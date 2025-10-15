@@ -1,3 +1,0 @@
-REPORT  zfir0121.
-INCLUDE zfir0121_top.
-INCLUDE zfir0121_form.

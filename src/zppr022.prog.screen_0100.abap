@@ -1,9 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE: pbo_0100,
-          status_0100.
-
-PROCESS AFTER INPUT.
-  MODULE pai_0100.
-
-PROCESS ON VALUE-REQUEST.
-  FIELD p_file MODULE carrega_arquivo.

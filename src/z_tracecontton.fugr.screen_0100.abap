@@ -1,8 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_0100.
-*
-PROCESS AFTER INPUT.
-  MODULE user_command_0100.
-
-PROCESS ON VALUE-REQUEST.
-  FIELD g_file_name MODULE file_dropdown_box.

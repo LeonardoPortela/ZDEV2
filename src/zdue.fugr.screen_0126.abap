@@ -1,7 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_0126.
-*
-  MODULE carrega_dados.
-
-PROCESS AFTER INPUT.
-  MODULE user_command_0126.

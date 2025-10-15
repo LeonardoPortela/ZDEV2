@@ -1,7 +1,0 @@
-
-PROCESS BEFORE OUTPUT.
-  MODULE status_9998.
-*
-PROCESS AFTER INPUT.
-  MODULE exit_aplicativo_999 AT EXIT-COMMAND.
-  MODULE user_command_9998.

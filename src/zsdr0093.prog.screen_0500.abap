@@ -1,8 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_0500.
-*
-PROCESS AFTER INPUT.
-  MODULE user_command_0500.
-
-PROCESS ON VALUE-REQUEST.
-  FIELD g_new_status MODULE f_help_status.

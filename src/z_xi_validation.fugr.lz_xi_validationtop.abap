@@ -1,2 +1,0 @@
-FUNCTION-POOL Z_XI_VALIDATION.              "MESSAGE-ID ..
-

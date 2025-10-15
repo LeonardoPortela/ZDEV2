@@ -1,7 +1,0 @@
-PROCESS BEFORE OUTPUT.
-
-  MODULE status_0110.
-
-PROCESS AFTER INPUT.
-
-  MODULE user_command_0110.
