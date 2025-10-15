@@ -1,0 +1,29 @@
+*CLEAR WG_TOTAL_CREDITOS.
+
+IF wg_saida-CREDITOS lt 0.
+  wg_saida-CREDITOS = wg_saida-CREDITOS * -1.
+ENDIF.
+
+WG_TOTAL_CREDITOS = WG_TOTAL_CREDITOS + WG_SAIDA-CREDITOS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

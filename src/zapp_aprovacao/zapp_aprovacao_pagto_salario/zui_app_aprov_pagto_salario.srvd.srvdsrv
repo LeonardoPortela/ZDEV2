@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Def - Aprov. Pagto Salario'
+define service ZUI_APP_APROV_PAGTO_SALARIO {
+  expose ZC_APROV_PAGTO_SALARIO as PagtoSalario;
+  expose ZC_APROV_PAGTO_SALARIO_IT as PagtoSalarioIT;
+}

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SCVI" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SCVI>
+    <SHDSVCI>
+     <SCVARIANT>ZFD32_TELA</SCVARIANT>
+     <PROGNAME>SAPMF02C</PROGNAME>
+     <DYNPRO>0210</DYNPRO>
+     <VERSION>2</VERSION>
+    </SHDSVCI>
+    <SHDSVTXCI>
+     <SHDSVTXCI>
+      <LANGU>P</LANGU>
+      <SCVARIANT>ZFD32_TELA</SCVARIANT>
+      <SCVTEXT>ZFD32_TELA</SCVTEXT>
+     </SHDSVTXCI>
+    </SHDSVTXCI>
+    <SHDSVFVCI>
+     <SHDSVFVCI>
+      <SCVARIANT>ZFD32_TELA</SCVARIANT>
+      <FIELDNAME>KNKK-CRBLB</FIELDNAME>
+      <ACTIVE>X</ACTIVE>
+      <INPUT_OFF>X</INPUT_OFF>
+      <ITYPE>C</ITYPE>
+     </SHDSVFVCI>
+    </SHDSVFVCI>
+   </SCVI>
+  </asx:values>
+ </asx:abap>
+</abapGit>

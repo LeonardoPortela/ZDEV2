@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZLESE0037</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Estrutura Itinerario</DDTEXT>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>ORDEM</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Ordem de Venda / Pedido</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ITEM</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Item Ordem/Pedido</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ROUTE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Rota</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DISTZ</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>valor em KM</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>MEDST</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>unidade de Medida</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>BEZEI</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>descritivo Itinerário</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>TRAZTD</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Duração transito do itinerário</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>AZONE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Zona de Origem A</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DESC_AZONE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Descritivo da zona de transporte A</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>LZONE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Zona de Origem L</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DESC_LZONE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Descritivo da zona de transporte L</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

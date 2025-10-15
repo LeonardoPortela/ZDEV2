@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ORDEM_MAN</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe processo ordem manutenção</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>M_CHECK_ORC_INIC_ORD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar orçamento inicial para ordem de manutenção</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>M_CHECK_ORC_SUPL_ORD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifcar valor suplementado para ordem</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_INIC_ORD</CMPNAME>
+     <SCONAME>I_AUFNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_INIC_ORD</CMPNAME>
+     <SCONAME>I_BELNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor total em moeda de transação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_INIC_ORD</CMPNAME>
+     <SCONAME>I_RETORN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_SUPL_ORD</CMPNAME>
+     <SCONAME>I_AUFNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_SUPL_ORD</CMPNAME>
+     <SCONAME>I_BELNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento para atribuição de orçamento e planej.estrutura</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_ORC_SUPL_ORD</CMPNAME>
+     <SCONAME>I_RETORN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

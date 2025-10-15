@@ -1,0 +1,25 @@
+"Name: \TY:CL_TAX_CALC_BR\ME:GET_TAX_DATA\SE:END\EI
+ENHANCEMENT 0 ZCL_TAX_CALC_BR_RATES.
+*
+
+*  IF SY-UNAME EQ 'MBARBARA'.
+*    BREAK-POINT.
+*  ENDIF.
+
+  ZCL_TAXA=>GET_PIS_COFINS( EXPORTING I_MWSKZ = ME->MS_KOMK-MWSKZ
+      CHANGING
+        E_PIS_RATE = ms_tax_data-PISRATE
+        E_COFINS_RATE = ms_tax_data-COFINSRATE
+  ).
+
+*  select SINGLE * into @data(wa_ZMMT0124)
+*    from ZMMT0124
+*   where MWSKZ eq @ME->MS_KOMK-MWSKZ
+*     AND MWSKZ NE @SPACE.
+*
+*  if sy-subrc is INITIAL.
+*    ms_tax_data-PISRATE = wa_ZMMT0124-NM_ALI_PIS / 100.
+*    ms_tax_data-COFINSRATE = wa_ZMMT0124-NM_ALI_COFINS / 100.
+*  endif.
+
+ENDENHANCEMENT.

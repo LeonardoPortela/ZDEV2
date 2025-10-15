@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SHLP" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD30V>
+    <SHLPNAME>ZLESH0006</SHLPNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <DDTEXT>Help do Matchcode Tipo de Ordem - ZLESR0072</DDTEXT>
+    <ISSIMPLE>X</ISSIMPLE>
+    <SELMETHOD>TVAK</SELMETHOD>
+    <SELMTYPE>X</SELMTYPE>
+    <TEXTTAB>TVAKT</TEXTTAB>
+    <DIALOGTYPE>D</DIALOGTYPE>
+   </DD30V>
+   <DD32P_TABLE>
+    <DD32P>
+     <SHLPNAME>ZLESH0006</SHLPNAME>
+     <FIELDNAME>AUART</FIELDNAME>
+     <FLPOSITION>0001</FLPOSITION>
+     <ROLLNAME>AUART</ROLLNAME>
+     <SHLPINPUT>X</SHLPINPUT>
+     <SHLPOUTPUT>X</SHLPOUTPUT>
+     <SHLPSELPOS>01</SHLPSELPOS>
+     <SHLPLISPOS>01</SHLPLISPOS>
+     <SCRLEN3>20</SCRLEN3>
+    </DD32P>
+    <DD32P>
+     <SHLPNAME>ZLESH0006</SHLPNAME>
+     <FIELDNAME>BEZEI</FIELDNAME>
+     <FLPOSITION>0002</FLPOSITION>
+     <ROLLNAME>TVAKT_BEZEI</ROLLNAME>
+     <SHLPINPUT>X</SHLPINPUT>
+     <SHLPOUTPUT>X</SHLPOUTPUT>
+     <SHLPSELPOS>02</SHLPSELPOS>
+     <SHLPLISPOS>02</SHLPLISPOS>
+     <SCRLEN3>20</SCRLEN3>
+    </DD32P>
+   </DD32P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

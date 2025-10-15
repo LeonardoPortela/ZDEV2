@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZNFW_BUDAT</OBJCT>
+    <FIEL1>ACTVT</FIEL1>
+    <OCLSS>AAAB</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZNFW_BUDAT</OBJECT>
+    <TTEXT>Autorização alterar Dt Lanc.Doc Trans. ZNFW0002</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZNFW_BUDAT</OBJCT>
+   </TOBJVORFLG>
+  </asx:values>
+ </asx:abap>
+</abapGit>

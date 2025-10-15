@@ -1,0 +1,9 @@
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_0001.
+*
+PROCESS AFTER INPUT.
+
+  MODULE user_command_0001_exit AT EXIT-COMMAND.
+
+  MODULE user_command_0001.

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZSDT0188</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZSDT0188</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZSDT0188</TCODE>
+    <TTEXT>Cadastro Transportadora - ZSDT0112</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZSDT0188</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZSDT0284;P_STCNAM=ZSDT0284_OUT;P_SCMANT=0107;P_TITLE=Cadastro de OVs p/ local de retirada;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PARA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TPARA>
+    <PARAMID>ZLES0050_RECUSA</PARAMID>
+   </TPARA>
+   <TPARAT>
+    <PARAMID>ZLES0050_RECUSA</PARAMID>
+    <SPRACHE>P</SPRACHE>
+    <PARTEXT>Permissão para Recusa de Modal Rodoviário</PARTEXT>
+   </TPARAT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

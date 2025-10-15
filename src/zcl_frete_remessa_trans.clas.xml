@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_FRETE_REMESSA_TRANS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para NF de transferência</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Inclui novo Item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_LOTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adicionar Lote</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Inclui Nova Classe para Lote do Material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VFDAT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data do vencimento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AV_VBELN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Remessa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CABECALHO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho de Remessa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CK_ALTEROU</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CK_ALTEROU_LOTES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXCLUIR_LOTE_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Excuir Lote</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GERAR_MOVIMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INFO_NOTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca Todas as Informações da NF-e</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ITEMS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens de Remessa - Tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ITENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOTES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens/Lotes da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOTES_CARACTERISTICAS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Inf. Lote - Caracteristica</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOTES_GERAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens/Lotes da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PARCEIROS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parceiros da Remessa - Tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PARTICAO_LOTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RETORNO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_ENTRADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gerar Remessa (não utilizado)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar Remessa com/sem Particao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preparar para Gerar Remessa (não utilizado)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LIMPAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar Objetos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LOTE_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Informações do Lote</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_NR_REMESSA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Set Remessa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_RETORNO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Set Mensagens de Retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VOLUMES_TRANSP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Transportador Volume</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_ITEM</CMPNAME>
+     <SCONAME>I_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Informações de item - ALV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE</CMPNAME>
+     <SCONAME>I_LOTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens/Lotes da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>E_CARACTERISTICAS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Inf. Lote - Caracteristica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>I_CHAVE_NFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Documento Fiscal Eletrônico</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>I_PROD_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>R_LOTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Informações de Lote</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>ZCX_CADASTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro Cadastro Interface.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>ZCX_CHARG_EXCEPTION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de NF-e Inbound</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LOTE_ITEM</CMPNAME>
+     <SCONAME>ZCX_NFE_INBOUND_EXCEPTION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de NF-e Inbound</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXCLUIR_LOTE_ITEM</CMPNAME>
+     <SCONAME>I_CD_LOTE_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sequência de Lote Item</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INFO_NOTA</CMPNAME>
+     <SCONAME>R_NFE_INBOUND</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de NF-e Inbound Cadastro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ENTRADA</CMPNAME>
+     <SCONAME>E_DADOS_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ENTRADA</CMPNAME>
+     <SCONAME>R_GEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ENTRADA</CMPNAME>
+     <SCONAME>ZCX_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Remessa/Aviso</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <SCONAME>E_DADOS_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <SCONAME>E_LOG_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>MEnsagens de Retorno transacao ZLES0200</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <SCONAME>R_GEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <SCONAME>T_ITENS_PED</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_REMESSA</CMPNAME>
+     <SCONAME>T_LOTES_PED</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens/Lotes da Nota Fiscal Eletrônica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ELIMINA_REMESSA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>E_DADOS_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_CABECALHO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho de Remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_GERAR_MOVIMENTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_ITEMS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens de Remessa - Tabela</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_PARCEIROS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parceiros da Remessa - Tabela</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_PARTICAO_LOTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>I_TIPO_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>R_GEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_GERAR_REMESSA</CMPNAME>
+     <SCONAME>ZCX_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Remessa/Aviso</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOTE_ITEM</CMPNAME>
+     <SCONAME>I_LOTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Informações de Lote</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOTE_ITEM</CMPNAME>
+     <SCONAME>I_LOTE_CARACT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens da Nota Fiscal Eletrônica - Inf. Lote - Caracteristica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_NR_REMESSA</CMPNAME>
+     <SCONAME>I_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_NR_REMESSA</CMPNAME>
+     <SCONAME>R_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Objeto Manibulação de Remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PIKING</CMPNAME>
+     <SCONAME>E_LOG_REMESSA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>MEnsagens de Retorno transacao ZLES0200</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PIKING</CMPNAME>
+     <SCONAME>R_GEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PIKING</CMPNAME>
+     <SCONAME>T_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens de Remessa - Tabela</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PIKING</CMPNAME>
+     <SCONAME>ZCX_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Remessa/Aviso</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_RETORNO</CMPNAME>
+     <SCONAME>I_RETORNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

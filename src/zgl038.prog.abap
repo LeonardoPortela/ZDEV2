@@ -1,0 +1,976 @@
+*&---------------------------------------------------------------------*
+*& Report  ZGL038
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZGL038.
+
+TABLES: T001, T001W, BSIS.
+
+
+TYPES: BEGIN OF TY_SAIDA,
+         APONTAR(20) TYPE C,
+         BUKRS       TYPE BSIS-BUKRS, "empresa
+         BUTXT       TYPE T001-BUTXT, "nome da empresa
+         WERKS       TYPE BSIS-WERKS, "centro
+         NAME1       TYPE T001W-NAME1, " nome do centro
+         BUDAT       TYPE BSIS-BUDAT, "data lancamento
+         BELNR       TYPE BSIS-BELNR, "doc. contábil
+         BLART       TYPE BSIS-BLART,
+         KOSTL       TYPE BSIS-KOSTL, "Centro de custo
+         LTEXT       TYPE CSKT-LTEXT, "descrição centro custo
+         AUFNR       TYPE BSIS-AUFNR, "ordem
+         HKONT       TYPE BSIS-HKONT, "conta
+         TXT50       TYPE SKAT-TXT50, "descrição conta
+         DMBTR       TYPE BSIS-DMBTR, " Valor R$
+         DMBE2       TYPE BSIS-DMBE2, " Valor US$
+         EBELN       TYPE MSEG-EBELN, "Pedido
+         EBELP       TYPE MSEG-EBELP, "Item ped.
+         BANFN       TYPE EKPO-BANFN, "Requisição
+         BNFPO       TYPE EKPO-BNFPO, "item requisição.
+         ERNAM       TYPE EBAN-ERNAM, "Usuario
+         RSNUM       TYPE MSEG-RSNUM, "reserva
+         USNAM       TYPE RKPF-USNAM, "usuario reserva
+         MATNR       TYPE MSEG-MATNR, "material
+         MAKTX       TYPE MAKT-MAKTX, "descrição material
+         TXZ01       TYPE EKPO-TXZ01, "texto
+         MATKL       TYPE MARA-MATKL, "gpo. merc
+         WGBEZ60     TYPE T023T-WGBEZ60, "descr. gpo mercadoria
+         LIFNR       TYPE MSEG-LIFNR, " Fornecedor
+         NAME2       TYPE LFA1-NAME1. "nome do fornecedor
+TYPES:  END OF TY_SAIDA.
+
+TYPES: BEGIN OF TY_BSIS,
+         BUKRS LIKE BSIS-BUKRS,
+         HKONT LIKE BSIS-HKONT,
+         BUDAT LIKE BSIS-BUDAT,
+         GJAHR LIKE BSIS-GJAHR,
+         BLART LIKE BSIS-BLART,
+         WERKS LIKE BSIS-WERKS,
+         KOSTL LIKE BSIS-KOSTL,
+         DMBTR LIKE BSIS-DMBTR,
+         DMBE2 LIKE BSIS-DMBE2,
+         BELNR LIKE BSIS-BELNR,
+         AUFNR LIKE BSIS-AUFNR,
+         GSBER LIKE BSIS-GSBER,
+         SHKZG LIKE BSIS-SHKZG,
+       END OF TY_BSIS.
+
+"Busca Dados Cabeçalho Documento Contábil
+TYPES: BEGIN OF TY_BKPF,
+         USNAM TYPE  BKPF-USNAM,
+         XBLNR TYPE  BKPF-XBLNR,
+         WAERS TYPE  BKPF-WAERS,
+         AWKEY TYPE  BKPF-AWKEY,
+         GJAHR TYPE  BKPF-GJAHR,
+         BUKRS TYPE  BKPF-BUKRS,
+         BELNR TYPE  BKPF-BELNR,
+       END OF TY_BKPF.
+
+"Busca Dados Movimentação de Mercadoria
+TYPES: BEGIN OF TY_MSEG,
+         MATNR TYPE  MSEG-MATNR,
+         LIFNR TYPE  MSEG-LIFNR,
+         EBELN TYPE  MSEG-EBELN,
+         EBELP TYPE  MSEG-EBELP,
+         RSNUM TYPE  MSEG-RSNUM,
+         RSPOS TYPE  MSEG-RSPOS,
+         MBLNR TYPE  MSEG-MBLNR,
+         MJAHR TYPE  MSEG-MJAHR,
+       END OF TY_MSEG.
+
+"Busca Dados Fatura
+TYPES: BEGIN OF TY_RSEG,
+         MATNR TYPE  RSEG-MATNR,
+         LIFNR TYPE  RSEG-LIFNR,
+         EBELN TYPE  RSEG-EBELN,
+         EBELP TYPE  RSEG-EBELP,
+         GJAHR TYPE  RSEG-GJAHR,
+       END OF TY_RSEG.
+
+"Busca Dados Usuário Requisição e Reserva
+TYPES: BEGIN OF TY_EKPO,
+         TXZ01 TYPE EKPO-TXZ01,
+         MATKL TYPE EKPO-MATKL,
+         BANFN TYPE EKPO-BANFN,
+         BNFPO TYPE EKPO-BNFPO,
+         EBELN TYPE EKPO-EBELN,
+         EBELP TYPE EKPO-EBELP,
+       END OF TY_EKPO.
+
+
+TYPES: BEGIN OF TY_EBAN,
+         BANFN TYPE EBAN-BANFN,
+         BNFPO TYPE EBAN-BNFPO,
+         ERNAM TYPE EBAN-ERNAM,
+       END OF TY_EBAN.
+
+
+TYPES: BEGIN OF TY_RKPF,
+         RSNUM TYPE RKPF-RSNUM,
+         USNAM TYPE RKPF-USNAM,
+       END OF TY_RKPF.
+
+"Seleção Nome da Filial
+TYPES: BEGIN OF TY_T001W,
+         WERKS TYPE T001W-WERKS,
+         NAME1 TYPE T001W-NAME1,
+       END OF TY_T001W.
+
+"Seleção Nome da Empresa
+TYPES: BEGIN OF TY_T001,
+         BUKRS TYPE T001-BUKRS,
+         BUTXT TYPE T001-BUTXT,
+       END OF TY_T001.
+
+"Seleção Descrição conta Contábil
+TYPES: BEGIN OF TY_SKAT,
+         SAKNR TYPE SKAT-SAKNR,
+         TXT50 TYPE SKAT-TXT50,
+       END OF TY_SKAT.
+
+"Seleção Descrição Centro de Custo
+TYPES: BEGIN OF TY_CSKT,
+         KOSTL TYPE CSKT-KOSTL,
+         LTEXT TYPE CSKT-LTEXT,
+       END OF TY_CSKT.
+
+
+"Seleção Nome do Grupo de Mercadoria
+TYPES: BEGIN OF TY_MARA,
+         MATNR TYPE MARA-MATNR,
+         MATKL TYPE MARA-MATKL,
+       END OF TY_MARA.
+
+TYPES: BEGIN OF TY_MAKT,
+         MATNR TYPE MAKT-MATNR,
+         MAKTX TYPE MAKT-MAKTX,
+       END OF TY_MAKT.
+
+
+TYPES: BEGIN OF TY_T023T,
+         MATKL   TYPE T023T-MATKL,
+         WGBEZ60 TYPE T023T-WGBEZ60,
+       END OF TY_T023T.
+
+TYPES: BEGIN OF TY_LFA1,
+         NAME1 TYPE LFA1-NAME1,
+         LIFNR TYPE LFA1-LIFNR,
+       END OF TY_LFA1.
+
+
+TYPES: BEGIN OF TY_BSIS_AUX,
+         BUKRS LIKE BSIS-BUKRS,
+         HKONT LIKE BSIS-HKONT,
+         BUDAT LIKE BSIS-BUDAT,
+         GJAHR LIKE BSIS-GJAHR,
+         BLART LIKE BSIS-BLART,
+         WERKS LIKE BSIS-WERKS,
+         KOSTL LIKE BSIS-KOSTL,
+         DMBTR LIKE BSIS-DMBTR,
+         DMBE2 LIKE BSIS-DMBE2,
+         BELNR LIKE BSIS-BELNR,
+         AUFNR LIKE BSIS-AUFNR,
+         GSBER LIKE BSIS-GSBER,
+         SHKZG LIKE BSIS-SHKZG,
+       END OF TY_BSIS_AUX.
+
+
+
+
+DATA: T_SAIDA     TYPE TABLE OF TY_SAIDA,
+      WA_SAIDA    TYPE  TY_SAIDA,
+      T_BSIS      TYPE TABLE OF TY_BSIS,
+      WA_BSIS     TYPE TY_BSIS,
+      T_BKPF      TYPE TABLE OF TY_BKPF,
+      WA_BKPF     TYPE TY_BKPF,
+      T_MSEG      TYPE TABLE OF TY_MSEG,
+      WA_MSEG     TYPE TY_MSEG,
+      T_RSEG      TYPE TABLE OF TY_RSEG,
+      WA_RSEG     TYPE TY_RSEG,
+      T_EKPO      TYPE TABLE OF TY_EKPO,
+      WA_EKPO     TYPE TY_EKPO,
+      T_EBAN      TYPE TABLE OF TY_EBAN,
+      WA_EBAN     TYPE TY_EBAN,
+      T_RKPF      TYPE TABLE OF TY_RKPF,
+      WA_RKPF     TYPE TY_RKPF,
+      T_T001W     TYPE TABLE OF TY_T001W,
+      WA_T001W    TYPE TY_T001W,
+      T_T001      TYPE TABLE OF TY_T001,
+      WA_T001     TYPE TY_T001,
+      T_SKAT      TYPE TABLE OF TY_SKAT,
+      WA_SKAT     TYPE TY_SKAT,
+      T_CSKT      TYPE TABLE OF TY_CSKT,
+      WA_CSKT     TYPE TY_CSKT,
+      T_MARA      TYPE TABLE OF TY_MARA,
+      WA_MARA     TYPE TY_MARA,
+      T_MAKT      TYPE TABLE OF TY_MAKT,
+      WA_MAKT     TYPE TY_MAKT,
+      T_T023T     TYPE TABLE OF TY_T023T,
+      WA_T023T    TYPE TY_T023T,
+      T_LFA1      TYPE TABLE OF TY_LFA1,
+      WA_LFA1     TYPE TY_LFA1,
+      T_BSIS_AUX  TYPE TABLE OF TY_BSIS_AUX,
+      WA_BSIS_AUX TYPE TY_BSIS_AUX.
+
+
+
+DATA: IT_FIELDCAT TYPE SLIS_T_FIELDCAT_ALV,                   "Estrutura de saida
+      IT_EVENT    TYPE SLIS_T_EVENT       WITH HEADER LINE,   "Eventos
+      IT_HEADER   TYPE KKBLO_T_LISTHEADER WITH HEADER LINE,   "Cabeçalho
+      VG_LAYOUT   TYPE SLIS_LAYOUT_ALV,   "Layout do alv
+      VG_UCOMM    TYPE STREE_UCOMM.
+
+
+
+INITIALIZATION.
+
+  SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+
+  SELECT-OPTIONS:
+          PA_BUKRS  FOR T001-BUKRS  OBLIGATORY. "empresa
+
+  PARAMETERS:
+    PA_WERKS LIKE T001W-WERKS, "centro
+    PA_KOSTL LIKE BSIS-KOSTL. "centro de custo
+
+  SELECT-OPTIONS:
+          PA_HKONT  FOR BSIS-HKONT DEFAULT '0000412000' TO '0000422999' OBLIGATORY  , " Classe de Custo
+          PA_BUDAT  FOR BSIS-BUDAT OBLIGATORY. "Data Lançamento
+
+  SELECTION-SCREEN END OF BLOCK B1.
+
+
+START-OF-SELECTION.
+
+  PERFORM CARREGA_DADOS.
+
+FORM CARREGA_DADOS.
+  DATA: ANO(4)       TYPE C.
+
+  ANO      =  PA_BUDAT-LOW+0(4).
+
+  IF ( PA_WERKS IS INITIAL ) AND ( PA_KOSTL IS INITIAL ).
+
+    SELECT  BUKRS  HKONT  BUDAT  GJAHR  BLART  WERKS  KOSTL  DMBTR  DMBE2  BELNR  AUFNR GSBER SHKZG
+      FROM BSIS
+      INTO TABLE T_BSIS
+      WHERE BUKRS IN PA_BUKRS
+      AND   HKONT IN PA_HKONT
+      AND   BUDAT IN PA_BUDAT
+      AND   GJAHR = ANO
+      AND  ( BLART EQ 'WE' OR BLART EQ 'WA' OR BLART EQ 'RE' )
+      AND   DMBTR <> '0.00'.
+
+  ENDIF.
+
+  IF ( PA_WERKS IS NOT INITIAL ) AND ( PA_KOSTL IS NOT INITIAL ) .
+
+    SELECT  BUKRS  HKONT  BUDAT  GJAHR  BLART  WERKS  KOSTL  DMBTR  DMBE2  BELNR  AUFNR GSBER SHKZG
+      FROM BSIS
+      INTO TABLE T_BSIS
+      WHERE BUKRS IN PA_BUKRS
+      AND   HKONT IN PA_HKONT
+      AND   BUDAT IN PA_BUDAT
+      AND   GJAHR = ANO
+      AND  ( BLART EQ 'WE' OR BLART EQ 'WA' OR BLART EQ 'RE' )
+      AND   WERKS EQ PA_WERKS " NÃO OBRIGATORIO
+      AND   KOSTL EQ PA_KOSTL " NÃO OBRIGAORIO
+      AND   DMBTR <> '0.00'.
+
+  ENDIF.
+
+  IF ( PA_WERKS IS NOT INITIAL ) AND ( PA_KOSTL IS  INITIAL ).
+    SELECT  BUKRS  HKONT  BUDAT  GJAHR  BLART  WERKS  KOSTL  DMBTR  DMBE2  BELNR  AUFNR GSBER SHKZG
+      FROM BSIS
+      INTO TABLE T_BSIS
+      WHERE BUKRS IN PA_BUKRS
+      AND   HKONT IN PA_HKONT
+      AND   BUDAT IN PA_BUDAT
+      AND   GJAHR = ANO
+      AND  ( BLART EQ 'WE' OR BLART EQ 'WA' OR BLART EQ 'RE' )
+      AND   WERKS EQ PA_WERKS " NÃO OBRIGATORIO
+      AND   DMBTR <> '0.00'.
+
+  ENDIF.
+  IF ( PA_WERKS IS  INITIAL ) AND ( PA_KOSTL IS NOT INITIAL ).
+    SELECT  BUKRS  HKONT  BUDAT  GJAHR  BLART  WERKS  KOSTL  DMBTR  DMBE2  BELNR  AUFNR GSBER SHKZG
+      FROM BSIS
+      INTO TABLE T_BSIS
+      WHERE BUKRS IN PA_BUKRS
+      AND   HKONT IN PA_HKONT
+      AND   BUDAT IN PA_BUDAT
+      AND   GJAHR = ANO
+      AND  ( BLART EQ 'WE' OR BLART EQ 'WA' OR BLART EQ 'RE' )
+      AND   KOSTL EQ PA_KOSTL " NÃO OBRIGAORIO
+      AND   DMBTR <> '0.00'.
+  ENDIF.
+
+  IF T_BSIS IS INITIAL.
+    MESSAGE TEXT-002 TYPE 'I'.
+  ELSE.
+    PERFORM TRATAR_DADOS.
+  ENDIF.
+
+ENDFORM.
+
+"Busca Dados Cabeçalho Documento Contábil
+FORM CONSULTA_BKPF.
+
+  SELECT  USNAM  XBLNR  WAERS  AWKEY  GJAHR  BUKRS  BELNR
+    FROM BKPF
+    INTO TABLE  T_BKPF
+    FOR ALL ENTRIES IN T_BSIS
+  WHERE BUKRS EQ T_BSIS-BUKRS
+    AND BELNR EQ T_BSIS-BELNR
+    AND GJAHR EQ T_BSIS-GJAHR.
+
+ENDFORM.
+
+"Busca Dados Movimentação de Mercadoria
+FORM CONSULTA_MSEG.
+  DATA: V_AWKEY(10) TYPE C.
+
+  READ TABLE T_BKPF INTO WA_BKPF WITH KEY BUKRS = PA_BUKRS-LOW.
+
+  V_AWKEY =  WA_BKPF-AWKEY+0(10).
+
+  SELECT  MATNR  LIFNR  EBELN  EBELP  RSNUM  RSPOS  MBLNR  MJAHR
+    FROM MSEG
+    INTO TABLE T_MSEG
+    FOR ALL ENTRIES IN T_BKPF
+    WHERE MBLNR EQ V_AWKEY
+    AND   MJAHR EQ T_BKPF-GJAHR.
+
+ENDFORM.
+
+
+FORM CONSULTA_RSEG.
+  DATA: V_AWKEY(10) TYPE C.
+
+  READ TABLE T_BKPF INTO WA_BKPF WITH KEY BUKRS = PA_BUKRS-LOW.
+  V_AWKEY =  WA_BKPF-AWKEY+0(10).
+
+  SELECT MATNR  LIFNR EBELN  EBELP GJAHR
+    FROM RSEG
+    INTO TABLE T_RSEG
+    FOR ALL ENTRIES IN T_BKPF
+    WHERE BELNR EQ V_AWKEY
+    AND   GJAHR EQ T_BKPF-GJAHR.
+
+ENDFORM.
+
+
+FORM CONSULTA_EKPO.
+
+  READ TABLE T_MSEG INTO WA_MSEG WITH KEY MBLNR = WA_BKPF-AWKEY+0(10).
+
+  READ TABLE T_RSEG INTO WA_RSEG WITH KEY GJAHR = WA_BKPF-GJAHR.
+
+  IF WA_MSEG IS NOT INITIAL.
+    SELECT  TXZ01  MATKL  BANFN   BNFPO   EBELN   EBELP
+      FROM EKPO
+      INTO TABLE T_EKPO
+      WHERE EBELN EQ WA_MSEG-EBELN
+      AND   EBELP EQ WA_MSEG-EBELP.
+  ELSE.
+    SELECT  TXZ01  MATKL  BANFN   BNFPO   EBELN   EBELP
+      FROM EKPO
+      INTO TABLE T_EKPO
+      WHERE EBELN EQ WA_RSEG-EBELN
+      AND   EBELP EQ WA_RSEG-EBELP.
+  ENDIF.
+
+ENDFORM.
+
+FORM CONSULTA_EBAN.
+
+  IF T_EKPO IS NOT INITIAL.
+    SELECT  BANFN  BNFPO  ERNAM
+       FROM EBAN
+      INTO TABLE T_EBAN
+      FOR ALL ENTRIES IN T_EKPO
+      WHERE BANFN EQ T_EKPO-BANFN
+      AND   BNFPO EQ T_EKPO-BNFPO.
+  ENDIF.
+
+ENDFORM.
+
+FORM CONSULTA_RKPF.
+
+  SELECT  RSNUM   USNAM
+    FROM RKPF
+    INTO TABLE T_RKPF
+    FOR ALL ENTRIES IN T_MSEG
+    WHERE RSNUM  EQ T_MSEG-RSNUM.
+
+ENDFORM.
+
+
+FORM CONSULTA_DESCRICAO.
+
+  " Seleção Nome da Filial
+  SELECT WERKS  NAME1
+    FROM T001W
+    INTO TABLE T_T001W
+    FOR ALL ENTRIES IN T_BSIS
+    WHERE WERKS EQ T_BSIS-WERKS.
+
+  "Seleção Nome da Empresa
+  SELECT BUKRS BUTXT
+  FROM  T001
+    INTO TABLE T_T001
+    FOR ALL ENTRIES IN T_BSIS
+  WHERE BUKRS EQ T_BSIS-BUKRS.
+
+  "Seleção Descrição conta Contábil
+  SELECT SAKNR  TXT50
+    FROM SKAT
+    INTO TABLE T_SKAT
+    FOR ALL ENTRIES IN T_BSIS
+  WHERE SPRAS EQ 'PT'
+    AND KTOPL EQ '0050'
+    AND SAKNR EQ T_BSIS-HKONT.
+
+  "Seleção Descrição Centro de Custo
+  SELECT KOSTL LTEXT
+    FROM CSKT
+    INTO TABLE T_CSKT
+    FOR ALL ENTRIES IN T_BSIS
+    WHERE KOKRS EQ 'MAGI'
+    AND   KOSTL EQ T_BSIS-KOSTL.
+
+
+  "Seleção Nome do Grupo de Mercadoria
+  SELECT MATNR MATKL
+    FROM MARA
+    INTO TABLE T_MARA
+    FOR ALL ENTRIES IN T_MSEG
+  WHERE MATNR EQ   T_MSEG-MATNR.
+
+
+  SELECT MATNR MAKTX
+    FROM MAKT
+    INTO TABLE T_MAKT
+    FOR ALL ENTRIES IN T_MSEG
+   WHERE MATNR EQ T_MSEG-MATNR.
+
+
+  SELECT MATKL WGBEZ60
+    FROM T023T
+    INTO TABLE T_T023T
+  FOR ALL ENTRIES IN T_MARA
+    WHERE MATKL EQ T_MARA-MATKL
+    AND   SPRAS EQ 'PT'.
+
+  SELECT NAME1 LIFNR
+    FROM LFA1
+    INTO TABLE T_LFA1
+    FOR ALL ENTRIES IN T_MSEG
+   WHERE LIFNR EQ T_MSEG-LIFNR.
+
+
+ENDFORM.
+
+FORM TRATAR_DADOS.
+
+  LOOP AT T_BSIS INTO WA_BSIS.
+
+    SELECT  USNAM  XBLNR  WAERS  AWKEY  GJAHR  BUKRS  BELNR
+    FROM BKPF
+      INTO TABLE T_BKPF
+  WHERE BUKRS EQ WA_BSIS-BUKRS
+    AND BELNR EQ WA_BSIS-BELNR
+    AND GJAHR EQ WA_BSIS-GJAHR.
+
+    "PERFORM CONSULTA_BKPF.
+    PERFORM CONSULTA_MSEG.
+    PERFORM CONSULTA_RSEG.
+    PERFORM CONSULTA_EKPO.
+    PERFORM CONSULTA_EBAN.
+    PERFORM CONSULTA_RKPF.
+    PERFORM CONSULTA_DESCRICAO.
+
+    "tira zero a esquerda
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      EXPORTING
+        INPUT  = WA_BSIS-HKONT
+      IMPORTING
+        OUTPUT = WA_SAIDA-HKONT. "contaa
+
+    WA_SAIDA-BUKRS = WA_BSIS-BUKRS. " empresa
+    WA_SAIDA-WERKS = WA_BSIS-WERKS. "Centro
+    WA_SAIDA-BUDAT = WA_BSIS-BUDAT. "data lancamento
+    WA_SAIDA-BELNR = WA_BSIS-BELNR. "'Doc.Contab.'
+    WA_SAIDA-BLART = WA_BSIS-BLART. " TIPO DOC.
+    WA_SAIDA-KOSTL = WA_BSIS-KOSTL. "Centro de custo
+    WA_SAIDA-AUFNR = WA_BSIS-AUFNR. "ORDEM
+
+    IF WA_BSIS-SHKZG = 'H'.
+      WA_SAIDA-DMBTR = WA_BSIS-DMBTR * -1. "Valor R$'
+      WA_SAIDA-DMBE2 = WA_BSIS-DMBE2 * -1. "Valor US$'
+    ELSE.
+      WA_SAIDA-DMBTR = WA_BSIS-DMBTR.
+      WA_SAIDA-DMBE2 = WA_BSIS-DMBE2.
+    ENDIF.
+
+    "Nome Empresa'
+    READ TABLE T_T001 INTO WA_T001 WITH KEY BUKRS = WA_BSIS-BUKRS.
+    IF SY-SUBRC EQ 0..
+      WA_SAIDA-BUTXT =  WA_T001-BUTXT.
+    ELSE.
+      WA_SAIDA-BUTXT = ''.
+    ENDIF.
+
+    "'Nome Centro'
+    READ TABLE T_T001W INTO WA_T001W WITH KEY WERKS = WA_BSIS-GSBER.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-NAME1 = WA_T001W-NAME1.
+    ELSE.
+      WA_SAIDA-NAME1 = ''.
+    ENDIF.
+
+    "'Descrição Centro Custo'
+    READ TABLE T_CSKT INTO WA_CSKT WITH KEY KOSTL = WA_BSIS-KOSTL.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-LTEXT = WA_CSKT-LTEXT.
+    ELSE.
+      WA_SAIDA-LTEXT = ''.
+    ENDIF.
+
+    "'Descrição Conta'
+    READ TABLE T_SKAT INTO WA_SKAT WITH KEY SAKNR = WA_BSIS-HKONT.
+    IF SY-SUBRC EQ 0..
+      WA_SAIDA-TXT50 = WA_SKAT-TXT50.
+    ELSE.
+      WA_SAIDA-TXT50 = ''.
+    ENDIF.
+
+    READ TABLE T_MSEG INTO WA_MSEG WITH KEY MBLNR = WA_BKPF-AWKEY+0(10).
+
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-LIFNR = WA_MSEG-LIFNR. "FORNECEDOR
+      WA_SAIDA-EBELN = WA_MSEG-EBELN. "PEDIDO
+      WA_SAIDA-EBELP = WA_MSEG-EBELP. "Item Ped
+      WA_SAIDA-RSNUM = WA_MSEG-RSNUM. "Reserva
+
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+        EXPORTING
+          INPUT  = WA_MSEG-MATNR
+        IMPORTING
+          OUTPUT = WA_SAIDA-MATNR. "Material
+    ENDIF.
+
+    READ TABLE T_EKPO INTO WA_EKPO WITH KEY EBELN = WA_MSEG-EBELN.
+
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-BANFN = WA_EKPO-BANFN. "REQUISICAO
+      WA_SAIDA-BNFPO = WA_EKPO-BNFPO. "ITEM REQUISIÇÃO
+      WA_SAIDA-TXZ01 = WA_EKPO-TXZ01. "texto
+    ENDIF.
+
+
+    READ TABLE T_EBAN INTO WA_EBAN WITH KEY BANFN = WA_EKPO-BANFN.
+
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-ERNAM =  WA_EBAN-ERNAM. "USUARIO REQ.
+    ENDIF.
+
+    READ TABLE T_RKPF INTO WA_RKPF WITH KEY RSNUM = WA_MSEG-RSNUM.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-USNAM = WA_BKPF-USNAM. "Usuario Reserva
+    ENDIF.
+
+    "Descrição Material
+    READ TABLE T_MAKT INTO WA_MAKT WITH KEY MATNR = WA_MSEG-MATNR.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-MAKTX = WA_MAKT-MAKTX.
+    ENDIF.
+
+    READ TABLE T_MARA INTO WA_MARA WITH KEY MATNR = WA_MSEG-MATNR.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-MATKL = WA_MARA-MATKL. "Gpo.Merc.
+    ENDIF.
+
+    "Descr.Gpo.Mercadoria
+    READ TABLE T_T023T INTO WA_T023T WITH KEY MATKL = WA_MARA-MATKL.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-WGBEZ60 = WA_T023T-WGBEZ60.
+    ENDIF.
+
+    "Nome do Fornecedor
+    READ TABLE T_LFA1 INTO WA_LFA1 WITH KEY LIFNR = WA_MSEG-LIFNR.
+    IF SY-SUBRC EQ 0.
+      WA_SAIDA-NAME2 = WA_LFA1-NAME1.
+    ENDIF.
+
+    "APONTAR
+    SELECT SINGLE STATUS
+      FROM ZMMT0091 INTO WA_SAIDA-APONTAR
+    WHERE BUKRS EQ WA_SAIDA-BUKRS
+      AND BELNR EQ WA_SAIDA-BELNR.
+
+    IF WA_SAIDA-APONTAR IS NOT INITIAL.
+      WA_SAIDA-APONTAR = ICON_CHECKED.
+    ELSE.
+      WA_SAIDA-APONTAR = ICON_GENERATE.
+    ENDIF.
+
+    APPEND WA_SAIDA TO T_SAIDA.
+
+    CLEAR WA_SAIDA.
+    CLEAR WA_BSIS.
+    CLEAR WA_BKPF.
+    CLEAR WA_MSEG.
+    CLEAR WA_RSEG.
+    CLEAR WA_EKPO.
+    CLEAR WA_EBAN.
+    CLEAR WA_RKPF.
+    CLEAR WA_T001W.
+    CLEAR WA_T001.
+    CLEAR WA_SKAT.
+    CLEAR WA_CSKT.
+    CLEAR WA_MARA.
+    CLEAR WA_MAKT.
+    CLEAR WA_T023T.
+    CLEAR WA_LFA1.
+    CLEAR WA_BSIS_AUX.
+
+  ENDLOOP.
+
+  PERFORM F_ALV_ESTRUTURA_REQ .
+
+ENDFORM.
+
+FORM F_ALV_ESTRUTURA_REQ .
+* Montar estruduta de ALV
+  PERFORM F_ALV_EST.
+* Monta cabeçalho
+  PERFORM F_MONTA_CABECALHO.
+* Executa ALV
+  PERFORM F_ALV_EXECUTA.
+ENDFORM.
+
+FORM F_FIELDCAT USING P_CONT P_KEY  P_TAB  P_FIELD P_DESC
+                      P_TAM  P_QTDE P_FIX  P_JUST P_HOT
+             CHANGING P_FIELDCAT TYPE SLIS_T_FIELDCAT_ALV.
+
+* Tabela interna local
+  DATA: TL_FIELDCAT TYPE SLIS_T_FIELDCAT_ALV WITH HEADER LINE.
+
+  TL_FIELDCAT-COL_POS    = P_CONT. "Posição
+  TL_FIELDCAT-KEY        = P_KEY.  "
+  TL_FIELDCAT-TABNAME    = P_TAB.  "Tabela interna
+  TL_FIELDCAT-FIELDNAME  = P_FIELD."Campo
+  TL_FIELDCAT-SELTEXT_L  = P_DESC. "Descrição longa
+  TL_FIELDCAT-SELTEXT_M  = P_DESC. "Descrição media
+  TL_FIELDCAT-SELTEXT_S  = P_DESC. "Descrição pequena
+  TL_FIELDCAT-OUTPUTLEN  = P_TAM.  "Tamanho
+  TL_FIELDCAT-QUANTITY   = P_QTDE. "Campo quantidade
+  TL_FIELDCAT-FIX_COLUMN = P_FIX.  "Fixar coluna
+  TL_FIELDCAT-JUST       = P_JUST. "Alinhar
+  TL_FIELDCAT-HOTSPOT    = P_HOT.  "Clique chama evento
+  APPEND TL_FIELDCAT TO P_FIELDCAT.
+
+ENDFORM.
+
+
+
+FORM F_ALV_EST .
+  PERFORM F_FIELDCAT USING:
+       '00' '' 'T_SAIDA'  'APONTAR'  'Apontar'                   6  ''  ''     '' 'X' CHANGING IT_FIELDCAT,
+       '01' '' 'T_SAIDA'  'BUKRS'    'Empresa'                   6  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '02' '' 'T_SAIDA'  'BUTXT'    'Nome Empresa'             30  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '03' '' 'T_SAIDA'  'WERKS'    'Centro'                    7  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '04' '' 'T_SAIDA'  'NAME1'    'Nome Centro'              20  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '05' '' 'T_SAIDA'  'BUDAT'    'Data Lcto'                12  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '06' '' 'T_SAIDA'  'BELNR'    'Doc.Contab.'              12  ''  ''     '' 'X' CHANGING IT_FIELDCAT,
+       '07' '' 'T_SAIDA'  'BLART'    'Tipo Doc.'                7   ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '07' '' 'T_SAIDA'  'KOSTL'    'Centro Custo'             12  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '08' '' 'T_SAIDA'  'LTEXT'    'Descrição Centro Custo'   20  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '09' '' 'T_SAIDA'  'AUFNR'    'Ordem'                    20  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '10' '' 'T_SAIDA'  'HKONT'    'Conta'                     7  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '11' '' 'T_SAIDA'  'TXT50'    'Descrição Conta'          30  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '12' '' 'T_SAIDA'  'DMBTR'    'Valor R$'                 12  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '13' '' 'T_SAIDA'  'DMBE2'    'Valor US$'                12  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '14' '' 'T_SAIDA'  'EBELN'    'Pedido'                   10  ''  ''     '' 'X' CHANGING IT_FIELDCAT,
+       '15' '' 'T_SAIDA'  'EBELP'    'Item Ped.'                 8  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '16' '' 'T_SAIDA'  'BANFN'    'Requisição'               10  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '17' '' 'T_SAIDA'  'BNFPO'    'Item Req.'                 8  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '18' '' 'T_SAIDA'  'ERNAM'    'Usuário Req.'             10  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '19' '' 'T_SAIDA'  'RSNUM'    'Reserva'                   8  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '20' '' 'T_SAIDA'  'USNAM'    'Usuário Reserva'          20  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '21' '' 'T_SAIDA'  'MATNR'    'Material'                  9  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '22' '' 'T_SAIDA'  'MAKTX'    'Descrição Material'       25  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '23' '' 'T_SAIDA'  'TXZ01'    'Texto'                    20  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '24' '' 'T_SAIDA'  'MATKL'    'Gpo.Merc'                 10  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '25' '' 'T_SAIDA'  'WGBEZ60'  'Descr.Gpo.Mercadoria'     25  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '26' '' 'T_SAIDA'  'LIFNR'    'Fornecedor'               11  ''  ''     '' ''  CHANGING IT_FIELDCAT,
+       '27' '' 'T_SAIDA'  'NAME2'    'Nome do Fornecedor'       25  ''  ''     '' ''  CHANGING IT_FIELDCAT.
+
+
+ENDFORM.                    " F_ALV_EST
+
+
+FORM F_MONTA_CABECALHO.
+
+  DATA: VL_BUTXT        LIKE T001-BUTXT,  "Nome da empresa
+        VL_FILIAL       LIKE T001W-NAME1, "Nome da filial
+        VL_LTEXT        LIKE CSKT-LTEXT, " Descrição centro de custo
+        VL_DATA1(10)    TYPE C,
+        VL_DATA2(10)    TYPE C,
+        VL_DATA(25)     TYPE C,
+        VL_FILIAL2(100) TYPE C,
+        VL_HKONT(25),
+        VL_LTEXT2(200)  TYPE C.
+
+  CLEAR IT_HEADER.
+  IT_HEADER-TYP  = 'H'.
+  IT_HEADER-INFO = 'Analise de Classe de Custo'.
+  APPEND  IT_HEADER.
+
+  SELECT SINGLE BUTXT
+   FROM T001
+   INTO VL_BUTXT
+  WHERE BUKRS = PA_BUKRS-LOW.
+  CONCATENATE PA_BUKRS-LOW
+              VL_BUTXT INTO VL_BUTXT
+              SEPARATED BY SPACE.
+
+  IT_HEADER-TYP  = 'S'.
+  IT_HEADER-KEY  = 'Empresa'.
+  IT_HEADER-INFO = VL_BUTXT.
+  APPEND  IT_HEADER.
+
+
+  IF PA_WERKS IS NOT INITIAL.
+    SELECT SINGLE NAME1
+      FROM T001W
+      INTO VL_FILIAL
+     WHERE WERKS EQ PA_WERKS.
+
+    CONCATENATE PA_WERKS  VL_FILIAL INTO VL_FILIAL2   SEPARATED BY SPACE.
+
+    IT_HEADER-TYP  = 'S'.
+    IT_HEADER-KEY  = 'Centro'.
+    IT_HEADER-INFO = VL_FILIAL2.
+    APPEND  IT_HEADER.
+  ENDIF.
+
+  CONCATENATE PA_HKONT-LOW+4(6)
+              'a'
+              PA_HKONT-HIGH+4(6) INTO VL_HKONT
+              SEPARATED BY SPACE.
+
+  IT_HEADER-TYP  = 'S'.
+  IT_HEADER-KEY  = 'Classe de Custo'.
+  IT_HEADER-INFO = VL_HKONT.
+  APPEND  IT_HEADER.
+
+
+  IF PA_KOSTL IS NOT INITIAL.
+    SELECT SINGLE LTEXT
+      FROM CSKT
+      INTO VL_LTEXT
+      WHERE KOKRS EQ  'MAGI'
+      AND   KOSTL EQ  PA_KOSTL.
+
+
+    CONCATENATE PA_KOSTL  VL_LTEXT INTO VL_LTEXT2 SEPARATED BY SPACE.
+
+    IT_HEADER-TYP  = 'S'.
+    IT_HEADER-KEY  = 'Centro de Custo '.
+    IT_HEADER-INFO = VL_LTEXT2.
+    APPEND  IT_HEADER.
+  ENDIF.
+
+
+  CONCATENATE PA_BUDAT-LOW+6(2) '.'
+                PA_BUDAT-LOW+4(2) '.'
+                PA_BUDAT-LOW(4)
+                INTO VL_DATA1.
+
+  CONCATENATE PA_BUDAT-HIGH+6(2) '.'
+              PA_BUDAT-HIGH+4(2) '.'
+              PA_BUDAT-HIGH(4)
+              INTO VL_DATA2.
+
+  CONCATENATE VL_DATA1  'a'   VL_DATA2 INTO VL_DATA   SEPARATED BY SPACE.
+
+  IT_HEADER-TYP  = 'S'.
+  IT_HEADER-KEY  = 'Data Lançamento'.
+  IT_HEADER-INFO = VL_DATA.
+  APPEND  IT_HEADER.
+ENDFORM.
+
+
+FORM F_ALV_EXECUTA .
+* Variavel Local
+  DATA: VL_REPID LIKE SY-REPID.
+  DATA: YT_EVENT       TYPE  SLIS_T_EVENT.
+
+  VL_REPID = SY-REPID.
+
+  IT_EVENT-NAME = SLIS_EV_TOP_OF_PAGE.
+  IT_EVENT-FORM = SLIS_EV_TOP_OF_PAGE.
+  APPEND IT_EVENT.
+
+* Determinar a tabela de cores
+  VG_LAYOUT-ZEBRA               = 'X'.
+
+* Função para exibir o ALV
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+    EXPORTING
+      I_CALLBACK_PROGRAM       = VL_REPID
+      I_CALLBACK_PF_STATUS_SET = 'SET_PF_STATUS'
+      I_CALLBACK_USER_COMMAND  = 'USER_COMMAND'
+      IS_LAYOUT                = VG_LAYOUT
+      IT_FIELDCAT              = IT_FIELDCAT[]
+"      I_DEFAULT                = 'A'
+      I_SAVE                   = 'A'
+      IT_EVENTS                = IT_EVENT[]
+    TABLES
+      T_OUTTAB                 = T_SAIDA
+    EXCEPTIONS
+      PROGRAM_ERROR            = 1
+      OTHERS                   = 2.
+  IF SY-SUBRC <> 0.
+    MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+    WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.
+
+ENDFORM.                    " F_ALV_EXECUTA
+
+
+FORM SET_PF_STATUS USING RT_EXTAB TYPE SLIS_T_EXTAB.
+  SET PF-STATUS 'STATUS'.
+ENDFORM.
+
+
+FORM USER_COMMAND USING P_UCOMM LIKE SY-UCOMM
+      P_FIELD TYPE SLIS_SELFIELD.
+
+  DATA: T_ZMMT0091  TYPE TABLE OF ZMMT0091,
+        WA_ZMMT0091 TYPE ZMMT0091.
+
+
+  IF P_FIELD-FIELDNAME = 'APONTAR'.
+    READ TABLE T_SAIDA  INTO WA_SAIDA INDEX P_FIELD-TABINDEX.
+
+    IF WA_SAIDA-APONTAR = ICON_CHECKED.
+      WA_SAIDA-APONTAR = ICON_GENERATE.
+    ELSE.
+      WA_SAIDA-APONTAR = ICON_CHECKED.
+    ENDIF.
+    MODIFY T_SAIDA FROM WA_SAIDA INDEX  P_FIELD-TABINDEX.
+
+    IF WA_SAIDA-APONTAR = ICON_GENERATE.
+      WA_ZMMT0091-BUKRS  = WA_SAIDA-BUKRS.
+      WA_ZMMT0091-BELNR  = WA_SAIDA-BELNR.
+      DELETE  ZMMT0091  FROM WA_ZMMT0091.
+    ELSE.
+      WA_ZMMT0091-BUKRS  = WA_SAIDA-BUKRS.
+      WA_ZMMT0091-BELNR  = WA_SAIDA-BELNR.
+      WA_ZMMT0091-STATUS = 'X'.
+      MODIFY ZMMT0091 FROM WA_ZMMT0091.
+    ENDIF.
+
+    MESSAGE TEXT-003 TYPE 'S'.
+    PERFORM F_ALV_EXECUTA.
+  ENDIF.
+
+
+  IF P_FIELD-FIELDNAME = 'BELNR'.
+
+    CALL FUNCTION 'AUTHORITY_CHECK_TCODE'
+      EXPORTING
+        TCODE  = 'FB03'
+      EXCEPTIONS
+        OK     = 1
+        NOT_OK = 2.
+    IF SY-SUBRC = 2.
+      MESSAGE E077(S#) WITH 'FB03'.
+    ENDIF.
+
+    READ TABLE T_SAIDA INTO WA_SAIDA INDEX P_FIELD-TABINDEX.
+
+    IF WA_SAIDA-BELNR IS NOT INITIAL
+      AND WA_SAIDA-BUKRS IS NOT INITIAL
+      AND WA_SAIDA-BUDAT IS NOT INITIAL.
+
+      SET PARAMETER ID: 'BLN' FIELD WA_SAIDA-BELNR,
+                        'BUK' FIELD WA_SAIDA-BUKRS,
+                        'GJR' FIELD WA_SAIDA-BUDAT(4).
+      CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+    ENDIF.
+  ENDIF.
+
+  IF P_FIELD-FIELDNAME = 'EBELN'.
+
+    CALL FUNCTION 'AUTHORITY_CHECK_TCODE'
+      EXPORTING
+        TCODE  = 'ME23N'
+      EXCEPTIONS
+        OK     = 1
+        NOT_OK = 2.
+    IF SY-SUBRC = 2.
+      MESSAGE E077(S#) WITH 'ME23N'.
+    ENDIF.
+
+    READ TABLE T_SAIDA INTO WA_SAIDA INDEX P_FIELD-TABINDEX.
+
+    IF WA_SAIDA-EBELN IS NOT INITIAL.
+      SET PARAMETER ID 'BES' FIELD WA_SAIDA-EBELN.
+      CALL TRANSACTION 'ME23N' AND SKIP FIRST SCREEN.
+    ENDIF.
+  ENDIF.
+
+
+  IF P_FIELD-FIELDNAME = 'BANFN'.
+
+    CALL FUNCTION 'AUTHORITY_CHECK_TCODE'
+      EXPORTING
+        TCODE  = 'ME53N'
+      EXCEPTIONS
+        OK     = 1
+        NOT_OK = 2.
+    IF SY-SUBRC = 2.
+      MESSAGE E077(S#) WITH 'ME53N'.
+    ENDIF.
+
+    READ TABLE T_SAIDA INTO WA_SAIDA INDEX P_FIELD-TABINDEX.
+    IF WA_SAIDA-BANFN IS NOT INITIAL.
+      SET PARAMETER ID 'BAN' FIELD WA_SAIDA-BANFN.
+      CALL TRANSACTION 'ME53N' AND SKIP FIRST SCREEN.
+    ENDIF.
+  ENDIF.
+
+  CASE SY-UCOMM.
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+ENDFORM.
+
+FORM TOP_OF_PAGE.
+* Cabeçalho
+  CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
+    EXPORTING
+*     i_logo             = c_logo
+      IT_LIST_COMMENTARY = IT_HEADER[].
+  SET TITLEBAR 'INI'.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Module  T02  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE T02 INPUT.
+
+*  CASE SY-UCOMM.
+*    WHEN 'BACK'.
+*      LEAVE TO SCREEN 0.
+*  ENDCASE.
+
+ENDMODULE.

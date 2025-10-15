@@ -1,0 +1,926 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZFIR060_FORM
+*&---------------------------------------------------------------------*
+
+
+FORM F_SELECIONAR_DADOS .
+
+  CLEAR: TG_J_1BNFDOC[],
+         TG_J_1BNFSTX[],
+         TG_J_1BNFLIN[],
+         TG_LFA1[],
+         TG_KONV[],
+         TG_VBRK[],
+         TG_J_1BNFE_ACTIVE[],
+         TG_MAKT[],
+         IT_SAIDA_0100[],
+         TG_0155[],
+         TG_0156[],
+         TG_0157[],
+         TG_BKPF[],
+         TG_J_1BNFNAD[],
+         R_TP_TRIB[].
+
+  DATA: MSG_EXIBIR TYPE STRING.
+
+  PERFORM F_INICIAR_VARIAVEIS.
+
+  AUTHORITY-CHECK OBJECT 'M_MATE_WRK'
+     ID 'WERKS' FIELD  P_BRANCH-LOW
+     ID 'ACTVT' FIELD '03'.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    CONCATENATE 'Usuário sem permissão para o centro:' P_BRANCH-LOW
+            INTO MSG_EXIBIR SEPARATED BY SPACE.
+
+    MESSAGE MSG_EXIBIR  TYPE 'S'.
+    SET CURSOR FIELD 'P_BRANCH-LOW'.
+    EXIT.
+  ENDIF.
+
+  "Monta Range Tp Trib.
+  R_TP_TRIB-SIGN   = 'I'.
+  R_TP_TRIB-OPTION = 'EQ'.
+
+  IF P_ZFES  EQ 'X'. " 01 - Fethab Soja
+    R_TP_TRIB-LOW = '01'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZFESA EQ 'X'.  " 02 - Fethab Soja Adicional
+    R_TP_TRIB-LOW = '02'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZFEA  EQ 'X'. " 03 - Fethab Algoão
+    R_TP_TRIB-LOW = '03'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZFEAA EQ 'X'. " 04 - Fethab Algoão Adicional
+    R_TP_TRIB-LOW = '04'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZIMA  EQ 'X'. " 05 - IMA
+    R_TP_TRIB-LOW = '05'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZIAGRO EQ 'X'. " 06 - IAGRO
+    R_TP_TRIB-LOW = '06'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZFEMI EQ 'X'. " 07 - FETHAB MILHO
+    R_TP_TRIB-LOW = '07'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF P_ZFETTO EQ 'X'. " 08 - FET TO
+    R_TP_TRIB-LOW = '08'.
+    APPEND R_TP_TRIB.
+  ENDIF.
+
+  IF R_TP_TRIB[] IS INITIAL.
+    MESSAGE 'Selecione pelo menos um tipo de imposto!' TYPE 'S'.
+    STOP.
+  ENDIF.
+
+  SELECT *
+    FROM J_1BNFDOC INTO CORRESPONDING FIELDS OF TABLE TG_J_1BNFDOC
+   WHERE BUKRS  EQ P_BUKRS
+     AND BRANCH IN P_BRANCH
+     AND DOCDAT IN P_DOCDAT
+     AND DIRECT EQ '2'
+     AND MODEL  EQ '55'.
+
+  DELETE TG_J_1BNFDOC WHERE DOCNUM NOT IN P_DOCNUM.
+  DELETE TG_J_1BNFDOC WHERE DOCTYP EQ '5'. "Estorno
+
+  IF TG_J_1BNFDOC[] IS INITIAL.
+    MESSAGE 'Nenhum movimento encontrado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  SELECT *
+    FROM J_1BNFE_ACTIVE INTO CORRESPONDING FIELDS OF TABLE TG_J_1BNFE_ACTIVE
+    FOR ALL ENTRIES IN TG_J_1BNFDOC
+   WHERE DOCNUM EQ TG_J_1BNFDOC-DOCNUM.
+
+  SELECT *
+    FROM J_1BNFLIN INTO CORRESPONDING FIELDS OF TABLE TG_J_1BNFLIN
+    FOR ALL ENTRIES IN TG_J_1BNFDOC
+   WHERE DOCNUM EQ TG_J_1BNFDOC-DOCNUM.
+
+  DELETE TG_J_1BNFLIN WHERE MATKL NOT IN P_MATKL.
+
+  IF TG_J_1BNFLIN[] IS INITIAL.
+    MESSAGE 'Nenhum movimento encontrado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  SELECT *
+    FROM J_1BNFSTX INTO TABLE TG_J_1BNFSTX
+     FOR ALL ENTRIES IN TG_J_1BNFDOC
+   WHERE DOCNUM EQ  TG_J_1BNFDOC-DOCNUM.
+
+  SELECT VK~VBELN VK~FKART VP~AUBEL VP~VGBEL VK~KNUMV VP~WERKS
+    FROM VBRK AS VK INNER JOIN VBRP AS VP ON VP~VBELN EQ VK~VBELN
+    INTO CORRESPONDING FIELDS OF TABLE TG_VBRK
+     FOR ALL ENTRIES IN TG_J_1BNFLIN
+   WHERE VK~VBELN EQ TG_J_1BNFLIN-REFKEY(10).
+
+  IF TG_VBRK[] IS NOT INITIAL.
+    SELECT *
+      FROM ZSDT0156 INTO TABLE TG_0156
+       FOR ALL ENTRIES IN TG_VBRK
+     WHERE VBELN = TG_VBRK-VBELN.
+  ENDIF.
+
+  TG_J_1BNFLIN_NFW[] = TG_J_1BNFLIN[].
+
+  DELETE TG_J_1BNFLIN_NFW[] WHERE REFTYP NE 'ZW'.
+
+  IF TG_J_1BNFLIN_NFW[] IS NOT INITIAL.
+
+    SELECT ZNFW8~SEQ_LCTO  ZNFW8~BUKRS ZNFW8~BRANCH ZNFW8~OPERACAO
+      FROM ZFIWRT0008 AS ZNFW8 INNER JOIN ZFIWRT0009 AS ZNFW9 ON ZNFW9~SEQ_LCTO EQ ZNFW8~SEQ_LCTO
+      INTO CORRESPONDING FIELDS OF TABLE TG_ZFIWRT0008
+       FOR ALL ENTRIES IN TG_J_1BNFLIN_NFW
+     WHERE ZNFW8~SEQ_LCTO EQ TG_J_1BNFLIN_NFW-REFKEY(10).
+
+    IF TG_ZFIWRT0008[] IS NOT INITIAL.
+
+      SELECT OPERACAO
+        FROM ZFIWRT0001 INTO TABLE TG_ZFIWRT0001
+        FOR ALL ENTRIES IN TG_ZFIWRT0008
+          WHERE OPERACAO = TG_ZFIWRT0008-OPERACAO
+        AND LM_CONTRI_UF = 'S'.
+
+      LOOP AT TG_ZFIWRT0008.
+        READ TABLE TG_ZFIWRT0001 WITH KEY OPERACAO = TG_ZFIWRT0008-OPERACAO.
+
+        IF SY-SUBRC NE 0.
+          DELETE TG_ZFIWRT0008.
+        ENDIF.
+      ENDLOOP.
+
+      IF TG_ZFIWRT0008[] IS NOT INITIAL.
+
+        SELECT *
+          FROM ZSDT0156 APPENDING TABLE TG_0156
+           FOR ALL ENTRIES IN TG_ZFIWRT0008
+         WHERE SEQ_LCTO = TG_ZFIWRT0008-SEQ_LCTO.
+
+      ENDIF.
+    ENDIF.
+
+  ENDIF.
+
+
+  IF TG_0156[] IS NOT INITIAL.
+    SELECT *
+      FROM ZSDT0157 INTO TABLE TG_0157
+       FOR ALL ENTRIES IN TG_0156
+     WHERE OBJ_KEY EQ TG_0156-OBJ_KEY
+       AND TP_TRIB IN R_TP_TRIB.
+
+
+    TG_0156_AUX[] = TG_0156[].
+    DELETE TG_0156_AUX WHERE BELNR IS INITIAL.
+
+    IF TG_0156_AUX[] IS NOT INITIAL.
+      SELECT *
+        FROM BKPF INTO TABLE TG_BKPF
+         FOR ALL ENTRIES IN TG_0156_AUX
+       WHERE BUKRS EQ TG_0156_AUX-BUKRS
+         AND BELNR EQ TG_0156_AUX-BELNR.
+    ENDIF.
+
+  ENDIF.
+
+
+  SELECT *
+    FROM MAKT INTO CORRESPONDING FIELDS OF TABLE TG_MAKT
+     FOR ALL ENTRIES IN TG_J_1BNFLIN
+   WHERE MATNR EQ TG_J_1BNFLIN-MATNR
+     AND SPRAS EQ SY-LANGU.
+
+  SELECT *
+    FROM ZSDT0155 INTO TABLE TG_0155
+     FOR ALL ENTRIES IN TG_J_1BNFDOC
+   WHERE BUKRS = TG_J_1BNFDOC-BUKRS.
+
+  DELETE TG_0155 WHERE CANCELADO EQ ABAP_TRUE.
+
+  SELECT *
+    FROM J_1BNFNAD INTO CORRESPONDING FIELDS OF TABLE TG_J_1BNFNAD
+     FOR ALL ENTRIES IN TG_J_1BNFDOC
+  WHERE DOCNUM = TG_J_1BNFDOC-DOCNUM.
+
+
+  LOOP AT TG_0156  ASSIGNING FIELD-SYMBOL(<FS_0156>) WHERE BELNR IS NOT INITIAL.
+
+    READ TABLE TG_BKPF WITH KEY BUKRS = <FS_0156>-BUKRS
+                                BELNR = <FS_0156>-BELNR.
+
+    IF ( SY-SUBRC EQ 0 ) AND ( TG_BKPF-STBLG IS NOT INITIAL ).
+
+      UPDATE ZSDT0156 SET ESTORNADO = ABAP_TRUE
+                          STBLG     = TG_BKPF-STBLG
+       WHERE VBELN    = <FS_0156>-VBELN
+         AND POSNR    = <FS_0156>-POSNR
+         AND SEQ_LCTO = <FS_0156>-SEQ_LCTO
+         AND ITMNUM   = <FS_0156>-ITMNUM
+         AND SEQ      = <FS_0156>-SEQ.
+
+      <FS_0156>-ESTORNADO = ABAP_TRUE.
+      <FS_0156>-STBLG     = TG_BKPF-STBLG.
+    ENDIF.
+  ENDLOOP.
+
+
+ENDFORM.
+
+FORM F_INICIAR_VARIAVEIS .
+
+  DATA: WL_BUTXT(50)   TYPE C,
+        WL_NAME(50)    TYPE C,
+
+        WL_HEADER(500) TYPE C,
+        WL_BUKRS(100)  TYPE C,
+        WL_BRANCH(50)  TYPE C,
+        WL_DT_MOV(50)  TYPE C,
+        WL_SAFRA(50)   TYPE C,
+
+        WL_LAYOUT1(20) VALUE 'Empresa:',
+        WL_LAYOUT2(20) VALUE 'Centro:',
+        WL_LAYOUT3(20) VALUE 'Período: ',
+        WL_LAYOUT4(20) VALUE 'Safra:',
+
+        WL_DATA        VALUE '.',
+        WL_SPACE       VALUE '-',
+        WL_ATE(3)      VALUE 'até'.
+
+  CLEAR: T_TOP[].
+
+  SELECT SINGLE BUTXT
+    FROM T001 INTO WL_BUTXT
+   WHERE BUKRS EQ P_BUKRS.
+
+  CONCATENATE WL_LAYOUT1 P_BUKRS WL_SPACE WL_BUTXT  INTO WL_BUKRS SEPARATED BY SPACE.  "Empresa
+  "CONCATENATE WL_LAYOUT2 P_BRANCH+3(4) WL_SPACE WL_NAME  INTO WL_BRANCH SEPARATED BY SPACE. "Filial
+
+  IF P_DOCDAT-LOW  IS NOT INITIAL AND
+     P_DOCDAT-HIGH IS NOT INITIAL.
+    CONCATENATE WL_LAYOUT3 P_DOCDAT-LOW  WL_ATE P_DOCDAT-HIGH INTO  WL_DT_MOV SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_DOCDAT-LOW  IS NOT INITIAL AND
+     P_DOCDAT-HIGH IS INITIAL.
+    CONCATENATE WL_LAYOUT3 P_DOCDAT-LOW INTO  WL_DT_MOV SEPARATED BY SPACE.
+  ENDIF.
+
+  WL_HEADER = 'Demonstrativo'.
+  IF P_ZFES  EQ 'X'. " 01 - Fethab Soja
+    CONCATENATE WL_HEADER '- FETHAB SOJA'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZFESA EQ 'X'.  " 02 - Fethab Soja Adicional
+    CONCATENATE WL_HEADER '- FETHAB SOJA ADICIONAL'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZFEA  EQ 'X'. " 03 - Fethab Algodão
+    CONCATENATE WL_HEADER '- FETHAB ALGODÃO'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZFEAA EQ 'X'. " 04 - Fethab Algodão Adicional
+    CONCATENATE WL_HEADER '- FETHAB ALGODÃO ADICIONAL'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZIMA  EQ 'X'. " 05 - IMA
+    CONCATENATE WL_HEADER '- IMA'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZIAGRO  EQ 'X'. " 06 - IAGRO
+    CONCATENATE WL_HEADER '- IAGRO'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  IF P_ZFEMI  EQ 'X'. " 07 - Fethab Milho
+    CONCATENATE WL_HEADER '- FETHAB MILHO'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+  IF P_ZFETTO  EQ 'X'. " 07 - Fethab Milho
+    CONCATENATE WL_HEADER '- FET TOCANTINS'
+           INTO WL_HEADER SEPARATED BY SPACE.
+  ENDIF.
+
+  PERFORM F_CONSTRUIR_CABECALHO USING 'H' WL_HEADER.
+
+  PERFORM F_CONSTRUIR_CABECALHO USING 'S' WL_BUKRS.
+  "PERFORM F_CONSTRUIR_CABECALHO USING 'S' WL_BRANCH.
+
+  IF WL_DT_MOV IS NOT INITIAL.
+    PERFORM F_CONSTRUIR_CABECALHO USING 'S' WL_DT_MOV.
+  ENDIF.
+
+  V_REPORT = SY-REPID.
+  GS_VARIANT-REPORT      = SY-REPID.
+
+
+ENDFORM.
+
+FORM F_PROCESSAR_DADOS.
+
+  DATA: WL_J_CABE TYPE J_1BINDOC,
+        WA_LIN_E  TYPE J_1BNFLIN,
+        WA_LIN_I  TYPE J_1BINLIN,
+        TMP_TAX   LIKE J_1BNFSTX OCCURS 10 WITH HEADER LINE.
+
+  DATA: PRODUTO    TYPE C LENGTH 40,
+        TIPO_ORDEM TYPE VBRK-FKART,
+        DOCNUM     TYPE J_1BNFDOC-DOCNUM,
+        WA_LFA1    TYPE LFA1.
+
+  SORT: TG_J_1BNFDOC        BY DOCDAT DOCNUM NFENUM,
+        TG_J_1BNFE_ACTIVE   BY DOCNUM,
+        TG_J_1BNFNAD        BY DOCNUM PARVW,
+        TG_J_1BNFLIN        BY DOCNUM,
+        TG_VBRK             BY VBELN,
+        TG_0155             BY BUKRS AUART,
+        TG_ZFIWRT0008       BY SEQ_LCTO.
+
+  LOOP AT TG_J_1BNFDOC.
+
+    CLEAR: WA_SAIDA_0100, WA_LFA1, WL_J_CABE, TG_J_1BNFE_ACTIVE, TG_J_1BNFNAD.
+
+    LOOP AT TG_J_1BNFLIN WHERE DOCNUM = TG_J_1BNFDOC-DOCNUM.
+
+      CLEAR: WA_LIN_E, WA_LIN_I, TMP_TAX[], TG_VBRK, TG_ZFIWRT0008.
+
+      CASE TG_J_1BNFLIN-REFTYP.
+        WHEN 'BI'.
+          READ TABLE TG_VBRK WITH KEY VBELN  = TG_J_1BNFLIN-REFKEY(10) BINARY SEARCH.
+          CHECK SY-SUBRC = 0.
+
+          WA_SAIDA_0100-WERKS          = TG_VBRK-WERKS.
+
+          "Check se tipo de Ordem está parametrizado
+          DATA(_PAR_OK_SD) = ''.
+          LOOP AT TG_0155 WHERE BUKRS = TG_J_1BNFDOC-BUKRS
+                            AND AUART = TG_VBRK-FKART
+                            AND ( MATNR EQ TG_J_1BNFLIN-MATNR  OR
+                                  MATKL EQ TG_J_1BNFLIN-MATKL ).
+            _PAR_OK_SD = 'X'.
+            EXIT.
+          ENDLOOP.
+          CHECK _PAR_OK_SD IS NOT INITIAL.
+
+        WHEN 'ZW'.
+          READ TABLE TG_ZFIWRT0008 WITH KEY SEQ_LCTO  = TG_J_1BNFLIN-REFKEY(10) BINARY SEARCH.
+          CHECK SY-SUBRC = 0.
+
+          WA_SAIDA_0100-WERKS          = TG_ZFIWRT0008-BRANCH.
+
+          "Check se tipo de Ordem está parametrizado
+          DATA(_PAR_OK) = ''.
+          LOOP AT TG_0155 WHERE BUKRS = TG_J_1BNFDOC-BUKRS
+                            AND LANC_ZNFW = ABAP_TRUE
+                            AND ( MATNR EQ TG_J_1BNFLIN-MATNR  OR
+                                  MATKL EQ TG_J_1BNFLIN-MATKL ).
+            _PAR_OK = 'X'.
+            EXIT.
+          ENDLOOP.
+
+          CHECK _PAR_OK IS NOT INITIAL.
+
+        WHEN OTHERS.
+          CONTINUE.
+      ENDCASE.
+
+      READ TABLE TG_J_1BNFE_ACTIVE WITH KEY DOCNUM = TG_J_1BNFDOC-DOCNUM BINARY SEARCH.
+
+      READ TABLE TG_J_1BNFNAD WITH KEY DOCNUM = TG_J_1BNFDOC-DOCNUM
+                                       PARVW  = 'Z1'
+                                       BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        "Cliente / Fornecedor / Local
+        CALL FUNCTION 'Z_PARCEIRO_INFO'
+          EXPORTING
+            P_PARCEIRO   = TG_J_1BNFNAD-PARID
+            P_PARTYPE    = TG_J_1BNFNAD-PARTYP
+          CHANGING
+            WA_INFO_PART = WA_LFA1.
+      ENDIF.
+
+
+      MOVE-CORRESPONDING TG_J_1BNFLIN TO WA_LIN_E.
+
+      LOOP AT TG_J_1BNFSTX WHERE DOCNUM EQ TG_J_1BNFLIN-DOCNUM
+                             AND ITMNUM EQ TG_J_1BNFLIN-ITMNUM.
+        TMP_TAX = TG_J_1BNFSTX.
+        APPEND TMP_TAX.
+      ENDLOOP.
+
+      CALL FUNCTION 'J_1B_NF_VALUE_DETERMINATION_I'
+        EXPORTING
+          NF_ITEM                 = WA_LIN_E
+          IV_NF_DIRECTION         = TG_J_1BNFDOC-DIRECT
+          IX_POSTED_WITH_XML_DATA = TG_J_1BNFDOC-AUTOM_INCOMING
+        IMPORTING
+          EXT_ITEM                = WA_LIN_I
+        TABLES
+          NF_ITEM_TAX             = TMP_TAX.
+
+      CHECK SY-SUBRC EQ 0.
+
+      WA_SAIDA_0100-BUKRS          = TG_J_1BNFDOC-BUKRS.
+      WA_SAIDA_0100-CFOP           = TG_J_1BNFLIN-CFOP(4).
+      WA_SAIDA_0100-NFENUM         = TG_J_1BNFDOC-NFENUM.
+      WA_SAIDA_0100-DOCNUM         = TG_J_1BNFDOC-DOCNUM.
+      WA_SAIDA_0100-SERIES         = TG_J_1BNFDOC-SERIES.
+
+      IF P_AMB IS INITIAL.
+        IF ( P_ATV IS NOT INITIAL ) AND ( TG_J_1BNFDOC-CANDAT IS NOT INITIAL ).
+          CONTINUE.
+        ENDIF.
+
+        IF ( P_EST IS NOT INITIAL ) AND ( TG_J_1BNFDOC-CANDAT IS INITIAL ).
+          CONTINUE.
+        ENDIF.
+      ENDIF.
+
+      IF TG_J_1BNFDOC-CANDAT IS INITIAL.
+        WA_SAIDA_0100-ST_SAP = 'Ativa'.
+      ELSE.
+        WA_SAIDA_0100-ST_SAP = 'Estornada'.
+      ENDIF.
+
+      CASE TG_J_1BNFE_ACTIVE-DOCSTA.
+        WHEN '1'.
+          WA_SAIDA_0100-ST_NFE = 'Autorizada'.
+          IF TG_J_1BNFE_ACTIVE-CANCEL IS NOT INITIAL.
+            WA_SAIDA_0100-ST_NFE = 'Cancelada'.
+          ENDIF.
+        WHEN '2'.
+          WA_SAIDA_0100-ST_NFE = 'Recusada'.
+        WHEN '3'.
+          WA_SAIDA_0100-ST_NFE = 'Rejeitada'.
+        WHEN OTHERS.
+          WA_SAIDA_0100-ST_NFE = 'Não enviado'.
+      ENDCASE.
+
+      WA_SAIDA_0100-MEINS          = TG_J_1BNFLIN-MEINS.
+      WA_SAIDA_0100-MATNR          = TG_J_1BNFLIN-MATNR.
+      READ TABLE TG_MAKT WITH KEY MATNR = TG_J_1BNFLIN-MATNR.
+      IF SY-SUBRC = 0.
+        WA_SAIDA_0100-MAKTX        = TG_MAKT-MAKTX.
+      ENDIF.
+      WA_SAIDA_0100-PSTDAT         = TG_J_1BNFDOC-PSTDAT.
+      WA_SAIDA_0100-DOCDAT         = TG_J_1BNFDOC-DOCDAT.
+      WA_SAIDA_0100-MENGE          = TG_J_1BNFLIN-MENGE.
+
+      IF WA_LIN_I-NFTOT > 0 .
+        WA_SAIDA_0100-NETWRT = WA_LIN_I-NFTOT.
+      ELSEIF WA_LIN_I-NFNETT > 0 .
+        WA_SAIDA_0100-NETWRT = WA_LIN_I-NFNETT.
+      ELSEIF WA_LIN_I-NETWRT > 0.
+        WA_SAIDA_0100-NETWRT = WA_LIN_I-NETWRT.
+      ENDIF.
+
+      WA_SAIDA_0100-ORDEM          = TG_VBRK-AUBEL.
+      WA_SAIDA_0100-REMESSA        = TG_VBRK-VGBEL.
+      WA_SAIDA_0100-FATURA         = TG_VBRK-VBELN.
+      WA_SAIDA_0100-SEQ_LCTO       = TG_ZFIWRT0008-SEQ_LCTO.
+      WA_SAIDA_0100-POSNR          = TG_J_1BNFLIN-REFITM.
+      WA_SAIDA_0100-NBM            = TG_J_1BNFLIN-NBM.
+
+      IF WA_LFA1 IS NOT INITIAL.
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+          EXPORTING
+            INPUT  = WA_LFA1-LIFNR
+          IMPORTING
+            OUTPUT = WA_SAIDA_0100-DS_TERMINAL.
+
+        CONCATENATE WA_SAIDA_0100-DS_TERMINAL '-' WA_LFA1-NAME1
+               INTO WA_SAIDA_0100-DS_TERMINAL SEPARATED BY SPACE.
+
+        WA_SAIDA_0100-UF             = WA_LFA1-REGIO.
+
+
+
+      ENDIF.
+      " BUSCA A UF DA FILIAL
+      SELECT SINGLE REGIO
+        INTO WA_SAIDA_0100-UF_FILIAL
+      FROM T001W
+      WHERE REGIO IN P_REGIO "USER STORY 159931 - MMSILVA - 17.12.2024
+      AND   WERKS = WA_SAIDA_0100-WERKS
+      AND   SPRAS = SY-LANGU.
+
+      "USER STORY 159931 - MMSILVA - 17.12.2024 - Inicio
+      IF ( WA_SAIDA_0100-UF_FILIAL IS INITIAL ).
+        CONTINUE.
+      ENDIF.
+      "USER STORY 159931 - MMSILVA - 17.12.2024 - Fim
+
+      WA_SAIDA_0100-TIPO_ORDEM     = TG_VBRK-FKART.
+
+      CASE TG_J_1BNFLIN-REFTYP.
+        WHEN 'BI'.
+          LOOP AT TG_0156 WHERE VBELN   EQ TG_J_1BNFLIN-REFKEY(10)
+                            AND POSNR   EQ TG_J_1BNFLIN-REFITM
+                            AND BELNR   IS NOT INITIAL
+                            AND STBLG   IS INITIAL   "Não foi estornado
+                            AND ANULADO IS INITIAL.  "Não foi anulado
+
+            WA_SAIDA_0100-OBJ_KEY = TG_0156-OBJ_KEY.
+
+            IF WA_SAIDA_0100-BELNR IS INITIAL.
+              WA_SAIDA_0100-BELNR = TG_0156-BELNR.
+            ELSE.
+              CONCATENATE WA_SAIDA_0100-BELNR '-' TG_0156-BELNR
+                     INTO WA_SAIDA_0100-BELNR SEPARATED BY SPACE.
+            ENDIF.
+
+            LOOP AT TG_0157 WHERE OBJ_KEY = TG_0156-OBJ_KEY.
+              ADD TG_0157-DMBTR TO  WA_SAIDA_0100-VLR_TRIBUTO.
+            ENDLOOP.
+
+            WA_SAIDA_0100-ST_CTB = ICON_LED_GREEN.
+          ENDLOOP.
+        WHEN 'ZW'.
+          LOOP AT TG_0156 WHERE SEQ_LCTO   EQ TG_J_1BNFLIN-REFKEY(10)
+                           AND ITMNUM   EQ TG_J_1BNFLIN-ITMNUM
+                           AND BELNR   IS NOT INITIAL
+                           AND STBLG   IS INITIAL   "Não foi estornado
+                           AND ANULADO IS INITIAL.  "Não foi anulado
+
+            WA_SAIDA_0100-OBJ_KEY = TG_0156-OBJ_KEY.
+
+            IF WA_SAIDA_0100-BELNR IS INITIAL.
+              WA_SAIDA_0100-BELNR = TG_0156-BELNR.
+            ELSE.
+              CONCATENATE WA_SAIDA_0100-BELNR '-' TG_0156-BELNR
+                     INTO WA_SAIDA_0100-BELNR SEPARATED BY SPACE.
+            ENDIF.
+
+            LOOP AT TG_0157 WHERE OBJ_KEY = TG_0156-OBJ_KEY.
+              ADD TG_0157-DMBTR TO  WA_SAIDA_0100-VLR_TRIBUTO.
+            ENDLOOP.
+
+            WA_SAIDA_0100-ST_CTB = ICON_LED_GREEN.
+            "WA_SAIDA_0100-SEQ_LCTO = TG_0156-SEQ_LCTO.
+            WA_SAIDA_0100-ITMNUM = TG_0156-ITMNUM.
+          ENDLOOP.
+      ENDCASE.
+
+
+
+      IF WA_SAIDA_0100-OBJ_KEY IS INITIAL.
+        LOOP AT TG_0156 WHERE VBELN   EQ TG_J_1BNFLIN-REFKEY(10)
+                          AND POSNR   EQ TG_J_1BNFLIN-REFITM
+                          AND BELNR   IS INITIAL   "Não tem doc. ctb
+                          AND STBLG   IS INITIAL   "Não foi estornado
+                          AND ANULADO IS INITIAL   "Não foi anulado
+                          AND ST_PROC EQ '2'.      "Com erro
+
+          WA_SAIDA_0100-OBJ_KEY = TG_0156-OBJ_KEY.
+          WA_SAIDA_0100-ST_CTB = ICON_LED_RED.
+        ENDLOOP.
+      ENDIF.
+
+      CONCATENATE TG_J_1BNFE_ACTIVE-REGIO
+                  TG_J_1BNFE_ACTIVE-NFYEAR
+                  TG_J_1BNFE_ACTIVE-NFMONTH
+                  TG_J_1BNFE_ACTIVE-STCD1
+                  TG_J_1BNFE_ACTIVE-MODEL
+                  TG_J_1BNFE_ACTIVE-SERIE
+                  TG_J_1BNFE_ACTIVE-NFNUM9
+                  TG_J_1BNFE_ACTIVE-DOCNUM9
+                  TG_J_1BNFE_ACTIVE-CDV INTO WA_SAIDA_0100-CHAVE_NFE.
+
+      APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+
+    ENDLOOP.
+  ENDLOOP.
+
+
+ENDFORM.
+
+FORM F_IMPRIMIR_DADOS.
+
+  PERFORM F_DEFINIR_EVENTOS.
+  PERFORM F_MONTAR_LAYOUT.
+
+  GS_LAYOUT-BOX_FIELDNAME = 'SEL'.
+  GS_LAYOUT-COLWIDTH_OPTIMIZE = 'X'.
+
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+    EXPORTING
+      I_CALLBACK_PROGRAM       = V_REPORT
+      IS_VARIANT               = GS_VARIANT_C
+      I_CALLBACK_USER_COMMAND  = 'USER_COMMAND'
+      I_CALLBACK_PF_STATUS_SET = 'PF_STATUS_SET'
+      IT_FIELDCAT              = IT_ESTRUTURA[]
+      IS_LAYOUT                = GS_LAYOUT
+      I_SAVE                   = 'X'
+      IT_EVENTS                = EVENTS
+      IS_PRINT                 = T_PRINT
+    TABLES
+      T_OUTTAB                 = IT_SAIDA_0100.
+
+ENDFORM.
+
+FORM F_DEFINIR_EVENTOS .
+  PERFORM F_CARREGAR_EVENTOS USING: SLIS_EV_TOP_OF_PAGE   'XTOP_OF_PAGE',
+                                    SLIS_EV_PF_STATUS_SET 'PF_STATUS_SET'.
+
+ENDFORM.                    " DEFINIR_EVENTOS
+
+FORM F_CARREGAR_EVENTOS USING NAME FORM.
+  CLEAR XS_EVENTS.
+  XS_EVENTS-NAME = NAME.
+  XS_EVENTS-FORM = FORM.
+  APPEND XS_EVENTS TO EVENTS.
+ENDFORM.                    " F_CARREGAR_EVENTOS
+
+FORM F_MONTAR_ESTRUTURA USING VALUE(P_COL_POS)       TYPE I
+                              VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                              VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                              VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                              VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                              VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                              VALUE(P_OUTPUTLEN)
+                              VALUE(P_HOTSPOT)
+                              VALUE(P_JUST).
+
+  CLEAR WA_ESTRUTURA.
+
+  WA_ESTRUTURA-FIELDNAME     = P_FIELD.
+  WA_ESTRUTURA-TABNAME       = P_TABNAME.
+  WA_ESTRUTURA-REF_TABNAME   = P_REF_TABNAME.
+  WA_ESTRUTURA-REF_FIELDNAME = P_REF_FIELDNAME.
+  WA_ESTRUTURA-KEY           = ' '.
+  WA_ESTRUTURA-KEY_SEL       = 'X'.
+  WA_ESTRUTURA-COL_POS       = P_COL_POS.
+  WA_ESTRUTURA-NO_OUT        = ' '.
+  WA_ESTRUTURA-SELTEXT_S     = P_SCRTEXT_L.
+  WA_ESTRUTURA-SELTEXT_M     = P_SCRTEXT_L.
+  WA_ESTRUTURA-SELTEXT_L     = P_SCRTEXT_L.
+  WA_ESTRUTURA-HOTSPOT       = P_HOTSPOT.
+  WA_ESTRUTURA-JUST          = P_JUST.
+  WA_ESTRUTURA-DDICTXT       = 'L'.
+  WA_ESTRUTURA-OUTPUTLEN     = P_OUTPUTLEN.
+
+
+  IF P_SCRTEXT_L IS NOT INITIAL.
+    WA_ESTRUTURA-REPTEXT_DDIC  = P_SCRTEXT_L.
+  ENDIF.
+
+  TRANSLATE  WA_ESTRUTURA-FIELDNAME     TO UPPER CASE.
+  TRANSLATE  WA_ESTRUTURA-TABNAME       TO UPPER CASE.
+  TRANSLATE  WA_ESTRUTURA-REF_TABNAME   TO UPPER CASE.
+  TRANSLATE  WA_ESTRUTURA-REF_FIELDNAME TO UPPER CASE.
+
+  APPEND WA_ESTRUTURA TO IT_ESTRUTURA.
+
+ENDFORM.                    " MONTAR_ESTRUTURA
+
+FORM F_MONTAR_LAYOUT .
+
+  REFRESH:  IT_ESTRUTURA[].
+
+  PERFORM F_MONTAR_ESTRUTURA USING:
+
+    01  ''            ''         'IT_SAIDA_0100' 'WERKS'         'Filial'              '08' ''    '',
+    02  ''            ''         'IT_SAIDA_0100' 'UF_FILIAL'     'UF Filial'           '08' ''    '',
+    03  ''            ''         'IT_SAIDA_0100' 'CFOP'          'CFOP'                '06' ''    '',
+    04  'J_1BNFDOC'   'NFENUM'   'IT_SAIDA_0100' 'NFENUM'        'Nr.Nota'             '10' ''    '',
+    05  ''            ''         'IT_SAIDA_0100' 'DOCNUM'        'Nr.Documento'        '12' 'X'   '',
+    06  ''            ''         'IT_SAIDA_0100' 'SERIES'        'Série'               '06' ''    '',
+    07  ''            ''         'IT_SAIDA_0100' 'ST_SAP'        'St.SAP'              '10' ''    '',
+    08  ''            ''         'IT_SAIDA_0100' 'ST_NFE'        'St.NF-e'             '10' ''    '',
+    09  ''            ''         'IT_SAIDA_0100' 'MEINS'         'Unid.'               '06' ''    '',
+    10  'MARA'        'MATNR'    'IT_SAIDA_0100' 'MATNR'         'Material'            '10' ''    '',
+    11  ''            ''         'IT_SAIDA_0100' 'MAKTX'         'Ds.Material'         '20' ''    '',
+    12  ''            ''         'IT_SAIDA_0100' 'PSTDAT'        'Dt.Lcto'             '10' ''    '',
+    13  ''            ''         'IT_SAIDA_0100' 'DOCDAT'        'Dt.Docto'            '10' ''    '',
+    14  ''            ''         'IT_SAIDA_0100' 'MENGE'         'Quantidade'          '13' ''    '',
+    15  ''            ''         'IT_SAIDA_0100' 'NETWRT'        'Valor NF.'           '13' ''    '',
+    16  ''            ''         'IT_SAIDA_0100' 'VLR_TRIBUTO'   'Vlr.Trib.'           '13' ''    '',
+    17  'VBAK'        'VBELN'    'IT_SAIDA_0100' 'ORDEM'         'Ordem'               '10' 'X'   '',
+    18  'LIKP'        'VBELN'    'IT_SAIDA_0100' 'REMESSA'       'Remessa'             '10' 'X'   '',
+    19  'VBRK'        'VBELN'    'IT_SAIDA_0100' 'FATURA'        'Fatura'              '10' 'X'   '',
+    20  'ZFIWRT0008'  'SEQ_LCTO' 'IT_SAIDA_0100' 'SEQ_LCTO'      'Lanc. ZNFW'          '10' 'X'    '',
+    21  'BKPF'        'BELNR'    'IT_SAIDA_0100' 'BELNR'         'Doc.Ctb.'            '10' 'X'   '',
+    22  ''            ''         'IT_SAIDA_0100' 'ST_CTB'        'St.Ctb.'             '06' 'X'   'C',
+    23  ''            ''         'IT_SAIDA_0100' 'NBM'           'NCM'                 '12' ''    '',
+    24  ''            ''         'IT_SAIDA_0100' 'CHAVE_NFE'     'Chave NF-e'          '44' ''    '',
+    25  ''            ''         'IT_SAIDA_0100' 'DS_TERMINAL'   'Terminal'            '25' ''    '',
+    26  ''            ''         'IT_SAIDA_0100' 'UF'            'UF'                  '04' ''    ''.
+
+ENDFORM.                    " MONTAR_LAYOUT
+
+FORM USER_COMMAND  USING R_UCOMM      LIKE SY-UCOMM
+                         RS_SELFIELD TYPE SLIS_SELFIELD.
+
+  DATA: REF1           TYPE REF TO CL_GUI_ALV_GRID,
+        WL_ZOB_RET_MSG TYPE ZOB_RET_MSG.
+
+  CASE R_UCOMM.
+    WHEN: '&IC1'.
+
+      CASE RS_SELFIELD-FIELDNAME.
+        WHEN 'ST_CTB'.
+
+          CLEAR: TG_ZIB_ERR[], WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-OBJ_KEY IS NOT INITIAL ).
+
+          SELECT *
+            FROM ZIB_CONTABIL_ERR AS A INTO CORRESPONDING FIELDS OF TABLE TG_ZIB_ERR
+           WHERE OBJ_KEY  EQ WA_SAIDA_0100-OBJ_KEY.
+
+          CHECK TG_ZIB_ERR[] IS NOT INITIAL.
+
+          PERFORM F_MONTAR_LAYOUT_LOG_ERRO.
+
+          CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+            EXPORTING
+              IT_FIELDCAT           = IT_ESTRUTURA[]
+              I_SAVE                = 'A'
+              I_SCREEN_START_COLUMN = 3
+              I_SCREEN_START_LINE   = 3
+              I_SCREEN_END_COLUMN   = 100
+              I_SCREEN_END_LINE     = 13
+            TABLES
+              T_OUTTAB              = TG_ZIB_ERR.
+
+        WHEN 'DOCNUM'.
+          CLEAR: WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-DOCNUM IS NOT INITIAL ).
+
+          SET PARAMETER ID 'JEF' FIELD WA_SAIDA_0100-DOCNUM.
+          CALL TRANSACTION 'J1B3N' AND SKIP FIRST SCREEN.
+        WHEN 'BELNR'.
+          CLEAR: WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-BELNR IS NOT INITIAL ).
+
+          SET PARAMETER ID 'BLN' FIELD WA_SAIDA_0100-BELNR.
+          SET PARAMETER ID 'BUK' FIELD WA_SAIDA_0100-BUKRS.
+          SET PARAMETER ID 'GJR' FIELD WA_SAIDA_0100-PSTDAT(4).
+          CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+        WHEN 'ORDEM'.
+          CLEAR: WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-ORDEM IS NOT INITIAL ).
+
+          SET PARAMETER ID 'AUN' FIELD WA_SAIDA_0100-ORDEM.
+          CALL TRANSACTION 'VA03'  WITH AUTHORITY-CHECK AND SKIP FIRST SCREEN .
+        WHEN 'REMESSA'.
+          CLEAR: WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-REMESSA IS NOT INITIAL ).
+
+          SET PARAMETER ID 'VL'  FIELD WA_SAIDA_0100-REMESSA.
+          CALL TRANSACTION 'VL03N' AND SKIP FIRST SCREEN.
+        WHEN 'FATURA'.
+          CLEAR: WA_SAIDA_0100.
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-FATURA IS NOT INITIAL ).
+
+          SET PARAMETER ID 'VF'   FIELD WA_SAIDA_0100-FATURA.
+          CALL TRANSACTION 'VF03' AND SKIP FIRST SCREEN.
+        WHEN 'SEQ_LCTO'.
+
+          READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX RS_SELFIELD-TABINDEX.
+
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-SEQ_LCTO IS NOT INITIAL ).
+
+          SET PARAMETER ID 'SEQ' FIELD  WA_SAIDA_0100-SEQ_LCTO.
+          CALL TRANSACTION 'ZNFW0002' AND SKIP FIRST SCREEN.
+      ENDCASE.
+  ENDCASE.
+
+  IF REF1 IS INITIAL.
+    CALL FUNCTION 'GET_GLOBALS_FROM_SLVC_FULLSCR' "<-- Gets the reference of ALV grid object from REUSE functions
+      IMPORTING
+        E_GRID = REF1.
+  ENDIF.
+
+  CHECK REF1 IS NOT INITIAL.
+
+  CASE R_UCOMM.
+    WHEN 'REPROC_MOV'.
+      CLEAR: VG_DTINI_PROC.
+      CALL SCREEN 0102 STARTING AT 30 05 ENDING AT 01 01.
+
+      PERFORM F_SELECIONAR_DADOS.
+      PERFORM F_PROCESSAR_DADOS.
+
+    WHEN 'ATUALIZAR'.
+      PERFORM F_SELECIONAR_DADOS.
+      PERFORM F_PROCESSAR_DADOS.
+    WHEN 'ANULAR_LCT'.
+      CALL METHOD REF1->GET_SELECTED_ROWS
+        IMPORTING
+          ET_INDEX_ROWS = IT_SEL_ROWS.
+
+      IF IT_SEL_ROWS[] IS INITIAL.
+        MESSAGE 'Nenhuma linha selecionada!' TYPE 'S'.
+        EXIT.
+      ENDIF.
+
+      LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+        READ TABLE IT_SAIDA_0100 ASSIGNING FIELD-SYMBOL(<FS_OUT>) INDEX WA_SEL_ROWS-INDEX.
+
+        CHECK ( SY-SUBRC = 0 ) AND ( <FS_OUT>-FATURA IS NOT INITIAL ) AND ( <FS_OUT>-POSNR IS NOT INITIAL  ).
+
+        SELECT *
+          FROM ZSDT0156 INTO TABLE @DATA(_TG_0156)
+         WHERE VBELN = @<FS_OUT>-FATURA
+           AND POSNR = @<FS_OUT>-POSNR
+          AND SEQ_LCTO = @<FS_OUT>-SEQ_LCTO
+          AND ITMNUM = @<FS_OUT>-ITMNUM.
+
+        LOOP AT _TG_0156 INTO DATA(_WL_0156) WHERE VBELN   EQ <FS_OUT>-FATURA
+                                               AND POSNR   EQ <FS_OUT>-POSNR
+                                               AND SEQ_LCTO EQ <FS_OUT>-SEQ_LCTO
+                                               AND ITMNUM EQ <FS_OUT>-ITMNUM
+                                               AND BELNR   IS INITIAL   "Não tem doc. contábil
+                                               AND STBLG   IS INITIAL   "Não foi estornado
+                                               AND ANULADO IS INITIAL   "Não foi anulado
+                                               AND ST_PROC = '2'.       "Com Erro
+
+          _WL_0156-ANULADO = 'X'.
+          MODIFY ZSDT0156 FROM _WL_0156.
+        ENDLOOP.
+      ENDLOOP.
+
+      PERFORM F_SELECIONAR_DADOS.
+      PERFORM F_PROCESSAR_DADOS.
+
+      MESSAGE 'Lançamento(s) com erro rejeitado(s) com sucesso!' TYPE 'S'.
+
+  ENDCASE.
+
+  CALL METHOD REF1->REFRESH_TABLE_DISPLAY.
+
+
+
+ENDFORM.                    "user_command
+
+FORM XTOP_OF_PAGE.                                          "#EC CALLED
+
+  CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
+    EXPORTING
+      IT_LIST_COMMENTARY = T_TOP
+      I_LOGO             = ''.
+
+ENDFORM. "X_TOP_PAGE
+
+FORM F_CONSTRUIR_CABECALHO USING TYP TEXT.
+
+  DATA: LS_LINE TYPE SLIS_LISTHEADER.
+  LS_LINE-TYP = TYP.
+  LS_LINE-INFO = TEXT.
+  APPEND LS_LINE TO T_TOP.
+
+ENDFORM.                    " F_CONSTRUIR_CABECALHO
+
+FORM PF_STATUS_SET USING UT_EXTAB TYPE SLIS_T_EXTAB.        "#EC CALLED
+
+  "DELETE UT_EXTAB WHERE FCODE = '&REFRESH'.
+
+  SET PF-STATUS '0100'. "EXCLUDING UT_EXTAB.
+
+  "SET PF-STATUS 'STANDARD_FULLSCREEN' OF PROGRAM 'SAPLKKBL'.
+
+
+ENDFORM.
+
+FORM F_MONTAR_LAYOUT_LOG_ERRO.
+  REFRESH IT_ESTRUTURA.
+  PERFORM F_MONTAR_ESTRUTURA USING:
+     01  ''   ''            'TG_ZIB_ERR' 'DT_ATUALIZACAO'     'Data'         '10' '' '' ,
+     02  ''   ''            'TG_ZIB_ERR' 'HR_ATUALIZACAO'     'Hora'         '10' '' '' ,
+     03  ''   ''            'TG_ZIB_ERR' 'TYPE'               'Tipo'         '10' '' '' ,
+     04  ''   ''            'TG_ZIB_ERR' 'NUM'                'Num.'         '10' '' '' ,
+     05  ''   ''            'TG_ZIB_ERR' 'MESSAGE'            'Mensagem'     '10' '' '' ,
+     06  ''   ''            'TG_ZIB_ERR' 'MESSAGE_V1'         'Msg.1'        '10' '' '' ,
+     07  ''   ''            'TG_ZIB_ERR' 'MESSAGE_V2'         'Msg.2'        '10' '' '' ,
+     08  ''   ''            'TG_ZIB_ERR' 'MESSAGE_V3'         'Msg.3'        '10' '' '' ,
+     09  ''   ''            'TG_ZIB_ERR' 'MESSAGE_V4'         'Msg.4'        '10' '' '' .
+
+ENDFORM.                    " MONTAR_LAYOUT

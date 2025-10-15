@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_IMAGE_HELPER</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Image helper</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_GRAPHIC_EXIST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Check graphic exist</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONVERT_JPEG_TO_BMP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Convert JPEG image to BMP format (lower quality)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_INTERNAL_URL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Create internal temporary URL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_INTERNAL_URL2</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Create internal temporary URL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Display image in container screen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ENCODE_PHOTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Encode image from binary to base64 format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PHOTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Get image in base64 format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PHOTO_URL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Get image url from repository</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SAVE_BITMAP_BDS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Save bitmap in abap photo container</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SAVE_PHOTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Save image into repository</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_JPEG_TO_BMP</CMPNAME>
+     <SCONAME>BMP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ITS: categoria de tabela para fonte MIME</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_JPEG_TO_BMP</CMPNAME>
+     <SCONAME>IMAGE_BIN_STR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Binary image xstring</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_JPEG_TO_BMP</CMPNAME>
+     <SCONAME>IMAGE_BIN_TABLE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Binary image table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>CUSTOM_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Container instance</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>CUSTOM_NAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Container name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>PICTURE_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Picture instance</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>URL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Url</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCODE_PHOTO</CMPNAME>
+     <SCONAME>IMAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de X255 campos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHOTO_URL</CMPNAME>
+     <SCONAME>NAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>SAP Smart Forms: nome de objeto</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_PHOTO</CMPNAME>
+     <SCONAME>ID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID text</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_PHOTO</CMPNAME>
+     <SCONAME>IMAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Binary Image</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_PHOTO</CMPNAME>
+     <SCONAME>NAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_PHOTO</CMPNAME>
+     <SCONAME>OBJECT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Object text</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

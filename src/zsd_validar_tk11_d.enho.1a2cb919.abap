@@ -1,0 +1,9 @@
+"Name: \PR:SAPMV130\FO:CUA_SETZEN\SE:BEGIN\EI
+ENHANCEMENT 0 ZSD_VALIDAR_TK11_D.
+*
+*-CS2024000498-24.06.2024-#143679-JT-inicio
+PERFORM f_set_pfstatus(saplv15e) TABLES ausschluss
+                                  USING cs_para2.
+*-CS2024000498-24.06.2024-#143679-JT-fim
+*
+ENDENHANCEMENT.

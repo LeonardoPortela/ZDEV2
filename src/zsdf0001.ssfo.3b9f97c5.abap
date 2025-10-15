@@ -1,0 +1,24 @@
+READ TABLE t_retlote INTO s_cabec INDEX 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

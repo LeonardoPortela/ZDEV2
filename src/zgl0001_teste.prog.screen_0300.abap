@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE cria_objetos_300.
+  MODULE status_0300.
+
+PROCESS AFTER INPUT.
+  MODULE user_command_0300.

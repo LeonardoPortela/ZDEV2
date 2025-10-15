@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Não permitir utilizar edição pela TK13 caso não tenha acesso</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>ENHO</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>OIC_SAPMV13A</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>ENHO</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>OIC_SAPMV13A</ORG_MAIN_NAME>
+    <PROGRAMNAME>OIC_SAPMV13A</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>OIC_SAPMV13A</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:SAPMV13A\EX:MV13AO0C_01\EN:OIC_SAPMV13A\SE:END\EI</FULL_NAME>
+     <PARENT_FULL_NAME>\PR:SAPMV13A\EX:MV13AO0C_01</PARENT_FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <FILES>
+    <item>
+     <NAME>\PR:SAPMV13A\EX:MV13AO0C_01\EN:OIC_SAPMV13A\SE:END\EI</NAME>
+     <FILE>df1ddafc</FILE>
+    </item>
+   </FILES>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>58912E0043B96026E1000000AC0C0CD0</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>58912E0043B96026E1000000AC0C0CD0</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>090</LENGTH>
+       <TEXT>Não permitir utilizar edição pela TK13 caso não tenha acesso</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>Z_BLOQUEIO_MODIFICACAO_TK13</OBJ_NAME>
+     <CONCEPT>58912E0043B96026E1000000AC0C0CD0</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

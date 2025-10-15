@@ -1,0 +1,11 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="INVENTORY-TRANSACTION" type="ddic:ZCOUPA_SERVICOS_RETORNO"/>
+  <tt:template>
+    <inventory-transaction>
+      <id tt:value-ref="INVENTORY-TRANSACTION.ID"/>
+      <exported tt:value-ref="INVENTORY-TRANSACTION.EXPORTED"/>
+    </inventory-transaction>
+  </tt:template>
+</tt:transform>

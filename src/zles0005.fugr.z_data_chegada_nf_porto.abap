@@ -1,0 +1,388 @@
+FUNCTION Z_DATA_CHEGADA_NF_PORTO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_BUKRS) TYPE  BUKRS
+*"     REFERENCE(I_BRANCH) TYPE  J_1BBRANC_
+*"     REFERENCE(I_PARID) TYPE  J_1BPARID
+*"     REFERENCE(I_DOCDAT) TYPE  J_1BDOCDAT
+*"     REFERENCE(I_NFENUM) TYPE  J_1BNFNUM9 OPTIONAL
+*"     REFERENCE(I_NFNUM) TYPE  J_1BNFNUMB OPTIONAL
+*"     REFERENCE(I_SERIES) TYPE  J_1BSERIES
+*"     REFERENCE(I_NF_TERCEIRO) TYPE  CHAR01
+*"  EXPORTING
+*"     REFERENCE(E_DT_CHEGADA) TYPE  ZDTACHEGADA
+*"----------------------------------------------------------------------
+
+  RANGES: R_SERIE FOR ZLEST0041-SERIE.
+
+  DATA: V_ID_REFERENCIA_ROM TYPE ZSDT0001-ID_REFERENCIA,
+        V_NFNUM_ROM         TYPE ZSDT0001-NFNUM,
+        V_SERIE             TYPE ZLEST0041-SERIE,
+        V_NR_NF             TYPE J_1BNFNUM9.
+
+  CLEAR: E_DT_CHEGADA, R_SERIE[].
+
+  CHECK ( I_BUKRS  IS NOT INITIAL ) AND
+        ( I_BRANCH IS NOT INITIAL ) AND
+        ( I_PARID  IS NOT INITIAL ) AND
+        ( I_DOCDAT IS NOT INITIAL ).
+
+  CHECK ( I_NFENUM IS NOT INITIAL ) OR ( I_NFNUM IS NOT INITIAL ).
+
+  IF I_NF_TERCEIRO IS NOT INITIAL.
+
+    CLEAR: V_SERIE.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = I_SERIES
+      IMPORTING
+        OUTPUT = V_SERIE.
+
+    R_SERIE-SIGN   = 'I'.
+    R_SERIE-OPTION = 'EQ'.
+    R_SERIE-LOW    = V_SERIE.
+    APPEND R_SERIE.
+
+    CLEAR: V_SERIE.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      EXPORTING
+        INPUT  = I_SERIES
+      IMPORTING
+        OUTPUT = V_SERIE.
+
+    R_SERIE-SIGN   = 'I'.
+    R_SERIE-OPTION = 'EQ'.
+    R_SERIE-LOW    = V_SERIE.
+    APPEND R_SERIE.
+
+    IF I_NFENUM IS NOT INITIAL.
+      V_NFNUM_ROM  = I_NFENUM.
+    ELSEIF I_NFNUM IS NOT INITIAL.
+      V_NFNUM_ROM  = I_NFNUM.
+    ENDIF.
+
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = V_NFNUM_ROM
+      IMPORTING
+        OUTPUT = V_NFNUM_ROM.
+
+    "Registro é gerado na ZLEST0087 quando não encontra NF propria relacionada ao NF de 3º no momento da importação do arquivo
+    SELECT SINGLE *
+      FROM ZLEST0087 INTO @DATA(WA_ZLEST0087)
+     WHERE IDINTER  EQ 'L1'
+       AND TP_MOVI  EQ 'E'
+       AND TP_REG   EQ '30'
+       AND BUKRS    EQ @I_BUKRS
+       AND WERKS    EQ @I_BRANCH
+       AND NR_NF    EQ @I_NFENUM
+       AND SERIE    IN @R_SERIE
+       AND LIFNR    EQ @I_PARID
+       AND STATUS   EQ ''.
+
+    IF SY-SUBRC = 0.
+
+      E_DT_CHEGADA = WA_ZLEST0087-DT_DESCARGA.
+      RETURN.
+
+    ELSE.
+
+      IF I_NFENUM IS NOT INITIAL.
+        V_NR_NF = I_NFENUM.
+      ELSE.
+        V_NR_NF = I_NFNUM.
+      ENDIF.
+
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = V_NR_NF
+        IMPORTING
+          OUTPUT = V_NR_NF.
+
+      SELECT SINGLE *
+        FROM ZLEST0041 INTO @DATA(WA_ZLEST0041)
+       WHERE CENTRO_COMPRADOR  EQ @I_BRANCH
+         AND NR_NF             EQ @V_NR_NF
+         AND COD_CLIENTE       EQ @I_PARID
+         AND SERIE             IN @R_SERIE.
+
+      IF SY-SUBRC IS INITIAL.
+
+        "Buscar Descarga Ferro
+        SELECT SINGLE *
+          FROM ZLEST0019 INTO @DATA(_WL_0019)
+         WHERE BUKRS   = @I_BUKRS
+           AND BRANCH  = @WA_ZLEST0041-CENTRO_COMPRADOR
+           AND NFENUM  = @WA_ZLEST0041-NR_NF_PROPRIA
+           AND IDINTER = 'L3'
+           AND TP_MOVI = 'E'
+           AND TP_REG  = '30'.
+
+        IF SY-SUBRC = 0.
+          E_DT_CHEGADA = _WL_0019-DTACHEGADA.
+          RETURN.
+        ENDIF.
+
+        "Buscar descarga Rodo
+        SELECT SINGLE *
+          FROM ZLEST0019 INTO _WL_0019
+         WHERE BUKRS   = I_BUKRS
+           AND BRANCH  = WA_ZLEST0041-CENTRO_COMPRADOR
+           AND NFENUM  = WA_ZLEST0041-NR_NF_PROPRIA
+           AND IDINTER = 'L1'
+           AND TP_MOVI = 'E'
+           AND TP_REG  = '30'.
+
+        IF ( SY-SUBRC = 0 ).
+
+          SELECT SINGLE *
+            FROM ZLEST0039 INTO @DATA(_WL_0039)
+           WHERE BUKRS  EQ @_WL_0019-BUKRS
+             AND WERKS  EQ @_WL_0019-BRANCH
+             AND NFENUM EQ @_WL_0019-NFENUM.
+
+          IF SY-SUBRC IS INITIAL.
+
+            DATA: WA_ULTIMA_CARTA  TYPE ZCARTA_CORRECAO.
+
+            SELECT * INTO TABLE @DATA(IT_CARTA_CORRECAO)
+              FROM ZCARTA_CORRECAO AS CA
+             WHERE DOCNUM           EQ @_WL_0039-DOCNUM
+               AND NOVO_LOC_ENTREGA NE @SPACE.
+
+            LOOP AT IT_CARTA_CORRECAO INTO DATA(WA_CARTA_CORRECAO).
+              IF WA_ULTIMA_CARTA IS INITIAL.
+                WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+              ELSEIF WA_ULTIMA_CARTA-ID_CC LT WA_CARTA_CORRECAO-ID_CC.
+                WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+              ENDIF.
+            ENDLOOP.
+
+            "Possui Carta de Correção
+            IF WA_ULTIMA_CARTA IS NOT INITIAL.
+              "Novo Local de Entrega (Transbordo)
+              IF WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA NE _WL_0039-PONTOTRANSB AND WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA IS NOT INITIAL.
+                _WL_0039-PONTOTRANSB = WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA.
+              ENDIF.
+            ENDIF.
+
+            CLEAR: WA_ULTIMA_CARTA, IT_CARTA_CORRECAO[], IT_CARTA_CORRECAO.
+
+            SELECT * INTO TABLE IT_CARTA_CORRECAO
+              FROM ZCARTA_CORRECAO AS CA
+             WHERE DOCNUM        EQ _WL_0039-DOCNUM
+               AND NOVO_TERMINAL NE SPACE.
+
+            LOOP AT IT_CARTA_CORRECAO INTO WA_CARTA_CORRECAO.
+              IF WA_ULTIMA_CARTA IS INITIAL.
+                WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+              ELSEIF WA_ULTIMA_CARTA-ID_CC LT WA_CARTA_CORRECAO-ID_CC.
+                WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+              ENDIF.
+            ENDLOOP.
+
+            "Possui Carta de Correção
+            IF WA_ULTIMA_CARTA IS NOT INITIAL.
+              "Novo Terminal (parceiro Z1)
+              IF WA_ULTIMA_CARTA-NOVO_TERMINAL NE _WL_0039-PONTOENTREGA AND WA_ULTIMA_CARTA-NOVO_TERMINAL IS NOT INITIAL.
+                _WL_0039-PONTOENTREGA = WA_ULTIMA_CARTA-NOVO_TERMINAL.
+              ENDIF.
+            ENDIF.
+
+            IF _WL_0039-PONTOTRANSB IS NOT INITIAL.
+
+              IF _WL_0039-PONTOTRANSB	NE _WL_0039-TRANSB_EFETIVO AND _WL_0039-TRANSB_EFETIVO IS NOT INITIAL.
+                _WL_0039-PONTOTRANSB = _WL_0039-TRANSB_EFETIVO.
+              ENDIF.
+
+              SELECT SINGLE * INTO @DATA(WA_KNA1)
+                FROM KNA1
+               WHERE KUNNR EQ @_WL_0039-PONTOTRANSB.
+
+              SELECT SINGLE * INTO @DATA(WA_LFA1)
+                FROM LFA1
+               WHERE LIFNR EQ @_WL_0039-PONTOENTREGA.
+
+              IF NOT ( WA_KNA1-STCD1 EQ WA_LFA1-STCD1 AND
+                       WA_KNA1-STCD2 EQ WA_LFA1-STCD2 AND
+                       WA_KNA1-STCD3 EQ WA_LFA1-STCD3 ).
+                DATA(LC_TEM_TRANSBORDO) = 'X'.
+              ELSE.
+                LC_TEM_TRANSBORDO = ABAP_FALSE.
+              ENDIF.
+
+            ELSE.
+              LC_TEM_TRANSBORDO = ABAP_FALSE.
+            ENDIF.
+
+            "Só condiderar data de chegada se não tem transbordo
+            IF ( LC_TEM_TRANSBORDO EQ ABAP_FALSE ).
+              E_DT_CHEGADA = _WL_0019-DTACHEGADA.
+              RETURN.
+            ENDIF.
+
+          ENDIF.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+    "Busca Romaneio Entrada.
+    SELECT SINGLE *
+      FROM ZSDT0001 INTO @DATA(_WL_0001_E)
+     WHERE BUKRS        EQ @I_BUKRS
+       AND BRANCH       EQ @I_BRANCH
+       AND PARID        EQ @I_PARID
+       AND DOCDAT       EQ @I_DOCDAT
+       AND NFNUM        EQ @V_NFNUM_ROM
+       AND TP_MOVIMENTO EQ 'E'.
+
+    CHECK SY-SUBRC = 0.
+
+    "Buscar Romaneio Saida
+    V_ID_REFERENCIA_ROM = _WL_0001_E-NR_ROMANEIO.
+
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      EXPORTING
+        INPUT  = V_ID_REFERENCIA_ROM
+      IMPORTING
+        OUTPUT = V_ID_REFERENCIA_ROM.
+
+    SELECT SINGLE *
+      FROM ZSDT0001 INTO @DATA(_WL_0001_S)
+     WHERE BUKRS          EQ @_WL_0001_E-BUKRS
+       AND BRANCH         EQ @_WL_0001_E-BRANCH
+       AND ID_REFERENCIA  EQ @V_ID_REFERENCIA_ROM
+       AND TP_MOVIMENTO   EQ 'S'
+       AND NR_SAFRA       EQ @_WL_0001_E-NR_SAFRA.
+
+    CHECK ( SY-SUBRC = 0 ) AND ( _WL_0001_S-NRO_NF_PROD IS NOT INITIAL ).
+
+    SELECT SINGLE *
+      FROM J_1BNFDOC INTO @DATA(_WL_DOC_S)
+     WHERE DOCNUM = @_WL_0001_S-NRO_NF_PROD.
+
+    CHECK ( SY-SUBRC = 0 ) AND
+          ( _WL_DOC_S-CANDAT IS INITIAL ) AND
+          ( _WL_DOC_S-CANCEL IS INITIAL ) AND
+          ( _WL_DOC_S-NFENUM IS NOT INITIAL ).
+
+    "Buscar Descarga Ferro
+    SELECT SINGLE *
+      FROM ZLEST0019 INTO _WL_0019
+     WHERE BUKRS   = _WL_DOC_S-BUKRS
+       AND BRANCH  = _WL_DOC_S-BRANCH
+       AND NFENUM  = _WL_DOC_S-NFENUM
+       AND IDINTER = 'L3'
+       AND TP_MOVI = 'E'
+       AND TP_REG  = '30'.
+
+    IF SY-SUBRC = 0.
+      E_DT_CHEGADA = _WL_0019-DTACHEGADA.
+      RETURN.
+    ENDIF.
+
+    "Buscar descarga Rodo
+    SELECT SINGLE *
+      FROM ZLEST0019 INTO _WL_0019
+     WHERE BUKRS   = _WL_DOC_S-BUKRS
+       AND BRANCH  = _WL_DOC_S-BRANCH
+       AND NFENUM  = _WL_DOC_S-NFENUM
+       AND IDINTER = 'L1'
+       AND TP_MOVI = 'E'
+       AND TP_REG  = '30'.
+
+    IF ( SY-SUBRC = 0 ).
+      SELECT SINGLE *
+        FROM ZLEST0039 INTO _WL_0039
+       WHERE BUKRS  EQ _WL_0019-BUKRS
+         AND WERKS  EQ _WL_0019-BRANCH
+         AND NFENUM EQ _WL_0019-NFENUM.
+
+      IF ( SY-SUBRC IS INITIAL ).
+
+        CLEAR: WA_ULTIMA_CARTA, IT_CARTA_CORRECAO[], IT_CARTA_CORRECAO.
+
+        SELECT * INTO TABLE IT_CARTA_CORRECAO
+          FROM ZCARTA_CORRECAO AS CA
+         WHERE DOCNUM           EQ _WL_0039-DOCNUM
+           AND NOVO_LOC_ENTREGA NE SPACE.
+
+        LOOP AT IT_CARTA_CORRECAO INTO WA_CARTA_CORRECAO.
+          IF WA_ULTIMA_CARTA IS INITIAL.
+            WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+          ELSEIF WA_ULTIMA_CARTA-ID_CC LT WA_CARTA_CORRECAO-ID_CC.
+            WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+          ENDIF.
+        ENDLOOP.
+
+        "Possui Carta de Correção
+        IF WA_ULTIMA_CARTA IS NOT INITIAL.
+          "Novo Local de Entrega (Transbordo)
+          IF WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA NE _WL_0039-PONTOTRANSB AND WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA IS NOT INITIAL.
+            _WL_0039-PONTOTRANSB = WA_ULTIMA_CARTA-NOVO_LOC_ENTREGA.
+          ENDIF.
+        ENDIF.
+
+        CLEAR: WA_ULTIMA_CARTA, IT_CARTA_CORRECAO[], IT_CARTA_CORRECAO.
+
+        SELECT * INTO TABLE IT_CARTA_CORRECAO
+          FROM ZCARTA_CORRECAO AS CA
+         WHERE DOCNUM        EQ _WL_0039-DOCNUM
+           AND NOVO_TERMINAL NE SPACE.
+
+        LOOP AT IT_CARTA_CORRECAO INTO WA_CARTA_CORRECAO.
+          IF WA_ULTIMA_CARTA IS INITIAL.
+            WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+          ELSEIF WA_ULTIMA_CARTA-ID_CC LT WA_CARTA_CORRECAO-ID_CC.
+            WA_ULTIMA_CARTA = WA_CARTA_CORRECAO.
+          ENDIF.
+        ENDLOOP.
+
+        "Possui Carta de Correção
+        IF WA_ULTIMA_CARTA IS NOT INITIAL.
+          "Novo Terminal (parceiro Z1)
+          IF WA_ULTIMA_CARTA-NOVO_TERMINAL NE _WL_0039-PONTOENTREGA AND WA_ULTIMA_CARTA-NOVO_TERMINAL IS NOT INITIAL.
+            _WL_0039-PONTOENTREGA = WA_ULTIMA_CARTA-NOVO_TERMINAL.
+          ENDIF.
+        ENDIF.
+
+        IF _WL_0039-PONTOTRANSB IS NOT INITIAL.
+
+          IF _WL_0039-PONTOTRANSB	NE _WL_0039-TRANSB_EFETIVO AND _WL_0039-TRANSB_EFETIVO IS NOT INITIAL.
+            _WL_0039-PONTOTRANSB = _WL_0039-TRANSB_EFETIVO.
+          ENDIF.
+
+          CLEAR: WA_KNA1, WA_LFA1.
+
+          SELECT SINGLE * INTO WA_KNA1
+            FROM KNA1
+           WHERE KUNNR EQ _WL_0039-PONTOTRANSB.
+
+          SELECT SINGLE * INTO WA_LFA1
+            FROM LFA1
+           WHERE LIFNR EQ _WL_0039-PONTOENTREGA.
+
+          IF NOT ( WA_KNA1-STCD1 EQ WA_LFA1-STCD1 AND
+                   WA_KNA1-STCD2 EQ WA_LFA1-STCD2 AND
+                   WA_KNA1-STCD3 EQ WA_LFA1-STCD3 ).
+            LC_TEM_TRANSBORDO = 'X'.
+          ELSE.
+            LC_TEM_TRANSBORDO = ABAP_FALSE.
+          ENDIF.
+
+        ELSE.
+          LC_TEM_TRANSBORDO = ABAP_FALSE.
+        ENDIF.
+
+        "Só condiderar data de chegada se não tem transbordo
+        IF ( LC_TEM_TRANSBORDO EQ ABAP_FALSE ).
+          E_DT_CHEGADA = _WL_0019-DTACHEGADA.
+          RETURN.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+  ENDIF.
+
+ENDFUNCTION.

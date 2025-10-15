@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZPPT0002</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZPPT0002</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZPPT0002</TCODE>
+    <TTEXT>Usuários Permitem Estorno Algodão</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZPPT0002</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_SCMANT=0115;P_TITLE=Usuarios Permitem Estorno Algodao;P_POPUP=X;P_TI_01=Log de Modificacoes;P_ENDCOL=144;P_ENDLIN=018;P_STACOL=040;P_STALIN=003;P_STC_01=ZPPT0027_LOG_OUT;P_DB_01=ZPPT0027_LOG;P_DB_TAB=ZPPT0027;P_STCNAM=ZPPT0027_OUT;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,43 @@
+"Name: \PR:SAPMV13A\FO:ANFORDERUNGSBILD\SE:BEGIN\EI
+ENHANCEMENT 0 Z_TK11_MODIF.
+*
+  Data: WA_ZLEST0071       type ZLEST0071,
+        WA_ZLEST0071_ANT   type ZLEST0071.
+
+   LOOP AT XKONP.
+      clear WA_ZLEST0071_ant.
+      select single *
+        from ZLEST0071
+        into WA_ZLEST0071_ant
+      where KNUMH       = XKONP-knumh.
+
+      WA_ZLEST0071-KNUMH       = XKONP-knumh.
+      WA_ZLEST0071-DT_EVENTO   = sy-datum.
+      WA_ZLEST0071-HR_EVENTO   = sy-uzeit.
+      WA_ZLEST0071-ERNAM       = sy-uname.
+      if WA_ZLEST0071_ant is not INITIAL.
+        WA_ZLEST0071-KSCHL       = WA_ZLEST0071_ANT-KSCHL.
+        WA_ZLEST0071-DATAB       = XKONH-DATAB.
+        WA_ZLEST0071-DATBI       = XKONH-DATBI.
+        WA_ZLEST0071-SHTYP       = WA_ZLEST0071_ANT-SHTYP.
+        WA_ZLEST0071-MATNR       = WA_ZLEST0071_ANT-MATNR.
+        WA_ZLEST0071-TDLNR       = WA_ZLEST0071_ANT-TDLNR.
+      else.
+        WA_ZLEST0071-KSCHL       = RV13A-KSCHL.
+        WA_ZLEST0071-DATAB       = RV13A-DATAB.
+        WA_ZLEST0071-DATBI       = RV13A-DATBI.
+        WA_ZLEST0071-SHTYP       = KOMG-SHTYP.
+        WA_ZLEST0071-MATNR       = KOMG-MATNR.
+        WA_ZLEST0071-TDLNR       = KOMG-TDLNR.
+      endif.
+
+      WA_ZLEST0071-LZONEA      = KOMG-LZONEA.
+      WA_ZLEST0071-LZONEZ      = KOMG-LZONEZ.
+      WA_ZLEST0071-ROUTE       = KOMG-ROUTE.
+      WA_ZLEST0071-KBETR       = XKONP-KBETR.
+      WA_ZLEST0071-KONWA       = XKONP-KONWA.
+      WA_ZLEST0071-tcode       = sy-tcode.
+      modify ZLEST0071 from WA_ZLEST0071.
+      exit.
+   ENDLOOP.
+ENDENHANCEMENT.

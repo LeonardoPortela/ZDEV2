@@ -1,0 +1,26 @@
+IF WG_SAIDA-CREDITOS LT 0.
+  WG_SAIDA-CREDITOS = WG_SAIDA-CREDITOS * -1.
+ENDIF.
+
+WG_CREDITOS = WG_CREDITOS + ( WG_SAIDA-CREDITOS * 100 ).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,125 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZPMR0059_TOP
+*&---------------------------------------------------------------------*
+
+
+**Definições de tabelas.
+TABLES: CRHD, AUFK, AFIH, CRCO.
+
+TYPES: BEGIN OF Y_KAKO,
+         WERKS TYPE KAKO-WERKS,
+         KAPID TYPE KAKO-KAPID,
+         AZNOR TYPE KAKO-AZNOR,
+         BEGZT TYPE KAKO-BEGZT,
+         ENDZT TYPE KAKO-ENDZT,
+         NGRAD TYPE KAKO-NGRAD,
+         PAUSE TYPE KAKO-PAUSE,
+       END OF Y_KAKO.
+
+TYPES: BEGIN OF Y_CRCA,
+         OBJID TYPE CRCA-OBJID,
+         KAPID TYPE CRCA-KAPID,
+         OBJTY TYPE CRCA-OBJTY,
+       END OF Y_CRCA.
+
+TYPES: BEGIN OF Y_ARBPL,
+    WERKS TYPE CRHD-WERKS,
+    ARBPL TYPE CRHD-ARBPL,
+  END OF Y_ARBPL.
+*
+TYPES: BEGIN OF Y_CRCO,
+         OBJTY TYPE CRCO-OBJTY,
+         OBJID TYPE CRCO-OBJID,
+         KOSTL TYPE CRCO-KOSTL,
+       END OF Y_CRCO.
+
+TYPES: BEGIN OF Y_CRHD,
+         WERKS TYPE CRHD-WERKS,
+         OBJID TYPE CRHD-OBJID,
+         ARBPL TYPE CRHD-ARBPL,
+         KAPID TYPE CRHD-KAPID,
+         VERWE TYPE CRHD-VERWE,
+       END OF Y_CRHD.
+
+
+TYPES: BEGIN OF Y_REG_2,
+         ARBPL  TYPE CRHD-ARBPL,
+         WERKS  TYPE AFRU-WERKS,
+         KOSTL  TYPE AUFK-KOSTL,
+         KTEXT  TYPE CSKT-KTEXT,
+         ARBID  TYPE AFRU-ARBID,
+         HRSPER TYPE P DECIMALS 2,
+         HRSAPO TYPE P DECIMALS 2,
+         HRSDIS TYPE P DECIMALS 2,
+         TPLNR  TYPE VIAUFKST-TPLNR,
+       END OF Y_REG_2.
+
+***Declaração tabelas.
+DATA: GT_PLKO   TYPE TABLE OF PLKO,
+      IT_REG_2  TYPE TABLE OF Y_REG_2,
+      IT_KAKO   TYPE TABLE OF Y_KAKO,
+      IT_CRHD   TYPE TABLE OF Y_CRHD,
+*      IT_ARBPL TYPE TABLE OF Y_ARBPL,
+      IT_CRCO   TYPE TABLE OF Y_CRCO,
+      IT_CRCA   TYPE TABLE OF Y_CRCA,
+      T_REGIST  TYPE TABLE OF ZPME_REG,
+      WA_REG    TYPE ZPME_REG,
+      IT_ARBPL    TYPE TABLE OF Y_ARBPL WITH HEADER LINE,
+      T_BACKLOG TYPE TABLE OF ZPME_BACKLOG,
+      W_BACKLOG TYPE ZPME_BACKLOG.
+
+DATA: P_RESP, CHECK, P_ERRO(1).
+DATA: TI_BDCDATA TYPE STANDARD TABLE OF BDCDATA,
+      WA_BDCDATA LIKE LINE OF TI_BDCDATA.
+
+DATA: BEGIN OF IT_MSG OCCURS 0.
+        INCLUDE STRUCTURE BDCMSGCOLL.
+      DATA: END OF IT_MSG.
+
+
+" OCCURS DEFINE E DECLARA A ESTRUTURA, NO CASO A ESTRUTURA IJSTAT
+DATA: BEGIN OF IJSTAT OCCURS   0.
+        INCLUDE STRUCTURE JSTAT.
+      DATA: END OF IJSTAT.
+
+
+
+
+DATA: CLICKS TYPE SY-TABIX.
+
+**Declaração estutura ALV.
+DATA: OBJ_ALV_0110    TYPE REF TO CL_GUI_ALV_GRID,
+      OBJ_CUSTOM_0110 TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      WA_LAYOUT       TYPE LVC_S_LAYO,
+      WA_STABLE       TYPE LVC_S_STBL,
+      GT_EXC_BUTTON   TYPE UI_FUNCTIONS,
+      IT_SORT         TYPE LVC_T_SORT,
+      IT_FCAT         TYPE TABLE OF LVC_S_FCAT.
+
+CONSTANTS: LC_U(1) VALUE 'U',
+           LC_A(1) VALUE 'A',
+           LC_1(1) VALUE '1'.
+
+
+
+
+***Definições parametros pesquisa.
+SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: S_WERKS FOR CRHD-WERKS OBLIGATORY,
+                S_ARBPL FOR CRHD-ARBPL. "MATCHCODE OBJECT CRAM.
+*                S_VERWE FOR CRHD-VERWE DEFAULT '0005',
+*                S_KOSTL FOR CRCO-KOSTL.   "CENTRO DE CUSTO
+*                P_PLNAL FOR PLKO-PLNAL.
+SELECTION-SCREEN END OF BLOCK B1.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR S_ARBPL-LOW.
+  PERFORM ZF_SELECT_ARBPL.
+
+
+
+***Estrutura do relatório.
+* ( IWERK )   (ARBPL)   (HRSPER)             (char10)
+*   Centro   | C.Trb | T.hr capacidade   |  T.hr plan   |
+*            |       |                   |              |
+*            |       |                   |              |
+*            |       |                   |              |

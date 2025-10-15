@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Historico Padrão (note 108559)</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZ_1B_HISTORICAL_DESCRIPTIOTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZ_1B_HISTORICAL_DESCRIPTIO</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_1B_HISTORICAL_DESCRIPTION</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>LINE_BSEG</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>BSEG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>LINE_BKPF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>BKPF</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_SGTXT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR50</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>LINE_BSEG</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>LINE_BKPF</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_SGTXT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,59 @@
+class ZCL_CENTRO definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_CENTRO .
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL_CENTRO IMPLEMENTATION.
+
+
+  METHOD ZIF_CENTRO~GET_CENTRO_AFIXAR.
+
+    R_ZIF_CENTRO = ME.
+
+    CLEAR: R_WERKS_AFIXAR.
+
+    "Buscar Centro a Fixar
+    SELECT SINGLE * INTO @DATA(WA_AFIXAR)
+      FROM ZSDT_DEPARA_CEN
+     WHERE VKORG             EQ @I_BUKRS
+       AND CENTRO_REAL       EQ @I_BRANCH
+       AND TP_CENTRO_VIRTUAL EQ @ZCL_PEDIDO_COMPRA=>ST_TP_CENTRO_A_FIXAR.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_CARGA
+        EXPORTING
+          TEXTID    = VALUE #( MSGID = ZCX_CARGA=>ZCX_CENTRO_A_FIXAR-MSGID
+                               MSGNO = ZCX_CARGA=>ZCX_CENTRO_A_FIXAR-MSGNO
+                               ATTR1 = CONV #( I_BRANCH )
+                               ATTR2 = 'ZSDT0036' )
+          MSGID     = ZCX_CARGA=>ZCX_CENTRO_A_FIXAR-MSGID
+          MSGNO     = ZCX_CARGA=>ZCX_CENTRO_A_FIXAR-MSGNO
+          MSGTY     = 'E'
+          MSGV1     = CONV #( I_BRANCH )
+          MSGV2     = 'ZSDT0036'
+          TRANSACAO = 'ZSDT0036'.
+    ENDIF.
+
+    R_WERKS_AFIXAR = WA_AFIXAR-CENTROV_1.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_CENTRO~GET_INSTANCE.
+
+    IF ZIF_CENTRO~AT_IF_CENTRO IS NOT BOUND.
+      CREATE OBJECT ZIF_CENTRO~AT_IF_CENTRO TYPE ZCL_CENTRO.
+    ENDIF.
+    R_ZIF_CENTRO = ZIF_CENTRO~AT_IF_CENTRO.
+
+  ENDMETHOD.
+ENDCLASS.

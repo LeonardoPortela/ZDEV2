@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Importar dados apont ordem  PM x Mobile</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_PM_IMP_CRIAR_APONTTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_PM_IMP_CRIAR_APONT</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_IMPORTA_APONT_PM</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>_ZTPM_IMP_DO_APONT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZPMT0015_T</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>ONLINE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR1</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>RETORNO_APONT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTPM_TRANSA_EXP_APONT</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>_ZTPM_IMP_DO_APONT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ONLINE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RETORNO_APONT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

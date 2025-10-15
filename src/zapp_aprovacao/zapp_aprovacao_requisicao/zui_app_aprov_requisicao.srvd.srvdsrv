@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Def - Aprovação Requisição de Compra'
+define service ZUI_APP_APROV_REQUISICAO {
+  expose ZC_APROV_REQUISICAO as Requisicao;
+}

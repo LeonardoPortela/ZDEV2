@@ -1,0 +1,28 @@
+*&---------------------------------------------------------------------*
+*& Report  ZMMR116
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZMMR116 MESSAGE-ID ZNFE_DISTRI.
+
+TABLES: ZMMT0072.
+
+DATA: OBJ_DEPARTAMENTOS TYPE REF TO ZCL_MM_DEPARTAMENTO,
+      I_FILTRO          TYPE ZDE_ZMMT0072_FILTRO.
+
+SELECTION-SCREEN: BEGIN OF BLOCK BA WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: P0001 FOR ZMMT0072-CD_DEPARTAMENTO,
+                P0002 FOR ZMMT0072-DS_DEPARTAMENTO.
+SELECTION-SCREEN: END OF BLOCK BA.
+
+
+START-OF-SELECTION.
+
+  MOVE: P0001[] TO I_FILTRO-CD_DEPARTAMENTO,
+        P0002[] TO I_FILTRO-DS_DEPARTAMENTO.
+
+  CALL FUNCTION 'ZNFE_CADASTRO_DEPARTAMENTO'
+    EXPORTING
+      I_FILTRO = I_FILTRO.

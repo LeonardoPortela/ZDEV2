@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_STVI" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <STVI>
+    <SHDTVCIU>
+     <TCVARIANT>ZMB1A_01</TCVARIANT>
+     <TCODE>MB1A</TCODE>
+     <VERSION>2</VERSION>
+    </SHDTVCIU>
+    <SHDTTCIU>
+     <SHDTTCIU>
+      <LANGU>P</LANGU>
+      <TCVARIANT>ZMB1A_01</TCVARIANT>
+      <TCVTEXT>CONTA RAZAO OBRIG</TCVTEXT>
+     </SHDTTCIU>
+    </SHDTTCIU>
+    <SHDTVSVCIU>
+     <SHDTVSVCIU>
+      <TCVARIANT>ZMB1A_01</TCVARIANT>
+      <SCVARIANT>ZMB1A_01_0421</SCVARIANT>
+     </SHDTVSVCIU>
+    </SHDTVSVCIU>
+   </STVI>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZFIS75</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZFIS75</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZFIS75</TCODE>
+    <TTEXT>Lead Time passivo omisso</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZFIS75</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZFIT259;P_TITLE=Lead Time passivo omisso;P_SCMANT=0326;P_STCNAM=ZFIT259;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

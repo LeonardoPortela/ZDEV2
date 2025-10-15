@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZPERFIL</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagem para Perfil</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Função &amp;1 já está atribuída!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Função &amp;1 não está atribuída!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Não encontrado usuário SAP para o CPF &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Encontrado mais de um usuário SAP para o CPF &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Informar CFP ou o Nome do Usuário SAP!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Data e hora de Início deve ser mario que data e hora de fim!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Usuário &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Centro de Custo &amp;1 não permitido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Não encontrado Gestor para o Colaborador &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPERFIL</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Não foi informado um perfil para ser atribuído!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

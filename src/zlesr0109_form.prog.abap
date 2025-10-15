@@ -1,0 +1,1677 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZLESR0109_FORM
+*&---------------------------------------------------------------------*
+
+*&---------------------------------------------------------------------*
+*&  Include           ZMMR123_FORM
+*&---------------------------------------------------------------------*
+
+FORM F_REFRESH_ALV USING P_ALV.
+
+  CASE P_ALV.
+    WHEN '0100'.
+
+      CHECK OBJ_ALV_0100 IS NOT INITIAL.
+
+      CALL METHOD OBJ_ALV_0100->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    WHEN '0110'.
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_REFRESH_OBJETOS .
+
+  CLEAR: GS_LAYOUT,
+         GS_VARIANT.
+
+  REFRESH: IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_CRIAR_CATALOG USING P_SCREEN.
+
+  FREE: WA_FCAT, IT_FCAT.
+
+  CASE P_SCREEN.
+    WHEN '0100'.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+       01  'ZLEST0141'      'BUKRS'             'IT_SAIDA_0100'   'BUKRS'             'Empresa'             '08'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       02  'ZLEST0141'      'BUTXT'             'IT_SAIDA_0100'   'BUTXT'             'Nome Empresa'        '35'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       03  'ZLEST0141'      'DATA'              'IT_SAIDA_0100'   'DATA'              'Data Movto'          '10'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       04  'ZLEST0141'      'VLR_MOV'           'IT_SAIDA_0100'   'SALDO_INICIAL'     'Saldo Inicial'       '13'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       05  'ZLEST0141'      'VLR_MOV'           'IT_SAIDA_0100'   'VLR_MOV'           'Valor Movto'         '13'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       06  'ZLEST0141'      'VLR_SLD_DIARIO'    'IT_SAIDA_0100'   'VLR_SLD_DIARIO'    'Saldo Diario'        '13'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       07  'ZLEST0141'      'VLR_PREV_ADT'      'IT_SAIDA_0100'   'VLR_PREV_ADT'      'Vlr.Prev.Adto'       '13'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       08  'ZLEST0141'      'VLR_MOV'           'IT_SAIDA_0100'   'SALDO_FINAL'       'Saldo Final'         '13'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+
+       09  'ZLEST0141'      'VLR_PGTO_ADT'      'IT_SAIDA_0100'   'VLR_PGTO_ADT'      'Vlr Pagar Adto 60%'  '18'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       10  'ZLEST0141'      'VLR_MOV'           'IT_SAIDA_0100'   'SALDO_FRETE'       'Saldo Frete'         '13'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       11  'ZLEST0141'      'VLR_MOV'           'IT_SAIDA_0100'   'SALDO_OUTROS'      'Outros'              '13'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       12  'ZLEST0141'      'VLR_PGTO_ADT_TOT'  'IT_SAIDA_0100'   'VLR_PGTO_ADT_TOT'  'Vlr.Pagar(Adto)Tot.' '19'   ' '    ''  ' ' ' ' ' ' ' ' '' .
+
+      IF P_G_ADT IS NOT INITIAL.
+        PERFORM F_ESTRUTURA_ALV USING:
+
+         13  ''               ''                  'IT_SAIDA_0100'   'GER_ADT'         'Gerar Adto'          '10'   ' '    ''  ' ' 'C' 'X' ' ' '' .
+
+      ENDIF.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+       14  'ZLEST0141'      'DATA'              'IT_SAIDA_0100'   'ZFBDT'             'Dt.Vcto'             '10'   ' '    ''  ' ' ' ' ' ' ' ' '' ,
+       15  'ZLEST0141'      'LOTE'              'IT_SAIDA_0100'   'LOTE'              'Lote'                '06'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       16  'ZLEST0141'      'DOC_LCTO'          'IT_SAIDA_0100'   'DOC_LCTO'          'Doc.Lcto'            '10'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       17  'ZLEST0141'      'BELNR'             'IT_SAIDA_0100'   'BELNR'             'Doc.Contábil'        '12'   ' '    ''  ' ' ' ' 'X' ' ' '' ,
+       18  'ZLEST0141'      'USUARIO'           'IT_SAIDA_0100'   'USUARIO'           'Usuario'             '10'   ' '    ''  ' ' ' ' ' ' ' ' '' .
+
+    WHEN '0110'.
+
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_ESTRUTURA_ALV USING VALUE(P_COL_POS)       TYPE I
+                           VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                           VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                           VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                           VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                           VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                           VALUE(P_OUTPUTLEN)
+                           VALUE(P_EDIT)
+                           VALUE(P_SUM)
+                           VALUE(P_EMPHASIZE)
+                           VALUE(P_JUST)
+                           VALUE(P_HOTSPOT)
+                           VALUE(P_F4)
+                           VALUE(P_CHECK).
+
+  CLEAR WA_FCAT.
+
+  WA_FCAT-FIELDNAME   = P_FIELD.
+  WA_FCAT-TABNAME     = P_TABNAME.
+  WA_FCAT-REF_TABLE   = P_REF_TABNAME.
+  WA_FCAT-REF_FIELD   = P_REF_FIELDNAME.
+  WA_FCAT-KEY         = ' '.
+  WA_FCAT-EDIT        = P_EDIT.
+  WA_FCAT-COL_POS     = P_COL_POS.
+  WA_FCAT-OUTPUTLEN   = P_OUTPUTLEN.
+  WA_FCAT-NO_OUT      = ' '.
+  WA_FCAT-DO_SUM      = P_SUM.
+  WA_FCAT-REPTEXT     = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_S   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_M   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_L   = P_SCRTEXT_L.
+  WA_FCAT-EMPHASIZE   = P_EMPHASIZE.
+  WA_FCAT-STYLE       =
+  WA_FCAT-JUST        = P_JUST.
+  WA_FCAT-HOTSPOT     = P_HOTSPOT.
+  WA_FCAT-F4AVAILABL  = P_F4.
+  WA_FCAT-CHECKBOX    = P_CHECK.
+
+  APPEND WA_FCAT TO IT_FCAT.
+
+ENDFORM.                    " ESTRUTURA_ALV
+
+FORM F_EXCLUDE_FCODE USING P_SCREEN.
+
+  APPEND CL_GUI_ALV_GRID=>MC_FC_REFRESH           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW      TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_CUT           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE         TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_CHECK             TO IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_LIMPA_VARIAVEIS .
+
+  CLEAR: WA_SAIDA_0100,
+         IT_SAIDA_0100[],
+         TG_0140[],
+         TG_0140_B[],
+         TG_0141[],
+         VG_NOT_FOUND.
+
+ENDFORM.
+
+FORM F_SELECIONAR_DADOS .
+
+  DATA: VAR_VISAO TYPE ZDE_VISAO_ZLES0145.
+
+  PERFORM F_LIMPA_VARIAVEIS.
+
+  CASE ABAP_TRUE.
+    WHEN P_G_ADT. "Geração Adiantamento
+      VAR_VISAO = '1'.
+    WHEN P_C_ADT. "Relatório Consulta
+      VAR_VISAO = '2'.
+  ENDCASE.
+
+
+  "Check de permissão de visão
+  IF VAR_VISAO NE '2'.
+
+    AUTHORITY-CHECK OBJECT 'ZLES0145'
+      ID 'ZVS_000004' FIELD VAR_VISAO.
+
+    IF SY-SUBRC <> 0.
+
+      VG_NOT_FOUND = 'X'.
+
+      SELECT SINGLE *
+        FROM USER_ADDRP INTO @DATA(WL_USER)
+       WHERE BNAME = @SY-UNAME.
+
+      IF ( SY-SUBRC = 0 ) AND ( WL_USER-NAME_FIRST IS NOT INITIAL ).
+        MESSAGE | { WL_USER-NAME_FIRST }, seu perfil está sem acesso ao tipo de visão selecionada! | TYPE 'S'.
+      ELSE.
+        MESSAGE | Perfil do usuário sem acesso ao tipo de visão! | TYPE 'S'.
+      ENDIF.
+
+      EXIT.
+    ENDIF.
+
+  ENDIF.
+
+  IF P_BUKRS[] IS INITIAL.
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Empresa é um campo obrigatório!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_DATA[] IS INITIAL.
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Período é um campo obrigatório!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF ( P_SD_INI IS NOT INITIAL ) AND ( P_DATA-HIGH IS NOT INITIAL ).
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Informe somente uma data!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_BUKRS-LOW IS INITIAL .
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Empresa não informada!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_DATA-LOW IS INITIAL .
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Periodo não informado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_LIFNR-LOW IS INITIAL .
+    VG_NOT_FOUND = 'X'.
+    MESSAGE 'Fornecedor não encontrado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF ( P_SD_INI IS NOT INITIAL ). "Gerar Lançamento Saldo Inicial
+
+    SELECT SINGLE *
+      FROM ZLEST0141 INTO @DATA(WL_0141)
+     WHERE BUKRS        =  @P_BUKRS-LOW
+       "AND LIFNR        =  @P_LIFNR-LOW
+       "AND DATA         >= @P_DATA-LOW
+       AND VLR_PGTO_ADT_TOT NE 0.
+
+    IF SY-SUBRC = 0.
+      VG_NOT_FOUND = 'X'.
+      MESSAGE 'Já existe lançamentos iniciais para essa Empresa/Fornecedor!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+    CLEAR: TG_0141.
+    TG_0141-BUKRS           = P_BUKRS-LOW.
+    TG_0141-LIFNR           = P_LIFNR-LOW.
+    TG_0141-DATA            = P_DATA-LOW.
+    TG_0141-DATA_REG        = SY-DATUM.
+    TG_0141-HORA_REG        = SY-UZEIT.
+    APPEND TG_0141.
+
+  ELSE.
+    SELECT *
+      FROM ZLEST0141 INTO CORRESPONDING FIELDS OF TABLE TG_0141
+     WHERE BUKRS IN P_BUKRS
+       AND DATA  IN P_DATA.
+
+    DELETE TG_0141 WHERE DT_ADTO IS NOT INITIAL. "Lançamentos em dias não uteis
+
+    SELECT *
+          FROM ZLEST0141 INTO CORRESPONDING FIELDS OF TABLE TG_0141_B
+         WHERE BUKRS IN P_BUKRS
+           AND DATA  IN P_DATA
+                 AND DT_ADTO = 00000000.
+
+    SELECT * FROM ZLEST0195
+      INTO TABLE TG_ZLEST0195.
+
+    IF TG_0141[] IS INITIAL.
+      VG_NOT_FOUND = 'X'.
+      MESSAGE 'Nenhum movimento encontrado!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+  ENDIF.
+
+  SELECT *
+    FROM T001 INTO CORRESPONDING FIELDS OF TABLE TG_T001
+     FOR ALL ENTRIES IN TG_0141
+   WHERE BUKRS = TG_0141-BUKRS.
+
+  SELECT *
+    FROM BSIK INTO CORRESPONDING FIELDS OF TABLE TG_BSIK
+     FOR ALL ENTRIES IN TG_0141
+   WHERE BUKRS = TG_0141-BUKRS
+     AND BELNR = TG_0141-BELNR.
+
+  SELECT *
+   FROM BSAK INTO CORRESPONDING FIELDS OF TABLE TG_BSAK
+    FOR ALL ENTRIES IN TG_0141
+  WHERE BUKRS = TG_0141-BUKRS
+    AND BELNR = TG_0141-BELNR.
+
+
+  SELECT *
+    FROM ZLEST0140 INTO CORRESPONDING FIELDS OF TABLE TG_0140
+     FOR ALL ENTRIES IN TG_0141
+   WHERE BUKRS = TG_0141-BUKRS
+    AND DATA  = TG_0141-DATA.
+
+  SELECT *
+    FROM ZLEST0141_RESUMO INTO CORRESPONDING FIELDS OF TABLE TG_0141_SLD_FRE
+   WHERE BUKRS          IN P_BUKRS
+     AND DT_SALDO_FRETE IN P_DATA.
+
+  IF TG_0141_SLD_FRE[] IS NOT INITIAL.
+    SELECT *
+      FROM T001 APPENDING CORRESPONDING FIELDS OF TABLE TG_T001
+       FOR ALL ENTRIES IN TG_0141_SLD_FRE
+     WHERE BUKRS = TG_0141_SLD_FRE-BUKRS.
+
+    SELECT *
+      FROM ZLEST0140 APPENDING CORRESPONDING FIELDS OF TABLE TG_0140
+        FOR ALL ENTRIES IN TG_0141_SLD_FRE
+     WHERE BUKRS = TG_0141_SLD_FRE-BUKRS
+       AND DATA  = TG_0141_SLD_FRE-DT_SALDO_FRETE.
+
+    SELECT *
+    FROM ZLEST0140 APPENDING CORRESPONDING FIELDS OF TABLE TG_0140_B
+    WHERE BUKRS IN P_BUKRS
+    AND DATA  IN P_DATA.
+
+  ENDIF.
+
+  TG_0141_SLD_FRE_GRP[] = TG_0141_SLD_FRE[].
+
+  SORT TG_0141_SLD_FRE_GRP BY BUKRS DT_SALDO_FRETE LIFNR.
+  DELETE ADJACENT DUPLICATES FROM TG_0141_SLD_FRE_GRP COMPARING BUKRS DT_SALDO_FRETE LIFNR.
+
+
+ENDFORM.
+
+FORM F_PROCESSA_DADOS .
+  DATA: WL_0141_MOV_ANT TYPE ZLEST0141,
+        V_DT_TMP        TYPE SY-DATUM,
+        V_DT_TMP_01     TYPE SY-DATUM,
+        V_DIA_ANT_UTIL  TYPE SY-DATUM,
+        V_MSG           TYPE STRING.
+
+  CHECK VG_NOT_FOUND IS INITIAL.
+
+  SORT TG_0141 BY BUKRS DATA.
+
+  DATA DIA_ANTERIOR TYPE ZDE_DATA_MOV.
+
+  DATA: IDX TYPE SY-TABIX.
+
+  LOOP AT TG_0141.
+
+
+    IDX = SY-TABIX .
+
+
+
+    CLEAR: WA_SAIDA_0100.
+
+    READ TABLE TG_0140 WITH KEY BUKRS = TG_0141-BUKRS
+                                DATA  = TG_0141-DATA.
+
+    IF SY-SUBRC NE 0.
+      PERFORM F_BLOQ_PROC USING 'Nenhum parâmetro encontrado para a data!'
+                       CHANGING WA_SAIDA_0100.
+    ENDIF.
+
+    WA_SAIDA_0100-BUKRS             =  TG_0141-BUKRS.
+
+    READ TABLE TG_T001 WITH KEY BUKRS = WA_SAIDA_0100-BUKRS.
+    IF SY-SUBRC = 0.
+      WA_SAIDA_0100-BUTXT = TG_T001-BUTXT.
+    ENDIF.
+
+
+    WA_SAIDA_0100-LIFNR             =  TG_0141-LIFNR.
+    WA_SAIDA_0100-DATA              =  TG_0141-DATA.
+    WA_SAIDA_0100-VLR_MOV           =  TG_0141-VLR_MOV.
+    WA_SAIDA_0100-SALDO_FRETE       =  TG_0141-SALDO_FRETE.
+    WA_SAIDA_0100-SALDO_OUTROS      =  TG_0141-SALDO_OUTROS.
+    WA_SAIDA_0100-SALDO_ESTORNO     =  TG_0141-SALDO_ESTORNO.
+    WA_SAIDA_0100-SEM_SLD_PGTO      =  TG_0141-SEM_SLD_PGTO.
+    WA_SAIDA_0100-USUARIO           =  TG_0141-USUARIO.
+
+    IF ( TG_0141-LOTE         IS INITIAL AND   " Não gerou adiantamento
+         TG_0141-SEM_SLD_PGTO IS INITIAL ).    " Possui saldo Pagar
+
+      WA_SAIDA_0100-VLR_PREV_ADT = TG_0140-VALOR.
+
+      IF WA_SAIDA_0100-LIFNR IS INITIAL.
+        WA_SAIDA_0100-LIFNR = TG_0140-LIFNR.
+      ENDIF.
+
+      PERFORM F_CALC_VALORES_PGTO USING P_SD_INI
+                               CHANGING WA_SAIDA_0100.
+
+    ELSE.
+
+      WA_SAIDA_0100-LOTE             =  TG_0141-LOTE.
+      WA_SAIDA_0100-DOC_LCTO         =  TG_0141-DOC_LCTO.
+      WA_SAIDA_0100-DT_LCTO_CTB      =  TG_0141-DT_LCTO_CTB.
+      WA_SAIDA_0100-BELNR            =  TG_0141-BELNR.
+      WA_SAIDA_0100-VLR_PREV_ADT     =  TG_0141-VLR_PREV_ADT.
+      WA_SAIDA_0100-VLR_SLD_DIARIO   =  TG_0141-VLR_SLD_DIARIO.
+      WA_SAIDA_0100-VLR_PGTO_ADT     =  TG_0141-VLR_PGTO_ADT.
+      WA_SAIDA_0100-VLR_PGTO_ADT_TOT =  TG_0141-VLR_PGTO_ADT_TOT.
+      WA_SAIDA_0100-SALDO_INICIAL    =  TG_0141-SALDO_INICIAL.
+      WA_SAIDA_0100-SALDO_FINAL      =  TG_0141-SALDO_FINAL.
+
+      LOOP AT TG_BSIK WHERE BUKRS = TG_0141-BUKRS
+                        AND BELNR = TG_0141-BELNR
+                        AND ZFBDT IS NOT INITIAL
+                        AND ZFBDT NE SPACE.
+        WA_SAIDA_0100-ZFBDT = TG_BSIK-ZFBDT.
+      ENDLOOP.
+
+      IF WA_SAIDA_0100-ZFBDT IS INITIAL.
+        LOOP AT TG_BSAK WHERE BUKRS = TG_0141-BUKRS
+                          AND BELNR = TG_0141-BELNR
+                          AND ZFBDT IS NOT INITIAL
+                          AND ZFBDT NE SPACE.
+          WA_SAIDA_0100-ZFBDT = TG_BSAK-ZFBDT.
+        ENDLOOP.
+      ENDIF.
+
+    ENDIF.
+
+*    Atualiza Status
+    PERFORM F_ATUALIZA_STATUS CHANGING WA_SAIDA_0100.
+
+    APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+
+  ENDLOOP.
+
+  "Incluir Linhas Previsão Saldo Frete
+  LOOP AT TG_0141_SLD_FRE_GRP.
+
+    DATA(_INC_REG) = ABAP_TRUE.
+
+    LOOP AT IT_SAIDA_0100 INTO WA_SAIDA_0100 WHERE BUKRS =  TG_0141_SLD_FRE_GRP-BUKRS
+                                               AND DATA  >= TG_0141_SLD_FRE_GRP-DT_SALDO_FRETE
+                                               AND LIFNR =  TG_0141_SLD_FRE_GRP-LIFNR.
+      _INC_REG = ABAP_FALSE.
+      EXIT.
+    ENDLOOP.
+    IF _INC_REG EQ ABAP_TRUE.
+      CLEAR: WA_SAIDA_0100.
+
+      WA_SAIDA_0100-BUKRS  = TG_0141_SLD_FRE_GRP-BUKRS.
+      WA_SAIDA_0100-DATA   = TG_0141_SLD_FRE_GRP-DT_SALDO_FRETE.
+      WA_SAIDA_0100-LIFNR  = TG_0141_SLD_FRE_GRP-LIFNR.
+
+      READ TABLE TG_T001 WITH KEY BUKRS = WA_SAIDA_0100-BUKRS.
+      IF SY-SUBRC = 0.
+        WA_SAIDA_0100-BUTXT = TG_T001-BUTXT.
+      ENDIF.
+
+      LOOP AT TG_0141_SLD_FRE WHERE BUKRS          =  TG_0141_SLD_FRE_GRP-BUKRS
+                                AND DT_SALDO_FRETE =  TG_0141_SLD_FRE_GRP-DT_SALDO_FRETE
+                                AND LIFNR          =  TG_0141_SLD_FRE_GRP-LIFNR.
+        ADD TG_0141_SLD_FRE-SALDO_FRETE TO WA_SAIDA_0100-SALDO_FRETE.
+      ENDLOOP.
+
+      READ TABLE TG_0140 WITH KEY BUKRS = WA_SAIDA_0100-BUKRS
+                                  DATA  = WA_SAIDA_0100-DATA.
+      IF SY-SUBRC EQ 0.
+        WA_SAIDA_0100-VLR_PREV_ADT =  TG_0140-VALOR.
+
+
+        "Adicionar Previsoes proximos dias não uteis
+        PERFORM ADD_PREV_PROX_DIA_NUTEIS CHANGING WA_SAIDA_0100
+        V_MSG.
+
+      ENDIF.
+
+      PERFORM F_BLOQ_PROC USING 'Linha de Previsão de Saldo de Frete!'
+                       CHANGING WA_SAIDA_0100.
+      "Atualiza Status
+      PERFORM F_ATUALIZA_STATUS CHANGING WA_SAIDA_0100.
+
+      APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+
+    ENDIF.
+  ENDLOOP.
+  DATA: DT_TMP    TYPE ERDAT,
+        DT_TESTEE TYPE ERDAT.
+
+  LOOP AT TG_0140_B  ASSIGNING FIELD-SYMBOL(<WA_0140_1>).
+
+    DT_TMP = <WA_0140_1>-DATA.
+    DT_TESTEE = DT_TMP.
+
+    PERFORM F_PROXIMO_DIA_UTIL CHANGING DT_TMP.
+
+    IF DT_TMP <> DT_TESTEE.
+      <WA_0140_1>-CHCK = ABAP_TRUE.
+    ENDIF.
+
+  ENDLOOP.
+
+
+  LOOP AT IT_SAIDA_0100 INTO DATA(WA_SAIDAA).
+    LOOP AT TG_0140_B ASSIGNING FIELD-SYMBOL(<WA_0140_B>) WHERE BUKRS = WA_SAIDAA-BUKRS
+                                                            AND DATA  = WA_SAIDAA-DATA.
+      <WA_0140_B>-CHCK = ABAP_TRUE.
+
+    ENDLOOP.
+  ENDLOOP.
+
+
+  DELETE TG_0140_B WHERE CHCK = ABAP_TRUE.
+
+
+  CLEAR WA_SAIDA_0100.
+  LOOP AT TG_0140_B INTO DATA(NUMBER1).
+
+    WA_SAIDA_0100-BUKRS = NUMBER1-BUKRS.
+    WA_SAIDA_0100-DATA = NUMBER1-DATA.
+    WA_SAIDA_0100-VLR_PREV_ADT =  NUMBER1-VALOR.
+
+    READ TABLE TG_T001 WITH KEY BUKRS = WA_SAIDA_0100-BUKRS.
+    IF SY-SUBRC = 0.
+      WA_SAIDA_0100-BUTXT = TG_T001-BUTXT.
+    ENDIF.
+
+    "Adicionar Previsoes proximos dias não uteis
+    PERFORM ADD_PREV_PROX_DIA_NUTEIS CHANGING WA_SAIDA_0100
+    V_MSG.
+
+    APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+
+  ENDLOOP.
+
+  SORT IT_SAIDA_0100 BY BUKRS DATA.
+*
+*  DATA: INDEX_DOIS TYPE SY-TABIX.
+*
+*  LOOP AT IT_SAIDA_0100 INTO DATA(WA_SAIDA_FINAL).
+*
+*    IDX = SY-TABIX.
+*    INDEX_DOIS = idx - 1.
+*    IF IDX <> 1.
+*      READ TABLE TG_ZLEST0195 INTO WA_ZLEST0195 WITH KEY DT_PGTO  = WA_SAIDA_FINAL-DATA.
+*
+*      IF SY-SUBRC = 0.
+*
+*        DIA_ANTERIOR = WA_SAIDA_FINAL-DATA - 1.
+*        WA_SAIDA_FINAL-DELETAR = 'X'.
+*
+*        MODIFY IT_SAIDA_0100 FROM WA_SAIDA_FINAL INDEX IDX TRANSPORTING  DELETAR.
+*
+*        DATA(WA_0141_SAIDA_D) = IT_SAIDA_0100[ INDEX_DOIS ].
+*
+*        WA_SAIDA_FINAL-SALDO_FRETE       =  WA_SAIDA_FINAL-SALDO_FRETE + WA_0141_SAIDA_D-SALDO_FRETE.
+*        WA_SAIDA_FINAL-VLR_PREV_ADT = WA_SAIDA_FINAL-VLR_PREV_ADT + WA_0141_SAIDA_D-VLR_PREV_ADT.
+*
+*        MODIFY IT_SAIDA_0100 FROM WA_SAIDA_FINAL INDEX IDX - 1 TRANSPORTING SALDO_FRETE VLR_PREV_ADT .
+*
+*
+*CLEAR: WA_SAIDA_FINAL, WA_0141_SAIDA_D .
+*INDEX_DOIS = IDX + 1.
+*
+*
+*      ENDIF.
+*
+*    ENDIF.
+*
+*ENDLOOP.
+*
+*DELETE IT_SAIDA_0100 WHERE DELETAR = 'X'.
+ENDFORM.
+
+FORM F_BLOQ_PROC USING P_MOTIVO_BLOQ TYPE STRING
+              CHANGING P_SAIDA_0100  TYPE ZDE_ZLES0145_0100_OUT.
+
+  CHECK P_SAIDA_0100-BLOQ_PROC IS INITIAL.
+
+  P_SAIDA_0100-BLOQ_PROC   = 'X'.
+  P_SAIDA_0100-MOTIVO_BLOQ = P_MOTIVO_BLOQ.
+
+ENDFORM.
+
+FORM F_ATUALIZA_STATUS CHANGING P_SAIDA_0100 TYPE ZDE_ZLES0145_0100_OUT.
+
+  IF P_SAIDA_0100-SEM_SLD_PGTO IS NOT INITIAL.
+    P_SAIDA_0100-GER_ADT  = ICON_GREEN_LIGHT.
+    EXIT.
+  ENDIF.
+
+  IF P_SAIDA_0100-LOTE IS INITIAL.
+
+    IF P_SAIDA_0100-BLOQ_PROC IS NOT INITIAL.
+      P_SAIDA_0100-GER_ADT = ICON_LED_YELLOW.
+    ELSE.
+      P_SAIDA_0100-GER_ADT = ICON_GENERATE.
+    ENDIF.
+
+  ELSEIF ( P_SAIDA_0100-BUKRS    IS NOT INITIAL ) AND
+         ( P_SAIDA_0100-DOC_LCTO IS NOT INITIAL ) AND
+         ( P_SAIDA_0100-LIFNR    IS NOT INITIAL ) AND
+         ( P_SAIDA_0100-DATA     IS NOT INITIAL ).
+
+    "Verifica se Doc. Lcto foi estornado.
+    IF ( P_SAIDA_0100-BELNR  IS INITIAL ).
+
+      SELECT SINGLE *
+        FROM ZGLT035 INTO @DATA(WL_ZGLT035)
+       WHERE BUKRS    = @P_SAIDA_0100-BUKRS
+         AND DOC_LCTO = @P_SAIDA_0100-DOC_LCTO.
+
+      IF ( SY-SUBRC EQ 0  AND WL_ZGLT035-LOEKZ EQ 'X' ) OR
+         ( SY-SUBRC NE 0 ).
+        UPDATE ZLEST0141 SET LOTE        = SPACE
+                             DOC_LCTO    = SPACE
+                             DT_LCTO_CTB = SPACE
+                             BELNR       = SPACE
+                             USUARIO     = SPACE
+                       WHERE BUKRS  = P_SAIDA_0100-BUKRS
+                         AND DATA   = P_SAIDA_0100-DATA.
+
+        CLEAR: P_SAIDA_0100-LOTE,
+               P_SAIDA_0100-DOC_LCTO,
+               P_SAIDA_0100-DT_LCTO_CTB,
+               P_SAIDA_0100-BELNR,
+               P_SAIDA_0100-USUARIO.
+      ENDIF.
+
+    ENDIF.
+
+    IF P_SAIDA_0100-BELNR IS NOT INITIAL.
+      P_SAIDA_0100-GER_ADT = ICON_GREEN_LIGHT.
+    ELSE.
+      PERFORM F_RETORNA_STATUS_ZIB USING P_SAIDA_0100-DOC_LCTO
+                                         P_SAIDA_0100-DT_LCTO_CTB(4)
+                                CHANGING WA_ZIB_CHAVE
+                                         WA_ZIB_ERRO.
+
+      IF ( WA_ZIB_CHAVE IS NOT INITIAL ).
+        P_SAIDA_0100-GER_ADT  = ICON_GREEN_LIGHT.
+        P_SAIDA_0100-BELNR    = WA_ZIB_CHAVE-BELNR.
+
+        UPDATE ZLEST0141 SET BELNR  = WA_ZIB_CHAVE-BELNR
+                       WHERE BUKRS  = P_SAIDA_0100-BUKRS
+                         AND DATA   = P_SAIDA_0100-DATA.
+
+      ELSEIF ( WA_ZIB_ERRO IS NOT INITIAL ).
+        P_SAIDA_0100-GER_ADT = ICON_RED_LIGHT.
+      ELSE.
+        P_SAIDA_0100-GER_ADT = ICON_YELLOW_LIGHT.
+      ENDIF.
+
+    ENDIF.
+
+  ENDIF.
+
+
+ENDFORM.
+
+FORM F_RETORNA_STATUS_ZIB USING P_DOC_LCTO
+                                P_ANO_LCTO
+                       CHANGING P_ZIBCHV TYPE ZIB_CONTABIL_CHV
+                                P_ZIBERR TYPE ZIB_CONTABIL_ERR.
+
+  DATA V_OBJKEY TYPE CHAR20.
+
+  CLEAR: P_ZIBCHV, P_ZIBERR.
+  CONCATENATE 'ZGL17' P_DOC_LCTO P_ANO_LCTO INTO V_OBJKEY.
+
+  SELECT SINGLE *
+    FROM ZIB_CONTABIL_CHV INTO P_ZIBCHV
+   WHERE OBJ_KEY = V_OBJKEY.
+
+  IF ( SY-SUBRC NE 0 ).
+    SELECT SINGLE *
+      FROM ZIB_CONTABIL_ERR INTO P_ZIBERR
+     WHERE OBJ_KEY = V_OBJKEY.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_GERAR_ADT  USING  P_SAIDA_0100 TYPE ZDE_ZLES0145_0100_OUT.
+
+  DATA: R_GERAR_LOTE TYPE REF TO ZCL_GERAR_LOTE.
+
+  DATA: WL_ZGLT035   TYPE ZGLT035,
+        WL_ZGLT036   TYPE ZGLT036,
+        WL_ZLEST0141 TYPE ZLEST0141,
+        WL_LFBK      TYPE LFBK,
+        V_LIBERADO   TYPE CHAR01,
+        V_HBKID      TYPE ZGLT036-HBKID,
+        V_ZLSCH      TYPE ZGLT036-ZLSCH,
+        GT_ZGLT036   TYPE TABLE OF ZGLT036,
+        VL_SEQITEM   TYPE ZGLT036-SEQITEM.
+
+  CLEAR: WL_ZLEST0141, WL_ZGLT035.
+
+  IF P_SAIDA_0100-BUKRS IS INITIAL.
+    MESSAGE 'Empresa não encontrada!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_SAIDA_0100-LIFNR IS INITIAL.
+    MESSAGE 'Fornecedor não encontrado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  CLEAR: V_HBKID, V_ZLSCH.
+
+  TRY .
+      ZCL_MIRO=>GET_FORMAPAG_BANCO_EMPRESA( EXPORTING I_BUKRS = P_SAIDA_0100-BUKRS
+                                                      I_LIFNR = P_SAIDA_0100-LIFNR
+                                                      I_BVTYP = '0001'
+                                            IMPORTING E_BANCO_EMPRESA   = V_HBKID
+                                                      E_FORMA_PAGAMENTO = V_ZLSCH ).
+      IF V_HBKID IS INITIAL.
+        MESSAGE S836(SD) WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 DISPLAY LIKE 'S'.
+        RETURN.
+      ENDIF.
+    CATCH ZCX_MIRO_EXCEPTION INTO DATA(EX_MIRO).  "
+      EX_MIRO->PUBLISHED_ERRO( EXPORTING I_MSGTY = 'S' I_MSGTY_DISPLAY = 'S' ).
+      RETURN.
+  ENDTRY.
+
+  IF P_SD_INI IS NOT INITIAL. "Lançamento de Saldo Inicial
+
+    IF P_SAIDA_0100-VLR_PGTO_ADT_TOT <= 0.
+      MESSAGE 'Valor para adiantamento não encontrado!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+    WL_ZLEST0141-BUKRS      = P_SAIDA_0100-BUKRS.
+    WL_ZLEST0141-LIFNR      = P_SAIDA_0100-LIFNR.
+    WL_ZLEST0141-DATA       = P_SAIDA_0100-DATA.
+    WL_ZLEST0141-DATA_REG   = SY-DATUM.
+    WL_ZLEST0141-HORA_REG   = SY-UZEIT.
+
+  ELSE.
+    SELECT SINGLE *
+      FROM ZLEST0141 INTO WL_ZLEST0141
+     WHERE BUKRS  = P_SAIDA_0100-BUKRS
+       AND DATA   = P_SAIDA_0100-DATA
+       AND LIFNR  = P_SAIDA_0100-LIFNR.
+
+    IF SY-SUBRC NE 0.
+      MESSAGE 'Registro do movimento não encontrado!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+    IF P_SAIDA_0100-VLR_PGTO_ADT_TOT <= 0. "Não possui saldo a pagar.
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+          TITLEBAR              = 'Confirmação'
+          TEXT_QUESTION         = 'Dia de movimento sem Saldo à pagar! Movimento deve ser desconsiderado?'
+          TEXT_BUTTON_1         = 'Sim'
+          TEXT_BUTTON_2         = 'Não'
+          DEFAULT_BUTTON        = '1'
+          DISPLAY_CANCEL_BUTTON = ''
+        IMPORTING
+          ANSWER                = VAR_ANSWER
+        EXCEPTIONS
+          TEXT_NOT_FOUND        = 1
+          OTHERS                = 2.
+
+      CHECK VAR_ANSWER = '1'.
+
+      WL_ZLEST0141-USUARIO            = SY-UNAME.
+      WL_ZLEST0141-VLR_PGTO_ADT       = P_SAIDA_0100-VLR_PGTO_ADT.
+      WL_ZLEST0141-VLR_PREV_ADT       = P_SAIDA_0100-VLR_PREV_ADT.
+      WL_ZLEST0141-VLR_SLD_DIARIO     = P_SAIDA_0100-VLR_SLD_DIARIO.
+      WL_ZLEST0141-VLR_PGTO_ADT_TOT   = P_SAIDA_0100-VLR_PGTO_ADT_TOT.
+      WL_ZLEST0141-SALDO_INICIAL      = P_SAIDA_0100-SALDO_INICIAL.
+      WL_ZLEST0141-SALDO_FINAL        = P_SAIDA_0100-SALDO_FINAL.
+      WL_ZLEST0141-SEM_SLD_PGTO       = 'X'.
+
+      MODIFY ZLEST0141 FROM WL_ZLEST0141.
+
+      IF SY-SUBRC = 0.
+        MESSAGE 'Lançamento foi desconsiderado!' TYPE 'S'.
+        EXIT.
+      ELSE.
+        MESSAGE 'Houve um erro ao gravar o registro!' TYPE 'S'.
+        EXIT.
+      ENDIF.
+
+    ENDIF.
+
+  ENDIF.
+
+  CALL FUNCTION 'POPUP_TO_CONFIRM'
+    EXPORTING
+      TITLEBAR              = 'Confirmação'
+      TEXT_QUESTION         = 'Deseja realmente gerar o adiantamento para o registro selecionado?'
+      TEXT_BUTTON_1         = 'Sim'
+      TEXT_BUTTON_2         = 'Não'
+      DEFAULT_BUTTON        = '1'
+      DISPLAY_CANCEL_BUTTON = ''
+    IMPORTING
+      ANSWER                = VAR_ANSWER
+    EXCEPTIONS
+      TEXT_NOT_FOUND        = 1
+      OTHERS                = 2.
+
+  CHECK VAR_ANSWER = '1'.
+
+  CLEAR: WL_ZGLT035.
+
+  CREATE OBJECT R_GERAR_LOTE.
+
+  R_GERAR_LOTE->CREATE_LOTE( EXPORTING
+                               I_BUKRS       = P_SAIDA_0100-BUKRS
+                               I_DESCR_LOTE  = 'Adiantamento Frete'
+                               I_DEP_RESP    = '11'
+                               I_USER_RESP   = SY-UNAME
+                             IMPORTING
+                               E_NUM_LOTE    = WL_ZGLT035-LOTE ).
+
+
+  MOVE: P_SAIDA_0100-BUKRS        TO WL_ZGLT035-BUKRS,
+        '11'                      TO WL_ZGLT035-DPTO_RESP,
+        'BRL'                     TO WL_ZGLT035-MOEDA_DOC,
+        'ME'                      TO WL_ZGLT035-BLART,
+        'Adiantamento Frete'      TO WL_ZGLT035-BKTXT,
+        "VL_XBLNR                  TO WL_ZGLT035-XBLNR,
+        SY-DATUM                  TO WL_ZGLT035-BUDAT,
+        SY-DATUM                  TO WL_ZGLT035-BLDAT,
+        SY-DATUM                  TO WL_ZGLT035-DT_LCTO,
+        SY-DATUM+4(2)             TO WL_ZGLT035-MONAT,
+        SY-DATUM(4)               TO WL_ZGLT035-GJAHR,
+        SY-UNAME                  TO WL_ZGLT035-USNAM,
+        SY-DATUM                  TO WL_ZGLT035-DT_ENTRADA,
+        SY-UZEIT                  TO WL_ZGLT035-HR_ENTRADA.
+
+  VL_SEQITEM = 1.
+  DO 2 TIMES.
+
+    DATA(_INDEX) = SY-INDEX.
+
+    CLEAR: WL_ZGLT036.
+
+    WL_ZGLT036-SEQITEM  = VL_SEQITEM.
+    WL_ZGLT036-UMSKZ    = 'J'.
+    WL_ZGLT036-HKONT    = P_SAIDA_0100-LIFNR.
+    WL_ZGLT036-SGTXT    = 'Pré Pagamento Frete'.
+
+    CASE _INDEX.
+      WHEN 1.
+        WL_ZGLT036-BSCHL    = '29'.
+      WHEN 2.
+        WL_ZGLT036-BSCHL    = '39'.
+        WL_ZGLT036-HBKID    = V_HBKID.
+        WL_ZGLT036-ZLSCH    = V_ZLSCH.
+        WL_ZGLT036-BVTYP    = '0001'.
+        WL_ZGLT036-DT_VCT   = SY-DATUM.
+    ENDCASE.
+
+    CASE P_SAIDA_0100-BUKRS.
+      WHEN '0001'.
+        WL_ZGLT036-GSBER = '0116'.
+      WHEN '0015'.
+        WL_ZGLT036-GSBER = '1510'.
+      WHEN '0010'.
+        WL_ZGLT036-GSBER = '1006'.
+      WHEN '0035'.
+        WL_ZGLT036-GSBER = '3513'.
+    ENDCASE.
+
+    MOVE: ABS( P_SAIDA_0100-VLR_PGTO_ADT_TOT ) TO WL_ZGLT036-VLR_MOEDA_DOC.
+
+    APPEND WL_ZGLT036 TO GT_ZGLT036.
+
+    CLEAR: WL_ZGLT036.
+    ADD 1 TO VL_SEQITEM.
+
+  ENDDO.
+
+
+  CALL METHOD ZCL_GERAR_LOTE=>CONTABILIZAR_LOTE(
+    CHANGING
+      I_ZGLT036 = GT_ZGLT036
+      I_ZGLT035 = WL_ZGLT035 ).
+  CLEAR: V_LIBERADO.
+  CALL FUNCTION 'Z_GL_LIBERAR_LOTE'
+    EXPORTING
+      P_NUM_LOTE = WL_ZGLT035-LOTE
+    IMPORTING
+      P_LIBERADO = V_LIBERADO.
+
+  CHECK V_LIBERADO EQ ABAP_TRUE.
+
+  "Gerar ZIB
+  SUBMIT Z_GRAVA_ZIB_ZGL WITH P_LOTE = WL_ZGLT035-LOTE AND RETURN.
+
+  "UPDATE ZGLT034
+  "   SET STATUS_LOTE = 'A'
+  " WHERE LOTE EQ WL_ZGLT035-LOTE.
+
+  WL_ZLEST0141-LOTE               = WL_ZGLT035-LOTE.
+  WL_ZLEST0141-DOC_LCTO           = WL_ZGLT035-DOC_LCTO.
+  WL_ZLEST0141-DT_LCTO_CTB        = WL_ZGLT035-BUDAT.
+  WL_ZLEST0141-VLR_PREV_ADT       = P_SAIDA_0100-VLR_PREV_ADT.
+  WL_ZLEST0141-VLR_SLD_DIARIO     = P_SAIDA_0100-VLR_SLD_DIARIO.
+  WL_ZLEST0141-VLR_PGTO_ADT       = P_SAIDA_0100-VLR_PGTO_ADT.
+  WL_ZLEST0141-VLR_PGTO_ADT_TOT   = P_SAIDA_0100-VLR_PGTO_ADT_TOT.
+  WL_ZLEST0141-SALDO_INICIAL      = P_SAIDA_0100-SALDO_INICIAL.
+  WL_ZLEST0141-SALDO_FINAL        = P_SAIDA_0100-SALDO_FINAL.
+  WL_ZLEST0141-USUARIO            = SY-UNAME.
+
+  MODIFY ZLEST0141 FROM WL_ZLEST0141.
+
+  IF SY-SUBRC = 0.
+
+    IF P_SD_INI IS NOT INITIAL.
+      P_SD_INI = ''.
+    ENDIF.
+
+    MESSAGE 'Lançamento gerado com sucesso!' TYPE 'S'.
+    EXIT.
+  ELSE.
+    MESSAGE 'Houve um erro ao gerar o lançamento!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_ESTORNO_CTB.
+
+  DATA: IT_DTA   TYPE STANDARD TABLE OF BDCDATA,
+        WA_DTA   TYPE BDCDATA,
+        WG_BDC   TYPE BDCDATA,
+        TG_BDC   TYPE TABLE OF BDCDATA,
+        TG_MSG   TYPE TABLE OF BDCMSGCOLL,
+        WG_MSG   TYPE BDCMSGCOLL,
+        OPT      TYPE CTU_PARAMS,
+        VL_STBLG TYPE BKPF-STBLG.
+
+  CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+  CALL METHOD OBJ_ALV_0100->GET_SELECTED_ROWS
+    IMPORTING
+      ET_INDEX_ROWS = IT_SEL_ROWS.
+
+  CHECK IT_SEL_ROWS IS NOT INITIAL.
+
+  IF LINES( IT_SEL_ROWS ) NE 1.
+    MESSAGE S836(SD) WITH TEXT-E19 DISPLAY LIKE 'E'.
+    RETURN.
+  ENDIF.
+
+  CALL FUNCTION 'POPUP_TO_CONFIRM'
+    EXPORTING
+      TITLEBAR              = 'Confirmação'
+      TEXT_QUESTION         = 'Deseja realmente gerar o estorno para o registro selecionado?'
+      TEXT_BUTTON_1         = 'Sim'
+      TEXT_BUTTON_2         = 'Não'
+      DEFAULT_BUTTON        = '1'
+      DISPLAY_CANCEL_BUTTON = ''
+    IMPORTING
+      ANSWER                = VAR_ANSWER
+    EXCEPTIONS
+      TEXT_NOT_FOUND        = 1
+      OTHERS                = 2.
+
+  CHECK VAR_ANSWER EQ '1'.
+
+  READ TABLE IT_SEL_ROWS INTO WA_SEL_ROWS INDEX 1.
+  READ TABLE IT_SAIDA_0100 ASSIGNING FIELD-SYMBOL(<SAIDA_0100>) INDEX WA_SEL_ROWS-INDEX.
+
+  CHECK SY-SUBRC = 0.
+
+  SELECT SINGLE *
+    FROM ZLEST0141 INTO @DATA(WL_ZLEST0141)
+   WHERE BUKRS  = @<SAIDA_0100>-BUKRS
+     AND DATA   > @<SAIDA_0100>-DATA
+     AND LIFNR  = @<SAIDA_0100>-LIFNR
+     AND LOTE   NE '0000000000'.
+
+  IF SY-SUBRC EQ 0.
+    MESSAGE 'Já existem movimentos contábeis com data de movimento posterior a data desse movimento!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF <SAIDA_0100>-BELNR IS INITIAL.
+    ROLLBACK WORK.
+    MESSAGE S836(SD) WITH TEXT-E23 DISPLAY LIKE 'E'.
+    RETURN.
+  ENDIF.
+
+  FREE: IT_DTA.
+  DEFINE SHDB.
+    CLEAR WA_DTA.
+    WA_DTA-PROGRAM   = &1.
+    WA_DTA-DYNPRO    = &2.
+    WA_DTA-DYNBEGIN  = &3.
+    WA_DTA-FNAM      = &4.
+    WA_DTA-FVAL      = &5.
+    APPEND WA_DTA TO IT_DTA.
+  END-OF-DEFINITION.
+
+  SHDB:
+  'SAPMF05A' '0105' 'X'  ' '           ' ',
+  ' '        ' '    ' '  'BDC_CURSOR'  'UF05A-STGRD',
+  ' '        ' '    ' '  'BDC_OKCODE'  '=BU',
+  ' '        ' '    ' '  'RF05A-BELNS' <SAIDA_0100>-BELNR,
+  ' '        ' '    ' '  'BKPF-BUKRS'  <SAIDA_0100>-BUKRS,
+  ' '        ' '    ' '  'RF05A-GJAHS' <SAIDA_0100>-DT_LCTO_CTB(4),
+  ' '        ' '    ' '  'UF05A-STGRD' '01'.
+
+  OPT-DISMODE = 'E'.
+  CALL TRANSACTION 'FB08' USING IT_DTA OPTIONS FROM OPT.
+
+  CHECK SY-SUBRC IS INITIAL.
+
+  SELECT SINGLE STBLG
+    FROM BKPF INTO VL_STBLG
+   WHERE BUKRS = <SAIDA_0100>-BUKRS
+     AND BELNR = <SAIDA_0100>-BELNR
+     AND GJAHR = <SAIDA_0100>-DT_LCTO_CTB(4).
+
+  CHECK ( SY-SUBRC = 0 ) AND ( VL_STBLG IS NOT INITIAL ).
+
+
+  UPDATE ZLEST0141 SET LOTE                = SPACE
+                       DOC_LCTO            = SPACE
+                       BELNR               = SPACE
+                       DT_LCTO_CTB         = SPACE
+                       VLR_PREV_ADT        = 0
+                       VLR_SLD_DIARIO      = 0
+                       VLR_PGTO_ADT_TOT    = 0
+                       VLR_PGTO_ADT        = 0
+                       SALDO_INICIAL       = 0
+                       SALDO_FINAL         = 0
+                       USUARIO             = SPACE
+                 WHERE BUKRS  = <SAIDA_0100>-BUKRS
+                   AND DATA   = <SAIDA_0100>-DATA.
+
+  COMMIT WORK.
+  MESSAGE S836(SD) WITH TEXT-S04 DISPLAY LIKE 'S'.
+
+  PERFORM: F_SELECIONAR_DADOS,
+           F_PROCESSA_DADOS.
+
+  PERFORM F_REFRESH_ALV USING '0100'.
+
+ENDFORM.
+
+
+FORM F_CTB_OUTRAS_MOEDAS TABLES I_ZGLT036 STRUCTURE ZGLT036
+                          USING I_ZGLT035 TYPE ZGLT035.
+
+
+  DATA: GT_ZGLT036         TYPE TABLE OF ZGLT036,
+        WL_ZGLT036         TYPE ZGLT036,
+        WA_T001            TYPE T001,
+        WA_MOEDAS          TYPE X001,
+        WL_TBSL            TYPE TBSL,
+        I_DATA             TYPE GDATU_INV,
+        E_UKURS  	         TYPE UKURS_CURR,
+        VL_INDEX           TYPE I,
+        VL_DIF             TYPE ZGLT036-VLR_MOEDA_INT,
+        VL_MOEDA_INT       TYPE ZGLT036-VLR_MOEDA_INT,
+        VL_MOEDA_FORTE     TYPE ZGLT036-VLR_MOEDA_FORTE,
+        VL_MOEDA_GRUPO     TYPE ZGLT036-VLR_MOEDA_GRUPO,
+        VL_TOT_MOEDA_INT   TYPE ZGLT036-VLR_MOEDA_INT,
+        VL_TOT_MOEDA_FORTE TYPE ZGLT036-VLR_MOEDA_FORTE,
+        VL_TOT_MOEDA_GRUPO TYPE ZGLT036-VLR_MOEDA_GRUPO.
+
+  DATA: OBJ_ZCL_UTIL_SD TYPE REF TO ZCL_UTIL_SD.
+
+  CLEAR: VL_TOT_MOEDA_INT, VL_TOT_MOEDA_FORTE, VL_TOT_MOEDA_GRUPO,
+         VL_MOEDA_INT    , VL_MOEDA_FORTE    , VL_MOEDA_GRUPO.
+
+  SELECT SINGLE BUKRS WAERS INTO (WA_T001-BUKRS,WA_T001-WAERS)
+    FROM T001
+   WHERE BUKRS EQ I_ZGLT035-BUKRS.
+
+  CALL FUNCTION 'FI_CURRENCY_INFORMATION'
+    EXPORTING
+      I_BUKRS = I_ZGLT035-BUKRS
+    IMPORTING
+      E_X001  = WA_MOEDAS.
+
+  IF I_ZGLT035-MOEDA_INTERNA IS INITIAL.
+    I_ZGLT035-MOEDA_INTERNA = WA_T001-WAERS.
+  ENDIF.
+
+  IF I_ZGLT035-MOEDA_FORTE IS INITIAL.
+    I_ZGLT035-MOEDA_FORTE = WA_MOEDAS-HWAE2.
+  ENDIF.
+
+  IF I_ZGLT035-MOEDA_GRUPO IS INITIAL.
+    I_ZGLT035-MOEDA_GRUPO = WA_MOEDAS-HWAE3.
+  ENDIF.
+
+  CREATE OBJECT OBJ_ZCL_UTIL_SD.
+
+  I_DATA = I_ZGLT035-DT_LCTO.
+  OBJ_ZCL_UTIL_SD->SET_DATA(  EXPORTING I_DATA = I_DATA ).
+  OBJ_ZCL_UTIL_SD->SET_KURST( EXPORTING I_KURST = 'B' ).
+  OBJ_ZCL_UTIL_SD->SET_WAERK( EXPORTING I_WAERK = I_ZGLT035-MOEDA_DOC ).
+
+  LOOP AT I_ZGLT036 INTO WL_ZGLT036.
+
+    IF WL_ZGLT036-VLR_MOEDA_INT EQ 0.
+      IF I_ZGLT035-MOEDA_INTERNA EQ I_ZGLT035-MOEDA_DOC.
+        WL_ZGLT036-VLR_MOEDA_INT = WL_ZGLT036-VLR_MOEDA_DOC.
+      ELSE.
+        OBJ_ZCL_UTIL_SD->SET_TCURR( EXPORTING I_TCURR = I_ZGLT035-MOEDA_INTERNA ).
+        OBJ_ZCL_UTIL_SD->TAXA_CAMBIO(  RECEIVING E_UKURS = E_UKURS ).
+        IF E_UKURS LT 0.
+          WL_ZGLT036-VLR_MOEDA_INT = WL_ZGLT036-VLR_MOEDA_DOC / ABS( E_UKURS ).
+        ELSE.
+          WL_ZGLT036-VLR_MOEDA_INT = WL_ZGLT036-VLR_MOEDA_DOC * ABS( E_UKURS ).
+        ENDIF.
+      ENDIF.
+
+      IF ( WL_ZGLT036-VLR_MOEDA_INT = 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC > 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC < 1 ).
+        WL_ZGLT036-VLR_MOEDA_INT = '0.01'.
+      ENDIF.
+    ENDIF.
+
+    IF WL_ZGLT036-VLR_MOEDA_FORTE EQ 0.
+      IF I_ZGLT035-MOEDA_FORTE EQ I_ZGLT035-MOEDA_DOC.
+        WL_ZGLT036-VLR_MOEDA_FORTE = WL_ZGLT036-VLR_MOEDA_DOC.
+      ELSE.
+        OBJ_ZCL_UTIL_SD->SET_TCURR( EXPORTING I_TCURR = I_ZGLT035-MOEDA_FORTE ).
+        OBJ_ZCL_UTIL_SD->TAXA_CAMBIO( RECEIVING E_UKURS = E_UKURS ).
+        IF E_UKURS LT 0.
+          WL_ZGLT036-VLR_MOEDA_FORTE = WL_ZGLT036-VLR_MOEDA_DOC / ABS( E_UKURS ).
+        ELSE.
+          WL_ZGLT036-VLR_MOEDA_FORTE = WL_ZGLT036-VLR_MOEDA_DOC * ABS( E_UKURS ).
+        ENDIF.
+      ENDIF.
+
+      IF ( WL_ZGLT036-VLR_MOEDA_FORTE = 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC   > 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC   < 1 ).
+        WL_ZGLT036-VLR_MOEDA_FORTE = '0.01'.
+      ENDIF.
+    ENDIF.
+
+    IF WL_ZGLT036-VLR_MOEDA_GRUPO EQ 0.
+      IF I_ZGLT035-MOEDA_GRUPO EQ I_ZGLT035-MOEDA_DOC.
+        WL_ZGLT036-VLR_MOEDA_GRUPO = WL_ZGLT036-VLR_MOEDA_DOC.
+      ELSE.
+        OBJ_ZCL_UTIL_SD->SET_TCURR( EXPORTING I_TCURR = I_ZGLT035-MOEDA_GRUPO ).
+        OBJ_ZCL_UTIL_SD->TAXA_CAMBIO( RECEIVING E_UKURS = E_UKURS ).
+        IF E_UKURS LT 0.
+          WL_ZGLT036-VLR_MOEDA_GRUPO = WL_ZGLT036-VLR_MOEDA_DOC / ABS( E_UKURS ).
+        ELSE.
+          WL_ZGLT036-VLR_MOEDA_GRUPO = WL_ZGLT036-VLR_MOEDA_DOC * ABS( E_UKURS ).
+        ENDIF.
+      ENDIF.
+
+      IF ( WL_ZGLT036-VLR_MOEDA_GRUPO = 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC   > 0 ) AND
+         ( WL_ZGLT036-VLR_MOEDA_DOC   < 1 ).
+        WL_ZGLT036-VLR_MOEDA_GRUPO = '0.01'.
+      ENDIF.
+    ENDIF.
+
+    CLEAR: WL_TBSL.
+    SELECT SINGLE *
+      FROM TBSL INTO WL_TBSL
+     WHERE BSCHL = WL_ZGLT036-BSCHL.
+
+    "Caso não encontre a chave para algum lançamento, sai do procedimento
+    IF ( SY-SUBRC NE 0 ) OR ( WL_TBSL-SHKZG IS INITIAL ).
+      RETURN.
+    ENDIF.
+
+    IF WL_ZGLT036-BSCHL NE '31'.
+      IF WL_TBSL-SHKZG = 'S'. "Débito
+        ADD WL_ZGLT036-VLR_MOEDA_INT   TO VL_TOT_MOEDA_INT.
+        ADD WL_ZGLT036-VLR_MOEDA_FORTE TO VL_TOT_MOEDA_FORTE.
+        ADD WL_ZGLT036-VLR_MOEDA_GRUPO TO VL_TOT_MOEDA_GRUPO.
+      ELSE.
+        SUBTRACT WL_ZGLT036-VLR_MOEDA_INT   FROM VL_TOT_MOEDA_INT.
+        SUBTRACT WL_ZGLT036-VLR_MOEDA_FORTE FROM VL_TOT_MOEDA_FORTE.
+        SUBTRACT WL_ZGLT036-VLR_MOEDA_GRUPO FROM VL_TOT_MOEDA_GRUPO.
+      ENDIF.
+    ENDIF.
+
+    MODIFY I_ZGLT036 FROM WL_ZGLT036.
+  ENDLOOP.
+
+  "Verifica Diferenças moedas, caso encontre, joga na primeira partida de razão.
+  CLEAR: WL_ZGLT036.
+  READ TABLE I_ZGLT036 INTO WL_ZGLT036 WITH KEY BSCHL = '31'.
+  CHECK SY-SUBRC = 0.
+
+  VL_MOEDA_INT    = WL_ZGLT036-VLR_MOEDA_INT.
+  VL_MOEDA_FORTE  = WL_ZGLT036-VLR_MOEDA_FORTE.
+  VL_MOEDA_GRUPO  = WL_ZGLT036-VLR_MOEDA_GRUPO.
+
+  SORT I_ZGLT036 BY VLR_MOEDA_DOC DESCENDING. "Ordernar para começar da partida de maior valor
+
+
+
+  LOOP AT I_ZGLT036 INTO WL_ZGLT036 WHERE BSCHL EQ '40'.
+
+    "Moeda Interna
+    IF ( VL_TOT_MOEDA_INT IS NOT INITIAL ) AND ( VL_MOEDA_INT IS NOT INITIAL ).
+      CLEAR: VL_DIF.
+      VL_DIF = VL_MOEDA_INT - VL_TOT_MOEDA_INT.
+      IF ( VL_DIF NE 0 ) AND ( ABS( VL_DIF ) < 2 ).
+        ADD VL_DIF TO WL_ZGLT036-VLR_MOEDA_INT.
+      ENDIF.
+    ENDIF.
+
+    "Moeda Forte
+    IF ( VL_TOT_MOEDA_FORTE IS NOT INITIAL ) AND ( VL_MOEDA_FORTE IS NOT INITIAL ).
+      CLEAR: VL_DIF.
+      VL_DIF = VL_MOEDA_FORTE - VL_TOT_MOEDA_FORTE.
+      IF ( VL_DIF NE 0 ) AND ( ABS( VL_DIF ) < 2 ).
+        ADD VL_DIF TO WL_ZGLT036-VLR_MOEDA_FORTE.
+      ENDIF.
+    ENDIF.
+
+    "Moeda Grupo
+    IF ( VL_TOT_MOEDA_GRUPO IS NOT INITIAL ) AND ( VL_MOEDA_GRUPO IS NOT INITIAL ).
+      CLEAR: VL_DIF.
+      VL_DIF = VL_MOEDA_GRUPO - VL_TOT_MOEDA_GRUPO.
+      IF ( VL_DIF NE 0 ) AND ( ABS( VL_DIF ) < 2 ).
+        ADD VL_DIF TO WL_ZGLT036-VLR_MOEDA_GRUPO.
+      ENDIF.
+    ENDIF.
+
+    MODIFY I_ZGLT036 FROM WL_ZGLT036.
+
+    RETURN.
+
+  ENDLOOP.
+
+ENDFORM.
+
+FORM F_REINICIAR_STATUS.
+
+  CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+  CALL METHOD OBJ_ALV_0100->GET_SELECTED_ROWS
+    IMPORTING
+      ET_INDEX_ROWS = IT_SEL_ROWS.
+
+  CHECK IT_SEL_ROWS IS NOT INITIAL.
+
+  IF LINES( IT_SEL_ROWS ) NE 1.
+    MESSAGE S836(SD) WITH TEXT-E19 DISPLAY LIKE 'E'.
+    RETURN.
+  ENDIF.
+
+  READ TABLE IT_SEL_ROWS INTO WA_SEL_ROWS INDEX 1.
+  READ TABLE IT_SAIDA_0100 ASSIGNING FIELD-SYMBOL(<SAIDA_0100>) INDEX WA_SEL_ROWS-INDEX.
+
+  CHECK SY-SUBRC = 0.
+
+  SELECT SINGLE *
+    FROM ZLEST0141 INTO @DATA(WL_ZLEST0141)
+   WHERE BUKRS        = @<SAIDA_0100>-BUKRS
+     AND DATA         > @<SAIDA_0100>-DATA
+     AND LIFNR        = @<SAIDA_0100>-LIFNR
+     AND LOTE         NE '0000000000'.
+
+  IF SY-SUBRC EQ 0.
+    MESSAGE 'Já existem movimentos contábeis com data de movimento posterior a data desse movimento!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  SELECT SINGLE *
+    FROM ZLEST0141 INTO WL_ZLEST0141
+   WHERE BUKRS        = <SAIDA_0100>-BUKRS
+     AND DATA         = <SAIDA_0100>-DATA
+     AND SEM_SLD_PGTO = 'X'.
+
+  IF SY-SUBRC NE 0.
+    MESSAGE 'Status Lançamento não pode ser reiniciado!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  CALL FUNCTION 'POPUP_TO_CONFIRM'
+    EXPORTING
+      TITLEBAR              = 'Confirmação'
+      TEXT_QUESTION         = 'Deseja realmente reiniciar o status do registro selecionado?'
+      TEXT_BUTTON_1         = 'Sim'
+      TEXT_BUTTON_2         = 'Não'
+      DEFAULT_BUTTON        = '1'
+      DISPLAY_CANCEL_BUTTON = ''
+    IMPORTING
+      ANSWER                = VAR_ANSWER
+    EXCEPTIONS
+      TEXT_NOT_FOUND        = 1
+      OTHERS                = 2.
+
+  CHECK VAR_ANSWER EQ '1'.
+
+  UPDATE ZLEST0141 SET SEM_SLD_PGTO       = ''
+                       VLR_PREV_ADT       = 0
+                       VLR_SLD_DIARIO     = 0
+                       VLR_PGTO_ADT_TOT   = 0
+                       VLR_PGTO_ADT       = 0
+                       SALDO_INICIAL      = 0
+                       SALDO_FINAL        = 0
+   WHERE BUKRS    = <SAIDA_0100>-BUKRS
+     AND DATA     = <SAIDA_0100>-DATA.
+
+  IF SY-SUBRC EQ 0.
+    MESSAGE 'Status reiniciado com sucesso!' TYPE 'S'.
+  ENDIF.
+
+  PERFORM: F_SELECIONAR_DADOS,
+           F_PROCESSA_DADOS.
+
+  PERFORM F_REFRESH_ALV USING '0100'.
+
+ENDFORM.
+
+FORM F_RESUMO_DOCUMENTOS USING P_TIPO
+                               P_SAIDA_0100  TYPE ZDE_ZLES0145_0100_OUT.
+
+  DATA: TG_0141_RESUMO_OUT TYPE TABLE OF ZLEST0141_RESUMO WITH HEADER LINE,
+        TG_0141_RESUMO     TYPE TABLE OF ZLEST0141_RESUMO WITH HEADER LINE,
+        TG_0141_OUTROS     TYPE TABLE OF ZLEST0141_L_ITEM WITH HEADER LINE.
+
+  CHECK P_SAIDA_0100 IS NOT INITIAL.
+
+  CLEAR: TG_0141_RESUMO_OUT[].
+
+  CASE P_TIPO.
+    WHEN '1'. "Valor Movto
+
+      "Busca Saldo Movimento
+      CLEAR: TG_0141_RESUMO[].
+      SELECT *
+        FROM ZLEST0141_RESUMO INTO CORRESPONDING FIELDS OF TABLE TG_0141_RESUMO
+       WHERE BUKRS          = P_SAIDA_0100-BUKRS
+         AND DATA           = P_SAIDA_0100-DATA
+         AND LIFNR          = P_SAIDA_0100-LIFNR.
+
+      LOOP AT TG_0141_RESUMO.
+        CLEAR: TG_0141_RESUMO_OUT.
+        MOVE-CORRESPONDING TG_0141_RESUMO TO TG_0141_RESUMO_OUT.
+        APPEND TG_0141_RESUMO_OUT.
+
+
+
+      ENDLOOP.
+
+      CLEAR: TG_0141_RESUMO[].
+      SELECT *
+        FROM ZLEST0141_RESUMO INTO CORRESPONDING FIELDS OF TABLE TG_0141_RESUMO
+       WHERE BUKRS          = P_SAIDA_0100-BUKRS
+         AND DT_ADTO        = P_SAIDA_0100-DATA
+         AND LIFNR          = P_SAIDA_0100-LIFNR.
+
+
+
+      LOOP AT TG_0141_RESUMO.
+        CLEAR: TG_0141_RESUMO_OUT.
+        MOVE-CORRESPONDING TG_0141_RESUMO TO TG_0141_RESUMO_OUT.
+        APPEND TG_0141_RESUMO_OUT.
+      ENDLOOP.
+
+      "Busca Saldo Estornos
+      CLEAR: TG_0141_RESUMO[].
+      SELECT *
+        FROM ZLEST0141_RESUMO INTO CORRESPONDING FIELDS OF TABLE TG_0141_RESUMO
+       WHERE BUKRS            = P_SAIDA_0100-BUKRS
+         AND DT_SALDO_ESTORNO = P_SAIDA_0100-DATA
+         AND LIFNR            = P_SAIDA_0100-LIFNR.
+
+      LOOP AT TG_0141_RESUMO.
+        CLEAR: TG_0141_RESUMO_OUT.
+        MOVE-CORRESPONDING TG_0141_RESUMO TO TG_0141_RESUMO_OUT.
+        TG_0141_RESUMO_OUT-VLR_MOV = TG_0141_RESUMO_OUT-SALDO_ESTORNO * -1.
+        APPEND TG_0141_RESUMO_OUT.
+      ENDLOOP.
+
+    WHEN '2'. "Saldo Frete
+
+      SELECT *
+        FROM ZLEST0141_RESUMO INTO CORRESPONDING FIELDS OF TABLE TG_0141_RESUMO_OUT
+       WHERE BUKRS          = P_SAIDA_0100-BUKRS
+         AND DT_SALDO_FRETE = P_SAIDA_0100-DATA
+         AND LIFNR          = P_SAIDA_0100-LIFNR.
+
+      DELETE TG_0141_RESUMO_OUT WHERE SALDO_FRETE = 0.
+
+    WHEN '3'. "Saldo Outros
+
+      SELECT
+            "ZLOTE~BUKRS,
+            ZITEM~DT_UTIL,
+            ZITEM~NM_LOTE,
+            ZITEM~NR_LOTE_ADM,
+            ZITEM~CHVID,
+            ZITEM~VL_PAGO_LOTE,
+            ZITEM~BELNR,
+            ZITEM~DT_BELNR,
+            ZITEM~DOCNUM
+        FROM ZLEST0141_LOTE AS ZLOTE
+        LEFT JOIN ZLEST0141_L_ITEM AS ZITEM
+            ON ZITEM~NM_LOTE = ZLOTE~NM_LOTE AND
+               ZITEM~NR_LOTE_ADM = ZLOTE~NR_LOTE_ADM
+        INTO CORRESPONDING FIELDS OF TABLE @TG_0141_OUTROS
+        WHERE ZLOTE~BUKRS = @P_SAIDA_0100-BUKRS AND
+              ZITEM~DT_UTIL = @P_SAIDA_0100-DATA.
+      IF ( SY-SUBRC = 0 ).
+        DELETE TG_0141_OUTROS[] WHERE VL_PAGO_LOTE = 0.
+      ENDIF.
+
+      CHECK ( TG_0141_OUTROS[] IS NOT INITIAL ).
+
+      REFRESH ESTRUTURA.
+      PERFORM F_MONTAR_ESTRUTURA USING:
+        01  '' '' 'TG_0141_OUTROS' 'DT_UTIL'        'Dt Util'       '10' '' '',
+        02  '' '' 'TG_0141_OUTROS' 'NM_LOTE'        'Lote'          '10' '' '',
+        03  '' '' 'TG_0141_OUTROS' 'NR_LOTE_ADM'    'Lote adm'      '10' '' '',
+        04  '' '' 'TG_0141_OUTROS' 'CHVID'          'Ch id'         '5' '' '',
+        05  '' '' 'TG_0141_OUTROS' 'VL_PAGO_LOTE'   'Valor'         '13' '' '',
+        06  '' '' 'TG_0141_OUTROS' 'BELNR'          'Doc_contábil'  '10' '' '',
+        07  '' '' 'TG_0141_OUTROS' 'DT_BELNR'       'Data contábil' '10' '' '',
+        08  '' '' 'TG_0141_OUTROS' 'DOCNUM'         'Docnum'        '10' '' ''.
+
+      CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+        EXPORTING
+          IT_FIELDCAT           = ESTRUTURA[]
+          I_SAVE                = 'A'
+          I_SCREEN_START_COLUMN = 3
+          I_SCREEN_START_LINE   = 3
+          I_SCREEN_END_COLUMN   = 80
+          I_SCREEN_END_LINE     = 25
+        TABLES
+          T_OUTTAB              = TG_0141_OUTROS[].
+
+
+  ENDCASE.
+
+  CHECK TG_0141_RESUMO_OUT[] IS NOT INITIAL.
+
+  SORT TG_0141_RESUMO_OUT BY DT_MOVTO.
+
+  REFRESH ESTRUTURA.
+  PERFORM F_MONTAR_ESTRUTURA USING:
+     01  ''   ''            'TG_0141_RESUMO_OUT' 'DOCNUM'      'Docnum'          '10' '' '',
+     02  ''   ''            'TG_0141_RESUMO_OUT' 'NFENUM'      'Número'          '10' '' '',
+     03  ''   ''            'TG_0141_RESUMO_OUT' 'EMISSOR'     'Agente Frete'    '13' '' '',
+     04  ''   ''            'TG_0141_RESUMO_OUT' 'ROUTE'       'Itinerário'      '10' '' '',
+     05  ''   ''            'TG_0141_RESUMO_OUT' 'DT_MOVTO'    'Dt.Movto'        '10' '' ''.
+
+
+  CASE P_TIPO.
+    WHEN '1'. "Valor Movto
+
+      PERFORM F_MONTAR_ESTRUTURA USING:
+
+        07  ''   ''            'TG_0141_RESUMO_OUT' 'VLR_MOV'     'Vlr.Movimento'   '14' '' 'X'.
+
+    WHEN '2'. "Saldo Frete
+
+      PERFORM F_MONTAR_ESTRUTURA USING:
+        08  ''   ''            'TG_0141_RESUMO_OUT' 'SALDO_FRETE' 'Saldo Frete'     '14' '' 'X'.
+
+  ENDCASE.
+
+
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+    EXPORTING
+      IT_FIELDCAT           = ESTRUTURA[]
+      I_SAVE                = 'A'
+      I_SCREEN_START_COLUMN = 3
+      I_SCREEN_START_LINE   = 3
+      I_SCREEN_END_COLUMN   = 80
+      I_SCREEN_END_LINE     = 25
+    TABLES
+      T_OUTTAB              = TG_0141_RESUMO_OUT.
+
+
+ENDFORM.
+
+FORM F_DIA_ANTERIOR_UTIL CHANGING P_DATA TYPE SY-DATUM.
+
+  DATA: V_DATA_AUX TYPE SY-DATUM.
+
+  CHECK P_DATA IS NOT INITIAL.
+
+  V_DATA_AUX = P_DATA.
+
+  SUBTRACT 1 FROM V_DATA_AUX.
+
+  "Jogar para o dia útil anterior
+  ZCL_MIRO=>GET_PROXIMO_DIA_UTIL(
+    EXPORTING
+      I_DATA_BASE = V_DATA_AUX
+      I_SIGNUM    = '-'
+      I_CK_DATA_ZLES0145 = ABAP_TRUE
+      I_BUKRS = P_BUKRS-LOW "USER STORY 158527 - MMSILVA - 17.01.2025
+    RECEIVING
+      R_DATA      = V_DATA_AUX
+    EXCEPTIONS
+      ERRO        = 1
+      OTHERS      = 2 ).
+
+  IF V_DATA_AUX IS NOT INITIAL.
+    P_DATA = V_DATA_AUX.
+  ENDIF.
+
+ENDFORM.
+
+
+FORM F_PROXIMO_DIA_UTIL CHANGING P_DATA TYPE SY-DATUM.
+
+  DATA: V_DATA_AUX TYPE SY-DATUM.
+
+  CHECK P_DATA IS NOT INITIAL.
+
+  V_DATA_AUX = P_DATA.
+
+  "Jogar para o dia útil anterior
+  ZCL_MIRO=>GET_PROXIMO_DIA_UTIL(
+    EXPORTING
+      I_DATA_BASE = V_DATA_AUX
+      I_SIGNUM    = '+'
+      I_CK_DATA_ZLES0145 = ABAP_TRUE
+      I_BUKRS = P_BUKRS-LOW "USER STORY 158527 - MMSILVA - 17.01.2025
+    RECEIVING
+      R_DATA      = V_DATA_AUX
+    EXCEPTIONS
+      ERRO        = 1
+      OTHERS      = 2 ).
+
+  IF V_DATA_AUX IS NOT INITIAL.
+    P_DATA = V_DATA_AUX.
+  ENDIF.
+
+ENDFORM.
+
+
+FORM ADD_PREV_PROX_DIA_NUTEIS CHANGING P_SAIDA_0100 TYPE ZDE_ZLES0145_0100_OUT
+                                       P_MSG        TYPE STRING.
+
+  DATA: V_DT_TMP       TYPE SY-DATUM,
+        V_DT_TMP_01    TYPE SY-DATUM,
+        V_DIA_ANT_UTIL TYPE SY-DATUM,
+        V_DATA_OUT     TYPE C LENGTH 15.
+
+  DATA(_OK) = ABAP_FALSE.
+  CLEAR: V_DT_TMP, V_DT_TMP_01, P_MSG.
+  WHILE _OK EQ ABAP_FALSE.
+
+    IF V_DT_TMP IS INITIAL.
+      V_DT_TMP  = P_SAIDA_0100-DATA.
+    ENDIF.
+
+    ADD 1 TO V_DT_TMP.
+    V_DT_TMP_01 = V_DT_TMP.
+
+    PERFORM F_PROXIMO_DIA_UTIL CHANGING V_DT_TMP_01.
+    IF V_DT_TMP_01 <> V_DT_TMP.
+      SELECT SINGLE *
+        FROM ZLEST0140 INTO @DATA(_WL_0140_TMP)
+       WHERE BUKRS = @P_SAIDA_0100-BUKRS
+         AND DATA  = @V_DT_TMP.
+      IF SY-SUBRC NE 0.
+        _OK = ABAP_TRUE.
+        V_DATA_OUT = V_DT_TMP+6(2) && '/' && V_DT_TMP+4(2) && '/' && V_DT_TMP(4).
+        CONCATENATE 'Parâmetro(Transação ZLES0144) não cadastrado no dia:' V_DATA_OUT '!' INTO P_MSG SEPARATED BY SPACE.
+      ELSE.
+        ADD _WL_0140_TMP-VALOR TO P_SAIDA_0100-VLR_PREV_ADT.
+      ENDIF.
+    ELSE.
+      _OK = ABAP_TRUE.
+    ENDIF.
+  ENDWHILE.
+
+ENDFORM.
+
+FORM F_CALC_VALORES_PGTO USING P_LCTO_SALDO_INICIAL
+                      CHANGING C_SAIDA_0100 TYPE ZDE_ZLES0145_0100_OUT.
+
+
+  DATA: WL_0141_MOV_ANT TYPE ZLEST0141,
+        V_DT_TMP        TYPE SY-DATUM,
+        V_DT_TMP_01     TYPE SY-DATUM,
+        V_DIA_ANT_UTIL  TYPE SY-DATUM,
+        V_MSG           TYPE STRING.
+
+  IF C_SAIDA_0100-LIFNR IS INITIAL.
+    PERFORM F_BLOQ_PROC USING 'Fornecedor não encontrado para geração do Adiantamento!'
+                      CHANGING C_SAIDA_0100.
+    EXIT.
+  ENDIF.
+
+  IF C_SAIDA_0100-BUKRS IS INITIAL.
+    PERFORM F_BLOQ_PROC USING 'Empresa não encontrada para geração do Adiantamento!'
+                      CHANGING C_SAIDA_0100.
+
+    EXIT.
+  ENDIF.
+
+  "Adicionar Previsoes proximos dias não uteis
+  PERFORM ADD_PREV_PROX_DIA_NUTEIS CHANGING C_SAIDA_0100
+                                            V_MSG.
+  IF V_MSG IS NOT INITIAL.
+    PERFORM F_BLOQ_PROC USING V_MSG
+                     CHANGING C_SAIDA_0100.
+  ENDIF.
+
+  IF C_SAIDA_0100-BLOQ_PROC IS INITIAL. "Nenhuma restrição para gerar adiantamento.
+
+    "Busca Movimento dia Anterior Util
+    CLEAR: V_DIA_ANT_UTIL.
+    V_DIA_ANT_UTIL = C_SAIDA_0100-DATA.
+
+    PERFORM F_DIA_ANTERIOR_UTIL CHANGING V_DIA_ANT_UTIL.
+
+    CLEAR: WL_0141_MOV_ANT.
+    SELECT SINGLE *
+      FROM ZLEST0141 INTO WL_0141_MOV_ANT
+     WHERE BUKRS = C_SAIDA_0100-BUKRS
+       AND DATA  = V_DIA_ANT_UTIL
+       AND LIFNR = C_SAIDA_0100-LIFNR.
+
+    IF ( P_LCTO_SALDO_INICIAL IS INITIAL )."Não é lançamento de Saldo Inicial
+
+      IF ( WL_0141_MOV_ANT IS INITIAL ) OR
+
+         ( WL_0141_MOV_ANT              IS NOT INITIAL AND
+           WL_0141_MOV_ANT-BELNR        IS INITIAL     AND  "Não gerou pagamento no dia anterior
+           WL_0141_MOV_ANT-SEM_SLD_PGTO IS INITIAL          "Possui Saldo Pagar
+          ).
+
+        PERFORM F_BLOQ_PROC USING 'Adiantamento não gerado no dia anterior!'
+                         CHANGING C_SAIDA_0100.
+
+      ELSEIF WL_0141_MOV_ANT-BELNR IS NOT INITIAL.
+
+        SELECT SINGLE *
+          FROM BSAK INTO @DATA(WL_BSAK)
+         WHERE BUKRS = @WL_0141_MOV_ANT-BUKRS
+           AND BELNR = @WL_0141_MOV_ANT-BELNR.
+
+        IF SY-SUBRC NE 0.
+          PERFORM F_BLOQ_PROC USING 'Adiantamento dia anterior ainda não compensado!'
+                            CHANGING C_SAIDA_0100.
+        ENDIF.
+
+      ENDIF.
+
+    ENDIF.
+
+  ENDIF.
+
+  IF C_SAIDA_0100-BLOQ_PROC IS INITIAL. "Nenhuma restrição para gerar adiantamento.
+
+    C_SAIDA_0100-SALDO_INICIAL    =  WL_0141_MOV_ANT-SALDO_FINAL.
+    C_SAIDA_0100-VLR_SLD_DIARIO   =  C_SAIDA_0100-SALDO_INICIAL - ( C_SAIDA_0100-VLR_MOV - C_SAIDA_0100-SALDO_ESTORNO ).
+
+    IF P_LCTO_SALDO_INICIAL IS NOT INITIAL. "Lançamento de Saldo Inicial
+      C_SAIDA_0100-VLR_PGTO_ADT     = C_SAIDA_0100-VLR_PREV_ADT.
+      C_SAIDA_0100-VLR_PGTO_ADT_TOT = C_SAIDA_0100-VLR_PREV_ADT.
+      C_SAIDA_0100-SALDO_FINAL      = C_SAIDA_0100-VLR_PREV_ADT.
+
+      CLEAR: C_SAIDA_0100-VLR_SLD_DIARIO, C_SAIDA_0100-SALDO_INICIAL.
+    ELSE.
+
+      "Valor Pagar 60%
+      C_SAIDA_0100-VLR_PGTO_ADT = 0.
+      IF C_SAIDA_0100-VLR_PREV_ADT > C_SAIDA_0100-VLR_SLD_DIARIO.
+        C_SAIDA_0100-VLR_PGTO_ADT = C_SAIDA_0100-VLR_PREV_ADT - C_SAIDA_0100-VLR_SLD_DIARIO.
+      ENDIF.
+
+      "Valor Pagar Adto Total
+      C_SAIDA_0100-VLR_PGTO_ADT_TOT = C_SAIDA_0100-VLR_PGTO_ADT + C_SAIDA_0100-SALDO_FRETE + C_SAIDA_0100-SALDO_OUTROS.
+
+      "Saldo Final
+      IF C_SAIDA_0100-VLR_SLD_DIARIO > C_SAIDA_0100-VLR_PREV_ADT.
+        C_SAIDA_0100-SALDO_FINAL = C_SAIDA_0100-VLR_SLD_DIARIO.
+      ELSE.
+        C_SAIDA_0100-SALDO_FINAL = C_SAIDA_0100-VLR_PREV_ADT.
+      ENDIF.
+
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.

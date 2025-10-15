@@ -1,0 +1,49 @@
+"Name: \PR:SAPMV50A\FO:USEREXIT_SAVE_DOCUMENT\SE:BEGIN\EI
+ENHANCEMENT 0 Z_MV50AFZ1_DIS.
+*
+ data: VREFER      TYPE ZSDT0151-CH_REFERENCIA,
+       FLAG_EXEC(3).
+
+ FLAG_EXEC = 'NAO'.
+ EXPORT FLAG_EXEC TO MEMORY ID 'VEXECVL'.
+
+ clear VREFER.
+ EXPORT VREFER TO MEMORY ID 'MREFER'.
+
+*data: VREFER      TYPE ZSDT0151-CH_REFERENCIA,
+*      WA_ZSDT0151 TYPE ZSDT0151,
+*      WA_VBAK     type VBAK,
+*      WA_KONV     type KONV.
+*
+*IMPORT  VREFER  FROM MEMORY ID 'MREFER'.
+*
+*     SELECT SINGLE *
+*       FROM ZSDT0151
+*       INTO WA_ZSDT0151
+*       WHERE VKORG          = LIKP-VKORG
+*       AND   WERKS          = LIPS-WERKS
+*       AND   VBELN          = LIPS-VGBEL
+*       AND   CH_REFERENCIA  = VREFER.
+*
+*  IF sy-subrc = 0.
+*       "total faturamento
+*      clear WA_KONV.
+*      SELECT SINGLE *
+*          FROM VBAK
+*          INTO WA_VBAK
+*          WHERE VBELN = LIPS-VGBEL.
+*
+*      IF SY-SUBRC = 0.
+*        SELECT SINGLE *
+*          FROM KONV
+*          INTO WA_KONV
+*        WHERE KNUMV  = WA_VBAK-KNUMV
+*        AND   KSCHL  = 'PR00'.
+*      ENDIF.
+*      WA_ZSDT0151-LFIMG = LIPS-LFIMG.
+*      WA_ZSDT0151-TOTAL = LIPS-LFIMG  * WA_KONV-KBETR..
+*      MODIFY ZSDT0151 from WA_ZSDT0151.
+*      COMMIT WORK.
+*  ENDIF.
+
+ENDENHANCEMENT.

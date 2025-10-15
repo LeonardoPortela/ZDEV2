@@ -1,0 +1,23 @@
+*CONCATENATE P_CODSAI ST_ZMMR001-FARDOS '%' into P_CODSAI_INICIO.
+
+"P_CODSAI_INICIO = | { P_CODSAI } { ST_ZMMR001-FARDOS } %|.
+*select single
+*  cd_sai
+*INTO
+*  P_CODSAI_EXTENSO
+*from
+*  zppt0002
+*where
+*  CD_SAI like P_CODSAI_INICIO.
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*

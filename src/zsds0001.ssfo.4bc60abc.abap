@@ -1,0 +1,26 @@
+CLEAR: WG_VLRTOT.
+
+MOVE WG_ITENS-VLRTOT TO WG_VLRTOT.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

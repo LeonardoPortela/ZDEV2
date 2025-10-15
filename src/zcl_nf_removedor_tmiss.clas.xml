@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_NF_REMOVEDOR_TMISS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe p/ remover o TMISS na J_1BNFLIN da Nota fiscal</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>BUSCAR_CONSTANTES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Buscar constante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Construtor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_TVARV_NFTYPE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ABAP: nome da variável de variante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INICIAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Iniciar rotina para limpar o campo TMISS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>S_DOC_HEADER</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_NFTYPE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar tipo de NF</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_VALIDO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar se o registro é válido para entrar na regra</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>I_S_DOC_HEADER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INICIAR</CMPNAME>
+     <SCONAME>C_T_DOC_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>J_1BNFLIN</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_NFTYPE</CMPNAME>
+     <SCONAME>CX_J1BNFE_INVALID_VALUE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exception NFe invalid value</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_VALIDO</CMPNAME>
+     <SCONAME>R_V_VALIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>variável booleana (X=verdade, -=falso, espaço=desconhecido)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

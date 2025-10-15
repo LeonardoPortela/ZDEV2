@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SCVI" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SCVI>
+    <SHDSVCI>
+     <SCVARIANT>ZTRIP_1756</SCVARIANT>
+     <PROGNAME>SAPMP56T</PROGNAME>
+     <DYNPRO>1756</DYNPRO>
+     <VERSION>9</VERSION>
+    </SHDSVCI>
+    <SHDSVTXCI>
+     <SHDSVTXCI>
+      <LANGU>P</LANGU>
+      <SCVARIANT>ZTRIP_1756</SCVARIANT>
+      <SCVTEXT>Campos obrigatorios</SCVTEXT>
+     </SHDSVTXCI>
+    </SHDSVTXCI>
+    <SHDSVFVCI>
+     <SHDSVFVCI>
+      <SCVARIANT>ZTRIP_1756</SCVARIANT>
+      <FIELDNAME>PSREF_FIELD-TRIP</FIELDNAME>
+      <ACTIVE>X</ACTIVE>
+      <OBLIGATORY>X</OBLIGATORY>
+      <ITYPE>C</ITYPE>
+     </SHDSVFVCI>
+    </SHDSVFVCI>
+   </SCVI>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,90 @@
+*&---------------------------------------------------------------------*
+*& Report  ZRD_ZMMT0113_EXIT
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZRD_ZMMT0113_EXIT.
+
+FORM F_EXIT_ZMMT0113_0001 CHANGING P_REGISTRO_MANTER TYPE ANY.
+
+
+  DATA: LS_ZMMT0113 TYPE ZMMT0113_OUT.
+
+  CLEAR: LS_ZMMT0113.
+
+  MOVE-CORRESPONDING P_REGISTRO_MANTER  TO LS_ZMMT0113.
+
+  MOVE-CORRESPONDING LS_ZMMT0113 TO P_REGISTRO_MANTER.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0002    USING P_REGISTRO_MANTER TYPE ANY
+                          CHANGING P_ERRO.
+
+  DATA: LS_ZMMT0113 TYPE ZMMT0113_OUT.
+
+  MOVE-CORRESPONDING P_REGISTRO_MANTER  TO LS_ZMMT0113.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0003 CHANGING P_REGISTRO_MANTER TYPE ANY.
+
+  DATA: LS_ZMMT0113 TYPE ZMMT0113_OUT.
+
+  CLEAR: LS_ZMMT0113.
+  MOVE-CORRESPONDING P_REGISTRO_MANTER  TO LS_ZMMT0113.
+
+  MOVE-CORRESPONDING LS_ZMMT0113 TO P_REGISTRO_MANTER.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0004 CHANGING P_REGISTRO_MANTER TYPE ANY.
+  DATA: LS_ZMMT0113 TYPE ZMMT0113_OUT.
+  CLEAR LS_ZMMT0113.
+
+  MOVE-CORRESPONDING P_REGISTRO_MANTER  TO LS_ZMMT0113.
+
+  MOVE-CORRESPONDING LS_ZMMT0113 TO P_REGISTRO_MANTER.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0005 CHANGING P_REGISTRO_MANTER TYPE ANY.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0006 USING P_REGISTRO_MANTER TYPE ANY
+                       CHANGING P_ERRO.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0008 CHANGING P_COL_POS
+                                  P_REF_TABNAME
+                                  P_REF_FIELDNAME
+                                  P_TABNAME
+                                  P_FIELD
+                                  P_SCRTEXT_L
+                                  P_OUTPUTLEN
+                                  P_EDIT
+                                  P_SUM
+                                  P_EMPHASIZE
+                                  P_JUST
+                                  P_HOTSPOT
+                                  P_F4
+                                  P_CHECK.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0009  TABLES IT_EXCL_TOOLBAR
+                            USING P_DB_TAB.
+ENDFORM.
+
+FORM F_EXIT_ZMMT0113_0020.
+
+  CALL FUNCTION 'Z_ANALISE_LOGS_TABLE'
+    EXPORTING
+      CUSOBJ   = 'ZMMT0113'
+      TABFIRST = 'X'.
+
+ENDFORM.

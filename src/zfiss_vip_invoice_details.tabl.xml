@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZFISS_VIP_INVOICE_DETAILS</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>VIP - Invoice Details Structure</DDTEXT>
+    <EXCLASS>1</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>TRANSTYPE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Transaction Type 1-Payable 2-Receivable</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>SEQNO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Sequence Number</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>COMPANYCODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Code of the company creating the journal</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>OPRBILLCODE</FIELDNAME>
+     <ROLLNAME>ZVIP_INVOICE_BILL_SOURCE</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <VALEXI>X</VALEXI>
+     <SHLPORIGIN>F</SHLPORIGIN>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>LOBCODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Line of business</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>LEDGERCODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Ledger account where this line was posted to</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>APARCODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>AP/AR account this line was posted to</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>MEMO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>CURRENCYAMOUNT</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Amount for this invoice line in the invoice currency</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>BASECURRENCYAMOUNT</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Amount for this invoice line in the system base currency USD</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>VOYAGENO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Voyage number associated to this invoice line</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>VESSELCODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Vessel code used in the related voyage</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>VENDOREXTERNALREF</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Counterparty external name: SAP reference - Forn</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>VENDORREFERENCECODE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Counterparty external name: SAP reference - Cli</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

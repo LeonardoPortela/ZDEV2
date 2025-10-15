@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZPPE0002</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Status JOB Trace Cotton</DDTEXT>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>QTD_SOLICITACAO_EM_FILA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Quantidade em Fila</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>QTD_REGISTRO_EM_FILA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Quantidade de Itens nas Requisição</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>QTD_SOLICITACAO_PROCESSADA_DIA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Quantidade Hoje</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>QTD_REGISTRO_PROCESSADO_DIA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Quantidade de Itens processado por dia</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>TIME_MEDIO_REGISTRO_PROCESSADO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000020</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Tempo Medio de Registro Processado</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>STS_JOB_PRI_ATIVO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000002</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000001</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Status JOB_FILA       {X} - Ativo  { } Inativo</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>STS_JOB_SEC_ATIVO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000002</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000001</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Status JOB_COTTON {X} - Ativo  { } Inativo</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

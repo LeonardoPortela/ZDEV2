@@ -1,0 +1,5 @@
+PROCESS BEFORE OUTPUT.
+
+  MODULE pbo_7203_create_objects.
+
+PROCESS AFTER INPUT.

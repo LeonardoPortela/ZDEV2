@@ -1,0 +1,1 @@
+FUNCTION-POOL ZRFFOM100.                    "MESSAGE-ID ..

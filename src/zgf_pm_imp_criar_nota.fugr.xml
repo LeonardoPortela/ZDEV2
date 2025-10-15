@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Importação de dados Nota PM x Mobile</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_PM_IMP_CRIAR_NOTATOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_PM_IMP_CRIAR_NOTA</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_IMPORTA_NOTA_PM</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>NOTAS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZPME0015_T</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>ONLINE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR1</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>RETORNO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTPM_RETORNO_NOTA</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>NOTAS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ONLINE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RETORNO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

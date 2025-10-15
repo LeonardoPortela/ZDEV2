@@ -1,0 +1,562 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZMMR126_STATUS_9004.
+*----------------------------------------------------------------------*
+
+CLASS LCL_EVENT_RECEIVER_9004 DEFINITION DEFERRED.
+
+DATA: CTL_CCCONTAINER_9004 TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      CTL_ALV_9004         TYPE REF TO CL_GUI_ALV_GRID,
+      IT_FIELDCATALOG_9004 TYPE LVC_T_FCAT,
+      GS_VARIANT_9004      TYPE DISVARIANT,
+      GS_LAYOUT_9004       TYPE LVC_S_LAYO,
+      GS_SCROLL_COL_9004   TYPE LVC_S_COL,
+      GS_SCROLL_ROW_9004   TYPE LVC_S_ROID,
+      WA_STABLE_9004       TYPE LVC_S_STBL.
+
+DATA: EVENT_HANDLER_9004 TYPE REF TO LCL_EVENT_RECEIVER_9004.
+
+DATA: CK_CONFERIU TYPE CHAR01.
+
+CLASS LCL_EVENT_RECEIVER_9004 DEFINITION.
+
+  PUBLIC SECTION.
+    DATA: VALIDAR_DATA  TYPE C,
+          ERROR_IN_DATA TYPE C,
+          LS_GOOD       TYPE LVC_S_MODI,
+          LV_VALUE      TYPE LVC_VALUE.
+
+    METHODS: DATA_CHANGED_FINISHED FOR EVENT DATA_CHANGED_FINISHED OF CL_GUI_ALV_GRID IMPORTING E_MODIFIED ET_GOOD_CELLS.
+    METHODS: DATA_CHANGED FOR EVENT DATA_CHANGED OF CL_GUI_ALV_GRID IMPORTING ER_DATA_CHANGED.
+    "METHODS: SUBTOTAL_TEXT FOR EVENT SUBTOTAL_TEXT OF CL_GUI_ALV_GRID IMPORTING ES_SUBTOTTXT_INFO EP_SUBTOT_LINE E_EVENT_DATA.
+
+  PRIVATE SECTION.
+
+    TYPES: DDSHRETVAL_TABLE TYPE TABLE OF DDSHRETVAL.
+
+    METHODS: PERFORM_SEMANTIC_CHECKS
+      IMPORTING
+        PR_DATA_CHANGED TYPE REF TO CL_ALV_CHANGED_DATA_PROTOCOL.
+
+    METHODS: ATUALIZA_NOTA
+      IMPORTING
+        I_CK_CHAVE_DEB_CRED TYPE CHAR01
+        PR_DATA_CHANGED     TYPE REF TO CL_ALV_CHANGED_DATA_PROTOCOL.
+
+ENDCLASS.                    "lcl_event_receiver DEFINITION
+
+CLASS LCL_EVENT_RECEIVER_9004 IMPLEMENTATION.
+
+  METHOD ATUALIZA_NOTA.
+
+    DATA: WA_TBSL     TYPE TBSL,
+          WA_ZGLT032  TYPE ZGLT032,
+          TP_DEB_CRED TYPE SHKZG.
+
+*    MOVE ZDE_MOV_LCT_BANCO-SAKNR TO LV_VALUE.
+*    CALL METHOD PR_DATA_CHANGED->MODIFY_CELL
+*      EXPORTING
+*        I_ROW_ID    = LS_GOOD-ROW_ID
+*        I_FIELDNAME = 'SAKNR'
+*        I_VALUE     = LV_VALUE.
+
+*    MOVE ZDE_MOV_LCT_BANCO-DMBE2 TO LV_VALUE.
+*    CONDENSE LV_VALUE NO-GAPS.
+*    CALL METHOD PR_DATA_CHANGED->MODIFY_CELL
+*      EXPORTING
+*        I_ROW_ID    = LS_GOOD-ROW_ID
+*        I_FIELDNAME = 'DMBE2'
+*        I_VALUE     = LV_VALUE.
+
+  ENDMETHOD.                    "ATUALIZA_NOTA
+
+*  METHOD SUBTOTAL_TEXT.
+*    DATA: WA_MOV_LCT_BANCO2 TYPE ZDE_MOV_LCT_BANCO,
+*          WA_MOV_LCT_BANCO  TYPE ZDE_MOV_LCT_BANCO.
+*
+*    FIELD-SYMBOLS: <FS>  TYPE ANY.
+*    FIELD-SYMBOLS: <FS2> TYPE ANY.
+*
+*    ASSIGN E_EVENT_DATA->M_DATA->* TO <FS>.
+*    IF SY-SUBRC EQ 0.
+*
+*      IF ES_SUBTOTTXT_INFO(07) EQ 'TP_LCTO'.
+*
+*        ASSIGN EP_SUBTOT_LINE->* TO <FS2>.
+*        WA_MOV_LCT_BANCO2 = <FS2>.
+*
+*        READ TABLE IT_MOV_LCT_BANCO INTO WA_MOV_LCT_BANCO WITH KEY TP_LCTO = WA_MOV_LCT_BANCO2-TP_LCTO.
+*        <FS> = WA_MOV_LCT_BANCO-DESCRICAO.
+*
+*        WA_MOV_LCT_BANCO2-DMBTR = 0.
+*        WA_MOV_LCT_BANCO2-DMBE2 = 0.
+*        LOOP AT IT_MOV_LCT_BANCO INTO WA_MOV_LCT_BANCO WHERE TP_LCTO = WA_MOV_LCT_BANCO2-TP_LCTO.
+*          WA_MOV_LCT_BANCO2-DMBTR = WA_MOV_LCT_BANCO2-DMBTR + WA_MOV_LCT_BANCO-DMBTR.
+*          WA_MOV_LCT_BANCO2-DMBE2 = WA_MOV_LCT_BANCO2-DMBE2 + WA_MOV_LCT_BANCO-DMBE2.
+*        ENDLOOP.
+*
+*        WA_MOV_LCT_BANCO = <FS2>.
+*        WA_MOV_LCT_BANCO-DMBTR = WA_MOV_LCT_BANCO2-DMBTR.
+*        WA_MOV_LCT_BANCO-DMBE2 = WA_MOV_LCT_BANCO2-DMBE2.
+*        <FS2> = WA_MOV_LCT_BANCO.
+*      ENDIF.
+*    ENDIF.
+
+*  ENDMETHOD.                    "subtotal_text
+
+  "BCALV_EDIT_03
+  METHOD PERFORM_SEMANTIC_CHECKS.
+
+    DATA: LC_NM_PESO_SUBTOTAL	TYPE ZDE_NM_PESO_SUBTOTAL,
+          LC_NM_PESO_LIQUIDO  TYPE ZDE_NM_PESO_LIQUIDO,
+          LC_DS_OBSERVACAO    TYPE ZDE_OBSERVACAO.
+
+    FIELD-SYMBOLS: <FS_CELL> TYPE LVC_S_MODI.
+
+    LOOP AT PR_DATA_CHANGED->MT_GOOD_CELLS INTO DATA(LS_GOOD)
+      WHERE FIELDNAME EQ 'DS_OBSERVACAO' OR FIELDNAME EQ 'NM_PESO_LIQUIDO'.
+
+      CASE LS_GOOD-FIELDNAME.
+        WHEN 'NM_PESO_LIQUIDO'.
+
+          LV_VALUE = LS_GOOD-VALUE.
+          CONDENSE LV_VALUE NO-GAPS.
+
+          READ TABLE IT_NOTAS ASSIGNING FIELD-SYMBOL(<FS_NOTA>) INDEX LS_GOOD-ROW_ID.
+
+          IF LS_GOOD-VALUE IS INITIAL.
+            CONTINUE.
+          ENDIF.
+
+          CASE LS_GOOD-FIELDNAME.
+            WHEN 'NM_PESO_SUBTOTAL'.
+              MOVE LV_VALUE TO LC_NM_PESO_SUBTOTAL.
+              LC_NM_PESO_LIQUIDO = <FS_NOTA>-NM_PESO_LIQUIDO.
+            WHEN 'NM_PESO_LIQUIDO'.
+              MOVE LV_VALUE TO LC_NM_PESO_LIQUIDO.
+              LC_NM_PESO_SUBTOTAL = <FS_NOTA>-NM_PESO_SUBTOTAL.
+          ENDCASE.
+
+          TRY .
+
+              OBJETO->SET_PESOS_NOTAS(
+                EXPORTING
+                  I_ID_CARGA      = <FS_NOTA>-ID_CARGA     " Id. da Carga
+                  I_ID_NOTA       = <FS_NOTA>-ID_NOTA      " Id. Nota Fiscal
+                  I_PESO_SUBTOTAL = LC_NM_PESO_SUBTOTAL    " Peso SubTotal do Caminhão
+                  I_PESO_LIQUIDO  = LC_NM_PESO_LIQUIDO     " Peso Líquido
+                IMPORTING
+                  E_NOTA          = <FS_NOTA>  ).
+
+            CATCH ZCX_CARGA INTO EX_CARGA.
+              ERROR_IN_DATA = ABAP_TRUE.
+              CALL METHOD PR_DATA_CHANGED->ADD_PROTOCOL_ENTRY
+                EXPORTING
+                  I_MSGID     = EX_CARGA->MSGID
+                  I_MSGNO     = EX_CARGA->MSGNO
+                  I_MSGTY     = EX_CARGA->MSGTY
+                  I_MSGV1     = EX_CARGA->MSGV1
+                  I_MSGV2     = EX_CARGA->MSGV2
+                  I_MSGV3     = EX_CARGA->MSGV3
+                  I_MSGV4     = EX_CARGA->MSGV4
+                  I_FIELDNAME = LS_GOOD-FIELDNAME
+                  I_ROW_ID    = LS_GOOD-ROW_ID.
+          ENDTRY.
+
+        WHEN 'DS_OBSERVACAO'.
+
+          LV_VALUE = LS_GOOD-VALUE.
+          READ TABLE IT_NOTAS ASSIGNING <FS_NOTA> INDEX LS_GOOD-ROW_ID.
+          LC_DS_OBSERVACAO = LV_VALUE.
+
+          TRY .
+              OBJETO->SET_OBSERVACAO_NOTA(
+                EXPORTING
+                  I_ID_CARGA      = <FS_NOTA>-ID_CARGA    " Id. da Carga
+                  I_ID_NOTA       = <FS_NOTA>-ID_NOTA     " Id. Nota Fiscal
+                  I_DS_OBSERVACAO = LC_DS_OBSERVACAO    " Peso SubTotal do Caminhão
+                IMPORTING
+                  E_NOTA          = <FS_NOTA> ).
+            CATCH ZCX_CARGA INTO EX_CARGA.
+              ERROR_IN_DATA = ABAP_TRUE.
+              CALL METHOD PR_DATA_CHANGED->ADD_PROTOCOL_ENTRY
+                EXPORTING
+                  I_MSGID     = EX_CARGA->MSGID
+                  I_MSGNO     = EX_CARGA->MSGNO
+                  I_MSGTY     = EX_CARGA->MSGTY
+                  I_MSGV1     = EX_CARGA->MSGV1
+                  I_MSGV2     = EX_CARGA->MSGV2
+                  I_MSGV3     = EX_CARGA->MSGV3
+                  I_MSGV4     = EX_CARGA->MSGV4
+                  I_FIELDNAME = LS_GOOD-FIELDNAME
+                  I_ROW_ID    = LS_GOOD-ROW_ID.
+          ENDTRY.
+      ENDCASE.
+
+    ENDLOOP.
+
+  ENDMETHOD.                    "perform_semantic_checks
+
+  METHOD DATA_CHANGED.
+    ERROR_IN_DATA = SPACE.
+    CALL METHOD PERFORM_SEMANTIC_CHECKS( ER_DATA_CHANGED ).
+    IF ERROR_IN_DATA = 'X'.
+      CALL METHOD ER_DATA_CHANGED->DISPLAY_PROTOCOL.
+    ENDIF.
+  ENDMETHOD.                    "on_data_chaged
+
+  METHOD DATA_CHANGED_FINISHED.
+
+    IF E_MODIFIED IS NOT INITIAL.
+
+      WA_STABLE_9004-ROW = ABAP_TRUE.
+      WA_STABLE_9004-COL = ABAP_TRUE.
+      CALL METHOD CTL_ALV_9004->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE_9004.
+    ENDIF.
+
+  ENDMETHOD.                    "ON_DATA_CHANGED_FINISHED_
+
+ENDCLASS.                    "LCL_EVENT_RECEIVER IMPLEMENTATION
+
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_9004  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_9004 OUTPUT.
+  SET PF-STATUS 'PF9004'.
+  SET TITLEBAR 'TL9004' WITH ZDE_ZSDT0001CG_ALV-NR_TICKET.
+
+  IF CTL_ALV_9004 IS INITIAL.
+
+    CREATE OBJECT CTL_CCCONTAINER_9004
+      EXPORTING
+        CONTAINER_NAME = 'ALV_9004'.
+
+    CREATE OBJECT CTL_ALV_9004
+      EXPORTING
+        I_PARENT = CTL_CCCONTAINER_9004.
+
+    PERFORM FILL_IT_FIELDCATALOG_9004.
+
+    PERFORM FILL_GS_VARIANT_9004.
+
+    GS_LAYOUT_9004-SEL_MODE   = 'A'.
+    GS_LAYOUT_9004-ZEBRA      = ABAP_FALSE.
+    GS_LAYOUT_9004-CWIDTH_OPT = ABAP_TRUE.
+    GS_LAYOUT_9004-NO_TOOLBAR = ABAP_TRUE.
+
+    IF NOT ( OBJETO->CARGA-CK_ENVIADO_OPUS = ABAP_TRUE AND OBJETO->CARGA-CK_RECEBIDO_OPUS EQ ABAP_FALSE ).
+      GS_LAYOUT_9004-EDIT_MODE  = 'X'.
+    ENDIF.
+
+    CALL METHOD CTL_ALV_9004->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT       = GS_LAYOUT_9004
+        IS_VARIANT      = GS_VARIANT_9004
+      CHANGING
+        IT_FIELDCATALOG = IT_FIELDCATALOG_9004
+        IT_OUTTAB       = IT_NOTAS[].
+
+    CALL METHOD CTL_ALV_9004->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD CTL_ALV_9004->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    CREATE OBJECT EVENT_HANDLER_9004.
+    SET HANDLER EVENT_HANDLER_9004->DATA_CHANGED_FINISHED FOR CTL_ALV_9004.
+    SET HANDLER EVENT_HANDLER_9004->DATA_CHANGED          FOR CTL_ALV_9004.
+*    SET HANDLER EVENT_HANDLER_9004->SUBTOTAL_TEXT         FOR CTL_ALV_9004.
+    CALL METHOD CTL_ALV_9004->REFRESH_TABLE_DISPLAY.
+
+  ENDIF.
+
+  WA_STABLE_9004-ROW = ABAP_TRUE.
+  WA_STABLE_9004-COL = ABAP_TRUE.
+
+  CALL METHOD CTL_ALV_9004->REFRESH_TABLE_DISPLAY
+    EXPORTING
+      IS_STABLE      = WA_STABLE_9004
+      I_SOFT_REFRESH = ABAP_TRUE.
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_9004  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_9004 INPUT.
+
+  DATA: CK_RETORNO TYPE SY-SUBRC.
+  DATA: CK_SAIDA_AUTOMATICA TYPE CHAR01.
+
+  CLEAR: CK_SAIDA_AUTOMATICA.
+
+  CASE OK_CODE.
+    WHEN 'CONFIRMA'.
+      CLEAR: OK_CODE.
+
+      IF OBJETO->AT_MANUTENCAO NE ABAP_TRUE.
+        IF NOT ( OBJETO->CARGA-CK_ENVIADO_OPUS = ABAP_TRUE AND OBJETO->CARGA-CK_RECEBIDO_OPUS EQ ABAP_FALSE ).
+          PERFORM CONFERE_CARGA CHANGING CK_RETORNO CK_SAIDA_AUTOMATICA.
+        ELSE.
+          CK_RETORNO = 0.
+        ENDIF.
+      ELSE.
+        CK_RETORNO = 0 .
+      ENDIF.
+
+      CHECK CK_RETORNO IS INITIAL.
+
+      TRY .
+          OBJETO->SET_CONFERIDO(
+             EXPORTING I_PROXIMO_PASSO_AUTOMATICO = CK_SAIDA_AUTOMATICA
+             IMPORTING E_CONFERIU = DATA(E_CONFERIU) ).
+
+          IF NOT E_CONFERIU EQ ABAP_TRUE.
+            EXIT.
+          ENDIF.
+
+        CATCH ZCX_CARGA INTO EX_CARGA.
+          EX_CARGA->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_PARCEIROS INTO EX_PARCEIROS.
+          EX_PARCEIROS->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_ORDEM_VENDA INTO EX_ORDEM_VENDA.
+          EX_ORDEM_VENDA->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_JOB INTO EX_JOB.
+          EX_JOB->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_CADASTRO INTO EX_CADASTRO.
+          EX_CADASTRO->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_PEDIDO_COMPRA_EXCEPTION INTO EX_PEDIDO.
+          EX_PEDIDO->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_MIRO_EXCEPTION INTO EX_MIRO.
+          EX_MIRO->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+        CATCH ZCX_ORDEM_CARREGAMENTO INTO EX_ORDEM.
+          EX_ORDEM->PUBLISHED_ERRO( I_MSGTY = 'I' I_MSGTY_DISPLAY = 'E' ).
+          EXIT.
+
+      ENDTRY.
+
+      CK_CONFERIU = ABAP_TRUE.
+
+      PERFORM LIMPAR_9004.
+
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_9004_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_9004_EXIT INPUT.
+
+  PERFORM LIMPAR_9004.
+
+  LEAVE TO SCREEN 0.
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Module  GET_SCROLL_INFO_9004  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE GET_SCROLL_INFO_9004 INPUT.
+
+  IF CTL_ALV_9004 IS NOT INITIAL.
+    CALL METHOD CTL_ALV_9004->GET_SCROLL_INFO_VIA_ID
+      IMPORTING
+        ES_COL_INFO = GS_SCROLL_COL_9004
+        ES_ROW_NO   = GS_SCROLL_ROW_9004.
+  ENDIF.
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Form  FILL_IT_FIELDCATALOG_9004
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM FILL_IT_FIELDCATALOG_9004 .
+
+  DATA: LC_COL_POS  TYPE LVC_COLPOS.
+
+  FIELD-SYMBOLS: <FS_CAT> TYPE LVC_S_FCAT.
+
+  CLEAR: IT_FIELDCATALOG_9004[].
+
+  CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+    EXPORTING
+      I_STRUCTURE_NAME = 'ZDE_ZSDT0001NT_ALV'
+    CHANGING
+      CT_FIELDCAT      = IT_FIELDCATALOG_9004.
+
+  LOOP AT IT_FIELDCATALOG_9004 ASSIGNING <FS_CAT>.
+    <FS_CAT>-TABNAME = 'ZDE_ZSDT0001NT_ALV'.
+
+    IF <FS_CAT>-FIELDNAME     EQ 'DS_FORNECEDOR' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_NOTA'       OR
+       <FS_CAT>-FIELDNAME     EQ 'NM_SERIE'      OR
+       <FS_CAT>-FIELDNAME     EQ 'DT_EMISSAO'    OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QUANTIDADE' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_VALOR'      OR
+       <FS_CAT>-FIELDNAME     EQ 'NM_PESO_SUBTOTAL' OR
+       <FS_CAT>-FIELDNAME     EQ 'NM_PESO_LIQUIDO' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_UMI' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_IMP' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_AVA' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_ARD' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_QUE' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_ESV' OR
+       <FS_CAT>-FIELDNAME     EQ 'DS_OBSERVACAO'.
+      <FS_CAT>-NO_OUT = ABAP_FALSE.
+    ELSE.
+      <FS_CAT>-NO_OUT = ABAP_TRUE.
+    ENDIF.
+
+    IF <FS_CAT>-FIELDNAME     EQ 'NM_PESO_SUBTOTAL' OR
+       <FS_CAT>-FIELDNAME     EQ 'NM_PESO_LIQUIDO' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_UMI' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_IMP' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_AVA' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_ARD' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_QUE' OR
+       <FS_CAT>-FIELDNAME     EQ 'NR_QTDE_ESV'.
+      <FS_CAT>-DO_SUM = ABAP_TRUE.
+    ENDIF.
+
+    IF ( <FS_CAT>-FIELDNAME   EQ 'NM_PESO_LIQUIDO' ) OR ( <FS_CAT>-FIELDNAME   EQ 'DS_OBSERVACAO' ) .
+
+      TRY .
+          OBJETO->GET_TP_STATUS( IMPORTING E_TP_STATUS = DATA(E_TP_STATUS) ).
+        CATCH ZCX_CARGA.
+      ENDTRY.
+
+      IF E_TP_STATUS EQ ZIF_CARGA=>ST_STATUS_FECHADO.
+        IF NOT ( OBJETO->CARGA-CK_ENVIADO_OPUS = ABAP_TRUE AND OBJETO->CARGA-CK_RECEBIDO_OPUS EQ ABAP_FALSE ).
+          <FS_CAT>-EDIT = ABAP_TRUE.
+        ELSE.
+          <FS_CAT>-EDIT = ABAP_FALSE.
+        ENDIF.
+      ENDIF.
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  FILL_GS_VARIANT_9004
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM FILL_GS_VARIANT_9004.
+
+  GS_VARIANT_9004-REPORT      = SY-REPID.
+  GS_VARIANT_9004-HANDLE      = '9004'.
+  GS_VARIANT_9004-LOG_GROUP   = ABAP_FALSE.
+  GS_VARIANT_9004-USERNAME    = ABAP_FALSE.
+  GS_VARIANT_9004-VARIANT     = ABAP_FALSE.
+  GS_VARIANT_9004-TEXT        = ABAP_FALSE.
+  GS_VARIANT_9004-DEPENDVARS  = ABAP_FALSE.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  CONFERE_CARGA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      <--P_CK_RETORNO  text
+*----------------------------------------------------------------------*
+FORM CONFERE_CARGA  CHANGING P_RETORNO TYPE SY-SUBRC P_AUTOMATICO TYPE CHAR01.
+
+  DATA: LC_CONTADOR TYPE ZDE_SEQUENCIA_NOTA.
+
+  P_RETORNO = 9.
+  CK_VALIDACAO_CONFERENCIA = ABAP_FALSE.
+  CK_VALIDACAO_SAIDA_AUTOM = ABAP_FALSE.
+  CK_EFETUAR_SAIDA_AUTOM   = ABAP_FALSE.
+
+  DESCRIBE TABLE IT_NOTAS LINES LC_QTD_NOTAS.
+
+  CLEAR: IT_VALIDA_NOTAS.
+
+  LC_CONTADOR = 0.
+  DO LC_QTD_NOTAS TIMES.
+    ADD 1 TO LC_CONTADOR.
+    CLEAR: WA_VALIDA_NOTAS.
+    WA_VALIDA_NOTAS-ID_NUMERO = LC_CONTADOR.
+    APPEND WA_VALIDA_NOTAS TO IT_VALIDA_NOTAS.
+  ENDDO.
+
+  READ TABLE IT_VALIDA_NOTAS INDEX 1 ASSIGNING FIELD-SYMBOL(<FS_VALIDA_NOTA>).
+  MOVE-CORRESPONDING <FS_VALIDA_NOTA> TO ZDE_ZSDT0001CG_VALIDA_NOTA.
+  <FS_VALIDA_NOTA>-LINE_COLOR = CS_LINE_COLOR_SELECIONADA.
+
+  SCREEN_TELA = 9007.
+
+  CALL SCREEN 9010.
+
+  IF CK_VALIDACAO_CONFERENCIA EQ ABAP_TRUE AND CK_VALIDACAO_SAIDA_AUTOM EQ ABAP_TRUE.
+    P_RETORNO = 0.
+  ELSE.
+    P_RETORNO = 1.
+  ENDIF.
+
+  P_AUTOMATICO = CK_EFETUAR_SAIDA_AUTOM.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  LIMPAR_9004
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM LIMPAR_9004 .
+
+  CLEAR: EVENT_HANDLER_9004.
+
+  IF CTL_ALV_9004 IS NOT INITIAL.
+    CTL_ALV_9004->FREE( ).
+  ENDIF.
+
+  CLEAR: CTL_ALV_9004.
+
+  IF CTL_CCCONTAINER_9004 IS NOT INITIAL.
+    CTL_CCCONTAINER_9004->FREE( ).
+  ENDIF.
+  CLEAR: CTL_CCCONTAINER_9004.
+
+ENDFORM.

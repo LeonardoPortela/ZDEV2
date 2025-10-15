@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>LES - Price</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZLES_PRICEF01</SOBJ_NAME>
+    <SOBJ_NAME>LZLES_PRICETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZLES_PRICE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_MODIFY_CONDITION_PRICE_01</FUNCNAME>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>T_VTTP</PARAMETER>
+       <DBSTRUCT>VTTP</DBSTRUCT>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>C_KOMV</PARAMETER>
+       <DBSTRUCT>KOMV_INDEX</DBSTRUCT>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>T_VFSIVB</PARAMETER>
+       <DBSTRUCT>VFSIVB</DBSTRUCT>
+       <OPTIONAL>X</OPTIONAL>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>T_VTTP</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>C_KOMV</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_VFSIVB</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

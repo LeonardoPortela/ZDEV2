@@ -1,0 +1,26 @@
+
+READ TABLE TG_MARA INTO WG_MARA
+ WITH KEY MATNR = WG_ITENS-MATNR
+          BINARY SEARCH.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

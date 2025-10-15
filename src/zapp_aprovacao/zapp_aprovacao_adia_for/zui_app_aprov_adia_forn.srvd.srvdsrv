@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Def - Aprovação Adia Fornecedor'
+define service ZUI_APP_APROV_ADIA_FORN {
+  expose ZC_APROV_ADIA_FORN as AdiaFornecedor;
+  expose ZC_APROV_ADIA_FORN_IT as AdiaFornecedorItem;
+  expose ZC_APROV_ADIA_FORN_EST as AdiaFornecedorEstr;
+}

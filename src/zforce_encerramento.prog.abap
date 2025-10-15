@@ -1,0 +1,124 @@
+*&---------------------------------------------------------------------*
+*& Report ZFORCE_ENCERRAMENTO
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZFORCE_ENCERRAMENTO.
+
+TABLES: zsdt0102.
+
+DATA: IT_ZSDT0102 TYPE TABLE OF ZSDT0102,
+      WA_ZSDT0102 TYPE ZSDT0102,
+       IT_ZSDT0102_AUX TYPE TABLE OF ZSDT0102,
+      WA_ZSDT0102_AUX TYPE ZSDT0102.
+
+
+
+SELECTION-SCREEN BEGIN OF BLOCK 02 WITH FRAME TITLE TEXT-001.
+  SELECT-OPTIONS: s_docnum   FOR zsdt0102-docnum.
+  SELECT-OPTIONS: s_dtemi   FOR zsdt0102-DATA_EMI.
+SELECTION-SCREEN   END OF BLOCK 02.
+
+START-OF-SELECTION.
+
+ IF sy-batch EQ abap_true.
+    TRY.
+        zcl_job=>get_ck_program_execucao( EXPORTING i_nome_program = sy-cprog IMPORTING e_qtd = DATA(e_qtd) ).
+      CATCH zcx_job.
+    ENDTRY.
+
+    IF e_qtd GT 1.
+      LEAVE PROGRAM.
+    ENDIF.
+  ENDIF.
+
+  DATA: VL_DATA_LIM   TYPE D,
+        VL_DATA_AVISO TYPE D,
+        VL_LINES      TYPE I,
+        VL_DATA_PREV  TYPE D,
+        VL_HORA_PREV  TYPE STRING,
+        VL_DATA       TYPE STRING,
+        VL_DHPREV     TYPE STRING.
+
+  DATA: VL_NMDFE       TYPE STRING,
+        VL_DOCNUM      TYPE STRING,
+        VL_DOC_CTE     TYPE STRING,
+        VL_DATA_AUT    TYPE STRING,
+        VL_TITULO      TYPE STRING,
+        VL_MSG_RET     TYPE STRING.
+
+  DATA: ZCL_MDFE TYPE REF TO ZCL_MDFE.
+
+
+  REFRESH: IT_ZSDT0102.
+  CLEAR: WA_ZSDT0102.
+
+
+
+
+
+  CLEAR:IT_ZSDT0102.
+
+IF s_docnum IS NOT INITIAL.
+
+    SELECT *
+    FROM ZSDT0102
+    INTO TABLE IT_ZSDT0102
+  WHERE AUTORIZADO EQ 'X'
+    AND ENCERRADO  NE 'X'
+    AND CANCEL     NE 'X'
+    AND DT_AUTHCOD NE ''
+    AND DATA_EMI   NE ''
+    AND ESTORNADO NE 'X'
+    and AUTHCODE NE ''
+    AND CODE EQ '100'
+    AND docnum   IN  s_docnum.
+  "  AND DATA_EMI   >= '20240501'.
+    "and CNPJ_EMI  IN ('10962697001450','10962697001379','10962697001298','10962697000640').
+   " AND AVISO_ENC_AUT = 'X'.
+
+ENDIF.
+
+IF s_dtemi IS NOT INITIAL.
+
+     SELECT *
+    FROM ZSDT0102
+    APPENDING TABLE IT_ZSDT0102
+  WHERE AUTORIZADO EQ 'X'
+    AND ENCERRADO  NE 'X'
+    AND CANCEL     NE 'X'
+    AND DT_AUTHCOD NE ''
+    AND DATA_EMI   NE ''
+    AND ESTORNADO NE 'X'
+    and AUTHCODE NE ''
+    AND CODE EQ '100'
+    AND DATA_EMI   EQ  S_DTEMI-LOW
+    AND CONTINGENCIA EQ 'X'   .
+  "  AND DATA_EMI   >= '20240501'.
+    "and CNPJ_EMI  IN ('10962697001450','10962697001379','10962697001298','10962697000640').
+   " AND AVISO_ENC_AUT = 'X'.
+
+
+ENDIF.
+
+  CHECK IT_ZSDT0102[] IS NOT INITIAL.
+
+  LOOP AT IT_ZSDT0102 INTO WA_ZSDT0102.
+
+    FREE: ZCL_MDFE.
+
+    CREATE OBJECT ZCL_MDFE
+      EXPORTING
+        I_NMDFE  = WA_ZSDT0102-NMDFE
+        I_DOCNUM = WA_ZSDT0102-DOCNUM.
+
+    ZCL_MDFE->ENCERRAR_MDFE( I_NO_MSG_CONFIRM = 'X'
+                             I_ENC_AUT        = 'X' ).
+
+
+    MOVE-CORRESPONDING WA_ZSDT0102 TO WA_ZSDT0102_AUX.
+    APPEND WA_ZSDT0102_AUX TO IT_ZSDT0102_AUX.
+
+    CLEAR: WA_ZSDT0102, WA_ZSDT0102_AUX.
+
+  ENDLOOP.

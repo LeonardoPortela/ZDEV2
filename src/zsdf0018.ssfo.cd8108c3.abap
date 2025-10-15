@@ -1,0 +1,26 @@
+IF V_TOTAL_GERAL_VOLUM IS NOT INITIAL.
+V_TOTAL_VOLUME_CONV = V_TOTAL_GERAL_VOLUM.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

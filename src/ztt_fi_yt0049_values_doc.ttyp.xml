@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TTYP" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD40V>
+    <TYPENAME>ZTT_FI_YT0049_VALUES_DOC</TYPENAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <ROWTYPE>ZSFI_YT0049_VALUES_DOC</ROWTYPE>
+    <ROWKIND>S</ROWKIND>
+    <DATATYPE>STRU</DATATYPE>
+    <ACCESSMODE>S</ACCESSMODE>
+    <KEYDEF>K</KEYDEF>
+    <KEYKIND>U</KEYKIND>
+    <KEYFDCOUNT>0003</KEYFDCOUNT>
+    <DDTEXT>Documentos contábeis válidos de ZSDYT0049</DDTEXT>
+   </DD40V>
+   <DD42V>
+    <DD42V>
+     <TYPENAME>ZTT_FI_YT0049_VALUES_DOC</TYPENAME>
+     <KEYFDPOS>0001</KEYFDPOS>
+     <ROWTYPEPOS>0001</ROWTYPEPOS>
+     <KEYFIELD>CTB_BUKRS</KEYFIELD>
+    </DD42V>
+    <DD42V>
+     <TYPENAME>ZTT_FI_YT0049_VALUES_DOC</TYPENAME>
+     <KEYFDPOS>0002</KEYFDPOS>
+     <ROWTYPEPOS>0002</ROWTYPEPOS>
+     <KEYFIELD>CTB_BELNR</KEYFIELD>
+    </DD42V>
+    <DD42V>
+     <TYPENAME>ZTT_FI_YT0049_VALUES_DOC</TYPENAME>
+     <KEYFDPOS>0003</KEYFDPOS>
+     <ROWTYPEPOS>0003</ROWTYPEPOS>
+     <KEYFIELD>CTB_GJAHR</KEYFIELD>
+    </DD42V>
+   </DD42V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

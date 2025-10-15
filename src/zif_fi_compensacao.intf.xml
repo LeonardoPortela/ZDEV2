@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_FI_COMPENSACAO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface Compensação Doc. Contabil</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_PARTIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adiciona partida para compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_PARTIDA_RESIDUAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adicionar Partida Residual</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_AUGLV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação de compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_AUGTX</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BKTXT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de cabeçalho de documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BLART</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BLDAT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data no documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BUDAT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_HWAE2_EMP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da moeda da segunda moeda interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_HWAE3_EMP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da moeda da terceira moeda interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_KURSF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa de câmbio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Modo de exibição em &apos;CALL transaction .. using .. &apos;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MONAT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mês do exercício</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PARTIDAS_COMP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas de Compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SGFUNCT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Função alternativa para interface de contabilização FI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SIMULACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TCODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de transação atual</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_WAERS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da moeda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_WAERS_EMP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da moeda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_WWERT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de conversão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_XBLNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de referência</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Check se partida esta Aberta</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>COMPENSAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Efetuar Compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PREPARAR_DADOS_COMPENSACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preparar Dados para Compensar</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_AUGLV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Operação de compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_COMPENSACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data Compensação(Set.Dt. Lcto/Doc./Periodo Automatic.)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_CONVERSAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data Conversão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_DOCUMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data Documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_LCTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data Lançamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Modo Compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MOEDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Moeda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PERIODO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Periodo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_REFERENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Referência</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_SGFUNCT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Função alternativa para interface de contabilização FI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_SIMULACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Simulação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TAXA_CAMBIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Taxa Câmbio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TAXA_PARTIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Taxa Partida</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TCODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Código de transação atual</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TEXTO_CAB_DOC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Texto Cabeçalho Documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TEXTO_COMPENSACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Texto Compensação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TP_DOCUMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Tipo Documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_D</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Transferir dados partida Clientes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_K</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Transferir dados partida Fornecedores</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_S</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Transferir dados partida Contas Razão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDAR_COMPENSACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validar Compensação</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA</CMPNAME>
+     <SCONAME>I_PARTIDA_COMP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA_RESIDUAL</CMPNAME>
+     <SCONAME>C_COUNT_FT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numerador cabeç.doc./linha documento (interface contabiliz.)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA_RESIDUAL</CMPNAME>
+     <SCONAME>C_FTPOST_T</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeç.e itens de documento p/interface interno de contabil.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA_RESIDUAL</CMPNAME>
+     <SCONAME>I_PARTIDA_ORIGINAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_PARTIDA_RESIDUAL</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>E_BSEG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Segmento do documento contabilidade financeira</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>E_BSID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade: índice secundário para clientes</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>E_BSIK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade: índice secundário para fornecedores</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>E_BSIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade financ.: índice secundário p/contas do Razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>I_BELNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de um documento contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>I_BUZEI</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº linha de lançamento no documento contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>I_GJAHR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exercício</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_PARTIDA_OPEN</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COMPENSAR</CMPNAME>
+     <SCONAME>E_BELNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número Documento Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COMPENSAR</CMPNAME>
+     <SCONAME>R_COMPENSADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COMPENSAR</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PREPARAR_DADOS_COMPENSACAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AUGLV</CMPNAME>
+     <SCONAME>I_AUGLV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação de compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AUGLV</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_COMPENSACAO</CMPNAME>
+     <SCONAME>I_AUGDT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_COMPENSACAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_CONVERSAO</CMPNAME>
+     <SCONAME>I_WWERT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de conversão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_CONVERSAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_DOCUMENTO</CMPNAME>
+     <SCONAME>I_BLDAT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data no documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_DOCUMENTO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_LCTO</CMPNAME>
+     <SCONAME>I_BUDAT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_LCTO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MODE</CMPNAME>
+     <SCONAME>I_MODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Modo de exibição em &apos;CALL transaction .. using .. &apos;</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MODE</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MOEDA</CMPNAME>
+     <SCONAME>I_WAERS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da moeda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MOEDA</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PERIODO</CMPNAME>
+     <SCONAME>I_MONAT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mês do exercício</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PERIODO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REFERENCIA</CMPNAME>
+     <SCONAME>I_XBLNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REFERENCIA</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SGFUNCT</CMPNAME>
+     <SCONAME>I_SGFUNCT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Função alternativa para interface de contabilização FI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SGFUNCT</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SIMULACAO</CMPNAME>
+     <SCONAME>I_SIMULACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SIMULACAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TAXA_CAMBIO</CMPNAME>
+     <SCONAME>I_KURSF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa de câmbio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TAXA_CAMBIO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TAXA_PARTIDA</CMPNAME>
+     <SCONAME>C_PARTIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TAXA_PARTIDA</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TCODE</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TCODE</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TEXTO_CAB_DOC</CMPNAME>
+     <SCONAME>I_BKTXT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de cabeçalho de documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TEXTO_CAB_DOC</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TEXTO_COMPENSACAO</CMPNAME>
+     <SCONAME>I_AUGTX</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TEXTO_COMPENSACAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TP_DOCUMENTO</CMPNAME>
+     <SCONAME>I_BLART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TP_DOCUMENTO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_D</CMPNAME>
+     <SCONAME>C_PARTIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_D</CMPNAME>
+     <SCONAME>I_BSID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade: índice secundário para clientes</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_D</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_K</CMPNAME>
+     <SCONAME>C_PARTIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_K</CMPNAME>
+     <SCONAME>I_BSIK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade: índice secundário para fornecedores</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_K</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_S</CMPNAME>
+     <SCONAME>C_PARTIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de Compensação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_S</CMPNAME>
+     <SCONAME>I_BSIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contabilidade financ.: índice secundário p/contas do Razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSF_DADOS_PARTIDA_S</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDAR_COMPENSACAO</CMPNAME>
+     <SCONAME>R_VALIDADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDAR_COMPENSACAO</CMPNAME>
+     <SCONAME>ZCX_FI_COMPENSACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Compensação Documento Contábil</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

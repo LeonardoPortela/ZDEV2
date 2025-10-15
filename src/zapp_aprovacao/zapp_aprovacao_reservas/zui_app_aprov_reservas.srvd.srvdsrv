@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Def - Aprovação Reservas'
+define service ZUI_APP_APROV_RESERVAS {
+  expose ZC_APROV_RESERVAS;
+}

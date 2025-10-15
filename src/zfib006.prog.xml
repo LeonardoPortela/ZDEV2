@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZFIB006</NAME>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <RSTAT>K</RSTAT>
+    <RLOAD>P</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <CUA>
+    <TIT>
+     <RSMPE_TITT>
+      <CODE>TITLE01</CODE>
+      <TEXT>Projeto Crescer - Carga inicial de Bancos</TEXT>
+     </RSMPE_TITT>
+    </TIT>
+   </CUA>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Planilha Excel não pode ser aberta!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>Planilha/Arquivo base para a carga de bancos</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Tipo de arquivo a ser processado</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Carga inicial de Bancos</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_CAMI</KEY>
+     <ENTRY>Arquivo para a carga</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_MOD1</KEY>
+     <ENTRY>Modo execução Batch-Input</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_NLINE</KEY>
+     <ENTRY>Nro de linhas executáveis</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_OPTXT</KEY>
+     <ENTRY>Arquivo texto sem separadores</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_OPXLS</KEY>
+     <ENTRY>Arquivo de planilha Excel</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CADASTRO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface de Cadastro.</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_ENV_APROV_TAXA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa se precisa de aprovação taxa dólar - Insumos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CK_ALTEROU</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXCLUIR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exclui o Registro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna Regitro de Cadastro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Grava no Banco o Registro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIMPAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar Atributos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>NOVO_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Novo Registro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Registro de Cadastro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_REGISTROEX</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Registro de Cadastro Excluido</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDAR_EXCLUSAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valida Exclusão do Registro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validar Registro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDA_ATRIBUTO_ALTERAVEL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo pode ser Alterado??</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_ENV_APROV_TAXA</CMPNAME>
+     <SCONAME>E_VALIDOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXCLUIR_REGISTRO</CMPNAME>
+     <SCONAME>I_EXCLUIU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <SCONAME>I_GRAVOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <SCONAME>I_JOB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <SCONAME>ZCX_CADASTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro de Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LIMPAR_REGISTRO</CMPNAME>
+     <SCONAME>I_NAO_LIMPA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REGISTRO</CMPNAME>
+     <SCONAME>I_ID_REGISTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sequencia de Lançamento.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REGISTRO</CMPNAME>
+     <SCONAME>I_NAO_LIMPA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REGISTRO</CMPNAME>
+     <SCONAME>ZCX_CADASTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro Cadastro Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_REGISTROEX</CMPNAME>
+     <SCONAME>ZCX_CADASTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro Cadastro Interface.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDAR_EXCLUSAO</CMPNAME>
+     <SCONAME>E_VALIDOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDAR_REGISTRO</CMPNAME>
+     <SCONAME>E_VALIDOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validou Cadastro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_ATRIBUTO_ALTERAVEL</CMPNAME>
+     <SCONAME>I_CAMPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do campo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_ATRIBUTO_ALTERAVEL</CMPNAME>
+     <SCONAME>R_PERMITIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

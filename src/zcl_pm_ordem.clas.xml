@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_PM_ORDEM</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Criação e Atualização de Ordens</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ACTIVITY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CHECK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IDAPN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro. do Bloco de dados recebido</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IDILG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item da Sequencia de log erros recebido</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IDOPR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IDORD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_OPER_NO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de objeto externa SAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ORDERID</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_REFNUM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº referência p/ligação método de objeto - atributo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SEQOPR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº referência p/ligação método de objeto - atributo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_UNAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: nome do usuário atual</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VORNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_REPORT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Executa o JOB para Criar/Modificar as Ordens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_QTD_ITEM_BLOCO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Quantidade de Blocos gravada na tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_VORNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica a existencia do VORNR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONVERT_DATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Converte as Datas informadas para o Padrão SAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONVERT_TIME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Converte as Horas informadas para o Padrão SAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria Atualiza as Notas e Causas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria e Atualiza as Ordens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE_OPERACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera as Operações da Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BLOCO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Bloco</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDAPN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o ID de envio do Apontamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDILG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera Item de Sequencia de Log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDLOG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera Sequencia de Log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDNOT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o ID de envio da Nota</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDOPR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o ID de envio da Operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDORD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o ID de envio da Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDVNT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera ID do Vinculo da Nota</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_UNAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Usuário executor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VORNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a sequencia de VORNR da Operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de erros da execução da WS Mobile</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Log de Erros</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MODIFY_ORDEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Vincula a Nota na Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SERVER</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDAPN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria o ID de envio do Apontamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDILG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria Item de Sequencia de Log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDLOG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria Sequencia de Log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDOPR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria o ID de envio da Operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDORD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria o ID de envio da Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_UNAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Vincula o Usuário executor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_VORNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria a sequencia de VORNR da Operação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>STATUS_READ</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Status da Ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>T_RETURN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>UPDATE_READ_TEXT_ORDEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Alterar texto da operação da ordem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICA_ERROS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validações de Negocio</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_REPORT</CMPNAME>
+     <SCONAME>I_REPORT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do programa ABAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_REPORT</CMPNAME>
+     <SCONAME>I_SEQUEN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro. do Bloco de dados recebido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_REPORT</CMPNAME>
+     <SCONAME>I_UNAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do usuário</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_REPORT</CMPNAME>
+     <SCONAME>T_ZPPT0015</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Embalagens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_VORNR</CMPNAME>
+     <SCONAME>E_SUBRC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de retorno de instruções ABAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_VORNR</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_VORNR</CMPNAME>
+     <SCONAME>I_VORNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº operação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_DATE</CMPNAME>
+     <SCONAME>E_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_DATE</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres do comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_DATE</CMPNAME>
+     <SCONAME>I_VERSAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_TIME</CMPNAME>
+     <SCONAME>E_TIME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Primeiro fim programado possível: executar (hora)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_TIME</CMPNAME>
+     <SCONAME>I_TIME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres do comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <SCONAME>E_NOTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº da nota</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <SCONAME>I_NOTAS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados importados Nota PM x Mobile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <SCONAME>I_ONLINE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_NOTAS</CMPNAME>
+     <SCONAME>T_CAUSAS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens/Causas da Nota executada por WS Mobile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>E_APONTAMENTOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Informações de retorno para APIs</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>E_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>I_APONTAMENTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo tabela dados importado apontamento hr/home  PM x Mobile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>I_NOTAS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Vinculo de Notas e Ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>I_ONLINE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>I_OPERACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CRIAR_ORDENS</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE_OPERACAO</CMPNAME>
+     <SCONAME>I_OPERACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE_OPERACAO</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BLOCO</CMPNAME>
+     <SCONAME>E_BLOCO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro. do Bloco de dados recebido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDAPN</CMPNAME>
+     <SCONAME>E_IDAPN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Apontamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDILG</CMPNAME>
+     <SCONAME>E_IDILG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item da Sequencia de log erros recebido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDLOG</CMPNAME>
+     <SCONAME>E_IDLOG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sequencia de log erros recebido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDNOT</CMPNAME>
+     <SCONAME>E_IDNOT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id de envio da Notas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDOPR</CMPNAME>
+     <SCONAME>E_IDOPR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Operação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDORD</CMPNAME>
+     <SCONAME>E_IDOPR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDVNT</CMPNAME>
+     <SCONAME>E_IDVNT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Vinculo de Notas e Ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_UNAME</CMPNAME>
+     <SCONAME>E_UNAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: nome do usuário atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VORNR</CMPNAME>
+     <SCONAME>E_VORNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº operação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_BLOCO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro. do Bloco de dados recebido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_FIELD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do campo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_IDNOT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id de envio da Notas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_IDORD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID de envio da Ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_ONLINE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOG_RETORNO</CMPNAME>
+     <SCONAME>I_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_ORDEM</CMPNAME>
+     <SCONAME>E_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_ORDEM</CMPNAME>
+     <SCONAME>I_NOTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº da nota</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_ORDEM</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SERVER</CMPNAME>
+     <SCONAME>VIEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do módulo de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_UNAME</CMPNAME>
+     <SCONAME>I_PERNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seleções standard para reporting de dados mestre HR</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VORNR</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VORNR</CMPNAME>
+     <SCONAME>I_VORNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº operação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_READ</CMPNAME>
+     <SCONAME>E_LIBERADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_READ</CMPNAME>
+     <SCONAME>I_AUFNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº objeto</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_READ</CMPNAME>
+     <SCONAME>I_EQUNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº equipamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPDATE_READ_TEXT_ORDEM</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ordem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPDATE_READ_TEXT_ORDEM</CMPNAME>
+     <SCONAME>WS_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_ERROS</CMPNAME>
+     <SCONAME>I_ERROS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>RegistroTransação Exportação Ordem Pm x Mobile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_ERROS</CMPNAME>
+     <SCONAME>I_OPERACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_ERROS</CMPNAME>
+     <SCONAME>I_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem para WS Mobile Amaggi</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PARA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TPARA>
+    <PARAMID>ZPM0104_EDIT</PARAMID>
+   </TPARA>
+   <TPARAT>
+    <PARAMID>ZPM0104_EDIT</PARAMID>
+    <SPRACHE>P</SPRACHE>
+    <PARTEXT>ZPM0104 PERMISSÃO DE EDIÇÃO</PARTEXT>
+   </TPARAT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

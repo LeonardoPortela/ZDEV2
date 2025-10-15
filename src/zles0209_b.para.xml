@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PARA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TPARA>
+    <PARAMID>ZLES0209_B</PARAMID>
+   </TPARA>
+   <TPARAT>
+    <PARAMID>ZLES0209_B</PARAMID>
+    <SPRACHE>P</SPRACHE>
+    <PARTEXT>Mostrar botões de acesso.</PARTEXT>
+   </TPARAT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

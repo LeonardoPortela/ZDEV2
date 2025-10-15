@@ -1,0 +1,453 @@
+*----------------------------------------------------------------------*
+***INCLUDE MZLES003COCKPIT0005 .
+*----------------------------------------------------------------------*
+
+***********************************************************************
+* LOCAL CLASSES
+***********************************************************************
+*---------- Definition -----------------------------------------------*
+CLASS COCKIP_EVENT_HANDLER_LOTES DEFINITION.
+
+  PUBLIC SECTION.
+    METHODS COCKPIT_HOTSPOT_CLICK_LOTES
+                FOR EVENT HOTSPOT_CLICK OF CL_GUI_ALV_GRID
+      IMPORTING E_COLUMN_ID ES_ROW_NO.
+
+ENDCLASS.                    "cockip_event_handler_lotes DEFINITION
+*---------- Implementation -------------------------------------------*
+CLASS COCKIP_EVENT_HANDLER_LOTES IMPLEMENTATION.
+
+  METHOD COCKPIT_HOTSPOT_CLICK_LOTES.
+    PERFORM COCKPIT_HOTSPOT_CLICK_LOTES USING ES_ROW_NO-ROW_ID E_COLUMN_ID-FIELDNAME.
+  ENDMETHOD.                    "cockpit_hotspot_click_lotes
+
+ENDCLASS.                    "cockip_event_handler_lotes IMPLEMENTATION
+
+*&---------------------------------------------------------------------*
+*&      Form  cockpit_hotspot_click_lotes
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->VALUE(ROW_ID)     text
+*      -->VALUE(FIELDNAME)  text
+*----------------------------------------------------------------------*
+FORM COCKPIT_HOTSPOT_CLICK_LOTES  USING VALUE(ROW_ID) LIKE LVC_S_ROID-ROW_ID VALUE(FIELDNAME) LIKE LVC_S_COL-FIELDNAME.
+
+  DATA: WA_LOTES_ALV TYPE ZPFE_LOTE_ALV,
+        VG_BELNR     TYPE BELNR_D,
+        VG_GJAHR     TYPE GJAHR,
+        VG_BUKRS     TYPE BUKRS.
+
+  CASE FIELDNAME.
+    WHEN 'ICOALERTA'.
+      READ TABLE IT_LOTES_ALV  INDEX ROW_ID INTO WA_LOTES_ALV.
+      IF NOT WA_LOTES_ALV-CK_UTILIZAR IS INITIAL.
+
+        CALL FUNCTION 'Z_PFE_LOTE_AC_DC_AJUSTES'
+          EXPORTING
+            P_NM_LOTE = WA_LOTES_ALV-NM_LOTE
+          EXCEPTIONS
+            ERRO      = 1
+            OTHERS    = 2.
+
+        IF NOT SY-SUBRC IS INITIAL.
+          MESSAGE ID SY-MSGID TYPE 'S' NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+        ELSE.
+          PERFORM PESQUISA_LOTE.
+        ENDIF.
+      ENDIF.
+    WHEN 'AUGBL'.
+      READ TABLE IT_LOTES_ALV  INDEX ROW_ID INTO WA_LOTES_ALV.
+      IF WA_LOTES_ALV-AUGBL IS INITIAL.
+        MESSAGE S006 WITH WA_LOTES_ALV-NM_LOTE.
+        CHECK 1 = 2.
+      ENDIF.
+      VG_BELNR = WA_LOTES_ALV-AUGBL.
+      VG_GJAHR = WA_LOTES_ALV-GJAHR.
+      VG_BUKRS = WA_LOTES_ALV-BUKRS.
+      SET PARAMETER ID: 'BLN' FIELD VG_BELNR, 'BUK' FIELD VG_BUKRS, 'GJR' FIELD VG_GJAHR.
+      CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+    WHEN 'BELNR'.
+      READ TABLE IT_LOTES_ALV  INDEX ROW_ID INTO WA_LOTES_ALV.
+      IF WA_LOTES_ALV-BELNR IS INITIAL.
+        MESSAGE S006 WITH WA_LOTES_ALV-NM_LOTE.
+        CHECK 1 = 2.
+      ENDIF.
+      VG_BELNR = WA_LOTES_ALV-BELNR.
+      VG_GJAHR = WA_LOTES_ALV-GJAHR.
+      VG_BUKRS = WA_LOTES_ALV-BUKRS.
+      SET PARAMETER ID: 'BLN' FIELD VG_BELNR, 'BUK' FIELD VG_BUKRS, 'GJR' FIELD VG_GJAHR.
+      CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+  ENDCASE.
+
+ENDFORM.                    " handle_hotspot_click
+
+DATA: COCKPIT_EVENT_HANDLER_LOTES  TYPE REF TO COCKIP_EVENT_HANDLER_LOTES.
+
+*&---------------------------------------------------------------------*
+*&      Module  CTE_CRIA_LOTES  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CTE_CRIA_LOTES OUTPUT.
+
+  PERFORM COCKPIT_CRIA_LOTES_ALV.
+
+  CALL METHOD COCKPIT_ALV_LOTES->REFRESH_TABLE_DISPLAY.
+
+ENDMODULE.                 " CTE_CRIA_LOTES  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Form  cockpit_CRIA_LOTES_ALV
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM COCKPIT_CRIA_LOTES_ALV .
+
+  DATA: IT_EXCLUDE_FCODE TYPE UI_FUNCTIONS,
+        WA_EXCLUDE_FCODE LIKE LINE OF IT_EXCLUDE_FCODE,
+        IT_EXCEPT_QINFO  TYPE LVC_T_QINF,
+        WA_EXCEPT_QINFO  TYPE LVC_S_QINF,
+        IT_DD07V         TYPE TABLE OF DD07V WITH HEADER LINE.
+
+  CONSTANTS: TABELA_LOTES TYPE STRING VALUE 'IT_LOTES_ALV'.
+
+  CLEAR: IT_EXCEPT_QINFO, IT_DD07V, IT_DD07V[].
+
+  IF COCKPIT_PRIM_LOTES IS INITIAL.
+
+    CLEAR: IT_EXCLUDE_FCODE.
+
+    WA_EXCLUDE_FCODE = '&PRINT'.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = '&AVERAGE'.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = '&MB_VIEW'.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = '&INFO'.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+
+*   Create object for container
+    CREATE OBJECT COCKPIT_CONTAINER_LOTES
+      EXPORTING
+        CONTAINER_NAME = 'CTN_LOTES'.
+
+    CREATE OBJECT COCKPIT_ALV_LOTES
+      EXPORTING
+        I_PARENT = COCKPIT_CONTAINER_LOTES.
+
+    CLEAR: IT_COCKPIT_CATALOG.
+
+    PERFORM Z_ESTRUTURA_FIELDCAT TABLES IT_COCKPIT_CATALOG USING:
+        TABELA_LOTES 'ICOSTATUS'       TEXT-L00 ' ' 01 03 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'ICOSTATUS_PLANO' TEXT-L30 ' ' 02 03 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'ICOALERTA'       TEXT-L19 'X' 03 03 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'NR_LOTE_ADM'     TEXT-L22 ' ' 04 10 SPACE 'ALPHA' SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'NM_LOTE'         TEXT-L01 ' ' 05 10 SPACE 'ALPHA' SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'TPLOTE'          TEXT-L21 ' ' 06 02 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'DT_POSICAO'      TEXT-L02 ' ' 07 10 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'DT_LEITURA'      TEXT-L03 ' ' 08 10 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'HR_LEITURA'      TEXT-L04 ' ' 09 10 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'CD_ADIMINISTRA'  TEXT-L05 ' ' 10 10 SPACE 'ALPHA' SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'NM_ADIMINISTRA ' TEXT-L06 ' ' 11 30 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'BUKRS'           TEXT-L07 ' ' 12 04 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'BUTXT'           TEXT-L08 ' ' 13 25 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'BRANCH'          TEXT-L09 ' ' 14 04 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'BRATXT'          TEXT-L10 ' ' 15 30 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_TOTAL_LOTE'   TEXT-L11 ' ' 16 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_AC_DC_LOTE'   TEXT-L20 ' ' 17 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_CONFI_LOTE'   TEXT-L17 ' ' 17 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_UTILIZAR'     TEXT-L18 ' ' 17 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_CTRL_SALDO'   TEXT-L23 ' ' 18 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'VL_PG_CONF'      TEXT-L29 ' ' 19 12 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'DT_VENCIMENTO'   TEXT-L12 ' ' 20 10 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'BELNR'           TEXT-L13 'X' 21 10 SPACE 'ALPHA' SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'GJAHR'           TEXT-L14 ' ' 22 05 SPACE SPACE   SPACE SPACE SPACE SPACE SPACE SPACE,
+        TABELA_LOTES 'AUGBL'           TEXT-L15 'X' 23 10 SPACE 'ALPHA' SPACE SPACE SPACE SPACE SPACE SPACE.
+
+    CLEAR: COCKPIT_GS_LAYOUT.
+
+    "Informações Documento
+    WA_EXCEPT_QINFO-TYPE      = CL_SALV_TOOLTIP=>C_TYPE_SYMBOL.
+    WA_EXCEPT_QINFO-VALUE     = ICON_TE_DEDUCTION.
+    WA_EXCEPT_QINFO-TEXT      = 'Pós Pago'.
+    WA_EXCEPT_QINFO-TABNAME   = 'ZPFE_LOTE_ALV'.
+    WA_EXCEPT_QINFO-FIELDNAME = 'ICOSTATUS_PLANO'.
+    APPEND WA_EXCEPT_QINFO TO IT_EXCEPT_QINFO.
+
+    WA_EXCEPT_QINFO-TYPE      = CL_SALV_TOOLTIP=>C_TYPE_SYMBOL.
+    WA_EXCEPT_QINFO-VALUE     = ICON_TE_ADVANCE_PAYMENT.
+    WA_EXCEPT_QINFO-TEXT      = 'Pré Pago'.
+    WA_EXCEPT_QINFO-TABNAME   = 'ZPFE_LOTE_ALV'.
+    WA_EXCEPT_QINFO-FIELDNAME = 'ICOSTATUS_PLANO'.
+    APPEND WA_EXCEPT_QINFO TO IT_EXCEPT_QINFO.
+
+    WA_EXCEPT_QINFO-TYPE      = CL_SALV_TOOLTIP=>C_TYPE_SYMBOL.
+    WA_EXCEPT_QINFO-VALUE     = ICON_SPACE.
+    WA_EXCEPT_QINFO-TEXT      = 'Não Definido'.
+    WA_EXCEPT_QINFO-TABNAME   = 'ZPFE_LOTE_ALV'.
+    WA_EXCEPT_QINFO-FIELDNAME = 'ICOSTATUS_PLANO'.
+    APPEND WA_EXCEPT_QINFO TO IT_EXCEPT_QINFO.
+
+    IS_VARIANT-REPORT = SY-REPID.
+    IS_VARIANT-HANDLE = '0005'.
+    COCKPIT_GS_LAYOUT-INFO_FNAME = 'ROWCOLOR'.
+
+    CALL METHOD COCKPIT_ALV_LOTES->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        I_DEFAULT            = SPACE
+        IS_LAYOUT            = COCKPIT_GS_LAYOUT
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        IS_VARIANT           = IS_VARIANT
+        I_SAVE               = 'A'
+        IT_EXCEPT_QINFO      = IT_EXCEPT_QINFO
+      CHANGING
+        IT_FIELDCATALOG      = IT_COCKPIT_CATALOG
+        IT_OUTTAB            = IT_LOTES_ALV[].
+
+    "Create Object for Event Handler
+    CREATE OBJECT COCKPIT_EVENT_HANDLER_LOTES.
+
+    SET HANDLER COCKPIT_EVENT_HANDLER_LOTES->COCKPIT_HOTSPOT_CLICK_LOTES FOR COCKPIT_ALV_LOTES.
+
+    COCKPIT_PRIM_LOTES = C_X.
+
+  ENDIF.
+
+ENDFORM.                    " CTE_CRIA_LOTES_ALV
+
+
+*&---------------------------------------------------------------------*
+*&      Form  SELECIONA_LOTE
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM SELECIONA_LOTE USING P_VG_SELECIONOU TYPE C.
+
+  CLEAR: IT_SELECTED_ROWS, P_VG_SELECIONOU, IT_LOTES_SEL[].
+
+  CALL METHOD COCKPIT_ALV_LOTES->GET_SELECTED_ROWS
+    IMPORTING
+      ET_INDEX_ROWS = IT_SELECTED_ROWS.
+
+  IF IT_SELECTED_ROWS IS INITIAL.
+    MESSAGE S011.
+    RETURN.
+  ENDIF.
+
+  LOOP AT IT_SELECTED_ROWS INTO WA_SELECTED_ROWS.
+    READ TABLE IT_LOTES_ALV INTO WA_LOTES_ALV INDEX WA_SELECTED_ROWS-INDEX.
+    APPEND WA_LOTES_ALV TO IT_LOTES_SEL.
+  ENDLOOP.
+
+  READ TABLE IT_SELECTED_ROWS INTO WA_SELECTED_ROWS INDEX 1.
+  READ TABLE IT_LOTES_ALV INTO WA_LOTES_ALV INDEX WA_SELECTED_ROWS-INDEX.
+  READ TABLE IT_LOTES     INTO WA_LOTES     WITH KEY NM_LOTE = WA_LOTES_ALV-NM_LOTE.
+
+  P_VG_SELECIONOU = C_X.
+
+ENDFORM.                    " SELECIONA_LOTE
+
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0005  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0005 OUTPUT.
+
+  IF VG_TELA_0005 IS INITIAL.
+    VG_TELA_0005 = C_5001.
+  ENDIF.
+
+ENDMODULE.                 " STATUS_0005  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_5001  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_5001 INPUT.
+
+  DATA: WA_AUX_LOTES     TYPE ZPFE_LOTE,
+        WA_AUX_LOTES_ALV TYPE ZPFE_LOTE_ALV.
+
+  CLEAR: VG_SELECIONOU.
+
+  CASE OK_CODE.
+    WHEN OK_GERAR.
+      PERFORM SELECIONA_LOTE USING VG_SELECIONOU.
+      IF NOT VG_SELECIONOU IS INITIAL.
+        LOOP AT IT_LOTES_SEL INTO WA_LOTES_ALV.
+
+          CALL FUNCTION 'Z_PFE_GERA_FINAN'
+            EXPORTING
+              P_NM_LOTE       = WA_LOTES_ALV-NM_LOTE
+            IMPORTING
+              WA_LOTE         = WA_AUX_LOTES
+              WA_LOTE_ALV     = WA_AUX_LOTES_ALV
+            EXCEPTIONS
+              SEM_LOTE        = 1
+              GERANDO_FINAM   = 2
+              CONCLUIDO_FINAN = 3
+              ZDIASVENCIMENTO = 4
+              DATA_VENCIMENTO = 5
+              GERADO_FINAM    = 6
+              OTHERS          = 7.
+
+          IF SY-SUBRC <> 0.
+            MESSAGE ID SY-MSGID TYPE 'W' NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+          ELSE.
+            READ TABLE IT_LOTES_ALV INTO WA_LOTES_ALV WITH KEY NM_LOTE = WA_AUX_LOTES-NM_LOTE.
+            IF SY-SUBRC IS INITIAL.
+              MOVE-CORRESPONDING WA_AUX_LOTES_ALV TO WA_LOTES_ALV.
+              MODIFY IT_LOTES_ALV FROM WA_LOTES_ALV INDEX SY-TABIX.
+            ENDIF.
+
+            READ TABLE IT_LOTES INTO WA_LOTES WITH KEY NM_LOTE = WA_AUX_LOTES-NM_LOTE.
+            IF SY-SUBRC IS INITIAL.
+              MOVE-CORRESPONDING WA_AUX_LOTES TO WA_LOTES.
+              MODIFY IT_LOTES FROM WA_LOTES INDEX SY-TABIX.
+            ENDIF.
+          ENDIF.
+
+        ENDLOOP.
+      ENDIF.
+    WHEN OK_EDITAR.
+      PERFORM SELECIONA_LOTE USING VG_SELECIONOU.
+      IF NOT VG_SELECIONOU IS INITIAL.
+        CALL FUNCTION 'Z_PFE_LOTE'
+          EXPORTING
+            P_NM_LOTE = WA_LOTES_ALV-NM_LOTE
+            P_EDITAR  = C_X.
+
+        IF SY-SUBRC IS INITIAL.
+          READ TABLE IT_LOTES_ALV INTO WA_LOTES_ALV WITH KEY NM_LOTE = WA_AUX_LOTES-NM_LOTE.
+          IF SY-SUBRC IS INITIAL.
+            MOVE-CORRESPONDING WA_AUX_LOTES_ALV TO WA_LOTES_ALV.
+            MODIFY IT_LOTES_ALV FROM WA_LOTES_ALV INDEX SY-TABIX.
+          ENDIF.
+
+          READ TABLE IT_LOTES INTO WA_LOTES WITH KEY NM_LOTE = WA_AUX_LOTES-NM_LOTE.
+          IF SY-SUBRC IS INITIAL.
+            MOVE-CORRESPONDING WA_AUX_LOTES TO WA_LOTES.
+            MODIFY IT_LOTES FROM WA_LOTES INDEX SY-TABIX.
+          ENDIF.
+        ENDIF.
+
+      ENDIF.
+    WHEN OK_LOG_PROC.
+      PERFORM SELECIONA_LOTE USING VG_SELECIONOU.
+      IF NOT VG_SELECIONOU IS INITIAL.
+        CALL FUNCTION 'Z_PFE_MSG_FINAN'
+          EXPORTING
+            P_NM_LOTE = WA_LOTES_ALV-NM_LOTE.
+      ENDIF.
+
+
+    WHEN: OK_DELOTE.
+      PERFORM SELECIONA_LOTE USING VG_SELECIONOU.
+
+      IF NOT VG_SELECIONOU IS INITIAL.
+        PERFORM: DELETA_LOTE_ITEM USING WA_LOTES_ALV-NM_LOTE.
+      ENDIF.
+
+  ENDCASE.
+
+ENDMODULE.                 " USER_COMMAND_5001  INPUT
+*&---------------------------------------------------------------------*
+*&      Form  DELETA_LOTE_ITEM
+*&---------------------------------------------------------------------*
+FORM DELETA_LOTE_ITEM  USING P_LOTE.
+
+  IF NOT P_LOTE IS INITIAL.
+
+    SELECT SINGLE * FROM ZPFE_LOTE INTO WA_LOTES_DELETE WHERE NM_LOTE EQ P_LOTE.
+
+    IF WA_LOTES_DELETE-STATUS EQ 'I' AND WA_LOTES_DELETE-BELNR IS INITIAL.
+
+      "Validação adicional na tabela ZLEST0141_LOTE (Outros Saldos)
+      SELECT
+          ZLOTE~NM_LOTE,
+          ZLOTE~NR_LOTE_ADM,
+          ZLOTE~CD_ADIMINISTRA,
+          ZLOTE~BUKRS,
+          ZLOTE~BRANCH,
+          ZITEM~DT_UTIL
+        FROM ZLEST0141_LOTE AS ZLOTE
+        LEFT JOIN ZLEST0141_L_ITEM AS ZITEM
+          ON ZITEM~NM_LOTE = ZLOTE~NM_LOTE AND
+             ZITEM~NR_LOTE_ADM = ZLOTE~NR_LOTE_ADM
+        INTO TABLE @DATA(IT_ZLEST0141_LOTE)
+        WHERE ZLOTE~NM_LOTE       = @WA_LOTES-NM_LOTE AND
+              ZLOTE~NR_LOTE_ADM   = @WA_LOTES-NR_LOTE_ADM AND
+              ZLOTE~CD_ADIMINISTRA = @WA_LOTES-CD_ADIMINISTRA AND
+              ZLOTE~BUKRS         = @WA_LOTES-BUKRS  AND
+              ZLOTE~BRANCH        = @WA_LOTES-BRANCH.
+      IF ( IT_ZLEST0141_LOTE[] IS NOT INITIAL ).
+
+        "-> Verificar se já foi gerado lote de pagamento de adiantamento:
+        SELECT BUKRS, DATA, BELNR
+          FROM ZLEST0141
+          INTO TABLE @DATA(IT_ZLEST0141)
+          FOR ALL ENTRIES IN @IT_ZLEST0141_LOTE
+          WHERE BUKRS = @IT_ZLEST0141_LOTE-BUKRS AND
+                DATA  = @IT_ZLEST0141_LOTE-DT_UTIL.
+        SORT IT_ZLEST0141[] BY BUKRS DATA ASCENDING.
+
+        IF ( IT_ZLEST0141[] IS NOT INITIAL ).
+
+          DELETE IT_ZLEST0141[] WHERE BELNR IS INITIAL.
+
+          "-> Caso exista lote de pagamento gerado, exibir erro:
+          IF ( LINES( IT_ZLEST0141[] ) >= 1 ).
+            CLEAR: P_LOTE.
+            MESSAGE S030 WITH 'Já existe documento'
+                              'contábil para este lote'.
+            EXIT.
+
+          ELSE. "-> Não existem lotes gerados, prosseguir com exclusão:
+
+            LOOP AT IT_ZLEST0141[] INTO DATA(W_ZLEST0141).
+              DELETE FROM ZLEST0141_L_ITEM
+                WHERE NM_LOTE = P_LOTE
+                  AND DT_UTIL = W_ZLEST0141-DATA.
+
+              IF ( SY-SUBRC = 0 ).
+
+                DELETE FROM ZLEST0141_LOTE
+                  WHERE NM_LOTE = P_LOTE
+                  AND BUKRS = WA_LOTES-BUKRS.
+
+              ENDIF.
+            ENDLOOP.
+
+          ENDIF.
+
+        ENDIF.
+
+      ENDIF.
+
+      DELETE FROM ZPFE_LOTE WHERE NM_LOTE EQ P_LOTE.
+
+      IF SY-SUBRC EQ 0.
+
+        DELETE FROM ZPFE_LOTE_ITEM WHERE NM_LOTE EQ P_LOTE.
+
+        IF SY-SUBRC EQ 0.
+          MESSAGE S030 WITH 'Lote/Itens deletado(s) com sucesso.'.
+        ENDIF.
+
+      ENDIF.
+
+    ELSEIF WA_LOTES_DELETE-STATUS NE 'I' AND NOT WA_LOTES_DELETE-BELNR IS INITIAL.
+      CLEAR: P_LOTE.
+      MESSAGE S030 WITH 'Já existe documento'
+                        'contábil para este lote'.
+    ENDIF.
+
+
+  ENDIF.
+
+
+
+ENDFORM.                    " DELETA_LOTE_ITEM

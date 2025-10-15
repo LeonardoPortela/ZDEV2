@@ -1,0 +1,8 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_7000.
+*
+PROCESS AFTER INPUT.
+
+  MODULE user_command_7000.

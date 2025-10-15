@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>Z_PP0030</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>Descrição do status</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Apto para importação XI</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Processado pelo XI com sucesso (ZMM0049)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Processado pelo XI com erro</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Pronto para ser classificação (MF42N)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Atualizado com dados da classificação</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Material entrou no estoque e gerou no de material (ZMM0050)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>SAP não deu entrada do fardinho</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_PP0030</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Registro estornado retornando para Tracecotton atualizar o registro</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZWRR0002_BKP</NAME>
+    <SUBC>1</SUBC>
+    <RLOAD>P</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Documentos Referênciados</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Incluir</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Atualizar documento</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>Deletar</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E01</KEY>
+     <ENTRY>Preencher informações obrigatórias, nos itens da nota.</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E02</KEY>
+     <ENTRY>O Código de operação não foi encontrado.</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E03</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Doc. Original&quot;.</ENTRY>
+     <LENGTH>55</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E04</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Romaneio&quot;.</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E05</KEY>
+     <ENTRY>O Local de negócio não foi encontrado para essa empresa!</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E06</KEY>
+     <ENTRY>Cliente selecionado, não foi encontrado!</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E07</KEY>
+     <ENTRY>Fornecedor/Filial selecionado, não foi encontrado!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E09</KEY>
+     <ENTRY>A função de Parceiro selecionada, não foi encontrada!</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E10</KEY>
+     <ENTRY>É preciso preencher a nota com pelo menos um item!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E11</KEY>
+     <ENTRY>A empresa não existe!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E12</KEY>
+     <ENTRY>CFOP não encontrado na J1BTAX e Parâmetros Gestão Fiscal.</ENTRY>
+     <LENGTH>57</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E13</KEY>
+     <ENTRY>O lote selecionado não existe .</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E14</KEY>
+     <ENTRY>O depósito selecionado não existe para o centro informado.</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E15</KEY>
+     <ENTRY>Verificar cadastro de material para esse local de negocios.</ENTRY>
+     <LENGTH>59</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E16</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Nº Nota Fiscal&quot;</ENTRY>
+     <LENGTH>55</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E17</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Data Lançamento Doc.&quot;</ENTRY>
+     <LENGTH>61</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E18</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Data do Documento&quot;</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E19</KEY>
+     <ENTRY>Verificar codigo de NCM do material.</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E20</KEY>
+     <ENTRY>A quantidade selecionada é superior a do saldo.</ENTRY>
+     <LENGTH>47</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E21</KEY>
+     <ENTRY>Não há saldo no Doc.Original selecionado</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E22</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Série da Nº Nota Fiscal&quot;</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E23</KEY>
+     <ENTRY>Arquivo XML não recebido para Nfe informada, solicitar para Parceiro enviar para o email nfe.fiscal@grupomaggi.com.br</ENTRY>
+     <LENGTH>117</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E24</KEY>
+     <ENTRY>O total dos lancamentos contábeis tem que ser igual a zero</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E25</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Depósito Destino&quot;.</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E26</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Depósito&quot;.</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E27</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Centro Destino&quot;.</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E28</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Incoterms&quot;.</ENTRY>
+     <LENGTH>51</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E29</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Lote&quot; para esse numero de material.</ENTRY>
+     <LENGTH>75</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E30</KEY>
+     <ENTRY>O centro preenchido, não esta vinculado a empresa selecionada.</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E31</KEY>
+     <ENTRY>O cliente não existe para a empresa selecionada.</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E32</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Forma de pagamento&quot; na aba Contabilização.</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E33</KEY>
+     <ENTRY>A Forma de pagamento informada não existe.</ENTRY>
+     <LENGTH>42</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E34</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Data Base&quot; na aba Contabilização.</ENTRY>
+     <LENGTH>73</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E35</KEY>
+     <ENTRY>A função de Parceiro selecionada, não foi encontrada! Aba de Parceiros.</ENTRY>
+     <LENGTH>72</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E36</KEY>
+     <ENTRY>O cliente selecionado na aba, Parceiros da Nota, não existe para empresa utilizada.</ENTRY>
+     <LENGTH>83</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E37</KEY>
+     <ENTRY>O fornecedor selecionado na aba, Parceiros da Nota, não existe para empresa utilizada.</ENTRY>
+     <LENGTH>87</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E38</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Centro de Custos&quot; na aba Contabilização.</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E39</KEY>
+     <ENTRY>O Centro de Custos selecionado, não tem uma data vencimento valida ou nao existe.</ENTRY>
+     <LENGTH>81</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E40</KEY>
+     <ENTRY>Informar parceiro Z1 no campo parceiros da nota.</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E41</KEY>
+     <ENTRY>Informar o centro do item da nota</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E42</KEY>
+     <ENTRY>Informar o número do pedido de compra.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E43</KEY>
+     <ENTRY>Para este cliente é obrigatório ser emitido Boleto de Cobrança ajustar a forma de pagamento.</ENTRY>
+     <LENGTH>93</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E44</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Centro Custo&quot;.</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E45</KEY>
+     <ENTRY>Centro de custo para transferência não existe</ENTRY>
+     <LENGTH>45</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E46</KEY>
+     <ENTRY>É obrigatório o preenchimento do Doc.Ref</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E47</KEY>
+     <ENTRY>Doc.Ref não é válido.</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E48</KEY>
+     <ENTRY>Centro destino para transferência não existe</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E49</KEY>
+     <ENTRY>Para CFOP&apos;s 1206 ou 2206, deve ser informado Conhecimento(s) Anulado(s).</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E50</KEY>
+     <ENTRY>Documento referenciado na anulação está cancelado</ENTRY>
+     <LENGTH>100</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E51</KEY>
+     <ENTRY>Documento referenciado na anulação não encontrado</ENTRY>
+     <LENGTH>98</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E52</KEY>
+     <ENTRY>Documento referenciado na anulação já referenciado</ENTRY>
+     <LENGTH>100</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E53</KEY>
+     <ENTRY>Esta Fornecedor/Nota/Serie já foi lançado no documento:</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E54</KEY>
+     <ENTRY>Este fornecedor</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E55</KEY>
+     <ENTRY>esta Bloqueado para contabilização</ENTRY>
+     <LENGTH>68</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E56</KEY>
+     <ENTRY>Este cliente</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E57</KEY>
+     <ENTRY>Anexar PDF venda/comodato de imobilizado</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E58</KEY>
+     <ENTRY>Material bloqueado</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E59</KEY>
+     <ENTRY>Utiliz.material não preenchido  aba Contabilidade 2, mestre materiais</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E60</KEY>
+     <ENTRY>Origem material não preenchido  aba Contabilidade 2, mestre materiais</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E61</KEY>
+     <ENTRY>Código de controle  não preenchido  aba Com.ext.importação, mestre materiais</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E62</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Cód.Transportador&quot;</ENTRY>
+     <LENGTH>120</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E63</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Chave Acesso&quot;.</ENTRY>
+     <LENGTH>108</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E64</KEY>
+     <ENTRY>Chave de Acesso inválida!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E65</KEY>
+     <ENTRY>Conta do Razão obrigatória!</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E66</KEY>
+     <ENTRY>Material recep. obrigatório!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E67</KEY>
+     <ENTRY>Lote_Rec obrigatório!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E68</KEY>
+     <ENTRY>Informe o numero da O.V.</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E69</KEY>
+     <ENTRY>Informe o item da O.V.</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E70</KEY>
+     <ENTRY>O.V. não existe!</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E71</KEY>
+     <ENTRY>Material Informado é diferente da O.V.!</ENTRY>
+     <LENGTH>78</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E72</KEY>
+     <ENTRY>ID Parceiro diferente Fornecedor equivalente do Cliente da OV - Ajustar cadastro!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E73</KEY>
+     <ENTRY>CNPJ ID Parceiro diferente do Cliente da OV !</ENTRY>
+     <LENGTH>120</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E74</KEY>
+     <ENTRY>Local de Negócios diferente do Centro da OV!</ENTRY>
+     <LENGTH>88</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E75</KEY>
+     <ENTRY>Placa 1 não cadastrada!</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E76</KEY>
+     <ENTRY>Placa 2 não cadastrada!</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E77</KEY>
+     <ENTRY>Placa 3 não cadastrada!</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E78</KEY>
+     <ENTRY>Informe a classificação Indea</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E79</KEY>
+     <ENTRY>Informe ID Parceiro</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E80</KEY>
+     <ENTRY>Infome o RENASEM</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E81</KEY>
+     <ENTRY>Solicite ao responsável pelo pedido a definição das confirmações</ENTRY>
+     <LENGTH>100</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E82</KEY>
+     <ENTRY>Deve ser informado parceiro Forn.Frete (SP) para emissão de Aviso Recebimento!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E83</KEY>
+     <ENTRY>Deve ser informado parceiro Local Coleta (LC) para emissão de Aviso Recebimento!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E84</KEY>
+     <ENTRY>Deve ser informado parceiro Local Entrada (LR) para emissão de Aviso Recebimento!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E85</KEY>
+     <ENTRY>O centro informado não pertence ao local de negócio!</ENTRY>
+     <LENGTH>104</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E86</KEY>
+     <ENTRY>É obrigatório o preenchimento do campo &quot;Banco&quot; na aba Contabilização.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E91</KEY>
+     <ENTRY>Direito fiscal ICMS não informado ou incorreto!</ENTRY>
+     <LENGTH>94</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E92</KEY>
+     <ENTRY>Direito fiscal IPI  não informado ou incorreto!</ENTRY>
+     <LENGTH>98</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E93</KEY>
+     <ENTRY>Lei tributária COFINS não informado ou incorreto!</ENTRY>
+     <LENGTH>92</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E94</KEY>
+     <ENTRY>Lei tributária PIS não informado ou incorreto!</ENTRY>
+     <LENGTH>92</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E95</KEY>
+     <ENTRY>CFOP não permitido nesta operação!</ENTRY>
+     <LENGTH>68</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,96 @@
+class ZCL_REPOM_PEDAGIO definition
+  public
+  final
+  create public .
+
+public section.
+
+  methods CONSTRUCTOR
+    importing
+      !I_TKNUM type TKNUM optional
+      !I_ID_PROC_CLIENTE type ZDE_ID_PROC_CLIENTE optional .
+protected section.
+private section.
+
+  data ID_PROC_CLIENTE type ZDE_ID_PROC_CLIENTE .
+  data ID_FILIAL_CLIENTE type ZDE_FILIAL_CLIENTE .
+  data DS_NR_CARTAO type ZDE_DS_NR_CARTAO .
+  data ID_ROTA_REPOM type ZDE_ID_ROTA_REPOM .
+  data ID_PERCURSO_REPOM type ZDE_ID_PERCURSO_REPOM .
+  data ID_ROTA type ZDE_ID_ROTA_CLIENTE .
+  data CD_PAIS type LAND1 .
+  data CD_CID_ORIGEM type ZDE_CIDADE_ORIGEM .
+  data CD_CID_DESTINO type ZDE_CIDADE_DESTINO .
+  data MOTORISTA_CPF type ZDE_CPF_MOTORISTA .
+  data MOTORISTA_NOME type ZDE_NOME_MOTORISTA .
+  data MOTORISTA_RG type ZDE_RG_MOTORISTA .
+  data MOTORISTA_FONE type ZDE_TELEFONE_MOTORISTA .
+  data VEICULO_PLACA type ZPC_VEICULO .
+  data VEICULO_EIXOS type ZQT_EIXO .
+  data TP_STATUS_AUT type ZDE_ST_PED_AUT_REPOM .
+  data TP_STATUS_CAN type ZDE_ST_PED_CAN_REPOM .
+  data ID_VIAGEM_CODIGO type ZDE_ID_VIAGEM_CODIGO .
+  data MOEDA_PEDAGIO type ZDE_MOEDA_PEDAGIO .
+  data VLR_TOTAL_PEDAGIO type ZDE_VLR_TOTAL_PEDAGIO .
+  data DT_EMISSAO_PEDAGIO type ZDE_DT_EMISSAO_PEDAGIO .
+  data TKNUM type TKNUM .
+  data DOCUMENTOS type ZDE_ZLEST0124_T .
+  data PEDAGIOS type ZDE_ZLEST0125_T .
+  data CK_ALTEROU type CHAR01 .
+
+  methods GET_PEDAGIO_TKNUM
+    importing
+      !I_TKNUM type TKNUM .
+  methods GET_PEDAGIO_CLIENTE
+    importing
+      !I_ID_PROC_CLIENTE type ZDE_ID_PROC_CLIENTE .
+  methods GRAVAR .
+ENDCLASS.
+
+
+
+CLASS ZCL_REPOM_PEDAGIO IMPLEMENTATION.
+
+
+  METHOD CONSTRUCTOR.
+
+    CK_ALTEROU = ABAP_FALSE.
+
+    ME->CD_PAIS = 'BR'.
+    ME->MOEDA_PEDAGIO = 'BRL'.
+
+    IF I_TKNUM IS NOT INITIAL.
+      CALL METHOD ME->GET_PEDAGIO_TKNUM
+        EXPORTING
+          I_TKNUM = I_TKNUM.
+
+      "Criou o contrato conforme TKNUM
+      IF CK_ALTEROU EQ ABAP_TRUE.
+        CALL METHOD ME->GRAVAR.
+      ENDIF.
+
+    ELSEIF I_ID_PROC_CLIENTE IS NOT INITIAL.
+      CALL METHOD ME->GET_PEDAGIO_CLIENTE
+        EXPORTING
+          I_ID_PROC_CLIENTE = I_ID_PROC_CLIENTE.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  method GET_PEDAGIO_CLIENTE.
+  endmethod.
+
+
+  METHOD GET_PEDAGIO_TKNUM.
+
+
+  ENDMETHOD.
+
+
+  METHOD GRAVAR.
+
+
+
+  ENDMETHOD.
+ENDCLASS.

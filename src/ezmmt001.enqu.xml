@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENQU" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD25V>
+    <VIEWNAME>EZMMT001</VIEWNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <AGGTYPE>E</AGGTYPE>
+    <ROOTTAB>ZMMT_EE_ZGR</ROOTTAB>
+    <DDTEXT>Objeto de bloqueio para RFC: Z_MM_INBOUND_EEZGR_MIGO</DDTEXT>
+   </DD25V>
+   <DD26E_TABLE>
+    <DD26E>
+     <VIEWNAME>EZMMT001</VIEWNAME>
+     <TABNAME>ZMMT_EE_ZGR</TABNAME>
+     <TABPOS>0001</TABPOS>
+     <FORTABNAME>ZMMT_EE_ZGR</FORTABNAME>
+     <ENQMODE>S</ENQMODE>
+    </DD26E>
+   </DD26E_TABLE>
+   <DD27P_TABLE>
+    <DD27P>
+     <VIEWNAME>EZMMT001</VIEWNAME>
+     <OBJPOS>0001</OBJPOS>
+     <VIEWFIELD>MANDT</VIEWFIELD>
+     <TABNAME>ZMMT_EE_ZGR</TABNAME>
+     <FIELDNAME>MANDT</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>S</ENQMODE>
+    </DD27P>
+    <DD27P>
+     <VIEWNAME>EZMMT001</VIEWNAME>
+     <OBJPOS>0002</OBJPOS>
+     <VIEWFIELD>OBJ_KEY</VIEWFIELD>
+     <TABNAME>ZMMT_EE_ZGR</TABNAME>
+     <FIELDNAME>OBJ_KEY</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>S</ENQMODE>
+    </DD27P>
+   </DD27P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

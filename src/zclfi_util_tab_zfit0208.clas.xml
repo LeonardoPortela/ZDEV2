@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCLFI_UTIL_TAB_ZFIT0208</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe de Utilidade - Tabela ZFIT0208</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>SEQUENCIA_CHAVE_PRIMARIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criação sequência da chave primária física Tab. ZFIT0208</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICA_CHAVE_PRIMARIA_LOGICA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Duplicidade - Chave lógica da tabela ZFIT0208</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIF_COMPOS_RESULT_CNTB_DUPL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Composição de Resultado Contábil Duplicado.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>SEQUENCIA_CHAVE_PRIMARIA</CMPNAME>
+     <SCONAME>EV_MSGERR_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem de erro da Função Numerador</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEQUENCIA_CHAVE_PRIMARIA</CMPNAME>
+     <SCONAME>IV_NAME_NUM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obj.interv.numer.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEQUENCIA_CHAVE_PRIMARIA</CMPNAME>
+     <SCONAME>IV_NUM_RANGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do intervalo de numeração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEQUENCIA_CHAVE_PRIMARIA</CMPNAME>
+     <SCONAME>RV_NUMBER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave da tabela ZFIT0208 de parâmetro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_CHAVE_PRIMARIA_LOGICA</CMPNAME>
+     <SCONAME>EE_ZFIT0208</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros de seleção cockpit composição conta razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_CHAVE_PRIMARIA_LOGICA</CMPNAME>
+     <SCONAME>EV_MSGERR_CVDUP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem de erro de chave lógica duplicada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_CHAVE_PRIMARIA_LOGICA</CMPNAME>
+     <SCONAME>IE_ZFIT0208</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros de seleção cockpit composição conta razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICA_CHAVE_PRIMARIA_LOGICA</CMPNAME>
+     <SCONAME>IV_OPERACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIF_COMPOS_RESULT_CNTB_DUPL</CMPNAME>
+     <SCONAME>EV_MSGERR_RES_CNTB_DUP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem Erro de Composição de Resultado Contábil Duplicado</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIF_COMPOS_RESULT_CNTB_DUPL</CMPNAME>
+     <SCONAME>IE_ZFIT0208</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros de seleção cockpit composição conta razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIF_COMPOS_RESULT_CNTB_DUPL</CMPNAME>
+     <SCONAME>IV_OPERACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

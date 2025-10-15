@@ -1,0 +1,25 @@
+IF WA_ITENS-PRICE_LBS IS NOT INITIAL.
+V_PRICE_LBS = WA_ITENS-PRICE_LBS.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

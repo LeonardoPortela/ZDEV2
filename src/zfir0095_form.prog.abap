@@ -1,0 +1,5741 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZFIR0095_FORM.
+*----------------------------------------------------------------------*
+
+FORM F_SELECIONA_DADOS.
+
+  DATA: VL_INTERVAL_DAYS   TYPE I,
+        VL_MAX_VERSAO      TYPE ZFIT0079-VERSAO,
+        VL_MAX_DT_VERSAO   TYPE ZFIT0079-DT_BASE_VERSAO,
+        VL_MAX_HORA_VERSAO TYPE ZFIT0079-HORA_VERSAO.
+
+  "-------------------------------------------------------
+
+  SELECT A~BUKRS A~BUTXT
+      INTO TABLE TG_T001
+      FROM T001 AS A
+     WHERE A~BUKRS IN S_BUKRS
+       AND EXISTS ( SELECT *
+                      FROM ZFIT0111 AS B
+                     WHERE B~BUKRS = A~BUKRS ).
+
+  "Se não informou versão nos parâmetros, Busca ultima Versão do Fluxo p/ cada Empresa.
+  IF ( WA_DT_VERSAO IS INITIAL ) OR
+     ( WA_VERSAO    IS INITIAL ).
+
+    LOOP AT TG_T001.
+
+      PERFORM GET_LAST_VERSAO USING TG_T001-BUKRS ''
+                           CHANGING VL_MAX_DT_VERSAO
+                                    VL_MAX_HORA_VERSAO
+                                    VL_MAX_VERSAO.
+
+      IF VL_MAX_VERSAO IS INITIAL.
+        CONTINUE.
+      ENDIF.
+
+      TG_LAST_VERSAO-BUKRS           = TG_T001-BUKRS.
+      TG_LAST_VERSAO-DT_BASE_VERSAO  = VL_MAX_DT_VERSAO.
+      TG_LAST_VERSAO-VERSAO          = VL_MAX_VERSAO.
+      APPEND TG_LAST_VERSAO.
+
+    ENDLOOP.
+
+    IF TG_LAST_VERSAO[] IS INITIAL.
+      MESSAGE 'Nenhuma versão encontrada!' TYPE 'S'.
+      VG_NO_VALID = 'X'.
+      EXIT.
+    ENDIF.
+
+  ENDIF.
+
+
+
+  DATA: LR_BUKRS TYPE RANGE OF BUKRS.
+
+  CLEAR: VG_NO_VALID.
+
+**  Begin of CS2022000708  #83806 FF   21.12.2022
+  SELECT A~MANDT A~COD_ESTRUTURA A~NOME_ESTRUTURA A~BUKRS B~BUTXT
+    FROM ZFIT181 AS A
+    INNER JOIN T001 AS B ON B~BUKRS = A~BUKRS
+    INTO TABLE GT_181
+    WHERE A~BUKRS IN S_BUKRS.
+
+  IF SY-SUBRC = 0.
+
+    LR_BUKRS = VALUE #( FOR LS_VALUE IN GT_181 ( SIGN   = 'I'
+                                                 OPTION = 'EQ'
+                                                 LOW    = LS_VALUE-BUKRS ) ).
+
+*    SELECT *
+*      INTO TABLE gt_0113
+*      FROM zfit0113
+*      WHERE bukrs IN lr_bukrs
+*        AND dt_vcto IN s_zfbdt
+*        AND dt_base_versao = sy-datum.
+*
+*    IF sy-subrc = 0.
+*      SORT gt_0113 DESCENDING BY bukrs dt_vcto dt_base_versao versao.
+*      DELETE ADJACENT DUPLICATES FROM gt_0113 COMPARING bukrs dt_vcto dt_base_versao.
+*    ENDIF.
+*
+*    SELECT *
+*      INTO TABLE gt_182
+*      FROM zfit182 FOR ALL ENTRIES IN gt_181
+*      WHERE cod_estrutura = gt_181-cod_estrutura.
+*
+*    IF sy-subrc = 0.
+*      SELECT *
+*        INTO TABLE gt_183
+*        FROM zfit183 FOR ALL ENTRIES IN gt_181
+*        WHERE cod_estrutura = gt_181-cod_estrutura.
+*      IF sy-subrc = 0.
+**alteradro por guilherme rabelo inicio
+**        SELECT *
+**          INTO TABLE gt_0111
+**          FROM zfit0111
+**          FOR ALL ENTRIES IN gt_183
+**          WHERE bukrs IN lr_bukrs
+**            AND codigo = gt_183-codigo_fluxo
+**            AND dt_vcto IN s_zfbdt
+**            AND dt_base_versao = sy-datum.
+*                  SELECT * FROM zfit0111 AS a
+*             INTO TABLE gt_0111
+*              WHERE bukrs IN lr_bukrs
+*                AND dt_base_versao EQ sy-datum
+*                AND versao EQ ( SELECT MAX( versao )
+*                                 FROM zfit0111 AS b
+*                                WHERE b~bukrs          EQ a~bukrs
+*                                  AND b~dt_base_versao EQ sy-datum ).
+**alteradro por guilherme rabelo fim
+*
+*        IF sy-subrc <> 0.
+*          CLEAR: gt_0111[], gt_0111.
+*        ENDIF.
+*
+*        IF sy-subrc = 0.
+*          SORT gt_0111 DESCENDING BY bukrs codigo dt_vcto dt_base_versao versao.
+*          DELETE ADJACENT DUPLICATES FROM gt_0111 COMPARING bukrs codigo dt_vcto dt_base_versao.
+*        ENDIF.
+*
+*        SELECT *
+*          INTO TABLE gt_184
+*          FROM zfit184 FOR ALL ENTRIES IN gt_181
+*          WHERE cod_estrutura = gt_181-cod_estrutura.
+*        IF sy-subrc <> 0.
+*          CLEAR: gt_184[], gt_184.
+*        ENDIF.
+*
+*      ENDIF.
+*    ELSE.
+*      CLEAR gt_182.
+*    ENDIF.
+
+    IF ( WA_DT_VERSAO IS INITIAL ) OR
+   ( WA_VERSAO    IS INITIAL ).
+
+      SELECT *
+      INTO TABLE GT_0113
+      FROM ZFIT0113
+      WHERE BUKRS EQ TG_LAST_VERSAO-BUKRS
+        AND DT_VCTO IN S_ZFBDT
+        AND DT_BASE_VERSAO = TG_LAST_VERSAO-DT_BASE_VERSAO.
+
+      IF SY-SUBRC = 0.
+        SORT GT_0113 DESCENDING BY BUKRS DT_VCTO DT_BASE_VERSAO VERSAO.
+        DELETE ADJACENT DUPLICATES FROM GT_0113 COMPARING BUKRS DT_VCTO DT_BASE_VERSAO.
+      ENDIF.
+
+      SELECT *
+        INTO TABLE GT_182
+        FROM ZFIT182 FOR ALL ENTRIES IN GT_181
+        WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+
+      IF SY-SUBRC = 0.
+        SELECT *
+          INTO TABLE GT_183
+          FROM ZFIT183 FOR ALL ENTRIES IN GT_181
+          WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+        IF SY-SUBRC = 0.
+          SELECT * FROM ZFIT0111 AS A
+                       INTO TABLE GT_0111
+                        WHERE BUKRS IN LR_BUKRS
+                          AND DT_BASE_VERSAO EQ SY-DATUM
+                          AND VERSAO EQ ( SELECT MAX( VERSAO )
+                                           FROM ZFIT0111 AS B
+                                          WHERE B~BUKRS          EQ TG_LAST_VERSAO-BUKRS
+                                            AND B~DT_BASE_VERSAO EQ TG_LAST_VERSAO-DT_BASE_VERSAO ).
+          IF SY-SUBRC <> 0.
+            CLEAR: GT_0111[], GT_0111.
+          ENDIF.
+
+          IF SY-SUBRC = 0.
+            SORT GT_0111 DESCENDING BY BUKRS CODIGO DT_VCTO DT_BASE_VERSAO VERSAO.
+            DELETE ADJACENT DUPLICATES FROM GT_0111 COMPARING BUKRS CODIGO DT_VCTO DT_BASE_VERSAO.
+          ENDIF.
+
+          SELECT *
+            INTO TABLE GT_184
+            FROM ZFIT184 FOR ALL ENTRIES IN GT_181
+            WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+          IF SY-SUBRC <> 0.
+            CLEAR: GT_184[], GT_184.
+          ENDIF.
+
+        ENDIF.
+      ELSE.
+        CLEAR GT_182.
+      ENDIF.
+    ELSE.
+      SELECT *
+    INTO TABLE GT_0113
+    FROM ZFIT0113
+    WHERE BUKRS IN LR_BUKRS
+      AND DT_VCTO IN S_ZFBDT
+      AND DT_BASE_VERSAO = WA_DT_VERSAO
+      AND VERSAO         EQ WA_VERSAO.
+
+      IF SY-SUBRC = 0.
+        SORT GT_0113 DESCENDING BY BUKRS DT_VCTO DT_BASE_VERSAO VERSAO.
+        DELETE ADJACENT DUPLICATES FROM GT_0113 COMPARING BUKRS DT_VCTO DT_BASE_VERSAO.
+      ENDIF.
+
+      SELECT *
+        INTO TABLE GT_182
+        FROM ZFIT182 FOR ALL ENTRIES IN GT_181
+        WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+
+      IF SY-SUBRC = 0.
+        SELECT *
+          INTO TABLE GT_183
+          FROM ZFIT183 FOR ALL ENTRIES IN GT_181
+          WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+        IF SY-SUBRC = 0.
+
+          SELECT * FROM ZFIT0111 AS A
+                       INTO TABLE GT_0111
+                        WHERE BUKRS IN LR_BUKRS
+                          AND DT_BASE_VERSAO EQ SY-DATUM
+                          AND VERSAO EQ ( SELECT MAX( VERSAO )
+                                           FROM ZFIT0111 AS B
+                                          WHERE B~BUKRS          IN LR_BUKRS
+                                            AND B~DT_BASE_VERSAO EQ WA_DT_VERSAO
+                                            AND B~VERSAO EQ WA_VERSAO ).
+          IF SY-SUBRC <> 0.
+            CLEAR: GT_0111[], GT_0111.
+          ENDIF.
+
+          IF SY-SUBRC = 0.
+            SORT GT_0111 DESCENDING BY BUKRS CODIGO DT_VCTO DT_BASE_VERSAO VERSAO.
+            DELETE ADJACENT DUPLICATES FROM GT_0111 COMPARING BUKRS CODIGO DT_VCTO DT_BASE_VERSAO.
+          ENDIF.
+
+          SELECT *
+            INTO TABLE GT_184
+            FROM ZFIT184 FOR ALL ENTRIES IN GT_181
+            WHERE COD_ESTRUTURA = GT_181-COD_ESTRUTURA.
+          IF SY-SUBRC <> 0.
+            CLEAR: GT_184[], GT_184.
+          ENDIF.
+
+        ENDIF.
+      ELSE.
+        CLEAR GT_182.
+      ENDIF.
+
+    ENDIF."ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG
+
+    "-------------------------------------------------------
+  ELSE.
+    CLEAR: GT_181[], GT_181.
+  ENDIF.
+** End of FF  21.12.2022
+
+  VL_INTERVAL_DAYS = 0.
+
+*  PERFORM limpa_dados.
+
+  IF ( S_ZFBDT-LOW  IS NOT INITIAL ) AND
+     ( S_ZFBDT-HIGH IS NOT INITIAL ).
+    VL_INTERVAL_DAYS = S_ZFBDT-HIGH - S_ZFBDT-LOW.
+  ENDIF.
+
+  IF VL_INTERVAL_DAYS > 31.
+    MESSAGE 'Intervalo de dias não pode ser superior a 31 dias!' TYPE 'S'.
+    VG_NO_VALID = 'X'.
+    EXIT.
+  ENDIF.
+
+ENDFORM.                    "F_SELECIONA_DADOS
+
+FORM F_PROCESSAR_DADOS.
+
+  DATA: VL_VLR_DIA  TYPE ZFIT0111-DMBTR.
+
+  LOOP AT GT_182.
+
+    CLEAR: WA_SAIDA.
+
+    READ TABLE GT_181 WITH KEY COD_ESTRUTURA = GT_182-COD_ESTRUTURA.
+    IF SY-SUBRC = 0.
+
+      WA_SAIDA-BUKRS         = GT_181-BUKRS.
+      WA_SAIDA-DESCRICAO     = GT_181-DESCRICAO.
+      WA_SAIDA-COD_ESTRUTURA = GT_182-COD_ESTRUTURA.
+"ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG - INICIO
+      WA_SAIDA-VERSAO = WA_VERSAO.
+      WA_SAIDA-DT_VERSAO =  WA_DT_VERSAO.
+      WA_SAIDA-HORA_VERSAO = WA_HORA_VERSAO.
+      WA_SAIDA-VERSAO_VAR = WA_VERSAO_VAR.
+      WA_SAIDA-DT_VERSAO_VAR =  WA_DT_VERSAO_VAR.
+      WA_SAIDA-HORA_VERSAO_VAR = WA_HORA_VERSAO_VAR.
+"ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG - FIM
+
+      APPEND WA_SAIDA TO IT_SAIDA.
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDFORM.                    "F_PROCESSAR_DADOS
+
+
+*=============================================================================*
+*Form F_GET_DIAS_MOV                                                       *
+*=============================================================================*
+FORM F_GET_DIAS_MOV USING P_MOV_AVULSO.
+
+  DATA: GT_0111_VCTO  TYPE TABLE OF ZFIT0111 WITH HEADER LINE.
+
+  DATA: VL_DT_VCTO_AUX TYPE ZFIT0111-DT_VCTO.
+
+*alterado por guilherme rabelo inicio
+*  SELECT * FROM zfit0111
+*       INTO TABLE @DATA(gt_0111)
+*        WHERE bukrs = @s_bukrs-low
+*            AND dt_base_versao EQ @s_zfbdt-low.
+
+*alterado por guilherme rabelo fim
+  IF P_MOV_AVULSO IS NOT INITIAL.
+
+    IF WA_SAIDA_MOV_FLX-DAY_01 = 0.
+      CLEAR: DAY_01_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_02 = 0.
+      CLEAR: DAY_02_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_03 = 0.
+      CLEAR: DAY_03_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_04 = 0.
+      CLEAR: DAY_04_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_05 = 0.
+      CLEAR: DAY_05_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_06 = 0.
+      CLEAR: DAY_06_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_07 = 0.
+      CLEAR: DAY_07_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_08 = 0.
+      CLEAR: DAY_08_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_09 = 0.
+      CLEAR: DAY_09_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_10 = 0.
+      CLEAR: DAY_10_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_11 = 0.
+      CLEAR: DAY_11_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_12 = 0.
+      CLEAR: DAY_12_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_13 = 0.
+      CLEAR: DAY_13_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_14 = 0.
+      CLEAR: DAY_14_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_15 = 0.
+      CLEAR: DAY_15_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_16 = 0.
+      CLEAR: DAY_16_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_17 = 0.
+      CLEAR: DAY_17_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_18 = 0.
+      CLEAR: DAY_18_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_19 = 0.
+      CLEAR: DAY_19_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_20 = 0.
+      CLEAR: DAY_20_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_21 = 0.
+      CLEAR: DAY_21_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_22 = 0.
+      CLEAR: DAY_22_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_23 = 0.
+      CLEAR: DAY_23_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_24 = 0.
+      CLEAR: DAY_24_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_25 = 0.
+      CLEAR: DAY_25_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_26 = 0.
+      CLEAR: DAY_26_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_27 = 0.
+      CLEAR: DAY_27_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_28 = 0.
+      CLEAR: DAY_28_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_29 = 0.
+      CLEAR: DAY_29_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_30 = 0.
+      CLEAR: DAY_30_MOV.
+    ENDIF.
+
+    IF WA_SAIDA_MOV_FLX-DAY_31 = 0.
+      CLEAR: DAY_31_MOV.
+    ENDIF.
+
+  ELSE.
+
+    PERFORM LIMPA_DIAS_MOV.
+
+    GT_0111_VCTO[] = GT_0111[].
+
+    SORT GT_0111_VCTO BY DT_VCTO.
+
+    DELETE ADJACENT DUPLICATES FROM GT_0111_VCTO COMPARING DT_VCTO.
+
+    LOOP AT GT_0111_VCTO.
+      PERFORM ADD_DIA_MOV USING GT_0111_VCTO-DT_VCTO.
+    ENDLOOP.
+
+    VL_DT_VCTO_AUX = S_ZFBDT-LOW.
+
+    IF ( S_ZFBDT-HIGH IS NOT INITIAL ) AND ( S_ZFBDT-LOW NE S_ZFBDT-HIGH  ).
+
+      WHILE VL_DT_VCTO_AUX <> S_ZFBDT-HIGH.
+        PERFORM ADD_DIA_MOV_AJUSTE USING VL_DT_VCTO_AUX.
+        ADD 1 TO VL_DT_VCTO_AUX.
+      ENDWHILE.
+
+      PERFORM ADD_DIA_MOV_AJUSTE USING S_ZFBDT-HIGH.
+
+    ELSE.
+      PERFORM ADD_DIA_MOV_AJUSTE USING VL_DT_VCTO_AUX.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.                    "F_GET_DIAS_MOV
+
+FORM ADD_DIA_MOV USING P_DT_VCTO TYPE ZFIT0111-DT_VCTO.
+
+  CHECK P_DT_VCTO IS NOT INITIAL.
+
+  IF DAY_01_MOV IS INITIAL.
+
+    DAY_01_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_02_MOV IS INITIAL.
+
+    DAY_02_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_03_MOV IS INITIAL.
+
+    DAY_03_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_04_MOV IS INITIAL.
+
+    DAY_04_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_05_MOV IS INITIAL.
+
+    DAY_05_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_06_MOV IS INITIAL.
+
+    DAY_06_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_07_MOV IS INITIAL.
+
+    DAY_07_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_08_MOV IS INITIAL.
+
+    DAY_08_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_09_MOV IS INITIAL.
+
+    DAY_09_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_10_MOV IS INITIAL.
+
+    DAY_10_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_11_MOV IS INITIAL.
+
+    DAY_11_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_12_MOV IS INITIAL.
+
+    DAY_12_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_13_MOV IS INITIAL.
+
+    DAY_13_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_14_MOV IS INITIAL.
+
+    DAY_14_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_15_MOV IS INITIAL.
+
+    DAY_15_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_16_MOV IS INITIAL.
+
+    DAY_16_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_17_MOV IS INITIAL.
+
+    DAY_17_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_18_MOV IS INITIAL.
+
+    DAY_18_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_19_MOV IS INITIAL.
+
+    DAY_19_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_20_MOV IS INITIAL.
+
+    DAY_20_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_21_MOV IS INITIAL.
+
+    DAY_21_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_22_MOV IS INITIAL.
+
+    DAY_22_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_23_MOV IS INITIAL.
+
+    DAY_23_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_24_MOV IS INITIAL.
+
+    DAY_24_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_25_MOV IS INITIAL.
+
+    DAY_25_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_26_MOV IS INITIAL.
+
+    DAY_26_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_27_MOV IS INITIAL.
+
+    DAY_27_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_28_MOV IS INITIAL.
+
+    DAY_28_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_29_MOV IS INITIAL.
+
+    DAY_29_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_30_MOV IS INITIAL.
+
+    DAY_30_MOV = P_DT_VCTO.
+
+  ELSEIF DAY_31_MOV IS INITIAL.
+
+    DAY_31_MOV = P_DT_VCTO.
+
+  ENDIF.
+
+ENDFORM.
+
+
+FORM ADD_DIA_MOV_AJUSTE USING P_DT_VCTO TYPE ZFIT0111-DT_VCTO.
+
+  CHECK P_DT_VCTO IS NOT INITIAL.
+
+  IF P_DT_VCTO < SY-DATUM. "Elimina Dias Retroativos
+    EXIT.
+  ENDIF.
+
+  CLEAR: TG_DAYS_MOV_AJUSTE.
+
+  IF DAY_01_AJUSTE IS INITIAL.
+
+    DAY_01_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_01'.
+
+  ELSEIF DAY_02_AJUSTE IS INITIAL.
+
+    DAY_02_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_02'.
+
+  ELSEIF DAY_03_AJUSTE IS INITIAL.
+
+    DAY_03_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_03'.
+
+  ELSEIF DAY_04_AJUSTE IS INITIAL.
+
+    DAY_04_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_04'.
+
+  ELSEIF DAY_05_AJUSTE IS INITIAL.
+
+    DAY_05_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_05'.
+
+  ELSEIF DAY_06_AJUSTE IS INITIAL.
+
+    DAY_06_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_06'.
+
+  ELSEIF DAY_07_AJUSTE IS INITIAL.
+
+    DAY_07_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_07'.
+
+  ELSEIF DAY_08_AJUSTE IS INITIAL.
+
+    DAY_08_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_08'.
+
+  ELSEIF DAY_09_AJUSTE IS INITIAL.
+
+    DAY_09_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_09'.
+
+  ELSEIF DAY_10_AJUSTE IS INITIAL.
+
+    DAY_10_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_10'.
+
+  ELSEIF DAY_11_AJUSTE IS INITIAL.
+
+    DAY_11_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_11'.
+
+  ELSEIF DAY_12_AJUSTE IS INITIAL.
+
+    DAY_12_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_12'.
+
+  ELSEIF DAY_13_AJUSTE IS INITIAL.
+
+    DAY_13_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_13'.
+
+  ELSEIF DAY_14_AJUSTE IS INITIAL.
+
+    DAY_14_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_14'.
+
+  ELSEIF DAY_15_AJUSTE IS INITIAL.
+
+    DAY_15_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_15'.
+
+  ELSEIF DAY_16_AJUSTE IS INITIAL.
+
+    DAY_16_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_16'.
+
+  ELSEIF DAY_17_AJUSTE IS INITIAL.
+
+    DAY_17_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_17'.
+
+  ELSEIF DAY_18_AJUSTE IS INITIAL.
+
+    DAY_18_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_18'.
+
+  ELSEIF DAY_19_AJUSTE IS INITIAL.
+
+    DAY_19_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_19'.
+
+  ELSEIF DAY_20_AJUSTE IS INITIAL.
+
+    DAY_20_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_20'.
+
+  ELSEIF DAY_21_AJUSTE IS INITIAL.
+
+    DAY_21_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_21'.
+
+  ELSEIF DAY_22_AJUSTE IS INITIAL.
+
+    DAY_22_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_22'.
+
+  ELSEIF DAY_23_AJUSTE IS INITIAL.
+
+    DAY_23_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_23'.
+
+  ELSEIF DAY_24_AJUSTE IS INITIAL.
+
+    DAY_24_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_24'.
+
+  ELSEIF DAY_25_AJUSTE IS INITIAL.
+
+    DAY_25_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_25'.
+
+  ELSEIF DAY_26_AJUSTE IS INITIAL.
+
+    DAY_26_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_26'.
+
+  ELSEIF DAY_27_AJUSTE IS INITIAL.
+
+    DAY_27_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_27'.
+
+  ELSEIF DAY_28_AJUSTE IS INITIAL.
+
+    DAY_28_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_28'.
+
+  ELSEIF DAY_29_AJUSTE IS INITIAL.
+
+    DAY_29_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_29'.
+
+  ELSEIF DAY_30_AJUSTE IS INITIAL.
+
+    DAY_30_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_30'.
+
+  ELSEIF DAY_31_AJUSTE IS INITIAL.
+
+    DAY_31_AJUSTE = P_DT_VCTO.
+    TG_DAYS_MOV_AJUSTE-COLUNA = 'DAY_31'.
+
+  ENDIF.
+
+  IF TG_DAYS_MOV_AJUSTE-COLUNA IS NOT INITIAL.
+    TG_DAYS_MOV_AJUSTE-DT_VCTO = P_DT_VCTO.
+    APPEND TG_DAYS_MOV_AJUSTE.
+  ENDIF.
+
+ENDFORM.
+
+FORM CREATE_CONTAINER_ALV_TREE .
+
+  DATA: URL(255)        TYPE C,
+        IT_FIELDCATALOG TYPE LVC_T_FCAT.
+
+  CHECK CONTAINER IS INITIAL.
+
+* create a container for the tree control
+  CREATE OBJECT CONTAINER
+    EXPORTING
+      CONTAINER_NAME              = 'C_TREE'
+    EXCEPTIONS
+      CNTL_ERROR                  = 1
+      CNTL_SYSTEM_ERROR           = 2
+      CREATE_ERROR                = 3
+      LIFETIME_ERROR              = 4
+      LIFETIME_DYNPRO_DYNPRO_LINK = 5.
+
+  IF SY-SUBRC <> 0.
+    MESSAGE A000(TREE_CONTROL_MSG).
+  ENDIF.
+
+  CREATE OBJECT DG_DYNDOC_ID
+    EXPORTING
+      STYLE = 'ALV_GRID'.
+
+  CREATE OBJECT DG_SPLITTER
+    EXPORTING
+      PARENT  = CONTAINER
+      ROWS    = 2
+      COLUMNS = 1.
+
+  CALL METHOD DG_SPLITTER->GET_CONTAINER
+    EXPORTING
+      ROW       = 1
+      COLUMN    = 1
+    RECEIVING
+      CONTAINER = DG_PARENT_HTML.
+
+  CREATE OBJECT DG_SPLITTER_2
+    EXPORTING
+      PARENT  = DG_PARENT_HTML
+      ROWS    = 1
+      COLUMNS = 2.
+
+  CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+    EXPORTING
+      ROW       = 1
+      COLUMN    = 1
+    RECEIVING
+      CONTAINER = DG_PARENT_HTML1.
+
+  CALL METHOD DG_SPLITTER_2->SET_COLUMN_WIDTH
+    EXPORTING
+      ID    = 1
+      WIDTH = 40.
+
+  CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+    EXPORTING
+      ROW       = 1
+      COLUMN    = 2
+    RECEIVING
+      CONTAINER = DG_PARENT_HTML2.
+
+  CREATE OBJECT PICTURE
+    EXPORTING
+      PARENT = DG_PARENT_HTML2.
+
+  PERFORM F_PEGA_IMAGEM USING 'LOGO_NOVO' CHANGING URL.
+
+  CALL METHOD PICTURE->LOAD_PICTURE_FROM_URL
+    EXPORTING
+      URL = URL.
+
+  CALL METHOD PICTURE->SET_DISPLAY_MODE
+    EXPORTING
+      DISPLAY_MODE = PICTURE->DISPLAY_MODE_FIT_CENTER.
+
+  CALL METHOD DG_SPLITTER->GET_CONTAINER
+    EXPORTING
+      ROW       = 2
+      COLUMN    = 1
+    RECEIVING
+      CONTAINER = DG_PARENT_TREE.
+
+  CALL METHOD DG_SPLITTER->SET_ROW_HEIGHT
+    EXPORTING
+      ID     = 1
+      HEIGHT = 16.
+
+  PERFORM CRIA_HTML_CAB_TREE.
+
+
+ENDFORM.                    " CREATE_CONTAINER_ALV_TREE
+
+FORM F_PEGA_IMAGEM  USING    NOME_LOGO
+                    CHANGING URL.
+
+  DATA: BEGIN OF GRAPHIC_TABLE OCCURS 0,
+          LINE(255) TYPE X,
+        END OF GRAPHIC_TABLE.
+  DATA: L_GRAPHIC_XSTR TYPE XSTRING.
+  DATA: GRAPHIC_SIZE   TYPE I.
+  DATA: L_GRAPHIC_CONV TYPE I.
+  DATA: L_GRAPHIC_OFFS TYPE I.
+
+  REFRESH GRAPHIC_TABLE.
+  CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+    EXPORTING
+      P_OBJECT = 'GRAPHICS'
+      P_NAME   = NOME_LOGO
+      P_ID     = 'BMAP'
+      P_BTYPE  = 'BCOL'
+    RECEIVING
+      P_BMP    = L_GRAPHIC_XSTR.
+
+  GRAPHIC_SIZE = XSTRLEN( L_GRAPHIC_XSTR ).
+  L_GRAPHIC_CONV = GRAPHIC_SIZE.
+  L_GRAPHIC_OFFS = 0.
+  WHILE L_GRAPHIC_CONV > 255.
+    GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(255).
+    APPEND GRAPHIC_TABLE.
+    L_GRAPHIC_OFFS = L_GRAPHIC_OFFS + 255.
+    L_GRAPHIC_CONV = L_GRAPHIC_CONV - 255.
+  ENDWHILE.
+  GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(L_GRAPHIC_CONV).
+  APPEND GRAPHIC_TABLE.
+  CALL FUNCTION 'DP_CREATE_URL'
+    EXPORTING
+      TYPE     = 'IMAGE'
+      SUBTYPE  = 'X-UNKNOWN'
+      SIZE     = GRAPHIC_SIZE
+      LIFETIME = 'T'
+    TABLES
+      DATA     = GRAPHIC_TABLE
+    CHANGING
+      URL      = URL.
+ENDFORM.                    " F_PEGA_IMAGEM
+
+FORM CRIA_HTML_CAB_TREE.
+
+  DATA: TEXTO(40), VG_MES(2), VG_ANO(4),
+        SDYDO_TEXT_ELEMENT(255),
+        P_TEXT_TABLE            TYPE SDYDO_TEXT_TABLE,
+        P_TEXT                  TYPE SDYDO_TEXT_ELEMENT,
+        POSITION                TYPE I,
+        VL_DATA_AUX             TYPE STRING,
+        VL_DATA_AUX02           TYPE STRING.
+
+  DATA: COLUMN         TYPE REF TO CL_DD_AREA,
+        COLUMN_1       TYPE REF TO CL_DD_AREA,
+        COLUMN_2       TYPE REF TO CL_DD_AREA,
+        TABLE_ELEMENT  TYPE REF TO CL_DD_TABLE_ELEMENT,
+        TABLE_ELEMENT2 TYPE REF TO CL_DD_TABLE_ELEMENT.
+
+  CALL METHOD DG_DYNDOC_ID->INITIALIZE_DOCUMENT.
+
+  CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+    EXPORTING
+      NO_OF_COLUMNS = 1
+      BORDER        = '0'
+      WIDTH         = '100%'
+    IMPORTING
+      TABLE         = TABLE_ELEMENT.
+
+  CALL METHOD TABLE_ELEMENT->ADD_COLUMN
+    IMPORTING
+      COLUMN = COLUMN.
+
+  CALL METHOD TABLE_ELEMENT->SET_COLUMN_STYLE
+    EXPORTING
+      COL_NO    = 1
+      SAP_ALIGN = 'CENTER'
+      SAP_STYLE = CL_DD_DOCUMENT=>HEADING.
+
+*  P_TEXT = 'Fluxo Caixa Previsto'.
+*  CALL METHOD COLUMN->ADD_TEXT
+*    EXPORTING
+*      TEXT      = P_TEXT
+*      SAP_STYLE = 'HEADING'.
+*
+*  CALL METHOD TABLE_ELEMENT->NEW_ROW.
+
+  IF P_INTER IS NOT INITIAL.
+    P_TEXT = 'Moeda Interna da empresa'.
+  ELSE.
+    P_TEXT = 'Moeda Forte'.
+  ENDIF.
+
+  IF S_ZFBDT-HIGH IS NOT INITIAL.
+
+    PERFORM FORMATA_DATA USING S_ZFBDT-LOW  VL_DATA_AUX.
+    PERFORM FORMATA_DATA USING S_ZFBDT-HIGH VL_DATA_AUX02.
+
+    CONCATENATE P_TEXT '/' 'Período:' VL_DATA_AUX 'até' VL_DATA_AUX02
+           INTO P_TEXT SEPARATED BY SPACE.
+  ELSE.
+
+    PERFORM FORMATA_DATA USING S_ZFBDT-LOW VL_DATA_AUX.
+
+    CONCATENATE P_TEXT '/' 'Dia:' VL_DATA_AUX
+           INTO P_TEXT SEPARATED BY SPACE.
+
+  ENDIF.
+
+
+  CALL METHOD COLUMN->ADD_TEXT
+    EXPORTING
+      TEXT         = P_TEXT
+      "SAP_STYLE = 'HEADING'.
+      SAP_FONTSIZE = 'MEDIUM'.
+
+
+  CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+    EXPORTING
+      NO_OF_COLUMNS = 2
+      BORDER        = '0'
+      WIDTH         = '100%'
+    IMPORTING
+      TABLE         = TABLE_ELEMENT2.
+
+  CALL METHOD TABLE_ELEMENT2->ADD_COLUMN
+    EXPORTING
+      SAP_STYLE   = 'SAP_BOLD'
+      STYLE_CLASS = 'SAP_BOLD'
+    IMPORTING
+      COLUMN      = COLUMN_1.
+
+  CALL METHOD TABLE_ELEMENT2->ADD_COLUMN
+    IMPORTING
+      COLUMN = COLUMN_2.
+
+  CALL METHOD TABLE_ELEMENT2->SET_COLUMN_STYLE
+    EXPORTING
+      COL_NO       = 2
+      SAP_ALIGN    = 'LEFT'
+      SAP_FONTSIZE = CL_DD_DOCUMENT=>MEDIUM.
+
+
+  CALL METHOD COLUMN_1->ADD_TEXT
+    EXPORTING
+      TEXT_TABLE = P_TEXT_TABLE
+      FIX_LINES  = 'X'.
+
+  CLEAR: P_TEXT_TABLE.
+
+
+  CALL METHOD COLUMN_2->ADD_TEXT
+    EXPORTING
+      TEXT_TABLE = P_TEXT_TABLE
+      FIX_LINES  = 'X'.
+
+  PERFORM CONTAINER_HTML.
+
+
+ENDFORM.                    " CRIA_HTML_CAB_DRE
+
+FORM CONTAINER_HTML .
+
+  DATA : DL_LENGTH        TYPE I,
+         DL_BACKGROUND_ID TYPE SDYDO_KEY VALUE SPACE.
+
+  IF DG_HTML_CNTRL IS INITIAL.
+    CREATE OBJECT DG_HTML_CNTRL
+      EXPORTING
+        PARENT = DG_PARENT_HTML1.
+  ENDIF.
+
+  CALL FUNCTION 'REUSE_ALV_GRID_COMMENTARY_SET'
+    EXPORTING
+      DOCUMENT = DG_DYNDOC_ID
+      BOTTOM   = SPACE
+    IMPORTING
+      LENGTH   = DL_LENGTH.
+
+  CALL METHOD DG_DYNDOC_ID->MERGE_DOCUMENT.
+
+  CALL METHOD DG_DYNDOC_ID->SET_DOCUMENT_BACKGROUND
+    EXPORTING
+      PICTURE_ID = DL_BACKGROUND_ID.
+
+  DG_DYNDOC_ID->HTML_CONTROL = DG_HTML_CNTRL.
+
+  CALL METHOD DG_DYNDOC_ID->DISPLAY_DOCUMENT
+    EXPORTING
+      REUSE_CONTROL      = 'X'
+      PARENT             = DG_PARENT_HTML1
+    EXCEPTIONS
+      HTML_DISPLAY_ERROR = 1.
+
+
+ENDFORM.                    " CONTAINER_HTML
+
+FORM CRIAR_FIELD_CATALOG_TREE.
+
+  FREE: WA_FCAT, IT_FCAT.
+  REFRESH: IT_FCAT.
+
+  PERFORM ESTRUTURA_ALV USING:
+
+      03  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_01'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      04  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_02'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      05  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_03'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      06  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_04'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      07  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_05'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      08  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_06'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      09  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_07'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      10  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_08'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      11  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_09'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      12  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_10'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      13  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_11'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      14  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_12'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      15  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_13'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      16  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_14'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      17  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_15'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      18  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_16'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      19  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_17'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      20  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_18'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      21  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_19'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      22  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_20'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      23  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_21'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      24  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_22'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      25  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_23'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      26  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_24'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      27  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_25'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      28  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_26'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      29  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_27'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      30  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_28'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      31  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_29'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      32  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_30'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X',
+      33  'ZFIT0111'  'DMBTR'   'IT_SAIDA' 'DAY_31'           'Dia 1'            '20'  ' '    '' ' ' 'R' ' ' 'X'.
+
+ENDFORM.                    " CRIAR_FIELD_CATALOG
+
+FORM ESTRUTURA_ALV USING VALUE(P_COL_POS)       TYPE I
+                         VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                         VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                         VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                         VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                         VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                         VALUE(P_OUTPUTLEN)
+                         VALUE(P_EDIT)
+                         VALUE(P_SUM)
+                         VALUE(P_EMPHASIZE)
+                         VALUE(P_JUST)
+                         VALUE(P_HOTSPOT)
+                         VALUE(P_COM_MOV).
+
+  DATA: VL_SCRTEXT_AUX TYPE DD03P-SCRTEXT_L,
+        VL_SCRTEXT     TYPE DD03P-SCRTEXT_L.
+
+  CASE P_FIELD.
+    WHEN 'DAY_01'.
+      IF ( DAY_01_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_01_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_02'.
+      IF ( DAY_02_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_02_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_03'.
+      IF ( DAY_03_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_03_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_04'.
+      IF ( DAY_04_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_04_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_05'.
+      IF ( DAY_05_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_05_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_06'.
+      IF ( DAY_06_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_06_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_07'.
+      IF ( DAY_07_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_07_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_08'.
+      IF ( DAY_08_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_08_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_09'.
+      IF ( DAY_09_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_09_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_10'.
+      IF ( DAY_10_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_10_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_11'.
+      IF ( DAY_11_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_11_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_12'.
+      IF ( DAY_12_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_12_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_13'.
+      IF ( DAY_13_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_13_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_14'.
+      IF ( DAY_14_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_14_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_15'.
+      IF ( DAY_15_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_15_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_16'.
+      IF ( DAY_16_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_16_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_17'.
+      IF ( DAY_17_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_17_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_18'.
+      IF ( DAY_18_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_18_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_19'.
+      IF ( DAY_19_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_19_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_20'.
+      IF ( DAY_20_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_20_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_21'.
+      IF ( DAY_21_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_21_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_22'.
+      IF ( DAY_22_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_22_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_23'.
+      IF ( DAY_23_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_23_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_24'.
+      IF ( DAY_24_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_24_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_25'.
+      IF ( DAY_25_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_25_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_26'.
+      IF ( DAY_26_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_26_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_27'.
+      IF ( DAY_27_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_27_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_28'.
+      IF ( DAY_28_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_28_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_29'.
+      IF ( DAY_29_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_29_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_30'.
+      IF ( DAY_30_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_30_MOV CHANGING VL_SCRTEXT_AUX.
+    WHEN 'DAY_31'.
+      IF ( DAY_31_MOV IS INITIAL ).
+        EXIT.
+      ENDIF.
+      PERFORM FORMATA_DATA USING DAY_31_MOV CHANGING VL_SCRTEXT_AUX.
+  ENDCASE.
+
+  IF VL_SCRTEXT_AUX IS NOT INITIAL.
+    "TRANSLATE VL_SCRTEXT_AUX+6 TO LOWER CASE.
+    VL_SCRTEXT = VL_SCRTEXT_AUX.
+  ELSE.
+    VL_SCRTEXT = P_SCRTEXT_L.
+  ENDIF.
+
+  CLEAR WA_FCAT.
+
+  WA_FCAT-FIELDNAME   = P_FIELD.
+  WA_FCAT-TABNAME     = P_TABNAME.
+  WA_FCAT-REF_TABLE   = P_REF_TABNAME.
+  WA_FCAT-REF_FIELD   = P_REF_FIELDNAME.
+  WA_FCAT-KEY         = ' '.
+  WA_FCAT-EDIT        = P_EDIT.
+  WA_FCAT-COL_POS     = P_COL_POS.
+  WA_FCAT-OUTPUTLEN   = P_OUTPUTLEN.
+  WA_FCAT-NO_OUT      = ' '.
+  WA_FCAT-COLDDICTXT = 'L'.
+  WA_FCAT-SELDDICTXT = 'L'.
+  WA_FCAT-TIPDDICTXT = 'L'.
+  WA_FCAT-SELTEXT     = VL_SCRTEXT.
+  WA_FCAT-REPTEXT     = VL_SCRTEXT.
+  WA_FCAT-SCRTEXT_S   = VL_SCRTEXT.
+  WA_FCAT-SCRTEXT_M   = VL_SCRTEXT.
+  WA_FCAT-SCRTEXT_L   = VL_SCRTEXT.
+  WA_FCAT-EMPHASIZE   = P_EMPHASIZE.
+  WA_FCAT-STYLE       =
+  WA_FCAT-JUST        = P_JUST.
+  WA_FCAT-DO_SUM      = P_SUM.
+  WA_FCAT-HOTSPOT     = P_HOTSPOT.
+
+  APPEND WA_FCAT TO IT_FCAT.
+
+ENDFORM.                    " ESTRUTURA_ALV
+
+FORM INICIAR_TREE .
+
+  DATA: L_HIERARCHY_HEADER TYPE TREEV_HHDR,
+        LT_LIST_COMMENTARY TYPE SLIS_T_LISTHEADER,
+        L_LOGO             TYPE SDYDO_VALUE,
+        LS_LINE            TYPE SLIS_LISTHEADER,
+        IT_FIELDCATALOG    TYPE LVC_T_FCAT,
+        VG_MES(2),
+        VG_ANO(4),
+        LT_EVENTS          TYPE CNTL_SIMPLE_EVENTS,
+        L_EVENT            TYPE CNTL_SIMPLE_EVENT,
+        I_DEFAULT          TYPE CHAR01,
+        IT_NODE_KEY        TYPE LVC_T_NKEY.
+
+  IF G_TREE IS INITIAL.
+
+    CREATE OBJECT G_TREE
+      EXPORTING
+        PARENT                      = DG_PARENT_TREE
+        NODE_SELECTION_MODE         = CL_GUI_COLUMN_TREE=>NODE_SEL_MODE_MULTIPLE
+        ITEM_SELECTION              = SPACE
+        NO_HTML_HEADER              = 'X'
+        NO_TOOLBAR                  = ''
+      EXCEPTIONS
+        CNTL_ERROR                  = 1
+        CNTL_SYSTEM_ERROR           = 2
+        CREATE_ERROR                = 3
+        LIFETIME_ERROR              = 4
+        ILLEGAL_NODE_SELECTION_MODE = 5
+        FAILED                      = 6
+        ILLEGAL_COLUMN_NAME         = 7.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      MESSAGE X208(00) WITH 'ERROR'.                        "#EC NOTEXT
+    ENDIF.
+
+*    CLEAR L_EVENT.
+*    L_EVENT-EVENTID = CL_GUI_COLUMN_TREE=>EVENTID_NODE_DOUBLE_CLICK.
+    L_EVENT-APPL_EVENT = 'X'.
+    APPEND L_EVENT TO LT_EVENTS.
+
+    CALL METHOD G_TREE->SET_REGISTERED_EVENTS
+      EXPORTING
+        EVENTS                    = LT_EVENTS
+      EXCEPTIONS
+        CNTL_ERROR                = 1
+        CNTL_SYSTEM_ERROR         = 2
+        ILLEGAL_EVENT_COMBINATION = 3.
+
+*  Definição de tamanhos do cabeçalho do avl tree list
+    L_HIERARCHY_HEADER-T_IMAGE = 'LOGO_NOVO'.
+    L_HIERARCHY_HEADER-HEADING = 'Empresa'.
+    L_HIERARCHY_HEADER-WIDTH   = 50.
+
+    "CREATE OBJECT ALV_TREE_VIEW_EVENT.
+    "SET HANDLER ALV_TREE_VIEW_EVENT->ON_NODE_DOUBLE_CLICK FOR G_TREE.
+
+    L_LOGO = 'LOGO_NOVO'.
+    G_VARIANT-REPORT = SY-REPID.
+
+    PERFORM: F_SELECIONA_DADOS.
+
+    CHECK VG_NO_VALID IS INITIAL.
+
+    PERFORM: F_GET_DIAS_MOV USING '',
+             CRIAR_FIELD_CATALOG_TREE.
+
+    IF IT_FCAT[] IS NOT INITIAL.
+
+      CALL METHOD G_TREE->SET_TABLE_FOR_FIRST_DISPLAY
+        EXPORTING
+          IS_HIERARCHY_HEADER = L_HIERARCHY_HEADER
+          IT_LIST_COMMENTARY  = LT_LIST_COMMENTARY
+          I_LOGO              = L_LOGO
+          I_BACKGROUND_ID     = 'ALV_BACKGROUND'
+          I_SAVE              = 'A'
+          IS_VARIANT          = G_VARIANT
+        CHANGING
+          IT_OUTTAB           = IT_ALV_TREE
+          IT_FIELDCATALOG     = IT_FCAT.
+
+      PERFORM: F_PROCESSAR_DADOS,
+               CRIAR_HIERARCHY TABLES IT_NODE_KEY,
+               F_POPUP_TO_CONFIRM.
+
+*     Register events for alv tree
+*      PERFORM fm_register_event.
+
+*    * calculate totals
+      CALL METHOD G_TREE->UPDATE_CALCULATIONS.
+*
+*    * this method must be called to send the data to the frontend
+      CALL METHOD G_TREE->FRONTEND_UPDATE.
+
+      IF ( VG_NO_EXPAND_NODE IS INITIAL ) AND ( VG_NODE_KEY IS NOT INITIAL ).
+
+        CALL METHOD G_TREE->EXPAND_NODES
+          EXPORTING
+            IT_NODE_KEY = VG_NODE_KEY.
+
+      ELSE.
+        CALL METHOD G_TREE->COLLAPSE_ALL_NODES.
+        REFRESH: VG_NODE_KEY.
+        CLEAR: VG_NODE_KEY, VG_NO_EXPAND_NODE.
+      ENDIF.
+
+    ELSE.
+      MESSAGE 'Nenhum movimento Encontrado!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.                    " CREATE_TREE_ALV_TREE3_TREE
+
+*&---------------------------------------------------------------------*
+*&      Form  ESTRUTURA_SAIDA_ALV_TREE_VIEW
+*&---------------------------------------------------------------------*
+
+FORM CRIAR_HIERARCHY TABLES IT_NODE_KEY TYPE LVC_T_NKEY.
+
+  DATA: VL_NODE_TEXT   TYPE LVC_VALUE,
+        L_ROOT_KEY     TYPE LVC_NKEY,
+        L_NVL1_KEY     TYPE LVC_NKEY,
+        WA_SALDO_FINAL TYPE TY_SAIDA.
+
+  DATA: IT_SAIDA_BUKRS  TYPE TABLE OF TY_SAIDA,
+        V_SALDO_INICIAL TYPE DMBTR.
+
+  IT_SAIDA_BUKRS[] = IT_SAIDA[].
+
+  SORT IT_SAIDA_BUKRS BY BUKRS.
+
+  DELETE ADJACENT DUPLICATES FROM IT_SAIDA_BUKRS COMPARING BUKRS.
+
+  LOOP AT IT_SAIDA_BUKRS INTO WA_SAIDA.
+
+    CONCATENATE WA_SAIDA-BUKRS '-' WA_SAIDA-DESCRICAO
+           INTO VL_NODE_TEXT SEPARATED BY SPACE.
+
+    PERFORM GET_SALDO_FINAL USING WA_SAIDA
+                         CHANGING WA_SALDO_FINAL.
+
+    "Adiciona Nó Empresa.
+    PERFORM ADD_LINE_TREE USING L_ROOT_KEY
+                                VL_NODE_TEXT
+                                'X'
+                                WA_SALDO_FINAL
+                                '@A8@'
+                       CHANGING L_NVL1_KEY.
+
+    GV_NODE_EMPRESA = L_NVL1_KEY.
+
+    IT_NODE_KEY = L_NVL1_KEY.
+    APPEND IT_NODE_KEY.
+
+    PERFORM:
+
+            ADD_SALDO_INICIAL   TABLES IT_NODE_KEY
+                                USING WA_SAIDA
+                                      L_NVL1_KEY,
+
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+             ADD_TYPE_LEVEL_XX    TABLES IT_NODE_KEY
+                                  USING  'EN'
+                                         WA_SAIDA
+                                         L_NVL1_KEY,
+
+             ADD_TYPE_LEVEL_XX    TABLES IT_NODE_KEY
+                                  USING  'SA'
+                                         WA_SAIDA
+                                         L_NVL1_KEY,
+
+             ADD_TYPE_LEVEL_XX    TABLES IT_NODE_KEY
+                                  USING  'ZE'
+                                         WA_SAIDA
+                                         L_NVL1_KEY,
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+
+             ADD_TYPE_LEVEL_FD    TABLES IT_NODE_KEY
+                                  USING WA_SAIDA
+                                        L_NVL1_KEY,
+
+             ADD_APLIC          TABLES IT_NODE_KEY
+                                  USING WA_SAIDA
+                                        L_NVL1_KEY,
+
+             ADD_SF_MAIS  TABLES IT_NODE_KEY
+                                  USING WA_SAIDA
+                                        L_NVL1_KEY,
+
+             ADD_SALDO_FINAL     TABLES IT_NODE_KEY
+                                  USING WA_SAIDA
+                                        L_NVL1_KEY,
+
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+             ADD_SALDO_FINAL_T    TABLES IT_NODE_KEY
+                                  USING  WA_SAIDA
+                                         L_NVL1_KEY.
+
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+  ENDLOOP.
+
+ENDFORM.
+
+
+FORM FORMATA_DATA  USING    P_DATA
+                   CHANGING P_VALUE.
+
+  DATA: VL_DAY_OF_WEEK_NUM TYPE C,
+        VL_DS_DAY_WEEK     TYPE C LENGTH 10.
+
+  CALL FUNCTION 'DATE_COMPUTE_DAY'
+    EXPORTING
+      DATE   = P_DATA
+    IMPORTING
+      DAY    = VL_DAY_OF_WEEK_NUM
+    EXCEPTIONS
+      OTHERS = 8.
+
+  CASE VL_DAY_OF_WEEK_NUM.
+    WHEN 1.
+      VL_DS_DAY_WEEK = '- Seg.'.
+    WHEN 2.
+      VL_DS_DAY_WEEK = '- Ter.'.
+    WHEN 3.
+      VL_DS_DAY_WEEK = '- Qua.'.
+    WHEN 4.
+      VL_DS_DAY_WEEK = '- Qui.'.
+    WHEN 5.
+      VL_DS_DAY_WEEK = '- Sex.'.
+    WHEN 6.
+      VL_DS_DAY_WEEK = '- Sáb.'.
+    WHEN 7.
+      VL_DS_DAY_WEEK = '- Dom.'.
+  ENDCASE.
+
+  CONCATENATE P_DATA+06(2) '.' P_DATA+04(2) '.' P_DATA+2(2) INTO P_VALUE.
+  CONCATENATE P_VALUE VL_DS_DAY_WEEK INTO P_VALUE SEPARATED BY SPACE.
+
+ENDFORM.
+
+FORM FORMATA_HORA  USING    P_HORA
+                   CHANGING P_VALUE.
+
+  CONCATENATE P_HORA(2) ':' P_HORA+02(2) INTO P_VALUE.
+
+ENDFORM.
+
+FORM ADD_SALDO_INICIAL  TABLES IT_NODE_KEY
+                        USING  P_SAIDA TYPE     TY_SAIDA
+                               P_RELAT_KEY TYPE LVC_NKEY.
+
+  DATA: VL_LVC_NKEY TYPE LVC_NKEY,
+        WL_SAIDA    TYPE TY_SAIDA.
+
+  DATA: VL_SALDO_INI TYPE ZFIT0113-DMBTR.
+
+  WL_SAIDA-BUKRS = P_SAIDA-BUKRS.
+
+  LOOP AT GT_0113 WHERE BUKRS          = P_SAIDA-BUKRS
+                    AND DT_VCTO        = S_ZFBDT-LOW.
+
+
+    IF P_INTER IS NOT INITIAL.
+      VL_SALDO_INI = GT_0113-SDO_INICIAL_R.
+    ELSEIF P_FORTE IS NOT INITIAL.
+      VL_SALDO_INI = GT_0113-SDO_INICIAL_US.
+    ENDIF.
+
+    PERFORM ATRIB_VLR_DIA USING GT_0113-DT_VCTO
+                                VL_SALDO_INI
+                                WL_SAIDA.
+
+    APPEND INITIAL LINE TO IT_SALDO_INI ASSIGNING FIELD-SYMBOL(<FS_SALDO_INI>).
+    MOVE WL_SAIDA TO <FS_SALDO_INI>.
+    MOVE P_SAIDA-COD_ESTRUTURA TO <FS_SALDO_INI>-COD_ESTRUTURA.
+
+  ENDLOOP.
+
+  PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                              'SALDO INICIAL'
+                              ''
+                              WL_SAIDA
+                              '@3Z@'
+                     CHANGING VL_LVC_NKEY.
+
+  VG_KEY_NODE = VL_LVC_NKEY.
+  VG_SALDO_INICIAL = VL_SALDO_INI.
+
+ENDFORM. "add_saldo_inicial
+
+FORM ADD_TYPE_LEVEL_FD  TABLES IT_NODE_KEY
+                        USING  P_SAIDA       TYPE TY_SAIDA
+                               P_RELAT_KEY   TYPE LVC_NKEY.
+
+  DATA: WA_TOT_FD  TYPE TY_SAIDA,
+        L_NVL2_KEY TYPE LVC_NKEY.
+
+
+  DATA: LV_TEXT_FOLDER(128).
+
+  LOOP AT GT_182 WHERE BUKRS = P_SAIDA-BUKRS
+                   AND COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA
+                   AND NIVEL(2) = 'FD'
+                   AND NIVEL_ANT IS INITIAL.
+
+    P_RELAT_KEY = GV_NODE_EMPRESA.
+    LV_TEXT_FOLDER = GT_182-NITXT.
+
+    CLEAR WA_TOT_FD.
+    PERFORM GET_TOTAL_FD USING P_SAIDA
+                         CHANGING WA_TOT_FD.
+
+    PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                LV_TEXT_FOLDER
+                                'X' "Indica que é um Folder
+                                WA_TOT_FD
+                                '' "'@93@'
+                       CHANGING L_NVL2_KEY.
+
+    IT_NODE_KEY = L_NVL2_KEY.
+    APPEND IT_NODE_KEY.
+
+    LOOP AT GT_182 INTO DATA(WA_PROX_NIVEL_182) WHERE NIVEL_ANT = GT_182-NIVEL
+                                                  AND BUKRS = P_SAIDA-BUKRS.
+
+      LV_TEXT_FOLDER = WA_PROX_NIVEL_182-NITXT.
+      P_RELAT_KEY = L_NVL2_KEY.
+
+      PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                  LV_TEXT_FOLDER
+                                  'X' "Indica que é um Folder
+                                  WA_TOT_FD
+                                  '' "'@93@'
+                         CHANGING L_NVL2_KEY.
+
+      IT_NODE_KEY = L_NVL2_KEY.
+      APPEND IT_NODE_KEY.
+
+      LOOP AT GT_182 INTO WA_PROX_NIVEL_182 WHERE NIVEL_ANT = WA_PROX_NIVEL_182-NIVEL
+                                              AND BUKRS = P_SAIDA-BUKRS.
+
+        LV_TEXT_FOLDER = WA_PROX_NIVEL_182-NITXT.
+        P_RELAT_KEY = L_NVL2_KEY.
+
+        PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                    LV_TEXT_FOLDER
+                                    'X' "Indica que é um Folder
+                                    WA_TOT_FD
+                                    '' "'@93@'
+                           CHANGING L_NVL2_KEY.
+
+        IT_NODE_KEY = L_NVL2_KEY.
+        APPEND IT_NODE_KEY.
+
+      ENDLOOP.
+    ENDLOOP.
+
+    PERFORM ADD_FILHOS_FD TABLES GT_182
+                           USING WA_PROX_NIVEL_182
+                                 L_NVL2_KEY.
+
+  ENDLOOP.
+
+ENDFORM. "add_type_level_fd
+
+
+FORM ADD_APLIC  TABLES IT_NODE_KEY
+                 USING  P_SAIDA      TYPE TY_SAIDA
+                        P_RELAT_KEY  TYPE LVC_NKEY.
+
+  DATA: WA_TOT_APLIC        TYPE TY_SAIDA,
+        L_NVL2_KEY          TYPE LVC_NKEY,
+        LV_TEXT_FOLDER(128).
+
+
+  READ TABLE GT_182 WITH KEY BUKRS = P_SAIDA-BUKRS
+                             COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA
+                             NIVEL(2) = 'SC'.
+  IF SY-SUBRC = 0.
+
+    PERFORM GET_TOTAL_APLIC USING P_SAIDA
+                            CHANGING WA_TOT_APLIC.
+
+
+    LV_TEXT_FOLDER = GT_182-NITXT.
+    P_RELAT_KEY = GV_NODE_EMPRESA.
+
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+    FREE IT_SAL_TOT_FIN.
+    APPEND INITIAL LINE TO IT_SAL_TOT_FIN ASSIGNING FIELD-SYMBOL(<FS_SAL_TOT_FIN>).
+    MOVE WA_TOT_APLIC TO <FS_SAL_TOT_FIN>.
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+    PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                LV_TEXT_FOLDER
+                                'X'
+                                WA_TOT_APLIC
+                                '@6F@'
+                       CHANGING L_NVL2_KEY.
+
+    IT_NODE_KEY = L_NVL2_KEY.
+    APPEND IT_NODE_KEY.
+
+  ENDIF.
+
+ENDFORM. "add_aplic
+
+
+FORM ADD_SF_MAIS  TABLES IT_NODE_KEY
+                  USING  P_SAIDA      TYPE TY_SAIDA
+                         P_RELAT_KEY  TYPE LVC_NKEY.
+
+  DATA: WL_SAIDA_SF_MAIS TYPE TY_SAIDA,
+        WA_TOT_SFMAIS    TYPE TY_SAIDA,
+        L_NVL2_KEY       TYPE LVC_NKEY,
+        VL_LVC_NKEY      TYPE LVC_NKEY,
+        VL_NODE_TEXT     TYPE LVC_VALUE.
+
+  DATA: LV_TEXT_FOLDER(128).
+
+  LOOP AT GT_182 WHERE BUKRS = P_SAIDA-BUKRS
+                   AND COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA
+                   AND NIVEL(2) = 'S+'.
+
+    P_RELAT_KEY = GV_NODE_EMPRESA.
+    LV_TEXT_FOLDER = GT_182-NITXT.
+
+    PERFORM GET_TOTAL_SFMAIS TABLES GT_184
+                             USING P_SAIDA
+                                   GT_182
+                             CHANGING WA_TOT_SFMAIS.
+
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+    APPEND INITIAL LINE TO IT_SAL_TOT_FIN ASSIGNING FIELD-SYMBOL(<FS_SAL_TOT_FIN>).
+    MOVE WA_TOT_SFMAIS TO <FS_SAL_TOT_FIN>.
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+    PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                LV_TEXT_FOLDER
+                                'X' "Indica que é um Folder
+                                WA_TOT_SFMAIS
+                                '@3Z@'
+                       CHANGING L_NVL2_KEY.
+
+    IT_NODE_KEY = L_NVL2_KEY.
+    APPEND IT_NODE_KEY.
+
+
+    PERFORM ADD_FILHOS_SF_MAIS TABLES GT_184
+                                USING GT_182
+                                 L_NVL2_KEY.
+
+  ENDLOOP.
+
+
+ENDFORM. "add_sf_mais
+
+FORM ADD_FILHOS_FD     TABLES P_GT_182 STRUCTURE ZFIT182
+                       USING  WA_PROX_NIVEL_182  STRUCTURE ZFIT182
+                              P_RELAT_KEY TYPE LVC_NKEY.
+
+  DATA: VL_LVC_NKEY  TYPE LVC_NKEY,
+        VL_NODE_TEXT TYPE LVC_VALUE,
+        VL_TOT_FD    TYPE DMBTR,
+        WL_SAIDA_AUX TYPE TY_SAIDA,
+        C_FOLDER.
+
+  CLEAR: C_FOLDER.
+
+  LOOP AT GT_183 WHERE BUKRS         = WA_PROX_NIVEL_182-BUKRS
+                   AND COD_ESTRUTURA = WA_PROX_NIVEL_182-COD_ESTRUTURA
+                   AND NIVEL         = WA_PROX_NIVEL_182-NIVEL.
+
+    MOVE-CORRESPONDING GT_183 TO WL_SAIDA_AUX.
+    WL_SAIDA_AUX-CODIGO_FLUXO  = GT_183-CODIGO_FLUXO.
+    WL_SAIDA_AUX-DESCRICAO     = GT_183-DESCRICAO.
+
+    WL_SAIDA_AUX-NIVEL = 'X'.
+    CONCATENATE GT_183-CODIGO_FLUXO '-' GT_183-DESCRICAO INTO VL_NODE_TEXT SEPARATED BY SPACE.
+
+    CLEAR WL_SAIDA_AUX.
+    LOOP AT GT_0111 WHERE CODIGO = GT_183-CODIGO_FLUXO
+                      AND DT_BASE_VERSAO = SY-DATUM.
+
+      IF GT_0111-CLAS_FLX = 'S'. "Negativo
+        GT_0111-DMBTR = GT_0111-DMBTR * -1.
+        GT_0111-DMBE2 = GT_0111-DMBE2 * -1.
+      ENDIF.
+
+      IF P_INTER IS NOT INITIAL.
+        VL_TOT_FD = GT_0111-DMBTR.
+      ELSE.
+        VL_TOT_FD = GT_0111-DMBE2.
+      ENDIF.
+
+      PERFORM ATRIB_VLR_DIA USING GT_0111-DT_VCTO
+                                  VL_TOT_FD
+                                  WL_SAIDA_AUX.
+    ENDLOOP.
+
+    PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                VL_NODE_TEXT
+                                C_FOLDER
+                                WL_SAIDA_AUX
+                                ''
+                       CHANGING VL_LVC_NKEY.
+
+
+  ENDLOOP.
+ENDFORM. "add_filhos_fd
+
+FORM ADD_FILHOS_SF_MAIS   TABLES P_GT_184 STRUCTURE ZFIT184
+                          USING  WA_182  STRUCTURE ZFIT182
+                                 P_RELAT_KEY TYPE LVC_NKEY.
+
+  DATA: BEGIN OF TG_0118_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0118-BUKRS,
+          DT_VCTO TYPE ZFIT0118-DT_VCTO,
+
+        END OF TG_0118_RESUMO.
+
+  DATA: BEGIN OF TG_0118_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0118-BUKRS,
+          DT_VCTO  TYPE ZFIT0118-DT_VCTO,
+          CODIGO   TYPE ZFIT0118-CODIGO,
+          TP_PREV  TYPE ZFIT0118-TP_PREV,
+          CLAS_FLX TYPE ZFIT0118-CLAS_FLX,
+          DMBTR    TYPE ZFIT0118-DMBTR,
+          DMBE2    TYPE ZFIT0118-DMBE2,
+        END OF TG_0118_DET.
+
+
+  DATA: VL_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR,
+        LR_EMPRESA       TYPE RANGE OF BUKRS,
+        GT_184_AUX       TYPE TABLE OF ZFIT184,
+        GT_LT_0111_AUX   TYPE TABLE OF ZFIT0111,
+        LRA_SEQ          TYPE RANGE OF ZFIT0109-SEQ,
+        WL_SAIDA         TYPE TY_SAIDA,
+        WL_SAIDA_AUX     TYPE TY_SAIDA,
+        DT_ANTERIOR      TYPE ZFIT0113-DT_VCTO.
+
+  DATA: BEGIN OF TG_0113_DET OCCURS 0,
+          BUKRS        TYPE ZFIT0113-BUKRS,
+          DT_VCTO      TYPE ZFIT0113-DT_VCTO,
+          SDO_FINAL_R  TYPE ZFIT0113-SDO_FINAL_R,
+          SDO_FINAL_US TYPE ZFIT0113-SDO_FINAL_US,
+        END OF TG_0113_DET.
+
+  DATA: P_VALOR_DIA  TYPE ZFIT0113-DMBTR,
+        VL_LVC_NKEY  TYPE LVC_NKEY,
+        C_FOLDER,
+        VL_NODE_TEXT TYPE LVC_VALUE.
+
+
+
+
+
+
+  GT_184_AUX[] = GT_184[].
+  DELETE GT_184_AUX WHERE BUKRS <> WA_182-BUKRS.
+
+  LOOP AT GT_184_AUX INTO DATA(WA_184).
+
+
+
+    CLEAR: WL_SAIDA_AUX, TG_0118_RESUMO[], TG_0118_DET[].
+
+    CONCATENATE WA_184-EMPRESA '-' WA_184-DESCRICAO INTO VL_NODE_TEXT SEPARATED BY SPACE.
+
+
+
+
+
+
+
+
+
+
+
+    MOVE-CORRESPONDING WA_184 TO WL_SAIDA_AUX.
+
+
+
+    WL_SAIDA_AUX-BUKRS         = WA_184-EMPRESA.
+    WL_SAIDA_AUX-COD_ESTRUTURA = WA_184-EMPRESA.
+    WL_SAIDA_AUX-DESCRICAO     = WA_184-DESCRICAO.
+    WL_SAIDA_AUX-NIVEL = 'X'.
+
+    "Seleciona Lançamentos Sobra Caixa Resumo por Empresa/Dt.Vcto.
+    SELECT A~BUKRS A~DT_VCTO
+      INTO TABLE TG_0118_RESUMO
+      FROM ZFIT0118 AS A
+      INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND A~DT_VCTO        IN S_ZFBDT
+       AND A~DT_BASE_VERSAO EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0118
+                         WHERE BUKRS          EQ A~BUKRS
+
+
+                           AND DT_BASE_VERSAO EQ SY-DATUM )
+       AND B~PROCESSO_ESP   = 'XRT-S'
+     GROUP BY A~BUKRS A~DT_VCTO.
+
+
+    "Seleciona Lançamentos Sobra Caixa Detalhes
+    SELECT A~BUKRS A~DT_VCTO A~CODIGO A~TP_PREV A~CLAS_FLX A~DMBTR A~DMBE2
+      INTO TABLE TG_0118_DET
+      FROM ZFIT0118 AS A
+      INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND A~DT_VCTO        IN S_ZFBDT
+       AND A~DT_BASE_VERSAO EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0118
+                         WHERE BUKRS          EQ A~BUKRS
+                           AND DT_BASE_VERSAO EQ SY-DATUM )
+       AND B~PROCESSO_ESP   = 'XRT-S'.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+    SELECT BUKRS DT_VCTO SDO_FINAL_R SDO_FINAL_US
+      INTO TABLE TG_0113_DET
+      FROM ZFIT0113 AS A
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND DT_VCTO          IN S_ZFBDT
+       AND DT_BASE_VERSAO   EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0113
+                         WHERE BUKRS          EQ A~BUKRS
+                           AND DT_BASE_VERSAO EQ SY-DATUM ).
+
+    IF TG_0118_RESUMO[] IS INITIAL.
+
+      " Montar Previsão com os Ajustes da Tesouraria em cima do
+      " Saldo de Aplicação Sobra de Caixa.
+      DATA(LVA_CALC_DIA_BASE) = ABAP_FALSE.
+      PERFORM APLICAR_AJUSTES_SOBRA_CXA_V2 USING WL_SAIDA_AUX
+                                                 0
+                                                 ABAP_FALSE
+                                                 SY-DATUM
+                                        CHANGING LVA_CALC_DIA_BASE.
+
+      PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                  VL_NODE_TEXT
+                                  C_FOLDER
+                                  WL_SAIDA_AUX
+                                  ''
+                         CHANGING VL_LVC_NKEY.
+      CONTINUE.
+    ENDIF.
+
+    LOOP AT TG_0118_RESUMO.
+
+
+
+      CLEAR: VL_TOT_SLD_APLIC.
+
+
+      "Buscar Saldo do dia do Vencimento.
+
+
+      LOOP AT TG_0118_DET WHERE BUKRS   = WA_184-EMPRESA
+                            AND DT_VCTO = TG_0118_RESUMO-DT_VCTO.
+
+
+
+
+
+
+
+
+
+
+
+        IF P_INTER IS NOT INITIAL.
+
+          IF TG_0118_DET-CLAS_FLX = 'S'.
+            VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ( ABS( TG_0118_DET-DMBTR ) * -1 ).
+          ELSE.
+            VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ABS( TG_0118_DET-DMBTR ).
+          ENDIF.
+
+        ELSE.
+
+          IF TG_0118_DET-CLAS_FLX = 'S'.
+            VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ( ABS( TG_0118_DET-DMBE2 ) * -1 ).
+          ELSE.
+            VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ABS( TG_0118_DET-DMBE2 ).
+          ENDIF.
+
+
+
+
+
+
+
+
+
+
+        ENDIF.
+
+      ENDLOOP.
+
+      " Montar Previsão com os Ajustes da Tesouraria em cima do
+      " Saldo de Aplicação Sobra de Caixa.
+      LVA_CALC_DIA_BASE = ABAP_FALSE.
+      PERFORM APLICAR_AJUSTES_SOBRA_CXA_V2 USING WL_SAIDA_AUX
+                                                 VL_TOT_SLD_APLIC
+                                                 ABAP_FALSE
+                                                 TG_0118_RESUMO-DT_VCTO
+                                        CHANGING LVA_CALC_DIA_BASE.
+
+      IF LVA_CALC_DIA_BASE EQ ABAP_FALSE.
+        P_VALOR_DIA = VL_TOT_SLD_APLIC.
+        LOOP AT TG_0113_DET WHERE DT_VCTO = TG_0118_RESUMO-DT_VCTO.
+          IF P_INTER IS NOT INITIAL.
+            ADD TG_0113_DET-SDO_FINAL_R TO P_VALOR_DIA.
+          ELSE.
+            ADD TG_0113_DET-SDO_FINAL_US TO P_VALOR_DIA.
+          ENDIF.
+        ENDLOOP.
+
+        PERFORM ATRIB_VLR_DIA USING TG_0118_RESUMO-DT_VCTO
+                                    P_VALOR_DIA
+                                    WL_SAIDA_AUX.
+      ENDIF.
+
+
+
+
+      PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                      VL_NODE_TEXT
+                                      C_FOLDER
+                                      WL_SAIDA_AUX
+                                      ''
+                             CHANGING VL_LVC_NKEY.
+
+    ENDLOOP.
+  ENDLOOP.
+
+
+
+
+
+
+
+
+
+  " Montar Previsão com os Ajustes da Tesouraria em cima do
+  " Saldo de Aplicação Sobra de Caixa.
+*    PERFORM aplicar_ajustes_sobra_cxa USING wl_saida
+*                                            vl_tot_sld_aplic.
+
+****  TYPES: BEGIN OF ty_saldo_final,
+****           vl_valor TYPE dmbtr,
+****           v_data   TYPE zfit0111-dt_vcto,
+****           bukrs    TYPE bukrs,
+****         END OF ty_saldo_final.
+****
+****  DATA: it_saldo_final TYPE TABLE OF ty_saldo_final,
+****        wa_saldo_final TYPE ty_saldo_final.
+****
+****  DATA: vl_lvc_nkey      TYPE lvc_nkey,
+****        vl_node_text     TYPE lvc_value,
+****        wl_saida_aux     TYPE ty_saida,
+****        wl_saida         TYPE ty_saida,
+****        vl_tot_sfmais    TYPE dmbtr,
+****        vl_tot_sfmais_   TYPE dmbtr,
+****        vl_aplic_111     TYPE dmbtr,
+****        vl_112           TYPE dmbtr,
+****        vl_apli_anterior TYPE dmbtr,
+****        vl_saldo_final   TYPE dmbtr,
+****        vl_outras_aplic  TYPE dmbtr,
+****        vl_final_alv     TYPE dmbtr,
+****        v_data_corrente  TYPE zfit0111-dt_vcto,
+****        c_folder,
+****        cont             TYPE i.
+
+*******  CLEAR: c_folder.
+*******  DATA: gt_184_aux TYPE TABLE OF zfit184.
+*******  DATA: lr_empresa TYPE RANGE OF bukrs,
+*******        lra_seq    TYPE RANGE OF zfit0109-seq.
+*******
+*******  gt_184_aux[] = gt_184[].
+*******  DELETE gt_184_aux WHERE bukrs <> wa_182-bukrs.
+*******
+*******  lr_empresa = VALUE #( FOR ls_value IN gt_184_aux ( sign   = 'I'
+*******                                                     option = 'EQ'
+*******                                                     low    = ls_value-empresa ) ).
+*******
+*******  IF lr_empresa[] IS NOT INITIAL.
+*******
+*******    SELECT bukrs, dt_vcto,  SUM( sdo_final_r ) AS sdo_final_r, SUM( sdo_final_us ) AS sdo_final_us
+*******    INTO TABLE @DATA(lt_0113)
+*******    FROM zfit0113
+*******        WHERE bukrs IN @lr_empresa
+*******          AND dt_vcto IN @s_zfbdt
+*******          AND dt_base_versao EQ @sy-datum
+*******          AND versao = ( SELECT MAX( versao )
+*******                        FROM zfit0113
+*******                        WHERE bukrs IN @lr_empresa
+*******                              AND dt_base_versao EQ @sy-datum )
+*******           GROUP BY bukrs, dt_vcto.
+********alterador por guilherme rabelo inicio 19.04.2023
+********    SELECT * FROM zfit0109
+********    INTO TABLE @DATA(it_zfit0109)
+********    WHERE opr_sobra_cxa NE ''.
+*******
+*******    SELECT * FROM zfit0109
+*******    INTO TABLE @DATA(it_zfit0109)
+*******    WHERE processo_esp = 'XRT-S'.
+*******
+********alterador por guilherme rabelo fim 19.04.2023
+*******    LOOP AT it_zfit0109 INTO DATA(wa_zfit0109_1).
+*******      APPEND VALUE #( sign = 'I' option = 'EQ' low =  wa_zfit0109_1-seq ) TO lra_seq.
+*******    ENDLOOP.
+*******
+********    SELECT codigo, bukrs, dt_vcto,  clas_flx, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+********    INTO TABLE @DATA(lt_0111)
+********    FROM zfit0111
+********        WHERE bukrs IN @lr_empresa
+********          AND seq IN @lra_seq
+********          AND dt_vcto IN @s_zfbdt
+********          AND dt_base_versao EQ @sy-datum
+********          AND tp_prev        EQ 'T'
+********          AND versao = ( SELECT MAX( versao )
+********                        FROM zfit0111
+********                        WHERE bukrs IN @lr_empresa
+********                              AND seq IN @lra_seq
+********                              AND dt_base_versao EQ @sy-datum
+********                              AND tp_prev        EQ 'T' )
+********          GROUP BY codigo, bukrs, dt_vcto, clas_flx.
+*******  ENDIF.
+********aletardo por guilherme rabelo inicio 19.04.2023
+*******
+*******
+********  SELECT bukrs, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+********  INTO TABLE @DATA(lt_0112)
+********  FROM zfit0112
+********  WHERE bukrs IN @lr_empresa
+********    AND mdo_tipo = 'S'
+********    GROUP BY bukrs.
+*******
+*******  SELECT *
+*******    INTO TABLE @DATA(lt_0112)
+*******    FROM zfit0118
+*******    FOR ALL ENTRIES IN @it_zfit0109
+*******   WHERE bukrs IN @lr_empresa
+*******    AND codigo EQ @it_zfit0109-codigo
+*******     AND dt_vcto        IN @s_zfbdt.
+*******
+********aletardo por guilherme rabelo fim 19.04.2023
+*******  "v_data_corrente = s_zfbdt-low.
+*******
+*******  IF lt_0113 IS NOT INITIAL.
+*******
+*******    MOVE-CORRESPONDING lt_0113[] TO gt_0113_aux[].
+*******    SORT gt_0113_aux[] BY dt_vcto.
+*******    DELETE ADJACENT DUPLICATES FROM gt_0113_aux[] COMPARING dt_vcto.
+*******  ENDIF.
+*******
+*******
+*******  LOOP AT gt_184 WHERE bukrs = wa_182-bukrs
+*******                   AND cod_estrutura = wa_182-cod_estrutura
+*******                   AND nivel(2) = 'S+'.
+*******
+*******    v_data_corrente = s_zfbdt-low.
+*******    CONCATENATE gt_184-empresa '-' gt_184-descricao INTO vl_node_text SEPARATED BY space.
+*******
+*******    SELECT codigo, bukrs, dt_vcto,  clas_flx, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+*******        INTO TABLE @DATA(lt_0111)
+*******        FROM zfit0111
+*******            WHERE bukrs EQ @gt_184-empresa
+********              AND seq IN @lra_seq
+*******              AND dt_vcto IN @s_zfbdt
+*******              AND dt_base_versao EQ @sy-datum
+********              AND tp_prev        EQ 'T'
+*******              AND versao = ( SELECT MAX( versao )
+*******                            FROM zfit0111
+*******                            WHERE bukrs EQ @gt_184-empresa
+********                                  AND seq IN @lra_seq
+*******                                  AND dt_base_versao EQ @sy-datum )
+********                                  AND tp_prev        EQ 'T' )
+*******              GROUP BY codigo, bukrs, dt_vcto, clas_flx.
+*******
+*******
+*******    MOVE-CORRESPONDING gt_184 TO wl_saida_aux.
+*******    wl_saida_aux-cod_estrutura = gt_184-empresa.
+*******    wl_saida_aux-descricao     = gt_184-descricao.
+*******    wl_saida_aux-nivel = 'X'.
+*******
+*******
+*******
+********++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    INICIO     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*******
+*******    "pegar o saldo outras aplicações
+*******    READ TABLE lt_0112 INTO DATA(ws_0112) WITH KEY bukrs = gt_184-empresa.
+*******    IF p_inter IS NOT INITIAL.
+*******      vl_outras_aplic = ws_0112-dmbtr.
+*******      vl_112 = ws_0112-dmbtr.
+*******    ELSE.
+*******      vl_outras_aplic =  ws_0112-dmbe2.
+*******      vl_112 = ws_0112-dmbe2.
+*******    ENDIF.
+*******
+*******    LOOP AT lt_0113 INTO DATA(wa_0113) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*******      IF p_inter IS NOT INITIAL.
+*******        vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_r.
+*******      ELSE.
+*******        vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_us.
+*******      ENDIF.
+*******
+*******      CLEAR: wa_0113.
+*******    ENDLOOP.
+*******
+*******    IF v_data_corrente EQ day_01_mov.
+*******
+*******      v_data_corrente = v_data_corrente + 1.
+*******
+*******      READ TABLE lt_0111 INTO DATA(ws_0111_aux) WITH KEY bukrs = gt_184-empresa.
+********                                                         dt_vcto = s_zfbdt-low.
+*******
+*******
+*******      IF sy-subrc IS INITIAL.
+*******        LOOP AT lt_0111 INTO DATA(ws_0111) WHERE bukrs EQ gt_184-empresa." AND dt_vcto EQ s_zfbdt-low.
+*******
+*******          READ TABLE it_zfit0109 INTO DATA(w_zfit0109) WITH KEY codigo = ws_0111-codigo.
+*******
+*******          CASE w_zfit0109-opr_sobra_cxa.
+*******            WHEN 'D'.
+*******
+*******              IF p_inter IS NOT INITIAL.
+*******                vl_outras_aplic = vl_outras_aplic - ws_0111-dmbtr.
+*******              ELSE.
+*******                vl_outras_aplic = vl_outras_aplic -  ws_0111-dmbe2.
+*******
+*******              ENDIF.
+*******
+*******            WHEN 'C'.
+*******
+*******              IF p_inter IS NOT INITIAL.
+*******                vl_outras_aplic = vl_outras_aplic + ws_0111-dmbtr.
+*******              ELSE.
+*******                vl_outras_aplic = vl_outras_aplic + ws_0111-dmbe2.
+*******              ENDIF.
+*******
+*******            WHEN OTHERS.
+*******          ENDCASE.
+*******
+*******
+*******        ENDLOOP.
+*******      ENDIF.
+*******      vl_tot_sfmais = vl_outras_aplic + vl_saldo_final.
+*******      vl_apli_anterior = vl_outras_aplic .
+*******
+********alterado por guilherme rabelo inicio
+*******     PERFORM aplicar_sobra_cxa USING wl_saida_aux
+*******                                     WS_0111_AUX-DT_VCTO
+*******                                     gt_184-empresa
+*******                                     vl_tot_sfmais.
+*******
+********alterado por guilherme rabelo inicio
+*******
+*******      PERFORM atrib_vlr_dia USING     day_01_mov
+*******                                      vl_tot_sfmais
+*******                                      wl_saida_aux.
+*******
+*******      wa_saldo_final-vl_valor = vl_tot_sfmais.
+*******      wa_saldo_final-v_data = s_zfbdt-low.
+*******      wa_saldo_final-bukrs = gt_184-empresa.
+*******
+*******      APPEND wa_saldo_final TO it_saldo_final.
+*******
+*******    ENDIF.
+*******
+*******    CLEAR:  vl_tot_sfmais, vl_outras_aplic.
+*******
+*******    DO 30 TIMES.
+*******
+*******      READ TABLE lt_0111 INTO DATA(ws_0111_a) WITH KEY bukrs = gt_184-empresa
+*******                                                       dt_vcto = v_data_corrente.
+*******
+*******      IF sy-subrc IS INITIAL.
+*******
+*******        LOOP AT lt_0111 INTO DATA(ws_0111_1) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*******
+*******          READ TABLE it_zfit0109 INTO DATA(w_zfit0109_1) WITH KEY codigo = ws_0111_1-codigo.
+*******
+*******          CASE w_zfit0109_1-opr_sobra_cxa.
+*******            WHEN 'D'.
+*******
+*******              IF p_inter IS NOT INITIAL.
+*******                vl_apli_anterior = vl_apli_anterior  - ws_0111_1-dmbtr.
+*******                vl_outras_aplic = vl_outras_aplic - ws_0111-dmbtr.
+*******              ELSE.
+*******                vl_apli_anterior = vl_apli_anterior -  ws_0111_1-dmbe2.
+*******                vl_outras_aplic = vl_outras_aplic - ws_0111_1-dmbe2.
+*******              ENDIF.
+*******
+*******            WHEN 'C'.
+*******
+*******              IF p_inter IS NOT INITIAL.
+*******                vl_apli_anterior = vl_apli_anterior + ws_0111_1-dmbtr.
+*******                vl_outras_aplic = vl_outras_aplic + ws_0111_1-dmbtr.
+*******              ELSE.
+*******                vl_apli_anterior = vl_apli_anterior + ws_0111_1-dmbe2.
+*******                vl_outras_aplic = vl_outras_aplic + ws_0111_1-dmbe2.
+*******              ENDIF.
+*******
+*******            WHEN OTHERS.
+*******          ENDCASE.
+*******
+*******        ENDLOOP.
+*******
+*******        CLEAR vl_saldo_final.
+*******
+*******        LOOP AT lt_0113 INTO DATA(wa_0113_1) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*******          IF p_inter IS NOT INITIAL.
+*******            vl_saldo_final = vl_saldo_final + wa_0113_1-sdo_final_r.
+*******          ELSE.
+*******            vl_saldo_final = vl_saldo_final + wa_0113_1-sdo_final_us.
+*******          ENDIF.
+*******
+*******          CLEAR: wa_0113_1.
+*******        ENDLOOP.
+*******
+********       LOOP AT lt_0113 INTO DATA(wa_0113) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+********          IF p_inter IS NOT INITIAL.
+********            vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_r.
+********          ELSE.
+********            vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_us.
+********          ENDIF.
+********
+********          CLEAR: wa_0113.
+********        ENDLOOP.
+*******
+*******        vl_tot_sfmais = vl_saldo_final + vl_apli_anterior.
+*******
+********alterado por guilherme rabelo inicio
+*******     PERFORM aplicar_sobra_cxa USING wl_saida_aux
+*******                                     WS_0111_1-DT_VCTO
+*******                                     gt_184-empresa
+*******                                     vl_tot_sfmais.
+*******
+********alterado por guilherme rabelo inicio
+*******
+*******        PERFORM atrib_vlr_dia USING   v_data_corrente
+*******                                      vl_tot_sfmais
+*******                                      wl_saida_aux.
+*******
+*******        wa_saldo_final-vl_valor = vl_tot_sfmais.
+*******        wa_saldo_final-v_data = v_data_corrente.
+*******        wa_saldo_final-bukrs = gt_184-empresa.
+*******
+*******        APPEND wa_saldo_final TO it_saldo_final.
+*******
+*******        CLEAR: vl_apli_anterior, vl_tot_sfmais.
+*******
+*******        vl_apli_anterior = vl_outras_aplic + vl_112.
+*******      ENDIF.
+*******
+*******      v_data_corrente = v_data_corrente + 1.
+*******    ENDDO.
+*******    "PEGAR VALORES DOS DIAS SEGUINTES
+*******
+*******
+*******    "wl_saida = wl_saida_aux.
+*******
+*********************************************************************************************************************************************************************************
+*******
+*******    PERFORM add_line_tree USING p_relat_key
+*******                                    vl_node_text
+*******                                    c_folder
+*******                                    wl_saida_aux
+*******                                    ''
+*******                           CHANGING vl_lvc_nkey.
+*******
+*******    CLEAR: vl_tot_sfmais, wl_saida_aux, ws_0112, vl_saldo_final, vl_outras_aplic, vl_112.
+*******    "CLEAR: vl_tot_sfmais, ws_0113_aux, wl_saida_aux, ws_0112.
+*******  ENDLOOP.
+*******
+*******  SORT it_saldo_final BY v_data.
+*******  CLEAR: wa_saldo_final, wl_saida_aux.
+*******  v_data_corrente = s_zfbdt-low.
+*******
+*******  LOOP AT it_saldo_final INTO wa_saldo_final.
+*******
+*******    IF v_data_corrente EQ wa_saldo_final-v_data.
+*******
+*******      vl_tot_sfmais = vl_tot_sfmais + wa_saldo_final-vl_valor.
+*******
+*******    ELSE.
+*******
+*******      PERFORM atrib_vlr_dia USING   v_data_corrente
+*******                                      vl_tot_sfmais
+*******                                      wl_saida_aux.
+*******
+*******      CLEAR: vl_tot_sfmais.
+*******      vl_tot_sfmais = vl_tot_sfmais + wa_saldo_final-vl_valor.
+*******    ENDIF.
+*******    v_data_corrente = wa_saldo_final-v_data.
+*******  ENDLOOP.
+*******
+*******  PERFORM atrib_vlr_dia USING   v_data_corrente
+*******                                     vl_tot_sfmais
+*******                                     wl_saida_aux.
+*******
+*******  wl_saida = wl_saida_aux.
+
+
+
+ENDFORM. "add_filhos_sf_mais
+FORM GET_TOTAL_APLIC USING  P_SAIDA      TYPE TY_SAIDA
+                     CHANGING P_SAIDA_APLIC  TYPE TY_SAIDA.
+
+
+
+
+
+
+
+  DATA: BEGIN OF TG_0118_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0118-BUKRS,
+          DT_VCTO TYPE ZFIT0118-DT_VCTO,
+        END OF TG_0118_RESUMO.
+
+  DATA: BEGIN OF TG_0118_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0118-BUKRS,
+          DT_VCTO  TYPE ZFIT0118-DT_VCTO,
+          CODIGO   TYPE ZFIT0118-CODIGO,
+          TP_PREV  TYPE ZFIT0118-TP_PREV,
+          CLAS_FLX TYPE ZFIT0118-CLAS_FLX,
+          DMBTR    TYPE ZFIT0118-DMBTR,
+          DMBE2    TYPE ZFIT0118-DMBE2,
+        END OF TG_0118_DET.
+
+  DATA: VL_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR,
+        LR_EMPRESA       TYPE RANGE OF BUKRS,
+        GT_184_AUX       TYPE TABLE OF ZFIT184,
+        GT_LT_0111_AUX   TYPE TABLE OF ZFIT0111,
+        LRA_SEQ          TYPE RANGE OF ZFIT0109-SEQ,
+        WL_SAIDA         TYPE TY_SAIDA,
+        DT_ANTERIOR      TYPE ZFIT0113-DT_VCTO.
+
+  WL_SAIDA-BUKRS = P_SAIDA-BUKRS.
+
+  "Seleciona Lançamentos Sobra Caixa Resumo por Empresa/Dt.Vcto.
+  SELECT A~BUKRS A~DT_VCTO
+    INTO TABLE TG_0118_RESUMO
+    FROM ZFIT0118 AS A
+    INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+   WHERE BUKRS            EQ P_SAIDA-BUKRS
+     AND A~DT_VCTO        IN S_ZFBDT
+     AND A~DT_BASE_VERSAO EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0118
+                       WHERE BUKRS          EQ P_SAIDA-BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND B~PROCESSO_ESP   = 'XRT-S'
+   GROUP BY A~BUKRS A~DT_VCTO.
+
+  "Seleciona Lançamentos Sobra Caixa Detalhes
+  SELECT A~BUKRS A~DT_VCTO A~CODIGO A~TP_PREV A~CLAS_FLX A~DMBTR A~DMBE2
+    INTO TABLE TG_0118_DET
+    FROM ZFIT0118 AS A
+    INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+   WHERE BUKRS            EQ P_SAIDA-BUKRS
+     AND A~DT_VCTO        IN S_ZFBDT
+     AND A~DT_BASE_VERSAO EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0118
+                       WHERE BUKRS          EQ P_SAIDA-BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND B~PROCESSO_ESP   = 'XRT-S'.
+
+  LOOP AT TG_0118_RESUMO.
+
+    CLEAR: VL_TOT_SLD_APLIC.
+
+
+    "Buscar Saldo do dia do Vencimento.
+    LOOP AT TG_0118_DET WHERE BUKRS   = TG_0118_RESUMO-BUKRS
+                         AND DT_VCTO = TG_0118_RESUMO-DT_VCTO.
+
+      IF P_INTER IS NOT INITIAL.
+
+        IF TG_0118_DET-CLAS_FLX = 'S'.
+          VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ( ABS( TG_0118_DET-DMBTR ) * -1 ).
+        ELSE.
+          VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ABS( TG_0118_DET-DMBTR ).
+        ENDIF.
+
+      ELSE.
+
+
+        IF TG_0118_DET-CLAS_FLX = 'S'.
+          VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ( ABS( TG_0118_DET-DMBE2 ) * -1 ).
+        ELSE.
+
+
+          VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ABS( TG_0118_DET-DMBE2 ).
+        ENDIF.
+
+      ENDIF.
+
+    ENDLOOP.
+
+
+
+
+
+
+
+    PERFORM ATRIB_VLR_DIA USING TG_0118_RESUMO-DT_VCTO
+                                VL_TOT_SLD_APLIC
+                                WL_SAIDA.
+
+  ENDLOOP.
+
+  " Montar Previsão com os Ajustes da Tesouraria em cima do
+  " Saldo de Aplicação Sobra de Caixa.
+  PERFORM APLICAR_AJUSTES_SOBRA_CXA USING WL_SAIDA
+                                          VL_TOT_SLD_APLIC.
+
+  P_SAIDA_APLIC = WL_SAIDA.
+
+
+
+
+
+
+
+
+
+ENDFORM. "get_total_aplic_aux
+*FORM get_total_aplic USING  p_saida      TYPE ty_saida
+*                     CHANGING p_saida_aplic  TYPE ty_saida.
+*
+*
+*
+*   DATA: BEGIN OF tg_0118_resumo OCCURS 0,
+*          bukrs   TYPE zfit0118-bukrs,
+*          dt_vcto TYPE zfit0118-dt_vcto,
+*        END OF tg_0118_resumo.
+*
+*  DATA: BEGIN OF tg_0118_det OCCURS 0,
+*          bukrs    TYPE zfit0118-bukrs,
+*          dt_vcto  TYPE zfit0118-dt_vcto,
+*          codigo   TYPE zfit0118-codigo,
+*          tp_prev  TYPE zfit0118-tp_prev,
+*          clas_flx TYPE zfit0118-clas_flx,
+*          dmbtr    TYPE zfit0118-dmbtr,
+*          dmbe2    TYPE zfit0118-dmbe2,
+*        END OF tg_0118_det.
+*
+*  DATA: vl_tot_sld_aplic  TYPE zfit0113-dmbtr,
+*        lr_empresa        TYPE RANGE OF bukrs,
+*        gt_184_aux        TYPE TABLE OF zfit184,
+*        gt_lt_0111_aux    TYPE TABLE OF zfit0111,
+*        lra_seq           TYPE RANGE OF zfit0109-seq,
+*        wl_saida          TYPE ty_saida,
+*        dt_anterior       TYPE zfit0113-dt_vcto.
+*
+*  wl_saida-bukrs = p_saida-bukrs.
+*
+*  "Seleciona Lançamentos Sobra Caixa Resumo por Empresa/Dt.Vcto.
+*  SELECT a~bukrs a~dt_vcto
+*    INTO TABLE tg_0118_resumo
+*    FROM zfit0118 AS a
+*    INNER JOIN zfit0109 AS b ON a~codigo = b~codigo
+*   WHERE bukrs            EQ p_saida-bukrs
+*     AND a~dt_vcto        IN s_zfbdt
+*     AND a~dt_base_versao EQ sy-datum
+*     AND a~versao = ( SELECT MAX( versao )
+*                        FROM zfit0118
+*                       WHERE bukrs          EQ p_saida-bukrs
+*                         AND dt_base_versao EQ sy-datum )
+*     AND b~processo_esp   = 'XRT-S'
+*   GROUP BY a~bukrs a~dt_vcto.
+*
+*  "Seleciona Lançamentos Sobra Caixa Detalhes
+*  SELECT a~bukrs a~dt_vcto a~codigo a~tp_prev a~clas_flx a~dmbtr a~dmbe2
+*    INTO TABLE tg_0118_det
+*    FROM zfit0118 AS a
+*    INNER JOIN zfit0109 AS b ON a~codigo = b~codigo
+*   WHERE bukrs            EQ p_saida-bukrs
+*     AND a~dt_vcto        IN s_zfbdt
+*     AND a~dt_base_versao EQ sy-datum
+*     AND a~versao = ( SELECT MAX( versao )
+*                        FROM zfit0118
+*                       WHERE bukrs          EQ p_saida-bukrs
+*                         AND dt_base_versao EQ sy-datum )
+*     AND b~processo_esp   = 'XRT-S'.
+*
+*   LOOP AT tg_0118_resumo.
+*
+*     CLEAR: vl_tot_sld_aplic.
+*
+*     "Buscar Saldo do dia do Vencimento.
+*     LOOP AT tg_0118_det WHERE bukrs   = tg_0118_resumo-bukrs
+*                          AND dt_vcto = tg_0118_resumo-dt_vcto.
+*
+*        IF p_inter IS NOT INITIAL.
+*
+*          IF tg_0118_det-clas_flx = 'S'.
+*            vl_tot_sld_aplic  = vl_tot_sld_aplic   + ( abs( tg_0118_det-dmbtr ) * -1 ).
+*          ELSE.
+*            vl_tot_sld_aplic  = vl_tot_sld_aplic   + abs( tg_0118_det-dmbtr ).
+*          ENDIF.
+*
+*        ELSE.
+*
+*          IF tg_0118_det-clas_flx = 'S'.
+*            vl_tot_sld_aplic = vl_tot_sld_aplic  + ( abs( tg_0118_det-dmbe2 ) * -1 ).
+*          ELSE.
+*            vl_tot_sld_aplic = vl_tot_sld_aplic  + abs( tg_0118_det-dmbe2 ).
+*          ENDIF.
+*
+*        ENDIF.
+*
+*      ENDLOOP.
+*
+*      PERFORM atrib_vlr_dia USING tg_0118_resumo-dt_vcto
+*                                  vl_tot_sld_aplic
+*                                  wl_saida.
+*
+*    ENDLOOP.
+*
+*    " Montar Previsão com os Ajustes da Tesouraria em cima do
+*    " Saldo de Aplicação Sobra de Caixa.
+*    PERFORM aplicar_ajustes_sobra_cxa USING wl_saida
+*                                            vl_tot_sld_aplic.
+*
+*    p_saida_aplic = wl_saida.
+*
+*
+*
+*
+**  DATA: lv_tot_aplic   TYPE zfit0113-dmbtr,
+**        lr_empresa     TYPE RANGE OF bukrs,
+**        gt_184_aux     TYPE TABLE OF zfit184,
+**        gt_lt_0111_aux TYPE TABLE OF zfit0111,
+**        lra_seq        TYPE RANGE OF zfit0109-seq,
+**        wl_saida       TYPE ty_saida,
+**        dt_anterior    TYPE zfit0113-dt_vcto.
+**  DATA: cont        TYPE i VALUE 1,
+**        v_prox_data TYPE erdat.
+**
+**  wl_saida-bukrs = p_saida-bukrs.
+**
+**  gt_184_aux[] = gt_184[].
+**  DELETE gt_184_aux WHERE bukrs <> p_saida-bukrs.
+**
+**  lr_empresa = VALUE #( FOR ls_value IN gt_184_aux ( sign   = 'I'
+**                                                     option = 'EQ'
+**                                                     low    = ls_value-empresa ) ).
+**
+***alterado por guilherme rabelo inicio 19.04.2023
+***  SELECT * FROM zfit0109
+***    INTO TABLE @DATA(it_zfit0109)
+***    WHERE opr_sobra_cxa NE ''.
+**
+**  SELECT * FROM zfit0109
+**    INTO TABLE @DATA(it_zfit0109)
+**    WHERE processo_esp = 'XRT-S'.
+**
+***alterado por guilherme rabelo inicio 19.04.2023
+**  CLEAR lra_seq.
+**  LOOP AT it_zfit0109 INTO DATA(wa_zfit0109).
+**    APPEND VALUE #( sign = 'I' option = 'EQ' low =  wa_zfit0109-seq ) TO lra_seq.
+**  ENDLOOP.
+**
+**
+**  IF sy-subrc IS INITIAL.
+**    SELECT codigo, dt_vcto,  clas_flx, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+**       INTO TABLE @DATA(lt_0111)
+**       FROM zfit0111
+**           WHERE bukrs EQ @p_saida-bukrs"IN @lr_empresa
+**             AND seq IN @lra_seq
+**             AND dt_vcto IN @s_zfbdt
+**             AND dt_base_versao EQ @sy-datum
+**             AND tp_prev        EQ 'T'
+**             AND versao = ( SELECT MAX( versao )
+**                        FROM zfit0111
+**                        WHERE bukrs EQ @p_saida-bukrs"IN @lr_empresa
+**                              AND seq IN @lra_seq
+**                              AND dt_base_versao EQ @sy-datum
+**                              AND tp_prev        EQ 'T' )
+**             GROUP BY codigo, dt_vcto, clas_flx.
+**    IF lt_0111 IS NOT INITIAL.
+**      MOVE-CORRESPONDING lt_0111[] TO  gt_lt_0111_aux[].
+**      SORT gt_lt_0111_aux[] BY codigo dt_vcto .
+**      DELETE ADJACENT DUPLICATES FROM gt_lt_0111_aux[] COMPARING codigo  dt_vcto .
+**      SORT gt_lt_0111_aux[] BY dt_vcto .
+**    ENDIF.
+**
+**  ENDIF.
+***alterado por guilherme rabelo inicio 19.04.2023
+***  SELECT bukrs, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+***  INTO TABLE @DATA(lt_0112)
+***  FROM zfit0112
+***  WHERE bukrs EQ @p_saida-bukrs
+***    AND mdo_tipo = 'S'
+***    GROUP BY bukrs.
+**
+**  SELECT *
+**    INTO TABLE @DATA(lt_0112)
+**    FROM zfit0118
+**    FOR ALL ENTRIES IN @it_zfit0109
+**   WHERE bukrs EQ @p_saida-bukrs
+**    AND codigo EQ @it_zfit0109-codigo
+**     AND dt_vcto        IN @s_zfbdt
+**     AND DT_BASE_VERSAO EQ @s_zfbdt-low.
+***alterado por guilherme rabelo fim 19.04.2023
+**
+**  IF sy-subrc = 0.
+**    MOVE-CORRESPONDING lt_0112[] TO gt_0112[].
+**  ENDIF.
+**
+**  LOOP AT gt_0112.
+**    IF p_inter IS NOT INITIAL.
+**      lv_tot_aplic = gt_0112-dmbtr.
+**    ELSE.
+**      lv_tot_aplic = gt_0112-dmbe2.
+**    ENDIF.
+**  ENDLOOP.
+**
+**
+***ajuste bug #107521 BG
+**  "LOOP AT gt_lt_0111_aux INTO DATA(ws_lt_0111_aux).
+**
+**  IF gt_lt_0111_aux IS INITIAL.
+**
+**    SELECT * FROM zfit0111
+**         INTO TABLE  gt_lt_0111_aux
+**         WHERE bukrs EQ p_saida-bukrs
+**           AND dt_base_versao EQ s_zfbdt-low.
+**
+**  ENDIF.
+**  LOOP AT gt_lt_0111_aux INTO DATA(ws_0111).
+**
+**
+**
+**    READ TABLE it_zfit0109 INTO DATA(w_zfit0109) WITH KEY codigo = ws_0111-codigo.
+**
+**    IF ws_0111-dt_vcto EQ day_01_mov.
+**      CASE w_zfit0109-opr_sobra_cxa.
+**        WHEN 'D'.
+**
+**          IF p_inter IS NOT INITIAL.
+**            lv_tot_aplic = lv_tot_aplic - ws_0111-dmbtr.
+**          ELSE.
+**            lv_tot_aplic = lv_tot_aplic - ws_0111-dmbe2.
+**          ENDIF.
+**
+**        WHEN 'C'.
+**
+**          IF p_inter IS NOT INITIAL.
+**            lv_tot_aplic = lv_tot_aplic + ws_0111-dmbtr.
+**          ELSE.
+**            lv_tot_aplic = lv_tot_aplic + ws_0111-dmbe2.
+**          ENDIF.
+**
+**        WHEN OTHERS.
+**      ENDCASE.
+**
+**      "lv_tot_aplic_ant = lv_tot_aplic.
+**    ELSE.
+**      CASE w_zfit0109-opr_sobra_cxa.
+**        WHEN 'D'.
+**
+**          IF p_inter IS NOT INITIAL.
+**            lv_tot_aplic = lv_tot_aplic - ws_0111-dmbtr.
+**          ELSE.
+**            lv_tot_aplic = lv_tot_aplic - ws_0111-dmbe2.
+**          ENDIF.
+**
+**        WHEN 'C'.
+**
+**          IF p_inter IS NOT INITIAL.
+**            lv_tot_aplic = lv_tot_aplic + ws_0111-dmbtr.
+**          ELSE.
+**            lv_tot_aplic = lv_tot_aplic + ws_0111-dmbe2.
+**          ENDIF.
+**
+**        WHEN OTHERS.
+**      ENDCASE.
+**    ENDIF.
+**
+**    PERFORM atrib_vlr_dia USING   ws_0111-dt_vcto
+**                                  lv_tot_aplic
+**                                  wl_saida.
+**
+**  ENDLOOP.
+**
+**  CLEAR: lv_tot_aplic.
+**
+**  p_saida_aplic = wl_saida.
+*
+*
+*ENDFORM. "get_total_aplic
+
+FORM APLICAR_AJUSTES_SOBRA_CXA  USING  P_SAIDA         TYPE TY_SAIDA
+                                       P_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR.
+
+
+  DATA: BEGIN OF TG_0111_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+        END OF TG_0111_RESUMO.
+
+  DATA: BEGIN OF TG_0111_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0111-BUKRS,
+          DT_VCTO  TYPE ZFIT0111-DT_VCTO,
+          CODIGO   TYPE ZFIT0111-CODIGO,
+          CLAS_FLX TYPE ZFIT0111-CLAS_FLX,
+          DMBTR    TYPE ZFIT0111-DMBTR,
+          DMBE2    TYPE ZFIT0111-DMBE2,
+        END OF TG_0111_DET.
+
+
+
+  "Seleciona Lançamentos Resumo por Empresa/Vcto Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO
+    INTO TABLE TG_0111_RESUMO
+    FROM ZFIT0111 AS A
+   WHERE BUKRS          EQ P_SAIDA-BUKRS
+     AND DT_VCTO        IN S_ZFBDT
+     AND DT_BASE_VERSAO EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ P_SAIDA-BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND TP_PREV        EQ 'T'
+   GROUP BY BUKRS DT_VCTO.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO CODIGO CLAS_FLX DMBTR DMBE2
+    INTO TABLE TG_0111_DET
+    FROM ZFIT0111 AS A
+   WHERE BUKRS            EQ P_SAIDA-BUKRS
+     AND DT_VCTO          IN S_ZFBDT
+     AND DT_BASE_VERSAO   EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ P_SAIDA-BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND TP_PREV          EQ 'T'.
+
+
+  IF TG_0111_DET[] IS NOT INITIAL.
+    SELECT CODIGO, OPR_SOBRA_CXA
+      FROM ZFIT0109 INTO TABLE @DATA(LIT_0109)
+      FOR ALL ENTRIES IN @TG_0111_DET
+      WHERE CODIGO = @TG_0111_DET-CODIGO.
+  ENDIF.
+
+  SORT TG_0111_RESUMO BY DT_VCTO.
+  LOOP AT TG_0111_RESUMO.
+
+    LOOP AT TG_0111_DET WHERE DT_VCTO = TG_0111_RESUMO-DT_VCTO.
+
+
+
+
+
+
+      READ TABLE LIT_0109 INTO DATA(LWA_0109) WITH KEY CODIGO = TG_0111_DET-CODIGO.
+      CHECK ( SY-SUBRC EQ 0 ) AND ( LWA_0109-OPR_SOBRA_CXA IS NOT INITIAL ).
+
+
+      IF P_INTER IS NOT INITIAL.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBTR ).
+        ELSE.
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBTR ).
+        ENDIF.
+      ELSE.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBE2 ).
+        ELSE.
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBE2 ).
+        ENDIF.
+      ENDIF.
+
+    ENDLOOP.
+
+    PERFORM ATRIB_VLR_DIA USING TG_0111_RESUMO-DT_VCTO
+                                P_TOT_SLD_APLIC
+                                P_SAIDA.
+  ENDLOOP.
+
+
+
+ENDFORM.
+
+
+
+
+
+FORM APLICAR_AJUSTES_SOBRA_CXA_V2  USING  P_SAIDA         TYPE TY_SAIDA
+                                          P_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR
+                                          P_APPEND        TYPE C
+                                          P_DIA_BASE      TYPE ZFIT0111-DT_VCTO
+                                 CHANGING C_CALC_DIA_BASE TYPE C.
+
+  DATA: BEGIN OF TG_0111_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+        END OF TG_0111_RESUMO.
+
+  DATA: BEGIN OF TG_0111_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0111-BUKRS,
+          DT_VCTO  TYPE ZFIT0111-DT_VCTO,
+          CODIGO   TYPE ZFIT0111-CODIGO,
+          CLAS_FLX TYPE ZFIT0111-CLAS_FLX,
+          DMBTR    TYPE ZFIT0111-DMBTR,
+          DMBE2    TYPE ZFIT0111-DMBE2,
+        END OF TG_0111_DET.
+
+  DATA: BEGIN OF TG_0113_DET OCCURS 0,
+          BUKRS        TYPE ZFIT0113-BUKRS,
+          DT_VCTO      TYPE ZFIT0113-DT_VCTO,
+          SDO_FINAL_R  TYPE ZFIT0113-SDO_FINAL_R,
+          SDO_FINAL_US TYPE ZFIT0113-SDO_FINAL_US,
+        END OF TG_0113_DET.
+
+  DATA: P_VALOR_DIA       TYPE ZFIT0113-DMBTR,
+        LVA_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR.
+
+  CLEAR: C_CALC_DIA_BASE.
+
+
+  LVA_TOT_SLD_APLIC = P_TOT_SLD_APLIC.
+
+  "Seleciona Lançamentos Resumo por Empresa/Vcto Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO
+    INTO TABLE TG_0111_RESUMO
+    FROM ZFIT0111 AS A
+   WHERE BUKRS          EQ P_SAIDA-BUKRS
+     AND DT_VCTO        IN S_ZFBDT
+     AND DT_BASE_VERSAO EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ A~BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND TP_PREV        EQ 'T'
+   GROUP BY BUKRS DT_VCTO.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO CODIGO CLAS_FLX DMBTR DMBE2
+    INTO TABLE TG_0111_DET
+    FROM ZFIT0111 AS A
+   WHERE BUKRS            EQ P_SAIDA-BUKRS
+     AND DT_VCTO          IN S_ZFBDT
+     AND DT_BASE_VERSAO   EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ A~BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+     AND TP_PREV          EQ 'T'.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO SDO_FINAL_R SDO_FINAL_US
+    INTO TABLE TG_0113_DET
+    FROM ZFIT0113 AS A
+   WHERE BUKRS            EQ P_SAIDA-BUKRS
+     AND DT_VCTO          IN S_ZFBDT
+     AND DT_BASE_VERSAO   EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0113
+                       WHERE BUKRS          EQ A~BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM ).
+
+
+
+
+
+  IF TG_0111_DET[] IS NOT INITIAL.
+
+    SELECT CODIGO, OPR_SOBRA_CXA
+
+      FROM ZFIT0109 INTO TABLE @DATA(LIT_0109)
+      FOR ALL ENTRIES IN @TG_0111_DET
+      WHERE CODIGO = @TG_0111_DET-CODIGO.
+  ENDIF.
+
+  SORT TG_0111_RESUMO BY DT_VCTO.
+  LOOP AT TG_0111_RESUMO.
+
+    IF TG_0111_RESUMO-DT_VCTO = P_DIA_BASE.
+      C_CALC_DIA_BASE = ABAP_TRUE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ENDIF.
+
+    LOOP AT TG_0111_DET WHERE DT_VCTO = TG_0111_RESUMO-DT_VCTO.
+
+      READ TABLE LIT_0109 INTO DATA(LWA_0109) WITH KEY CODIGO = TG_0111_DET-CODIGO.
+      CHECK ( SY-SUBRC EQ 0 ) AND ( LWA_0109-OPR_SOBRA_CXA IS NOT INITIAL ).
+
+
+
+
+
+      IF P_INTER IS NOT INITIAL.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          LVA_TOT_SLD_APLIC = LVA_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBTR ).
+        ELSE.
+          LVA_TOT_SLD_APLIC = LVA_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBTR ).
+        ENDIF.
+      ELSE.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          LVA_TOT_SLD_APLIC = LVA_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBE2 ).
+        ELSE.
+          LVA_TOT_SLD_APLIC = LVA_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBE2 ).
+        ENDIF.
+      ENDIF.
+
+    ENDLOOP.
+
+    LOOP AT TG_0113_DET WHERE DT_VCTO = TG_0111_RESUMO-DT_VCTO.
+      IF P_INTER IS NOT INITIAL.
+        P_VALOR_DIA = LVA_TOT_SLD_APLIC + TG_0113_DET-SDO_FINAL_R.
+      ELSE.
+        P_VALOR_DIA = LVA_TOT_SLD_APLIC + TG_0113_DET-SDO_FINAL_US.
+      ENDIF.
+    ENDLOOP.
+
+    IF P_APPEND EQ ABAP_TRUE.
+      PERFORM APPEND_VLR_DIA USING TG_0111_RESUMO-DT_VCTO
+                                   P_VALOR_DIA
+                                   P_SAIDA.
+    ELSE.
+      PERFORM ATRIB_VLR_DIA USING TG_0111_RESUMO-DT_VCTO
+                                  P_VALOR_DIA
+                                  P_SAIDA.
+    ENDIF.
+
+  ENDLOOP.
+
+
+ENDFORM.
+
+
+
+
+FORM APLICAR_SOBRA_CXA  USING       P_SAIDA         TYPE TY_SAIDA
+                                    P_VEN           TYPE ZFIT0118-DT_VCTO
+                                    P_BUKRS         TYPE BUKRS
+                                    P_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR.
+
+  DATA: BEGIN OF TG_0111_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+        END OF TG_0111_RESUMO.
+
+  DATA: BEGIN OF TG_0111_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0111-BUKRS,
+          DT_VCTO  TYPE ZFIT0111-DT_VCTO,
+          CODIGO   TYPE ZFIT0111-CODIGO,
+          CLAS_FLX TYPE ZFIT0111-CLAS_FLX,
+          DMBTR    TYPE ZFIT0111-DMBTR,
+          DMBE2    TYPE ZFIT0111-DMBE2,
+        END OF TG_0111_DET.
+
+
+
+
+
+
+
+  "Seleciona Lançamentos Resumo por Empresa/Vcto Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO
+    INTO TABLE TG_0111_RESUMO
+    FROM ZFIT0111 AS A
+   WHERE BUKRS          EQ P_BUKRS
+     AND DT_VCTO        EQ P_VEN
+     AND DT_BASE_VERSAO EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ P_BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM )
+*     AND tp_prev        EQ 'T'
+   GROUP BY BUKRS DT_VCTO.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+  SELECT BUKRS DT_VCTO CODIGO CLAS_FLX DMBTR DMBE2
+    INTO TABLE TG_0111_DET
+    FROM ZFIT0111 AS A
+   WHERE BUKRS            EQ P_BUKRS
+     AND DT_VCTO          EQ P_VEN
+     AND DT_BASE_VERSAO   EQ SY-DATUM
+     AND A~VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                       WHERE BUKRS          EQ P_BUKRS
+                         AND DT_BASE_VERSAO EQ SY-DATUM ).
+*     AND tp_prev          EQ 'T'.
+
+
+
+
+  IF TG_0111_DET[] IS NOT INITIAL.
+
+    SELECT CODIGO, OPR_SOBRA_CXA
+      FROM ZFIT0109 INTO TABLE @DATA(LIT_0109)
+      FOR ALL ENTRIES IN @TG_0111_DET
+      WHERE CODIGO = @TG_0111_DET-CODIGO.
+  ENDIF.
+
+  SORT TG_0111_RESUMO BY DT_VCTO.
+  LOOP AT TG_0111_RESUMO.
+
+
+
+
+    LOOP AT TG_0111_DET WHERE DT_VCTO = TG_0111_RESUMO-DT_VCTO.
+
+      READ TABLE LIT_0109 INTO DATA(LWA_0109) WITH KEY CODIGO = TG_0111_DET-CODIGO.
+      CHECK ( SY-SUBRC EQ 0 ) AND ( LWA_0109-OPR_SOBRA_CXA IS NOT INITIAL ).
+
+
+
+
+      IF P_INTER IS NOT INITIAL.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBTR ).
+        ELSE.
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBTR ).
+        ENDIF.
+      ELSE.
+        IF LWA_0109-OPR_SOBRA_CXA = 'C'. "Creditar
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC + ABS( TG_0111_DET-DMBE2 ).
+        ELSE.
+          P_TOT_SLD_APLIC = P_TOT_SLD_APLIC - ABS( TG_0111_DET-DMBE2 ).
+        ENDIF.
+      ENDIF.
+
+    ENDLOOP.
+
+
+
+*    PERFORM atrib_vlr_dia USING tg_0111_resumo-dt_vcto
+*                                p_tot_sld_aplic
+*                                p_saida.
+  ENDLOOP.
+
+
+
+
+
+
+ENDFORM.
+
+FORM GET_TOTAL_SFMAIS TABLES P_GT_184 STRUCTURE ZFIT184
+                      USING  P_SAIDA      TYPE TY_SAIDA
+                             WA_182  STRUCTURE ZFIT182
+                     CHANGING P_SAIDA_SFMAIS  TYPE TY_SAIDA.
+
+  DATA: BEGIN OF TG_0118_RESUMO OCCURS 0,
+          BUKRS   TYPE ZFIT0118-BUKRS,
+          DT_VCTO TYPE ZFIT0118-DT_VCTO,
+        END OF TG_0118_RESUMO.
+
+  DATA: BEGIN OF TG_0118_DET OCCURS 0,
+          BUKRS    TYPE ZFIT0118-BUKRS,
+          DT_VCTO  TYPE ZFIT0118-DT_VCTO,
+          CODIGO   TYPE ZFIT0118-CODIGO,
+          TP_PREV  TYPE ZFIT0118-TP_PREV,
+          CLAS_FLX TYPE ZFIT0118-CLAS_FLX,
+          DMBTR    TYPE ZFIT0118-DMBTR,
+          DMBE2    TYPE ZFIT0118-DMBE2,
+        END OF TG_0118_DET.
+
+
+
+
+  DATA: VL_TOT_SLD_APLIC TYPE ZFIT0113-DMBTR,
+        LR_EMPRESA       TYPE RANGE OF BUKRS,
+        GT_184_AUX       TYPE TABLE OF ZFIT184,
+        GT_LT_0111_AUX   TYPE TABLE OF ZFIT0111,
+        LRA_SEQ          TYPE RANGE OF ZFIT0109-SEQ,
+        WL_SAIDA         TYPE TY_SAIDA,
+        WL_SAIDA_AUX     TYPE TY_SAIDA,
+        DT_ANTERIOR      TYPE ZFIT0113-DT_VCTO.
+
+  DATA: BEGIN OF TG_0113_DET OCCURS 0,
+          BUKRS        TYPE ZFIT0113-BUKRS,
+          DT_VCTO      TYPE ZFIT0113-DT_VCTO,
+          SDO_FINAL_R  TYPE ZFIT0113-SDO_FINAL_R,
+          SDO_FINAL_US TYPE ZFIT0113-SDO_FINAL_US,
+        END OF TG_0113_DET.
+
+  DATA: P_VALOR_DIA  TYPE ZFIT0113-DMBTR,
+        VL_LVC_NKEY  TYPE LVC_NKEY,
+        C_FOLDER,
+        VL_NODE_TEXT TYPE LVC_VALUE.
+
+
+
+
+
+
+  GT_184_AUX[] = GT_184[].
+  DELETE GT_184_AUX WHERE BUKRS <> WA_182-BUKRS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  CLEAR: WL_SAIDA_AUX.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  LOOP AT GT_184_AUX INTO DATA(WA_184).
+
+    CLEAR: TG_0118_RESUMO[], TG_0118_DET[].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    MOVE-CORRESPONDING WA_184 TO WL_SAIDA_AUX.
+
+    WL_SAIDA_AUX-BUKRS         = WA_184-EMPRESA.
+    WL_SAIDA_AUX-COD_ESTRUTURA = WA_184-EMPRESA.
+    WL_SAIDA_AUX-DESCRICAO     = WA_184-DESCRICAO.
+    WL_SAIDA_AUX-NIVEL = 'X'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "Seleciona Lançamentos Sobra Caixa Resumo por Empresa/Dt.Vcto.
+    SELECT A~BUKRS A~DT_VCTO
+      INTO TABLE TG_0118_RESUMO
+      FROM ZFIT0118 AS A
+      INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND A~DT_VCTO        IN S_ZFBDT
+       AND A~DT_BASE_VERSAO EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0118
+                         WHERE BUKRS          EQ A~BUKRS
+                           AND DT_BASE_VERSAO EQ SY-DATUM )
+       AND B~PROCESSO_ESP   = 'XRT-S'
+     GROUP BY A~BUKRS A~DT_VCTO.
+
+    "Seleciona Lançamentos Sobra Caixa Detalhes
+    SELECT A~BUKRS A~DT_VCTO A~CODIGO A~TP_PREV A~CLAS_FLX A~DMBTR A~DMBE2
+      INTO TABLE TG_0118_DET
+      FROM ZFIT0118 AS A
+      INNER JOIN ZFIT0109 AS B ON A~CODIGO = B~CODIGO
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND A~DT_VCTO        IN S_ZFBDT
+       AND A~DT_BASE_VERSAO EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0118
+                         WHERE BUKRS          EQ A~BUKRS
+                           AND DT_BASE_VERSAO EQ SY-DATUM )
+       AND B~PROCESSO_ESP   = 'XRT-S'.
+
+*  "Seleciona Lançamentos Ajustes Tesouraria
+    SELECT BUKRS DT_VCTO SDO_FINAL_R SDO_FINAL_US
+      INTO TABLE TG_0113_DET
+      FROM ZFIT0113 AS A
+     WHERE BUKRS            EQ WA_184-EMPRESA
+       AND DT_VCTO          IN S_ZFBDT
+       AND DT_BASE_VERSAO   EQ SY-DATUM
+       AND A~VERSAO = ( SELECT MAX( VERSAO )
+                          FROM ZFIT0113
+                         WHERE BUKRS          EQ A~BUKRS
+                           AND DT_BASE_VERSAO EQ SY-DATUM ).
+
+    IF TG_0118_RESUMO[] IS INITIAL.
+
+
+
+
+      "Montar Previsão com os Ajustes da Tesouraria em cima do
+      "Saldo de Aplicação Sobra de Caixa.
+      DATA(LVA_CALC_DIA_BASE) = ABAP_FALSE.
+      PERFORM APLICAR_AJUSTES_SOBRA_CXA_V2 USING WL_SAIDA_AUX
+                                                 0
+                                                 ABAP_TRUE
+                                                 SY-DATUM
+                                        CHANGING LVA_CALC_DIA_BASE.
+
+
+
+      CONTINUE.
+    ENDIF.
+
+
+
+
+
+    LOOP AT TG_0118_RESUMO.
+
+
+      CLEAR: VL_TOT_SLD_APLIC.
+
+      "Buscar Saldo do dia do Vencimento.
+      LOOP AT TG_0118_DET WHERE BUKRS   = WA_184-EMPRESA
+                            AND DT_VCTO = TG_0118_RESUMO-DT_VCTO.
+
+        IF P_INTER IS NOT INITIAL.
+
+          IF TG_0118_DET-CLAS_FLX = 'S'.
+            VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ( ABS( TG_0118_DET-DMBTR ) * -1 ).
+          ELSE.
+            VL_TOT_SLD_APLIC  = VL_TOT_SLD_APLIC   + ABS( TG_0118_DET-DMBTR ).
+          ENDIF.
+
+
+
+
+        ELSE.
+
+
+
+
+          IF TG_0118_DET-CLAS_FLX = 'S'.
+            VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ( ABS( TG_0118_DET-DMBE2 ) * -1 ).
+          ELSE.
+            VL_TOT_SLD_APLIC = VL_TOT_SLD_APLIC  + ABS( TG_0118_DET-DMBE2 ).
+          ENDIF.
+
+
+
+
+
+
+
+        ENDIF.
+
+      ENDLOOP.
+
+
+      " Montar Previsão com os Ajustes da Tesouraria em cima do
+      " Saldo de Aplicação Sobra de Caixa.
+      LVA_CALC_DIA_BASE = ABAP_FALSE.
+      PERFORM APLICAR_AJUSTES_SOBRA_CXA_V2 USING WL_SAIDA_AUX
+                                                 VL_TOT_SLD_APLIC
+                                                 ABAP_TRUE "Somar valor no dia
+                                                 TG_0118_RESUMO-DT_VCTO
+                                        CHANGING LVA_CALC_DIA_BASE.
+
+      IF LVA_CALC_DIA_BASE EQ ABAP_FALSE.
+
+        P_VALOR_DIA = VL_TOT_SLD_APLIC.
+        LOOP AT TG_0113_DET WHERE DT_VCTO = TG_0118_RESUMO-DT_VCTO.
+          IF P_INTER IS NOT INITIAL.
+            ADD TG_0113_DET-SDO_FINAL_R TO P_VALOR_DIA.
+          ELSE.
+            ADD TG_0113_DET-SDO_FINAL_US TO P_VALOR_DIA.
+          ENDIF.
+
+
+        ENDLOOP.
+
+
+
+
+
+
+
+
+
+
+
+        PERFORM APPEND_VLR_DIA USING TG_0118_RESUMO-DT_VCTO
+                                     P_VALOR_DIA
+                                     WL_SAIDA_AUX.
+      ENDIF.
+
+
+
+
+
+
+
+    ENDLOOP.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ENDLOOP.
+
+
+
+
+
+  P_SAIDA_SFMAIS = WL_SAIDA_AUX.
+
+
+
+*  TYPES: BEGIN OF ty_saldo_final,
+*           vl_valor TYPE dmbtr,
+*           v_data   TYPE zfit0111-dt_vcto,
+*           bukrs    TYPE bukrs,
+*         END OF ty_saldo_final.
+*
+*  DATA: it_saldo_final TYPE TABLE OF ty_saldo_final,
+*        wa_saldo_final TYPE ty_saldo_final.
+*
+*  DATA: vl_lvc_nkey      TYPE lvc_nkey,
+*        vl_node_text     TYPE lvc_value,
+*        wl_saida_aux     TYPE ty_saida,
+*        wl_saida         TYPE ty_saida,
+*        vl_tot_sfmais    TYPE dmbtr,
+*        vl_tot_sfmais_   TYPE dmbtr,
+*        vl_aplic_111     TYPE dmbtr,
+*        vl_112           TYPE dmbtr,
+*        vl_apli_anterior TYPE dmbtr,
+*        vl_saldo_final   TYPE dmbtr,
+*        vl_outras_aplic  TYPE dmbtr,
+*        vl_final_alv     TYPE dmbtr,
+*        v_data_corrente  TYPE zfit0111-dt_vcto,
+*        c_folder,
+*        cont             TYPE i.
+*
+*  CLEAR: c_folder.
+*  DATA: gt_184_aux TYPE TABLE OF zfit184.
+*  DATA: lr_empresa TYPE RANGE OF bukrs,
+*        lra_seq    TYPE RANGE OF zfit0109-seq.
+*
+*  gt_184_aux[] = gt_184[].
+*  DELETE gt_184_aux WHERE bukrs <> wa_182-bukrs.
+*
+*  lr_empresa = VALUE #( FOR ls_value IN gt_184_aux ( sign   = 'I'
+*                                                     option = 'EQ'
+*                                                     low    = ls_value-empresa ) ).
+*
+*  IF lr_empresa[] IS NOT INITIAL.
+*
+*    SELECT bukrs, dt_vcto,  SUM( sdo_final_r ) AS sdo_final_r, SUM( sdo_final_us ) AS sdo_final_us
+*    INTO TABLE @DATA(lt_0113)
+*    FROM zfit0113
+*        WHERE bukrs IN @lr_empresa
+*          AND dt_vcto IN @s_zfbdt
+*          AND dt_base_versao EQ @sy-datum
+*          AND versao = ( SELECT MAX( versao )
+*                        FROM zfit0113
+*                        WHERE bukrs IN @lr_empresa
+*                              AND dt_base_versao EQ @sy-datum )
+*           GROUP BY bukrs, dt_vcto.
+**alterador por guilherme rabelo inicio 19.04.2023
+**    SELECT * FROM zfit0109
+**    INTO TABLE @DATA(it_zfit0109)
+**    WHERE opr_sobra_cxa NE ''.
+*
+*    SELECT * FROM zfit0109
+*    INTO TABLE @DATA(it_zfit0109)
+*    WHERE processo_esp = 'XRT-S' .
+**alterador por guilherme rabelo fim 19.04.2023
+*
+*    LOOP AT it_zfit0109 INTO DATA(wa_zfit0109_1).
+*      APPEND VALUE #( sign = 'I' option = 'EQ' low =  wa_zfit0109_1-seq ) TO lra_seq.
+*    ENDLOOP.
+*
+**    SELECT codigo, bukrs, dt_vcto,  clas_flx, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+**    INTO TABLE @DATA(lt_0111)
+**    FROM zfit0111
+**        WHERE bukrs IN @lr_empresa
+**          AND seq IN @lra_seq
+**          AND dt_vcto IN @s_zfbdt
+**          AND dt_base_versao EQ @sy-datum
+**          AND tp_prev        EQ 'T'
+**          AND versao = ( SELECT MAX( versao )
+**                        FROM zfit0111
+**                        WHERE bukrs IN @lr_empresa
+**                              AND seq IN @lra_seq
+**                              AND dt_base_versao EQ @sy-datum
+**                              AND tp_prev        EQ 'T' )
+**          GROUP BY codigo, bukrs, dt_vcto, clas_flx.
+*  ENDIF.
+*
+**alterado por guilherme rabelo inicio
+**  SELECT bukrs, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+**  INTO TABLE @DATA(lt_0112)
+**  FROM zfit0112
+**  WHERE bukrs IN @lr_empresa
+**    AND mdo_tipo = 'S'
+**    GROUP BY bukrs.
+*
+*  SELECT *
+*    INTO TABLE @DATA(lt_0112)
+*    FROM zfit0118
+*    FOR ALL ENTRIES IN @it_zfit0109
+*   WHERE bukrs EQ @p_saida-bukrs
+*    AND codigo EQ @it_zfit0109-codigo
+*     AND dt_vcto        IN @s_zfbdt.
+**alterado por guilherme rabelo fim
+*  "v_data_corrente = s_zfbdt-low.
+*
+*  IF lt_0113 IS NOT INITIAL.
+*
+*    MOVE-CORRESPONDING lt_0113[] TO gt_0113_aux[].
+*    SORT gt_0113_aux[] BY dt_vcto.
+*    DELETE ADJACENT DUPLICATES FROM gt_0113_aux[] COMPARING dt_vcto.
+*  ENDIF.
+*
+*
+*  LOOP AT gt_184 WHERE bukrs = wa_182-bukrs
+*                   AND cod_estrutura = wa_182-cod_estrutura
+*                   AND nivel(2) = 'S+'.
+*
+*    v_data_corrente = s_zfbdt-low.
+*    CONCATENATE gt_184-empresa '-' gt_184-descricao INTO vl_node_text SEPARATED BY space.
+*
+**alterado por guilherme rabelo inicio
+*    "    SELECT codigo, bukrs, dt_vcto,  clas_flx, SUM( dmbtr ) AS dmbtr, SUM( dmbe2 ) AS dmbe2
+*    "        INTO TABLE @DATA(lt_0111)
+*    "        FROM zfit0111
+*    "            WHERE bukrs EQ @gt_184-empresa
+*    "              AND seq IN @lra_seq
+*    "              AND dt_vcto IN @s_zfbdt
+*    "              AND dt_base_versao EQ @sy-datum
+*    "              AND tp_prev        EQ 'T'
+*    "              AND versao = ( SELECT MAX( versao )
+*    "                            FROM zfit0111
+*    "                            WHERE bukrs EQ @gt_184-empresa
+*    "                                  AND seq IN @lra_seq
+*    "                                  AND dt_base_versao EQ @sy-datum
+*    "                                  AND tp_prev        EQ 'T' )
+*    "              GROUP BY codigo, bukrs, dt_vcto, clas_flx.
+*
+*
+*    SELECT * FROM zfit0111
+*      INTO TABLE @DATA(lt_0111)
+*         WHERE bukrs EQ @p_saida-bukrs
+*                  AND dt_base_versao EQ @s_zfbdt-low.
+**alterado por guilherme rabelo fim
+*
+*    MOVE-CORRESPONDING gt_184 TO wl_saida_aux.
+*    wl_saida_aux-cod_estrutura = gt_184-empresa.
+*    wl_saida_aux-descricao     = gt_184-descricao.
+*    wl_saida_aux-nivel = 'X'.
+*
+*
+*
+**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    INICIO     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*    "pegar o saldo outras aplicações
+*    READ TABLE lt_0112 INTO DATA(ws_0112) WITH KEY bukrs = gt_184-empresa.
+*    IF p_inter IS NOT INITIAL.
+*      vl_outras_aplic = ws_0112-dmbtr.
+*      vl_112 = ws_0112-dmbtr.
+*    ELSE.
+*      vl_outras_aplic =  ws_0112-dmbe2.
+*      vl_112 = ws_0112-dmbe2.
+*    ENDIF.
+*
+*    LOOP AT lt_0113 INTO DATA(wa_0113) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*      IF p_inter IS NOT INITIAL.
+*        vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_r.
+*      ELSE.
+*        vl_saldo_final = vl_saldo_final + wa_0113-sdo_final_us.
+*      ENDIF.
+*
+*      CLEAR: wa_0113.
+*    ENDLOOP.
+*
+*    IF v_data_corrente EQ day_01_mov.
+*
+*      v_data_corrente = v_data_corrente + 1.
+*
+*      READ TABLE lt_0111 INTO DATA(ws_0111_aux) WITH KEY bukrs = gt_184-empresa
+*                                                         dt_vcto = s_zfbdt-low.
+*
+*      IF sy-subrc IS INITIAL.
+*        LOOP AT lt_0111 INTO DATA(ws_0111) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ s_zfbdt-low.
+*
+*          READ TABLE it_zfit0109 INTO DATA(w_zfit0109) WITH KEY codigo = ws_0111-codigo.
+*
+*          CASE w_zfit0109-opr_sobra_cxa.
+*            WHEN 'D'.
+*
+*              IF p_inter IS NOT INITIAL.
+*                vl_outras_aplic = vl_outras_aplic - ws_0111-dmbtr.
+*              ELSE.
+*                vl_outras_aplic = vl_outras_aplic -  ws_0111-dmbe2.
+*
+*              ENDIF.
+*
+*            WHEN 'C'.
+*
+*              IF p_inter IS NOT INITIAL.
+*                vl_outras_aplic = vl_outras_aplic + ws_0111-dmbtr.
+*              ELSE.
+*                vl_outras_aplic = vl_outras_aplic + ws_0111-dmbtr.
+*              ENDIF.
+*
+*            WHEN OTHERS.
+*          ENDCASE.
+*
+*        ENDLOOP.
+*      ENDIF.
+*      vl_tot_sfmais = vl_outras_aplic + vl_saldo_final.
+*      vl_apli_anterior = vl_outras_aplic .
+*
+*      wa_saldo_final-vl_valor = vl_tot_sfmais.
+*      wa_saldo_final-v_data = s_zfbdt-low.
+*      wa_saldo_final-bukrs = gt_184-empresa.
+*
+*      APPEND wa_saldo_final TO it_saldo_final.
+*
+*    ENDIF.
+*
+*    CLEAR:  vl_tot_sfmais, vl_outras_aplic.
+*
+*    DO 30 TIMES.
+*
+*      READ TABLE lt_0111 INTO DATA(ws_0111_a) WITH KEY bukrs = gt_184-empresa
+*                                                       dt_vcto = v_data_corrente.
+*
+*      IF sy-subrc IS INITIAL.
+*
+*        LOOP AT lt_0111 INTO DATA(ws_0111_1) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*
+*          READ TABLE it_zfit0109 INTO DATA(w_zfit0109_1) WITH KEY codigo = ws_0111_1-codigo.
+*
+*          CASE w_zfit0109_1-opr_sobra_cxa.
+*            WHEN 'D'.
+*
+*              IF p_inter IS NOT INITIAL.
+*                vl_apli_anterior = vl_apli_anterior  - ws_0111_1-dmbtr.
+*                vl_outras_aplic = vl_outras_aplic - ws_0111-dmbtr.
+*              ELSE.
+*                vl_apli_anterior = vl_apli_anterior -  ws_0111_1-dmbe2.
+*                vl_outras_aplic = vl_outras_aplic - ws_0111_1-dmbe2.
+*              ENDIF.
+*
+*            WHEN 'C'.
+*
+*              IF p_inter IS NOT INITIAL.
+*                vl_apli_anterior = vl_apli_anterior + ws_0111_1-dmbtr.
+*                vl_outras_aplic = vl_outras_aplic + ws_0111_1-dmbtr.
+*              ELSE.
+*                vl_apli_anterior = vl_apli_anterior + ws_0111_1-dmbe2.
+*                vl_outras_aplic = vl_outras_aplic + ws_0111_1-dmbe2.
+*              ENDIF.
+*
+*            WHEN OTHERS.
+*          ENDCASE.
+*
+*        ENDLOOP.
+*
+*        CLEAR vl_saldo_final.
+*
+*        LOOP AT lt_0113 INTO DATA(wa_0113_1) WHERE bukrs EQ gt_184-empresa AND dt_vcto EQ v_data_corrente.
+*          IF p_inter IS NOT INITIAL.
+*            vl_saldo_final = vl_saldo_final + wa_0113_1-sdo_final_r.
+*          ELSE.
+*            vl_saldo_final = vl_saldo_final + wa_0113_1-sdo_final_us.
+*          ENDIF.
+*
+*          CLEAR: wa_0113_1.
+*        ENDLOOP.
+*
+*        vl_tot_sfmais = vl_saldo_final + vl_apli_anterior.
+*
+*        wa_saldo_final-vl_valor = vl_tot_sfmais.
+*        wa_saldo_final-v_data = v_data_corrente.
+*        wa_saldo_final-bukrs = gt_184-empresa.
+*
+*        APPEND wa_saldo_final TO it_saldo_final.
+*
+*        CLEAR: vl_apli_anterior, vl_tot_sfmais.
+*
+*        vl_apli_anterior = vl_outras_aplic + vl_112.
+*      ENDIF.
+*
+*      v_data_corrente = v_data_corrente + 1.
+*    ENDDO.
+*    "PEGAR VALORES DOS DIAS SEGUINTES
+*
+*    CLEAR: vl_tot_sfmais, wl_saida_aux, ws_0112, vl_saldo_final, vl_outras_aplic, vl_112.
+*    "CLEAR: vl_tot_sfmais, ws_0113_aux, wl_saida_aux, ws_0112.
+*  ENDLOOP.
+*
+*  SORT it_saldo_final BY v_data.
+*  CLEAR: wa_saldo_final, wl_saida_aux.
+*  v_data_corrente = s_zfbdt-low.
+*
+*  LOOP AT it_saldo_final INTO wa_saldo_final.
+*    IF v_data_corrente EQ wa_saldo_final-v_data.
+*
+*      vl_tot_sfmais = vl_tot_sfmais + wa_saldo_final-vl_valor.
+*
+*    ELSE.
+*
+*      PERFORM atrib_vlr_dia USING   v_data_corrente
+*                                      vl_tot_sfmais
+*                                      wl_saida_aux.
+*
+*      CLEAR: vl_tot_sfmais.
+*      vl_tot_sfmais = vl_tot_sfmais + wa_saldo_final-vl_valor.
+*    ENDIF.
+*    v_data_corrente = wa_saldo_final-v_data.
+*  ENDLOOP.
+*
+*  PERFORM atrib_vlr_dia USING   v_data_corrente
+*                                     vl_tot_sfmais
+*                                     wl_saida_aux.
+*  wl_saida_aux-bukrs = gt_184-bukrs.
+*  p_saida_sfmais = wl_saida_aux.
+*
+*  FREE: lt_0112[], lt_0113[], lt_0111[], gt_0113_aux.
+
+ENDFORM. "get_total_sfmais
+
+FORM GET_TOTAL_FD USING P_SAIDA TYPE TY_SAIDA
+                  CHANGING P_SAIDA_RET TYPE TY_SAIDA.
+
+  DATA: VL_TOT_FD TYPE ZFIT0113-DMBTR.
+  DATA: WL_SAIDA TYPE TY_SAIDA.
+  DATA: LR_CODIGO_FLUXO TYPE RANGE OF NUM4.
+  WL_SAIDA-BUKRS = P_SAIDA-BUKRS.
+
+  DATA: BEGIN OF GT_0111_TOTAL OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+          DMBTR   TYPE ZFIT0111-DMBTR,
+          DMBE2   TYPE ZFIT0111-DMBE2,
+        END OF GT_0111_TOTAL.
+
+  DATA: BEGIN OF GT_0111_TOTAL_AUX OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+          DMBTR   TYPE ZFIT0111-DMBTR,
+          DMBE2   TYPE ZFIT0111-DMBE2,
+        END OF GT_0111_TOTAL_AUX.
+
+  SELECT * FROM ZFIT183
+    INTO TABLE @DATA(LT_183)
+    WHERE BUKRS         = @P_SAIDA-BUKRS
+      AND COD_ESTRUTURA = @P_SAIDA-COD_ESTRUTURA.
+
+  LOOP AT LT_183 ASSIGNING FIELD-SYMBOL(<FS>).
+    IF <FS>-NIVEL(5) <> GT_182-NIVEL.
+      DELETE LT_183 INDEX SY-TABIX.
+    ENDIF.
+  ENDLOOP.
+
+  IF SY-SUBRC = 0 AND LT_183[] IS NOT INITIAL.
+
+    LR_CODIGO_FLUXO = VALUE #( FOR LS_VALUE IN LT_183 ( SIGN = 'I'
+                                                      OPTION = 'EQ'
+                                                         LOW = LS_VALUE-CODIGO_FLUXO ) ).
+
+    SELECT BUKRS, CODIGO, CLAS_FLX, DT_VCTO, DMBTR, DMBE2
+      INTO TABLE @DATA(LT_0111_RESUMO)
+      FROM ZFIT0111
+     WHERE BUKRS   EQ @P_SAIDA-BUKRS
+       AND CODIGO  IN @LR_CODIGO_FLUXO
+       AND DT_VCTO IN @S_ZFBDT
+       AND DT_BASE_VERSAO = @SY-DATUM
+       AND VERSAO = ( SELECT MAX( VERSAO )
+                      FROM ZFIT0111
+                      WHERE BUKRS = @P_SAIDA-BUKRS
+                        AND CODIGO IN @LR_CODIGO_FLUXO
+                        AND DT_BASE_VERSAO = @SY-DATUM
+                    ).
+
+    IF SY-SUBRC = 0.
+
+      SORT LT_0111_RESUMO BY BUKRS CODIGO DT_VCTO ASCENDING.
+      LOOP AT LT_0111_RESUMO ASSIGNING FIELD-SYMBOL(<FS_0111_RESUMO>).
+
+        IF <FS_0111_RESUMO>-CLAS_FLX = 'S'. "Negativo
+          <FS_0111_RESUMO>-DMBTR = <FS_0111_RESUMO>-DMBTR * -1.
+          <FS_0111_RESUMO>-DMBE2 = <FS_0111_RESUMO>-DMBE2 * -1.
+        ENDIF.
+
+      ENDLOOP.
+
+      MOVE-CORRESPONDING LT_0111_RESUMO[] TO GT_0111_TOTAL_AUX[].
+
+      LOOP AT GT_0111_TOTAL_AUX.
+        COLLECT GT_0111_TOTAL_AUX INTO GT_0111_TOTAL.
+      ENDLOOP.
+
+    ELSE.
+      CLEAR LT_0111_RESUMO[].
+    ENDIF.
+  ENDIF.
+
+  CHECK GT_0111_TOTAL[] IS NOT INITIAL.
+  LOOP AT GT_0111_TOTAL.
+
+    IF P_INTER IS NOT INITIAL.
+      VL_TOT_FD = GT_0111_TOTAL-DMBTR.
+    ELSE.
+      VL_TOT_FD = GT_0111_TOTAL-DMBE2.
+    ENDIF.
+
+    PERFORM ATRIB_VLR_DIA USING GT_0111_TOTAL-DT_VCTO
+                                VL_TOT_FD
+                                WL_SAIDA.
+  ENDLOOP.
+
+  APPEND INITIAL LINE TO IT_TOTAL_VC ASSIGNING FIELD-SYMBOL(<FS_TOTAL_VC>).
+  MOVE WL_SAIDA TO <FS_TOTAL_VC>.
+  <FS_TOTAL_VC>-COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA.
+  <FS_TOTAL_VC>-DT_VCTO = GT_0111_TOTAL-DT_VCTO.
+
+  P_SAIDA_RET = WL_SAIDA.
+
+ENDFORM. "get_total_fd
+
+FORM GET_SALDO_FINAL  USING    P_SAIDA     TYPE TY_SAIDA
+                      CHANGING P_SAIDA_RET TYPE TY_SAIDA.
+
+  DATA: TG_0113  TYPE TABLE OF ZFIT0113 WITH HEADER LINE,
+        WL_SAIDA TYPE TY_SAIDA.
+
+  DATA: VL_SALDO_FIM       TYPE ZFIT0113-DMBTR,
+        VL_MAX_VERSAO      TYPE ZFIT0079-VERSAO,
+        VL_MAX_DT_VERSAO   TYPE ZFIT0079-DT_BASE_VERSAO,
+        VL_MAX_HORA_VERSAO TYPE ZFIT0079-HORA_VERSAO.
+
+  SELECT *
+    FROM ZFIT0113
+    INTO TABLE TG_0113
+   WHERE BUKRS          = P_SAIDA-BUKRS
+     AND DT_VCTO        IN S_ZFBDT
+     AND DT_BASE_VERSAO = P_SAIDA-DT_VERSAO
+     AND VERSAO         = P_SAIDA-VERSAO.
+
+  "ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG - INICIO
+  wl_saida-bukrs       = p_saida-bukrs.
+  wl_saida-dt_versao   = p_saida-dt_versao.
+  wl_saida-versao      = p_saida-versao.
+  wl_saida-hora_versao = p_saida-hora_versao.
+
+*  WA_BUKRS_VERSAO       = P_SAIDA-BUKRS.
+*  WA_DT_VERSAO   = P_SAIDA-DT_VERSAO.
+*  WA_VERSAO      = P_SAIDA-VERSAO.
+*  WA_HORA_VERSAO = P_SAIDA-HORA_VERSAO.
+
+  "ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG - FIM
+
+  "Se não informou versão nos parâmetros...Busca Versão anterior a versão atual.
+  IF  ( wa_dt_versao_var IS INITIAL ) OR
+     ( wa_versao_var   IS INITIAL ).
+
+    "Get Versão para gerar Variação.
+    CLEAR: VL_MAX_VERSAO , VL_MAX_DT_VERSAO, VL_MAX_HORA_VERSAO.
+
+    "Busca Versão Anterior no mesmo dia.
+    SELECT MAX( VERSAO )
+      INTO (VL_MAX_VERSAO )
+       FROM ZFIT0079
+      WHERE BUKRS          =  P_SAIDA-BUKRS
+        AND DT_BASE_VERSAO = P_SAIDA-DT_VERSAO
+        AND VERSAO         <  P_SAIDA-VERSAO.
+
+    IF ( SY-SUBRC EQ 0 ) AND
+       ( VL_MAX_VERSAO IS NOT INITIAL ).
+
+      SELECT MAX( HORA_VERSAO )
+        INTO (VL_MAX_HORA_VERSAO )
+        FROM ZFIT0079
+        WHERE BUKRS          =  P_SAIDA-BUKRS
+          AND DT_BASE_VERSAO =  P_SAIDA-DT_VERSAO
+          AND VERSAO         =  VL_MAX_VERSAO.
+
+      WL_SAIDA-DT_VERSAO_VAR   = P_SAIDA-DT_VERSAO.
+      WL_SAIDA-VERSAO_VAR      = VL_MAX_VERSAO.
+      WL_SAIDA-HORA_VERSAO_VAR = VL_MAX_HORA_VERSAO.
+
+    ELSE. "Busca Ultima Versão nos dias anteriores.
+
+      CLEAR: VL_MAX_VERSAO , VL_MAX_DT_VERSAO, VL_MAX_HORA_VERSAO.
+
+      SELECT MAX( DT_BASE_VERSAO )
+       INTO (VL_MAX_DT_VERSAO)
+        FROM ZFIT0079
+       WHERE BUKRS          =  P_SAIDA-BUKRS
+         AND DT_BASE_VERSAO <  P_SAIDA-DT_VERSAO.
+
+      IF ( SY-SUBRC EQ 0 ) AND
+         ( VL_MAX_DT_VERSAO IS NOT INITIAL ).
+
+        SELECT MAX( VERSAO )
+         INTO (VL_MAX_VERSAO )
+          FROM ZFIT0079
+         WHERE BUKRS          =  P_SAIDA-BUKRS
+           AND DT_BASE_VERSAO =  VL_MAX_DT_VERSAO.
+
+        IF ( SY-SUBRC EQ 0 ) AND
+           ( VL_MAX_VERSAO  IS NOT INITIAL ).
+
+          SELECT MAX( HORA_VERSAO )
+           INTO (VL_MAX_HORA_VERSAO )
+            FROM ZFIT0079
+           WHERE BUKRS          =  P_SAIDA-BUKRS
+             AND DT_BASE_VERSAO =  VL_MAX_DT_VERSAO
+             AND VERSAO         =  VL_MAX_VERSAO.
+
+          WL_SAIDA-DT_VERSAO_VAR    = VL_MAX_DT_VERSAO.
+          WL_SAIDA-VERSAO_VAR       = VL_MAX_VERSAO.
+          WL_SAIDA-HORA_VERSAO_VAR  = VL_MAX_HORA_VERSAO.
+
+        ENDIF.
+
+      ENDIF.
+
+    ENDIF.
+
+  ELSE.
+
+    WL_SAIDA-DT_VERSAO_VAR    = WA_DT_VERSAO_VAR.
+    WL_SAIDA-VERSAO_VAR       = WA_VERSAO_VAR.
+    WL_SAIDA-HORA_VERSAO_VAR  = WA_HORA_VERSAO_VAR.
+
+  ENDIF.
+
+
+  LOOP AT TG_0113.
+
+    IF VG_MOEDA_INT IS NOT INITIAL.
+      VL_SALDO_FIM = TG_0113-SDO_FINAL_R.
+    ELSE.
+      VL_SALDO_FIM = TG_0113-SDO_FINAL_US.
+    ENDIF.
+
+    PERFORM ATRIB_VLR_DIA USING TG_0113-DT_VCTO
+                                VL_SALDO_FIM
+                                WL_SAIDA.
+
+  ENDLOOP.
+
+  P_SAIDA_RET = WL_SAIDA.
+
+ENDFORM. "get_saldo_final
+
+FORM ADD_SALDO_FINAL    TABLES IT_NODE_KEY
+                        USING  P_SAIDA TYPE TY_SAIDA
+                               P_RELAT_KEY   TYPE LVC_NKEY.
+  CLEAR: IT_DIF_SALDO.
+
+  DATA: VL_LVC_NKEY    TYPE LVC_NKEY,
+        WA_SALDO_FINAL TYPE TY_SAIDA.
+
+  SELECT * FROM ZFIT0113
+   INTO TABLE @DATA(LT_0113)
+   WHERE BUKRS = @P_SAIDA-BUKRS
+     AND DT_VCTO IN @S_ZFBDT
+     AND DT_BASE_VERSAO = @SY-DATUM.
+
+  IF SY-SUBRC = 0.
+    SORT LT_0113 DESCENDING BY BUKRS DT_VCTO DT_BASE_VERSAO VERSAO.
+    DELETE ADJACENT DUPLICATES FROM LT_0113 COMPARING BUKRS DT_VCTO DT_BASE_VERSAO.
+  ENDIF.
+
+  PERFORM UPDATE_SALDO_FINAL USING P_SAIDA
+                             CHANGING WA_SALDO_FINAL.
+
+  PERFORM UPDATE_SALDO_INICIAL USING VG_KEY_NODE
+                                     WA_SALDO_FINAL.
+
+  PERFORM F_CHECK_DIF_SALDO TABLES LT_0113
+                                   IT_DIF_SALDO
+                          USING WA_SALDO_FINAL.
+
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+  APPEND INITIAL LINE TO IT_SAL_TOT_FIN ASSIGNING FIELD-SYMBOL(<FS_SAL_TOT_FIN>).
+  MOVE WA_SALDO_FINAL TO <FS_SAL_TOT_FIN>.
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+
+  PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                              'SALDO FINAL'
+                              ''
+                              WA_SALDO_FINAL
+                              '@3Z@'
+                     CHANGING VL_LVC_NKEY.
+
+
+ENDFORM. "add_saldo_final
+
+FORM ADD_LINE_TREE USING P_RELAT_KEY     TYPE LVC_NKEY
+                         P_TEXT          TYPE LVC_VALUE
+                         P_FOLDER        TYPE C
+                         P_SAIDA         TYPE TY_SAIDA
+                         P_IMAGE         TYPE STRING
+                CHANGING P_NEW_NODE_KEY  TYPE LVC_NKEY.
+
+  DATA: L_NODE_TEXT    TYPE LVC_VALUE,
+        LT_ITEM_LAYOUT TYPE LVC_T_LAYI,
+        LS_ITEM_LAYOUT TYPE LVC_S_LAYI,
+        LS_NODE        TYPE LVC_S_LAYN.
+
+  DATA: VL_STYLE TYPE I.
+
+  LS_ITEM_LAYOUT-FIELDNAME = G_TREE->C_HIERARCHY_COLUMN_NAME.
+
+  IF ( P_TEXT EQ 'SALDO INICIAL' ) OR ( P_TEXT EQ 'SALDO FINAL' ) OR ( P_TEXT EQ 'SALDO FINAL TOTAL' ).
+    LS_ITEM_LAYOUT-STYLE     = CL_GUI_COLUMN_TREE=>STYLE_EMPHASIZED.
+  ELSEIF ( P_TEXT(8) EQ 'VARIAÇÃO' ).
+    LS_ITEM_LAYOUT-STYLE     = CL_GUI_COLUMN_TREE=>STYLE_EMPHASIZED_NEGATIVE.
+  ELSE.
+    LS_ITEM_LAYOUT-STYLE     = CL_GUI_COLUMN_TREE=>STYLE_DEFAULT.
+  ENDIF.
+
+  "LS_ITEM_LAYOUT-CLASS = CL_GUI_COLUMN_TREE=>ITEM_CLASS_LINK.
+
+  IF P_IMAGE IS NOT INITIAL.
+    LS_ITEM_LAYOUT-T_IMAGE = P_IMAGE.
+  ENDIF.
+  APPEND LS_ITEM_LAYOUT TO LT_ITEM_LAYOUT.
+
+  L_NODE_TEXT       = P_TEXT.
+  LS_NODE-EXP_IMAGE = SPACE.
+
+  IF ( P_TEXT EQ 'SALDO INICIAL' ) OR ( P_TEXT EQ 'SALDO FINAL' ) OR ( P_TEXT EQ 'SALDO FINAL TOTAL' ).
+    LS_NODE-STYLE  = CL_GUI_COLUMN_TREE=>STYLE_EMPHASIZED.
+  ELSEIF ( P_TEXT(8) EQ 'VARIAÇÃO' ).
+    LS_NODE-STYLE  = CL_GUI_COLUMN_TREE=>STYLE_EMPHASIZED_NEGATIVE.
+  ELSE.
+    LS_NODE-STYLE  = CL_GUI_COLUMN_TREE=>STYLE_INTENSIFIED.
+  ENDIF.
+
+
+  IF P_FOLDER IS NOT INITIAL.
+    LS_NODE-ISFOLDER = 'X'.
+  ENDIF.
+
+  IF P_TEXT = 'SALDO FINAL' OR ( P_TEXT EQ 'SALDO FINAL TOTAL' ).
+    CLEAR LS_ITEM_LAYOUT.
+    LOOP AT IT_DIF_SALDO.
+      LS_ITEM_LAYOUT-FIELDNAME = IT_DIF_SALDO-FIELDNAME.
+      LS_ITEM_LAYOUT-STYLE     = CL_GUI_COLUMN_TREE=>STYLE_EMPHASIZED_NEGATIVE. "Cor vermelho
+      APPEND LS_ITEM_LAYOUT TO LT_ITEM_LAYOUT.
+    ENDLOOP.
+  ENDIF.
+
+  CALL METHOD G_TREE->ADD_NODE
+    EXPORTING
+      I_RELAT_NODE_KEY = P_RELAT_KEY
+      I_RELATIONSHIP   = CL_GUI_COLUMN_TREE=>RELAT_LAST_CHILD
+      I_NODE_TEXT      = L_NODE_TEXT
+      IS_OUTTAB_LINE   = P_SAIDA
+      IS_NODE_LAYOUT   = LS_NODE
+      IT_ITEM_LAYOUT   = LT_ITEM_LAYOUT
+    IMPORTING
+      E_NEW_NODE_KEY   = P_NEW_NODE_KEY.
+
+ENDFORM.
+
+FORM LIMPA_DADOS .
+
+  REFRESH: TG_0109,
+           GT_0111,
+           GT_0111,
+           TG_0118,
+           TG_0118_GROUP,
+           TG_T001,
+           IT_SAIDA,
+           IT_SCALC_SALDO,
+           IT_ALV_TREE,
+           IT_MOV_AJUSTE,
+           TG_DAYS_MOV_AJUSTE.
+
+ENDFORM.
+
+FORM LIMPA_DIAS_MOV .
+
+  CLEAR:  DAY_01_MOV, DAY_02_MOV, DAY_03_MOV, DAY_04_MOV, DAY_05_MOV,
+          DAY_06_MOV, DAY_07_MOV, DAY_08_MOV, DAY_09_MOV, DAY_10_MOV,
+          DAY_11_MOV, DAY_12_MOV, DAY_13_MOV, DAY_14_MOV, DAY_15_MOV,
+          DAY_16_MOV, DAY_17_MOV, DAY_18_MOV, DAY_19_MOV, DAY_20_MOV,
+          DAY_21_MOV, DAY_22_MOV, DAY_23_MOV, DAY_24_MOV, DAY_25_MOV,
+          DAY_26_MOV, DAY_27_MOV, DAY_28_MOV, DAY_29_MOV, DAY_30_MOV, DAY_31_MOV,
+
+          DAY_01_AJUSTE, DAY_02_AJUSTE, DAY_03_AJUSTE, DAY_04_AJUSTE, DAY_05_AJUSTE,
+          DAY_06_AJUSTE, DAY_07_AJUSTE, DAY_08_AJUSTE, DAY_09_AJUSTE, DAY_10_AJUSTE,
+          DAY_11_AJUSTE, DAY_12_AJUSTE, DAY_13_AJUSTE, DAY_14_AJUSTE, DAY_15_AJUSTE,
+          DAY_16_AJUSTE, DAY_17_AJUSTE, DAY_18_AJUSTE, DAY_19_AJUSTE, DAY_20_AJUSTE,
+          DAY_21_AJUSTE, DAY_22_AJUSTE, DAY_23_AJUSTE, DAY_24_AJUSTE, DAY_25_AJUSTE,
+          DAY_26_AJUSTE, DAY_27_AJUSTE, DAY_28_AJUSTE, DAY_29_AJUSTE, DAY_30_AJUSTE, DAY_31_AJUSTE.
+
+ENDFORM.
+
+FORM ATRIB_VLR_DIA USING P_DT_VCTO_MOV TYPE ZFIT0079-ZFBDT
+                         P_VALOR_MOV   TYPE ZFIT0079-DMBTR
+                         P_WA_SAIDA    TYPE TY_SAIDA.
+
+  CASE P_DT_VCTO_MOV.
+
+
+    WHEN DAY_01_MOV.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      P_WA_SAIDA-DAY_01 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_02_MOV.
+      P_WA_SAIDA-DAY_02 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_03_MOV.
+      P_WA_SAIDA-DAY_03 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_04_MOV.
+      P_WA_SAIDA-DAY_04 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_05_MOV.
+      P_WA_SAIDA-DAY_05 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_06_MOV.
+      P_WA_SAIDA-DAY_06 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_07_MOV.
+      P_WA_SAIDA-DAY_07 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_08_MOV.
+      P_WA_SAIDA-DAY_08 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_09_MOV.
+      P_WA_SAIDA-DAY_09 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_10_MOV.
+      P_WA_SAIDA-DAY_10 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_11_MOV.
+      P_WA_SAIDA-DAY_11 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_12_MOV.
+      P_WA_SAIDA-DAY_12 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_13_MOV.
+      P_WA_SAIDA-DAY_13 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_14_MOV.
+      P_WA_SAIDA-DAY_14 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_15_MOV.
+      P_WA_SAIDA-DAY_15 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_16_MOV.
+      P_WA_SAIDA-DAY_16 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_17_MOV.
+      P_WA_SAIDA-DAY_17 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_18_MOV.
+      P_WA_SAIDA-DAY_18 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_19_MOV.
+      P_WA_SAIDA-DAY_19 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_20_MOV.
+      P_WA_SAIDA-DAY_20 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_21_MOV.
+      P_WA_SAIDA-DAY_21 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_22_MOV.
+      P_WA_SAIDA-DAY_22 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_23_MOV.
+      P_WA_SAIDA-DAY_23 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_24_MOV.
+      P_WA_SAIDA-DAY_24 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_25_MOV.
+      P_WA_SAIDA-DAY_25 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_26_MOV.
+      P_WA_SAIDA-DAY_26 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_27_MOV.
+      P_WA_SAIDA-DAY_27 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_28_MOV.
+      P_WA_SAIDA-DAY_28 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_29_MOV.
+      P_WA_SAIDA-DAY_29 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_30_MOV.
+      P_WA_SAIDA-DAY_30 = CONV #( P_VALOR_MOV ).
+    WHEN DAY_31_MOV.
+      P_WA_SAIDA-DAY_31 = CONV #( P_VALOR_MOV ).
+*<--- 09/06/2023 - Migração S4 - JS
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM APPEND_VLR_DIA USING P_DT_VCTO_MOV TYPE ZFIT0079-ZFBDT
+                          P_VALOR_MOV   TYPE ZFIT0079-DMBTR
+                          P_WA_SAIDA    TYPE TY_SAIDA.
+
+  CASE P_DT_VCTO_MOV.
+    WHEN DAY_01_MOV.
+      P_WA_SAIDA-DAY_01 = P_WA_SAIDA-DAY_01 + P_VALOR_MOV.
+    WHEN DAY_02_MOV.
+      P_WA_SAIDA-DAY_02 = P_WA_SAIDA-DAY_02 + P_VALOR_MOV.
+    WHEN DAY_03_MOV.
+      P_WA_SAIDA-DAY_03 = P_WA_SAIDA-DAY_03 + P_VALOR_MOV.
+    WHEN DAY_04_MOV.
+      P_WA_SAIDA-DAY_04 = P_WA_SAIDA-DAY_04 + P_VALOR_MOV.
+    WHEN DAY_05_MOV.
+      P_WA_SAIDA-DAY_05 = P_WA_SAIDA-DAY_05 + P_VALOR_MOV.
+    WHEN DAY_06_MOV.
+      P_WA_SAIDA-DAY_06 = P_WA_SAIDA-DAY_06 + P_VALOR_MOV.
+    WHEN DAY_07_MOV.
+      P_WA_SAIDA-DAY_07 = P_WA_SAIDA-DAY_07 + P_VALOR_MOV.
+    WHEN DAY_08_MOV.
+      P_WA_SAIDA-DAY_08 = P_WA_SAIDA-DAY_08 + P_VALOR_MOV.
+    WHEN DAY_09_MOV.
+      P_WA_SAIDA-DAY_09 = P_WA_SAIDA-DAY_09 + P_VALOR_MOV.
+    WHEN DAY_10_MOV.
+      P_WA_SAIDA-DAY_10 = P_WA_SAIDA-DAY_10 + P_VALOR_MOV.
+    WHEN DAY_11_MOV.
+      P_WA_SAIDA-DAY_11 = P_WA_SAIDA-DAY_11 + P_VALOR_MOV.
+    WHEN DAY_12_MOV.
+      P_WA_SAIDA-DAY_12 = P_WA_SAIDA-DAY_12 + P_VALOR_MOV.
+    WHEN DAY_13_MOV.
+      P_WA_SAIDA-DAY_13 = P_WA_SAIDA-DAY_13 + P_VALOR_MOV.
+    WHEN DAY_14_MOV.
+      P_WA_SAIDA-DAY_14 = P_WA_SAIDA-DAY_14 + P_VALOR_MOV.
+    WHEN DAY_15_MOV.
+      P_WA_SAIDA-DAY_15 = P_WA_SAIDA-DAY_15 + P_VALOR_MOV.
+    WHEN DAY_16_MOV.
+      P_WA_SAIDA-DAY_16 = P_WA_SAIDA-DAY_16 + P_VALOR_MOV.
+    WHEN DAY_17_MOV.
+      P_WA_SAIDA-DAY_17 = P_WA_SAIDA-DAY_17 + P_VALOR_MOV.
+    WHEN DAY_18_MOV.
+      P_WA_SAIDA-DAY_18 = P_WA_SAIDA-DAY_18 + P_VALOR_MOV.
+    WHEN DAY_19_MOV.
+      P_WA_SAIDA-DAY_19 = P_WA_SAIDA-DAY_19 + P_VALOR_MOV.
+    WHEN DAY_20_MOV.
+      P_WA_SAIDA-DAY_20 = P_WA_SAIDA-DAY_20 + P_VALOR_MOV.
+    WHEN DAY_21_MOV.
+      P_WA_SAIDA-DAY_21 = P_WA_SAIDA-DAY_21 + P_VALOR_MOV.
+    WHEN DAY_22_MOV.
+      P_WA_SAIDA-DAY_22 = P_WA_SAIDA-DAY_22 + P_VALOR_MOV.
+    WHEN DAY_23_MOV.
+      P_WA_SAIDA-DAY_23 = P_WA_SAIDA-DAY_23 + P_VALOR_MOV.
+    WHEN DAY_24_MOV.
+      P_WA_SAIDA-DAY_24 = P_WA_SAIDA-DAY_24 + P_VALOR_MOV.
+    WHEN DAY_25_MOV.
+      P_WA_SAIDA-DAY_25 = P_WA_SAIDA-DAY_25 + P_VALOR_MOV.
+    WHEN DAY_26_MOV.
+      P_WA_SAIDA-DAY_26 = P_WA_SAIDA-DAY_26 + P_VALOR_MOV.
+    WHEN DAY_27_MOV.
+      P_WA_SAIDA-DAY_27 = P_WA_SAIDA-DAY_27 + P_VALOR_MOV.
+    WHEN DAY_28_MOV.
+      P_WA_SAIDA-DAY_28 = P_WA_SAIDA-DAY_28 + P_VALOR_MOV.
+    WHEN DAY_29_MOV.
+      P_WA_SAIDA-DAY_29 = P_WA_SAIDA-DAY_29 + P_VALOR_MOV.
+    WHEN DAY_30_MOV.
+      P_WA_SAIDA-DAY_30 = P_WA_SAIDA-DAY_30 + P_VALOR_MOV.
+    WHEN DAY_31_MOV.
+      P_WA_SAIDA-DAY_31 = P_WA_SAIDA-DAY_31 + P_VALOR_MOV.
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_GET_DIA_AJUSTE USING I_COLUMN_ID
+                   CHANGING P_DIA_AJUSTE.
+
+  CLEAR: P_DIA_AJUSTE.
+
+  CHECK I_COLUMN_ID IS NOT INITIAL.
+
+  CASE I_COLUMN_ID.
+    WHEN 'DAY_01'.
+      P_DIA_AJUSTE = DAY_01_AJUSTE.
+    WHEN 'DAY_02'.
+      P_DIA_AJUSTE = DAY_02_AJUSTE.
+    WHEN 'DAY_03'.
+      P_DIA_AJUSTE = DAY_03_AJUSTE.
+    WHEN 'DAY_04'.
+      P_DIA_AJUSTE = DAY_04_AJUSTE.
+    WHEN 'DAY_05'.
+      P_DIA_AJUSTE = DAY_05_AJUSTE.
+    WHEN 'DAY_06'.
+      P_DIA_AJUSTE = DAY_06_AJUSTE.
+    WHEN 'DAY_07'.
+      P_DIA_AJUSTE = DAY_07_AJUSTE.
+    WHEN 'DAY_08'.
+      P_DIA_AJUSTE = DAY_08_AJUSTE.
+    WHEN 'DAY_09'.
+      P_DIA_AJUSTE = DAY_09_AJUSTE.
+    WHEN 'DAY_10'.
+      P_DIA_AJUSTE = DAY_10_AJUSTE.
+    WHEN 'DAY_11'.
+      P_DIA_AJUSTE = DAY_11_AJUSTE.
+    WHEN 'DAY_12'.
+      P_DIA_AJUSTE = DAY_12_AJUSTE.
+    WHEN 'DAY_13'.
+      P_DIA_AJUSTE = DAY_13_AJUSTE.
+    WHEN 'DAY_14'.
+      P_DIA_AJUSTE = DAY_14_AJUSTE.
+    WHEN 'DAY_15'.
+      P_DIA_AJUSTE = DAY_15_AJUSTE.
+    WHEN 'DAY_16'.
+      P_DIA_AJUSTE = DAY_16_AJUSTE.
+    WHEN 'DAY_17'.
+      P_DIA_AJUSTE = DAY_17_AJUSTE.
+    WHEN 'DAY_18'.
+      P_DIA_AJUSTE = DAY_18_AJUSTE.
+    WHEN 'DAY_19'.
+      P_DIA_AJUSTE = DAY_19_AJUSTE.
+    WHEN 'DAY_20'.
+      P_DIA_AJUSTE = DAY_20_AJUSTE.
+    WHEN 'DAY_21'.
+      P_DIA_AJUSTE = DAY_21_AJUSTE.
+    WHEN 'DAY_22'.
+      P_DIA_AJUSTE = DAY_22_AJUSTE.
+    WHEN 'DAY_23'.
+      P_DIA_AJUSTE = DAY_23_AJUSTE.
+    WHEN 'DAY_24'.
+      P_DIA_AJUSTE = DAY_24_AJUSTE.
+    WHEN 'DAY_25'.
+      P_DIA_AJUSTE = DAY_25_AJUSTE.
+    WHEN 'DAY_26'.
+      P_DIA_AJUSTE = DAY_26_AJUSTE.
+    WHEN 'DAY_27'.
+      P_DIA_AJUSTE = DAY_27_AJUSTE.
+    WHEN 'DAY_28'.
+      P_DIA_AJUSTE = DAY_28_AJUSTE.
+    WHEN 'DAY_29'.
+      P_DIA_AJUSTE = DAY_29_AJUSTE.
+    WHEN 'DAY_30'.
+      P_DIA_AJUSTE = DAY_30_AJUSTE.
+    WHEN 'DAY_31'.
+      P_DIA_AJUSTE = DAY_31_AJUSTE.
+  ENDCASE.
+
+
+ENDFORM.
+
+FORM F_CHECK_DIF_SALDO TABLES P_LT_0113  STRUCTURE ZFIT0113
+                              P_IT_DIF_SALDO STRUCTURE ZFI_DIF_SALDO
+                        USING P_SALDO_FINAL TYPE TY_SAIDA.
+
+  SORT P_LT_0113 BY BUKRS DT_VCTO ASCENDING.
+
+  LOOP AT P_LT_0113 INTO DATA(WA_0113).
+
+    IF P_INTER IS NOT INITIAL.
+      DATA(LV_SALDO_FINAL_0113) = WA_0113-SDO_FINAL_R.
+    ELSE.
+      LV_SALDO_FINAL_0113 = WA_0113-SDO_FINAL_US.
+    ENDIF.
+
+    CASE SY-TABIX.
+      WHEN 1.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_01'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_01
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 2.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_02'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_02
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 3.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_03'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_03
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 4.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_04'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_04
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 5.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_05'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_05
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 6.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_06'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_06
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 7.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_07'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_07
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 8.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_08'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_08
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 9.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_09'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_09
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 10.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_10'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_10
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 11.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_11'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_11
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 12.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_12'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_12
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 13.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_13'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_13
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 14.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_14'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_14
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 15.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_15'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_15
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 16.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_16'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_16
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 17.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_17'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_17
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 18.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_18'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_18
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 19.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_19'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_19
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 20.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_20'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_20
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 21.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_21'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_21
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 22.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_22'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_22
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 23.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_23'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_23
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 24.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_24'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_24
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 25.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_25'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_25
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 26.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_26'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_26
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 27.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_27'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_27
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 28.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_28'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_28
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 29.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_29'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_29
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 30.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_30'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_30
+                                                  LV_SALDO_FINAL_0113.
+      WHEN 31.
+        PERFORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO
+                                            USING 'DAY_31'
+                                                  WA_0113-DT_VCTO
+                                                  P_SALDO_FINAL-DAY_31
+                                                  LV_SALDO_FINAL_0113.
+
+
+      WHEN OTHERS.
+    ENDCASE.
+  ENDLOOP.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  PREENCHE_TABELA_SALDO_FINAL
+*&---------------------------------------------------------------------*
+FORM PREENCHE_TABELA_SALDO_FINAL TABLES P_IT_DIF_SALDO STRUCTURE ZFI_DIF_SALDO
+                                 USING P_DAY
+                                       P_WA_0113_DT_VCTO
+                                       P_SALDO_FINAL
+                                       P_LV_SALDO_FINAL_0113.
+
+  CHECK P_SALDO_FINAL IS NOT INITIAL.
+
+  IF P_SALDO_FINAL <>  P_LV_SALDO_FINAL_0113 .
+    APPEND INITIAL LINE TO P_IT_DIF_SALDO ASSIGNING FIELD-SYMBOL(<FS_DIF_SALDO>).
+    <FS_DIF_SALDO>-FIELDNAME           = P_DAY.
+    <FS_DIF_SALDO>-DT_VCTO             = P_WA_0113_DT_VCTO.
+    <FS_DIF_SALDO>-SALDO_FINAL         = P_SALDO_FINAL.
+    <FS_DIF_SALDO>-SALDO_FINAL_ZFI0101 = P_LV_SALDO_FINAL_0113.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  F_POPUP_TO_CONFIRM
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_POPUP_TO_CONFIRM .
+
+  CHECK IT_DIF_SALDO[] IS NOT INITIAL.
+
+  DATA: LV_TEXT_QUESTION TYPE STRING VALUE 'Existem diferenças entre Saldo Final x Saldo Final ZFI0101. Deseja visualizar as datas? ',
+        LV_ANSWER.
+
+  TYPES: BEGIN OF TY_DIF_SALDO_ALV,
+           DT_VCTO(10),
+           SALDO_FINAL         TYPE DMBTR,
+           SALDO_FINAL_ZFI0101 TYPE DMBTR,
+         END OF TY_DIF_SALDO_ALV.
+  DATA: IT_DIF_SALDO_ALV TYPE TABLE OF TY_DIF_SALDO_ALV.
+
+  CALL FUNCTION 'POPUP_TO_CONFIRM'
+    EXPORTING
+      TITLEBAR              = 'Diferença Saldo Final'
+      TEXT_QUESTION         = LV_TEXT_QUESTION
+      TEXT_BUTTON_1         = 'Sim'
+      ICON_BUTTON_1         = 'ICON_OKAY'
+      TEXT_BUTTON_2         = 'Não'
+      ICON_BUTTON_2         = 'ICON_CANCEL'
+      DEFAULT_BUTTON        = '1'
+      DISPLAY_CANCEL_BUTTON = ' '
+      START_COLUMN          = 25
+      START_ROW             = 6
+    IMPORTING
+      ANSWER                = LV_ANSWER
+    EXCEPTIONS
+      TEXT_NOT_FOUND        = 1
+      OTHERS                = 2.
+
+  IF SY-SUBRC = 0 AND LV_ANSWER = 1. "Sim
+
+    DATA: LT_FIELDCAT TYPE STANDARD TABLE OF SLIS_FIELDCAT_ALV,
+          LS_FIELDCAT TYPE SLIS_FIELDCAT_ALV.
+
+    LS_FIELDCAT-COL_POS   = 1.
+    LS_FIELDCAT-FIELDNAME = 'DT_VCTO'.
+    LS_FIELDCAT-SELTEXT_M = 'Data'.
+    APPEND LS_FIELDCAT TO LT_FIELDCAT.
+    CLEAR LS_FIELDCAT.
+
+    LS_FIELDCAT-COL_POS   = 2.
+    LS_FIELDCAT-FIELDNAME = 'SALDO_FINAL'.
+    LS_FIELDCAT-SELTEXT_M = 'Saldo Final'.
+    APPEND LS_FIELDCAT TO LT_FIELDCAT.
+    CLEAR LS_FIELDCAT.
+
+    LS_FIELDCAT-COL_POS   = 3.
+    LS_FIELDCAT-FIELDNAME = 'SALDO_FINAL_ZFI0101'.
+    LS_FIELDCAT-SELTEXT_M = 'Saldo Final ZFI0101'.
+    APPEND LS_FIELDCAT TO LT_FIELDCAT.
+    CLEAR LS_FIELDCAT.
+
+    LOOP AT IT_DIF_SALDO INTO DATA(WA_DIF_SALDO).
+      APPEND INITIAL LINE TO IT_DIF_SALDO_ALV ASSIGNING FIELD-SYMBOL(<FS>).
+
+      WRITE WA_DIF_SALDO-DT_VCTO TO <FS>-DT_VCTO USING EDIT MASK '__.__.____' .
+      <FS>-SALDO_FINAL = WA_DIF_SALDO-SALDO_FINAL.
+      <FS>-SALDO_FINAL_ZFI0101 = WA_DIF_SALDO-SALDO_FINAL_ZFI0101.
+    ENDLOOP.
+
+    CALL FUNCTION 'REUSE_ALV_POPUP_TO_SELECT'
+      EXPORTING
+        I_TITLE               = 'Diferença Saldo Final'
+        I_ALLOW_NO_SELECTION  = 'X'
+        I_SCREEN_START_COLUMN = 10
+        I_SCREEN_START_LINE   = 5
+        I_SCREEN_END_COLUMN   = 60
+        I_SCREEN_END_LINE     = 20
+        I_TABNAME             = 'IT_DIF_SALDO_ALV'
+        IT_FIELDCAT           = LT_FIELDCAT
+        I_CALLBACK_PROGRAM    = SY-CPROG
+      TABLES
+        T_OUTTAB              = IT_DIF_SALDO_ALV
+      EXCEPTIONS
+        PROGRAM_ERROR         = 1
+        OTHERS                = 2.
+    IF SY-SUBRC <> 0.
+    ENDIF.
+
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  UPDATE_SALDO_INICIAL
+*&---------------------------------------------------------------------*
+
+FORM UPDATE_SALDO_INICIAL  USING P_NODE_KEY      TYPE LVC_NKEY
+                                 P_SALDO_FINAL   TYPE TY_SAIDA.
+
+  DATA: WA_SALDO_INICIO TYPE TY_SAIDA.
+
+  "Saldo inicial é sempre o Saldo Final do dia anterior.
+*---> 09/06/2023 - Migração S4 - JS
+*              wa_saldo_inicio-day_01 = vg_saldo_inicial.
+  WA_SALDO_INICIO-DAY_01 = CONV #( VG_SALDO_INICIAL ).
+*<--- 09/06/2023 - Migração S4 - JS
+  WA_SALDO_INICIO-DAY_02 = P_SALDO_FINAL-DAY_01.
+  WA_SALDO_INICIO-DAY_03 = P_SALDO_FINAL-DAY_02.
+  WA_SALDO_INICIO-DAY_04 = P_SALDO_FINAL-DAY_03.
+  WA_SALDO_INICIO-DAY_05 = P_SALDO_FINAL-DAY_04.
+  WA_SALDO_INICIO-DAY_06 = P_SALDO_FINAL-DAY_05.
+  WA_SALDO_INICIO-DAY_07 = P_SALDO_FINAL-DAY_06.
+  WA_SALDO_INICIO-DAY_08 = P_SALDO_FINAL-DAY_07.
+  WA_SALDO_INICIO-DAY_09 = P_SALDO_FINAL-DAY_08.
+  WA_SALDO_INICIO-DAY_10 = P_SALDO_FINAL-DAY_09.
+  WA_SALDO_INICIO-DAY_11 = P_SALDO_FINAL-DAY_10.
+  WA_SALDO_INICIO-DAY_12 = P_SALDO_FINAL-DAY_11.
+  WA_SALDO_INICIO-DAY_13 = P_SALDO_FINAL-DAY_12.
+  WA_SALDO_INICIO-DAY_14 = P_SALDO_FINAL-DAY_13.
+  WA_SALDO_INICIO-DAY_15 = P_SALDO_FINAL-DAY_14.
+  WA_SALDO_INICIO-DAY_16 = P_SALDO_FINAL-DAY_15.
+  WA_SALDO_INICIO-DAY_17 = P_SALDO_FINAL-DAY_16.
+  WA_SALDO_INICIO-DAY_18 = P_SALDO_FINAL-DAY_17.
+  WA_SALDO_INICIO-DAY_19 = P_SALDO_FINAL-DAY_18.
+  WA_SALDO_INICIO-DAY_20 = P_SALDO_FINAL-DAY_19.
+  WA_SALDO_INICIO-DAY_21 = P_SALDO_FINAL-DAY_20.
+  WA_SALDO_INICIO-DAY_22 = P_SALDO_FINAL-DAY_21.
+  WA_SALDO_INICIO-DAY_23 = P_SALDO_FINAL-DAY_22.
+  WA_SALDO_INICIO-DAY_24 = P_SALDO_FINAL-DAY_23.
+  WA_SALDO_INICIO-DAY_25 = P_SALDO_FINAL-DAY_24.
+  WA_SALDO_INICIO-DAY_26 = P_SALDO_FINAL-DAY_25.
+  WA_SALDO_INICIO-DAY_27 = P_SALDO_FINAL-DAY_26.
+  WA_SALDO_INICIO-DAY_28 = P_SALDO_FINAL-DAY_27.
+  WA_SALDO_INICIO-DAY_29 = P_SALDO_FINAL-DAY_28.
+  WA_SALDO_INICIO-DAY_30 = P_SALDO_FINAL-DAY_29.
+  WA_SALDO_INICIO-DAY_31 = P_SALDO_FINAL-DAY_30.
+
+
+  CALL METHOD G_TREE->CHANGE_NODE
+    EXPORTING
+      I_NODE_KEY     = P_NODE_KEY
+      I_OUTTAB_LINE  = WA_SALDO_INICIO
+*     is_node_layout =
+*     it_item_layout =
+*     i_node_text    =
+*     i_u_node_text  =
+    EXCEPTIONS
+      NODE_NOT_FOUND = 1
+      OTHERS         = 2.
+  IF SY-SUBRC <> 0.
+* Implement suitable error handling here
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  UPDATE_SALDO_FINAL
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_WA_SALDO_FINAL  text
+*----------------------------------------------------------------------*
+FORM UPDATE_SALDO_FINAL  USING  P_SAIDA TYPE TY_SAIDA
+                         CHANGING  WA_SALDO_FINAL TYPE TY_SAIDA.
+
+  LOOP AT IT_TOTAL_VC ASSIGNING FIELD-SYMBOL(<FS_TOTAL_VC>) WHERE BUKRS = P_SAIDA-BUKRS
+                                                              AND COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA.
+    IF <FS_TOTAL_VC> IS ASSIGNED.
+
+      WA_SALDO_FINAL-BUKRS = <FS_TOTAL_VC>-BUKRS.
+      WA_SALDO_FINAL-COD_ESTRUTURA = <FS_TOTAL_VC>-COD_ESTRUTURA.
+
+      WA_SALDO_FINAL-DAY_01 = WA_SALDO_FINAL-DAY_01 + <FS_TOTAL_VC>-DAY_01.
+      WA_SALDO_FINAL-DAY_02 = WA_SALDO_FINAL-DAY_02 + <FS_TOTAL_VC>-DAY_02.
+      WA_SALDO_FINAL-DAY_03 = WA_SALDO_FINAL-DAY_03 + <FS_TOTAL_VC>-DAY_03.
+      WA_SALDO_FINAL-DAY_04 = WA_SALDO_FINAL-DAY_04 + <FS_TOTAL_VC>-DAY_04.
+      WA_SALDO_FINAL-DAY_05 = WA_SALDO_FINAL-DAY_05 + <FS_TOTAL_VC>-DAY_05.
+      WA_SALDO_FINAL-DAY_06 = WA_SALDO_FINAL-DAY_06 + <FS_TOTAL_VC>-DAY_06.
+      WA_SALDO_FINAL-DAY_07 = WA_SALDO_FINAL-DAY_07 + <FS_TOTAL_VC>-DAY_07.
+      WA_SALDO_FINAL-DAY_08 = WA_SALDO_FINAL-DAY_08 + <FS_TOTAL_VC>-DAY_08.
+      WA_SALDO_FINAL-DAY_09 = WA_SALDO_FINAL-DAY_09 + <FS_TOTAL_VC>-DAY_09.
+      WA_SALDO_FINAL-DAY_10 = WA_SALDO_FINAL-DAY_10 + <FS_TOTAL_VC>-DAY_10.
+      WA_SALDO_FINAL-DAY_11 = WA_SALDO_FINAL-DAY_11 + <FS_TOTAL_VC>-DAY_11.
+      WA_SALDO_FINAL-DAY_12 = WA_SALDO_FINAL-DAY_12 + <FS_TOTAL_VC>-DAY_12.
+      WA_SALDO_FINAL-DAY_13 = WA_SALDO_FINAL-DAY_13 + <FS_TOTAL_VC>-DAY_13.
+      WA_SALDO_FINAL-DAY_14 = WA_SALDO_FINAL-DAY_14 + <FS_TOTAL_VC>-DAY_14.
+      WA_SALDO_FINAL-DAY_15 = WA_SALDO_FINAL-DAY_15 + <FS_TOTAL_VC>-DAY_15.
+      WA_SALDO_FINAL-DAY_16 = WA_SALDO_FINAL-DAY_16 + <FS_TOTAL_VC>-DAY_16.
+      WA_SALDO_FINAL-DAY_17 = WA_SALDO_FINAL-DAY_17 + <FS_TOTAL_VC>-DAY_17.
+      WA_SALDO_FINAL-DAY_18 = WA_SALDO_FINAL-DAY_18 + <FS_TOTAL_VC>-DAY_18.
+      WA_SALDO_FINAL-DAY_19 = WA_SALDO_FINAL-DAY_19 + <FS_TOTAL_VC>-DAY_19.
+      WA_SALDO_FINAL-DAY_20 = WA_SALDO_FINAL-DAY_20 + <FS_TOTAL_VC>-DAY_20.
+      WA_SALDO_FINAL-DAY_21 = WA_SALDO_FINAL-DAY_21 + <FS_TOTAL_VC>-DAY_21.
+      WA_SALDO_FINAL-DAY_22 = WA_SALDO_FINAL-DAY_22 + <FS_TOTAL_VC>-DAY_22.
+      WA_SALDO_FINAL-DAY_23 = WA_SALDO_FINAL-DAY_23 + <FS_TOTAL_VC>-DAY_23.
+      WA_SALDO_FINAL-DAY_24 = WA_SALDO_FINAL-DAY_24 + <FS_TOTAL_VC>-DAY_24.
+      WA_SALDO_FINAL-DAY_25 = WA_SALDO_FINAL-DAY_25 + <FS_TOTAL_VC>-DAY_25.
+      WA_SALDO_FINAL-DAY_26 = WA_SALDO_FINAL-DAY_26 + <FS_TOTAL_VC>-DAY_26.
+      WA_SALDO_FINAL-DAY_27 = WA_SALDO_FINAL-DAY_27 + <FS_TOTAL_VC>-DAY_27.
+      WA_SALDO_FINAL-DAY_28 = WA_SALDO_FINAL-DAY_28 + <FS_TOTAL_VC>-DAY_28.
+      WA_SALDO_FINAL-DAY_29 = WA_SALDO_FINAL-DAY_29 + <FS_TOTAL_VC>-DAY_29.
+      WA_SALDO_FINAL-DAY_30 = WA_SALDO_FINAL-DAY_30 + <FS_TOTAL_VC>-DAY_30.
+      WA_SALDO_FINAL-DAY_31 = WA_SALDO_FINAL-DAY_31 + <FS_TOTAL_VC>-DAY_31.
+
+    ENDIF.
+  ENDLOOP.
+  WA_SALDO_FINAL-DAY_01 = WA_SALDO_FINAL-DAY_01 + VG_SALDO_INICIAL.
+  WA_SALDO_FINAL-DAY_02 = WA_SALDO_FINAL-DAY_02 + WA_SALDO_FINAL-DAY_01.
+  WA_SALDO_FINAL-DAY_03 = WA_SALDO_FINAL-DAY_03 + WA_SALDO_FINAL-DAY_02.
+  WA_SALDO_FINAL-DAY_04 = WA_SALDO_FINAL-DAY_04 + WA_SALDO_FINAL-DAY_03.
+  WA_SALDO_FINAL-DAY_05 = WA_SALDO_FINAL-DAY_05 + WA_SALDO_FINAL-DAY_04.
+  WA_SALDO_FINAL-DAY_06 = WA_SALDO_FINAL-DAY_06 + WA_SALDO_FINAL-DAY_05.
+  WA_SALDO_FINAL-DAY_07 = WA_SALDO_FINAL-DAY_07 + WA_SALDO_FINAL-DAY_06.
+  WA_SALDO_FINAL-DAY_08 = WA_SALDO_FINAL-DAY_08 + WA_SALDO_FINAL-DAY_07.
+  WA_SALDO_FINAL-DAY_09 = WA_SALDO_FINAL-DAY_09 + WA_SALDO_FINAL-DAY_08.
+  WA_SALDO_FINAL-DAY_10 = WA_SALDO_FINAL-DAY_10 + WA_SALDO_FINAL-DAY_09.
+  WA_SALDO_FINAL-DAY_11 = WA_SALDO_FINAL-DAY_11 + WA_SALDO_FINAL-DAY_10.
+  WA_SALDO_FINAL-DAY_12 = WA_SALDO_FINAL-DAY_12 + WA_SALDO_FINAL-DAY_11.
+  WA_SALDO_FINAL-DAY_13 = WA_SALDO_FINAL-DAY_13 + WA_SALDO_FINAL-DAY_12.
+  WA_SALDO_FINAL-DAY_14 = WA_SALDO_FINAL-DAY_14 + WA_SALDO_FINAL-DAY_13.
+  WA_SALDO_FINAL-DAY_15 = WA_SALDO_FINAL-DAY_15 + WA_SALDO_FINAL-DAY_14.
+  WA_SALDO_FINAL-DAY_16 = WA_SALDO_FINAL-DAY_16 + WA_SALDO_FINAL-DAY_15.
+  WA_SALDO_FINAL-DAY_17 = WA_SALDO_FINAL-DAY_17 + WA_SALDO_FINAL-DAY_16.
+  WA_SALDO_FINAL-DAY_18 = WA_SALDO_FINAL-DAY_18 + WA_SALDO_FINAL-DAY_17.
+  WA_SALDO_FINAL-DAY_19 = WA_SALDO_FINAL-DAY_19 + WA_SALDO_FINAL-DAY_18.
+  WA_SALDO_FINAL-DAY_20 = WA_SALDO_FINAL-DAY_20 + WA_SALDO_FINAL-DAY_19.
+  WA_SALDO_FINAL-DAY_21 = WA_SALDO_FINAL-DAY_21 + WA_SALDO_FINAL-DAY_20.
+  WA_SALDO_FINAL-DAY_22 = WA_SALDO_FINAL-DAY_22 + WA_SALDO_FINAL-DAY_21.
+  WA_SALDO_FINAL-DAY_23 = WA_SALDO_FINAL-DAY_23 + WA_SALDO_FINAL-DAY_22.
+  WA_SALDO_FINAL-DAY_24 = WA_SALDO_FINAL-DAY_24 + WA_SALDO_FINAL-DAY_23.
+  WA_SALDO_FINAL-DAY_25 = WA_SALDO_FINAL-DAY_25 + WA_SALDO_FINAL-DAY_24.
+  WA_SALDO_FINAL-DAY_26 = WA_SALDO_FINAL-DAY_26 + WA_SALDO_FINAL-DAY_25.
+  WA_SALDO_FINAL-DAY_27 = WA_SALDO_FINAL-DAY_27 + WA_SALDO_FINAL-DAY_26.
+  WA_SALDO_FINAL-DAY_28 = WA_SALDO_FINAL-DAY_28 + WA_SALDO_FINAL-DAY_27.
+  WA_SALDO_FINAL-DAY_29 = WA_SALDO_FINAL-DAY_29 + WA_SALDO_FINAL-DAY_28.
+  WA_SALDO_FINAL-DAY_30 = WA_SALDO_FINAL-DAY_30 + WA_SALDO_FINAL-DAY_29.
+  WA_SALDO_FINAL-DAY_31 = WA_SALDO_FINAL-DAY_31 + WA_SALDO_FINAL-DAY_30.
+
+
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  ADD_SALDO_FINAL_T
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_IT_NODE_KEY  text
+*      -->P_WA_SAIDA  text
+*      -->P_L_NVL1_KEY  text
+*----------------------------------------------------------------------*
+FORM ADD_SALDO_FINAL_T   TABLES IT_NODE_KEY
+                         USING  P_SAIDA TYPE TY_SAIDA
+                                P_RELAT_KEY   TYPE LVC_NKEY.
+
+  CLEAR: IT_DIF_SALDO.
+
+  DATA: VL_LVC_NKEY      TYPE LVC_NKEY,
+        WA_SALDO_FINAL_T TYPE TY_SAIDA.
+
+  PERFORM UPDATE_SALDO_FINAL_T USING P_SAIDA
+                               CHANGING WA_SALDO_FINAL_T.
+
+  PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                              'SALDO FINAL TOTAL'
+                              ''
+                              WA_SALDO_FINAL_T
+                              '@3Z@'
+                     CHANGING VL_LVC_NKEY.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  UPDATE_SALDO_FINAL_T
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_P_SAIDA  text
+*      <--P_WA_SALDO_FINAL_T  text
+*----------------------------------------------------------------------*
+FORM UPDATE_SALDO_FINAL_T  USING  P_SAIDA TYPE TY_SAIDA
+                           CHANGING  WA_SALDO_FINAL TYPE TY_SAIDA.
+
+  LOOP AT IT_SAL_TOT_FIN ASSIGNING FIELD-SYMBOL(<FS_TOTAL_VC>). "WHERE bukrs = p_saida-bukrs
+    "AND   cod_estrutura = p_saida-cod_estrutura.
+    IF <FS_TOTAL_VC> IS ASSIGNED.
+
+      WA_SALDO_FINAL-BUKRS = <FS_TOTAL_VC>-BUKRS.
+      WA_SALDO_FINAL-COD_ESTRUTURA = <FS_TOTAL_VC>-COD_ESTRUTURA.
+
+      WA_SALDO_FINAL-DAY_01 = WA_SALDO_FINAL-DAY_01 + <FS_TOTAL_VC>-DAY_01.
+      WA_SALDO_FINAL-DAY_02 = WA_SALDO_FINAL-DAY_02 + <FS_TOTAL_VC>-DAY_02.
+      WA_SALDO_FINAL-DAY_03 = WA_SALDO_FINAL-DAY_03 + <FS_TOTAL_VC>-DAY_03.
+      WA_SALDO_FINAL-DAY_04 = WA_SALDO_FINAL-DAY_04 + <FS_TOTAL_VC>-DAY_04.
+      WA_SALDO_FINAL-DAY_05 = WA_SALDO_FINAL-DAY_05 + <FS_TOTAL_VC>-DAY_05.
+      WA_SALDO_FINAL-DAY_06 = WA_SALDO_FINAL-DAY_06 + <FS_TOTAL_VC>-DAY_06.
+      WA_SALDO_FINAL-DAY_07 = WA_SALDO_FINAL-DAY_07 + <FS_TOTAL_VC>-DAY_07.
+      WA_SALDO_FINAL-DAY_08 = WA_SALDO_FINAL-DAY_08 + <FS_TOTAL_VC>-DAY_08.
+      WA_SALDO_FINAL-DAY_09 = WA_SALDO_FINAL-DAY_09 + <FS_TOTAL_VC>-DAY_09.
+      WA_SALDO_FINAL-DAY_10 = WA_SALDO_FINAL-DAY_10 + <FS_TOTAL_VC>-DAY_10.
+      WA_SALDO_FINAL-DAY_11 = WA_SALDO_FINAL-DAY_11 + <FS_TOTAL_VC>-DAY_11.
+      WA_SALDO_FINAL-DAY_12 = WA_SALDO_FINAL-DAY_12 + <FS_TOTAL_VC>-DAY_12.
+      WA_SALDO_FINAL-DAY_13 = WA_SALDO_FINAL-DAY_13 + <FS_TOTAL_VC>-DAY_13.
+      WA_SALDO_FINAL-DAY_14 = WA_SALDO_FINAL-DAY_14 + <FS_TOTAL_VC>-DAY_14.
+      WA_SALDO_FINAL-DAY_15 = WA_SALDO_FINAL-DAY_15 + <FS_TOTAL_VC>-DAY_15.
+      WA_SALDO_FINAL-DAY_16 = WA_SALDO_FINAL-DAY_16 + <FS_TOTAL_VC>-DAY_16.
+      WA_SALDO_FINAL-DAY_17 = WA_SALDO_FINAL-DAY_17 + <FS_TOTAL_VC>-DAY_17.
+      WA_SALDO_FINAL-DAY_18 = WA_SALDO_FINAL-DAY_18 + <FS_TOTAL_VC>-DAY_18.
+      WA_SALDO_FINAL-DAY_19 = WA_SALDO_FINAL-DAY_19 + <FS_TOTAL_VC>-DAY_19.
+      WA_SALDO_FINAL-DAY_20 = WA_SALDO_FINAL-DAY_20 + <FS_TOTAL_VC>-DAY_20.
+      WA_SALDO_FINAL-DAY_21 = WA_SALDO_FINAL-DAY_21 + <FS_TOTAL_VC>-DAY_21.
+      WA_SALDO_FINAL-DAY_22 = WA_SALDO_FINAL-DAY_22 + <FS_TOTAL_VC>-DAY_22.
+      WA_SALDO_FINAL-DAY_23 = WA_SALDO_FINAL-DAY_23 + <FS_TOTAL_VC>-DAY_23.
+      WA_SALDO_FINAL-DAY_24 = WA_SALDO_FINAL-DAY_24 + <FS_TOTAL_VC>-DAY_24.
+      WA_SALDO_FINAL-DAY_25 = WA_SALDO_FINAL-DAY_25 + <FS_TOTAL_VC>-DAY_25.
+      WA_SALDO_FINAL-DAY_26 = WA_SALDO_FINAL-DAY_26 + <FS_TOTAL_VC>-DAY_26.
+      WA_SALDO_FINAL-DAY_27 = WA_SALDO_FINAL-DAY_27 + <FS_TOTAL_VC>-DAY_27.
+      WA_SALDO_FINAL-DAY_28 = WA_SALDO_FINAL-DAY_28 + <FS_TOTAL_VC>-DAY_28.
+      WA_SALDO_FINAL-DAY_29 = WA_SALDO_FINAL-DAY_29 + <FS_TOTAL_VC>-DAY_29.
+      WA_SALDO_FINAL-DAY_30 = WA_SALDO_FINAL-DAY_30 + <FS_TOTAL_VC>-DAY_30.
+      WA_SALDO_FINAL-DAY_31 = WA_SALDO_FINAL-DAY_31 + <FS_TOTAL_VC>-DAY_31.
+
+    ENDIF.
+  ENDLOOP.
+*  wa_saldo_final-day_01 = wa_saldo_final-day_01 + vg_saldo_inicial.
+*  wa_saldo_final-day_02 = wa_saldo_final-day_02 + wa_saldo_final-day_01.
+*  wa_saldo_final-day_03 = wa_saldo_final-day_03 + wa_saldo_final-day_02.
+*  wa_saldo_final-day_04 = wa_saldo_final-day_04 + wa_saldo_final-day_03.
+*  wa_saldo_final-day_05 = wa_saldo_final-day_05 + wa_saldo_final-day_04.
+*  wa_saldo_final-day_06 = wa_saldo_final-day_06 + wa_saldo_final-day_05.
+*  wa_saldo_final-day_07 = wa_saldo_final-day_07 + wa_saldo_final-day_06.
+*  wa_saldo_final-day_08 = wa_saldo_final-day_08 + wa_saldo_final-day_07.
+*  wa_saldo_final-day_09 = wa_saldo_final-day_09 + wa_saldo_final-day_08.
+*  wa_saldo_final-day_10 = wa_saldo_final-day_10 + wa_saldo_final-day_09.
+*  wa_saldo_final-day_11 = wa_saldo_final-day_11 + wa_saldo_final-day_10.
+*  wa_saldo_final-day_12 = wa_saldo_final-day_12 + wa_saldo_final-day_11.
+*  wa_saldo_final-day_13 = wa_saldo_final-day_13 + wa_saldo_final-day_12.
+*  wa_saldo_final-day_14 = wa_saldo_final-day_14 + wa_saldo_final-day_13.
+*  wa_saldo_final-day_15 = wa_saldo_final-day_15 + wa_saldo_final-day_14.
+*  wa_saldo_final-day_16 = wa_saldo_final-day_16 + wa_saldo_final-day_15.
+*  wa_saldo_final-day_17 = wa_saldo_final-day_17 + wa_saldo_final-day_16.
+*  wa_saldo_final-day_18 = wa_saldo_final-day_18 + wa_saldo_final-day_17.
+*  wa_saldo_final-day_19 = wa_saldo_final-day_19 + wa_saldo_final-day_18.
+*  wa_saldo_final-day_20 = wa_saldo_final-day_20 + wa_saldo_final-day_19.
+*  wa_saldo_final-day_21 = wa_saldo_final-day_21 + wa_saldo_final-day_20.
+*  wa_saldo_final-day_22 = wa_saldo_final-day_22 + wa_saldo_final-day_21.
+*  wa_saldo_final-day_23 = wa_saldo_final-day_23 + wa_saldo_final-day_22.
+*  wa_saldo_final-day_24 = wa_saldo_final-day_24 + wa_saldo_final-day_23.
+*  wa_saldo_final-day_25 = wa_saldo_final-day_25 + wa_saldo_final-day_24.
+*  wa_saldo_final-day_26 = wa_saldo_final-day_26 + wa_saldo_final-day_25.
+*  wa_saldo_final-day_27 = wa_saldo_final-day_27 + wa_saldo_final-day_26.
+*  wa_saldo_final-day_28 = wa_saldo_final-day_28 + wa_saldo_final-day_27.
+*  wa_saldo_final-day_29 = wa_saldo_final-day_29 + wa_saldo_final-day_28.
+*  wa_saldo_final-day_30 = wa_saldo_final-day_30 + wa_saldo_final-day_29.
+*  wa_saldo_final-day_31 = wa_saldo_final-day_31 + wa_saldo_final-day_30.
+
+ENDFORM.
+* RJF - Ini - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+*&---------------------------------------------------------------------*
+*&      Form  ADD_TYPE_LEVEL_XX
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_IT_NODE_KEY  text
+*      -->P_WA_SAIDA  text
+*      -->P_L_NVL1_KEY  text
+*----------------------------------------------------------------------*
+FORM ADD_TYPE_LEVEL_XX  TABLES IT_NODE_KEY
+                        USING  P_NIVEL       TYPE CHAR2
+                               P_SAIDA       TYPE TY_SAIDA
+                               P_RELAT_KEY   TYPE LVC_NKEY.
+
+  DATA: WA_TOT_FD  TYPE TY_SAIDA,
+        WA_TOT_XX  TYPE TY_SAIDA, " RJF
+        L_NVL2_KEY TYPE LVC_NKEY.
+
+
+  DATA: LV_TEXT_FOLDER(128).
+
+  LOOP AT GT_182 WHERE BUKRS = P_SAIDA-BUKRS
+                   AND COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA
+                   AND NIVEL(2) = P_NIVEL
+                   AND NIVEL_ANT IS INITIAL.
+
+    P_RELAT_KEY = GV_NODE_EMPRESA.
+    LV_TEXT_FOLDER = GT_182-NITXT.
+
+    CLEAR WA_TOT_FD.
+    PERFORM GET_TOTAL_XX USING    'P'
+                                  P_SAIDA
+                         CHANGING WA_TOT_FD.
+
+    PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                LV_TEXT_FOLDER
+                                ABAP_TRUE "Indica que é um Folder
+                                WA_TOT_FD
+                                '' "'@93@'
+                       CHANGING L_NVL2_KEY.
+
+    IT_NODE_KEY = L_NVL2_KEY.
+    GV_NODE_XX =  L_NVL2_KEY.
+    APPEND IT_NODE_KEY.
+
+    LOOP AT GT_182 INTO DATA(WA_PROX_NIVEL_182) WHERE NIVEL_ANT = GT_182-NIVEL
+                                                  AND BUKRS = P_SAIDA-BUKRS.
+
+      LV_TEXT_FOLDER = WA_PROX_NIVEL_182-NITXT.
+      P_RELAT_KEY = L_NVL2_KEY.
+
+*      CLEAR wa_tot_fd.
+*      PERFORM get_total_xx USING    ''
+*                                    p_saida
+*                           CHANGING wa_tot_fd.
+
+      PERFORM ADD_FILHOS_XX TABLES GT_182
+                            USING  WA_PROX_NIVEL_182
+                                   L_NVL2_KEY
+                            CHANGING WA_TOT_XX.
+
+
+      PERFORM ADD_LINE_TREE USING GV_NODE_XX
+                                  LV_TEXT_FOLDER
+                                  'X' "Indica que é um Folder
+                                  WA_TOT_XX
+                                  '' "'@93@'
+                         CHANGING L_NVL2_KEY.
+
+      IT_NODE_KEY = L_NVL2_KEY.
+      APPEND IT_NODE_KEY.
+
+      LOOP AT GT_182 INTO WA_PROX_NIVEL_182 WHERE NIVEL_ANT = WA_PROX_NIVEL_182-NIVEL
+                                              AND BUKRS = P_SAIDA-BUKRS.
+
+        LV_TEXT_FOLDER = WA_PROX_NIVEL_182-NITXT.
+        P_RELAT_KEY = L_NVL2_KEY.
+
+*        CLEAR wa_tot_fd.
+*        PERFORM get_total_xx USING    ''
+*                                      p_saida
+*                             CHANGING wa_tot_fd.
+
+
+        PERFORM ADD_FILHOS_XX TABLES GT_182
+                              USING  WA_PROX_NIVEL_182
+                                     L_NVL2_KEY
+                              CHANGING WA_TOT_XX.
+
+
+        PERFORM ADD_LINE_TREE USING P_RELAT_KEY
+                                    LV_TEXT_FOLDER
+                                    'X' "Indica que é um Folder
+                                    WA_TOT_XX
+                                    '' "'@93@'
+                           CHANGING L_NVL2_KEY.
+
+        IT_NODE_KEY = L_NVL2_KEY.
+        APPEND IT_NODE_KEY.
+
+      ENDLOOP.
+
+      PERFORM ADD_FILHOS_FD TABLES GT_182
+                          USING    WA_PROX_NIVEL_182
+                                   L_NVL2_KEY.
+
+    ENDLOOP.
+
+  ENDLOOP.
+ENDFORM.
+* RJF - Fim - 115538 CS2022000708 - Nova demanda melhoria fluxo caixa V.2
+*&---------------------------------------------------------------------*
+*&      Form  GET_TOTAL_XX
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_P_SAIDA  text
+*      <--P_WA_TOT_FD  text
+*----------------------------------------------------------------------*
+FORM GET_TOTAL_XX  USING    P_N     TYPE C
+                            P_SAIDA TYPE TY_SAIDA
+                   CHANGING P_SAIDA_RET TYPE TY_SAIDA.
+
+  DATA: VL_TOT_FD TYPE ZFIT0113-DMBTR,
+        LT_183X   TYPE TABLE OF ZFIT183.
+  DATA: WL_SAIDA TYPE TY_SAIDA.
+  DATA: LR_CODIGO_FLUXO TYPE RANGE OF NUM4.
+  WL_SAIDA-BUKRS = P_SAIDA-BUKRS.
+
+  DATA: BEGIN OF GT_0111_TOTAL OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+          DMBTR   TYPE ZFIT0111-DMBTR,
+          DMBE2   TYPE ZFIT0111-DMBE2,
+        END OF GT_0111_TOTAL.
+
+  DATA: BEGIN OF GT_0111_TOTAL_AUX OCCURS 0,
+          BUKRS   TYPE ZFIT0111-BUKRS,
+          DT_VCTO TYPE ZFIT0111-DT_VCTO,
+          DMBTR   TYPE ZFIT0111-DMBTR,
+          DMBE2   TYPE ZFIT0111-DMBE2,
+        END OF GT_0111_TOTAL_AUX.
+
+  SELECT * FROM ZFIT183
+    INTO TABLE @DATA(LT_183)
+    WHERE BUKRS         = @P_SAIDA-BUKRS
+      AND COD_ESTRUTURA = @P_SAIDA-COD_ESTRUTURA.
+
+  LOOP AT LT_183 ASSIGNING FIELD-SYMBOL(<FS>).
+    IF GT_182-NIVEL_ANT IS INITIAL AND P_N EQ 'P'.
+      IF <FS>-NIVEL(2) <> GT_182-NIVEL.
+        DELETE LT_183 INDEX SY-TABIX.
+      ENDIF.
+*      READ TABLE gt_182 INTO DATA(ws_182x) WITH KEY nivel = <fs>-nivel(2).
+*      IF sy-subrc IS INITIAL.
+*        APPEND <fs> TO lt_183x.
+*      ENDIF.
+**    ELSE.
+**      READ TABLE gt_182 INTO ws_182x WITH KEY nivel = <fs>-nivel(8).
+**      IF sy-subrc IS INITIAL.
+**        APPEND <fs> TO lt_183x.
+**      ENDIF.
+*      IF <fs>-nivel(8) <> gt_182-nivel.
+*        DELETE lt_183 INDEX sy-tabix.
+*      ENDIF.
+    ENDIF.
+  ENDLOOP.
+
+  IF P_N IS INITIAL.
+    FREE LT_183.
+  ENDIF.
+
+  IF SY-SUBRC = 0 AND LT_183[] IS NOT INITIAL.
+
+    LR_CODIGO_FLUXO = VALUE #( FOR LS_VALUE IN LT_183 ( SIGN = 'I'
+                                                      OPTION = 'EQ'
+                                                         LOW = LS_VALUE-CODIGO_FLUXO ) ).
+    "ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG
+    IF ( WA_DT_VERSAO IS INITIAL ) OR
+         ( WA_VERSAO    IS INITIAL ).
+
+      SELECT BUKRS, CODIGO, CLAS_FLX, DT_VCTO, DMBTR, DMBE2
+        INTO TABLE @DATA(LT_0111_RESUMO)
+        FROM ZFIT0111
+       WHERE BUKRS   EQ @P_SAIDA-BUKRS
+         AND CODIGO  IN @LR_CODIGO_FLUXO
+         AND DT_VCTO IN @S_ZFBDT
+         AND DT_BASE_VERSAO = @SY-DATUM
+         AND VERSAO = ( SELECT MAX( VERSAO )
+                        FROM ZFIT0111
+                        WHERE BUKRS = @P_SAIDA-BUKRS
+                          AND CODIGO IN @LR_CODIGO_FLUXO
+                          AND DT_BASE_VERSAO = @SY-DATUM
+                      ).
+
+      IF SY-SUBRC = 0.
+
+        SORT LT_0111_RESUMO BY BUKRS CODIGO DT_VCTO ASCENDING.
+        LOOP AT LT_0111_RESUMO ASSIGNING FIELD-SYMBOL(<FS_0111_RESUMO>).
+
+          IF <FS_0111_RESUMO>-CLAS_FLX = 'S'. "Negativo
+            <FS_0111_RESUMO>-DMBTR = <FS_0111_RESUMO>-DMBTR * -1.
+            <FS_0111_RESUMO>-DMBE2 = <FS_0111_RESUMO>-DMBE2 * -1.
+          ENDIF.
+
+        ENDLOOP.
+
+        MOVE-CORRESPONDING LT_0111_RESUMO[] TO GT_0111_TOTAL_AUX[].
+
+        LOOP AT GT_0111_TOTAL_AUX.
+          COLLECT GT_0111_TOTAL_AUX INTO GT_0111_TOTAL.
+        ENDLOOP.
+
+      ELSE.
+        CLEAR LT_0111_RESUMO[].
+      ENDIF.
+
+    ELSE.
+
+      SELECT BUKRS, CODIGO, CLAS_FLX, DT_VCTO, DMBTR, DMBE2
+     INTO TABLE @DATA(LT_0111_RESUMO1)
+     FROM ZFIT0111
+    WHERE BUKRS   EQ @P_SAIDA-BUKRS
+      AND CODIGO  IN @LR_CODIGO_FLUXO
+      AND DT_VCTO IN @S_ZFBDT
+      AND DT_BASE_VERSAO = @WA_DT_VERSAO
+      AND VERSAO = @WA_VERSAO.
+
+      IF SY-SUBRC = 0.
+
+        SORT LT_0111_RESUMO BY BUKRS CODIGO DT_VCTO ASCENDING.
+        LOOP AT LT_0111_RESUMO1 ASSIGNING FIELD-SYMBOL(<FS_0111_RESUMO1>).
+
+          IF <FS_0111_RESUMO1>-CLAS_FLX = 'S'. "Negativo
+            <FS_0111_RESUMO1>-DMBTR = <FS_0111_RESUMO1>-DMBTR * -1.
+            <FS_0111_RESUMO1>-DMBE2 = <FS_0111_RESUMO1>-DMBE2 * -1.
+          ENDIF.
+
+        ENDLOOP.
+
+        MOVE-CORRESPONDING LT_0111_RESUMO1[] TO GT_0111_TOTAL_AUX[].
+
+        LOOP AT GT_0111_TOTAL_AUX.
+          COLLECT GT_0111_TOTAL_AUX INTO GT_0111_TOTAL.
+        ENDLOOP.
+
+      ELSE.
+        CLEAR LT_0111_RESUMO1[].
+      ENDIF.
+
+    ENDIF. "ZFI Visualizar datas retroativas - ZFI0140 #124930 - BG
+
+
+  ENDIF.
+
+  CHECK GT_0111_TOTAL[] IS NOT INITIAL.
+  LOOP AT GT_0111_TOTAL.
+
+    IF P_INTER IS NOT INITIAL.
+      VL_TOT_FD = GT_0111_TOTAL-DMBTR.
+    ELSE.
+      VL_TOT_FD = GT_0111_TOTAL-DMBE2.
+    ENDIF.
+
+    PERFORM ATRIB_VLR_DIA USING GT_0111_TOTAL-DT_VCTO
+                                VL_TOT_FD
+                                WL_SAIDA.
+  ENDLOOP.
+
+  APPEND INITIAL LINE TO IT_TOTAL_VC ASSIGNING FIELD-SYMBOL(<FS_TOTAL_VC>).
+  MOVE WL_SAIDA TO <FS_TOTAL_VC>.
+  <FS_TOTAL_VC>-COD_ESTRUTURA = P_SAIDA-COD_ESTRUTURA.
+  <FS_TOTAL_VC>-DT_VCTO = GT_0111_TOTAL-DT_VCTO.
+
+  P_SAIDA_RET = WL_SAIDA.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  ADD_FILHOS_XX
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_GT_182  text
+*      -->P_WA_PROX_NIVEL_182  text
+*      -->P_L_NVL2_KEY  text
+*----------------------------------------------------------------------*
+FORM ADD_FILHOS_XX     TABLES P_GT_182           STRUCTURE ZFIT182
+                       USING  WA_PROX_NIVEL_182  STRUCTURE ZFIT182
+                              P_RELAT_KEY        TYPE LVC_NKEY
+                       CHANGING  WL_SAIDA_AUX    TYPE TY_SAIDA.
+
+  DATA: VL_LVC_NKEY  TYPE LVC_NKEY,
+        VL_NODE_TEXT TYPE LVC_VALUE,
+        VL_TOT_FD    TYPE DMBTR,
+*        wl_saida_aux TYPE ty_saida
+        C_FOLDER.
+
+  CLEAR: C_FOLDER.
+
+  FREE IT_SAL_TOT.
+
+  LOOP AT GT_183 WHERE BUKRS         = WA_PROX_NIVEL_182-BUKRS
+                   AND COD_ESTRUTURA = WA_PROX_NIVEL_182-COD_ESTRUTURA
+                   AND NIVEL(8)      = WA_PROX_NIVEL_182-NIVEL(8).
+
+    MOVE-CORRESPONDING GT_183 TO WL_SAIDA_AUX.
+    WL_SAIDA_AUX-CODIGO_FLUXO  = GT_183-CODIGO_FLUXO.
+    WL_SAIDA_AUX-DESCRICAO     = GT_183-DESCRICAO.
+
+    WL_SAIDA_AUX-NIVEL = 'X'.
+    CONCATENATE GT_183-CODIGO_FLUXO '-' GT_183-DESCRICAO INTO VL_NODE_TEXT SEPARATED BY SPACE.
+
+    CLEAR WL_SAIDA_AUX.
+    LOOP AT GT_0111 WHERE CODIGO = GT_183-CODIGO_FLUXO
+                      AND DT_BASE_VERSAO = SY-DATUM.
+
+      IF GT_0111-CLAS_FLX = 'S'. "Negativo
+        GT_0111-DMBTR = GT_0111-DMBTR * -1.
+        GT_0111-DMBE2 = GT_0111-DMBE2 * -1.
+      ENDIF.
+
+      IF P_INTER IS NOT INITIAL.
+        VL_TOT_FD = GT_0111-DMBTR.
+      ELSE.
+        VL_TOT_FD = GT_0111-DMBE2.
+      ENDIF.
+
+      PERFORM ATRIB_VLR_DIA USING GT_0111-DT_VCTO
+                                  VL_TOT_FD
+                                  WL_SAIDA_AUX.
+
+
+
+    ENDLOOP.
+
+    APPEND INITIAL LINE TO IT_SAL_TOT ASSIGNING FIELD-SYMBOL(<FS_SAL_TOT_FIN>).
+    MOVE WL_SAIDA_AUX TO <FS_SAL_TOT_FIN>.
+
+    CLEAR WL_SAIDA_AUX.
+    PERFORM UPDATE_SALDO_FT CHANGING WL_SAIDA_AUX.
+
+*
+*    PERFORM add_line_tree USING p_relat_key
+*                                vl_node_text
+*                                c_folder
+*                                wl_saida_aux
+*                                ''
+*                       CHANGING vl_lvc_nkey.
+
+
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  UPDATE_SALDO_FT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_WL_SAIDA_AUX  text
+*      <--P_WL_SAIDA_AUX  text
+*----------------------------------------------------------------------*
+FORM UPDATE_SALDO_FT CHANGING  WA_SALDO_FINAL TYPE TY_SAIDA.
+
+  LOOP AT IT_SAL_TOT ASSIGNING FIELD-SYMBOL(<FS_TOTAL_VC>). "WHERE bukrs = p_saida-bukrs
+    "AND   cod_estrutura = p_saida-cod_estrutura.
+    IF <FS_TOTAL_VC> IS ASSIGNED.
+
+      WA_SALDO_FINAL-BUKRS = <FS_TOTAL_VC>-BUKRS.
+      WA_SALDO_FINAL-COD_ESTRUTURA = <FS_TOTAL_VC>-COD_ESTRUTURA.
+
+      WA_SALDO_FINAL-DAY_01 = WA_SALDO_FINAL-DAY_01 + <FS_TOTAL_VC>-DAY_01.
+      WA_SALDO_FINAL-DAY_02 = WA_SALDO_FINAL-DAY_02 + <FS_TOTAL_VC>-DAY_02.
+      WA_SALDO_FINAL-DAY_03 = WA_SALDO_FINAL-DAY_03 + <FS_TOTAL_VC>-DAY_03.
+      WA_SALDO_FINAL-DAY_04 = WA_SALDO_FINAL-DAY_04 + <FS_TOTAL_VC>-DAY_04.
+      WA_SALDO_FINAL-DAY_05 = WA_SALDO_FINAL-DAY_05 + <FS_TOTAL_VC>-DAY_05.
+      WA_SALDO_FINAL-DAY_06 = WA_SALDO_FINAL-DAY_06 + <FS_TOTAL_VC>-DAY_06.
+      WA_SALDO_FINAL-DAY_07 = WA_SALDO_FINAL-DAY_07 + <FS_TOTAL_VC>-DAY_07.
+      WA_SALDO_FINAL-DAY_08 = WA_SALDO_FINAL-DAY_08 + <FS_TOTAL_VC>-DAY_08.
+      WA_SALDO_FINAL-DAY_09 = WA_SALDO_FINAL-DAY_09 + <FS_TOTAL_VC>-DAY_09.
+      WA_SALDO_FINAL-DAY_10 = WA_SALDO_FINAL-DAY_10 + <FS_TOTAL_VC>-DAY_10.
+      WA_SALDO_FINAL-DAY_11 = WA_SALDO_FINAL-DAY_11 + <FS_TOTAL_VC>-DAY_11.
+      WA_SALDO_FINAL-DAY_12 = WA_SALDO_FINAL-DAY_12 + <FS_TOTAL_VC>-DAY_12.
+      WA_SALDO_FINAL-DAY_13 = WA_SALDO_FINAL-DAY_13 + <FS_TOTAL_VC>-DAY_13.
+      WA_SALDO_FINAL-DAY_14 = WA_SALDO_FINAL-DAY_14 + <FS_TOTAL_VC>-DAY_14.
+      WA_SALDO_FINAL-DAY_15 = WA_SALDO_FINAL-DAY_15 + <FS_TOTAL_VC>-DAY_15.
+      WA_SALDO_FINAL-DAY_16 = WA_SALDO_FINAL-DAY_16 + <FS_TOTAL_VC>-DAY_16.
+      WA_SALDO_FINAL-DAY_17 = WA_SALDO_FINAL-DAY_17 + <FS_TOTAL_VC>-DAY_17.
+      WA_SALDO_FINAL-DAY_18 = WA_SALDO_FINAL-DAY_18 + <FS_TOTAL_VC>-DAY_18.
+      WA_SALDO_FINAL-DAY_19 = WA_SALDO_FINAL-DAY_19 + <FS_TOTAL_VC>-DAY_19.
+      WA_SALDO_FINAL-DAY_20 = WA_SALDO_FINAL-DAY_20 + <FS_TOTAL_VC>-DAY_20.
+      WA_SALDO_FINAL-DAY_21 = WA_SALDO_FINAL-DAY_21 + <FS_TOTAL_VC>-DAY_21.
+      WA_SALDO_FINAL-DAY_22 = WA_SALDO_FINAL-DAY_22 + <FS_TOTAL_VC>-DAY_22.
+      WA_SALDO_FINAL-DAY_23 = WA_SALDO_FINAL-DAY_23 + <FS_TOTAL_VC>-DAY_23.
+      WA_SALDO_FINAL-DAY_24 = WA_SALDO_FINAL-DAY_24 + <FS_TOTAL_VC>-DAY_24.
+      WA_SALDO_FINAL-DAY_25 = WA_SALDO_FINAL-DAY_25 + <FS_TOTAL_VC>-DAY_25.
+      WA_SALDO_FINAL-DAY_26 = WA_SALDO_FINAL-DAY_26 + <FS_TOTAL_VC>-DAY_26.
+      WA_SALDO_FINAL-DAY_27 = WA_SALDO_FINAL-DAY_27 + <FS_TOTAL_VC>-DAY_27.
+      WA_SALDO_FINAL-DAY_28 = WA_SALDO_FINAL-DAY_28 + <FS_TOTAL_VC>-DAY_28.
+      WA_SALDO_FINAL-DAY_29 = WA_SALDO_FINAL-DAY_29 + <FS_TOTAL_VC>-DAY_29.
+      WA_SALDO_FINAL-DAY_30 = WA_SALDO_FINAL-DAY_30 + <FS_TOTAL_VC>-DAY_30.
+      WA_SALDO_FINAL-DAY_31 = WA_SALDO_FINAL-DAY_31 + <FS_TOTAL_VC>-DAY_31.
+
+    ENDIF.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM PESQ_VERSAO  USING    VALUE(P_VERSAO).
+
+  "TYPES
+  TYPES: BEGIN OF TY_VERSAO,
+           "BUKRS           TYPE ZFIT0079-BUKRS,
+           "DT_BASE_VERSAO  TYPE ZFIT0079-DT_BASE_VERSAO,
+           VERSAO      TYPE ZFIT0111-VERSAO,
+           HORA_VERSAO TYPE ZFIT0111-HORA_VERSAO,
+         END OF TY_VERSAO.
+
+  DATA: LT_VERSAO TYPE TABLE OF TY_VERSAO,
+        LS_VERSAO TYPE TY_VERSAO,
+        LT_MAP    TYPE TABLE OF DSELC,
+        LS_MAP    TYPE DSELC,
+        LT_RETURN TYPE TABLE OF DDSHRETVAL,
+        LS_RETURN TYPE DDSHRETVAL,
+        LS_STABLE TYPE LVC_S_STBL.
+
+  IF WA_BUKRS_VERSAO IS INITIAL.
+    MESSAGE 'Selecione a Empresa!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_VERSAO EQ '1'.
+
+    CLEAR: WA_HORA_VERSAO, WA_VERSAO.
+
+    IF WA_DT_VERSAO IS INITIAL.
+      MESSAGE 'Selecione a data da Versão!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+    "LOAD F4 DATA
+    SELECT VERSAO HORA_VERSAO
+      INTO TABLE LT_VERSAO
+      FROM ZFIT0111
+     WHERE BUKRS          = WA_BUKRS_VERSAO
+       AND DT_BASE_VERSAO = WA_DT_VERSAO.
+
+  ELSE.
+    CLEAR: WA_HORA_VERSAO_VAR, WA_VERSAO_VAR.
+
+    IF WA_DT_VERSAO_VAR IS INITIAL.
+      MESSAGE 'Selecione a data da Versão!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+
+    "LOAD F4 DATA
+    SELECT VERSAO HORA_VERSAO
+      INTO TABLE LT_VERSAO
+      FROM ZFIT0111
+     WHERE BUKRS          = WA_BUKRS_VERSAO
+       AND DT_BASE_VERSAO = WA_DT_VERSAO_VAR.
+
+  ENDIF.
+
+  SORT LT_VERSAO BY VERSAO.
+  DELETE ADJACENT DUPLICATES FROM LT_VERSAO COMPARING VERSAO.
+
+  "SET RETURN FIELD
+  CLEAR LS_MAP.
+  LS_MAP-FLDNAME = 'F0001'.
+  LS_MAP-DYFLDNAME = 'VERSAO'.
+  APPEND LS_MAP TO LT_MAP.
+
+  "SET RETURN FIELD
+  CLEAR LS_MAP.
+  LS_MAP-FLDNAME = 'F0002'.
+  LS_MAP-DYFLDNAME = 'HORA_VERSAO'.
+  APPEND LS_MAP TO LT_MAP.
+
+
+  " CALL SEARCH HELP POPUP FUNCTION
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'VERSAO'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = LT_VERSAO
+      DYNPFLD_MAPPING = LT_MAP
+      RETURN_TAB      = LT_RETURN
+    EXCEPTIONS
+      PARAMETER_ERROR = 1
+      NO_VALUES_FOUND = 2
+      OTHERS          = 3.
+
+
+  " READ SELECTED F4 VALUE
+  READ TABLE LT_RETURN INTO LS_RETURN WITH KEY FIELDNAME = 'F0001'.
+  IF LS_RETURN IS NOT INITIAL.
+
+    IF P_VERSAO EQ '1'.
+      WA_VERSAO     = LS_RETURN-FIELDVAL.
+    ELSEIF P_VERSAO EQ '2'.
+      WA_VERSAO_VAR = LS_RETURN-FIELDVAL.
+    ENDIF.
+
+  ENDIF.
+
+  " READ SELECTED F4 VALUE
+  READ TABLE LT_RETURN INTO LS_RETURN WITH KEY FIELDNAME = 'F0002'.
+  IF LS_RETURN IS NOT INITIAL.
+
+    IF P_VERSAO EQ '1'.
+
+      WA_HORA_VERSAO     = LS_RETURN-FIELDVAL.
+
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = WA_HORA_VERSAO
+        IMPORTING
+          OUTPUT = WA_HORA_VERSAO.
+
+    ELSEIF P_VERSAO EQ '2'.
+      WA_HORA_VERSAO_VAR = LS_RETURN-FIELDVAL.
+
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = WA_HORA_VERSAO_VAR
+        IMPORTING
+          OUTPUT = WA_HORA_VERSAO_VAR.
+
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.
+
+FORM GET_LAST_VERSAO USING P_BUKRS P_MSG
+                  CHANGING P_DT_VERSAO
+                           P_HR_VERSAO
+                           P_VERSAO.
+
+  DATA: VL_MSG_1      TYPE STRING,
+        VL_MSG_2      TYPE STRING,
+        VL_MSG_EXIBIR TYPE STRING.
+
+  CLEAR: P_DT_VERSAO, P_HR_VERSAO, P_VERSAO.
+
+  SELECT MAX( DT_BASE_VERSAO )
+    INTO (P_DT_VERSAO)
+    FROM ZFIT0111
+   WHERE BUKRS = P_BUKRS
+     AND CX_INTERNACIONAL = P_INTER.
+
+  IF ( SY-SUBRC NE 0 ) OR
+     ( P_DT_VERSAO IS INITIAL ).
+
+    IF P_MSG IS NOT INITIAL.
+      VL_MSG_1 = P_BUKRS.
+      CONCATENATE 'Nenhuma versão de Processamento encontrada para a Empresa('VL_MSG_1')!'
+           INTO VL_MSG_EXIBIR SEPARATED BY SPACE.
+      MESSAGE VL_MSG_EXIBIR TYPE 'S'.
+    ENDIF.
+
+    RETURN.
+  ENDIF.
+
+  SELECT MAX( VERSAO )
+    INTO (P_VERSAO)
+    FROM ZFIT0111
+   WHERE BUKRS          = P_BUKRS
+     AND DT_BASE_VERSAO = P_DT_VERSAO
+     AND CX_INTERNACIONAL = P_INTER.
+
+  IF ( SY-SUBRC NE 0 ) OR
+     ( P_VERSAO    IS INITIAL ).
+
+    IF P_MSG IS NOT INITIAL.
+      VL_MSG_1 = P_BUKRS.
+      CONCATENATE 'Nenhuma versão de Processamento encontrada para a Empresa('VL_MSG_1')!'
+             INTO VL_MSG_EXIBIR SEPARATED BY SPACE.
+      MESSAGE VL_MSG_EXIBIR TYPE 'S'.
+    ENDIF.
+
+    RETURN.
+  ENDIF.
+
+  SELECT SINGLE HORA_VERSAO
+    INTO P_HR_VERSAO
+    FROM ZFIT0111
+   WHERE BUKRS          = P_BUKRS
+     AND DT_BASE_VERSAO = P_DT_VERSAO
+     AND VERSAO         = P_VERSAO
+     AND CX_INTERNACIONAL = P_INTER.
+
+  IF ( SY-SUBRC NE 0 ) OR
+     ( P_HR_VERSAO  IS INITIAL ).
+
+    IF P_MSG IS NOT INITIAL.
+      VL_MSG_1 = P_BUKRS.
+      CONCATENATE 'Nenhuma versão de Processamento encontrada para a Empresa('VL_MSG_1')!'
+             INTO VL_MSG_EXIBIR SEPARATED BY SPACE.
+      MESSAGE VL_MSG_EXIBIR TYPE 'S'.
+    ENDIF.
+
+    RETURN.
+  ENDIF.
+
+  IF ( P_DT_VERSAO IS INITIAL ) OR
+     ( P_HR_VERSAO IS INITIAL ) OR
+     ( P_VERSAO    IS INITIAL ).
+    CLEAR: P_DT_VERSAO, P_HR_VERSAO, P_VERSAO.
+  ENDIF.
+
+ENDFORM.

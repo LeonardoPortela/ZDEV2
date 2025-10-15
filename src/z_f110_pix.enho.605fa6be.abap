@@ -1,0 +1,36 @@
+"Name: \PR:RFFOBR_U\FO:DME_BRAZIL\SE:END\EI
+ENHANCEMENT 0 Z_F110_PIX.
+
+* "// Envia dados de Criação do PIX via API do ITAU - US-152654 WBARBOSA 20/01/2025
+*DATA: IT_REGUH TYPE TABLE OF REGUH.
+*DATA: IT_REGUP TYPE TABLE OF REGUP.
+*
+*IF T042Z-ZLSCH EQ ABAP_TRUE AND
+*  REGUH-XVORL NE ABAP_TRUE. "// Não Enviar Proposta
+*
+**"// Valida CNPJ e Usuario
+*  CALL METHOD ZCL_FI_UTILS=>CHECK_ACESSO
+*    EXPORTING
+*      I_CNPJ = J_1BWFIELD-CGC_NUMBER
+*    RECEIVING
+*      IS_OK  = DATA(IS_OK).
+*
+*  IF IS_OK IS NOT INITIAL.
+*    TRY.
+*        LOOP.
+*          CALL METHOD ZCL_FI_UTILS=>SEND_PIX_ITAU
+*            EXPORTING
+*              I_CNPJ  = J_1BWFIELD-CGC_NUMBER
+*              I_REGUP = REGUP
+*              I_REGUH = REGUH
+*              I_T012K = T012K.
+*        ENDLOOP.
+*      CATCH CX_ROOT INTO DATA(LS_ROOT).
+*        MESSAGE 'Houve algum problema na Execução da API PIX ITAU!'  TYPE 'S' .
+*    ENDTRY.
+*  ENDIF.
+*ENDIF.
+** "// Envia dados de Criação do PIX via API do ITAU - US-152654 WBARBOSA 20/01/2025
+
+
+ENDENHANCEMENT.

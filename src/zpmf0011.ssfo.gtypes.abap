@@ -1,0 +1,43 @@
+TYPES: BEGIN OF TY_ZPMR0008,
+         BUKRS    TYPE C LENGTH 50,
+         WERKS    TYPE C LENGTH 50,
+         EQUNR    TYPE EQUI-EQUNR,
+         AUART    TYPE CAUFV-AUART,
+         AUFNR    TYPE CAUFV-AUFNR,
+         TIDNR    TYPE EQUZ-TIDNR,
+         ERDAT    TYPE CAUFV-ERDAT,
+         IDAT1    TYPE CAUFV-IDAT1,
+         WARPL    TYPE MPLA-WARPL,
+         WPTXT    TYPE MPLA-WPTXT,
+         BAUTL    TYPE MPOS-BAUTL,
+         MAKTX    TYPE MAKT-MAKTX,
+         AUFPL    TYPE CAUFV-AUFPL,
+         APLZL    TYPE AFVC-APLZL,
+         LTXA1    TYPE AFVC-LTXA1,
+         LTXA2    TYPE AFVC-LTXA2,
+         GSTRP    TYPE CAUFV-GSTRP,
+         EQUNRDES TYPE CHAR50,
+       END OF TY_ZPMR0008,
+
+       BEGIN OF TY_ORDEM,
+         LINHA TYPE C LENGTH 16384,
+       END OF TY_ORDEM.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

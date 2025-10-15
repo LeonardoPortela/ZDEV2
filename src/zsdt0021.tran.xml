@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZSDT0021</TCODE>
+    <PGMNA>SAPMZENTREMESSA</PGMNA>
+    <DYPNO>1000</DYPNO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZSDT0021</TCODE>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZSDT0021</TCODE>
+    <TTEXT>Entrada de remessa p/ processamento</TTEXT>
+   </TSTCT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

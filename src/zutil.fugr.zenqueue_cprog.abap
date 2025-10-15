@@ -1,0 +1,47 @@
+FUNCTION ZENQUEUE_CPROG.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(MODE) TYPE  ENQMODE DEFAULT 'X'
+*"     REFERENCE(MANDT) TYPE  MANDT DEFAULT SY-MANDT
+*"     REFERENCE(CPROG) TYPE  SYST_CPROG
+*"     REFERENCE(_SCOPE) DEFAULT '2'
+*"     REFERENCE(_WAIT) DEFAULT SPACE
+*"     REFERENCE(_COLLECT) TYPE  DDENQCOLL DEFAULT SPACE
+*"  EXCEPTIONS
+*"      FOREIGN_LOCK
+*"      SYSTEM_FAILURE
+*"----------------------------------------------------------------------
+
+  DATA: __SEQTA_TAB TYPE SEQTA OCCURS 01 WITH HEADER LINE,
+        __SCOPE     TYPE DDENQSCOPE,
+        __WAIT      TYPE DDENQWAIT.
+
+  __WAIT = _WAIT.
+  __SCOPE = _SCOPE.
+
+  DATA: BEGIN OF %A_CPROG,
+          MANDT    TYPE SY-MANDT,
+          CPROG TYPE SYST_CPROG,
+        END OF %A_CPROG.
+
+  CALL 'C_ENQ_WILDCARD' ID 'HEX0' FIELD %A_CPROG.
+
+  MOVE: CPROG TO %A_CPROG-CPROG.
+
+  IF NOT MANDT IS INITIAL.
+    MOVE MANDT TO: %A_CPROG-MANDT.
+  ENDIF.
+
+* Preencher tab.bloqueio:
+  __SEQTA_TAB-GNAME = 'SYCPROG'.
+  __SEQTA_TAB-GMODE = MODE.
+  __SEQTA_TAB-GARG = %A_CPROG.
+  APPEND __SEQTA_TAB.
+
+* Fixar bloqueio:
+  PERFORM SEND_ENQUEUE(SAPLSENA)
+   TABLES __SEQTA_TAB
+    USING '1' __SCOPE __WAIT ' ' 'ESYCPROG' _COLLECT.
+
+ENDFUNCTION.

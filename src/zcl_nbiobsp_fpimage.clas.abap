@@ -1,0 +1,393 @@
+class ZCL_NBIOBSP_FPIMAGE definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_NBIOBSP_FPIMAGE .
+
+  methods CONSTRUCTOR
+    importing
+      !I_OLE_FPIMAGE type OLE2_OBJECT
+    raising
+      ZCX_NBIOBSP .
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL_NBIOBSP_FPIMAGE IMPLEMENTATION.
+
+
+  METHOD CONSTRUCTOR.
+
+    IF I_OLE_FPIMAGE IS INITIAL.
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGID  = ZCX_NBIOBSP=>ZCX_REF_OBJ_OLE_FPIMAGE-MSGID
+                            MSGNO  = ZCX_NBIOBSP=>ZCX_REF_OBJ_OLE_FPIMAGE-MSGNO )
+          MSGID  = ZCX_NBIOBSP=>ZCX_REF_OBJ_OLE_FPIMAGE-MSGID
+          MSGNO  = ZCX_NBIOBSP=>ZCX_REF_OBJ_OLE_FPIMAGE-MSGNO
+          MSGTY  = 'E'.
+    ENDIF.
+
+    ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE = I_OLE_FPIMAGE.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_NBIOBSP_FPIMAGE~CONVERTRAWTOJPG.
+
+    DATA: LC_IMAGEWIDTH  TYPE I,
+          LC_IMAGEHEIGHT TYPE I.
+
+    BREAK-POINT.
+
+    R_FPIMAGE = ME->ZIF_NBIOBSP_FPIMAGE~EXPORT( )->GET_RAWDATA( ).
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'ImageWidth'  = LC_IMAGEWIDTH.
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'ImageHeight' = LC_IMAGEHEIGHT.
+
+    CHECK 1 EQ 1.
+
+    CALL METHOD OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'ConvertRawToJpg' = E_JPEG
+      EXPORTING
+        #1 = LC_IMAGEWIDTH
+        #2 = LC_IMAGEHEIGHT
+        #3 = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+        #4 = 100.
+
+    IF ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORCODE( )->ERRORCODE IS NOT INITIAL.
+
+      ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORDESCRIPTION( ).
+
+      SY-MSGV2 = CONV #( ME->ZIF_NBIOBSP_FPIMAGE~ERRORCODE ).
+      CONDENSE SY-MSGV2 NO-GAPS.
+
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+                            MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+                            ATTR1  = 'ZIF_NBIOBSP_FPIMAGE~CONVERTRAWTOJPG'
+                            ATTR2  = CONV #( SY-MSGV2 )
+                            ATTR3  = ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION )
+          MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+          MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = 'ZIF_NBIOBSP_FPIMAGE~CONVERTRAWTOJPG'
+          MSGV2  = SY-MSGV2
+          MSGV3  = CONV #( ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  method ZIF_NBIOBSP_FPIMAGE~EXPORT.
+
+    R_FPIMAGE = ME.
+
+    CALL METHOD OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'Export'.
+
+    IF ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORCODE( )->ERRORCODE IS NOT INITIAL.
+
+      ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORDESCRIPTION( ).
+
+      SY-MSGV2 = CONV #( ME->ZIF_NBIOBSP_FPIMAGE~ERRORCODE ).
+      CONDENSE SY-MSGV2 NO-GAPS.
+
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+                            MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+                            ATTR1  = 'ZIF_NBIOBSP_FPIMAGE~EXPORT'
+                            ATTR2  = CONV #( SY-MSGV2 )
+                            ATTR3  = ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION )
+          MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+          MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = 'ZIF_NBIOBSP_FPIMAGE~EXPORT'
+          MSGV2  = SY-MSGV2
+          MSGV3  = CONV #( ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION ).
+    ENDIF.
+
+  endmethod.
+
+
+  method ZIF_NBIOBSP_FPIMAGE~GET_ERRORCODE.
+
+    R_FPIMAGE = ME.
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'ErrorCode' = ME->ZIF_NBIOBSP_FPIMAGE~ERRORCODE.
+    E_ERRORCODE = ME->ZIF_NBIOBSP_FPIMAGE~ERRORCODE.
+
+  endmethod.
+
+
+  METHOD ZIF_NBIOBSP_FPIMAGE~GET_ERRORDESCRIPTION.
+
+    R_FPIMAGE = ME.
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'ErrorDescription' = ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION.
+    E_ERRORDESCRIPTION = ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_NBIOBSP_FPIMAGE~GET_RAWDATA.
+
+    DATA: LC_PROPERTY TYPE C LENGTH 30.
+
+    R_FPIMAGE = ME->ZIF_NBIOBSP_FPIMAGE~EXPORT( ).
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData[0;0]' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA.
+
+    LC_PROPERTY = 'RawData["0","0"]'.
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData["0","0"]' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+      EXPORTING #1 = 0
+                #2 = 0.
+
+    LC_PROPERTY = 'RawData["0","0"]'.
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData["0";"0"]' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+      EXPORTING #1 = 0
+                #2 = 0.
+
+    LC_PROPERTY = 'RawData["0","0"]'.
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData(0,0)' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+      EXPORTING #1 = 0
+                #2 = 0.
+
+    LC_PROPERTY = 'RawData["0","0"]'.
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData(0)' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+      EXPORTING #1 = 0
+                #2 = 0.
+
+    LC_PROPERTY = 'RawData["0","0"]'.
+
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'RawData("0","0")' = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA
+      EXPORTING #1 = 0
+                #2 = 0.
+
+    E_RAWDATA = ME->ZIF_NBIOBSP_FPIMAGE~RAWDATA.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_NBIOBSP_FPIMAGE~GET_TOTALFINGERCOUNT.
+
+    R_FPIMAGE = ME.
+    GET PROPERTY OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'TotalFingerCount' = ME->ZIF_NBIOBSP_FPIMAGE~TOTALFINGERCOUNT.
+    E_TOTALFINGERCOUNT = ME->ZIF_NBIOBSP_FPIMAGE~TOTALFINGERCOUNT.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_NBIOBSP_FPIMAGE~SAVE.
+
+    DATA: XLINE TYPE X.
+    DATA : T_FILE LIKE TABLE OF XLINE.
+
+    DATA: LC_NAME_ARQUIVO TYPE STRING,
+          LC_FINGER       TYPE I,
+          LC_RC	          TYPE I.
+
+    DATA: FILELENGTH TYPE I,
+          HEADER     TYPE XSTRING.
+
+    DATA: IT_TABELA TYPE TABLE OF ZDE_LINHA.
+
+    R_FPIMAGE = ME->ZIF_NBIOBSP_FPIMAGE~EXPORT( ).
+
+    DO ME->ZIF_NBIOBSP_FPIMAGE~GET_TOTALFINGERCOUNT( )->TOTALFINGERCOUNT TIMES.
+      LC_FINGER = SY-INDEX - 1.
+      CASE I_NIMAGETYPE.
+        WHEN ZIF_NBIOBSP_FPIMAGE=>ST_NBIOAPI_IMG_TYPE_BMP.
+          LC_NAME_ARQUIVO = I_BSZIMGFILEPATH && '_' && LC_FINGER && '_0' && '.bmp' .
+        WHEN ZIF_NBIOBSP_FPIMAGE=>ST_NBIOAPI_IMG_TYPE_JPG.
+          LC_NAME_ARQUIVO = I_BSZIMGFILEPATH && '_' && LC_FINGER && '_0' && '.jpeg' .
+      ENDCASE.
+
+      CL_GUI_FRONTEND_SERVICES=>FILE_EXIST(
+        EXPORTING
+          FILE                 = LC_NAME_ARQUIVO
+        RECEIVING
+          RESULT               = DATA(E_EXISTE)
+        EXCEPTIONS
+          CNTL_ERROR           = 1
+          ERROR_NO_GUI         = 2
+          WRONG_PARAMETER      = 3
+          NOT_SUPPORTED_BY_GUI = 4
+          OTHERS               = 5
+      ).
+
+      IF SY-SUBRC IS NOT INITIAL.
+        RAISE EXCEPTION TYPE ZCX_NBIOBSP
+          EXPORTING
+            TEXTID = VALUE #( MSGNO  = SY-MSGNO
+                              MSGID  = SY-MSGID
+                              ATTR1  = CONV #( SY-MSGV1 )
+                              ATTR2  = CONV #( SY-MSGV2 )
+                              ATTR3  = CONV #( SY-MSGV3 )
+                              ATTR4  = CONV #( SY-MSGV4 ) )
+            MSGID  = SY-MSGID
+            MSGNO  = SY-MSGNO
+            MSGTY  = SY-MSGTY
+            MSGV1  = SY-MSGV1
+            MSGV2  = SY-MSGV2
+            MSGV3  = SY-MSGV3
+            MSGV4  = SY-MSGV4.
+      ENDIF.
+
+      IF E_EXISTE EQ ABAP_TRUE.
+
+        CL_GUI_FRONTEND_SERVICES=>FILE_DELETE( EXPORTING FILENAME = LC_NAME_ARQUIVO CHANGING RC = LC_RC
+          EXCEPTIONS
+            FILE_DELETE_FAILED   = 1
+            CNTL_ERROR           = 2
+            ERROR_NO_GUI         = 3
+            FILE_NOT_FOUND       = 4
+            ACCESS_DENIED        = 5
+            UNKNOWN_ERROR        = 6
+            NOT_SUPPORTED_BY_GUI = 7
+            WRONG_PARAMETER      = 8
+            OTHERS               = 9 ).
+
+        IF SY-SUBRC IS NOT INITIAL.
+          RAISE EXCEPTION TYPE ZCX_NBIOBSP
+            EXPORTING
+              TEXTID = VALUE #( MSGNO  = SY-MSGNO
+                                MSGID  = SY-MSGID
+                                ATTR1  = CONV #( SY-MSGV1 )
+                                ATTR2  = CONV #( SY-MSGV2 )
+                                ATTR3  = CONV #( SY-MSGV3 )
+                                ATTR4  = CONV #( SY-MSGV4 ) )
+              MSGID  = SY-MSGID
+              MSGNO  = SY-MSGNO
+              MSGTY  = SY-MSGTY
+              MSGV1  = SY-MSGV1
+              MSGV2  = SY-MSGV2
+              MSGV3  = SY-MSGV3
+              MSGV4  = SY-MSGV4.
+        ENDIF.
+
+      ENDIF.
+
+      CALL METHOD OF ME->ZIF_NBIOBSP_FPIMAGE~FPIMAGE 'Save'
+        EXPORTING
+          #1 = LC_NAME_ARQUIVO
+          #2 = I_NIMAGETYPE
+          #3 = I_NFINGERID
+          #4 = I_NSAMPLENUMBER.
+    ENDDO.
+
+    CL_GUI_FRONTEND_SERVICES=>GUI_UPLOAD(
+      EXPORTING
+        FILENAME                = LC_NAME_ARQUIVO
+        FILETYPE                = 'BIN'
+      IMPORTING
+        FILELENGTH              = FILELENGTH
+        HEADER                  = HEADER
+      CHANGING
+        DATA_TAB                = T_FILE
+      EXCEPTIONS
+        FILE_OPEN_ERROR         = 1
+        FILE_READ_ERROR         = 2
+        NO_BATCH                = 3
+        GUI_REFUSE_FILETRANSFER = 4
+        INVALID_TYPE            = 5
+        NO_AUTHORITY            = 6
+        UNKNOWN_ERROR           = 7
+        BAD_DATA_FORMAT         = 8
+        HEADER_NOT_ALLOWED      = 9
+        SEPARATOR_NOT_ALLOWED   = 10
+        HEADER_TOO_LONG         = 11
+        UNKNOWN_DP_ERROR        = 12
+        ACCESS_DENIED           = 13
+        DP_OUT_OF_MEMORY        = 14
+        DISK_FULL               = 15
+        DP_TIMEOUT              = 16
+        NOT_SUPPORTED_BY_GUI    = 17
+        ERROR_NO_GUI            = 18
+        OTHERS                  = 19 ).
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGNO  = SY-MSGNO
+                            MSGID  = SY-MSGID
+                            ATTR1  = CONV #( SY-MSGV1 )
+                            ATTR2  = CONV #( SY-MSGV2 )
+                            ATTR3  = CONV #( SY-MSGV3 )
+                            ATTR4  = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = SY-MSGTY
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+    CALL FUNCTION 'SCMS_BINARY_TO_XSTRING'
+      EXPORTING
+        INPUT_LENGTH = FILELENGTH
+      IMPORTING
+        BUFFER       = E_IMAGE
+      TABLES
+        BINARY_TAB   = T_FILE
+      EXCEPTIONS
+        FAILED       = 1
+        OTHERS       = 2.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGNO  = SY-MSGNO
+                            MSGID  = SY-MSGID
+                            ATTR1  = CONV #( SY-MSGV1 )
+                            ATTR2  = CONV #( SY-MSGV2 )
+                            ATTR3  = CONV #( SY-MSGV3 )
+                            ATTR4  = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = SY-MSGTY
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+    CALL FUNCTION 'POC_HR_KR_XSTRING_TO_STRING'
+      EXPORTING
+        IN_XSTRING = E_IMAGE
+      IMPORTING
+        OUT_STRING = E_IMAGE_STRING.
+
+    IF ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORCODE( )->ERRORCODE IS NOT INITIAL.
+
+      ME->ZIF_NBIOBSP_FPIMAGE~GET_ERRORDESCRIPTION( ).
+
+      SY-MSGV2 = ME->ZIF_NBIOBSP_FPIMAGE~ERRORCODE.
+      CONDENSE SY-MSGV2 NO-GAPS.
+
+      RAISE EXCEPTION TYPE ZCX_NBIOBSP
+        EXPORTING
+          TEXTID = VALUE #( MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+                            MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+                            ATTR1  = 'ZIF_NBIOBSP_FPIMAGE~SAVE'
+                            ATTR2  = CONV #( SY-MSGV2 )
+                            ATTR3  = ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION )
+          MSGID  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGID
+          MSGNO  = ZCX_NBIOBSP=>ZCX_ERRO_METODO-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = 'ZIF_NBIOBSP_FPIMAGE~SAVE'
+          MSGV2  = SY-MSGV2
+          MSGV3  = CONV #( ME->ZIF_NBIOBSP_FPIMAGE~ERRORDESCRIPTION ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.

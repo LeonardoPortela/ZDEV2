@@ -1,0 +1,10 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE inicializa_log_700.
+
+* MODULE STATUS_700.
+*
+PROCESS AFTER INPUT.
+
+* MODULE obtem_log_container_700.

@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE: pbo_0710,
+          create_obj_0710.
+*
+PROCESS AFTER INPUT.
+  MODULE pai_0710.

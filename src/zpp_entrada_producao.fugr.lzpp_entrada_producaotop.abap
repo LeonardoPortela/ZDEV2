@@ -1,0 +1,3 @@
+FUNCTION-POOL ZPP_ENTRADA_PRODUCAO.         "MESSAGE-ID ..
+
+* INCLUDE LZPP_ENTRADA_PRODUCAOD...          " Local class definition

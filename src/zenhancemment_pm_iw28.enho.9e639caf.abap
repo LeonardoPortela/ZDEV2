@@ -1,0 +1,17 @@
+"Name: \PR:RIQMEL20\FO:SELECTION_L\SE:END\EI
+ENHANCEMENT 0 ZENHANCEMMENT_PM_IW28.
+**Inicio USER STORY 96088 / Anderson Oenning.
+
+*Passar valor para estrutura da ALV IW38.
+  LOOP AT object_tab ASSIGNING FIELD-SYMBOL(<WS_OB_TAB>).
+  IF <WS_OB_TAB>-STRMN IS NOT INITIAL and <WS_OB_TAB>-LTRMN IS NOT INITIAL.
+  CALL FUNCTION 'ZPM_CAL_DATE_PLAN'
+    EXPORTING
+      i_date_inicio       = <WS_OB_TAB>-STRMN
+      i_date_fim          = <WS_OB_TAB>-LTRMN
+   IMPORTING
+     E_STATUS            = <WS_OB_TAB>-ZZSTATUS.
+  ENDIF.
+  ENDLOOP.
+
+ENDENHANCEMENT.

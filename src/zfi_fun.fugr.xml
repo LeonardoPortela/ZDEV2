@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Funções diversas de FI</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFI_FUNTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFI_FUN</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_FI_GRAVA_TABELAZ_F110</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>LAUFD</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZFIT0006-LAUFD</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>LAUFI</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZFIT0006-LAUFI</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>LAUFD</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>LAUFI</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>Z_FI_START_RFC_AP_AR2</FUNCNAME>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

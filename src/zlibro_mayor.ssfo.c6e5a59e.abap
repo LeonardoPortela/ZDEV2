@@ -1,0 +1,23 @@
+*BREAK-POINT.
+WG_TOTAL_DEBITOS = ( WG_TOTAL_DEBITOS + WG_SAIDA-DEBITOS ) * 100 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

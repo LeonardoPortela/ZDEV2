@@ -1,0 +1,37 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="INVOICE" type="ddic:ZFIT_VIP_INVOICE"/>
+  <tt:template>
+    <invoice>
+      <status tt:value-ref=".INVOICE.STATUS"/>
+      <transNo tt:value-ref=".INVOICE.TRANSNO"/>
+      <vendorName tt:value-ref=".INVOICE.VENDORNAME"/>
+      <vendorExternalRef tt:value-ref=".INVOICE.VENDOREXTERNALREF"/>
+      <entryDate tt:value-ref=".INVOICE.ENTRYDATE"/>
+      <invoiceNo tt:value-ref=".INVOICE.INVOICENO"/>
+      <invoiceDate tt:value-ref=".INVOICE.INVOICEDATE"/>
+      <actDate tt:value-ref=".INVOICE.ACTDATE"/>
+      <dueDate tt:value-ref=".INVOICE.DUEDATE"/>
+      <exchangeRateDate tt:value-ref=".INVOICE.EXCHANGERATEDATE"/>
+      <exchangeRate tt:value-ref=".INVOICE.EXCHANGERATE"/>
+      <oprBillSource tt:value-ref=".INVOICE.OPRBILLSOURCE"/>
+      <currencyAmount tt:value-ref=".INVOICE.CURRENCYAMOUNT"/>
+      <currency tt:value-ref=".INVOICE.CURRENCY"/>
+      <baseCurrencyAmount tt:value-ref=".INVOICE.BASECURRENCYAMOUNT"/>
+      <tt:loop ref=".INVOICE.INVOICEDETAILS">
+        <invoiceDetails>
+          <transType tt:value-ref="TRANSTYPE"/>
+          <companyCode tt:value-ref="COMPANYCODE"/>
+          <oprBillCode tt:value-ref="OPRBILLCODE"/>
+          <lobCode tt:value-ref="LOBCODE"/>
+          <ledgerCode tt:value-ref="LEDGERCODE"/>
+          <aparCode tt:value-ref="APARCODE"/>
+          <currencyAmount tt:value-ref="CURRENCYAMOUNT"/>
+          <baseCurrencyAmount tt:value-ref="BASECURRENCYAMOUNT"/>
+          <voyageNo tt:value-ref="VOYAGENO"/>
+          <vesselCode tt:value-ref="VESSELCODE"/>
+        </invoiceDetails>
+      </tt:loop>
+    </invoice>
+  </tt:template>
+</tt:transform>

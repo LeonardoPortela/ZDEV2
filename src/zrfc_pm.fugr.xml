@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo de função para RFC&apos;s PM</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZRFC_PMTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZRFC_PM</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_GET_MEDIA_CONSUMO_FROTAS</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>ET_ZPMT0067</PARAMETER>
+       <DBSTRUCT>ZPMT0067</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>ET_ZPMT0067</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

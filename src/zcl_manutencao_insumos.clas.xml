@@ -1,0 +1,2093 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MANUTENCAO_INSUMOS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <CLSSHAREDMEMORY>X</CLSSHAREDMEMORY>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Itinerário Existente, Deseja Continuar!</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Texto para Ordem de Venda</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Existem campos incompletos na OV:</ENTRY>
+     <LENGTH>66</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Nota de cabeçalho 1</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Quantidade Solicitada é Superior ao Saldo!</ENTRY>
+     <LENGTH>84</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Quantidade Solicitada é Superior a Quantidade Embarcado!</ENTRY>
+     <LENGTH>122</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Numero da Solicitação!</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>É Obrigatorio o preenchimento da Sequência da Solicitação!</ENTRY>
+     <LENGTH>116</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>009</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Centro!</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>010</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Material!</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>011</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Deposito!</ENTRY>
+     <LENGTH>84</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>012</KEY>
+     <ENTRY>É Obrigatorio o preenchimento da Quantidade!</ENTRY>
+     <LENGTH>88</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>013</KEY>
+     <ENTRY>Tipo de OV não permitida!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>014</KEY>
+     <ENTRY>O.V é um campo Obrigatório!</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>015</KEY>
+     <ENTRY>Item da O.V é um campo Obrigatório!</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>016</KEY>
+     <ENTRY>Material é um campo Obrigatório!</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>017</KEY>
+     <ENTRY>Cliente é um campo Obrigatório!</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>018</KEY>
+     <ENTRY>A Quantidade é um campo Obrigatório!</ENTRY>
+     <LENGTH>72</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>019</KEY>
+     <ENTRY>Cliente não cadastrado!</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>020</KEY>
+     <ENTRY>Rota do Local de Recebimento é Obrigatório!</ENTRY>
+     <LENGTH>100</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>021</KEY>
+     <ENTRY>Rota do Ponto de Coleta é Obrigatório!</ENTRY>
+     <LENGTH>76</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>022</KEY>
+     <ENTRY>********************************#INICIO#*********************************</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>023</KEY>
+     <ENTRY>********************************#  FIM  #*********************************</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>024</KEY>
+     <ENTRY>O.Vs com Valores divergente com o Simulador!</ENTRY>
+     <LENGTH>88</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>025</KEY>
+     <ENTRY>Itinerário Existente, Deseja Continuar!</ENTRY>
+     <LENGTH>78</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>026</KEY>
+     <ENTRY>A troca de Centro Fornecedor Será Aplicado em Todos os Itens da OV! Deseja Continuar?</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>027</KEY>
+     <ENTRY>Existe Desconto Absoluto NÃO Agregado NO Simulador:</ENTRY>
+     <LENGTH>102</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E01</KEY>
+     <ENTRY>Informe a quantidade a ser trocada</ENTRY>
+     <LENGTH>68</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E02</KEY>
+     <ENTRY>Informe material para substituir</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E03</KEY>
+     <ENTRY>Informe a quantidade a ser substituída.</ENTRY>
+     <LENGTH>78</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E04</KEY>
+     <ENTRY>O campo Deposito é Obrigatório!</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E05</KEY>
+     <ENTRY>Material não expandido para o Depósito informado!</ENTRY>
+     <LENGTH>98</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E06</KEY>
+     <ENTRY>Para o tipo de ordem ZRFU, o grupo de mercadorias deve ser o mesmo na troca</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E07</KEY>
+     <ENTRY>Para o tipo de ordem</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E08</KEY>
+     <ENTRY>o centro deve ser o mesmo na troca.</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E09</KEY>
+     <ENTRY>o incoterms deve ser o mesmo na troca.</ENTRY>
+     <LENGTH>76</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E10</KEY>
+     <ENTRY>não pode ser diferente</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E11</KEY>
+     <ENTRY>Não é permitido criar mais de um item do mesmo material</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E12</KEY>
+     <ENTRY>Não existe Itinerário para</ENTRY>
+     <LENGTH>52</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E13</KEY>
+     <ENTRY>Ação Cancelada, O.V Existe Faturamento e Desconto Absoluto!</ENTRY>
+     <LENGTH>104</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ADITIVOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BEHAVE_WHEN_ERROR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BUSINESS_EX</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Bapistructure of VBKD with english field names</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CATEGORIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Ação Executada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CH_REFERENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DADOS_TRATADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabel itens OV selecionadas para transferência</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DESCONTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante de condição</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_EXTENSIONIN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ctg.tabela para BAPIPAREX</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ITEM_DISTRIB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item Distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MANUTENCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção de Ordem de Venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_NOVA_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ORDER_TEXT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela da categoria de linha BAPISDTEXT</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PARTNERS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campos de comunicação: parceiro doc.SD: WWW</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PONTO_COLETA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PRICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante de condição</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SALES_HEADER_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campos de comunicação: cabeçalho doc.SD</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SELECAO_87</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura da ALV da ZSDT0087</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TCODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TROCA_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabela de Troca de Materiais Add</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TROCA_OLD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabela Troca de Material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAK_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAP_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBELN_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBELN_OLD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_CREATE_ITINERARIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chama a Transação de Criação de Itinerario</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_ORDER_CHANGE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Atualizar Ordem de Venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_ORDER_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar Ordem de Venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CANCEL_APROVADORES_EMBARQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cancela Aprovadores Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_APROVADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Atualiza os Valores ou Marca como Eliminado o Item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_DISTRIBUIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Atualiza os Valores ou Atualiza o Status da Distribução</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_CADASTRO_FORN_SISDEV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica cadastro SISDEV do cliente/fornecedor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_DADOS_BACKGROUND</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Dados Vindo da Transação &quot;ZSDT0081&quot;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_DADOS_DESMEMBRAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica dados Do Desmembramento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_DADOS_INCOMPLETOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Dados Incompletos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_DADOS_TROCA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica dados da Troca</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_MATERIAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_MATERIAL_ZFER</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Material ZFER</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_NOVA_OK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se Cria uma Nova OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_NOVA_OV_81</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se Cria uma Nova OV, Item ou Agrega</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_CLI_APROVADORES_EMBARQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Cliente Origem e Destino do mesmo CPF e CNPJ Raiz</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_CRIACAO_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se a Ordem de Venda Existe na Tabela.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa se existe Desconto para ser aplicado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_FATURADO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica o Desconto Absoluto e se esta Faturado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa se exsite diferença nos valores entre o OLD e NEW</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_DESC_APLICADO_SIMULADOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se O desconto ABS foi aplicado no Simulador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Check e Retorna a Divergencia de Vls entre OVs e Simulador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_FATURAMENTO_SIMULADOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se existe uma O.V no Simulador com Faturamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_ID_PROPRIEDADE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica o de/Para da Rota com o ID propriedade</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_LATITUDE_LONGITUDE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se Existe Latitude e Longitude</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_LIMITE_QUANTIDADE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Check de Limite de Quantidade</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_OV_DISTRIBUIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica a Solicitação Distribuida</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_OV_SOLICITADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem de Venda foi Solicitada?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Qual OV tem o Maior Valor para aplicar o DESC ABS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_REGRA_PROPORCIONAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se a Quantidade é proporcional ao Material aplicado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_SOLICITACAO_EM_CARGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Dados em Carga</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHK_USER_EXCECAO_PROPORCIONAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Veriifca se o Usuario esta na Exceção de Proporcionalidade</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLEAR_ATRIBUTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpa os dados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DADOSGERAIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mudança de Dados Gerais</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DESMEMBRAMENTO_DEVOLUCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Desmembramento de Devolução</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DESMEMBRAMENTO_MASSA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Desmembramento de OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXIBE_MENSAGENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exibe Mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_DADOS_CHANGE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Armazena os dados para realizar a ação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_DADOS_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Armazena os dados para realizar a ação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_DELETE_ORDEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Deletar a OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche Dados de Desmembramento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_OLD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche Dados de Desmembramento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_ORDEM_CHANGE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche os dados para BAPI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche os dados para BAPI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_TROCA_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche Dados da Troca</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_TROCA_OLD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche Dados da Troca</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica o Preço Cadastrado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera Desconto Absoluto aplicado pelo usuario</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DESC_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Desconto Absoluto</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_OV_CH_REFERENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a OV Criada.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PC_VIA_ROTEIRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera Ponto de Coleta pela Rota</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PRECO_LIQUIDO_41</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Preço Liquido da ZSDT0044 no Item do Simulador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PROPORCIONALIDADE_MATERIAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Valor Proporcionalidade do Material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_QUANTIDADE_DEVOLVIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Quantidade Devolvida da OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_QUANTIDADE_DISTRIBUIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Quantidade Distribuida</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_QUANTIDADE_EMBARCADO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Quantidade já embarcado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Rota a partir do Fornecedor/Cliente</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_SIMULADOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera o Simulador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TOLERANCIA_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tolerancia para Desconto Absoluto</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VLR_ADITIVO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera os Valores dos Itens do Aditivo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ZONA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera a Zona</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>HEDGE_TROCA_MATERIAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Disparo Hedge</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>POPUP_CONFIRM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>PopUp de Confirmação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESSA_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Processa Desconto ABS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Executa o Desconto ate Zerar ou 30 vezes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS_GERAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Reprocessa Descondo ABS do Simulador Todo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ROWBACK_ENCERRAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica Status para Encerramento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Execute a Modificação da OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Disparo para Tabela ZSDT0116 Aprovadores de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ADITIVOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche dados da ZSDT0090</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DADOS_DESMEMBRAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche os dados adicionais para o Desmembramento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DADOS_TROCA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adiciona Dados de Troca</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DESCONTO_ABS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Aplica Desconto Absoluto na OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DESCONTO_ABS_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Aplica Desconto Absoluto na OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estornar a Solicitação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LOG_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adiciona Log de Modificação da ZSDT0081</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MENSAGENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adiciona os Erros e Sucessos do Processo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TROCA_CENTRO_FORNECEDOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Troca de Centro Fornecedor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TROCA_MATERIAIS_MASSA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Troca de Materiais</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se Existe Itinerario Cadastrado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO_82</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica itinerario da ZSDT0082</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_CREATE_ITINERARIO</CMPNAME>
+     <SCONAME>I_LR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_CREATE_ITINERARIO</CMPNAME>
+     <SCONAME>I_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_ORDER_CHANGE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_ORDER_CREATE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCEL_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>I_VBELV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCEL_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_APROVADA</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_APROVADA</CMPNAME>
+     <SCONAME>I_QTDE_ENCERRADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_APROVADA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_QTDE_ENCERRADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_SOLICITACAO_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_CADASTRO_FORN_SISDEV</CMPNAME>
+     <SCONAME>E_ERRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_CADASTRO_FORN_SISDEV</CMPNAME>
+     <SCONAME>I_KUNNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_CADASTRO_FORN_SISDEV</CMPNAME>
+     <SCONAME>I_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_BACKGROUND</CMPNAME>
+     <SCONAME>I_MANUTENCAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_BACKGROUND</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_DESMEMBRAMENTO</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_INCOMPLETOS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_INCOMPLETOS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_DADOS_TROCA</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_MATERIAL</CMPNAME>
+     <SCONAME>E_MAKTX</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto breve de material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_MATERIAL</CMPNAME>
+     <SCONAME>E_MARA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados gerais de material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_MATERIAL</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_MATERIAL_ZFER</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_MATERIAL_ZFER</CMPNAME>
+     <SCONAME>ZCX_INSUMOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_CLI_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>CLIENTE_DESTINO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_CLI_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>CLIENTE_ORIGEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_CRIACAO_OV</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS</CMPNAME>
+     <SCONAME>E_DESCONTO_ABS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_VLR_REAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_FATURADO</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_FATURADO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <SCONAME>E_DESCONTO_ABS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <SCONAME>I_MATNR_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <SCONAME>I_MATNR_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <SCONAME>I_VBELN_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESCONTO_ABS_OLD_NEW</CMPNAME>
+     <SCONAME>I_VBELN_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DESC_APLICADO_SIMULADOR</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>E_DIFERENCA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>E_DIFERENCA_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>E_ORDEM_VENDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>E_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor fixado de contrato básico na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_DIVERGENCIA_OV_SIMULADOR</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_FATURAMENTO_SIMULADOR</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_ID_PROPRIEDADE</CMPNAME>
+     <SCONAME>I_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Rota SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_ID_PROPRIEDADE</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LATITUDE_LONGITUDE</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do campo de tabela</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LATITUDE_LONGITUDE</CMPNAME>
+     <SCONAME>I_LATITUDE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Latitude</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LATITUDE_LONGITUDE</CMPNAME>
+     <SCONAME>I_LONGITUDE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Longitude</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LIMITE_QUANTIDADE</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LIMITE_QUANTIDADE</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LIMITE_QUANTIDADE</CMPNAME>
+     <SCONAME>I_QTDE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade da ordem acumulada em unidade de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_LIMITE_QUANTIDADE</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_SOLICITADA</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_SOLICITADA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>E_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>E_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>I_MATNR_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>I_MATNR_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>I_VBELN_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_OV_VALOR_MAIOR</CMPNAME>
+     <SCONAME>I_VBELN_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_REGRA_PROPORCIONAL</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>char255</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_REGRA_PROPORCIONAL</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_REGRA_PROPORCIONAL</CMPNAME>
+     <SCONAME>I_QUANTIDADE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade prevista em unidades de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_SOLICITACAO_EM_CARGA</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_SOLICITACAO_EM_CARGA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHK_USER_EXCECAO_PROPORCIONAL</CMPNAME>
+     <SCONAME>I_USER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do usuário</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DADOSGERAIS</CMPNAME>
+     <SCONAME>I_CATEGORIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Ação Executada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DADOSGERAIS</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DADOSGERAIS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DADOSGERAIS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DESMEMBRAMENTO_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_DESC_ABS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DESMEMBRAMENTO_DEVOLUCAO</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DESMEMBRAMENTO_MASSA</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXIBE_MENSAGENS</CMPNAME>
+     <SCONAME>I_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CHANGE</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CHANGE</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CREATE</CMPNAME>
+     <SCONAME>E_KONV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Condições (dados de operação)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CREATE</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CREATE</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DADOS_CREATE</CMPNAME>
+     <SCONAME>E_VBKD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DELETE_ORDEM</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DELETE_ORDEM</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_NEW</CMPNAME>
+     <SCONAME>E_KONV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Condições (dados de operação)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_NEW</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_NEW</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_NEW</CMPNAME>
+     <SCONAME>E_VBKD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_OLD</CMPNAME>
+     <SCONAME>E_KONV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Condições (dados de operação)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_OLD</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_OLD</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_DESMEMBRAMENTO_OLD</CMPNAME>
+     <SCONAME>E_VBKD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CHANGE</CMPNAME>
+     <SCONAME>I_VBAK_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CHANGE</CMPNAME>
+     <SCONAME>I_VBAP_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de item</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CHANGE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <SCONAME>I_KONV_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <SCONAME>I_VBAK_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <SCONAME>I_VBAP_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <SCONAME>I_VBKD_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_ORDEM_CREATE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_NEW</CMPNAME>
+     <SCONAME>E_KONV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Condições (dados de operação)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_NEW</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_NEW</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_NEW</CMPNAME>
+     <SCONAME>E_VBKD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_OLD</CMPNAME>
+     <SCONAME>E_KONV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Condições (dados de operação)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_OLD</CMPNAME>
+     <SCONAME>E_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_OLD</CMPNAME>
+     <SCONAME>E_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TROCA_OLD</CMPNAME>
+     <SCONAME>E_VBKD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados comerciais</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_CULTURA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cultura</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_INCO1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Incoterms parte 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_WAERK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Moeda do documento SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>I_WERKS_FORNEC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CADASTRO_PRECO</CMPNAME>
+     <SCONAME>LS_PRECO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas - Cadastro de produtos e margens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>E_DESCONTO_ABS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DESC_ABS</CMPNAME>
+     <SCONAME>E_KBETR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_OV_CH_REFERENCIA</CMPNAME>
+     <SCONAME>E_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_OV_CH_REFERENCIA</CMPNAME>
+     <SCONAME>E_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_OV_CH_REFERENCIA</CMPNAME>
+     <SCONAME>I_BSTKD_E</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PC_VIA_ROTEIRO</CMPNAME>
+     <SCONAME>E_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PC_VIA_ROTEIRO</CMPNAME>
+     <SCONAME>I_ROTA_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Rota SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PRECO_LIQUIDO_41</CMPNAME>
+     <SCONAME>E_PRECO_LIQUIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante de condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PRECO_LIQUIDO_41</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PRECO_LIQUIDO_41</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PRECO_LIQUIDO_41</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROPORCIONALIDADE_MATERIAL</CMPNAME>
+     <SCONAME>E_GROES_DEC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor teórico ou real de um componente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROPORCIONALIDADE_MATERIAL</CMPNAME>
+     <SCONAME>E_MEINS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Unidade de medida básica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROPORCIONALIDADE_MATERIAL</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_DEVOLVIDA</CMPNAME>
+     <SCONAME>E_VALOR_DEVOLVIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido item ordem na moeda documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_DEVOLVIDA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_DISTRIBUIDA</CMPNAME>
+     <SCONAME>E_VALOR_DISTRIBUIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido item ordem na moeda documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_DISTRIBUIDA</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_EMBARCADO</CMPNAME>
+     <SCONAME>E_QTDE_EMBARCADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_EMBARCADO</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_QUANTIDADE_EMBARCADO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ROTA</CMPNAME>
+     <SCONAME>E_ROTEIRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Rota SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ROTA</CMPNAME>
+     <SCONAME>I_LR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ROTA</CMPNAME>
+     <SCONAME>I_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_SIMULADOR</CMPNAME>
+     <SCONAME>E_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_SIMULADOR</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TEXT_OV</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TEXT_OV</CMPNAME>
+     <SCONAME>T_TEXT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de textos descritivos para CATSXT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOLERANCIA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>E_TOLERANCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preço líquido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_ADITIVO</CMPNAME>
+     <SCONAME>E_VLR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor fixado de contrato básico na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_ADITIVO</CMPNAME>
+     <SCONAME>I_CATEGORIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Ação Executada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_ADITIVO</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZONA</CMPNAME>
+     <SCONAME>E_ZONA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Zona de transporte para a qual ou da qual é fornecido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZONA</CMPNAME>
+     <SCONAME>I_LR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZONA</CMPNAME>
+     <SCONAME>I_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>HEDGE_TROCA_MATERIAL</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>POPUP_CONFIRM</CMPNAME>
+     <SCONAME>I_MENSAGEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Descrição breve para valores de filtro em Se19</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS_GERAL</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS_GERAL</CMPNAME>
+     <SCONAME>I_SIMULADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS_GERAL</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPROCESSA_DESCONTO_ABS_GERAL</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ROWBACK_ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ROWBACK_ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_QTDE_ENCERRADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ROWBACK_ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <SCONAME>E_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <SCONAME>E_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <SCONAME>I_MANUTENCAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>E_SEQUENCIAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto numérico de comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>I_POSNN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>I_VBELV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_APROVADORES_EMBARQUE</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ADITIVOS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_DESMEMBRAMENTO</CMPNAME>
+     <SCONAME>I_MANUTENCAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_TROCA</CMPNAME>
+     <SCONAME>I_MANUTENCAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de Troca</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_TROCA</CMPNAME>
+     <SCONAME>I_SELECAO_87</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura da ALV da ZSDT0087</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_TROCA</CMPNAME>
+     <SCONAME>I_TROCA_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabela de Troca de Materiais Add</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_TROCA</CMPNAME>
+     <SCONAME>I_TROCA_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabela Troca de Material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_DESCONTO_ABS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante ou porcentagem da condição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS_OV</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS_OV</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCONTO_ABS_OV</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <SCONAME>E_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOG_SOLICITACAO</CMPNAME>
+     <SCONAME>I_DIRECAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de usuário p/cluster PC nacional</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOG_SOLICITACAO</CMPNAME>
+     <SCONAME>I_NEW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOG_SOLICITACAO</CMPNAME>
+     <SCONAME>I_OLD</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MENSAGENS</CMPNAME>
+     <SCONAME>I_MENSAGEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>char255</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MENSAGENS</CMPNAME>
+     <SCONAME>I_TYPE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MENSAGENS</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_CENTRO_FORNECEDOR</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_CENTRO_FORNECEDOR</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_CENTRO_FORNECEDOR</CMPNAME>
+     <SCONAME>I_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_CENTRO_FORNECEDOR</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_MATERIAIS_MASSA</CMPNAME>
+     <SCONAME>I_INPUT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura itens OV selecionadas para transferência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TROCA_MATERIAIS_MASSA</CMPNAME>
+     <SCONAME>R_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO</CMPNAME>
+     <SCONAME>E_ROUTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itinerário real da remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO</CMPNAME>
+     <SCONAME>I_LR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO</CMPNAME>
+     <SCONAME>I_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO_82</CMPNAME>
+     <SCONAME>E_ROUTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itinerário real da remessa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO_82</CMPNAME>
+     <SCONAME>I_ROTA_LR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Rota SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_ITINERARIO_82</CMPNAME>
+     <SCONAME>I_ROTA_PC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Rota SD</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

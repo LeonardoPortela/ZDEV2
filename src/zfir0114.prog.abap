@@ -1,0 +1,56 @@
+*&---------------------------------------------------------------------*
+*& Report ZFIR0114
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZFIR0114.
+
+INITIALIZATION.
+
+AT SELECTION-SCREEN OUTPUT.
+
+AT SELECTION-SCREEN.
+
+START-OF-SELECTION.
+  CALL SCREEN '0100'.
+
+END-OF-SELECTION.
+
+MODULE STATUS_0100 OUTPUT.
+  SET PF-STATUS 'STATUS_0100'.
+  SET TITLEBAR 'T0100'.
+ENDMODULE.
+
+FORM ACTION_PROCESS.
+  CASE SY-UCOMM.
+    WHEN 'BACK'.
+      SET SCREEN 0.
+      LEAVE SCREEN.
+    WHEN 'CANCEL'.
+      SET SCREEN 0.
+      LEAVE SCREEN.
+    WHEN 'EXIT'.
+      SET SCREEN 0.
+      LEAVE SCREEN.
+    WHEN 'BT_FILIAL'.
+      CALL TRANSACTION 'ZFI0163'.
+    WHEN 'BT_CTRAZ'.
+      CALL TRANSACTION 'ZFI0164'.
+    WHEN 'BT_CONTSALD'.
+      CALL TRANSACTION 'ZFI0166'.
+    WHEN 'BT_LANC'.
+      CALL TRANSACTION 'ZFI0165'.
+    WHEN 'BT_APROV'.
+      CALL TRANSACTION 'ZFI0167'.
+    WHEN 'BT_ZFIT0120'.
+      CALL TRANSACTION 'ZFIT0120'.
+    WHEN 'BT_ZGL072'.
+      CALL TRANSACTION 'ZGL072'.
+    WHEN 'BT_SALDO'.
+      SUBMIT ZFIR0122 AND RETURN.
+  ENDCASE.
+ENDFORM.
+
+MODULE USER_COMMAND_0100 INPUT.
+  PERFORM ACTION_PROCESS.
+ENDMODULE.

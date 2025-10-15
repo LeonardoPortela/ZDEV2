@@ -1,0 +1,13 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_1000.
+*
+  CALL SUBSCREEN sub1001 INCLUDING sy-cprog vg_dynnr_1001.
+
+
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN sub1001.
+
+  MODULE user_command_1000.

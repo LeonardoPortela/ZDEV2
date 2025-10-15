@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Verificar Valores de Confirmação de Produção Repetitiva</SHORTTEXT>
+   <SPOT_NAME>WORKORDER_GOODSMVT</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>WORKORDER_GOODSMVT</SPOT_NAME>
+     <BADI_NAME>WORKORDER_GOODSMVT</BADI_NAME>
+     <IMPL_NAME>ZPP_WORKORDER_GOODS</IMPL_NAME>
+     <IMPL_CLASS>ZCL_IM_PP_WORKORDER_GOODS</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Verificar Valores Confirmação de Produção Repetitiva</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>874D914CED326A5AE1000000C0A800D0</IMPL_SHORTTEXT_ID>
+     <MIG_BADI_IMPL>ZPP_WORKORDER_GOODS</MIG_BADI_IMPL>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>874D914CED326A5AE1000000C0A800D0</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>874D914CED326A5AE1000000C0A800D0</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>078</LENGTH>
+       <TEXT>Verificar Valores Confirmação de Produção Repetitiva</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+    <item>
+     <HEADER>
+      <CONCEPT>95D8914CCE2D105AE1000000C0A800D0</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>95D8914CCE2D105AE1000000C0A800D0</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>083</LENGTH>
+       <TEXT>Verificar Valores de Confirmação de Produção Repetitiva</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZPP_WORKORDER_GOODS</OBJ_NAME>
+     <CONCEPT>874D914CED326A5AE1000000C0A800D0</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZPP_WORKORDER_GOODS</OBJ_NAME>
+     <CONCEPT>95D8914CCE2D105AE1000000C0A800D0</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

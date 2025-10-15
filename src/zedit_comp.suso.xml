@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZEDIT_COMP</OBJCT>
+    <FIEL1>ACTVT</FIEL1>
+    <FIEL2>ZEDIT_COMP</FIEL2>
+    <OCLSS>ZLES</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZEDIT_COMP</OBJECT>
+    <TTEXT>Autorização para Edição/Comparativo de Saída e Chegada</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZEDIT_COMP</OBJCT>
+   </TOBJVORFLG>
+   <TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>01</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>02</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>03</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>04</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>10</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>16</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>31</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>32</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>33</ACTVT>
+    </TACTZ>
+    <TACTZ>
+     <BROBJ>ZEDIT_COMP</BROBJ>
+     <ACTVT>34</ACTVT>
+    </TACTZ>
+   </TACTZ>
+  </asx:values>
+ </asx:abap>
+</abapGit>

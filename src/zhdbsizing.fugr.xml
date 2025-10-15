@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <INCLUDES>
+    <SOBJ_NAME>LZHDBSIZINGTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZHDBSIZING</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_COLLECT_STATS</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>Read size in bytes per columns</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>PRECISION</PARAMETER>
+       <DEFAULT>&apos;M&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>DTPRECINT</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>MODE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>STRING</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>LOAD</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>HL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>MAC</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>CLUSTPREC</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>DTPRECINT</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>MSHL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>DAAG</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>NUMC3</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>FORCE_COUNT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>STAT_AGE</PARAMETER>
+       <DEFAULT>5</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>MIN_REC_CNT</PARAMETER>
+       <DEFAULT>100000</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>HDB_EMPTY_TABLES</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>BOOLEAN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>LRAW</PARAMETER>
+       <DEFAULT>5000</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>INT4</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>DATA</PARAMETER>
+       <TYP>XSTRING</TYP>
+      </RSCHA>
+     </CHANGING>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>SYSTEM_ERROR</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>PRECISION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Internal precision</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MODE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>LOAD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>HL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MAC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CLUSTPREC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Internal precision</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MSHL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>DAAG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Numc3, internal use</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>FORCE_COUNT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>STAT_AGE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Natural Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MIN_REC_CNT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Natural Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>HDB_EMPTY_TABLES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Boolean Variable (X=True, -=False, Space=Unknown)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>LRAW</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Natural Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>DATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>SYSTEM_ERROR</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

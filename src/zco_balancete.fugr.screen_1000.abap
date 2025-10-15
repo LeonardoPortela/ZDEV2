@@ -1,0 +1,9 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_1000.
+
+PROCESS AFTER INPUT.
+
+  MODULE user_command_1000.
+
+PROCESS ON VALUE-REQUEST.
+  FIELD diretorio MODULE search_help_directory.

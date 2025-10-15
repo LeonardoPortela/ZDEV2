@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Interface de Grãos - Estoque</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZMMGRAOSTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZMMGRAOS</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_MM_INBOUND_AJUSTE_VALOR</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>IT_ZMMT0006</PARAMETER>
+       <DBSTRUCT>ZMMT0006</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IT_ZMMT0006</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

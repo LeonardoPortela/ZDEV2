@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Importação de dados ordem PM x Mobile</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_PM_IMP_CRIAR_ORDEMF01</SOBJ_NAME>
+    <SOBJ_NAME>LZGF_PM_IMP_CRIAR_ORDEMTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_PM_IMP_CRIAR_ORDEM</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_IMPORTA_ORDEM_PM</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>ONLINE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR1</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>ORDENS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTPM_D_M_ORDEM_T</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>RETORNO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTPM_TRANSA_EXP_ORDEM</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>ONLINE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ORDENS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RETORNO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

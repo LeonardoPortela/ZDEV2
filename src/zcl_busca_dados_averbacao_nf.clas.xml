@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_BUSCA_DADOS_AVERBACAO_NF</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Buscar dados averbação notas</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>E_RETORNO_DADOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>dados averbação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria de tabela para BUKRS_RAN</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_CFOP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status Código Fiscal de Operação - CFOP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_CHAVE_NFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>chave_nfe</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_DATA_DOC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela range para data</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_DT_EVENTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela range para data</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>I_KUNNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela range para clientes</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

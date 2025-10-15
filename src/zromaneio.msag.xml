@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZROMANEIO</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagem para Romaneio</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Romaneio Salvo com Sucesso</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Romaneio Excluido com Sucesso</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Deve ser Informado a Empresa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Deve ser Informado o Local de Negocio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Deve ser Informado a Safra!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Deve ser Informado o Tipo de Movimento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Deve ser Informado um Tipo de Movimento Válido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Deve ser Informado a Data de Movimento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Deve ser Informado um Data de Movimento maior/igual a data atual!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Deve ser Informado o Parceiro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Deve ser Informado o Cliente de Destino!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Deve ser Informado o ID de Interface!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Id. de Interface não Permitido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Item &amp;1 não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Impossível excluir Romaneio. Remessa já gerada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Para Interface de Carga deve ser Informado o ID da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Para Interface de Carga deve ser Informado o ID da Carga e ID Nota!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Qtd. de Embalagens não encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>OPUS: Erro ao consultar romaneio &amp;1/&amp;2/&amp;3/&amp;4!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZROMANEIO</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>OPUS: Romaneio &amp;1/&amp;2/&amp;3 não encontado! &amp;4</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

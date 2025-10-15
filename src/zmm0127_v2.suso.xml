@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZMM0127_V2</OBJCT>
+    <FIEL1>ZACAO_0001</FIEL1>
+    <OCLSS>ZMM</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZMM0127_V2</OBJECT>
+    <TTEXT>Recebimento de Carga</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZMM0127_V2</OBJCT>
+   </TOBJVORFLG>
+  </asx:values>
+ </asx:abap>
+</abapGit>

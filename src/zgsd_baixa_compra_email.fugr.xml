@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Aprovar/Reprovar Baixa</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGSD_BAIXA_COMPRA_EMAILTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGSD_BAIXA_COMPRA_EMAIL</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZSD_EMAIL_BAIXAS</FUNCNAME>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SOFOLENTI1-OBJECT_ID</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>T_BAIXAS</PARAMETER>
+       <DBSTRUCT>ZSTSD_EMAIL_BAIXAS</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_BAIXAS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

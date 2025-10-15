@@ -1,0 +1,9 @@
+
+PROCESS BEFORE OUTPUT.
+  MODULE status_0300.
+*
+PROCESS AFTER INPUT.
+  MODULE user_command_0300.
+
+PROCESS ON VALUE-REQUEST.
+  FIELD wg_instrucao     MODULE search_instr.

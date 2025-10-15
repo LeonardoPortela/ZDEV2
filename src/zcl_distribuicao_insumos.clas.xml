@@ -1,0 +1,1353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_DISTRIBUICAO_INSUMOS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Itinerário Existente, Deseja Continuar!</ENTRY>
+     <LENGTH>78</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Texto para Ordem de Venda</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Existem campos incompletos na OV:</ENTRY>
+     <LENGTH>66</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Nota de cabeçalho 1</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Quantidade Solicitada é Superior ao Saldo!</ENTRY>
+     <LENGTH>84</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Quantidade Solicitada é Superior a Quantidade Embarcado!</ENTRY>
+     <LENGTH>122</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Numero da Solicitação!</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>É Obrigatorio o preenchimento da Sequência da Solicitação!</ENTRY>
+     <LENGTH>116</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>009</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Centro!</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>010</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Material!</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>011</KEY>
+     <ENTRY>É Obrigatorio o preenchimento do Deposito!</ENTRY>
+     <LENGTH>84</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>012</KEY>
+     <ENTRY>É Obrigatorio o preenchimento da Quantidade!</ENTRY>
+     <LENGTH>88</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>013</KEY>
+     <ENTRY>Tipo de OV não permitida!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>014</KEY>
+     <ENTRY>O.V é um campo Obrigatório!</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>015</KEY>
+     <ENTRY>Item da O.V é um campo Obrigatório!</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>016</KEY>
+     <ENTRY>Material é um campo Obrigatório!</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>017</KEY>
+     <ENTRY>Cliente é um campo Obrigatório!</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>018</KEY>
+     <ENTRY>A Quantidade é um campo Obrigatório!</ENTRY>
+     <LENGTH>72</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>019</KEY>
+     <ENTRY>Cliente não cadastrado!</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E01</KEY>
+     <ENTRY>Informe a quantidade a ser trocada</ENTRY>
+     <LENGTH>68</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E02</KEY>
+     <ENTRY>Informe material para substituir</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E03</KEY>
+     <ENTRY>Informe a quantidade a ser substituída.</ENTRY>
+     <LENGTH>78</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E04</KEY>
+     <ENTRY>O campo Deposito é Obrigatório!</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E05</KEY>
+     <ENTRY>Material não expandido para o Depósito informado!</ENTRY>
+     <LENGTH>98</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E06</KEY>
+     <ENTRY>Para o tipo de ordem ZRFU, o grupo de mercadorias deve ser o mesmo na troca</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E07</KEY>
+     <ENTRY>Para o tipo de ordem</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E08</KEY>
+     <ENTRY>o centro deve ser o mesmo na troca.</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E09</KEY>
+     <ENTRY>o incoterms deve ser o mesmo na troca.</ENTRY>
+     <LENGTH>76</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E10</KEY>
+     <ENTRY>não pode ser diferente</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E11</KEY>
+     <ENTRY>Não é permitido criar mais de um item do mesmo material</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E12</KEY>
+     <ENTRY>Não existe Itinerário para</ENTRY>
+     <LENGTH>52</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E13</KEY>
+     <ENTRY>Ação Cancelada, O.V Existe Faturamento e Desconto Absoluto!</ENTRY>
+     <LENGTH>104</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ADITIVOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BEHAVE_WHEN_ERROR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CH_REFERENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DADOS_TRATADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Tabel itens OV selecionadas para transferência</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DISTRIBUICAO_INSUMOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_EXTENSIONIN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ctg.tabela para BAPIPAREX</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ITEM_DISTRIB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item Distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MAKT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Textos breves de material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MANUTENCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção de Ordem de Venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MARA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados gerais de material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MARC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de centro para material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ORDEM_ETAPA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numc3, utilização interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ORDER_TEXT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela da categoria de linha BAPISDTEXT</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PARTNERS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campos de comunicação: parceiro doc.SD: WWW</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_REPROCESSAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SALES_HEADER_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campos de comunicação: cabeçalho doc.SD</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SELECAO_87</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura da ALV da ZSDT0087</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SOLIICTACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_T_ZSDS094</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Distribuir - ZSDT0081</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_T_ZSDT0414</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_T_ZSDT0415</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAK_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBAP_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBELN_NEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBELN_OLD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ZSDS093</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura ALV1 - ZSDT0081 - Distribuição de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ZSDS094_TT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Distribuir - ZSDT0081</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ZSDT0082</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CANCELAR_DISTRIBUICAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cancelar Distribuição</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_USO_ESTOQUE_SOL_ENT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Analise do estoque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_APROVADO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_CONCLUIDO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_OVEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Etapa do Processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_PENDENTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_PEND_APROV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_ZSDT0081</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CH_REFERENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter chave referncia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CK_ESTOQUE_FILIAL_ARMAZ</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa Consumo Estoque e Armazenagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CK_JOB_CANCELADO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa se JOB cancelou processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CONSUMO_REAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar consumo na tabela ZSDT0082</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DADOS_ZSDT0415</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter dados da zsdt0415 pelas caracteristicas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Instanciar Classe</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_NEXT_ITEM_DISTRIB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Proximo ID Item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PENDENTE_APROVACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Checa se solicitacao esta Pendente Aprovacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PERMITE_CANCELAR_DISTR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Analisa de Distribuicao pode ser cancelada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TABLE_ZSDT0415</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>READ tabela interna da ZSDT0415</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_UUID</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Numero UUID</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VERIFICAR_CONSUMO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Avaliar consumo efetuado na solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter ZSDT0082</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter ZSDT0411</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ZSDT0414</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter ZSDT0414</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter ZSDT0415</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_AJUSTAR_DADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ajustar Rota PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ANALISAR_ESTOQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Analise do estoque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_APROVAR_EMBARQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Aprovacao de Embaque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_AVALIAR_STATUS_SOLIC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Avaliar Status Bloqueio Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BLOQUEIO_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Bloquear Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CANCELAR_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cancelar Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_JOB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar JOB para processamento Distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_ORDEM_VENDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar Ordem de Venda</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar nova Solicitacao de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CRIAR_TABELA_EVENTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montar tabela de eventos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DESBOQUEIO_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Desbloquear Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ERROR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Raise</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estornar Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Executa a distribuicao nas Solicitacoes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Realiza integração com o safra control</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL_BK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Realiza integração com o safra control</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LIBERAR_EMBARQUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Liberar Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LIMPAR_MENSAGEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar Mensagem Processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MODIFICAR_STATUS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Modificar Status da solicitacao em processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MONTAR_EVENTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montar os eventos de Execucao da distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_QTDE_SOLICITADA_ZSDT0082</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Setar Quantidade Solicitada na ZSST0082</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_SALVAR_COPIA_DISTRIB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Salvar imagem da Distribuicao a ser feita</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status da Aprovacao/Rejeicao Solicitacao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Setar Status registro em Processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TABLE_ZSDT0415</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar tabela interna da ZSDT0415</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRANSFORM_TAB_RETURN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Transforma T_RETURN em String</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRATAR_PROCESSAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tratar forma de Processamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRATAR_VENDA_ESPECIAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Criar tabelas Venda especial</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRATA_STRING</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tratamento de strings para mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_VALIDAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validar dados para distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_VALIDAR_DISTRIBUICAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validar Distribuicao</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sequecial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_USO_ESTOQUE_SOL_ENT</CMPNAME>
+     <SCONAME>I_ESTOQUE_PEDIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_USO_ESTOQUE_SOL_ENT</CMPNAME>
+     <SCONAME>R_CONSUMO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade da ordem acumulada em unidade de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CH_REFERENCIA</CMPNAME>
+     <SCONAME>R_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_ESTOQUE_FILIAL_ARMAZ</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_JOB_CANCELADO</CMPNAME>
+     <SCONAME>I_ZSDT0082</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_JOB_CANCELADO</CMPNAME>
+     <SCONAME>R_CANCELADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONSUMO_REAL</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONSUMO_REAL</CMPNAME>
+     <SCONAME>R_CONSUMO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade da ordem acumulada em unidade de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_ZSDT0415</CMPNAME>
+     <SCONAME>I_ZSDS093</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_ZSDT0415</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_ZSDT0415</CMPNAME>
+     <SCONAME>R_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>R_DISTRIBUICAO_INSUMOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_NEXT_ITEM_DISTRIB</CMPNAME>
+     <SCONAME>R_ITEM_DISTRIB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item Distribuicao</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PENDENTE_APROVACAO</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PENDENTE_APROVACAO</CMPNAME>
+     <SCONAME>R_PENDENTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PERMITE_CANCELAR_DISTR</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PERMITE_CANCELAR_DISTR</CMPNAME>
+     <SCONAME>R_PERMITE_CANCELAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TABLE_ZSDT0415</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TABLE_ZSDT0415</CMPNAME>
+     <SCONAME>R_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VERIFICAR_CONSUMO</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VERIFICAR_CONSUMO</CMPNAME>
+     <SCONAME>R_UTILIZADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade prevista em unidades de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numc3, utilização interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0082</CMPNAME>
+     <SCONAME>R_ZSDT0082</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Solicitação de Embarque Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <SCONAME>E_ZSDT0411</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho avaliação da distribuição de venda especial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <SCONAME>I_ID_DISTRIBUICAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id Distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <SCONAME>I_TODOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0411</CMPNAME>
+     <SCONAME>R_ZSDT0411</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho avaliação da distribuição de venda especial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0414</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0414</CMPNAME>
+     <SCONAME>R_ZSDT0414</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_INCLUIR_CANCELADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_SOMENTE_MAIS_ATUAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_SOMENTE_PENDENTES</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_SOMENTE_SELECIONADOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0415</CMPNAME>
+     <SCONAME>R_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ANALISAR_ESTOQUE</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ANALISAR_ESTOQUE</CMPNAME>
+     <SCONAME>R_CONSUMO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade da ordem acumulada em unidade de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_APROVAR_EMBARQUE</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_APROVAR_EMBARQUE</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AVALIAR_STATUS_SOLIC</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AVALIAR_STATUS_SOLIC</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AVALIAR_STATUS_SOLIC</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numc3, utilização interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_AVALIAR_STATUS_SOLIC</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BLOQUEIO_SOLICITACAO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CANCELAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CANCELAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_ID_DISTRIBUICAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id Distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_JOB</CMPNAME>
+     <SCONAME>I_ZSDS093</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura ALV1 - ZSDT0081 - Distribuição de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_JOB</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Distribuir - ZSDT0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_JOB</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ORDEM_VENDA</CMPNAME>
+     <SCONAME>I_ZSDT0414</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Header</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ORDEM_VENDA</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_ORDEM_VENDA</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_ZSDT0414</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Header</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_SOLICITACAO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_TABELA_EVENTOS</CMPNAME>
+     <SCONAME>I_ETAPA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Etapa do Processamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_TABELA_EVENTOS</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_TABELA_EVENTOS</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESBOQUEIO_SOLICITACAO</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESBOQUEIO_SOLICITACAO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ERROR</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ESTORNAR_SOLICITACAO</CMPNAME>
+     <SCONAME>I_ITEM_DISTRIB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item Distribuicao</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_REPROCESSAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_SOMENTE_MONTAR_EVENTOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_SOMENTE_VALIDAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_ZSDS093</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura ALV1 - ZSDT0081 - Distribuição de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Distribuir - ZSDT0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>R_DISTRIBUICAO_INSUMOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXECUTAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL</CMPNAME>
+     <SCONAME>I_DADOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave dos dados da tabela zsdt0082</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL</CMPNAME>
+     <SCONAME>ZCX_INTEGRACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL_BK</CMPNAME>
+     <SCONAME>I_DADOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave dos dados da tabela zsdt0082</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL_BK</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INTEGRAR_SAFRA_CONTROL_BK</CMPNAME>
+     <SCONAME>ZCX_INTEGRACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LIBERAR_EMBARQUE</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LIBERAR_EMBARQUE</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MODIFICAR_STATUS</CMPNAME>
+     <SCONAME>I_ETAPA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Etapa do Processamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MODIFICAR_STATUS</CMPNAME>
+     <SCONAME>I_ITEM_DISTRIB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item Distribuicao</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MODIFICAR_STATUS</CMPNAME>
+     <SCONAME>I_STATUS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status da Solicitacao</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MONTAR_EVENTOS</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QTDE_SOLICITADA_ZSDT0082</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QTDE_SOLICITADA_ZSDT0082</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SALVAR_COPIA_DISTRIB</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Distribuir - ZSDT0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_DATE_ACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de criação do registro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_ID_DISTRIBUICAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id Distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de  Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_OBSERVACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de textos descritivos para CATSXT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_STATUS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status Venda Especial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_TIME_ACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Hora de criação do registro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_AVALIACAO_SOLIC</CMPNAME>
+     <SCONAME>I_USER_ACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Usuario Criação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>I_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>I_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numc3, utilização interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>I_STATUS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_STATUS_PROCESSAMENTO</CMPNAME>
+     <SCONAME>R_DISTRIBUICAO_INSUMOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manutenção Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TABLE_ZSDT0415</CMPNAME>
+     <SCONAME>I_ZSDT0415</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro da Distribuição de Embarque efetuada - Itens</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRANSFORM_TAB_RETURN</CMPNAME>
+     <SCONAME>I_BAPIRET</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATAR_PROCESSAMENTO</CMPNAME>
+     <SCONAME>R_PROSSEGUE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATAR_PROCESSAMENTO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATA_STRING</CMPNAME>
+     <SCONAME>E_MSGV1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATA_STRING</CMPNAME>
+     <SCONAME>E_MSGV2</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATA_STRING</CMPNAME>
+     <SCONAME>E_MSGV3</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRATA_STRING</CMPNAME>
+     <SCONAME>E_MSGV4</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VALIDAR</CMPNAME>
+     <SCONAME>I_ZSDS093</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura ALV1 - ZSDT0081 - Distribuição de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VALIDAR</CMPNAME>
+     <SCONAME>I_ZSDS094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saldo distribuir - zsdt0081</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VALIDAR</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VALIDAR_DISTRIBUICAO</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

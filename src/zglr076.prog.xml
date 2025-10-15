@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZGLR076</NAME>
+    <SUBC>1</SUBC>
+    <RLOAD>P</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <DYNPROS>
+    <item>
+     <HEADER>
+      <PROGRAM>ZGLR076</PROGRAM>
+      <SCREEN>0100</SCREEN>
+      <LANGUAGE>P</LANGUAGE>
+      <DESCRIPT>Cockpit - Equivalência Patrimonial</DESCRIPT>
+      <TYPE>N</TYPE>
+      <NEXTSCREEN>0100</NEXTSCREEN>
+      <LINES>027</LINES>
+      <COLUMNS>120</COLUMNS>
+     </HEADER>
+     <CONTAINERS>
+      <RPY_DYCATT>
+       <TYPE>SCREEN</TYPE>
+       <NAME>SCREEN</NAME>
+      </RPY_DYCATT>
+     </CONTAINERS>
+     <FIELDS>
+      <RPY_DYFATC>
+       <CONT_TYPE>SCREEN</CONT_TYPE>
+       <CONT_NAME>SCREEN</CONT_NAME>
+       <TYPE>OKCODE</TYPE>
+       <TEXT>____________________</TEXT>
+       <LENGTH>020</LENGTH>
+       <VISLENGTH>020</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <INPUT_FLD>X</INPUT_FLD>
+      </RPY_DYFATC>
+     </FIELDS>
+    </item>
+   </DYNPROS>
+   <CUA>
+    <ADM>
+     <ACTCODE>000003</ACTCODE>
+     <MENCODE>000023</MENCODE>
+     <PFKCODE>000003</PFKCODE>
+    </ADM>
+    <STA>
+     <RSMPE_STAT>
+      <CODE>PF0200</CODE>
+      <MODAL>D</MODAL>
+      <ACTCODE>000003</ACTCODE>
+      <PFKCODE>000003</PFKCODE>
+      <BUTCODE>0001</BUTCODE>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_STAT>
+     <RSMPE_STAT>
+      <CODE>ST1000</CODE>
+      <MODAL>D</MODAL>
+      <ACTCODE>000001</ACTCODE>
+      <PFKCODE>000001</PFKCODE>
+      <BUTCODE>0001</BUTCODE>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_STAT>
+    </STA>
+    <FUN>
+     <RSMPE_FUNT>
+      <CODE>BACK</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <FUN_TEXT>Voltar</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>BACK</CODE>
+      <TEXTNO>002</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <FUN_TEXT>Encerrar</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>BACK</CODE>
+      <TEXTNO>003</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_CANCEL</TEXT_NAME>
+      <ICON_ID>@0W@</ICON_ID>
+      <FUN_TEXT>Cancelar</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>CADASTROEMPRESA</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_OPERATION</TEXT_NAME>
+      <ICON_ID>@9X@</ICON_ID>
+      <FUN_TEXT>Cadastro Empresa</FUN_TEXT>
+      <ICON_TEXT>Cadastro Empresa</ICON_TEXT>
+      <INFO_TEXT>Cadastro Empresa</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>CADGRUPCONT</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SYSTEM_COPY</TEXT_NAME>
+      <ICON_ID>@2U@</ICON_ID>
+      <FUN_TEXT>Cad. Conta Conciliação</FUN_TEXT>
+      <ICON_TEXT>Cad. Conta Conciliação</ICON_TEXT>
+      <INFO_TEXT>Cad. Conta Conciliação</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F00</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_EXECUTE_OBJECT</TEXT_NAME>
+      <ICON_ID>@15@</ICON_ID>
+      <FUN_TEXT>F00</FUN_TEXT>
+      <ICON_TEXT>Executar</ICON_TEXT>
+      <INFO_TEXT>Executar</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F01</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>F01</FUN_TEXT>
+      <ICON_TEXT>Cadastro Empresa</ICON_TEXT>
+      <INFO_TEXT>Cadastro Empresa</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F02</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>F02</FUN_TEXT>
+      <ICON_TEXT>Parâm. Contab.</ICON_TEXT>
+      <INFO_TEXT>Parâm. Contabilização</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F03</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>F03</FUN_TEXT>
+      <ICON_TEXT>Cad. Saldo Ini.</ICON_TEXT>
+      <INFO_TEXT>Cad. Saldo Inicial</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F04</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>F04</FUN_TEXT>
+      <ICON_TEXT>Class. Contas PL</ICON_TEXT>
+      <INFO_TEXT>Classificar Contas do PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F05</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>F05</FUN_TEXT>
+      <ICON_TEXT>Cad. Conta Conc.</ICON_TEXT>
+      <INFO_TEXT>Cad. Conta Conciliação</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>F06</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Classificar Contas do PL</FUN_TEXT>
+      <ICON_TEXT>Classificar Contas do PL</ICON_TEXT>
+      <INFO_TEXT>Classificar Contas do PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC00</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_EXECUTE_OBJECT</TEXT_NAME>
+      <ICON_ID>@15@</ICON_ID>
+      <FUN_TEXT>Executar</FUN_TEXT>
+      <INFO_TEXT>Executar</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC01</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Cadastro Empresa.</FUN_TEXT>
+      <ICON_TEXT>Cadastro</ICON_TEXT>
+      <INFO_TEXT>Cadastro Empresa</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC02</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Parâm. Contabilização</FUN_TEXT>
+      <ICON_TEXT>Parâm Contab</ICON_TEXT>
+      <INFO_TEXT>Parâm. Contabilização</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC03</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Cad. Saldo Inicial</FUN_TEXT>
+      <ICON_TEXT>Cad Saldo Ini</ICON_TEXT>
+      <INFO_TEXT>Cad. Saldo Inicial</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC04</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Classificar Contas do PL</FUN_TEXT>
+      <ICON_TEXT>Class Contas PL</ICON_TEXT>
+      <INFO_TEXT>Classificar Contas do PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC05</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TYPE>P</TYPE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Cad. Conta Conciliação</FUN_TEXT>
+      <ICON_TEXT>Cad Ct Concili</ICON_TEXT>
+      <INFO_TEXT>Cad. Conta Conciliação</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>FC06</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Parametrizar Reflexa do PL</FUN_TEXT>
+      <ICON_TEXT>Parametrizar Reflexa do PL</ICON_TEXT>
+      <INFO_TEXT>Reflexa do PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>GET</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_VARIANTS</TEXT_NAME>
+      <ICON_ID>@0R@</ICON_ID>
+      <FUN_TEXT>VARIANTE</FUN_TEXT>
+      <ICON_TEXT>Variante</ICON_TEXT>
+      <INFO_TEXT>Chamar Variante</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>REFLEXA</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Parametrizar Reflexa do PL</FUN_TEXT>
+      <ICON_TEXT>Parametrizar Reflexa do PL</ICON_TEXT>
+      <INFO_TEXT>Reflexa PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>REFLEXA_PL</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SUBMIT</TEXT_NAME>
+      <ICON_ID>@8W@</ICON_ID>
+      <FUN_TEXT>Parametrizar Reflexa do PL</FUN_TEXT>
+      <INFO_TEXT>Reflexa do PL</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>SAVE</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SYSTEM_SAVE</TEXT_NAME>
+      <ICON_ID>@2L@</ICON_ID>
+      <FUN_TEXT>Gravar</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>SPOS</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_SYSTEM_SAVE</TEXT_NAME>
+      <ICON_ID>@2L@</ICON_ID>
+      <FUN_TEXT>Gravar</FUN_TEXT>
+     </RSMPE_FUNT>
+    </FUN>
+    <MTX>
+     <RSMPE_MNLT>
+      <CODE>000001</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>Menu de contexto</TEXT>
+      <INT_NOTE>Menu</INT_NOTE>
+     </RSMPE_MNLT>
+     <RSMPE_MNLT>
+      <CODE>000002</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>TESTE</TEXT>
+     </RSMPE_MNLT>
+     <RSMPE_MNLT>
+      <CODE>000003</CODE>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT>TESTE</TEXT>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_MNLT>
+    </MTX>
+    <BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>01</NO>
+      <PFNO>08</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>02</NO>
+      <PFNO>13</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>03</NO>
+      <PFNO>02</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>04</NO>
+      <PFNO>06</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>05</NO>
+      <PFNO>07</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>06</NO>
+      <PFNO>05</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>07</NO>
+      <PFNO>09</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000002</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>01</NO>
+      <PFNO>09</PFNO>
+     </RSMPE_BUT>
+    </BUT>
+    <PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>02</PFNO>
+      <FUNCODE>F01</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>03</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>05</PFNO>
+      <FUNCODE>F04</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>06</PFNO>
+      <FUNCODE>F02</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>07</PFNO>
+      <FUNCODE>F03</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>08</PFNO>
+      <FUNCODE>F00</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>09</PFNO>
+      <FUNCODE>F05</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>11</PFNO>
+      <FUNCODE>SPOS</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>12</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>003</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>13</PFNO>
+      <FUNCODE>GET</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>15</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>002</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000002</CODE>
+      <PFNO>09</PFNO>
+      <FUNCODE>CADGRUPCONT</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000003</CODE>
+      <PFNO>03</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000003</CODE>
+      <PFNO>11</PFNO>
+      <FUNCODE>SAVE</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000003</CODE>
+      <PFNO>12</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>003</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000003</CODE>
+      <PFNO>15</PFNO>
+      <FUNCODE>BACK</FUNCODE>
+      <FUNNO>002</FUNNO>
+     </RSMPE_PFK>
+    </PFK>
+    <SET>
+     <RSMPE_STAF>
+      <STATUS>PF0200</STATUS>
+      <FUNCTION>BACK</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>PF0200</STATUS>
+      <FUNCTION>SAVE</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>BACK</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>CADASTROEMPRESA</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F00</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F01</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F02</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F03</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F04</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>F05</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC00</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC01</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC02</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC03</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC04</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>FC05</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>GET</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>SAVE</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ST1000</STATUS>
+      <FUNCTION>SPOS</FUNCTION>
+     </RSMPE_STAF>
+    </SET>
+    <DOC>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>A</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Seleção e Parâmetros</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>P</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Seleção e Parâmetros</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>B</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <SUB_CODE>0001</SUB_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Seleção e Parâmetros</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>A</OBJ_TYPE>
+      <OBJ_CODE>000002</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Menu 1000</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>P</OBJ_TYPE>
+      <OBJ_CODE>000002</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Menu 1000</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>B</OBJ_TYPE>
+      <OBJ_CODE>000002</OBJ_CODE>
+      <SUB_CODE>0001</SUB_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Menu 1000</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>B</OBJ_TYPE>
+      <INT_NOTE>tELA 1000</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>A</OBJ_TYPE>
+      <OBJ_CODE>000003</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>P</OBJ_TYPE>
+      <OBJ_CODE>000003</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>B</OBJ_TYPE>
+      <OBJ_CODE>000003</OBJ_CODE>
+      <SUB_CODE>0001</SUB_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Status Gui</INT_NOTE>
+     </RSMPE_ATRT>
+    </DOC>
+    <TIT>
+     <RSMPE_TITT>
+      <CODE>TB0100</CODE>
+      <TEXT>Seleção e Parâmetros</TEXT>
+     </RSMPE_TITT>
+     <RSMPE_TITT>
+      <CODE>TB0200</CODE>
+      <TEXT>Cockpit - Equivalência Patrimonial</TEXT>
+     </RSMPE_TITT>
+    </TIT>
+   </CUA>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Parâmetros</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Execuções</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Dados de Entrada</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B01</KEY>
+     <ENTRY>Cadastro Empresa</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B02</KEY>
+     <ENTRY>Parâm. Contabilização</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B03</KEY>
+     <ENTRY>Equivalência Patrimonial</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B04</KEY>
+     <ENTRY>Conversão do Balanço</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B05</KEY>
+     <ENTRY>Cad. Saldo Inicial</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B06</KEY>
+     <ENTRY>Classificar Contas do PL</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Cockpit - Equivalência Patrimonial</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_GJAHR</KEY>
+     <ENTRY>Ano</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_INVDA</KEY>
+     <ENTRY>Investida</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_INVRA</KEY>
+     <ENTRY>Investidora</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_MONAT</KEY>
+     <ENTRY>Mês</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

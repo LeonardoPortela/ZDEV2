@@ -1,0 +1,219 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZLESR0119_FORM
+*&---------------------------------------------------------------------*
+
+
+
+FORM F_REFRESH_ALV USING P_ALV.
+
+  CASE P_ALV.
+    WHEN '0100'.
+      CALL METHOD OBJ_ALV_0100->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    WHEN '0110'.
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_REFRESH_OBJETOS .
+
+  CLEAR: GS_LAYOUT,
+         GS_VARIANT.
+
+  REFRESH: IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_CRIAR_CATALOG USING P_SCREEN.
+
+  FREE: WA_FCAT, IT_FCAT.
+
+  CASE P_SCREEN.
+    WHEN '0100'.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+       01  'ZSDT0001'      'CH_REFERENCIA'   'IT_SAIDA_0100'  'CH_REFERENCIA'   'Ch.Referencia'  '15'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       02  'ZSDT0001'      'DT_MOVIMENTO'    'IT_SAIDA_0100'  'DT_MOVIMENTO'    'Dt.Entrada'     '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       03  'ZSDT0001'      'NR_ROMANEIO'     'IT_SAIDA_0100'  'NR_ROMANEIO'     'Romaneio'       '08'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       04  'ZSDT0001'      'DOCDAT'          'IT_SAIDA_0100'  'DOCDAT'          'Dt.Nf.'         '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       05  'ZSDT0001'      'NFNUM'           'IT_SAIDA_0100'  'NFNUM'           'Nr.Nf.'         '09'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       06  'ZSDT0001'      'SERIES'          'IT_SAIDA_0100'  'SERIES'          'Série Nf.'      '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       07  'ZSDT0001'      'NR_DCO'          'IT_SAIDA_0100'  'NR_DCO'          'Nr.DCO.'        '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       08  'ZSDT0001'      'NR_SAFRA'        'IT_SAIDA_0100'  'NR_SAFRA'        'Safra'          '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       09  'ZLEST0158'     'MOTIVO_BAIXA'    'IT_SAIDA_0100'  'MOTIVO_BAIXA'    'Motivo Baixa'   '30'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       10  'ZLEST0158'     'DT_REGISTRO'     'IT_SAIDA_0100'  'DT_BAIXA'        'Dt.Baixa'       '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       11  'ZLEST0158'     'HR_REGISTRO'     'IT_SAIDA_0100'  'HR_BAIXA'        'Hr.Baixa'       '10'   ' '    ''  ' ' ' ' ' ' ' ' '',
+       12  'ZLEST0158'     'US_REGISTRO'     'IT_SAIDA_0100'  'US_BAIXA'        'Us.Baixa'       '10'   ' '    ''  ' ' ' ' ' ' ' ' ''.
+
+    WHEN '0110'.
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_ESTRUTURA_ALV USING VALUE(P_COL_POS)       TYPE I
+                           VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                           VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                           VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                           VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                           VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                           VALUE(P_OUTPUTLEN)
+                           VALUE(P_EDIT)
+                           VALUE(P_SUM)
+                           VALUE(P_EMPHASIZE)
+                           VALUE(P_JUST)
+                           VALUE(P_HOTSPOT)
+                           VALUE(P_F4)
+                           VALUE(P_CHECK).
+
+  CLEAR WA_FCAT.
+
+  WA_FCAT-FIELDNAME   = P_FIELD.
+  WA_FCAT-TABNAME     = P_TABNAME.
+  WA_FCAT-REF_TABLE   = P_REF_TABNAME.
+  WA_FCAT-REF_FIELD   = P_REF_FIELDNAME.
+  WA_FCAT-KEY         = ' '.
+  WA_FCAT-EDIT        = P_EDIT.
+  WA_FCAT-COL_POS     = P_COL_POS.
+  WA_FCAT-OUTPUTLEN   = P_OUTPUTLEN.
+  WA_FCAT-NO_OUT      = ' '.
+  WA_FCAT-DO_SUM      = P_SUM.
+  WA_FCAT-REPTEXT     = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_S   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_M   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_L   = P_SCRTEXT_L.
+  WA_FCAT-EMPHASIZE   = P_EMPHASIZE.
+  WA_FCAT-STYLE       =
+  WA_FCAT-JUST        = P_JUST.
+  WA_FCAT-HOTSPOT     = P_HOTSPOT.
+  WA_FCAT-F4AVAILABL  = P_F4.
+  WA_FCAT-CHECKBOX    = P_CHECK.
+
+  APPEND WA_FCAT TO IT_FCAT.
+
+ENDFORM.                    " ESTRUTURA_ALV
+
+FORM F_EXCLUDE_FCODE USING P_SCREEN.
+
+  APPEND CL_GUI_ALV_GRID=>MC_FC_REFRESH           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW      TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_CUT           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE         TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_CHECK             TO IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_LIMPA_VARIAVEIS .
+
+  CLEAR: WA_SAIDA_0100,
+         IT_SAIDA_0100[],
+         TG_ZLEST0158[],
+         TG_ZDCO_VINCULO[],
+         TG_ZSDT0001[].
+
+ENDFORM.
+
+FORM F_SELECIONAR_DADOS.
+
+  DATA: V_TP_ROM  TYPE C LENGTH 8.
+
+  PERFORM F_LIMPA_VARIAVEIS.
+
+  SELECT SINGLE *
+    FROM LFA1 INTO @DATA(WL_LFA1_NF)
+   WHERE LIFNR EQ @P_LIFNR-LOW.
+
+  IF SY-SUBRC NE 0.
+    MESSAGE 'Remetente não encontrado!' TYPE 'S'.
+    STOP.
+  ENDIF.
+
+  CASE WL_LFA1_NF-KTOKK.
+    WHEN: 'ZFIC'.
+      V_TP_ROM = 'PROPRIO'.
+    WHEN OTHERS.
+      V_TP_ROM = 'TERCEIRO'.
+  ENDCASE.
+
+  CALL FUNCTION 'ZLES_SELECAO_ROM_AQUA'
+    EXPORTING
+      I_TP_ROMANEIO          = V_TP_ROM
+      I_CTE_EMIT_AQUAV       = '1'
+      I_CENTRO_EMISSOR       = P_WERKS-LOW
+      I_MATNR                = P_MATNR-LOW
+      I_TP_CLASS             = P_TPCLA
+      I_PARID                = P_LIFNR-LOW
+    TABLES
+      E_ZSDT0001             = TG_ZSDT0001.
+
+  IF P_SAFRA-LOW IS NOT INITIAL.
+    DELETE TG_ZSDT0001 WHERE NR_SAFRA NE P_SAFRA-LOW.
+  ENDIF.
+
+  CHECK TG_ZSDT0001[] IS NOT INITIAL.
+
+  IF  V_TP_ROM = 'PROPRIO'.
+    "Recupera o DCO das Notas.
+    SELECT *
+      FROM ZDCO_VINCULO INTO TABLE TG_ZDCO_VINCULO
+       FOR ALL ENTRIES IN TG_ZSDT0001
+     WHERE VBELN EQ TG_ZSDT0001-DOC_REM.
+  ENDIF.
+
+  SELECT *
+    FROM ZLEST0158 INTO TABLE TG_ZLEST0158
+     FOR ALL ENTRIES IN TG_ZSDT0001
+   WHERE CH_REFERENCIA = TG_ZSDT0001-CH_REFERENCIA.
+
+ENDFORM.
+
+FORM F_PROCESSA_DADOS .
+
+  LOOP AT TG_ZSDT0001.
+
+    CLEAR: WA_SAIDA_0100.
+
+    MOVE-CORRESPONDING TG_ZSDT0001 TO WA_SAIDA_0100.
+
+    WA_SAIDA_0100-CH_REFERENCIA =  TG_ZSDT0001-CH_REFERENCIA.
+    WA_SAIDA_0100-DT_MOVIMENTO  =  TG_ZSDT0001-DT_MOVIMENTO.
+    WA_SAIDA_0100-NR_ROMANEIO   =  TG_ZSDT0001-NR_ROMANEIO.
+    WA_SAIDA_0100-DOCDAT        =  TG_ZSDT0001-DOCDAT.
+    WA_SAIDA_0100-NFNUM         =  TG_ZSDT0001-NFNUM.
+    WA_SAIDA_0100-SERIES        =  TG_ZSDT0001-SERIES.
+    WA_SAIDA_0100-NR_SAFRA      =  TG_ZSDT0001-NR_SAFRA.
+
+    READ TABLE TG_ZDCO_VINCULO WITH KEY VBELN = TG_ZSDT0001-DOC_REM.
+    IF SY-SUBRC = 0.
+      WA_SAIDA_0100-NR_DCO = TG_ZDCO_VINCULO-NR_DCO.
+    ENDIF.
+
+    READ TABLE TG_ZLEST0158 WITH KEY CH_REFERENCIA = TG_ZSDT0001-CH_REFERENCIA.
+    IF SY-SUBRC = 0.
+      WA_SAIDA_0100-MOTIVO_BAIXA = TG_ZLEST0158-MOTIVO.
+      WA_SAIDA_0100-DT_BAIXA     = TG_ZLEST0158-DT_REGISTRO.
+      WA_SAIDA_0100-HR_BAIXA     = TG_ZLEST0158-HR_REGISTRO.
+      WA_SAIDA_0100-US_BAIXA     = TG_ZLEST0158-US_REGISTRO.
+    ENDIF.
+
+    CASE 'X'.
+      WHEN P_PENDE.
+        CHECK WA_SAIDA_0100-MOTIVO_BAIXA IS INITIAL.
+      WHEN P_BAIXA.
+        CHECK WA_SAIDA_0100-MOTIVO_BAIXA IS NOT INITIAL.
+      WHEN P_AMBAS.
+    ENDCASE.
+
+    APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+  ENDLOOP.
+
+ENDFORM.

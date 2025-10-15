@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Criar lançamento - ISENÇÃO JUROS</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFI_CRIAR_LANCAMENTOF01</SOBJ_NAME>
+    <SOBJ_NAME>LZFI_CRIAR_LANCAMENTOTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFI_CRIAR_LANCAMENTO</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFI_CRIAR_LANCAMENTO</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_EDIT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZFI_EDIT</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_NUMERO_LANCAMENTO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZSEQ_LAC_INS</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>T_026</PARAMETER>
+       <DBSTRUCT>ZFIT0026</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_EDIT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_NUMERO_LANCAMENTO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_026</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

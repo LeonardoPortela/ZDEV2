@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_9000.
+  MODULE create_container.
+
+PROCESS AFTER INPUT.
+  MODULE user_command_9000.

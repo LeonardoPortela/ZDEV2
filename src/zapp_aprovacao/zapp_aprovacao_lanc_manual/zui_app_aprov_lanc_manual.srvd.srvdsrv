@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Def - Aprov. Lanc. Manual'
+define service ZUI_APP_APROV_LANC_MANUAL {
+  expose ZC_APROV_LANC_MANUAL as LancManual;
+  expose ZC_APROV_LANC_MANUAL_IT as LancManualIt;
+  expose ZC_APROV_LANC_MANUAL_EST as LancManualEst;
+}

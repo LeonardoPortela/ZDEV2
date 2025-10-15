@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Atualiza as notas na operação da ordem</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZPM_ATUALIZA_OBJETOS_ORDEMTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZPM_ATUALIZA_OBJETOS_ORDEM</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_ATUALIZA_OBJETOS_ORDEM</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_AUFNR</PARAMETER>
+       <TYP>AUFK-AUFNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_NOTAS</PARAMETER>
+       <TYP>ZPMT0020_T</TYP>
+      </RSIMP>
+     </IMPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>I_OPROL</PARAMETER>
+       <DBSTRUCT>BAPI_ALM_OLIST_RELATION</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_AUFNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_NOTAS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_OPROL</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

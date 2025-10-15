@@ -1,0 +1,8 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_0121.
+*
+PROCESS AFTER INPUT.
+  MODULE user_command_0121.
+
+PROCESS ON VALUE-REQUEST.
+  FIELD zsdt0172-codigo_ncm MODULE busca_ncm_material.

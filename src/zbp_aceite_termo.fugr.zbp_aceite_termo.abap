@@ -1,0 +1,33 @@
+FUNCTION ZBP_ACEITE_TERMO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     VALUE(I_PROTOCOLO) TYPE  STRING OPTIONAL
+*"     VALUE(I_ACEITE) TYPE  CHAR1 OPTIONAL
+*"  TABLES
+*"      I_FORNECEDOR_SAP STRUCTURE  KNA1
+*"----------------------------------------------------------------------
+  DATA: GO_INT TYPE REF TO ZCL_INTEGRACAO_DATASHARE.
+  DATA: LT_KNA1 TYPE STANDARD TABLE OF KNA1,
+        LW_KNA1 TYPE KNA1.
+
+  LT_KNA1[] = CORRESPONDING #( I_FORNECEDOR_SAP[] ).
+
+  READ TABLE LT_KNA1 INTO LW_KNA1 INDEX 1. "  lw_kna1 = CORRESPONDING #( i_fornecedor_sap ).
+
+  IF LW_KNA1-LIFNR IS NOT INITIAL.
+    CREATE OBJECT GO_INT
+      EXPORTING
+        I_SERVICO        = 'CADASTRO_DATASHARE'
+        I_FORNECEDOR_SAP = LW_KNA1-LIFNR
+        I_CLIENTE        = LW_KNA1-KUNNR
+        I_PROTOCOLO      = I_PROTOCOLO
+        I_ACEITE         = I_ACEITE.
+
+    TRY .
+        GO_INT->ZIF_INTEGRACAO_DATASHARE~SET_CADASTRO( ).
+      CATCH ZCX_INTEGRACAO.
+      CATCH ZCX_ERROR.
+    ENDTRY.
+  ENDIF.
+ENDFUNCTION.

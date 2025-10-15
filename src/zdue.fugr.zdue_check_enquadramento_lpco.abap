@@ -1,0 +1,23 @@
+FUNCTION ZDUE_CHECK_ENQUADRAMENTO_LPCO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_CODIGO_ENQUADRAMENTO) TYPE  ZDE_CODIGO_ENQUADRAMENTO
+*"  EXPORTING
+*"     REFERENCE(E_ENQ_LPCO) TYPE  CHAR01
+*"----------------------------------------------------------------------
+
+  E_ENQ_LPCO = ABAP_FALSE.
+
+  CHECK I_CODIGO_ENQUADRAMENTO IS NOT INITIAL.
+
+  SELECT SINGLE *
+    FROM SETLEAF INTO @DATA(_WL_SETLEAF_DUE_ENQ_LPCO)
+   WHERE SETNAME EQ 'DUE_ENQ_LPCO'
+     AND VALFROM EQ @I_CODIGO_ENQUADRAMENTO.
+
+  IF SY-SUBRC EQ 0.
+    E_ENQ_LPCO = ABAP_TRUE.
+  ENDIF.
+
+ENDFUNCTION.

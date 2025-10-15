@@ -1,0 +1,1576 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZRFFOM100</NAME>
+    <DBAPL>F</DBAPL>
+    <DBNA>PY</DBNA>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <RLOAD>D</RLOAD>
+    <LDBNAME>PYF</LDBNAME>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_IBAN</KEY>
+     <ENTRY>Encaminhar IBAN</ENTRY>
+     <LENGTH>25</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_ISOC</KEY>
+     <ENTRY>Cód.ISO da moeda</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_MAXP</KEY>
+     <ENTRY>Núm.partidas na lista de pgtos</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_MOFI</KEY>
+     <ENTRY>Formato divergente</ENTRY>
+     <LENGTH>27</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_SBNK</KEY>
+     <ENTRY>Cód.SWIFT banco remet.MT101</ENTRY>
+     <LENGTH>35</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_UNIX</KEY>
+     <ENTRY>Nome do file</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_XDTA</KEY>
+     <ENTRY>Pagamentos em formato MT100</ENTRY>
+     <LENGTH>35</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_ZEIL</KEY>
+     <ENTRY>Núm.linhas p/finalidade</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_HBKI</KEY>
+     <ENTRY>Banco da empresa</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_HKTI</KEY>
+     <ENTRY>ID conta</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_UZAW</KEY>
+     <ENTRY>Supl.frm.pgto</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_VBLN</KEY>
+     <ENTRY>Nº documento de pagamento</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_WAER</KEY>
+     <ENTRY>Código da moeda</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEL_ZAWE</KEY>
+     <ENTRY>Formas de pagamento</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_ESPR</KEY>
+     <ENTRY>Texto no idioma do recebedor</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>700</KEY>
+     <ENTRY>Cta.nos s/reg.&amp;EIKTO</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>701</KEY>
+     <ENTRY>S/ nº conta &amp;KTNRA</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>702</KEY>
+     <ENTRY>Nº &amp;XBLNR/&amp;BLDAT</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>703</KEY>
+     <ENTRY>&amp;SGTXT</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>704</KEY>
+     <ENTRY>Aviso de &amp;ZALDT para</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>705</KEY>
+     <ENTRY>Doc.pagamento &amp;VBLNR</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>706</KEY>
+     <ENTRY>&amp;WNETT desc. &amp;PSATZ</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>707</KEY>
+     <ENTRY>Contrato &amp;VERTN</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>708</KEY>
+     <ENTRY>Ordem &amp;VERTN</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Suporte pgto.internacional - Formato SWIFT MT100</ENTRY>
+     <LENGTH>49</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_ANZP</KEY>
+     <ENTRY>Núm.impressões-teste</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_BELP</KEY>
+     <ENTRY>Verificação de doc.pagamento</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_CBXX</KEY>
+     <ENTRY>Ordem de pagamento coletivo</ENTRY>
+     <LENGTH>35</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_DTYP</KEY>
+     <ENTRY>Meio de saída</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>700</KEY>
+       <ENTRY>Kto bei Ihnen &amp;EIKTO</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>701</KEY>
+       <ENTRY>Ihre Kontonr. &amp;KTNRA</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>702</KEY>
+       <ENTRY>Nr.&amp;XBLNR/&amp;BLDAT</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>703</KEY>
+       <ENTRY>&amp;SGTXT</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>704</KEY>
+       <ENTRY>Avis vom &amp;ZALDT zu</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>705</KEY>
+       <ENTRY>Zahlungsbeleg &amp;VBLNR</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>706</KEY>
+       <ENTRY>&amp;WNETT Skonto &amp;PSATZ</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>707</KEY>
+       <ENTRY>Vertrag &amp;VERTN</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>708</KEY>
+       <ENTRY>Auftrag &amp;VERTN</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Zahlungsträger International - SWIFT-Format MT100</ENTRY>
+       <LENGTH>49</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ANZP</KEY>
+       <ENTRY>Anzahl Probedrucke</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_AVIS</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_BEGL</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_BELP</KEY>
+       <ENTRY>Zahlungsbeleg-Verprobung</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_CBXX</KEY>
+       <ENTRY>Sammelauftrag</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DTYP</KEY>
+       <ENTRY>Ausgabemedium</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ESPR</KEY>
+       <ENTRY>Texte in Empfängersprache</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_IBAN</KEY>
+       <ENTRY>IBAN weiterleiten</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ISOC</KEY>
+       <ENTRY>Währung in ISO-Code</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MAXP</KEY>
+       <ENTRY>Postenzahl Begleitliste</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MOFI</KEY>
+       <ENTRY>Abweichendes Format</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_PRIA</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_PRIB</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_SBNK</KEY>
+       <ENTRY>SWIFT-Code MT101-Senderbank</ENTRY>
+       <LENGTH>35</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_SOFA</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_SOFB</KEY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_UNIX</KEY>
+       <ENTRY>Filename</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_XDTA</KEY>
+       <ENTRY>Zahlungen im MT100-Format</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ZEIL</KEY>
+       <ENTRY>Anzahl Verwendungszweckzeilen</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HBKI</KEY>
+       <ENTRY>Hausbank</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HKTI</KEY>
+       <ENTRY>Konto-Id</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_UZAW</KEY>
+       <ENTRY>Zahlwegzusatz</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_VBLN</KEY>
+       <ENTRY>Zahlungsbelegnummer</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_WAER</KEY>
+       <ENTRY>Währungsschlüssel</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_ZAWE</KEY>
+       <ENTRY>Zahlwege</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_IBAN</KEY>
+       <ENTRY>Transfer IBAN</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ISOC</KEY>
+       <ENTRY>Currency in ISO code</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MAXP</KEY>
+       <ENTRY>No.of items in payment summary</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MOFI</KEY>
+       <ENTRY>Alternative format</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_SBNK</KEY>
+       <ENTRY>SWIFT cde MT101 sender bank</ENTRY>
+       <LENGTH>35</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_UNIX</KEY>
+       <ENTRY>File name</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_XDTA</KEY>
+       <ENTRY>Payments in MT100 format</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ZEIL</KEY>
+       <ENTRY>Number of note to payee lines</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HBKI</KEY>
+       <ENTRY>House bank</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HKTI</KEY>
+       <ENTRY>Account ID</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_UZAW</KEY>
+       <ENTRY>Payment method supplement</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_VBLN</KEY>
+       <ENTRY>Payment document number</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_WAER</KEY>
+       <ENTRY>Currency key</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_ZAWE</KEY>
+       <ENTRY>Payment methods</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ESPR</KEY>
+       <ENTRY>Texts in recipient&apos;s language</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>700</KEY>
+       <ENTRY>Acct with you &amp;EIKTO</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>701</KEY>
+       <ENTRY>Your acct no. &amp;KTNRA</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>702</KEY>
+       <ENTRY>Inv. &amp;XBLNR fr.&amp;BLDAT</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>703</KEY>
+       <ENTRY>&amp;SGTXT</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>704</KEY>
+       <ENTRY>P.adv.fr.&amp;ZALDT to</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>705</KEY>
+       <ENTRY>Pmnt document &amp;VBLNR</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>706</KEY>
+       <ENTRY>&amp;WNETT cash discount &amp;PSATZ</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>707</KEY>
+       <ENTRY>Contract &amp;VERTN</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>708</KEY>
+       <ENTRY>Order &amp;VERTN</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>International Payment Medium - SWIFT Format MT100</ENTRY>
+       <LENGTH>49</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ANZP</KEY>
+       <ENTRY>Number of sample printouts</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_BELP</KEY>
+       <ENTRY>Payment document validation</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_CBXX</KEY>
+       <ENTRY>Collective payment order</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DTYP</KEY>
+       <ENTRY>Output medium</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>S</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_IBAN</KEY>
+       <ENTRY>Transmitir IBAN</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ISOC</KEY>
+       <ENTRY>Moneda en código ISO</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MAXP</KEY>
+       <ENTRY>Nº partidas lista adjunta</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_MOFI</KEY>
+       <ENTRY>Formato alternativo</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_SBNK</KEY>
+       <ENTRY>Cód.SWIFT banco emisor MT101</ENTRY>
+       <LENGTH>36</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_UNIX</KEY>
+       <ENTRY>Nombre de fichero</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_XDTA</KEY>
+       <ENTRY>Pagos en formato MT100</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ZEIL</KEY>
+       <ENTRY>Nº de líneas de destino util.</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HBKI</KEY>
+       <ENTRY>Banco propio</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_HKTI</KEY>
+       <ENTRY>ID de cuenta</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_UZAW</KEY>
+       <ENTRY>Suplemento de vía de pago</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_VBLN</KEY>
+       <ENTRY>Número del documento de pago</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_WAER</KEY>
+       <ENTRY>Clave de moneda</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEL_ZAWE</KEY>
+       <ENTRY>Vías de pago</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ESPR</KEY>
+       <ENTRY>Textos en idioma receptor</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>700</KEY>
+       <ENTRY>Ntra.cta.c/Uds.&amp;EIKTO</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>701</KEY>
+       <ENTRY>Su núm.cuenta &amp;KTNRA</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>702</KEY>
+       <ENTRY>Nº &amp;XBLNR/&amp;BLDAT</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>703</KEY>
+       <ENTRY>&amp;SGTXT</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>704</KEY>
+       <ENTRY>Aviso del &amp;ZALDT para</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>705</KEY>
+       <ENTRY>Documento pago &amp;VBLNR</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>706</KEY>
+       <ENTRY>&amp;WNETT Descuento &amp;PSATZ</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>707</KEY>
+       <ENTRY>Cntrato.&amp;VERTN</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>708</KEY>
+       <ENTRY>Orden &amp;VERTN</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Medio de pago internacional - Formato SWIFT MT100</ENTRY>
+       <LENGTH>49</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_ANZP</KEY>
+       <ENTRY>Ctd.impresiones de prueba</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_BELP</KEY>
+       <ENTRY>Comprobación docs.pago</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_CBXX</KEY>
+       <ENTRY>Orden de pago colectiva</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DTYP</KEY>
+       <ENTRY>Medio de salida</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFFOM100</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00046</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFFOM100</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042B-AFORN&amp; = &apos;F110_D_AVIS&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-WFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ZFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ANZPO&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-XFOSP&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-PROGN&amp; = &apos;RFFOM100&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-ZLSTN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-TXTSL&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSCHK&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSWEC&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Das Programm erstellt Nachrichten im Format MT100 Customer Transfer.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Hierbei liegt die Formatspezifikation zugrunde, wie sie im S.W.I.F.T.-</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Handbuch Standards 2 beschrieben ist. Das Format findet im</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>internationalen Zahlungsverkehr zur Übertragung ausgehender Zahlungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Verwendung. Der Anwender kann entscheiden, ob er ein File pro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Zahlungsanweisung erstellen oder mehrere Anweisungen in einem File</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>zusammenfassen möchte. Neben dem Ausgabefile mit den MT100-Nachrichten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>können auch die zugehörigen Avise und Zahlungsbegleitlisten gedruckt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_F110    &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042B   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042Z   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042E   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T015W   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_LAYOUT_SET&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>RESET N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_SYMBOLS   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_ADVICE    &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_MAINTAIN  &apos; OBJECT DOKU ID TX PARAGRAPH AS</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_PAYMENT_RUN         &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_SPOOL        &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME          &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Weitergehende Informationen zum Aufbau des Datenträgers entnehmen Sie</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>bitte der &lt;DS:TX.FI_RFFO_TECHN_INFO_RFFOM100&gt;technischen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Beschreibung&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_FILE     &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_TEMSE    &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>User-Exit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Sie können die Ausgabe des Programms modifizieren, indem Sie die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>vorgesehenen User-Exit-Schnittstellen benutzen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Näheres zur Modifikation des MT100-Records finden Sie in der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Dokumentation zu &lt;DS:TX.FI_RFFOM100_DESC_USEREXIT&gt;User-Exits für</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>MT100.&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_ERRORMESSAGES&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFFOM100</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00043</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFFOM100</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042B-AFORN&amp; = &apos;F110_D_AVIS&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-WFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ZFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ANZPO&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-XFOSP&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-PROGN&amp; = &apos;RFFOM100&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-ZLSTN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-TXTSL&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSCHK&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSWEC&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>This program generates messages in the MT100 Customer Transfer format.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>This program is based on the the format specification described in the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>S.W.I.F.T. manual Standards 2. The format is used in international</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>payments for transferring outgoing payments. The user can decide</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>whether to generate a file for each payment or to bundle multiple</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>payments in a single file. You can print the accompanying advice notes</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>and payment summaries as well as the output file with the MT100</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>messages.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_F110    &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042B   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042Z   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042E   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T015W   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_LAYOUT_SET&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>RESET N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_SYMBOLS   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_ADVICE    &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_MAINTAIN  &apos; OBJECT DOKU ID TX PARAGRAPH AS</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_PAYMENT_RUN         &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_SPOOL        &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME          &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>For further information on creating a data medium, refer to the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;DS:TX.FI_RFFO_TECHN_INFO_RFFOM100&gt;technical description&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_FILE     &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_TEMSE    &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>User Exit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>You can modify the output of the program by using the user exit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>interface defined for this purpose.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>For more information on modifying the MT100 record, refer to the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documentation on &lt;DS:TX.FI_RFFOM100_DESC_USEREXIT&gt;user exits&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_ERRORMESSAGES&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFFOM100</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00044</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFFOM100</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042B-AFORN&amp; = &apos;F110_D_AVIS&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-WFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ZFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ANZPO&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-XFOSP&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-PROGN&amp; = &apos;RFFOM100&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-ZLSTN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-TXTSL&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSCHK&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSWEC&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>O programa cria mensagens no formato MT100 Customer Transfer. Neste</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>caso, a especificação do formato é usada como base, como está descrito</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>no manual standard 2 S.W.I.F.T.. O formato é utilizado nos pagamentos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>internacionais para a transferência de pagamentos de saída?. O usuário</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>pode decidir pela criação de um file para cada instrução de pagamento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ou pelo agrupamento de várias instruções em um file. Além do file de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>saída com as mensagens MT100, também podem ser imprimidos os</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>respectivos avisos de pagamento e as listas de pagamentos.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_F110    &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042B   &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042Z   &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042E   &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T015W   &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_LAYOUT_SET&apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>RESET N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_SYMBOLS   &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_ADVICE    &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_MAINTAIN  &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_PAYMENT_RUN         &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_SPOOL        &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME          &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Outras informações referentes à estrutura do suporte de dados, retirar</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>da &lt;DS:TX.FI_RFFO_TECHN_INFO_RFFOM100&gt;descrição técnica&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_FILE     &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_TEMSE    &apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>User-Exit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>É possível modificar a edição do programa, se utilizar a interface</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>prevista user-exit.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Mais informações referentes ao registro MT100, encontram-se na</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documentação para &lt;DS:TX.FI_RFFOM100_DESC_USEREXIT&gt;User-Exits</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>referentes a MT100&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_ERRORMESSAGES&apos; LANGUAGE PT</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFFOM100</OBJECT>
+      <LANGU>S</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00044</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFFOM100</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>S</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042B-AFORN&amp; = &apos;F110_D_AVIS&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-WFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ZFORN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-ANZPO&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042E-XFOSP&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-PROGN&amp; = &apos;RFFOM100&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-ZLSTN&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-TXTSL&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSCHK&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>DEFINE &amp;T042Z-XSWEC&amp; = &apos; &apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/*</TDFORMAT>
+       <TDLINE>------------------------------------------------------------------------</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>El programa genera mensajes en formato MT100 Customer Transfer. La base</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>es la especificación de fomrato tal como viene descrita en el segundo</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>libro del manual SWIFT. El formato se utiliza en los pagos automáticos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>internacionales para la transferencia de de pagos efectuados. El</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>usuario puede decidir si desea crear un archivo por orden de pago o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>varias instrucciones en un sólo fichero. Junto al fichero de salida con</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>los mensajes MT100 también pueden imprimirse los avisos y listas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>adjuntas a los pagos correspondientes.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_F110    &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042B   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042Z   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T042E   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_CUSTOMIZING_T015W   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_LAYOUT_SET&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>RESET N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_SYMBOLS   &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_ADVICE    &apos; OBJECT DOKU ID TX PARAGRAPH N1</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_SAPSCRIPT_MAINTAIN  &apos; OBJECT DOKU ID TX PARAGRAPH AS</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_PAYMENT_RUN         &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_SPOOL        &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME          &apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Encontrará más información relativa a la estructura del soporte de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>datos en la &lt;DS:TX.FI_RFFO_TECHN_INFO_RFFOM100&gt;Descripción técnica&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_FILE     &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_DME_TEMSE    &apos; OBJECT DOKU ID TX PARAGRAPH U3</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Salida de usuario</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Puede modificar la salida de usuario utilizando las interfases de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>salida de usuario previstas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Encontrará información más detallada relativa a la modificación del los</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>registros MT100 en la documentación para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>  &lt;DS:TX.FI_RFFOM100_DESC_USEREXIT&gt;Salidas de usuario MT100.&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FI_RFFO_OUTPUT_ERRORMESSAGES&apos; OBJECT DOKU ID TX PARAGRAPH U2</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

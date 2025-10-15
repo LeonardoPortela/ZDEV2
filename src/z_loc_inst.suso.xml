@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>Z_LOC_INST</OBJCT>
+    <FIEL1>ACTVT</FIEL1>
+    <OCLSS>PM</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>Z_LOC_INST</OBJECT>
+    <TTEXT>Criar setor/tipo de equipamento para locais de instalações</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>Z_LOC_INST</OBJCT>
+   </TOBJVORFLG>
+   <TACTZ>
+    <TACTZ>
+     <BROBJ>Z_LOC_INST</BROBJ>
+     <ACTVT>01</ACTVT>
+    </TACTZ>
+   </TACTZ>
+  </asx:values>
+ </asx:abap>
+</abapGit>

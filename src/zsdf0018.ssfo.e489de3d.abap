@@ -1,0 +1,23 @@
+IF WA_CONTRATO-TOTAL_USS IS NOT INITIAL.
+V_TOTAL_USS = WA_CONTRATO-TOTAL_USS.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

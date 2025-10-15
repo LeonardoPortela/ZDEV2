@@ -1,0 +1,275 @@
+*----------------------------------------------------------------------*
+***INCLUDE MZBALANCO_2000 .
+*----------------------------------------------------------------------*
+
+SELECTION-SCREEN BEGIN OF SCREEN 2101 AS SUBSCREEN.
+SELECTION-SCREEN BEGIN OF BLOCK Z210 WITH FRAME TITLE TEXT-008.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 01(10) TEXT-001 FOR FIELD P_BUKRS.
+PARAMETERS: R_BUKRS TYPE BUKRS OBLIGATORY MATCHCODE OBJECT C_T001.
+SELECTION-SCREEN POSITION 20.
+PARAMETERS: R_BUTXT TYPE C LENGTH 50 DEFAULT text-060."'<Informe empresa do Demonstrativo>'.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(10) TEXT-002 FOR FIELD P_GJAHR.
+PARAMETERS: R_GJAHR TYPE GJAHR OBLIGATORY.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(10) TEXT-003 FOR FIELD P_MONAT.
+PARAMETERS: R_MONAT  TYPE MONAT OBLIGATORY.
+SELECTION-SCREEN POSITION 20.
+PARAMETERS: R_MONAT2 TYPE MONAT OBLIGATORY.
+SELECTION-SCREEN END OF LINE.
+
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(10) TEXT-004 FOR FIELD P_WAERS.
+PARAMETERS: R_WAERS TYPE WAERS OBLIGATORY DEFAULT 'BRL' MATCHCODE OBJECT H_TCURC.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN SKIP.
+
+SELECTION-SCREEN BEGIN OF BLOCK Z210A WITH FRAME TITLE TEXT-009.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(10) TEXT-007 FOR FIELD P_ESTR.
+PARAMETERS: R_ESTR TYPE VERSN_011 MATCHCODE OBJECT ZH_ZGLT046.
+SELECTION-SCREEN POSITION 20.
+PARAMETERS: R_ESTT TYPE C LENGTH 50 DEFAULT text-060."'<Informe estrutura do Demonstrativo>'.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN SKIP.
+
+SELECTION-SCREEN BEGIN OF LINE.
+PARAMETERS: C_VOLUME AS CHECKBOX.
+SELECTION-SCREEN COMMENT 3(73) TEXT-011.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.
+PARAMETERS: R_VCSV TYPE CHAR01 AS CHECKBOX.
+SELECTION-SCREEN COMMENT 03(73) TEXT-010.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN END OF BLOCK Z210A.
+
+"SELECTION-SCREEN ULINE.
+
+PARAMETERS: R_FILE TYPE IBIPPARMS-PATH NO-DISPLAY.
+
+SELECTION-SCREEN END OF BLOCK Z210.
+SELECTION-SCREEN END OF SCREEN 2101.
+
+AT SELECTION-SCREEN ON R_BUKRS.
+  SELECT SINGLE BUTXT INTO R_BUTXT FROM T001 WHERE BUKRS EQ R_BUKRS.
+  IF SY-SUBRC IS NOT INITIAL.
+    MESSAGE E018 WITH R_BUKRS.
+  ENDIF.
+
+AT SELECTION-SCREEN ON R_WAERS.
+
+  DATA: WL_T001  TYPE T001,
+        EL_X001  LIKE X001.
+
+  SELECT SINGLE * INTO WL_T001 FROM T001 WHERE BUKRS EQ R_BUKRS.
+
+  IF R_WAERS NE WL_T001-WAERS.
+    CALL FUNCTION 'FI_CURRENCY_INFORMATION'
+      EXPORTING
+        I_BUKRS                = WL_T001-BUKRS
+      IMPORTING
+        E_X001                 = EL_X001
+      EXCEPTIONS
+        CURRENCY_2_NOT_DEFINED = 1
+        CURRENCY_3_NOT_DEFINED = 2
+        OTHERS                 = 3.
+
+    IF ( R_WAERS NE EL_X001-HWAE2 ) AND ( R_WAERS NE EL_X001-HWAE3 ).
+      MESSAGE E017 WITH R_WAERS WL_T001-BUKRS.
+    ENDIF.
+
+  ENDIF.
+
+
+
+AT SELECTION-SCREEN ON R_ESTR.
+
+  DATA: WA_46 TYPE ZGLT046.
+
+  IF SY-UCOMM NE 'GERAR' AND R_ESTR IS INITIAL .
+
+    CLEAR: SY-UCOMM.
+
+    DATA: VG_TIPO    TYPE ZDE_VERSNT.
+    CLEAR: R_ESTT.
+
+    VG_TIPO = '3'.
+
+    SELECT SINGLE * INTO WA_46 FROM ZGLT046 WHERE VERSNT EQ VG_TIPO.
+    IF SY-SUBRC IS NOT INITIAL.
+      CLEAR: R_ESTT, R_ESTR.
+      "Estrutura para Este tipo de Demonstrativo não Cadastrada!
+      MESSAGE S015 DISPLAY LIKE 'E'.
+    ELSE.
+      R_ESTT = WA_46-VSTXT.
+      R_ESTR = WA_46-VERSN.
+    ENDIF.
+
+    IF R_BUKRS IS NOT INITIAL.
+      SELECT SINGLE BUTXT INTO R_BUTXT FROM T001 WHERE BUKRS EQ R_BUKRS.
+    ENDIF.
+
+  ELSEIF SY-UCOMM EQ 'GERAR'.
+
+    IF R_ESTR IS INITIAL.
+      "Deve ser informado uma Estrutura p/ Demonstrativo!
+      MESSAGE E016.
+    ENDIF.
+
+    VG_TIPO = '3'.
+
+    SELECT SINGLE * INTO WA_46 FROM ZGLT046 WHERE VERSNT EQ VG_TIPO AND VERSN EQ R_ESTR.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      "Estrutura &1 não compatível com Demonstrativo Selecionado!
+      MESSAGE E013 WITH R_ESTR.
+    ENDIF.
+
+  ENDIF.
+
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_2000  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_2000 OUTPUT.
+
+  DATA: WA_FCODE2201 TYPE SY-UCOMM,
+        IT_FCODE2201 LIKE TABLE OF WA_FCODE2201.
+
+  IF TL_2000_PAI IS INITIAL.
+    TL_2000_PAI = TL_2100.
+  ENDIF.
+
+  CASE TL_2000_PAI.
+    WHEN TL_2100.
+
+      SET PF-STATUS 'PF1102'.
+      SET TITLEBAR 'TL2101'.
+
+    WHEN TL_2201.
+
+      CLEAR: IT_FCODE2201.
+
+      IF IT_CONTAS_SOLTAS[] IS INITIAL.
+        WA_FCODE2201 = OK_EXCECAO.
+        APPEND WA_FCODE2201 TO IT_FCODE2201.
+      ENDIF.
+
+      IF IT_CONTAS_SALDO[] IS INITIAL.
+        WA_FCODE2201 = OK_EXCECAO2.
+        APPEND WA_FCODE2201 TO IT_FCODE2201.
+      ENDIF.
+
+      SET PF-STATUS 'PF1103' EXCLUDING IT_FCODE2201.
+      SET TITLEBAR 'TL2201'.
+  ENDCASE.
+
+ENDMODULE.                 " STATUS_2000  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2000_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_2000_EXIT INPUT.
+
+  CASE TL_2000_PAI.
+    WHEN TL_2100.
+      LEAVE PROGRAM.
+  ENDCASE.
+
+ENDMODULE.                 " USER_COMMAND_2000_EXIT  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2000  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_2000 INPUT.
+
+  CASE TL_2000_PAI.
+      "Select Sreen
+    WHEN TL_2100.
+      CASE OK_CODE_2000.
+        WHEN OK_GERAR.
+          PERFORM VALIDAR_ESTRUTURA_03.
+          PERFORM CHAMA_TREE_VIEW_03.
+      ENDCASE.
+
+      "Tela de Demonstrativo de Receita Operacional
+    WHEN TL_2201.
+      CASE OK_CODE_2000.
+        WHEN OK_BACK.
+          TL_2000_PAI = TL_2100.
+          LEAVE TO SCREEN 2000.
+      ENDCASE.
+  ENDCASE.
+
+ENDMODULE.                 " USER_COMMAND_2000  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Form  VALIDAR_ESTRUTURA_03
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM VALIDAR_ESTRUTURA_03 .
+
+  DATA: VG_TIPO    TYPE ZDE_VERSNT,
+        WA_ZGLT046 TYPE ZGLT046,
+        WA_T001    TYPE T001,
+        E_X001     LIKE X001.
+
+  VG_TIPO = '3'.
+
+  SELECT SINGLE *
+    INTO WA_ZGLT046
+    FROM ZGLT046
+   WHERE VERSN  EQ R_ESTR
+     AND VERSNT EQ VG_TIPO.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    MESSAGE E013 WITH R_ESTR.
+  ENDIF.
+
+  SELECT SINGLE  * INTO WA_T001 FROM T001 WHERE BUKRS EQ R_BUKRS.
+
+  IF R_WAERS NE WA_T001-WAERS.
+    CALL FUNCTION 'FI_CURRENCY_INFORMATION'
+      EXPORTING
+        I_BUKRS                = WA_T001-BUKRS
+      IMPORTING
+        E_X001                 = E_X001
+      EXCEPTIONS
+        CURRENCY_2_NOT_DEFINED = 1
+        CURRENCY_3_NOT_DEFINED = 2
+        OTHERS                 = 3.
+
+    IF ( R_WAERS NE E_X001-HWAE2 ) AND ( R_WAERS NE E_X001-HWAE3 ).
+      MESSAGE E017 WITH R_WAERS WA_T001-BUKRS.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.                    " VALIDAR_ESTRUTURA_03
+
+*&---------------------------------------------------------------------*
+*&      Form  CHAMA_TREE_VIEW_03
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM CHAMA_TREE_VIEW_03.
+  TL_2000_PAI = TL_2201.
+ENDFORM.                    " CHAMA_TREE_VIEW_03

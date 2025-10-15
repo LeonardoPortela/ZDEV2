@@ -1,0 +1,21 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="ORDER_HEARDER" type="ddic:ZCOUPA_PEDIDO_CUSTOM_FIELDS"/>
+  <tt:template>
+    <order-header>
+      <id tt:value-ref=".ORDER_HEARDER.ID"/>
+      <custom-fields>
+        <TIPO-DE-PEDIDO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.TIPO_DE_PEDIDO"/>
+        <REQ-AUTOMATICA tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.REQ_AUTOMATICA"/>
+        <CD_FORNECEDOR-PARCEIRO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.CD_FORNECEDOR_PARCEIRO"/>
+        <FORNECEDOR-PARCEIRO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.FORNECEDOR_PARCEIRO"/>
+        <HISTRICO-DE-FATURAMENTO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.HISTRICO_DE_FATURAMENTO"/>
+        <TAXA-DE-CAMBIO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.TAXA_DE_CAMBIO"/>
+        <STATUS-DA-INTEGRAO tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.STATUS_DA_INTEGRAO"/>
+        <LIBERACAO-PERFIL tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.LIBERACAO_PERFIL"/>
+        <STATUS-HOMOLOGAO-FORNECEDOR tt:value-ref=".ORDER_HEARDER.CUSTOM_FIELDS.STATUS_HOMOLOGAO_FORNECEDOR"/>
+      </custom-fields>
+    </order-header>
+  </tt:template>
+</tt:transform>

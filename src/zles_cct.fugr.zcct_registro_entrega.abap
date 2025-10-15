@@ -1,0 +1,150 @@
+FUNCTION ZCCT_REGISTRO_ENTREGA .
+*"--------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     VALUE(I_REGISTRO_ENTREGA) TYPE  ZDE_REGISTRO_ENTREGA
+*"     REFERENCE(I_ZSDT0170) TYPE  ZSDT0170_T OPTIONAL
+*"--------------------------------------------------------------------
+
+  CLEAR: CAB_ENTREGA, ENTREGA_CONTROL, ENTREGA_DEFAULT, IT_SAIDA_0120[], IT_SAIDA_0122[], OK_CODE_0100.
+
+  PERFORM: FREE_ALV USING '0120',
+           FREE_ALV USING '0122'.
+
+*-----------------------------------------------------------------------------------------------------*
+*  Define Valores Default para a Estrutura
+*-----------------------------------------------------------------------------------------------------*
+
+  ENTREGA_CONTROL-MODO      = I_REGISTRO_ENTREGA-MODO.
+
+  IF I_ZSDT0170 IS NOT INITIAL.
+    ENTREGA_CONTROL-NO_EDIT_DOCUMENTOS = 'X'.
+  ENDIF.
+
+  "Inicializa Control Tab.
+  ENTREGA_DYNNR_000          = ENTREGA_0110.
+  INFO_ENTREGA_TAB-ACTIVETAB = ENTREGA_TB01.
+
+  IF ( ENTREGA_CONTROL-MODO = C_ENTREGA_CHANGE ) OR
+     ( ENTREGA_CONTROL-MODO = C_ENTREGA_VIEW   ).
+
+    IF I_REGISTRO_ENTREGA-ID_ENTREGA IS INITIAL.
+      MESSAGE |Id. da Entrega não foi informado!| TYPE 'W'.
+      RETURN.
+    ENDIF.
+
+    "Cabeçalho
+    SELECT SINGLE *
+      FROM ZSDT0179 INTO @DATA(_WL_0179)
+     WHERE ID_ENTREGA EQ @I_REGISTRO_ENTREGA-ID_ENTREGA.
+
+    IF SY-SUBRC NE 0.
+      MESSAGE |Entrega com Id. { I_REGISTRO_ENTREGA-ID_ENTREGA } não encontrada!| TYPE 'W'.
+      RETURN.
+    ENDIF.
+
+    MOVE-CORRESPONDING _WL_0179 TO CAB_ENTREGA.
+
+    "Documentos
+    SELECT *
+      FROM ZSDT0180 INTO TABLE @DATA(TG_0180)
+     WHERE ID_ENTREGA EQ @_WL_0179-ID_ENTREGA.
+
+    IF TG_0180[] IS NOT INITIAL.
+      "Documentos de Carga
+      SELECT *
+        FROM ZSDT0181 INTO TABLE @DATA(TG_0181)
+         FOR ALL ENTRIES IN @TG_0180
+       WHERE ID_ENTREGA  EQ @TG_0180-ID_ENTREGA
+         AND NUMERO_DUE  EQ @TG_0180-NUMERO_DUE.
+    ENDIF.
+
+    "Carrega Tabelas de Saída.
+
+    "Documentos
+    LOOP AT TG_0180 INTO DATA(_WL_0180).
+      CLEAR: WA_SAIDA_0120.
+      MOVE-CORRESPONDING _WL_0180 TO WA_SAIDA_0120.
+      APPEND WA_SAIDA_0120 TO IT_SAIDA_0120.
+    ENDLOOP.
+
+    "Documentos de Carga
+    LOOP AT TG_0181 INTO DATA(_WL_0181).
+      CLEAR: WA_SAIDA_0122.
+      MOVE-CORRESPONDING _WL_0181 TO WA_SAIDA_0122.
+      APPEND WA_SAIDA_0122 TO IT_SAIDA_0122.
+    ENDLOOP.
+
+  ELSE.
+    CLEAR: I_REGISTRO_ENTREGA-ID_ENTREGA.
+  ENDIF.
+
+  CASE ENTREGA_CONTROL-MODO.
+    WHEN C_ENTREGA_NOVO.
+
+      CAB_ENTREGA-TP_ENTREGA          = I_REGISTRO_ENTREGA-TP_ENTREGA.
+      CAB_ENTREGA-BUKRS               = I_REGISTRO_ENTREGA-BUKRS.
+      CAB_ENTREGA-BRANCH              = I_REGISTRO_ENTREGA-BRANCH.
+      CAB_ENTREGA-CNPJ_RESPONSAVEL    = I_REGISTRO_ENTREGA-CNPJ_RESPONSAVEL.
+      CAB_ENTREGA-LOCAL_CODIGO_URF    = I_REGISTRO_ENTREGA-LOCAL_CODIGO_URF.
+      CAB_ENTREGA-LOCAL_CODIGO_RA     = I_REGISTRO_ENTREGA-LOCAL_CODIGO_RA.
+
+      "-------------------------------------------------------------*
+      " Valores Default para Cabeçalho
+      "-------------------------------------------------------------*
+
+      IF I_REGISTRO_ENTREGA-REC_VIA_TRANSPORTE IS NOT INITIAL.
+        CAB_ENTREGA-REC_VIA_TRANSPORTE  = I_REGISTRO_ENTREGA-REC_VIA_TRANSPORTE.
+      ENDIF.
+
+      IF I_REGISTRO_ENTREGA-REC_BALDEACAO_TRANSBORDO IS NOT INITIAL.
+        CAB_ENTREGA-REC_BALDEACAO_TRANSBORDO = I_REGISTRO_ENTREGA-REC_BALDEACAO_TRANSBORDO.
+      ENDIF.
+
+      "Lista DU-e Pré Definida
+      LOOP AT I_ZSDT0170 INTO DATA(_WL_0170).
+        CLEAR: WA_SAIDA_0120.
+
+        WA_SAIDA_0120-NUMERO_DUE = _WL_0170-NUMERO_DUE.
+        WA_SAIDA_0120-ID_DUE     = _WL_0170-ID_DUE.
+        WA_SAIDA_0120-NUMERO_RUC = _WL_0170-NUMERO_RUC.
+
+        MOVE-CORRESPONDING _WL_0170 TO WA_SAIDA_0120.
+        APPEND WA_SAIDA_0120 TO IT_SAIDA_0120.
+      ENDLOOP.
+
+    WHEN C_ENTREGA_CHANGE. "Modificar
+
+      IF CAB_ENTREGA-STATUS EQ '1'. "Registrada no portal
+        MESSAGE S065(ZCCT) DISPLAY LIKE 'E'.
+        RETURN.
+      ENDIF.
+
+    WHEN C_ENTREGA_VIEW. "Visualizar
+
+  ENDCASE.
+
+  CASE ENTREGA_CONTROL-MODO.
+    WHEN C_ENTREGA_NOVO   OR  "Nova
+         C_ENTREGA_CHANGE.    "Modificar.
+      "-------------------------------------------------------------*
+      " Valores Default para novos Documentos de Carga
+      "-------------------------------------------------------------*
+      IF I_REGISTRO_ENTREGA-TIPO_CARGA IS NOT INITIAL.
+        ENTREGA_DEFAULT-TIPO_CARGA = I_REGISTRO_ENTREGA-TIPO_CARGA.
+      ENDIF.
+
+      IF I_REGISTRO_ENTREGA-TIPO_GRANEL IS NOT INITIAL.
+        ENTREGA_DEFAULT-TIPO_GRANEL = I_REGISTRO_ENTREGA-TIPO_GRANEL.
+      ENDIF.
+
+      IF I_REGISTRO_ENTREGA-UNID_MEDIDA IS NOT INITIAL.
+        ENTREGA_DEFAULT-UNID_MEDIDA = I_REGISTRO_ENTREGA-UNID_MEDIDA.
+      ENDIF.
+
+  ENDCASE.
+
+
+  CALL SCREEN 0100 STARTING AT 10 02 ENDING AT 117 23.
+
+ENDFUNCTION.

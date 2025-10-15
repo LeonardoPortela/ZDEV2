@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_INTEGRA_VIP</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Integração VIP - Veson Nautical.</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <LONGTEXTS_CO>
+    <item>
+     <DOKIL>
+      <ID>CO</ID>
+      <OBJECT>ZCL_INTEGRA_VIP               SET_EXCHANGE_RATES</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0001</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00004</TXTLINES>
+      <DOKSTATE>R</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZCL_INTEGRA_VIP               SET_EXCHANGE_RATES</TDNAME>
+      <TDID>CO</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00001</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;FUNCTIONALITY&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Método que busca taxas e envia para o VIP. Esse método é</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>acionado/utilizado no momento que o job Z_LEITURA_XML_EZV_SUICA_15.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Programa do job: Z_LEITURA_XML_EZV_SUICA_2. Função que o job chama:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ZFI_VIP_EXCHANGE_RATES.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;RESULT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PARAMETERS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXCEPTIONS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;HINTS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS_CO>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ARREDONDA_CONTABIL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IMOS - Arredondamento de valores para contabilização</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_API_INVOICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Invoice Criada VIP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_API_INVOICE_CANCEL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cancel Invoice VIP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_API_INVOICE_REVERSAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Reverse Invoice VIP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONVERT_INVOICE_XML_TO_ABAP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Converte XML da invoice em estrutura SAP para lançamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_EXCHANGE_RATES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca as informações de Exchange Rates</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_SIMPLE_PAYMENT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Allows to create a payment in IMOSio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIMPA_TABELA_MENSAGENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpa tabela de logs de envios do SAP p/ IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEND_CONTRAPARTIES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca fornecedores e clientes para enviar ao IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia XML para API. SAP x IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_COUNTERPARTIES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia dados de clientes e fornecedores do SAP p/ IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_COUNTERPARTIES_BANK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia dados bancários dos fornecedores do SAP p/ IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_EXCHANGE_RATES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia as taxas de câmbio do SAP p/ IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_INVOICE_REVERSE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Executa processo de estorno/reverse dos documentos marcados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_INVOICE_XML_TO_SAP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recebe XML da Invoice e grava no SAP</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_INVOICE_ZIB_CONTABIL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera registro das invoices na ZIB_CONTABIL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_RETORNA_STATUS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia status das mensagens para o IMOS</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ARREDONDA_CONTABIL</CMPNAME>
+     <SCONAME>I_ZIB_CONTABIL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Registros de Geração de Documentos Z_FI_MANYDOCUME</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_INVOICE_XML_TO_ABAP</CMPNAME>
+     <SCONAME>I_XML</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>XML in stirng format</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_INVOICE_XML_TO_ABAP</CMPNAME>
+     <SCONAME>R_MSG_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Returning Message</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXCHANGE_RATES</CMPNAME>
+     <SCONAME>I_DATE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXCHANGE_RATES</CMPNAME>
+     <SCONAME>I_FCURR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Moeda de procedência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXCHANGE_RATES</CMPNAME>
+     <SCONAME>I_TCURR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Moeda de destino</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXCHANGE_RATES</CMPNAME>
+     <SCONAME>R_UKURS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa de câmbio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_SIMPLE_PAYMENT</CMPNAME>
+     <SCONAME>I_TRANSNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mandante</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <SCONAME>I_CREATION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <SCONAME>I_KNA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mestre de clientes (parte geral)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <SCONAME>I_LFA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mestre de fornecedores (parte geral)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <SCONAME>I_METODO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Metódo utilizado para envio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEND_XML_TO_API</CMPNAME>
+     <SCONAME>I_XML</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>XML to send to API</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES</CMPNAME>
+     <SCONAME>I_CREATION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Novo cadastro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES</CMPNAME>
+     <SCONAME>I_KNA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mestre de clientes (parte geral)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES</CMPNAME>
+     <SCONAME>I_LFA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mestre de fornecedores (parte geral)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES_BANK</CMPNAME>
+     <SCONAME>I_CREATION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Novo cadastro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES_BANK</CMPNAME>
+     <SCONAME>I_LFA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria de tabela para LFA1 (ordenada)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COUNTERPARTIES_BANK</CMPNAME>
+     <SCONAME>T_LFBK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria de tabela para LFBK (ordenada)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INVOICE_REVERSE</CMPNAME>
+     <SCONAME>I_ZFIT0164</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lançamento de Invoice - VIP Integration</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INVOICE_XML_TO_SAP</CMPNAME>
+     <SCONAME>I_XML</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>XML Invoice from IMOS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INVOICE_XML_TO_SAP</CMPNAME>
+     <SCONAME>R_MESSAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Returning Message</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INVOICE_ZIB_CONTABIL</CMPNAME>
+     <SCONAME>I_ZFIT0164</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lançamento de Invoice - VIP Integration</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

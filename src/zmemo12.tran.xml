@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZMEMO12</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZMEMO12</TCODE>
+    <S_WIN32>X</S_WIN32>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZMEMO12</TCODE>
+    <TTEXT>Parâmetros para geração de contratos</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZMEMO12</TCODE>
+    <PARAM>/*SM30 UPDATE=X;VIEWNAME=ZNOM_PARAM_CONT;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,30 @@
+
+PROCESS BEFORE OUTPUT.
+*&SPWIZARD: PBO FLOW LOGIC FOR TABLECONTROL 'TC_CONTAB'
+  MODULE tc_contab_change_tc_attr.
+  MODULE busca_valor_cont.
+*&SPWIZARD: MODULE TC_CONTAB_CHANGE_COL_ATTR.
+  LOOP AT   tg_contab
+       WITH CONTROL tc_contab
+       CURSOR tc_contab-current_line.
+*&SPWIZARD:   MODULE TC_CONTAB_CHANGE_FIELD_ATTR
+
+  ENDLOOP.
+
+* MODULE STATUS_0110.
+*
+PROCESS AFTER INPUT.
+*&SPWIZARD: PAI FLOW LOGIC FOR TABLECONTROL 'TC_CONTAB'
+  LOOP AT tg_contab.
+    CHAIN.
+      FIELD tg_contab-bschl.
+      FIELD tg_contab-hkont.
+      FIELD tg_contab-dmbtr.
+      FIELD tg_contab-taxtyp.
+      FIELD tg_contab-estorno.
+    ENDCHAIN.
+  ENDLOOP.
+*&SPWIZARD: MODULE TC_CONTAB_CHANGE_TC_ATTR.
+*&SPWIZARD: MODULE TC_CONTAB_CHANGE_COL_ATTR.
+
+* MODULE USER_COMMAND_0110.

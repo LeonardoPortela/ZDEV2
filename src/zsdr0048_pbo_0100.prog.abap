@@ -1,0 +1,269 @@
+*&---------------------------------------------------------------------*
+*&      Module  PBO_0100  OUTPUT
+*&---------------------------------------------------------------------*
+
+MODULE PBO_0100 OUTPUT.
+  SET PF-STATUS 'PF0100'.
+  SET TITLEBAR 'HEDGE'.
+ENDMODULE.                 " PBO_0100  OUTPUT
+
+*----------------------------------------------------------------------*
+*  MODULE CRIAR_OBJECTS OUTPUT
+*----------------------------------------------------------------------*
+*
+*---------------------------------------------------------------------*
+MODULE CRIAR_OBJECTS OUTPUT.
+*  DATA LT_F4             TYPE LVC_T_F4 WITH HEADER LINE.
+
+  IF OBJ_CUSTOM IS INITIAL.
+
+*   Create object for Container
+    CREATE OBJECT OBJ_CUSTOM
+      EXPORTING
+        CONTAINER_NAME = 'CC_SOL'.
+
+*   Create object for ALV grid inside container
+    CREATE OBJECT OBJ_GRID
+      EXPORTING
+        I_PARENT = OBJ_CUSTOM.
+
+*  Create toolbar for grid.
+    CREATE OBJECT OBJ_TOOLBAR
+      EXPORTING
+        IO_ALV_GRID = OBJ_GRID.
+
+*   Set layout parameters for ALV grid
+
+    CLEAR: GS_LAYOUT, GS_STABLE.
+    GS_LAYOUT-ZEBRA      = ABAP_TRUE.
+*    GS_LAYOUT-NO_ROWMARK = ABAP_TRUE.
+    GS_STABLE-ROW        = ABAP_TRUE.
+    GS_LAYOUT-CWIDTH_OPT = ABAP_TRUE.
+    GS_LAYOUT-STYLEFNAME = 'FIELD_STYLE'.
+    GS_LAYOUT-INFO_FNAME = 'LINE_COLOR'.
+    GS_LAYOUT-CWIDTH_OPT = ABAP_TRUE.
+
+    GS_VARIANT-REPORT      = SY-REPID.
+
+    REFRESH LT_F4.
+    DEFINE F4.
+      WT_F4-FIELDNAME = &1.
+      WT_F4-REGISTER  = &2.
+      WT_F4-GETBEFORE = &3.
+      WT_F4-CHNGEAFTER = &4.
+      APPEND WT_F4 TO LT_F4 .
+      CLEAR WT_F4.
+    END-OF-DEFINITION.
+
+    F4: 'BEZEI'      ABAP_TRUE ABAP_TRUE ABAP_TRUE.
+
+*    *  Create Catalog
+    PERFORM CHANGE_CATALOGO USING ' '.
+
+*   Excluir Buttons Toolbar
+    REFRESH: IT_EXCLUDE_FCODE.
+
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+    WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+    APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+
+    CALL METHOD OBJ_GRID->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        IS_VARIANT           = GS_VARIANT
+*       I_SAVE               = 'A'
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+      CHANGING
+        IT_OUTTAB            = IT_ZSDT0094
+        IT_FIELDCATALOG      = IT_FCAT.
+
+    CALL METHOD OBJ_GRID->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD OBJ_GRID->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    CALL METHOD OBJ_GRID->REGISTER_F4_FOR_FIELDS
+      EXPORTING
+        IT_F4 = LT_F4[].
+
+*    *   Register event handler
+    SET HANDLER: OBJ_TOOLBAR->ON_TOOLBAR          FOR OBJ_GRID,
+                 OBJ_TOOLBAR->HANDLE_USER_COMMAND FOR OBJ_GRID,
+                 OBJ_TOOLBAR->ON_DATA_CHANGED_FINISHED FOR OBJ_GRID,
+                 OBJ_TOOLBAR->ON_DATA_CHANGER     FOR OBJ_GRID,
+                 OBJ_TOOLBAR->ON_F4               FOR OBJ_GRID.
+
+
+    CALL METHOD OBJ_GRID->SET_READY_FOR_INPUT
+      EXPORTING
+        I_READY_FOR_INPUT = 1.
+
+    CLEAR GF_FIRST_DISPLAY_0100.
+  ELSE.
+    CALL METHOD OBJ_GRID->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = GS_STABLE.
+  ENDIF.
+
+ENDMODULE.                 " CRIAR_OBJECTS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0101  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0101 OUTPUT.
+  SET PF-STATUS 'PF0101'.
+  SET TITLEBAR 'TI0101'.
+ENDMODULE.                 " STATUS_0101  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  PBO0102  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE PBO0102 OUTPUT.
+  SET PF-STATUS 'PF0102'.
+  SET TITLEBAR 'TI0102'.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  CRIAR_OBJECTS_0103  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CRIAR_OBJECTS_0102 OUTPUT.
+
+  VAR_DIR = ABAP_TRUE.
+
+  IF OBJ_CUSTOM_0102 IS INITIAL.
+
+*   Create object for Container
+    CREATE OBJECT OBJ_CUSTOM_0102
+      EXPORTING
+        CONTAINER_NAME = 'C_ADD'.
+
+*   Create object for ALV grid inside container
+    CREATE OBJECT OBJ_GRID_0102
+      EXPORTING
+        I_PARENT = OBJ_CUSTOM_0102.
+
+*  Create toolbar for grid.
+    CREATE OBJECT OBJ_TOOLBAR_0102
+      EXPORTING
+        IO_ALV_GRID = OBJ_GRID_0102.
+
+*  Create Catalog
+    PERFORM CHANGE_CATALOGO USING ' '.
+    PERFORM BUILD_DROPDOWN.
+
+    REFRESH LT_F4.
+    DEFINE F4.
+      WT_F4-FIELDNAME = &1.
+      WT_F4-REGISTER  = &2.
+      WT_F4-GETBEFORE = &3.
+      WT_F4-CHNGEAFTER = &4.
+
+      APPEND WT_F4 TO LT_F4 .
+      CLEAR WT_F4.
+    END-OF-DEFINITION.
+
+    F4: 'BEZEI'      ABAP_TRUE ABAP_TRUE ABAP_TRUE.
+
+    IT_FCAT_0102 = IT_FCAT.
+
+*   Set layout parameters for ALV grid
+*    GS_LAYOUT-GRID_TITLE = 'HEDGE'.
+    GS_LAYOUT-STYLEFNAME = 'FIELD_STYLE'.
+    GS_LAYOUT-ZEBRA      = 'X'.
+    GS_LAYOUT-INFO_FNAME = 'COLOR_LINE'.
+    GS_LAYOUT-CTAB_FNAME = 'COLOR_CELL'.
+    "GS_LAYOUT-NO_TOOLBAR = 'X'. " Sem Barra de Ferramentas
+    GS_VARIANT-REPORT      = SY-REPID.
+
+*   Register event handler
+    SET HANDLER: OBJ_TOOLBAR->ON_TOOLBAR_0102          FOR OBJ_GRID_0102,
+                 OBJ_TOOLBAR->HANDLE_USER_COMMAND_0102 FOR OBJ_GRID_0102,
+                 OBJ_TOOLBAR->ON_DATA_CHANGER_0102     FOR OBJ_GRID_0102,
+                 OBJ_TOOLBAR->ON_F4                    FOR OBJ_GRID_0102.
+
+*   Excluir Buttons Toolbar
+    FREE: IT_FCODE_0102.
+
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+    WA_FCODE_0102 = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+    APPEND WA_FCODE_0102 TO IT_FCODE_0102.
+
+    CALL METHOD OBJ_GRID_0102->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        IS_VARIANT           = GS_VARIANT
+        I_SAVE               = 'X'
+        IT_TOOLBAR_EXCLUDING = IT_FCODE_0102
+      CHANGING
+        IT_OUTTAB            = IT_ADD
+        IT_FIELDCATALOG      = IT_FCAT_0102.
+
+    CALL METHOD OBJ_GRID_0102->REGISTER_F4_FOR_FIELDS
+      EXPORTING
+        IT_F4 = LT_F4[].
+
+    CALL METHOD OBJ_GRID_0102->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD OBJ_GRID_0102->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    CALL METHOD OBJ_GRID_0102->SET_READY_FOR_INPUT
+      EXPORTING
+        I_READY_FOR_INPUT = 1.
+
+    CLEAR GF_FIRST_DISPLAY_0102.
+
+  ELSE.
+    CALL METHOD OBJ_GRID_0102->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = GS_STABLE.
+  ENDIF.
+
+ENDMODULE.

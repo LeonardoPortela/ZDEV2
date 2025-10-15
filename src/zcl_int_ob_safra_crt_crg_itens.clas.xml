@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_INT_OB_SAFRA_CRT_CRG_ITENS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT> API Integração Sist. Roteirizador - Order</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BODY_DEL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Itens Carga</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BODY_POST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura para API de ordens - Safra Control</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_EXTERNALID</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura External ID - Safra Control</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ID_INTERFACE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id. de Integração de Inteface</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

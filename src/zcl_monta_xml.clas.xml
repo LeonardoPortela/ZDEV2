@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MONTA_XML</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Ajuda a Montar XML</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CLEAR_STRANGE_CHARS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>limpa caracteres estranhos da string</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Concatena String</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre Tag XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML com/sem conteudo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAFE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag Sem Valor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAFV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML com/sem conteudo numero</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNAVN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo numero</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNA_SEPARADOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Concatena String com Separado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNDHN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo data/hora</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNDTF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNDTN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNFE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Fecha Tag XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CTNNAONULO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Abre/Fecha Tag XML sempre com conteudo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIMPAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SALVA_XML</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Salva XML</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CTNAFV</CMPNAME>
+     <SCONAME>PRECISAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº inteiro com sinal +/- (-2.147.483.648 .. 2.147.483.647)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CTNAVN</CMPNAME>
+     <SCONAME>PRECISAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº inteiro com sinal +/- (-2.147.483.648 .. 2.147.483.647)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CTNA_SEPARADOR</CMPNAME>
+     <SCONAME>SEPARADOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CTNNAONULO</CMPNAME>
+     <SCONAME>TAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

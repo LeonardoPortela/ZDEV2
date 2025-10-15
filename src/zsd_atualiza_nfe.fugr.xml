@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Atualiza Dados NF-e</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZSD_ATUALIZA_NFEF01</SOBJ_NAME>
+    <SOBJ_NAME>LZSD_ATUALIZA_NFETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZSD_ATUALIZA_NFE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZSD_ATUALIZA_NFE</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IN_NOTAS</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>ZIB_NOTA_FISCAL_SAP</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IN_DOC</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>J_1BNFDOC</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IN_NOTAS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IN_DOC</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

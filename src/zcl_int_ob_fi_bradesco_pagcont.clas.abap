@@ -1,0 +1,284 @@
+*&-------------------------------------------------------------------------------------------------------*
+*& Classe         : ZCL_INT_OB_FI_ITAU_PIX                                                         *
+*& Chamado        : USER STORY 162810                                                                    *
+*& Data           : 28/01/2025                                                                           *
+*& Especificado   : Carolini Santos                                                                    *
+*& Desenvolvimento: Welgem Souza Barbosa                                                              *
+*--------------------------------------------------------------------------------------------------------*
+*& Histórico de Alterações:                                                                              *
+*--------------------------------------------------------------------------------------------------------*
+*&  Data       | Request    | Autor         | Alteração                                                  *
+*&-------------------------------------------------------------------------------------------------------*
+*&-------------------------------------------------------------------------------------------------------*
+*& 28/01/2025  |DEVK9A2DWX  |WBARBOSA       |FI-280125-US-162810-Pagamento via PIX F110-WB               *
+*--------------------------------------------------------------------------------------------------------*
+class ZCL_INT_OB_FI_BRADESCO_PAGCONT definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_INTEGRACAO_INJECT .
+  interfaces ZIF_INTEGRACAO_OUTBOUND .
+
+* Busca Fatura Energia - Faturamento/Pagamento
+  constants AT_ID_INTERFACE type ZDE_ID_INTERFACE value '308' ##NO_TEXT.
+  constants:
+    LC_SERVICO       TYPE C LENGTH 23 value 'BBD_PAGCONTAS_CONS_TRIB' ##NO_TEXT.
+  constants:
+    LC_AUTHORIZATION TYPE C LENGTH 13 value 'Authorization' ##NO_TEXT.
+  constants:
+    LC_CORRELATIONID TYPE C LENGTH 20 value 'x-bradesco-correlationID' ##NO_TEXT.
+  constants:
+    LC_CONTENT_TYPE  TYPE C LENGTH 04 value 'JSON' ##NO_TEXT.
+  constants:
+    LC_INTERFACE     TYPE C LENGTH 09 value 'interface' ##NO_TEXT.
+  constants:
+    LC_BASIC         TYPE C LENGTH 05 value 'Basic' ##NO_TEXT.
+  constants:
+    LC_ERRO          TYPE C LENGTH 01 value 'E' ##NO_TEXT.
+  constants LC_FIELD type DDOBJNAME value 'ZDE_IN_BBD_PAG_CONT' ##NO_TEXT.
+  data AT_PARAMS type ZDE_IN_BBD_PAG_CONT .
+  data AT_BODY type ZDE_IN_BBD_PAG_CONT .
+
+  methods CONSTRUCTOR
+    importing
+      value(I_SERVICO) type ZTIPOWEBSERV optional
+    raising
+      ZCX_INTEGRACAO .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+
+ENDCLASS.
+
+
+
+CLASS ZCL_INT_OB_FI_BRADESCO_PAGCONT IMPLEMENTATION.
+
+
+  METHOD CONSTRUCTOR.
+
+    ME->ZIF_INTEGRACAO_INJECT~AT_ID_INTERFACE      = ME->AT_ID_INTERFACE.
+    ME->ZIF_INTEGRACAO_INJECT~AT_TP_INTEGRACAO     = ZIF_INTEGRACAO=>AT_TP_INTEGRACAO_OUTBOUND.
+    ME->ZIF_INTEGRACAO_INJECT~AT_TP_CANAL          = ZIF_INTEGRACAO=>AT_TP_CANAL_COMUNICA_HTTP.
+    ME->ZIF_INTEGRACAO_INJECT~AT_TP_SINCRONIA      = ZIF_INTEGRACAO=>AT_TP_SINCRONIA_SINCRONA.
+    ME->ZIF_INTEGRACAO_INJECT~AT_AUTENTICA_OPUS    = ZIF_INTEGRACAO=>AT_ID_INTERFACE_AUT_OPUS_NAO.
+    ME->ZIF_INTEGRACAO_INJECT~AT_AUTENTICA_API_AD  = ZIF_INTEGRACAO=>AT_ID_INTERFACE_AUT_API_AD_NAO.
+    ME->ZIF_INTEGRACAO_INJECT~AT_SEND_AUTENTICAO   = ZIF_INTEGRACAO=>AT_ID_INTERFACE_AUT_SEND_SIM.
+    ME->ZIF_INTEGRACAO_INJECT~AT_AUTENTICA_MODULE  = ME->LC_INTERFACE.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~GET_FORM_REQUEST_HTTP.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~GET_HEADER_REQUEST_HTTP.
+
+    R_IF_INTEGRACAO_INJECT = ME.
+    E_HEADER_FIELDS = ME->ZIF_INTEGRACAO_INJECT~AT_HEADER_FIELDS.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_BEFORE_ERROR_OUTBOUND_MSG.
+    E_SUCESSO = ABAP_FALSE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_BEFORE_SEND_OUTBOUND_MSG.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_FORM_REQUEST_HTTP.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_HEADER_REQUEST_HTTP.
+    R_IF_INTEGRACAO_INJECT = ME.
+    ME->ZIF_INTEGRACAO_INJECT~AT_HEADER_FIELDS = I_HEADER_FIELDS.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_INTEGRAR_INBOUND.
+    R_IF_INTEGRACAO_INJECT = ME.
+    E_SUCESSO = ABAP_TRUE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_INTEGRAR_RETORNO.
+    R_IF_INTEGRACAO_INJECT = ME.
+    E_SUCESSO = ABAP_TRUE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_PARAMETRO.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_PROCESSA_INBOUND.
+    R_IF_INTEGRACAO_INJECT = ME.
+    E_SUCESSO = ABAP_TRUE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_INJECT~SET_PROCESSA_RETORNO.
+    R_IF_INTEGRACAO_INJECT = ME.
+    E_SUCESSO = ABAP_TRUE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~BUILD_INFO_REQUEST.
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+    MOVE-CORRESPONDING I_INFO_REQUEST TO AT_PARAMS.
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~EXECUTE_REQUEST.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+
+    "// Inclui Json na Mensagem a Ser Enviada
+    ME->ZIF_INTEGRACAO_OUTBOUND~BUILD_INFO_REQUEST( I_INFO_REQUEST = I_INFO_REQUEST
+      )->GET_DATA( IMPORTING E_DATA = DATA(LC_DATA)
+      )->SET_DATA( EXPORTING I_DATA = LC_DATA
+      )->SET_URL(
+      )->SET_ID_REFERENCIA(
+      )->SEND_MSG( IMPORTING E_ID_INTEGRACAO = E_ID_INTEGRACAO E_INTEGRACAO  = E_INTEGRACAO
+      ).
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~GET_DATA.
+
+    CLEAR: E_DATA.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+
+    MOVE-CORRESPONDING AT_PARAMS TO ME->AT_BODY.
+
+    CALL METHOD /UI2/CL_JSON=>SERIALIZE
+      EXPORTING
+        DATA        = ME->AT_BODY
+        PRETTY_NAME = ABAP_TRUE
+      RECEIVING
+        R_JSON      = E_DATA.
+
+    "REPLACE '"tipo_identificacao_recebedor"' IN E_DATA WITH '"tipo_de_identificacao_do_recebedor"'.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~GET_ID_REFERENCIA.
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+  ENDMETHOD.
+
+
+  METHOD zif_integracao_outbound~get_instance.
+
+    IF zif_integracao_outbound~at_if_integracao_outbound IS NOT BOUND.
+      CREATE OBJECT zif_integracao_outbound~at_if_integracao_outbound TYPE zcl_int_ob_fi_bradesco_pagcont.
+    ENDIF.
+
+    r_if_integracao_outbound = zif_integracao_outbound~at_if_integracao_outbound.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~SEND_MSG.
+
+    DATA: LC_INTEGRAR TYPE REF TO ZCL_INTEGRACAO.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+
+    CREATE OBJECT LC_INTEGRAR.
+
+    "// Cria MSG para Integração via HTTP
+    LC_INTEGRAR->ZIF_INTEGRACAO~SET_MSG_INJECT( I_MSG = CAST #( ME )
+      )->SET_NEW_MSG( IMPORTING E_ID_INTEGRACAO = E_ID_INTEGRACAO
+      )->SET_OUTBOUND_MSG(
+      )->SET_PROCESSAR_RETORNO(
+      )->SET_INTEGRAR_RETORNO(
+      )->GET_REGISTRO( IMPORTING E_INTEGRACAO = E_INTEGRACAO
+      )->FREE(
+      ).
+
+    CLEAR: LC_INTEGRAR.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~SET_DATA.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_BODY = I_DATA.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~SET_ID_REFERENCIA.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+    ME->ZIF_INTEGRACAO_OUTBOUND~GET_ID_REFERENCIA( IMPORTING E_REFERENCIA = ME->ZIF_INTEGRACAO_INJECT~AT_REFERENCIA ).
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_INTEGRACAO_OUTBOUND~SET_URL.
+
+    DATA: ZCL_BASE64ENCODER TYPE REF TO CL_HTTP_UTILITY.
+    CREATE OBJECT ZCL_BASE64ENCODER.
+
+    DATA: LV_URL         TYPE ZDE_URL_ENVIO,
+          LV_COMPLEMENTO TYPE ZDE_URL_ENVIO,
+          T_DFIES        TYPE TABLE OF DFIES.
+
+    FIELD-SYMBOLS: <FS_CAMPO>  TYPE ANY,
+                   <FS_PARAMS> TYPE ZDE_IN_BBD_PIX.
+
+    DATA: CAMPO      TYPE FIELDNAME.
+
+    R_IF_INTEGRACAO_OUTBOUND = ME.
+
+    SELECT SINGLE *
+      FROM ZAUTH_WEBSERVICE
+      INTO @DATA(LWA_WEBSERVICE)
+     WHERE SERVICE EQ @LC_SERVICO.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_INTEGRACAO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = ZCX_INTEGRACAO=>ZCX_ERRO_GERAL-MSGID
+                            MSGNO = ZCX_INTEGRACAO=>ZCX_ERRO_GERAL-MSGNO
+                            ATTR1 = CONV #( TEXT-001 ) "// Serviço não configurado:
+                            ATTR2 = CONV #( ME->LC_SERVICO ) )
+          MSGID  = ZCX_INTEGRACAO=>ZCX_ERRO_GERAL-MSGID
+          MSGNO  = ZCX_INTEGRACAO=>ZCX_ERRO_GERAL-MSGNO
+          MSGTY  = ME->LC_ERRO "// E
+          MSGV1  = CONV #( TEXT-001 ) "// Serviço não configurado:
+          MSGV2  = CONV #( ME->LC_SERVICO ).
+    ENDIF.
+
+
+    LV_URL = LWA_WEBSERVICE-URL.
+
+    CLEAR: ME->ZIF_INTEGRACAO_INJECT~AT_HEADER_FIELDS.
+
+    DATA(LV_TPCREDENTIALS) = ZCL_BASE64ENCODER->IF_HTTP_UTILITY~ENCODE_BASE64( |{ LWA_WEBSERVICE-TOKEN }| ).
+
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_FORMATO            = LC_CONTENT_TYPE.
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_CONTENT_TYPE       = LWA_WEBSERVICE-CONTENT_TYPE.
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_URL                = LV_URL.
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_SERVER_PROTOCOLO   = ABAP_OFF.
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_METODO             = LWA_WEBSERVICE-METHOD.
+    ME->ZIF_INTEGRACAO_INJECT~AT_INFO_REQUEST_HTTP-DS_NOT_CONTENT_LENGTH = ABAP_TRUE.
+
+**** Informação do header
+    APPEND VALUE #( NAME = LC_AUTHORIZATION VALUE = |{ LC_BASIC } { LV_TPCREDENTIALS }| ) TO ME->ZIF_INTEGRACAO_INJECT~AT_HEADER_FIELDS.
+
+  ENDMETHOD.
+ENDCLASS.

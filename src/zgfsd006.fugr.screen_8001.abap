@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_8001.
+  MODULE alv_init.
+
+PROCESS AFTER INPUT.
+  MODULE user_command_8001.

@@ -1,0 +1,1010 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_TAXA_CURVA_DB</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Taxa Curva - Banco</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Altera Data Entrega - ZSDT0094</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BIO_TAB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Solicitação Ordem de Venda – PRECO</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_INDICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Indice para calculo do total proporcional (HEDGE)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IN_DT_ENT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Hedge Data Entrega - Alteração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MATKL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Grupo de mercadorias</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOTAL_53</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOTAL_54</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOTAL_55</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade diaria</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOTAL_94</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOTAL_PESO_53</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para calcular o frete.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALC_CADENCIA_94</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Calcula o valor da cadencia pela tabela ZST0094</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALC_DATA_VENC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Calculo da data.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIA_UTIL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se a Data é dia ÚtiL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Diferença.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para excutar o processo de edição.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método separado para o encerramento.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ESTORNO_AQV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Metodo para estornar o processo de Frete Aquaviario</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para estornar o processo da Venda e Frete do Insumos.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para executar o processo quando Frame.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para negativar o frame.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRAME_PARCIAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para frame parcial.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FREE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar os atributos.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para executar o processo do Frete.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRETE_AQV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Metodo para executar o processo de Disparo de Frete</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRETE_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para executar o processo do Frete de Insumos.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FRETE_PEDIDO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Metodo para executar o processo de Disparo de Frete - Pedido</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PORCENTAGEM_FRETE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar a Porcentagem do Frete de Insumos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar os Totais da 53 54 55 94</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INDICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Indice para Calculo.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIBERAR_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para executar o processo quando Lib. de OV.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Reverte o Frete</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SELECIONAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para selecionar as informações.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para mudar o status para Y quando devolução</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_53</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total da ZSDT0053.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_54</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total da ZSDT0054.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_55</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total da ZSDT0055.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_94</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total da ZSDT0094</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_94_FRE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total da ZSDT0054 FRETE.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOTAL_PESO_53</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para retornar o total do peso da ZSDT0053.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>UPDATE_JOB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Atualiza ação do JOB como Executado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para executar o processo da Venda de Insumos.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <SCONAME>I_ACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <SCONAME>I_BEZEI</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Denominação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <SCONAME>I_DT_ENTREGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Hedge Data Entrega - Alteração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ALTERA_DATA_ENTREGA</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_FRETE</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_CADENCIA_94</CMPNAME>
+     <SCONAME>CV_CADENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade prevista em unidades de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_CADENCIA_94</CMPNAME>
+     <SCONAME>IT_0094</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>HEDGE - Mercado Interno/Insumos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_CADENCIA_94</CMPNAME>
+     <SCONAME>IV_DOC_SIMU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_CADENCIA_94</CMPNAME>
+     <SCONAME>IV_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_DATA_VENC</CMPNAME>
+     <SCONAME>E_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorno da Data Calculada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_DATA_VENC</CMPNAME>
+     <SCONAME>I_DATA_FINAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data Final</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALC_DATA_VENC</CMPNAME>
+     <SCONAME>I_DATA_INICIAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data Inicial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIA_UTIL</CMPNAME>
+     <SCONAME>E_SUBRC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: código de retorno de instruções ABAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIA_UTIL</CMPNAME>
+     <SCONAME>P_VENCIMENTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data efetiva fixa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <SCONAME>I_DIFERENCA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_BEZEI</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres do comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_DIFERENCA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DIFERENCA_IN</CMPNAME>
+     <SCONAME>I_WAERK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Moeda do documento SD</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EDICAO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_ESTORNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº 10 posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_VBAP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de tabela para estrutura VBAP</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENCERRAMENTO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_AQV</CMPNAME>
+     <SCONAME>VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <SCONAME>I_0090</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <SCONAME>I_0090_MANUAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Flag geral</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de contagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNO_IN</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_BEZEI</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Denominação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_STATUS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_EDICAO</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_PARCIAL</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_PARCIAL</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Vorschlagswerte bei Anlage von Debitoren aus Workbench</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_PARCIAL</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRAME_PARCIAL</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_UCOMM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de função que acionou o PAI</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_AQV</CMPNAME>
+     <SCONAME>_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_AQV</CMPNAME>
+     <SCONAME>_VBRK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de faturamento: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_AQV</CMPNAME>
+     <SCONAME>_VBRP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de faturamento: dados de item</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_IN</CMPNAME>
+     <SCONAME>I_0090</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_IN</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_IN</CMPNAME>
+     <SCONAME>I_TAXA_BOLETA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa de câmbio cotação de preços</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_IN</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_PEDIDO</CMPNAME>
+     <SCONAME>ZCX_WEBSERVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>WebService - Exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_PEDIDO</CMPNAME>
+     <SCONAME>_DIFERENCA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_PEDIDO</CMPNAME>
+     <SCONAME>_EKKO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho do documento de compra</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FRETE_PEDIDO</CMPNAME>
+     <SCONAME>_EKPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de compras</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PORCENTAGEM_FRETE</CMPNAME>
+     <SCONAME>PORC_FRETE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Porcentagem do Frete</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>E_INDICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Indice para calculo do total proporcional (HEDGE)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>E_TOTAL_53</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>E_TOTAL_54</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>E_TOTAL_55</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade diaria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>E_TOTAL_PESO_53</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtd.prevista em UMV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOTAIS</CMPNAME>
+     <SCONAME>I_NRO_SOL_OV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_BIO</CMPNAME>
+     <SCONAME>CV_CADENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade prevista em unidades de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_BIO</CMPNAME>
+     <SCONAME>IV_ACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Conversão/Reversão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_BIO</CMPNAME>
+     <SCONAME>IV_DOC_SIMU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_BIO</CMPNAME>
+     <SCONAME>IV_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INDICE</CMPNAME>
+     <SCONAME>I_TOTAL_53</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INDICE</CMPNAME>
+     <SCONAME>I_TOTAL_54</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LIBERAR_OV</CMPNAME>
+     <SCONAME>I_ESTORNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº 10 posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LIBERAR_OV</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LIBERAR_OV</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LIBERAR_OV</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_0090</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_DIR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Denominação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_SEQ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de contagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REVERSAO_FRETE_IN</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONAR</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONAR</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_ESTORNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº 10 posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STATUS_DEVOLUCAO</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação atual</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_53</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_53</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_54</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_55</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_94</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_94</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_94_FRE</CMPNAME>
+     <SCONAME>E_DIFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante em moeda interna</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_94_FRE</CMPNAME>
+     <SCONAME>I_FIXACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_94_FRE</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TOTAL_PESO_53</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPDATE_JOB</CMPNAME>
+     <SCONAME>NRO_SOL_OV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero de Solicitação de Ordem de Venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPDATE_JOB</CMPNAME>
+     <SCONAME>TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPDATE_JOB</CMPNAME>
+     <SCONAME>VL_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de vendas e distribuição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <SCONAME>I_0090</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Simulador de Vendas – Controle de Transferencias de OV</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <SCONAME>I_DIR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Denominação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <SCONAME>I_NUMERO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero do documento de simulação de venda</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <SCONAME>I_TAXA_BOLETA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa de câmbio cotação de preços</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VENDA_IN</CMPNAME>
+     <SCONAME>I_TIPO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de 3 bytes de comprimento</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

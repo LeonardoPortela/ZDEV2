@@ -1,0 +1,88 @@
+FUNCTION ZSDMF001_CHECK_OV_TRAVA_CAMBIO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_DOC_SIMULACAO) TYPE  ZSDED003
+*"     REFERENCE(I_VBELN) TYPE  VBELN
+*"  CHANGING
+*"     REFERENCE(C_TRAVA_CAMBIO) TYPE  C OPTIONAL
+*"     REFERENCE(C_TRAVA_CAMBIO_PREC) TYPE  C OPTIONAL
+*"     REFERENCE(C_TAXA) TYPE  KURSF OPTIONAL
+*"     REFERENCE(C_OV_PRECEDENTE) TYPE  VBELN OPTIONAL
+*"     REFERENCE(C_ZSDT0090_PREC) TYPE  ZSDT0090 OPTIONAL
+*"----------------------------------------------------------------------
+
+  DATA: VL_PROC_OV      TYPE C,
+        VL_VBELN_AUX    TYPE ZSDT0090-VBELN,
+        GW_0090         TYPE ZSDT0090,
+        GW_0090_AUX     TYPE ZSDT0090,
+        GW_0090_AUX2    TYPE ZSDT0090.
+
+  CLEAR: C_TRAVA_CAMBIO, C_TRAVA_CAMBIO_PREC, C_TAXA, C_OV_PRECEDENTE, C_ZSDT0090_PREC.
+
+  CHECK ( I_DOC_SIMULACAO IS NOT INITIAL ) AND
+        ( I_VBELN         IS NOT INITIAL ).
+
+  SELECT SINGLE *
+    FROM ZSDT0090 INTO GW_0090
+   WHERE DOC_SIMULACAO EQ I_DOC_SIMULACAO
+     AND VBELV         EQ I_VBELN
+     AND CATEGORIA     EQ 'C'
+     AND ESTORNO       EQ ABAP_FALSE.
+
+  IF SY-SUBRC = 0.
+    C_TAXA         = GW_0090-KURRF.
+    C_TRAVA_CAMBIO = 'X'.
+  ENDIF.
+
+  VL_VBELN_AUX    = I_VBELN.
+  VL_PROC_OV      = 'X'.
+
+  WHILE VL_PROC_OV EQ 'X'.
+
+    SELECT SINGLE *
+      FROM ZSDT0090 AS A INTO GW_0090_AUX
+     WHERE A~DOC_SIMULACAO EQ I_DOC_SIMULACAO
+       AND A~VBELN         EQ VL_VBELN_AUX
+       AND A~ESTORNO       EQ ABAP_FALSE
+       AND A~VBELN         NE ''
+       AND A~VBELV         NE ''
+       AND A~VBELN         NE A~VBELV.
+
+    IF SY-SUBRC EQ 0.
+
+      SELECT SINGLE *
+        FROM ZSDT0090 INTO GW_0090_AUX2
+       WHERE DOC_SIMULACAO EQ I_DOC_SIMULACAO
+         AND VBELV         EQ GW_0090_AUX-VBELV
+         AND CATEGORIA     EQ 'C'
+         AND ESTORNO       EQ ABAP_FALSE.
+
+      IF SY-SUBRC = 0. "Caso OV Origem Esteja travada cambio, sai do Loop.
+        VL_PROC_OV          = ''.
+        C_TRAVA_CAMBIO      = 'X'.
+        C_TRAVA_CAMBIO_PREC = 'X'.
+
+        IF C_TAXA IS INITIAL.
+          C_TAXA          = GW_0090_AUX2-KURRF.
+        ENDIF.
+
+        MOVE-CORRESPONDING GW_0090_AUX TO C_ZSDT0090_PREC.
+
+        C_OV_PRECEDENTE = GW_0090_AUX2-VBELV.
+
+      ENDIF.
+
+      VL_VBELN_AUX = GW_0090_AUX-VBELV.
+
+    ELSE.
+      VL_PROC_OV = ''.
+    ENDIF.
+
+  ENDWHILE.
+
+
+
+
+
+ENDFUNCTION.

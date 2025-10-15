@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_FERROVIARIO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Ferroviário L1/L2/L3</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ID_REFKEY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Get ID RefKey</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_NEW_ID_REFKEY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Novo ID RefKey</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_REFKEY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo sequencia da tabela ZLEST0019</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ID_REFKEY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Set ID RefKey</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ID_REFKEY</CMPNAME>
+     <SCONAME>R_ID_REFKEY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo sequencia da tabela ZLEST0019</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_NEW_ID_REFKEY</CMPNAME>
+     <SCONAME>R_ID_ZLEST0019</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo sequencia da tabela ZLEST0019</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_NEW_ID_REFKEY</CMPNAME>
+     <SCONAME>ZCX_FERROVIARIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Ferroviário Entrada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_REFKEY</CMPNAME>
+     <SCONAME>I_ID_REFKEY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo sequencia da tabela ZLEST0019</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,31 @@
+CLEAR V_ENT_EXIT.
+IF NOTA_FISCAL-NOTA_FISCAL-DIRECT EQ '1' OR
+   NOTA_FISCAL-NOTA_FISCAL-DIRECT EQ '4'.
+   v_ent_exit = '0'.
+ELSEIF NOTA_FISCAL-NOTA_FISCAL-DIRECT EQ '2'
+    OR NOTA_FISCAL-NOTA_FISCAL-DIRECT EQ '3'.
+   v_ent_exit = '1'.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

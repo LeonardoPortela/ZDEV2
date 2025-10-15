@@ -1,0 +1,3110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZRSPO1041</NAME>
+    <SUBC>1</SUBC>
+    <APPL>S</APPL>
+    <RLOAD>D</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Ordens spool obsoletas sem ordem de saída:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Ordens spool sem ordem de saída mais antiga que &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Não é possível eliminar ordem &amp;1 &amp;2</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Ordens spool concluídas mais antigas que &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Ordens spool em processamento mais antigas que &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Ordens spool obsoletas em processamento:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>Ordens spool concluídas obsoletas:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>Ordens spool incorretas mais antigas que &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>009</KEY>
+     <ENTRY>Ordens spool incorretas obsoletas:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>010</KEY>
+     <ENTRY>Nenhuma ordem spool adequada</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>011</KEY>
+     <ENTRY>Tmp.sist.:</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>012</KEY>
+     <ENTRY>Seguintes ordens spool devem ser eliminadas:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>013</KEY>
+     <ENTRY>Foram selecionadas as seguintes condições:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>014</KEY>
+     <ENTRY>Gerador:</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>016</KEY>
+     <ENTRY>Nomes sist.:</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>017</KEY>
+     <ENTRY>Mand.:</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>018</KEY>
+     <ENTRY>Tít.:</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>019</KEY>
+     <ENTRY>Nome ordem spool:</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>020</KEY>
+     <ENTRY>Nome ordem spool (sufixo1):</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>021</KEY>
+     <ENTRY>Nome ordem spool (sufixo2):</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>022</KEY>
+     <ENTRY>Só registrar em log, não eliminar</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>023</KEY>
+     <ENTRY>Registrar log e eliminar</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>024</KEY>
+     <ENTRY>Commit todas ordens spool &amp;1</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>025</KEY>
+     <ENTRY>P/&amp;1 ordens spool não existe nenhuma autorização seleção</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>026</KEY>
+     <ENTRY>Interpretação do núm.de dias: contar todos dias</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>027</KEY>
+     <ENTRY>Interpretação do núm.de dias: só contar dias úteis (calendário &amp;1)</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>028</KEY>
+     <ENTRY>Não é possível converter data (code =</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>029</KEY>
+     <ENTRY>Não é possível ler calendário de fábrica (code =</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>030</KEY>
+     <ENTRY>Disp.saída:</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>031</KEY>
+     <ENTRY>Eliminar logs orfãos:</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>032</KEY>
+     <ENTRY>Ordens spool obsoletas, s/ordem de saída, anteriores a &amp;1 dias:</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>033</KEY>
+     <ENTRY>Ordens spool obsoletas, concluídas, anteriores a &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>034</KEY>
+     <ENTRY>Ordens spool obsoletas, s/ordem saída, anteriores a &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>035</KEY>
+     <ENTRY>Ordens spool obsoletas, incorretas, anteriores a &amp;1 dias:</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>100</KEY>
+     <ENTRY>Critérios para seleção das ordens spool a eliminar</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>110</KEY>
+     <ENTRY>Outras condições</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>113</KEY>
+     <ENTRY>Concluído</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>114</KEY>
+     <ENTRY>Sem ordem de saída</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>115</KEY>
+     <ENTRY>Incorreto</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>116</KEY>
+     <ENTRY>Em processamento</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>117</KEY>
+     <ENTRY>ID calendário fábr.</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>118</KEY>
+     <ENTRY>Só dias úteis</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>119</KEY>
+     <ENTRY>Todos os dias</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>120</KEY>
+     <ENTRY>Ordens de spool</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>121</KEY>
+     <ENTRY>Mais antigo ... dias</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>122</KEY>
+     <ENTRY>obsoleto</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>123</KEY>
+     <ENTRY>e / ou</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>124</KEY>
+     <ENTRY>&quot;e&quot; só é permitido se os dois outros campos de seleção também estiverem marcados</ENTRY>
+     <LENGTH>128</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>125</KEY>
+     <ENTRY>/</ENTRY>
+     <LENGTH>1</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>126</KEY>
+     <ENTRY>Ordens c/dispositivo de saída (já) não existente</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>127</KEY>
+     <ENTRY>Sist.</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>128</KEY>
+     <ENTRY>ID spool</ENTRY>
+     <LENGTH>8</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>129</KEY>
+     <ENTRY>Propriet.</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>130</KEY>
+     <ENTRY>Hora geração</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>131</KEY>
+     <ENTRY>Per.elim.</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>132</KEY>
+     <ENTRY>Calend.</ENTRY>
+     <LENGTH>8</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>133</KEY>
+     <ENTRY>Utilizar todos os dias para outro cálculo.</ENTRY>
+     <LENGTH>43</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Eliminação de ordens spool antigas</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AGE1</KEY>
+     <ENTRY>Sem ordem de saída</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AGE2</KEY>
+     <ENTRY>Em processamento</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AGE3</KEY>
+     <ENTRY>Concluído</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AGE4</KEY>
+     <ENTRY>Incorreto</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AND1</KEY>
+     <ENTRY>e</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AND2</KEY>
+     <ENTRY>e</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AND3</KEY>
+     <ENTRY>e</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AND4</KEY>
+     <ENTRY>e</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>CLIENT</KEY>
+     <ENTRY>Mandante</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>COMMIT_A</KEY>
+     <ENTRY>COMMIT todas ... ordens spool</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>DAYS</KEY>
+     <ENTRY>Contar todos os dias</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>LISTONLY</KEY>
+     <ENTRY>Só log sem eliminar?</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MIN_ALT1</KEY>
+     <ENTRY>Mais antigo ... dias</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MIN_ALT2</KEY>
+     <ENTRY>Mais antigo ... dias</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MIN_ALT3</KEY>
+     <ENTRY>Mais antigo ... dias</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MIN_ALT4</KEY>
+     <ENTRY>Mais antigo ... dias</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>NONEX</KEY>
+     <ENTRY>Ordens sem dispositivo saída</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OLD1</KEY>
+     <ENTRY>obsoleto</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OLD2</KEY>
+     <ENTRY>obsoleto</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OLD3</KEY>
+     <ENTRY>obsoleto</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OLD4</KEY>
+     <ENTRY>obsoleto</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OR1</KEY>
+     <ENTRY>ou</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OR2</KEY>
+     <ENTRY>ou</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OR3</KEY>
+     <ENTRY>ou</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>OR4</KEY>
+     <ENTRY>ou</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PCALID</KEY>
+     <ENTRY>ID calendário fábr.</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PRINTER</KEY>
+     <ENTRY>Dispositivo de saída</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SUFFIX0</KEY>
+     <ENTRY>Nome ordem spool</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SUFFIX1</KEY>
+     <ENTRY>Ordem spool (sufixo1)</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SUFFIX2</KEY>
+     <ENTRY>Ordem spool (sufixo2)</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SYSTEM</KEY>
+     <ENTRY>Nome do sistema</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>TITLE</KEY>
+     <ENTRY>Título</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>UNAME</KEY>
+     <ENTRY>Gerador</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>WORKING</KEY>
+     <ENTRY>Só contar dias úteis</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Veraltete Spool-Aufträge ohne Ausgabeauftrag:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Spool-Aufträge ohne Ausgabeauftrag älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Kann Auftrag &amp;1 &amp;2 nicht löschen</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Fertige Spool-Aufträge älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Spool-Aufträge in Arbeit älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Veraltete Spool-Aufträge in Arbeit:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Veraltete fertige Spool-Aufträge:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>Fehlerhafte Spool-Aufträge älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>009</KEY>
+       <ENTRY>Veraltete fehlerhafte Spool-Aufträge:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>010</KEY>
+       <ENTRY>Kein passender Spoolauftrag gefunden</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>011</KEY>
+       <ENTRY>Systemzeit:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>012</KEY>
+       <ENTRY>Folgende Spool-Aufträge sollen gelöscht werden:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>013</KEY>
+       <ENTRY>Folgende weitere Bedingungen wurden gewählt:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>014</KEY>
+       <ENTRY>Erzeuger:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>016</KEY>
+       <ENTRY>Systemnamen:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>017</KEY>
+       <ENTRY>Mandant:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>018</KEY>
+       <ENTRY>Titel:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>019</KEY>
+       <ENTRY>Spool-Auftragsname:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>020</KEY>
+       <ENTRY>Spool-Auftragsname (Suffix1):</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>021</KEY>
+       <ENTRY>Spool-Auftragsname (Suffix2):</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>022</KEY>
+       <ENTRY>Nur protokollieren, nicht löschen.</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>023</KEY>
+       <ENTRY>Protokollieren und löschen</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>024</KEY>
+       <ENTRY>Commit alle &amp;1 Spool-Aufträge</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>025</KEY>
+       <ENTRY>Für &amp;1 Spool-Aufträge besteht keine Selektionsberechtigung</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>026</KEY>
+       <ENTRY>Interpretation der Tageszahlen: Alle Tage zählen</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>027</KEY>
+       <ENTRY>Interpretation der Tageszahlen: Nur Werktage zählen (Kalender &amp;1)</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>028</KEY>
+       <ENTRY>Datum kann nicht umgesetzt werden (Code =</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>029</KEY>
+       <ENTRY>Fabrikkalender kann nicht gelesen werden (Code =</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>030</KEY>
+       <ENTRY>Ausgabegerät:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>031</KEY>
+       <ENTRY>Löschen verwaister Protokolle:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>032</KEY>
+       <ENTRY>Veraltete Spool-Aufträge ohne Ausgabeauftrag älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>033</KEY>
+       <ENTRY>Veraltete fertige Spool-Aufträge älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>034</KEY>
+       <ENTRY>Veraltete Spool-Aufträge in Arbeit älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>035</KEY>
+       <ENTRY>Veraltete fehlerhafte Spool-Aufträge älter als &amp;1 Tage:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Kriterien zur Auswahl der zu löschenden Spool-Aufträge</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Weitere Bedingungen</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Fertige</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Ohne Ausgabeauftrag</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Fehlerhafte</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>In Arbeit</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>Fabrikkalender-ID</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>118</KEY>
+       <ENTRY>Nur Werktage</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>119</KEY>
+       <ENTRY>Alle Tage</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Spool-Aufträge</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>älter als ... Tage</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>veraltet</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>und / oder</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>&quot;und&quot; ist nur erlaubt, wenn auch die beiden anderen Checkboxen angekreuzt sind</ENTRY>
+       <LENGTH>128</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>/</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Aufträge mit nicht (mehr) existierendem Ausgabegerät</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>System</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>Spool-ID</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Eigentümer</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Erzeugungszeit</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>Löschzeit</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>132</KEY>
+       <ENTRY>Kalender</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>133</KEY>
+       <ENTRY>Verwende alle Tage zur weiteren Berechnung.</ENTRY>
+       <LENGTH>43</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Löschen alter Spool-Aufträge</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE1</KEY>
+       <ENTRY>Ohne Ausgabeauftrag</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE2</KEY>
+       <ENTRY>In Arbeit</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE3</KEY>
+       <ENTRY>Fertige</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE4</KEY>
+       <ENTRY>Fehlerhafte</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND1</KEY>
+       <ENTRY>und</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND2</KEY>
+       <ENTRY>und</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND3</KEY>
+       <ENTRY>und</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND4</KEY>
+       <ENTRY>und</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>CLIENT</KEY>
+       <ENTRY>Mandant</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMMIT_A</KEY>
+       <ENTRY>COMMIT alle ... Spool-Aufträge</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DAYS</KEY>
+       <ENTRY>Alle Tage zählen</ENTRY>
+       <LENGTH>24</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTONLY</KEY>
+       <ENTRY>Nur Protokoll ohne Löschen?</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT1</KEY>
+       <ENTRY>älter als ... Tage</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT2</KEY>
+       <ENTRY>älter als ... Tage</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT3</KEY>
+       <ENTRY>älter als ... Tage</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT4</KEY>
+       <ENTRY>älter als ... Tage</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NONEX</KEY>
+       <ENTRY>Aufträge ohne Ausgabegerät</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD1</KEY>
+       <ENTRY>veraltet</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD2</KEY>
+       <ENTRY>veraltet</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD3</KEY>
+       <ENTRY>veraltet</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD4</KEY>
+       <ENTRY>veraltet</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR1</KEY>
+       <ENTRY>oder</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR2</KEY>
+       <ENTRY>oder</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR3</KEY>
+       <ENTRY>oder</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR4</KEY>
+       <ENTRY>oder</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PCALID</KEY>
+       <ENTRY>Fabrikkalender-ID</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PRINTER</KEY>
+       <ENTRY>Ausgabegerät</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX0</KEY>
+       <ENTRY>Spool-Auftragsname</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX1</KEY>
+       <ENTRY>Spool-A. (Suffix1)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX2</KEY>
+       <ENTRY>Spool-A. (Suffix2)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SYSTEM</KEY>
+       <ENTRY>Systemname</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>Titel</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>UNAME</KEY>
+       <ENTRY>Erzeuger</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>WORKING</KEY>
+       <ENTRY>Nur Werktage zählen</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Old spool requests without output request:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Spool requests without output request older than &amp;1 days</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Cannot delete request &amp;1 &amp;2</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Completed spool requests older than &amp;1 days</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Spool requests being processed older than &amp;1 days</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Old spool requests being processed:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Old completed spool requests:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>Incorrect spool requests older than &amp;1 days:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>009</KEY>
+       <ENTRY>Old, incorrect spool requests:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>010</KEY>
+       <ENTRY>No matching spool request found</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>011</KEY>
+       <ENTRY>Sys. Time:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>012</KEY>
+       <ENTRY>Delete  the following spool requests:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>013</KEY>
+       <ENTRY>Following additional conditions selected:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>014</KEY>
+       <ENTRY>CreatedBy</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>016</KEY>
+       <ENTRY>Sys. names:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>017</KEY>
+       <ENTRY>Client:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>018</KEY>
+       <ENTRY>Title:</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>019</KEY>
+       <ENTRY>Spool request name:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>020</KEY>
+       <ENTRY>Spool request name (suffix1):</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>021</KEY>
+       <ENTRY>Spool request name (suffix2):</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>022</KEY>
+       <ENTRY>Only log, do not delete</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>023</KEY>
+       <ENTRY>Log and delete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>024</KEY>
+       <ENTRY>Commit all &amp;1 spool requests</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>025</KEY>
+       <ENTRY>No selection authorization for &amp;1 spool requests</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>026</KEY>
+       <ENTRY>How to interpret day numbers: include all days</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>027</KEY>
+       <ENTRY>How to interpret day numbers: only include work days (calendar &amp;1)</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>028</KEY>
+       <ENTRY>Cannot convert date (code =</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>029</KEY>
+       <ENTRY>Cannot read company calendar (code =</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>030</KEY>
+       <ENTRY>OutputDevice:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>031</KEY>
+       <ENTRY>Delete orphaned logs:</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>032</KEY>
+       <ENTRY>Old spool requests without output request older than &amp;1 days:</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>033</KEY>
+       <ENTRY>Old completed spool requests older than &amp;1 days:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>034</KEY>
+       <ENTRY>Old spool requests in processing older than &amp;1 days:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>035</KEY>
+       <ENTRY>Old spool request with errors older than &amp;1 days:</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Criteria for selecting spool requests for deletion</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Further conditions</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Completed</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Without output request</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Incorrect</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>In processing</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>Factory calendar ID</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>118</KEY>
+       <ENTRY>Only work days</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>119</KEY>
+       <ENTRY>Every day</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Spool requests</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>older than ... days</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>Obsolete</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>and / or</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>&quot;And&quot; is only allowed when both the other checkboxes are selected</ENTRY>
+       <LENGTH>128</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>/</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Requests with output device that no longer exists</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>System</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>Spool ID</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Owner</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Created At</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>Del. Time</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>132</KEY>
+       <ENTRY>Calendar</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>133</KEY>
+       <ENTRY>Use all days for further calculation.</ENTRY>
+       <LENGTH>43</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Delete Old Spool Requests</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE1</KEY>
+       <ENTRY>Without Output Request</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE2</KEY>
+       <ENTRY>In Processing</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE3</KEY>
+       <ENTRY>Completed</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE4</KEY>
+       <ENTRY>Incorrect</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND1</KEY>
+       <ENTRY>and</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND2</KEY>
+       <ENTRY>and</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND3</KEY>
+       <ENTRY>and</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND4</KEY>
+       <ENTRY>and</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>CLIENT</KEY>
+       <ENTRY>Client</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMMIT_A</KEY>
+       <ENTRY>COMMIT all ... Spool requests</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DAYS</KEY>
+       <ENTRY>Include all days</ENTRY>
+       <LENGTH>24</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTONLY</KEY>
+       <ENTRY>Only log without deleting?</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT1</KEY>
+       <ENTRY>older than ... days</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT2</KEY>
+       <ENTRY>older than ... days</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT3</KEY>
+       <ENTRY>older than ... days</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT4</KEY>
+       <ENTRY>older than ... days</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NONEX</KEY>
+       <ENTRY>Requests without Output Device</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD1</KEY>
+       <ENTRY>Obsolete</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD2</KEY>
+       <ENTRY>Obsolete</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD3</KEY>
+       <ENTRY>Obsolete</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD4</KEY>
+       <ENTRY>Obsolete</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR1</KEY>
+       <ENTRY>Or</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR2</KEY>
+       <ENTRY>Or</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR3</KEY>
+       <ENTRY>Or</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR4</KEY>
+       <ENTRY>Or</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PCALID</KEY>
+       <ENTRY>Factory calendar ID</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PRINTER</KEY>
+       <ENTRY>Output Device</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX0</KEY>
+       <ENTRY>Spool request name</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX1</KEY>
+       <ENTRY>Spool request (suffix 1)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX2</KEY>
+       <ENTRY>Spool request (suffix 2)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SYSTEM</KEY>
+       <ENTRY>System name</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>Title</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>UNAME</KEY>
+       <ENTRY>Creator</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>WORKING</KEY>
+       <ENTRY>Only include work days</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>S</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Órdenes SPOOL obsoletas sin orden de salida</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Órdenes SPOOL sin orden de salida con más de &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>No se puede borrar la orden &amp;1 &amp;2</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Órdenes SPOOL acabadas con más de &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Órdenes SPOOL en proceso con más de &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Órdenes SPOOL obsoletas en proceso</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Órdenes SPOOL acabadas obsoletas</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>Órdenes SPOOL erróneas con más de &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>009</KEY>
+       <ENTRY>Órdenes SPOOL erróneas obsoletas</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>010</KEY>
+       <ENTRY>No existe ninguna orden SPOOL adecuada</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>011</KEY>
+       <ENTRY>Hora del sistema</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>012</KEY>
+       <ENTRY>Las siguientes órdenes SPOOL se deben borrar</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>013</KEY>
+       <ENTRY>Siguentes condiciones seleccionadas</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>014</KEY>
+       <ENTRY>Creado p/</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>016</KEY>
+       <ENTRY>Nombres de sistemas</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>017</KEY>
+       <ENTRY>Mandante</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>018</KEY>
+       <ENTRY>Título</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>019</KEY>
+       <ENTRY>Nombre orden SPOOL</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>020</KEY>
+       <ENTRY>Nombre orden SPOOL (sufijo 1)</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>021</KEY>
+       <ENTRY>Nombre orden SPOOL (sufijo 2)</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>022</KEY>
+       <ENTRY>Sólo grabar en log no borrar</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>023</KEY>
+       <ENTRY>Grabar en log y borrar</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>024</KEY>
+       <ENTRY>Commit cada &amp;1 órdenes SPOOL</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>025</KEY>
+       <ENTRY>Sin autorización de selección para &amp;1 órdenes SPOOL</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>026</KEY>
+       <ENTRY>Interpretar números de días: Contar días (todos)</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>027</KEY>
+       <ENTRY>Interpretar números de días: Contar sólo días laborables (calend.&amp;1)</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>028</KEY>
+       <ENTRY>La fecha no se puede convertir (código=</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>029</KEY>
+       <ENTRY>El calendario de fábrica no se puede leer (cód.=</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>030</KEY>
+       <ENTRY>Dispos.salida</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>031</KEY>
+       <ENTRY>Borrar logs huérfanos</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>032</KEY>
+       <ENTRY>Órdenes SPOOL obsoletas sin orden salida anterior a &amp;1 días</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>033</KEY>
+       <ENTRY>Órdenes SPOOL listas y obsoletas anteriores a &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>034</KEY>
+       <ENTRY>Órdenes SPOOL obsoletas en curso anteriores a &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>035</KEY>
+       <ENTRY>Órdenes SPOOL erróneas y obsoletas anteriores a &amp;1 días</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Criterios para seleccionar órdenes SPOOL a borrar</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Otras condiciones</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Acabados</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Sin orden de salida</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Erróneo</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>En proceso</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>ID calendario de fábrica</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>118</KEY>
+       <ENTRY>Sólo laborables</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>119</KEY>
+       <ENTRY>Días (todos)</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Órdenes SPOOL</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>Más de ... días</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>Obsoleto</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>y/o</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>&quot;y&quot; sólo se puede usar cuando las otras dos casillas de selección también están marcadas</ENTRY>
+       <LENGTH>128</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>/</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Órdenes con dispositivo de salida que (ya) no existe</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>Sist.</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>ID SPOOL</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Titular</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Creado a las</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>H.borrado</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>132</KEY>
+       <ENTRY>Calend.</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>133</KEY>
+       <ENTRY>Utiliza todos los días para otros cálculos</ENTRY>
+       <LENGTH>43</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Borrar órdenes SPOOL antiguas</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE1</KEY>
+       <ENTRY>Sin orden de salida</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE2</KEY>
+       <ENTRY>En proceso</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE3</KEY>
+       <ENTRY>Acabados</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AGE4</KEY>
+       <ENTRY>Erróneos</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND1</KEY>
+       <ENTRY>Y</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND2</KEY>
+       <ENTRY>Y</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND3</KEY>
+       <ENTRY>Y</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AND4</KEY>
+       <ENTRY>Y</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>CLIENT</KEY>
+       <ENTRY>Mandante</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMMIT_A</KEY>
+       <ENTRY>COMMIT tras cada...orden SPOOL</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DAYS</KEY>
+       <ENTRY>Contar todos los días</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTONLY</KEY>
+       <ENTRY>¿Sólo log sin borrar?</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT1</KEY>
+       <ENTRY>Más de ... días</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT2</KEY>
+       <ENTRY>Más de ... días</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT3</KEY>
+       <ENTRY>Más de ... días</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_ALT4</KEY>
+       <ENTRY>Más de ... días</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NONEX</KEY>
+       <ENTRY>Órdenes sin equipo de salida</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD1</KEY>
+       <ENTRY>Obsoleto</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD2</KEY>
+       <ENTRY>Obsoleto</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD3</KEY>
+       <ENTRY>Obsoleto</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OLD4</KEY>
+       <ENTRY>Obsoleto</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR1</KEY>
+       <ENTRY>O</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR2</KEY>
+       <ENTRY>O</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR3</KEY>
+       <ENTRY>O</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>OR4</KEY>
+       <ENTRY>O</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PCALID</KEY>
+       <ENTRY>ID calendario de fábrica</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PRINTER</KEY>
+       <ENTRY>Dispositivo de salida</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX0</KEY>
+       <ENTRY>Nombre de orden SPOOL</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX1</KEY>
+       <ENTRY>Orden SPOOL (sufijo 1)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SUFFIX2</KEY>
+       <ENTRY>Orden SPOOL (sufijo 2)</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SYSTEM</KEY>
+       <ENTRY>Sistema</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>Título</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>UNAME</KEY>
+       <ENTRY>Creador</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>WORKING</KEY>
+       <ENTRY>Contar sólo días laborables</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRSPO1041</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00050</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRSPO1041</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Diesen Report sollten Sie periodisch einplanen, um veraltete</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Spoolaufträge zu löschen. Dies geschieht nicht automatisch vom System.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>(Ab Release 4.6A können Sie veraltete Spool-Aufträge auch vom</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Spool-Workprozeß löschen lassen. Die Einstellung hierzu finden sind in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>der Transaktion SPAD unter Einstellungen-&gt;Spool-System-&gt;Verwaltung)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITIONS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Diesen Report können Sie online oder im Batch ausführen. Wenn Sie den</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Report online ausführen, kann leicht die zulässige Dialogzeit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>überschritten werden, so daß der Report abgebrochen wird.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PARAMETERS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Auswahlkriterien</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Spool-Aufträge ohne Ausgabeauftrag</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller Spool-Aufträge, für die kein Ausgabeauftrag erstellt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wurde.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Spool-Aufträge in Arbeit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller Spool-Aufträge, welche sich im Status &lt;ZK&gt;in Arbeit&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>befinden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Fertige Spool-Aufträge</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller erfolgreich bearbeiteten (gedruckten und ggf.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>archivierten) Spool-Aufträge.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Fehlerhafte Spool-Aufträge</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller Spool-Aufträge, bei deren Bearbeitung ein Fehler auftrat.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>älter als  ... Tage</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller Spool-Aufträge, die vor dem angegebenen Zeitraum erzeugt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wurden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>veraltet</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Löschen aller Spool-Aufträge, deren bei der Erzeugung angegebenes</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Verfallsdatum überschritten ist. Standardmäßig beträgt das</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Verfallsdatum 8 Tage.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Mandant</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>xxx --- nur im Mandaten xxx löschen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (Berechtigung SPAR zum Löschen im eigenen Mandanten notwendig)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>*   --- mandatenübergreifend löschen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (Berechtigung SPAD notwendig)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Nur Protokoll ohne Löschen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Alle Spool-Aufträge, die den Selektionskriterien entsprechen, werden</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>lediglich aufgelistet, aber nicht gelöscht.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>COMMIT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Gibt an, nach wieviel gelöschten Spool-Aufträgen ein COMMIT gemacht</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wird. Ist diese Zahl zu groß, so wird das Rollbackfile der Datenbank</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>u.U. sehr groß; ist sie zu klein, so ist der DB-Overhead zu groß.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Sie möchten alle erfolgreich bearbeiteten Spool-Aufträge, die älter als</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>zwei Tage sind, sowie alle Aufträge, deren Verfallsdatum überschritten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wurde, löschen. Markieren Sie dazu das Ankreuzfeld &lt;ZK&gt;&quot;Fertige&quot;&lt;/&gt;,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tragen Sie 2 Tage ein, wählen die (voreingestellte) Verknüpfung &quot;oder&quot;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE> und markieren Sie das Ankreuzfeld &lt;ZK&gt;&quot;veraltet&quot;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>=</TDFORMAT>
+       <TDLINE>&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Wenn Sie erreichen wollen, daß nur diejenigen fertigen Spool-Aufträge</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gelöscht werden, die mindestens 10 Tage alt sind und noch nicht</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>veraltet sind, so markieren dann das Ankreuzfeld &lt;ZK&gt;&quot;Fertige&quot;&lt;/&gt;,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tragen Sie 10 Tage ein, wählen die Verknüpfung &quot;und&quot;  und markieren Sie</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>das Ankreuzfeld &lt;ZK&gt;&quot;veraltet&quot;&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE/>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRSPO1041</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00040</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRSPO1041</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>You should schedule this report to run periodically in order to delete</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>old spool requests. The system does not automatically do this.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>(As of Release 4.6A, you can also use the spool work process to delete</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>old spool requests. For the settings for this, go to transaction SPAD,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>and choose &quot;Settings&quot; -&gt; &quot;Spool System&quot; -&gt; &quot;Administr.&quot; tab.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>You can execute this report online or in the background. If executed</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>online, however, it may exceed the permitted dialog time and be</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>terminated.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PARAMETERS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Selection criteria</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Spool requests without output request</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests with no output request</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Spool requests being processed</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests with status &quot;In processing&quot;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Completed spool requests</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests that were processed successfully (printed and</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>possibly archived)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests for which errors occurred during processing</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Older than ... days</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests created before the specified time period</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Old</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Delete all spool requests whose expiration date has passed. The</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>expiration date is specified when the spool request was created. The</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>default expiration date is eight days.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Client</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>xxx --- Only delete in client xxx</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (requires authorization SPAR to delete in your own client)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>*   --- Delete in all clients</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (requires authorization for SPAD)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Log without deleting</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>All spool requests that match the selection criteria are listed, but</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>not deleted.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>COMMIT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Specifies how many spool requests are to be deleted before a COMMIT is</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>sent. If this number is too large, the rollback file in the database</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>may be too big; if this file is too small, database overhead is too</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>high.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>You want to delete all successfully processed spool requests that are</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>older than two days, as well as all requests whose expiration date has</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>passed. To do this, select &lt;ZK&gt;Completed&lt;/&gt;, enter 2 days, and then</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>select &lt;ZK&gt;Old&lt;/&gt;.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRSPO1041</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00052</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRSPO1041</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Este report deve ser escalonado periodicamente para eliminar ordens</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>spool obsoletas. Isto não acontece automaticamente no sistema.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>(A partir do release 4.6A é possível eliminar também ordens spool</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>obsoletas do processo operacional spool. A configuração pode ser</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>encontrada na transação SPAD em Configurações -&gt; Sistema spool -&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Administração)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITIONS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>É possível exibir este report on-line ou no processamento em</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>background. Se o report for executado on-line, é muito fácil exceder o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tempo de diálogo permitido de forma que o report é cancelado.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PARAMETERS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Critérios de seleção</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Ordens spool sem ordem de saída</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool, para as quais não foi criada</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>nenhuma ordem de saída.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Ordens spool em processamento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool que se encontram no status &lt;ZK&gt;Em</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>processamento&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Ordens spool concluídas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool processadas com êxito (impressas e,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>se necessário, arquivadas).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Ordens spool incorretas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool, em cuja impressão ocorreu um erro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Com mais de  ... dias</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool que foram geradas antes do período</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>indicado.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Obsoleto</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eliminação de todas as ordens spool, cuja data de expiração indicada é</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>excedida durante a geração. Segundo o standard, a data de expiração é</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de 8 dias.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Mandante</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>xxx --- eliminar apenas no mandante xxx</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (autorização SPAR necessária para eliminação no próprio</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mandante)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>*   --- eliminar em todos os mandantes</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (autorização SPAD necessária)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Só log sem eliminar</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Todas as ordens spool que correspondem aos critérios de seleção só são</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>listadas, mas não eliminadas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>COMMIT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Indica depois de quantas ordens spool eliminadas é efetuado um COMMIT.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Se este número for muito grande, em certas circunstâncias, o file de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>rollback de banco de dados é também muito grande. Se o número for muito</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>pequeno, o overhead BD é demasiado grande.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>O usuário pretende eliminar todas as ordens spool processadas com êxito</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>que têm mais de 2 dias, bem como todas as ordens, cuja data de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>expiração foi excedida. Para isso, marcar o campo de seleção</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;ZK&gt;&quot;Concluído&quot;&lt;/&gt;, inscrever 2 dias, selecionar a ligação</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(predefinida) &quot;Ou&quot; e marcar o campo de seleção &lt;ZK&gt;&quot;Obsoleto&quot;&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Se o usuário pretender que sejam eliminadas apenas as ordens spool</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>concluídas que têm, pelo menos, 10 dias e que ainda não são obsoletas,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>marcar o campo de seleção &lt;ZK&gt;&quot;Concluído&quot;&lt;/&gt;, inscrever 10 dias,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selecionar a ligação &quot;E&quot;, e marcar o campo de seleção &lt;ZK&gt;&quot;Obsoleto&quot;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>=</TDFORMAT>
+       <TDLINE>&lt;/&gt;.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRSPO1041</OBJECT>
+      <LANGU>S</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0015</VERSION>
+      <TXTLINES>00053</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRSPO1041</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>S</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00015</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Este report se debería planificar periódicamente para borrar las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>órdenes SPOOL obsoletas, lo cual no se produce de forma automática en</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>el sistema.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>(A partir de la versión de corrección 4.6A, también es posible borrar</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>órdenes SPOOL del proceso de trabajo SPOOL. Las parametrizaciones</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>pertinentes se hallan en la transacción SPAD, en Parametrizaciones-&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sistema SPOOL-&gt; Gestión)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITIONS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Este report se puede ejecutar online o en proceso de fondo. Si se</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ejecuta online es muy fácil que se exceda el tiempo de diálogo</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>permitido, por lo que el sistema cancelará el report.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PARAMETERS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Criterios de selección</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Órdenes SPOOL sin orden de salida</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL para las que no se ha creado una orden</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de salida.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Órdenes SPOOL en tratamiento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL que poseean el status &lt;ZK&gt;En tratamiento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>=</TDFORMAT>
+       <TDLINE>&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Órdenes SPOOL concluidas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL tratadas (impresas y, en caso necesario,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>archivadas) con éxito.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Órdenes SPOOL erróneas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL en cuyo tratamiento se produjo un error.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Con más de ... días:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL que se han generado antes del período</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>indicado.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Obsoleto</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Borrar todas las órdenes SPOOL cuya fecha de vencimiento indicada se</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>haya superado en el momento de generarlas. Dicha fecha es por defecto</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de 8 días.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Mandante</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>xxx --- borrar sólo en el mandante xxx</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (se necesita la autorización SPAR para borrar en el propio</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/</TDFORMAT>
+       <TDLINE>         mandante)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>*   --- borrar de forma válida para todos los mandantes</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>        (se necesita la autorización SPAD)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>Sólo log sin borrado</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Se enumeran todas las órdenes SPOOL que corresponden a los criterios de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selección, pero no se borran.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U2</TDFORMAT>
+       <TDLINE>COMMIT</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Indica tras cuantas órdenes SPOOL borradas se crea un COMMIT. Si esta</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cantidad es demasiado grande, es posible que el fichero de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>actualización de la base de datos también se vuelva demasiado grande;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>si dicha cantidad es demasiado pequeña entonces el overhead BD es</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>demasiado grande.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Desea borrar todas las órdenes SPOOL tratadas con éxito que superan los</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>dos días de antigüedad, así como todas las órdenes cuya fecha de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>vencimiento haya sido excedida. Para borrarlas marque la casilla de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selección &lt;ZK&gt;Conluido&lt;/&gt;&lt;ZK&gt;s&lt;/&gt;, introduzca 2 días, seleccione el</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>enlace &quot;o&quot; y marque la casilla &lt;ZK&gt;Obsoleto&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Si desea conseguir que sólo se borren aquellas órdenes SPOOL concluidas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>que ya tienen como mínimo 10 días pero que todavía no son obsoletas,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>marque la casilla de selección &lt;ZK&gt;Conluido&lt;/&gt;&lt;ZK&gt;s&lt;/&gt;, introduzca 10</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>días, seleccione el enlace &quot;y&quot;, y marque la casilla &lt;ZK&gt;Obsoleto&lt;/&gt;.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

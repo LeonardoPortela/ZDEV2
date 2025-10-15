@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Consultar Docs Contabil Estornados</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFI_GET_DOC_CTB_ESTORNADOTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFI_GET_DOC_CTB_ESTORNADO</SOBJ_NAME>
+   </INCLUDES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

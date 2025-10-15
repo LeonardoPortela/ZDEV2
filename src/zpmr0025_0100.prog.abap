@@ -1,0 +1,911 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZPMR0025_0100
+*&---------------------------------------------------------------------*
+
+CLASS LCL_EVENTOS DEFINITION.
+
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      ON_HOTSPOT_CLICK FOR EVENT HOTSPOT_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID E_COLUMN_ID.
+
+ENDCLASS.                    "LCL_EVENT DEFINITION
+
+CLASS LCL_EVENTOS_2 DEFINITION.
+
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      ON_HOTSPOT_CLICK FOR EVENT HOTSPOT_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID E_COLUMN_ID.
+
+ENDCLASS.
+
+CLASS LCL_EVENTOS IMPLEMENTATION.
+  METHOD ON_HOTSPOT_CLICK.
+    CLEAR WA_SAIDA.
+
+*    BREAK-POINT.
+    FREE IT_POPUP.
+    READ TABLE IT_SAIDA INTO WA_SAIDA INDEX E_ROW_ID-INDEX.
+
+    CASE E_COLUMN_ID-FIELDNAME.
+
+      WHEN:'QNIND'."0010 - Indisponível
+
+
+        IF WA_SAIDA-QNIND = 0.
+          EXIT.
+        ENDIF.
+
+        LOOP AT IT_VIQMEL INTO WA_VIQMEL.
+          IF WA_SAIDA-QNIND IS NOT INITIAL
+            AND WA_VIQMEL-QMART = IT_ZVAL-ZVAL
+            AND WA_VIQMEL-QMGRP = 'F0000050'
+            AND WA_VIQMEL-QMCOD = '0010'
+            AND WA_VIQMEL-IWERK = WA_SAIDA-IWERK.
+            WA_POPUP-QMNUM = WA_VIQMEL-QMNUM.
+            WA_POPUP-IWERK = WA_VIQMEL-IWERK.
+            WA_POPUP-QMART = WA_VIQMEL-QMART.
+            WA_POPUP-EQUNR = WA_VIQMEL-EQUNR.
+            WA_POPUP-TPLNR = WA_VIQMEL-TPLNR.
+            WA_POPUP-DATA = WA_VIQMEL-DATA.
+            WA_POPUP-QMDAB = WA_VIQMEL-QMDAB.
+
+            WA_POPUP-DATA = | { WA_VIQMEL-DATA+6(2) }.{ WA_VIQMEL-DATA+4(2) }.{ WA_VIQMEL-DATA(4) } |.
+
+
+*            CALL FUNCTION 'CONVERSION_EXIT_IDATE_INPUT'
+*              EXPORTING
+**                INPUT  = WA_VIQMEL-DATA
+*              IMPORTING
+*                OUTPUT = WA_POPUP-DATA.
+
+            IF WA_SAIDA-BEBER IS NOT INITIAL.
+              READ TABLE IT_T357 INTO WA_T357 WITH KEY BEBER = WA_VIQMEL-BEBER.
+              IF WA_T357-BEBER = WA_SAIDA-BEBER.
+                WA_POPUP-BEBER = WA_T357-BEBER.
+                WA_POPUP-FING  = WA_T357-FING.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_IFLO INTO WA_IFLO WITH KEY TPLNR = WA_VIQMEL-TPLNR.
+                  WA_POPUP-PLTXT = WA_IFLO-PLTXT.
+                ENDIF.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_EQKT INTO WA_EQKT WITH KEY EQUNR = WA_VIQMEL-EQUNR.
+                  WA_POPUP-EQKTX = WA_EQKT-EQKTX.
+                ENDIF.
+
+                APPEND WA_POPUP TO IT_POPUP.
+
+                CLEAR WA_POPUP.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+
+      WHEN:'QNNOR'."0020 - Normal
+
+        IF WA_SAIDA-QNNOR = 0.
+          EXIT.
+        ENDIF.
+
+        LOOP AT IT_VIQMEL INTO WA_VIQMEL.
+          IF WA_SAIDA-QNNOR IS NOT INITIAL
+            AND WA_VIQMEL-QMART = IT_ZVAL-ZVAL
+            AND WA_VIQMEL-QMGRP = 'F0000050'
+            AND WA_VIQMEL-QMCOD = '0020'
+            AND WA_VIQMEL-IWERK = WA_SAIDA-IWERK.
+            WA_POPUP-QMNUM = WA_VIQMEL-QMNUM.
+            WA_POPUP-IWERK = WA_VIQMEL-IWERK.
+            WA_POPUP-QMART = WA_VIQMEL-QMART.
+            WA_POPUP-EQUNR = WA_VIQMEL-EQUNR.
+            WA_POPUP-TPLNR = WA_VIQMEL-TPLNR.
+           WA_POPUP-DATA = WA_VIQMEL-DATA.
+            WA_POPUP-QMDAB = WA_VIQMEL-QMDAB.
+
+            WA_POPUP-DATA = | { WA_VIQMEL-DATA+6(2) }.{ WA_VIQMEL-DATA+4(2) }.{ WA_VIQMEL-DATA(4) } |.
+
+
+
+
+            IF WA_SAIDA-BEBER IS NOT INITIAL.
+              READ TABLE IT_T357 INTO WA_T357 WITH KEY BEBER = WA_VIQMEL-BEBER.
+              IF WA_T357-BEBER = WA_SAIDA-BEBER.
+                WA_POPUP-BEBER = WA_T357-BEBER.
+                WA_POPUP-FING  = WA_T357-FING.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_IFLO INTO WA_IFLO WITH KEY TPLNR = WA_VIQMEL-TPLNR.
+                  WA_POPUP-PLTXT = WA_IFLO-PLTXT.
+                ENDIF.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_EQKT INTO WA_EQKT WITH KEY EQUNR = WA_VIQMEL-EQUNR.
+                  WA_POPUP-EQKTX = WA_EQKT-EQKTX.
+                ENDIF.
+
+                APPEND WA_POPUP TO IT_POPUP.
+                CLEAR WA_POPUP.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+
+      WHEN:'QNOPO'."0030 - Oportunidade
+        IF WA_SAIDA-QNOPO = 0.
+          EXIT.
+        ENDIF.
+
+        LOOP AT IT_VIQMEL INTO WA_VIQMEL.
+          IF WA_SAIDA-QNOPO IS NOT INITIAL
+            AND WA_VIQMEL-QMART = IT_ZVAL-ZVAL
+            AND WA_VIQMEL-QMGRP = 'F0000050'
+            AND WA_VIQMEL-QMCOD = '0030'
+            AND WA_VIQMEL-IWERK = WA_SAIDA-IWERK.
+            WA_POPUP-QMNUM = WA_VIQMEL-QMNUM.
+            WA_POPUP-IWERK = WA_VIQMEL-IWERK.
+            WA_POPUP-QMART = WA_VIQMEL-QMART.
+            WA_POPUP-EQUNR = WA_VIQMEL-EQUNR.
+            WA_POPUP-TPLNR = WA_VIQMEL-TPLNR.
+            WA_POPUP-DATA = WA_VIQMEL-DATA.
+            WA_POPUP-QMDAB = WA_VIQMEL-QMDAB.
+
+            WA_POPUP-DATA = | { WA_VIQMEL-DATA+6(2) }.{ WA_VIQMEL-DATA+4(2) }.{ WA_VIQMEL-DATA(4) } |.
+
+
+            IF WA_SAIDA-BEBER IS NOT INITIAL.
+              READ TABLE IT_T357 INTO WA_T357 WITH KEY BEBER = WA_VIQMEL-BEBER.
+              IF WA_T357-BEBER = WA_SAIDA-BEBER.
+                WA_POPUP-BEBER = WA_T357-BEBER.
+                WA_POPUP-FING  = WA_T357-FING.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_IFLO INTO WA_IFLO WITH KEY TPLNR = WA_VIQMEL-TPLNR.
+                  WA_POPUP-PLTXT = WA_IFLO-PLTXT.
+                ENDIF.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_EQKT INTO WA_EQKT WITH KEY EQUNR = WA_VIQMEL-EQUNR.
+                  WA_POPUP-EQKTX = WA_EQKT-EQKTX.
+                ENDIF.
+
+                APPEND WA_POPUP TO IT_POPUP.
+                CLEAR WA_POPUP.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+
+      WHEN:'QNURG'."0040 - Urgência
+
+
+        IF WA_SAIDA-QNURG = 0.
+          EXIT.
+        ENDIF.
+
+        LOOP AT IT_VIQMEL INTO WA_VIQMEL.
+          IF WA_SAIDA-QNURG IS NOT INITIAL
+           AND WA_VIQMEL-QMART = IT_ZVAL-ZVAL
+           AND WA_VIQMEL-QMGRP = 'F0000050'
+           AND WA_VIQMEL-QMCOD = '0040'
+           AND WA_VIQMEL-IWERK = WA_SAIDA-IWERK.
+            WA_POPUP-QMNUM = WA_VIQMEL-QMNUM.
+            WA_POPUP-IWERK = WA_VIQMEL-IWERK.
+            WA_POPUP-QMART = WA_VIQMEL-QMART.
+            WA_POPUP-EQUNR = WA_VIQMEL-EQUNR.
+            WA_POPUP-TPLNR = WA_VIQMEL-TPLNR.
+           WA_POPUP-DATA = WA_VIQMEL-DATA.
+            WA_POPUP-QMDAB = WA_VIQMEL-QMDAB.
+
+            WA_POPUP-DATA = | { WA_VIQMEL-DATA+6(2) }.{ WA_VIQMEL-DATA+4(2) }.{ WA_VIQMEL-DATA(4) } |.
+
+*
+            IF WA_SAIDA-BEBER IS NOT INITIAL.
+              READ TABLE IT_T357 INTO WA_T357 WITH KEY BEBER = WA_VIQMEL-BEBER.
+              IF WA_T357-BEBER = WA_SAIDA-BEBER.
+                WA_POPUP-BEBER = WA_T357-BEBER.
+                WA_POPUP-FING  = WA_T357-FING.
+
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_IFLO INTO WA_IFLO WITH KEY TPLNR = WA_VIQMEL-TPLNR.
+                  WA_POPUP-PLTXT = WA_IFLO-PLTXT.
+                ENDIF.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_EQKT INTO WA_EQKT WITH KEY EQUNR = WA_VIQMEL-EQUNR.
+                  WA_POPUP-EQKTX = WA_EQKT-EQKTX.
+                ENDIF.
+
+                APPEND WA_POPUP TO IT_POPUP.
+                CLEAR WA_POPUP.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+
+      WHEN:'QNEME'."0050 - Emergência
+
+        IF WA_SAIDA-QNEME = 0.
+          EXIT.
+        ENDIF.
+
+        LOOP AT IT_VIQMEL INTO WA_VIQMEL.
+          IF WA_SAIDA-QNEME IS NOT INITIAL
+            AND WA_VIQMEL-QMART = IT_ZVAL-ZVAL
+            AND WA_VIQMEL-QMGRP = 'F0000050'
+            AND WA_VIQMEL-QMCOD = '0050'
+            AND WA_VIQMEL-IWERK = WA_SAIDA-IWERK.
+            WA_POPUP-QMNUM = WA_VIQMEL-QMNUM.
+            WA_POPUP-IWERK = WA_VIQMEL-IWERK.
+            WA_POPUP-QMART = WA_VIQMEL-QMART.
+            WA_POPUP-EQUNR = WA_VIQMEL-EQUNR.
+            WA_POPUP-TPLNR = WA_VIQMEL-TPLNR.
+           WA_POPUP-DATA = WA_VIQMEL-DATA.
+            WA_POPUP-QMDAB = WA_VIQMEL-QMDAB.
+
+            WA_POPUP-DATA = | { WA_VIQMEL-DATA+6(2) }.{ WA_VIQMEL-DATA+4(2) }.{ WA_VIQMEL-DATA(4) } |.
+
+            IF WA_SAIDA-BEBER IS NOT INITIAL.
+              READ TABLE IT_T357 INTO WA_T357 WITH KEY BEBER = WA_VIQMEL-BEBER.
+
+              IF WA_T357-BEBER = WA_SAIDA-BEBER.
+                WA_POPUP-BEBER = WA_T357-BEBER.
+                WA_POPUP-FING  = WA_T357-FING.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_IFLO INTO WA_IFLO WITH KEY TPLNR = WA_VIQMEL-TPLNR.
+                  WA_POPUP-PLTXT = WA_IFLO-PLTXT.
+                ENDIF.
+
+                IF SY-SUBRC = 0.
+                  READ TABLE IT_EQKT INTO WA_EQKT WITH KEY EQUNR = WA_VIQMEL-EQUNR.
+                  WA_POPUP-EQKTX = WA_EQKT-EQKTX.
+                ENDIF.
+
+                APPEND WA_POPUP TO IT_POPUP.
+                CLEAR WA_POPUP.
+
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+    ENDCASE.
+
+    CALL SCREEN 200 ."STARTING AT 2 15 ENDING AT 60 30 .
+
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS LCL_EVENTOS_2 IMPLEMENTATION.
+  METHOD ON_HOTSPOT_CLICK.
+
+
+    READ TABLE IT_POPUP INTO WA_POPUP INDEX E_ROW_ID-INDEX.
+
+    CASE E_COLUMN_ID-FIELDNAME.
+      WHEN:'QMNUM'."Notas Manuteção
+
+
+        IF WA_POPUP-QMNUM IS NOT INITIAL.
+          SET PARAMETER ID 'IQM' FIELD WA_POPUP-QMNUM.
+          CALL TRANSACTION 'IW23' AND SKIP FIRST SCREEN .
+        ENDIF.
+
+      WHEN:'EQUNR'."Ordem Manuteção
+        IF WA_POPUP-EQUNR IS NOT INITIAL.
+          SET PARAMETER ID 'EQN' FIELD WA_POPUP-EQUNR.
+          CALL TRANSACTION 'IE03' AND SKIP FIRST SCREEN .
+        ENDIF.
+
+*    WHEN OTHERS.
+
+    ENDCASE.
+
+
+
+
+  ENDMETHOD.
+ENDCLASS.
+
+
+
+DATA:
+  "IT_SELECT           TYPE STANDARD TABLE OF TY_DADOS_IMOB,
+  G_CUSTOM_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+  G_CONTAINER        TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+  DG_SPLITTER_1      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_SPLITTER_2      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_PARENT_1        TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_2        TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_3        TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_4        TYPE REF TO CL_GUI_CONTAINER,
+  DG_SPLITTER_3      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_SPLITTER_4      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_PARENT_2A       TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_2A_2     TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_ALV      TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_ALV_2    TYPE REF TO CL_GUI_CONTAINER,
+  PICTURE            TYPE REF TO CL_GUI_PICTURE,
+  PICTURE_2          TYPE REF TO CL_GUI_PICTURE,
+  CTL_ALV            TYPE REF TO CL_GUI_ALV_GRID,
+  CTL_ALV_2          TYPE REF TO CL_GUI_ALV_GRID,
+  DG_DYNDOC_ID       TYPE REF TO CL_DD_DOCUMENT,
+  DG_DYNDOC_ID_2     TYPE REF TO CL_DD_DOCUMENT,
+  TABLE_ELEMENT      TYPE REF TO CL_DD_TABLE_ELEMENT,
+  TABLE_ELEMENT_2    TYPE REF TO CL_DD_TABLE_ELEMENT,
+  COLUMN             TYPE REF TO CL_DD_AREA,
+  COLUMN_2           TYPE REF TO CL_DD_AREA,
+  TABLE_ELEMENT2     TYPE REF TO CL_DD_TABLE_ELEMENT,
+  TABLE_ELEMENT3     TYPE REF TO CL_DD_TABLE_ELEMENT,
+  COLUMN_1           TYPE REF TO CL_DD_AREA,
+  COLUMN_3           TYPE REF TO CL_DD_AREA,
+  DG_HTML_CNTRL      TYPE REF TO CL_GUI_HTML_VIEWER,
+  DG_HTML_CNTRL_2    TYPE REF TO CL_GUI_HTML_VIEWER,
+  IT_EXCLUDE_FCODE   TYPE UI_FUNCTIONS,
+  WA_EXCLUDE_FCODE   LIKE LINE OF IT_EXCLUDE_FCODE,
+  IT_EXCLUDE_FCODE_2 TYPE UI_FUNCTIONS,
+  WA_EXCLUDE_FCODE_2 LIKE LINE OF IT_EXCLUDE_FCODE,
+  GS_LAYOUT          TYPE LVC_S_LAYO,
+  GS_LAYOUT_2        TYPE LVC_S_LAYO,
+  GS_VARIANT         TYPE DISVARIANT,
+  GS_VARIANT_2       TYPE DISVARIANT,
+  IT_FIELDCATALOG    TYPE LVC_T_FCAT,
+  IT_FIELDCATALOG_2  TYPE LVC_T_FCAT,
+  WA_FIELDCATALOG    TYPE LVC_S_FCAT,
+  WA_FIELDCATALOG_2  TYPE LVC_S_FCAT,
+  IT_SORT            TYPE LVC_T_SORT,
+  "GS_SCROLL_COL       TYPE LVC_S_COL,
+  "GS_SCROLL_ROW       TYPE LVC_S_ROID,
+  "GS_STABLE           TYPE LVC_S_STBL,
+  "IT_SELECTED_ROWS    TYPE LVC_T_ROW,
+  "WA_SELECTED_ROWS    TYPE LVC_S_ROW,
+  LS_STABLE          TYPE LVC_S_STBL,
+  LS_STABLE_2        TYPE LVC_S_STBL,
+  T_SORT             TYPE LVC_T_SORT,
+  W_SORT             TYPE LVC_T_SORT WITH HEADER LINE,
+  T_OUT_1            TYPE TABLE OF TY_SAIDA,
+  T_FCAT_1           TYPE TABLE OF LVC_S_FCAT,
+  W_FCAT_1           TYPE LVC_S_FCAT.
+
+
+
+
+DATA: "R_EVENT_HANDLER TYPE REF TO LCL_EVENTS_HANDLER,
+  I_SELECTED_ROWS TYPE LVC_T_ROW,                "Linhas selecionadas
+  W_SELECTED_ROWS TYPE LVC_S_ROW.                "Colunas Selecionadas
+
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+
+
+MODULE STATUS_0100 OUTPUT.
+  DATA:
+    LST_LAYOUT TYPE LVC_S_LAYO.
+
+  DATA: URL(255)                TYPE C,
+        P_TEXT                  TYPE SDYDO_TEXT_ELEMENT,
+        P_TEXT_2                TYPE SDYDO_TEXT_ELEMENT,
+        SDYDO_TEXT_ELEMENT(255),
+        P_TEXT_TABLE            TYPE SDYDO_TEXT_TABLE,
+        P_TEXT_TABLE_2          TYPE SDYDO_TEXT_TABLE,
+        VL_CONT                 TYPE I,
+        VL_BUTXT                TYPE T001-BUTXT,
+        VL_DATES1               TYPE CHAR10,
+        VL_DATES2               TYPE CHAR10.
+
+  SET PF-STATUS 'T01'.
+  SET TITLEBAR 'T02'.
+
+
+* Adicionando Logo Marca no Cabeçalho
+  IF G_CUSTOM_CONTAINER IS INITIAL.
+
+    CREATE OBJECT G_CUSTOM_CONTAINER
+      EXPORTING
+        CONTAINER_NAME              = 'CONTAINER'
+      EXCEPTIONS
+        CNTL_ERROR                  = 1
+        CNTL_SYSTEM_ERROR           = 2
+        CREATE_ERROR                = 3
+        LIFETIME_ERROR              = 4
+        LIFETIME_DYNPRO_DYNPRO_LINK = 5.
+
+
+    IF SY-SUBRC <> 0.
+      MESSAGE A000(TREE_CONTROL_MSG).
+    ENDIF.
+
+    CREATE OBJECT DG_SPLITTER_1
+      EXPORTING
+        PARENT  = G_CUSTOM_CONTAINER
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 2
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_ALV.
+
+    CREATE OBJECT DG_SPLITTER_2
+      EXPORTING
+        PARENT  = DG_PARENT_1
+        ROWS    = 1
+        COLUMNS = 2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 2
+      RECEIVING
+        CONTAINER = DG_PARENT_2A.
+
+    CALL METHOD DG_SPLITTER_1->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 16.
+
+    CALL METHOD DG_SPLITTER_2->SET_COLUMN_WIDTH
+      EXPORTING
+        ID    = 1
+        WIDTH = 65.
+
+    CREATE OBJECT PICTURE
+      EXPORTING
+        PARENT = DG_PARENT_2A.
+
+    PERFORM F_PEGA_IMAGEM USING 'LOGO_NOVO' CHANGING URL.
+
+    CALL METHOD PICTURE->LOAD_PICTURE_FROM_URL
+      EXPORTING
+        URL = URL.
+
+    CALL METHOD PICTURE->SET_DISPLAY_MODE
+      EXPORTING
+        DISPLAY_MODE = PICTURE->DISPLAY_MODE_FIT_CENTER.
+
+    IF IT_SAIDA IS NOT INITIAL.
+      P_TEXT = TEXT-003.
+      PERFORM FILL_IT_FIELDCATALOG USING:
+              02 'BEBER '      'VIQMEL '    '25'  ' '     ' '    ' '   'Cod Area               ' '    ' ' ' ,
+              03 'FING  '      'T357   '    '10'  ' '     ' '    ' '   'Area Operacional       ' '    ' ' ' ,
+              01 'IWERK '      'VIQMEL '    '30'  ' '     ' '    ' '   'Centro                 ' '    ' ' ' ,
+              04 'QMART '      'VIQMEL '    '30'  ' '     ' '    ' '   'Tipo de Nota           ' '    ' ' ' ,
+              05 'QNEME '      '       '    '30'  ' '     ' '    'X'   'Qtd Nota Emergencia    ' 'C610' 'X' ,
+              06 'QNURG '      '       '    '16'  ' '     ' '    'X'   'Qtd Nota Urgencia      ' 'C610' 'X' ,
+              07 'QNOPO '      '       '    '16'  ' '     ' '    'X'   'Qtd Nota Oportunidade  ' 'C310' 'X' ,
+              08 'QNNOR '      '       '    '16'  ' '     ' '    'X'   'Qtd Nota Normal        ' 'C510' 'X' ,
+              09 'QNIND'       '       '    '26'  ' '     ' '    'X'   'Qtd Nota Indisponivel  ' '    ' 'X' ,
+              10 'TNOTA'       '       '    '20'  ' '     ' '    'X'   'Total de Notas         ' '    ' ' ' .
+
+      PERFORM FILL_IT_SORT.
+
+
+* Adicionando informação do parametro de entrada no cabeçalho.
+      PERFORM FILL_GS_VARIANT.
+
+      GS_LAYOUT-SEL_MODE   = 'A'.
+      GS_LAYOUT-CWIDTH_OPT = 'X'.
+      CLEAR: IT_EXCLUDE_FCODE, IT_EXCLUDE_FCODE[].
+
+      CREATE OBJECT CTL_ALV
+        EXPORTING
+          I_PARENT = DG_PARENT_ALV.
+
+
+      CALL METHOD CTL_ALV->SET_TABLE_FOR_FIRST_DISPLAY
+        EXPORTING
+          IS_LAYOUT            = GS_LAYOUT
+          IS_VARIANT           = GS_VARIANT
+          IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+          I_SAVE               = 'A'
+        CHANGING
+          IT_FIELDCATALOG      = IT_FIELDCATALOG
+          IT_OUTTAB            = IT_SAIDA
+          IT_SORT              = IT_SORT.
+
+      SET HANDLER: LCL_EVENTOS=>ON_HOTSPOT_CLICK FOR CTL_ALV.
+
+
+      CREATE OBJECT DG_DYNDOC_ID
+        EXPORTING
+          STYLE = 'ALV_GRID'.
+
+      CALL METHOD DG_DYNDOC_ID->INITIALIZE_DOCUMENT.
+
+      CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+        EXPORTING
+          NO_OF_COLUMNS = 1
+          BORDER        = '0'
+          WIDTH         = '100%'
+        IMPORTING
+          TABLE         = TABLE_ELEMENT.
+
+      CALL METHOD TABLE_ELEMENT->ADD_COLUMN
+        IMPORTING
+          COLUMN = COLUMN.
+
+      CALL METHOD TABLE_ELEMENT->SET_COLUMN_STYLE
+        EXPORTING
+          COL_NO    = 1
+          "SAP_ALIGN = 'CENTER'
+          SAP_STYLE = CL_DD_DOCUMENT=>HEADING.
+
+      CALL METHOD COLUMN->ADD_TEXT
+        EXPORTING
+          TEXT      = P_TEXT
+          SAP_STYLE = 'HEADING'.
+
+      CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+        EXPORTING
+          NO_OF_COLUMNS = 2
+          BORDER        = '0'
+          WIDTH         = '100%'
+        IMPORTING
+          TABLE         = TABLE_ELEMENT2.
+
+      CALL METHOD TABLE_ELEMENT2->ADD_COLUMN
+        EXPORTING
+          SAP_STYLE   = 'SAP_BOLD'
+          STYLE_CLASS = 'SAP_BOLD'
+        IMPORTING
+          COLUMN      = COLUMN_1.
+
+
+* Mosta o cabeçario com o periodo pesquisado.
+      LOOP AT P_DATA.
+        IF P_DATA-OPTION EQ 'BT'.
+          CONCATENATE P_DATA-LOW+6(2) '.' P_DATA-LOW+4(2) '.' P_DATA-LOW(4) INTO VL_DATES1.
+          CONCATENATE P_DATA-HIGH+6(2) '.' P_DATA-HIGH+4(2) '.' P_DATA-HIGH(4) INTO VL_DATES2.
+          CONCATENATE 'Período:' VL_DATES1 '-' VL_DATES2 INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          EXIT.
+        ELSE.
+          CONCATENATE P_DATA-LOW+6(2) '.' P_DATA-LOW+4(2) '.' P_DATA-LOW(4) INTO VL_DATES1.
+          CONCATENATE 'Período:' VL_DATES1 INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT, VL_DATES1, VL_DATES2.
+
+      "------------------
+      CALL METHOD COLUMN_1->ADD_TEXT
+        EXPORTING
+          TEXT_TABLE = P_TEXT_TABLE
+          FIX_LINES  = 'X'.
+
+      CALL METHOD DG_DYNDOC_ID->MERGE_DOCUMENT.
+
+      CREATE OBJECT DG_HTML_CNTRL
+        EXPORTING
+          PARENT = DG_PARENT_2.
+
+      DG_DYNDOC_ID->HTML_CONTROL = DG_HTML_CNTRL.
+
+      CALL METHOD DG_DYNDOC_ID->DISPLAY_DOCUMENT
+        EXPORTING
+          REUSE_CONTROL      = 'X'
+          PARENT             = DG_PARENT_2
+        EXCEPTIONS
+          HTML_DISPLAY_ERROR = 1.
+
+*      PERFORM AJUSTA_TOTAIS.
+
+    ELSE.
+
+      LS_STABLE-ROW = 'X'.
+      LS_STABLE-COL = 'X'.
+
+      CALL METHOD CTL_ALV->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = LS_STABLE
+        EXCEPTIONS
+          FINISHED  = 1
+          OTHERS    = 2.
+
+      IF SY-SUBRC <> 0.
+      ENDIF.
+
+    ENDIF.
+  ENDIF.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100 INPUT.
+  CASE SY-UCOMM.
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+
+ENDMODULE.
+
+FORM FILL_GS_VARIANT.
+
+  GS_VARIANT-REPORT      = SY-REPID.
+  GS_VARIANT-HANDLE      = '0100'.
+  GS_VARIANT-LOG_GROUP   = ABAP_FALSE.
+  GS_VARIANT-USERNAME    = ABAP_FALSE.
+  GS_VARIANT-VARIANT     = ABAP_FALSE.
+  GS_VARIANT-TEXT        = ABAP_FALSE.
+  GS_VARIANT-DEPENDVARS  = ABAP_FALSE.
+ENDFORM.
+
+FORM FILL_GS_VARIANT_2.
+
+  GS_VARIANT-REPORT      = SY-REPID.
+  GS_VARIANT-HANDLE      = '0100'.
+  GS_VARIANT-LOG_GROUP   = ABAP_FALSE.
+  GS_VARIANT-USERNAME    = ABAP_FALSE.
+  GS_VARIANT-VARIANT     = ABAP_FALSE.
+  GS_VARIANT-TEXT        = ABAP_FALSE.
+  GS_VARIANT-DEPENDVARS  = ABAP_FALSE.
+ENDFORM.
+
+*Parametros da ALV.
+FORM FILL_IT_FIELDCATALOG USING VALUE(P_COLNUM)
+                                VALUE(P_FIELDNAME)
+                                VALUE(P_TABNAME)
+                                VALUE(P_LEN)
+                                VALUE(P_EDIT)
+                                VALUE(P_ICON)
+                                VALUE(P_DO_SUM)
+                                VALUE(P_HEADER)
+                                VALUE(P_EMPHASIZE)
+                                VALUE(P_HOTSPOT).
+  DATA:  WA_FIELDCATALOG  TYPE LVC_S_FCAT.
+
+  WA_FIELDCATALOG-COL_POS     = P_COLNUM.
+  WA_FIELDCATALOG-FIELDNAME   = P_FIELDNAME.
+  WA_FIELDCATALOG-TABNAME     = P_TABNAME.
+  WA_FIELDCATALOG-OUTPUTLEN   = P_LEN.
+  WA_FIELDCATALOG-COLTEXT     = P_HEADER.
+  WA_FIELDCATALOG-EDIT        = P_EDIT.
+  WA_FIELDCATALOG-ICON        = P_ICON.
+  WA_FIELDCATALOG-REF_TABLE   = P_TABNAME.
+  WA_FIELDCATALOG-CHECKTABLE  = P_TABNAME.
+  WA_FIELDCATALOG-DO_SUM      = P_DO_SUM.
+  WA_FIELDCATALOG-EMPHASIZE   = P_EMPHASIZE.
+  WA_FIELDCATALOG-HOTSPOT     = P_HOTSPOT.
+*  WA_FIELDCATALOG-EXCP_CONDS  = P_EXCP_CONDS.
+
+  GS_LAYOUT-EXCP_CONDS    = 'X'.
+  GS_LAYOUT-ZEBRA         = ' '.
+  GS_LAYOUT-SEL_MODE      = 'A'.
+  GS_LAYOUT-CWIDTH_OPT    = 'X'.     "  Otimizar colunas na tela
+  GS_LAYOUT-TOTALS_BEF    = ''.
+
+  APPEND WA_FIELDCATALOG TO IT_FIELDCATALOG.
+
+
+ENDFORM.                    " F_DEFINE_CONTAINER_HEADER
+
+FORM FILL_IT_SORT .
+
+  DATA: WA_SORT TYPE LVC_S_SORT.
+
+  WA_SORT-SPOS = '1'.
+  WA_SORT-FIELDNAME = 'IWERK'.
+  "WA_SORT-DOWN = 'X'.
+  WA_SORT-GROUP = '*'.
+  WA_SORT-SUBTOT = ' '.
+  APPEND WA_SORT TO IT_SORT.
+
+*  IF P_BEBER IS NOT INITIAL.
+*
+*    WA_SORT-SPOS = '2'.
+*    WA_SORT-FIELDNAME = 'BEBER'.
+*    "WA_SORT-DOWN = 'X'.
+*    WA_SORT-GROUP = '*'.
+*    WA_SORT-SUBTOT = 'X'.
+*    APPEND WA_SORT TO IT_SORT.
+*
+*  ENDIF.
+ENDFORM.
+
+*  Busca a logo Marca e adiciona no cabeçario.
+FORM F_PEGA_IMAGEM  USING    NOME_LOGO
+                  CHANGING URL.
+
+  DATA: BEGIN OF GRAPHIC_TABLE OCCURS 0,
+          LINE(255) TYPE X,
+        END OF GRAPHIC_TABLE.
+
+  DATA: L_GRAPHIC_XSTR TYPE XSTRING.
+  DATA: GRAPHIC_SIZE   TYPE I.
+  DATA: L_GRAPHIC_CONV TYPE I.
+  DATA: L_GRAPHIC_OFFS TYPE I.
+
+  REFRESH GRAPHIC_TABLE.
+
+  CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+    EXPORTING
+      P_OBJECT = 'GRAPHICS'
+      P_NAME   = NOME_LOGO
+      P_ID     = 'BMAP'
+      P_BTYPE  = 'BCOL'
+    RECEIVING
+      P_BMP    = L_GRAPHIC_XSTR.
+
+  GRAPHIC_SIZE = XSTRLEN( L_GRAPHIC_XSTR ).
+  L_GRAPHIC_CONV = GRAPHIC_SIZE.
+  L_GRAPHIC_OFFS = 0.
+
+  WHILE L_GRAPHIC_CONV > 255.
+
+    GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(255).
+    APPEND GRAPHIC_TABLE.
+    L_GRAPHIC_OFFS = L_GRAPHIC_OFFS + 255.
+    L_GRAPHIC_CONV = L_GRAPHIC_CONV - 255.
+
+  ENDWHILE.
+
+  GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(L_GRAPHIC_CONV).
+  APPEND GRAPHIC_TABLE.
+
+  CALL FUNCTION 'DP_CREATE_URL'
+    EXPORTING
+      TYPE     = 'IMAGE'
+      SUBTYPE  = 'X-UNKNOWN'
+      SIZE     = GRAPHIC_SIZE
+      LIFETIME = 'T'
+    TABLES
+      DATA     = GRAPHIC_TABLE
+    CHANGING
+      URL      = URL.
+
+ENDFORM.                    " F_PEGA_IMAGEM
+
+
+*Parametros da ALV.
+FORM FILL_IT_FIELDCATALOG_POPUP USING VALUE(P_COLNUM)
+                                VALUE(P_FIELDNAME)
+                                VALUE(P_TABNAME)
+                                VALUE(P_LEN)
+                                VALUE(P_EDIT)
+                                VALUE(P_ICON)
+                                VALUE(P_DO_SUM)
+                                VALUE(P_HEADER)
+                                VALUE(P_EMPHASIZE)
+                                VALUE(P_HOTSPOT).
+
+
+  WA_FIELDCATALOG_2-COL_POS     = P_COLNUM.
+  WA_FIELDCATALOG_2-FIELDNAME   = P_FIELDNAME.
+  WA_FIELDCATALOG_2-TABNAME     = P_TABNAME.
+  WA_FIELDCATALOG_2-OUTPUTLEN   = P_LEN.
+  WA_FIELDCATALOG_2-COLTEXT     = P_HEADER.
+  WA_FIELDCATALOG_2-EDIT        = P_EDIT.
+  WA_FIELDCATALOG_2-ICON        = P_ICON.
+  WA_FIELDCATALOG_2-REF_TABLE   = P_TABNAME.
+  WA_FIELDCATALOG_2-CHECKTABLE  = P_TABNAME.
+  WA_FIELDCATALOG_2-DO_SUM      = P_DO_SUM.
+  WA_FIELDCATALOG_2-EMPHASIZE   = P_EMPHASIZE.
+  WA_FIELDCATALOG_2-HOTSPOT     = P_HOTSPOT.
+*  WA_FIELDCATALOG-EXCP_CONDS  = P_EXCP_CONDS.
+
+
+  GS_LAYOUT_2-EXCP_CONDS    = 'X'.
+  GS_LAYOUT_2-ZEBRA         = 'X'.
+  GS_LAYOUT_2-SEL_MODE      = 'A'.
+  GS_LAYOUT_2-CWIDTH_OPT    = ' '.     "  Otimizar colunas na tela
+  GS_LAYOUT_2-TOTALS_BEF     = ''.
+
+  APPEND WA_FIELDCATALOG_2 TO IT_FIELDCATALOG_2.
+
+
+ENDFORM.                    " F_DEFINE_CONTAINER_HEADER
+
+*&---------------------------------------------------------------------*
+*&      Form  EXCLUDE
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM EXCLUDE .
+
+*   Excluir Buttons Toolbar
+  FREE: IT_EXCLUDE_FCODE.
+
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+  WA_EXCLUDE_FCODE = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+  APPEND WA_EXCLUDE_FCODE TO IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+
+*  Busca a logo Marca e adiciona no cabeçario.
+FORM F_PEGA_IMAGEM_2  USING    NOME_LOGO_2
+                  CHANGING URL.
+
+  DATA: BEGIN OF GRAPHIC_TABLE OCCURS 0,
+          LINE(255) TYPE X,
+        END OF GRAPHIC_TABLE.
+
+  DATA: L_GRAPHIC_XSTR_2 TYPE XSTRING.
+  DATA: GRAPHIC_SIZE_2   TYPE I.
+  DATA: L_GRAPHIC_CONV_2 TYPE I.
+  DATA: L_GRAPHIC_OFFS_2 TYPE I.
+
+  REFRESH GRAPHIC_TABLE.
+
+  CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+    EXPORTING
+      P_OBJECT = 'GRAPHICS'
+      P_NAME   = NOME_LOGO_2
+      P_ID     = 'BMAP'
+      P_BTYPE  = 'BCOL'
+    RECEIVING
+      P_BMP    = L_GRAPHIC_XSTR_2.
+
+  GRAPHIC_SIZE_2 = XSTRLEN( L_GRAPHIC_XSTR_2 ).
+  L_GRAPHIC_CONV_2 = GRAPHIC_SIZE_2.
+  L_GRAPHIC_OFFS_2 = 0.
+
+  WHILE L_GRAPHIC_CONV_2 > 255.
+
+    GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR_2+L_GRAPHIC_OFFS_2(255).
+    APPEND GRAPHIC_TABLE.
+    L_GRAPHIC_OFFS_2 = L_GRAPHIC_OFFS_2 + 255.
+    L_GRAPHIC_CONV_2 = L_GRAPHIC_CONV_2 - 255.
+
+  ENDWHILE.
+
+  GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR_2+L_GRAPHIC_OFFS_2(L_GRAPHIC_CONV_2).
+  APPEND GRAPHIC_TABLE.
+
+  CALL FUNCTION 'DP_CREATE_URL'
+    EXPORTING
+      TYPE     = 'IMAGE'
+      SUBTYPE  = 'X-UNKNOWN'
+      SIZE     = GRAPHIC_SIZE_2
+      LIFETIME = 'T'
+    TABLES
+      DATA     = GRAPHIC_TABLE
+    CHANGING
+      URL      = URL.
+
+ENDFORM.                    " F_PEGA_IMAGEM

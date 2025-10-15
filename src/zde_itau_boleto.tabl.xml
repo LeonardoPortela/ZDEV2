@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZDE_ITAU_BOLETO</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Parametros de Saida de Dados Boletos</DDTEXT>
+    <EXCLASS>1</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>CODIGO_CARTEIRA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Número da carteira utilizada na emissão do boleto</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DATA_INICIAL</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Data inicial da pesquisa</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DATA_FINAL</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Data final da pesquisa</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ID_BENEFICIARIO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>(4 dígitos agência)(5 dígitos c/c)+(1 dígito DAC)</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>NOME_PAGADOR</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Nome do destinatário do boleto</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>NUMERO_CPF_CNPJ_PAGADOR</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Número do CPF ou CNPJ do destinatário do boleto</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>NUMERO_NOSSO_NUMERO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Nosso número informado na emissão do boleto</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>SEU_NUMERO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Seu número, informado pelo beneficiário de cobrança</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>SITUACAO_GERAL_BOLETO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Status do boleto a ser filtrado</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>SITUACAO_NEGATIVACAO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Informa a situação da negativação do boleto.</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>SITUACAO_PROTESTO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Informa a situação do protesto do boleto</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>STATUS_VENCIMENTO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Status vencimento</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>TIPO_BOLETO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Informa o tipo de boleto a ser pesquisado</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>TIPO_DATA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>g</INTTYPE>
+     <INTLEN>000008</INTLEN>
+     <DATATYPE>STRG</DATATYPE>
+     <MASK>  STRG</MASK>
+     <DDTEXT>Campo indica onde a pesquisa será realizada, venc ou emissao</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>PAGE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Definir um número de página para obter informações</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>PAGE_SIZE</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000004</INTLEN>
+     <DATATYPE>INT4</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  INT4</MASK>
+     <DDTEXT>Limitar o número de elementos por página</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

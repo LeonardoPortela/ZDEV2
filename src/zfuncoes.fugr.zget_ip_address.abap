@@ -1,0 +1,22 @@
+FUNCTION ZGET_IP_ADDRESS.
+*"--------------------------------------------------------------------
+*"*"Interface local:
+*"  EXPORTING
+*"     REFERENCE(ZIP_ADDRESS) TYPE  CHAR69
+*"--------------------------------------------------------------------
+TYPES: BEGIN OF KERNEL_VERSION,
+         KEY(21) TYPE C,
+         DATA(69) TYPE C,
+      END OF KERNEL_VERSION.
+
+DATA : GT_KERNEL_VERSION TYPE STANDARD TABLE OF KERNEL_VERSION,
+       GW_KERNEL_VERSION TYPE KERNEL_VERSION.
+
+CALL 'SAPCORE' ID 'ID' FIELD 'VERSION'
+               ID 'TABLE' FIELD GT_KERNEL_VERSION[].
+
+READ TABLE GT_KERNEL_VERSION INTO GW_KERNEL_VERSION INDEX 11.
+ZIP_ADDRESS = GW_KERNEL_VERSION-DATA.
+
+
+ENDFUNCTION.

@@ -1,0 +1,637 @@
+*&---------------------------------------------------------------------*
+*& Report  ZPMR0041
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZPMR0041.
+
+
+TABLES SFLIGHT.
+
+
+
+TABLES: VIAUFKST, V_AUART.
+
+" OCCURS DEFINE E DECLARA A ESTRUTURA, NO CASO A ESTRUTURA IJSTAT
+DATA: BEGIN OF IJSTAT OCCURS   0.
+        INCLUDE STRUCTURE JSTAT.
+      DATA: END OF IJSTAT.
+
+DATA: GS_SAIDA   TYPE TABLE OF ZTPM_MECANICA,
+      DATA_ATUAL TYPE CHAR7,
+      GW_SAIDA   TYPE TABLE OF ZTPM_MECANICA.
+
+DATA: TOTAL_7_DIAS          TYPE CHAR7,
+      TOTAL_15_DIAS         TYPE CHAR7,
+      TOTAL_30_DIAS         TYPE CHAR7,
+      TOTAL_ACIMA_MES       TYPE CHAR7,
+      TOTAL_GERAL           TYPE CHAR7,
+      PORCENTAGEM_7_DIAS    TYPE P DECIMALS 2,
+      PORCENTAGEM_15_DIAS   TYPE P DECIMALS 2,
+      PORCENTAGEM_30_DIAS   TYPE P DECIMALS 2,
+      PORCENTAGEM_ACIMA_MES TYPE P DECIMALS 2.
+
+* ALV
+
+DATA:
+  G_CUSTOM_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+  DG_SPLITTER_1      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_PARENT_1        TYPE REF TO CL_GUI_CONTAINER,
+  DG_SPLITTER_2      TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+  DG_PARENT_2        TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_2A       TYPE REF TO CL_GUI_CONTAINER,
+  DG_PARENT_ALV      TYPE REF TO CL_GUI_CONTAINER,
+  PICTURE            TYPE REF TO CL_GUI_PICTURE,
+  CTL_ALV            TYPE REF TO CL_GUI_ALV_GRID,
+  DG_DYNDOC_ID       TYPE REF TO CL_DD_DOCUMENT,
+  TABLE_ELEMENT      TYPE REF TO CL_DD_TABLE_ELEMENT,
+  COLUMN             TYPE REF TO CL_DD_AREA,
+  TABLE_ELEMENT2     TYPE REF TO CL_DD_TABLE_ELEMENT,
+  COLUMN_1           TYPE REF TO CL_DD_AREA,
+  DG_HTML_CNTRL      TYPE REF TO CL_GUI_HTML_VIEWER,
+  IT_EXCLUDE_FCODE   TYPE UI_FUNCTIONS,
+  WA_EXCLUDE_FCODE   LIKE LINE OF IT_EXCLUDE_FCODE,
+  GS_LAYOUT          TYPE LVC_S_LAYO,
+  GS_VARIANT         TYPE DISVARIANT,
+  IT_FIELDCATALOG    TYPE LVC_T_FCAT,
+  WA_FIELDCATALOG    TYPE LVC_S_FCAT,
+  IT_SORT            TYPE LVC_T_SORT,
+  LS_STABLE          TYPE LVC_S_STBL.
+
+DATA: URL(255)                TYPE C,
+        P_TEXT                  TYPE SDYDO_TEXT_ELEMENT,
+        SDYDO_TEXT_ELEMENT(255),
+        P_TEXT_TABLE            TYPE SDYDO_TEXT_TABLE,
+        VL_CONT                 TYPE I,
+        VL_BUTXT                TYPE T001-BUTXT,
+        VL_DATES1               TYPE CHAR10,
+        VL_DATES2               TYPE CHAR10.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: P_IWERK FOR VIAUFKST-IWERK OBLIGATORY NO INTERVALS NO-EXTENSION,
+                P_ERDAT  FOR VIAUFKST-ERDAT,
+                "P_AUFNR FOR VIAUFKST-AUFNR,
+                P_AUART FOR VIAUFKST-AUART.
+SELECTION-SCREEN END OF BLOCK B1.
+
+
+
+PERFORM RELATORIO.
+
+
+IF GW_SAIDA[] IS NOT INITIAL.
+    PERFORM IMPRIMIR_ALV.
+    "PERFORM F_RELATORIO TABLES T_SAIDA.
+  ELSE.
+    MESSAGE 'Dados não encontrado' TYPE 'S' DISPLAY LIKE 'E'.
+  ENDIF.
+
+FORM RELATORIO.
+
+  SELECT
+    *
+  FROM
+    VIAUFKST INTO CORRESPONDING FIELDS OF TABLE GS_SAIDA
+  WHERE
+    IWERK IN P_IWERK
+    AND ERDAT IN P_ERDAT
+    "AND AUFNR IN P_AUFNR
+    AND AUART IN P_AUART.
+
+
+  CHECK GS_SAIDA IS NOT  INITIAL.
+
+  " ASSIGNING FIELD-SYMBOL >> MODIFICA A PROPRIA TABELA DO LOOP POREM TEM QUE PASSAR UM WORKAREA DECLARADA AGR MSM
+  LOOP AT GS_SAIDA ASSIGNING FIELD-SYMBOL(<WA_SAIDA>).
+
+    IF <WA_SAIDA>-AUART IS NOT INITIAL.
+
+      SELECT SINGLE * FROM V_AUART WHERE AUART EQ <WA_SAIDA>-AUART AND SPRAS = SY-LANGU.
+
+      <WA_SAIDA>-TXT = V_AUART-TXT.
+
+    ENDIF.
+
+    CALL FUNCTION 'STATUS_READ'
+      EXPORTING
+        OBJNR       = <WA_SAIDA>-OBJNR
+        ONLY_ACTIVE = 'X'
+      TABLES
+        STATUS      = IJSTAT
+      EXCEPTIONS
+        OTHERS      = 01.
+    CHECK SY-SUBRC = 0.
+
+    LOOP AT IJSTAT.
+
+      IF IJSTAT-STAT EQ 'I0001' OR IJSTAT-STAT EQ 'I0002'.
+        <WA_SAIDA>-MARQ = ABAP_TRUE.
+      ENDIF.
+
+    ENDLOOP.
+
+
+
+  ENDLOOP.
+
+  DELETE GS_SAIDA WHERE MARQ NE ABAP_TRUE.
+
+  GW_SAIDA = GS_SAIDA.
+
+  SORT GW_SAIDA ASCENDING BY AUART.
+
+  DELETE ADJACENT DUPLICATES FROM GW_SAIDA COMPARING AUART.
+
+  LOOP AT GW_SAIDA ASSIGNING FIELD-SYMBOL(<WA_ORDEM>).
+
+    LOOP AT GS_SAIDA INTO DATA(WA_SAIDA) WHERE AUART = <WA_ORDEM>-AUART.
+
+      DATA_ATUAL = SY-DATUM - WA_SAIDA-ERDAT.
+
+      CONDENSE DATA_ATUAL.
+
+      IF DATA_ATUAL <= 7.
+        ADD 1 TO  TOTAL_7_DIAS.
+      ELSEIF DATA_ATUAL > 7 AND DATA_ATUAL <= 15.
+        ADD 1 TO  TOTAL_15_DIAS.
+      ELSEIF DATA_ATUAL > 15 AND DATA_ATUAL <= 30.
+        ADD 1 TO  TOTAL_30_DIAS.
+      ELSE.
+        ADD 1 TO  TOTAL_ACIMA_MES.
+      ENDIF.
+
+      ADD 1  TO TOTAL_GERAL.
+
+    ENDLOOP.
+
+    <WA_ORDEM>-TOTAL_7_DIAS    = TOTAL_7_DIAS.
+    <WA_ORDEM>-TOTAL_15_DIAS   = TOTAL_15_DIAS.
+    <WA_ORDEM>-TOTAL_30_DIAS   = TOTAL_30_DIAS.
+    <WA_ORDEM>-TOTAL_ACIMA_MES = TOTAL_ACIMA_MES.
+    <WA_ORDEM>-TOTAL_GERAL     = TOTAL_7_DIAS + TOTAL_15_DIAS + TOTAL_30_DIAS + TOTAL_ACIMA_MES.
+
+    PORCENTAGEM_7_DIAS    = ( TOTAL_7_DIAS / <WA_ORDEM>-TOTAL_GERAL ) * 100.
+    PORCENTAGEM_15_DIAS   =  ( TOTAL_15_DIAS / <WA_ORDEM>-TOTAL_GERAL ) * 100.
+    PORCENTAGEM_30_DIAS   = ( TOTAL_30_DIAS / <WA_ORDEM>-TOTAL_GERAL ) * 100.
+    PORCENTAGEM_ACIMA_MES = ( TOTAL_ACIMA_MES / <WA_ORDEM>-TOTAL_GERAL ) * 100.
+
+    <WA_ORDEM>-PORC_7_DIAS   = PORCENTAGEM_7_DIAS && '%'.
+    <WA_ORDEM>-PORC_15_DIAS  = PORCENTAGEM_15_DIAS && '%'.
+    <WA_ORDEM>-PORC_30_DIAS  = PORCENTAGEM_30_DIAS && '%'.
+    <WA_ORDEM>-POR_ACIMA_30  = PORCENTAGEM_ACIMA_MES && '%'.
+
+
+    CLEAR: TOTAL_7_DIAS,
+    TOTAL_15_DIAS,
+    TOTAL_30_DIAS,
+    TOTAL_ACIMA_MES,
+    TOTAL_GERAL,
+    PORCENTAGEM_7_DIAS,
+    PORCENTAGEM_15_DIAS,
+    PORCENTAGEM_30_DIAS,
+    PORCENTAGEM_ACIMA_MES.
+
+  ENDLOOP.
+ENDFORM.
+
+FORM FILL_IT_FIELDCATALOG USING VALUE(P_COLNUM)
+                                VALUE(P_FIELDNAME)
+                                VALUE(P_TABNAME)
+                                VALUE(P_LEN)
+                                VALUE(P_EDIT)
+                                VALUE(P_ICON)
+                                VALUE(P_DO_SUM)
+                                VALUE(P_HEADER).
+
+  DATA: WA_FIELDCATALOG TYPE LVC_S_FCAT.
+
+  WA_FIELDCATALOG-COL_POS     = P_COLNUM.
+  WA_FIELDCATALOG-FIELDNAME   = P_FIELDNAME.
+  WA_FIELDCATALOG-TABNAME     = P_TABNAME.
+  WA_FIELDCATALOG-OUTPUTLEN   = P_LEN.
+  WA_FIELDCATALOG-COLTEXT     = P_HEADER.
+  WA_FIELDCATALOG-EDIT        = P_EDIT.
+  WA_FIELDCATALOG-ICON        = P_ICON.
+  WA_FIELDCATALOG-REF_TABLE   = P_TABNAME.
+  WA_FIELDCATALOG-CHECKTABLE  = P_TABNAME.
+  WA_FIELDCATALOG-DO_SUM  = P_DO_SUM.
+  APPEND WA_FIELDCATALOG TO IT_FIELDCATALOG.
+
+ENDFORM.
+
+FORM FILL_GS_VARIANT .
+
+  GS_VARIANT-REPORT      = SY-REPID.
+  GS_VARIANT-HANDLE      = '0100'.
+  GS_VARIANT-LOG_GROUP   = ABAP_FALSE.
+  GS_VARIANT-USERNAME    = ABAP_FALSE.
+  GS_VARIANT-VARIANT     = ABAP_FALSE.
+  GS_VARIANT-TEXT        = ABAP_FALSE.
+  GS_VARIANT-DEPENDVARS  = ABAP_FALSE.
+
+ENDFORM.
+
+FORM F_PEGA_IMAGEM  USING    NOME_LOGO
+                    CHANGING URL.
+
+  DATA: BEGIN OF GRAPHIC_TABLE OCCURS 0,
+          LINE(255) TYPE X,
+        END OF GRAPHIC_TABLE.
+
+  DATA: L_GRAPHIC_XSTR TYPE XSTRING.
+  DATA: GRAPHIC_SIZE   TYPE I.
+  DATA: L_GRAPHIC_CONV TYPE I.
+  DATA: L_GRAPHIC_OFFS TYPE I.
+
+  REFRESH GRAPHIC_TABLE.
+
+  CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+    EXPORTING
+      P_OBJECT = 'GRAPHICS'
+      P_NAME   = NOME_LOGO
+      P_ID     = 'BMAP'
+      P_BTYPE  = 'BCOL'
+    RECEIVING
+      P_BMP    = L_GRAPHIC_XSTR.
+
+  GRAPHIC_SIZE = XSTRLEN( L_GRAPHIC_XSTR ).
+  L_GRAPHIC_CONV = GRAPHIC_SIZE.
+  L_GRAPHIC_OFFS = 0.
+
+  WHILE L_GRAPHIC_CONV > 255.
+
+    GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(255).
+    APPEND GRAPHIC_TABLE.
+    L_GRAPHIC_OFFS = L_GRAPHIC_OFFS + 255.
+    L_GRAPHIC_CONV = L_GRAPHIC_CONV - 255.
+
+  ENDWHILE.
+
+  GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(L_GRAPHIC_CONV).
+  APPEND GRAPHIC_TABLE.
+
+  CALL FUNCTION 'DP_CREATE_URL'
+    EXPORTING
+      TYPE     = 'IMAGE'
+      SUBTYPE  = 'X-UNKNOWN'
+      SIZE     = GRAPHIC_SIZE
+      LIFETIME = 'T'
+    TABLES
+      DATA     = GRAPHIC_TABLE
+    CHANGING
+      URL      = URL.
+
+ENDFORM.
+
+MODULE STATUS_0100 OUTPUT.
+  SET PF-STATUS 'ST0100'.
+  SET TITLEBAR 'TITULO0100'.
+
+
+
+
+ENDMODULE.
+
+FORM IMPRIMIR_ALV.
+   IF G_CUSTOM_CONTAINER IS INITIAL.
+
+    CREATE OBJECT G_CUSTOM_CONTAINER
+      EXPORTING
+        CONTAINER_NAME              = 'CONTAINER'
+      EXCEPTIONS
+        CNTL_ERROR                  = 1
+        CNTL_SYSTEM_ERROR           = 2
+        CREATE_ERROR                = 3
+        LIFETIME_ERROR              = 4
+        LIFETIME_DYNPRO_DYNPRO_LINK = 5.
+
+
+      IF SY-SUBRC <> 0.
+      MESSAGE A000(TREE_CONTROL_MSG).
+    ENDIF.
+    CREATE OBJECT DG_SPLITTER_1
+      EXPORTING
+        PARENT  = G_CUSTOM_CONTAINER
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 2
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_ALV.
+
+    CREATE OBJECT DG_SPLITTER_2
+      EXPORTING
+        PARENT  = DG_PARENT_1
+        ROWS    = 1
+        COLUMNS = 2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 2
+      RECEIVING
+        CONTAINER = DG_PARENT_2A.
+
+    CALL METHOD DG_SPLITTER_1->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 16.
+
+    CALL METHOD DG_SPLITTER_2->SET_COLUMN_WIDTH
+      EXPORTING
+        ID    = 1
+        WIDTH = 40.
+
+    CREATE OBJECT PICTURE
+      EXPORTING
+        PARENT = DG_PARENT_2A.
+
+    PERFORM F_PEGA_IMAGEM USING 'LOGO_NOVO' CHANGING URL.
+
+    CALL METHOD PICTURE->LOAD_PICTURE_FROM_URL
+      EXPORTING
+        URL = URL.
+
+    CALL METHOD PICTURE->SET_DISPLAY_MODE
+      EXPORTING
+        DISPLAY_MODE = PICTURE->DISPLAY_MODE_FIT_CENTER.
+
+    PERFORM FILL_IT_FIELDCATALOG USING:
+*          01 'BUKRS'      'VIQMEL'    '07'  ' '     ' '    ' '   'Empresa',
+*          02 'SWERK'      'VIQMEL'    '06'  ' '     ' '    ' '   'Filial',
+*          03 'TPLMA'      'IFLO'      '30'  ' '     ' '    ' '   'Local Superior',
+*          04 'PLTX2'      'IFLO'      '40'  ' '     ' '    ' '   'Desc. Local Superior',
+*          05 'TPLNR'      'VIQMEL'    '18'  ' '     ' '    ' '   'Local',
+*          06 'PLTXT'      'ITOB'      '40'  ' '     ' '    ' '   'Desc. Local',
+*          07 'OPERA'      ''          '16'  ' '     ' '    'X'   'Tpo Oper. (Min)',
+*          08 'DISPO'      ''          '16'  ' '     ' '    'X'   'Tpo Dispon. (Min)',
+*          09 'PARAD'      ''          '16'  ' '     ' '    'X'   'Tpo Parada (Min)',
+*          10 '%DISP'      ''          '16'  ' '     ' '    'X'   'Dispon. (%)'
+
+          01 'AUART'      ''          '10'  ' '     ' '    ' '   'Tipo Ordem' ,
+          02 'TXT  '             ' '  '10'  ' '     ' '    ' '   'Descrição'            ,      "   ''      '' '' '' ,
+          03 'TOTAL_7_DIAS'      ' '  '18'  ' '     ' '    'X'   'Total Até 7 dias'     ,      "   ''      '' 'P_SUM' '' ,
+          04 'PORC_7_DIAS'       ' '  '12'  ' '     ' '    ' '   'Porcentagem'          ,      "   ''      '' '' ' ' ,
+          05 'TOTAL_15_DIAS'     ' '  '18'  ' '     ' '    'X'   'Total Até 15 dias'    ,      "   ''      '' 'P_SUM' '' ,
+          06 'PORC_15_DIAS'      ' '  '12'  ' '     ' '    ' '   'Porcentagem'          ,      "   ''      '' '' ' ' ,
+          07 'TOTAL_30_DIAS'     ' '  '18'  ' '     ' '    'X'   'Total Até 30 dias'    ,      "   ''      '' 'P_SUM' '' ,
+          08 'PORC_30_DIAS'      ' '  '12'  ' '     ' '    ' '   'Porcentagem'          ,      "   ''      '' '' ' ' ,
+          09 'TOTAL_ACIMA_MES'   ' '  '11'  ' '     ' '    'X'   'Total + 30'           ,      "   ''      '' 'P_SUM' ' ' ,
+          10 'POR_ACIMA_30'      ' '  '12'  ' '     ' '    ' '   'Porcentagem'          ,      "   ''      '' '' '' ,
+          11 'TOTAL_GERAL'       ' '  '12'  ' '     ' '    'X'   'Total Geral'          .      "   ''      '' 'P_SUM' '' .
+
+    "PERFORM FILL_IT_SORT.
+
+
+*   Fill info for layout variant
+    PERFORM FILL_GS_VARIANT.
+
+    GS_LAYOUT-SEL_MODE   = 'A'.
+    GS_LAYOUT-CWIDTH_OPT = 'X'.
+    CLEAR: IT_EXCLUDE_FCODE, IT_EXCLUDE_FCODE[].
+
+    CREATE OBJECT CTL_ALV
+      EXPORTING
+        I_PARENT = DG_PARENT_ALV.
+
+    "PERFORM EXCLUDE.
+
+    CALL METHOD CTL_ALV->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        IS_VARIANT           = GS_VARIANT
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        I_SAVE               = 'A'
+      CHANGING
+        IT_FIELDCATALOG      = IT_FIELDCATALOG
+        IT_OUTTAB            = GW_SAIDA
+        IT_SORT              = IT_SORT.
+
+    CREATE OBJECT DG_DYNDOC_ID
+      EXPORTING
+        STYLE = 'ALV_GRID'.
+
+    CALL METHOD DG_DYNDOC_ID->INITIALIZE_DOCUMENT.
+
+    CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+      EXPORTING
+        NO_OF_COLUMNS = 1
+        BORDER        = '0'
+        WIDTH         = '100%'
+      IMPORTING
+        TABLE         = TABLE_ELEMENT.
+
+    CALL METHOD TABLE_ELEMENT->ADD_COLUMN
+      IMPORTING
+        COLUMN = COLUMN.
+
+    CALL METHOD TABLE_ELEMENT->SET_COLUMN_STYLE
+      EXPORTING
+        COL_NO    = 1
+        "SAP_ALIGN = 'CENTER'
+        SAP_STYLE = CL_DD_DOCUMENT=>HEADING.
+
+    CALL METHOD COLUMN->ADD_TEXT
+      EXPORTING
+        TEXT      = P_TEXT
+        SAP_STYLE = 'HEADING'.
+
+    CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+      EXPORTING
+        NO_OF_COLUMNS = 2
+        BORDER        = '0'
+        WIDTH         = '100%'
+      IMPORTING
+        TABLE         = TABLE_ELEMENT2.
+
+    CALL METHOD TABLE_ELEMENT2->ADD_COLUMN
+      EXPORTING
+        SAP_STYLE   = 'SAP_BOLD'
+        STYLE_CLASS = 'SAP_BOLD'
+      IMPORTING
+        COLUMN      = COLUMN_1.
+
+    CLEAR: P_TEXT_TABLE.
+        "------------------
+    IF P_IWERK IS NOT INITIAL.
+      LOOP AT P_IWERK.
+        IF P_IWERK-OPTION NE 'EQ' AND P_IWERK-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = 'Centro: Multiplas Seleções'.
+          EXIT.
+        ELSEIF P_IWERK-OPTION EQ 'BT'.
+          CONCATENATE 'Centro:' P_IWERK-LOW '-' P_IWERK-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          EXIT.
+        ELSE.
+          VL_CONT = VL_CONT + 1.
+          IF VL_CONT GT 1.
+            SDYDO_TEXT_ELEMENT = 'Centro: Multiplas Seleções'.
+          ELSE.
+            CONCATENATE 'Centro:' P_IWERK-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+    ENDIF.
+    CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+    "------------------
+    LOOP AT P_ERDAT.
+      IF P_ERDAT-OPTION EQ 'BT'.
+        CONCATENATE P_ERDAT-LOW+6(2) '.' P_ERDAT-LOW+4(2) '.' P_ERDAT-LOW(4) INTO VL_DATES1.
+        CONCATENATE P_ERDAT-HIGH+6(2) '.' P_ERDAT-HIGH+4(2) '.' P_ERDAT-HIGH(4) INTO VL_DATES2.
+        CONCATENATE 'Período:' VL_DATES1 '-' VL_DATES2 INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        EXIT.
+      ELSE.
+        CONCATENATE P_ERDAT-LOW+6(2) '.' P_ERDAT-LOW+4(2) '.' P_ERDAT-LOW(4) INTO VL_DATES1.
+        CONCATENATE 'Período:' VL_DATES1 INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+      ENDIF.
+    ENDLOOP.
+    APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+    CLEAR: SDYDO_TEXT_ELEMENT, VL_DATES1, VL_DATES2.
+
+    "------------------
+*    IF P_AUFNR IS NOT INITIAL.
+*    LOOP AT P_AUFNR.
+*        IF P_AUFNR-OPTION NE 'EQ' AND P_AUFNR-OPTION NE 'BT'.
+*          SDYDO_TEXT_ELEMENT = 'Ordem: Multiplas Seleções'.
+*          EXIT.
+*        ELSEIF P_AUFNR-OPTION EQ 'BT'.
+*          CONCATENATE 'Ordem:' P_AUFNR-LOW '-' P_AUFNR-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+*          EXIT.
+*        ELSE.
+*          VL_CONT = VL_CONT + 1.
+*          IF VL_CONT GT 1.
+*            SDYDO_TEXT_ELEMENT = 'Ordem: Multiplas Seleções'.
+*          ELSE.
+*            CONCATENATE 'Ordem:' P_AUFNR-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+*          ENDIF.
+*        ENDIF.
+*      ENDLOOP.
+*      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+*      CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+*    ENDIF.
+*    CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+
+    "------------------
+    IF P_AUART IS NOT INITIAL.
+    LOOP AT P_AUART.
+        IF P_AUART-OPTION NE 'EQ' AND P_AUART-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = 'Tipo de Ordem: Multiplas Seleções'.
+          EXIT.
+        ELSEIF P_AUART-OPTION EQ 'BT'.
+          CONCATENATE 'Tipo de Ordem:' P_AUART-LOW '-' P_AUART-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          EXIT.
+        ELSE.
+          VL_CONT = VL_CONT + 1.
+          IF VL_CONT GT 1.
+            SDYDO_TEXT_ELEMENT = 'Tipo de Ordem: Multiplas Seleções'.
+          ELSE.
+            CONCATENATE 'Tipo de Ordem:' P_AUART-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+    ENDIF.
+    CLEAR: VL_CONT, SDYDO_TEXT_ELEMENT.
+
+    "------------------
+    CALL METHOD COLUMN_1->ADD_TEXT
+      EXPORTING
+        TEXT_TABLE = P_TEXT_TABLE
+        FIX_LINES  = 'X'.
+
+    CALL METHOD DG_DYNDOC_ID->MERGE_DOCUMENT.
+
+    CREATE OBJECT DG_HTML_CNTRL
+      EXPORTING
+        PARENT = DG_PARENT_2.
+
+    DG_DYNDOC_ID->HTML_CONTROL = DG_HTML_CNTRL.
+
+    CALL METHOD DG_DYNDOC_ID->DISPLAY_DOCUMENT
+      EXPORTING
+        REUSE_CONTROL      = 'X'
+        PARENT             = DG_PARENT_2
+      EXCEPTIONS
+        HTML_DISPLAY_ERROR = 1.
+
+    "PERFORM AJUSTA_TOTAIS.
+
+  ELSE.
+
+    LS_STABLE-ROW = 'X'.
+    LS_STABLE-COL = 'X'.
+
+    CALL METHOD CTL_ALV->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = LS_STABLE
+      EXCEPTIONS
+        FINISHED  = 1
+        OTHERS    = 2.
+
+    IF SY-SUBRC <> 0.
+    ENDIF.
+
+  ENDIF.
+
+ CALL SCREEN 0100.
+
+  ENDFORM.
+
+
+MODULE USER_COMMAND_0100 INPUT.
+
+  CASE SY-UCOMM.
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+
+ENDMODULE.
+
+
+FORM PREENCHE_CAT USING VALUE(P_CAMPO)
+                        VALUE(P_DESC)
+                        VALUE(P_TAM)
+                        VALUE(P_ZERO)
+                        VALUE(P_HOT)
+                        VALUE(P_SUM)
+                        VALUE(P_JUST).
+
+*  WA_FIELDCATALOG-FIELDNAME   = P_CAMPO.
+*  WA_FIELDCATALOG-COLTEXT     = P_DESC.
+*  WA_FIELDCATALOG-SCRTEXT_L   = P_DESC.
+*  WA_FIELDCATALOG-SCRTEXT_M   = P_DESC.
+*  WA_FIELDCATALOG-SCRTEXT_S   = P_DESC.
+*
+*
+*  WA_FIELDCATALOG-OUTPUTLEN   = P_TAM.
+*  WA_FIELDCATALOG-HOTSPOT     = P_HOT.
+*  WA_FIELDCATALOG-NO_ZERO     = P_ZERO.
+*  WA_FIELDCATALOG-DO_SUM      = P_SUM.
+*  WA_FIELDCATALOG-JUST        = P_JUST.
+
+*  APPEND WA_FIELDCATALOG TO IT_FIELDCATALOG.
+
+
+ENDFORM.

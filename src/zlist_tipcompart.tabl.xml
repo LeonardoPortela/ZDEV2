@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZLIST_TIPCOMPART</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>TIPO DE COMPARTIMENTO DE ÓLEO</DDTEXT>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>TXTCOMP</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000080</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000040</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Descrição do óleo</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ID</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>X</INTTYPE>
+     <INTLEN>000001</INTLEN>
+     <DATATYPE>INT1</DATATYPE>
+     <LENG>000003</LENG>
+     <MASK>  INT1</MASK>
+     <DDTEXT>ID do compartimento</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

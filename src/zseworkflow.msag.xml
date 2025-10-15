@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZSEWORKFLOW</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagem p/ SoftExpert WorkFlow</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>WorkFlow Id &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Não Encontrado CPF do usuário &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Sem Retorno do WebService &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Não encontrado tag &amp;1 no retorno do WebService &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Processo SAP &amp;1 não possui um Processo registrado no Ambiente &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Serviço WebService não Encontrado (SE)! Transação: ZLES0096!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSEWORKFLOW</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Tipo do Serviço WebService não Encontrado (1)! Transação: ZLES0096!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

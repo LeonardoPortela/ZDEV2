@@ -1,0 +1,8 @@
+"Name: \TY:CL_EDOCUMENT_BR_IN\ME:UPDATE_WITH_UNDO_REJECTION\SE:END\EI
+ENHANCEMENT 0 ZDRC_TRATAR_MANIFESTO4.
+*
+*#127333 - 04.12.2023 - JT - inicio
+  set_anular_rejeicao_manifesto( iv_edoc_guid ).
+*#127333 - 04.12.2023 - JT - fim
+*
+ENDENHANCEMENT.

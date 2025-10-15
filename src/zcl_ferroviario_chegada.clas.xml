@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_FERROVIARIO_CHEGADA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para Inf. de Chegada Ferroviária</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <MSG_ID>ZFERRO</MSG_ID>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_SAIDA_ALV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Monta Saída Unitária Comparativo Saída X Chegada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Monta Processo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>NOTAS_TERCEIRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados da nota de remessa por conta e ordem de terceiros</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PESO_NOTAS_CHEGADAS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de importação Peso Confirmado Ferroviário - L2/20</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PESO_NOTAS_SAIDAS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de importação Peso Confirmado Ferroviário - L2/20</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESSO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Comparativo de Saída e Chegada Ferroviário</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_CHEGADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data de Chegada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Peso de Chegada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_QT_CHEGADA_TOTAL_RATEAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Rateio na notas de acordo com peso de saida e chegada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VAGAO_CHEGADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de importação Peso Confirmado Ferroviário - L2/20</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VAGAO_SAIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de importação Peso Confirmado Ferroviário - L2/20</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_SAIDA_ALV</CMPNAME>
+     <SCONAME>R_PROCESSO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Comparativo de Saída e Chegada Ferroviário</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <SCONAME>I_CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CNPF - Ferroviário</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <SCONAME>I_DCL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>DCL</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <SCONAME>I_ID_VAGAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Vagão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <SCONAME>I_NFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número de documento de nove posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_PROCESSO</CMPNAME>
+     <SCONAME>I_SERIE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Serie DCL</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_CHEGADA</CMPNAME>
+     <SCONAME>I_DT_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Chegada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_AGPESO</CMPNAME>
+     <SCONAME>I_ID_AGPESO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_AGPESO</CMPNAME>
+     <SCONAME>R_LFA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mestre de fornecedores (parte geral)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_AGPESO</CMPNAME>
+     <SCONAME>ZCX_FERROVIARIO_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Ferroviário Entrada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>I_BRANCH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>I_NR_NF_PROPRIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número de documento de nove posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>I_QT_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade de Chegada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>I_SERIE_PROPRIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Séries</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA</CMPNAME>
+     <SCONAME>ZCX_FERROVIARIO_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Ferroviário Entrada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA_TOTAL_RATEAR</CMPNAME>
+     <SCONAME>I_QT_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade de Chegada</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_QT_CHEGADA_TOTAL_RATEAR</CMPNAME>
+     <SCONAME>ZCX_FERROVIARIO_CHEGADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Ferroviário Entrada</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

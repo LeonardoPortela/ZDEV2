@@ -1,0 +1,226 @@
+*----------------------------------------------------------------------*
+*   INCLUDE RSPOTIME                                                   *
+*----------------------------------------------------------------------*
+CONSTANTS: UTC LIKE TZONREF-TZONE VALUE SPACE,
+           UTC_NEW TYPE I VALUE 1.
+
+*FORM get_timestampx CHANGING timestamp.
+*  DATA:
+*    lv_tstmpp     LIKE tzonref-tstamps,
+*    BEGIN OF ls_tstmpc,
+*      sign,
+*      date TYPE d,
+*      time TYPE t,
+*    END   OF ls_tstmpc,
+*    lv_tstmpex(14)  TYPE n.
+*  GET TIME STAMP FIELD lv_tstmpp.
+*  lv_tstmpex = ls_tstmpc = lv_tstmpp.
+*ENDFORM.
+
+
+FORM GET_TIMESTAMP CHANGING TIMESTAMP.
+  IF UTC_NEW = 1.
+    DATA: TS LIKE TZONREF-TSTAMPS,
+          D LIKE SY-DATUM,
+          T LIKE SY-UZEIT.
+
+    GET TIME STAMP FIELD TS.
+    CONVERT TIME STAMP TS TIME ZONE UTC INTO DATE D TIME T.
+    CLEAR TIMESTAMP.
+    TRANSLATE TIMESTAMP USING ' 0'.
+    TIMESTAMP(8) = D.
+    TIMESTAMP+8(6) = T.
+  ELSE.
+    DATA: S LIKE TTZDATA-TIMESTAMP.
+
+    CALL FUNCTION 'TZ_UTC_SYSTEMCLOCK'          "#EC FB_OLDED
+         IMPORTING
+*             UTC_DATE      =
+*             UTC_TIME      =
+              UTC_TIMESTAMP = S
+         EXCEPTIONS
+              OTHERS        = 1.
+    IF SY-SUBRC NE 0.
+      S = SY-DATUM.
+      S+8 = SY-UZEIT.
+    ENDIF.
+    TRANSLATE TIMESTAMP USING ' 0'.
+    TIMESTAMP(14) = S.
+  ENDIF.
+ENDFORM.
+
+FORM MAP_TO_LOCAL_TIME USING TIMESTAMP CHANGING D T.
+  DATA: DATE LIKE SY-DATUM,
+        TIME LIKE SY-UZEIT.
+
+  IF UTC_NEW = 1.
+    DATA: TS LIKE TZONREF-TSTAMPS.
+
+    DATE = TIMESTAMP(8).
+    TIME = TIMESTAMP+8(6).
+    CONVERT DATE DATE TIME TIME INTO TIME STAMP TS TIME ZONE UTC.
+    CONVERT TIME STAMP TS TIME ZONE SY-ZONLO INTO DATE DATE TIME TIME.
+    D = DATE.
+    T = TIME.
+  ELSE.
+    DATA: S LIKE TTZDATA-TIMESTAMP.
+    DATA: TZ LIKE TTZDATA-TZONE.
+
+    S = TIMESTAMP(14).
+    TZ = SY-ZONLO.
+    CALL FUNCTION 'TZ_GLOBAL_TO_LOCAL'            "#EC FB_OLDED
+       EXPORTING
+*           DATE_GLOBAL         = '00000000'
+            TIMESTAMP_GLOBAL    = S
+            TIMEZONE            = TZ
+*           TIME_GLOBAL         = '000000'
+       IMPORTING
+            DATE_LOCAL          = DATE
+*           TIMESTAMP_LOCAL     =
+            TIME_LOCAL          = TIME
+       EXCEPTIONS
+            OTHERS              = 4.
+    IF SY-SUBRC NE 0.
+      D = TIMESTAMP(8).
+      T = TIMESTAMP+8.
+    ELSE.
+      D = DATE.
+      T = TIME.
+    ENDIF.
+  ENDIF.
+ENDFORM.
+
+FORM MAP_DT_TO_GLOBAL_TS USING D LIKE SY-DATUM T LIKE SY-UZEIT
+                         CHANGING TIMESTAMP.
+  TIMESTAMP(8) = D.
+  TIMESTAMP+8(6) = T.
+  TIMESTAMP+14(2) = '00'.
+  PERFORM MAP_TO_GLOBAL_TIME CHANGING TIMESTAMP.
+ENDFORM.
+
+FORM MAP_TO_GLOBAL_TIME CHANGING TIMESTAMP.
+  TRANSLATE TIMESTAMP USING ' 0'.
+  IF UTC_NEW = 1.
+    DATA: TS LIKE TZONREF-TSTAMPS,
+          D LIKE SY-DATUM,
+          T LIKE SY-UZEIT.
+
+    D = TIMESTAMP(8).
+    T = TIMESTAMP+8(6).
+    CONVERT DATE D TIME T INTO TIME STAMP TS TIME ZONE SY-ZONLO.
+    CONVERT TIME STAMP TS TIME ZONE UTC INTO DATE D TIME T.
+    TIMESTAMP(8) = D.
+    TIMESTAMP+8(6) = T.
+  ELSE.
+    DATA: S LIKE TTZDATA-TIMESTAMP.
+    DATA: TZ LIKE TTZDATA-TZONE.
+
+    S = TIMESTAMP(14).
+    TZ = SY-ZONLO.
+    CALL FUNCTION 'TZ_LOCAL_TO_GLOBAL'       "#EC FB_OLDED
+       EXPORTING
+*           DATE_LOCAL          = '00000000'
+            TIMESTAMP_LOCAL     = S
+            TIMEZONE            = TZ
+*           TIME_LOCAL          = '000000'
+       IMPORTING
+*           DATE_GLOBAL         =
+            TIMESTAMP_GLOBAL    = S
+*           TIME_GLOBAL         =
+       EXCEPTIONS
+            NO_PARAMETERS       = 1
+            TOO_MANY_PARAMETERS = 2
+            CONVERSION_ERROR    = 3
+            OTHERS              = 4.
+
+    IF SY-SUBRC EQ 0.
+      TIMESTAMP(14) = S.
+    ENDIF.
+  ENDIF.
+ENDFORM.
+
+FORM ADD_TO_TIMESTAMP USING INTERVAL CHANGING TIMESTAMP.
+  DATA: DATE LIKE SY-DATUM,
+        TIME LIKE SY-UZEIT,
+        TIMET LIKE TIME,
+        INT_DAYS TYPE I,
+        INT_SEC TYPE I.
+
+  DATE = TIMESTAMP(8).
+  TIME = TIMESTAMP+8.
+  INT_SEC = INTERVAL MOD 86400.
+  INT_DAYS = INTERVAL DIV 86400.
+  TIMET = TIME + INT_SEC.
+  IF TIMET < TIME.
+    DATE = DATE + 1.
+  ENDIF.
+  DATE = DATE + INT_DAYS.
+  TIMESTAMP = DATE.
+  TIMESTAMP+8(6) = TIMET.
+ENDFORM.
+
+* assumes ts1 >= ts2
+FORM DIFF_TIMESTAMP USING TS1 TS2 CHANGING TIMEDIFF.
+  DATA: D1 LIKE SY-DATUM, D2 LIKE SY-DATUM,
+        T1 LIKE SY-UZEIT, T2 LIKE SY-UZEIT.
+  D1 = TS1(8).
+  D2 = TS2(8).
+  T1 = TS1+8.
+  T2 = TS2+8.
+  TIMEDIFF = ( D1 - D2 ) * 86400.
+  TIMEDIFF = TIMEDIFF + ( T1 - T2 ).
+ENDFORM.
+
+FORM COMP_BEFORE USING DAYS CHANGING TIMESTAMP.
+
+  DATA: D1 TYPE D,
+      TEMPD(8),
+      TEMP(16).
+
+  D1 = SY-DATUM - DAYS.
+  TEMPD = D1.
+  TEMP(8) = TEMPD.
+  TEMP+8(6) = SY-UZEIT.
+  PERFORM MAP_TO_GLOBAL_TIME CHANGING TEMP.
+  TEMP+14(2) = '00'.
+
+  TIMESTAMP = TEMP.
+
+ENDFORM.
+
+RANGES: D_PROTO FOR RSPOTYPE-DELDATE,
+        T_PROTO FOR RSPOTYPE-DELTIME.
+FORM DATE_RANGE_TO_TIME_RANGE USING DR LIKE D_PROTO[]
+                              CHANGING TR LIKE T_PROTO[].
+  REFRESH TR.
+  LOOP AT DR INTO D_PROTO.
+    MOVE-CORRESPONDING D_PROTO TO T_PROTO.
+    T_PROTO-LOW+8(8) = '00000000'.
+    IF T_PROTO-HIGH(8) = '00000000'.
+      T_PROTO-HIGH = T_PROTO-LOW.
+    ENDIF.
+    T_PROTO-HIGH+8(8) = '23595999'.
+* change equal and not equal to ranges!
+    IF T_PROTO-OPTION = 'EQ'.
+      T_PROTO-OPTION = 'BT'.
+    ELSE.
+      IF T_PROTO-OPTION = 'NE'.
+        T_PROTO-OPTION = 'BT'.
+        IF T_PROTO-SIGN = 'I'.
+          T_PROTO-SIGN = 'E'.
+        ELSE.
+          T_PROTO-SIGN = 'I'.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+    APPEND T_PROTO TO TR.
+  ENDLOOP.
+ENDFORM.
+
+FORM TIME_RANGE_TO_GLOBAL CHANGING TR LIKE T_PROTO[].
+  LOOP AT TR INTO T_PROTO.
+    PERFORM MAP_TO_GLOBAL_TIME CHANGING T_PROTO-LOW(14).
+    PERFORM MAP_TO_GLOBAL_TIME CHANGING T_PROTO-HIGH(14).
+    MODIFY TR FROM T_PROTO.
+  ENDLOOP.
+ENDFORM.

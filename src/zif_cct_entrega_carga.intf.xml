@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CCT_ENTREGA_CARGA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface Entrega Carga CCT</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_DOCUMENTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para adicionar Documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_DOCUMENTO_CARGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para adicionar Documento de Carga</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DOCUMENTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Documentos Entrega de Carga - CCT</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DOCUMENTOS_CARGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Documentos de Cargas - Entrega de Carga - CCT</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ENTREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Cabeçalho Entrega de Carga - CCT</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Token Portal Unico Siscomex</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CANCELAR_ENTREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cancelar Entrega</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CK_ALTEROU</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ENVIAR_ENTREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Enviar Entrega</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gravar Registro DU-e</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIMPAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Limpar Registro DU-e</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MONTA_XML</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para montar XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REGISTRO_ENTREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Metodo p/ Elaborar Entrega</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CABECALHO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Cabeçalho Entrega</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CNPJ_RESPONSAVEL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta CNPJ Responsável</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDAR_REGISTRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Validar Registro DU-e</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_DOCUMENTO</CMPNAME>
+     <SCONAME>I_ZSDT0180</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Documentos Entrega de Carga - CCT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_DOCUMENTO_CARGA</CMPNAME>
+     <SCONAME>I_ZSDT0181</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Documentos de Cargas - Entrega de Carga - CCT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_DOCUMENTO_CARGA</CMPNAME>
+     <SCONAME>R_ADICIONADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR_ENTREGA</CMPNAME>
+     <SCONAME>R_CANCELADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ENVIAR_ENTREGA</CMPNAME>
+     <SCONAME>R_ENVIADA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GRAVAR_REGISTRO</CMPNAME>
+     <SCONAME>R_GRAVOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REGISTRO_ENTREGA</CMPNAME>
+     <SCONAME>I_REGISTRO_ENTREGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros de Import Função Registro Entrega</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REGISTRO_ENTREGA</CMPNAME>
+     <SCONAME>I_ZSDT0170</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Registro de Cabeçalho DU-e</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CABECALHO</CMPNAME>
+     <SCONAME>I_ZSDT0179</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Cabeçalho Entrega de Carga - CCT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CNPJ_RESPONSAVEL</CMPNAME>
+     <SCONAME>I_CNPJ_RESPONSAVEL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ID fiscal 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TOKEN</CMPNAME>
+     <SCONAME>I_TOKEN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Token Portal Unico Siscomex</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDAR_REGISTRO</CMPNAME>
+     <SCONAME>R_VALIDOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

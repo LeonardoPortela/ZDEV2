@@ -1,0 +1,26 @@
+IF WA_CONTRATO-VOLUM IS NOT INITIAL.
+V_TOTAL_VOLUM = WA_CONTRATO-VOLUM.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

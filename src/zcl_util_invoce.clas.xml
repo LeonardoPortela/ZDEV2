@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_UTIL_INVOCE</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Processos gerar invoce</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA_INSTRUCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seleção de dados instrução</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA_INVOICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seleção de dados invoce</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA_NOTA_INVOICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seleção de dados nota por invoce</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA_PROVISIONAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seleção de dados provisional</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SAVE_MEMOR_DATA_PROVISIONAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Memorizar dados da provisional</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_INSTRUCAO</CMPNAME>
+     <SCONAME>IT_RESULT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados provisional invoce</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_INSTRUCAO</CMPNAME>
+     <SCONAME>I_PARAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface: critérios de seleção</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_INVOICE</CMPNAME>
+     <SCONAME>IT_RESULT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados do invoce</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_INVOICE</CMPNAME>
+     <SCONAME>I_PARAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface: critérios de seleção</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_NOTA_INVOICE</CMPNAME>
+     <SCONAME>IT_RESULT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados do invoce</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_NOTA_INVOICE</CMPNAME>
+     <SCONAME>I_PARAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface: critérios de seleção</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_PROVISIONAL</CMPNAME>
+     <SCONAME>IT_RESULT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados provisional invoce</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DATA_PROVISIONAL</CMPNAME>
+     <SCONAME>I_PARAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface: critérios de seleção</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_MEMOR_DATA_PROVISIONAL</CMPNAME>
+     <SCONAME>E_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE_MEMOR_DATA_PROVISIONAL</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados provisional invoce</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

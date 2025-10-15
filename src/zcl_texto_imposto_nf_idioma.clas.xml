@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_TEXTO_IMPOSTO_NF_IDIOMA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe p/ inserir idioma e gerar o texto de imposto NF</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ATRIBUIR_IDIOMA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Atribuir idioma p/ que seja gerado o texto de impostos da NF</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>BUSCAR_CONSTANTES</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Buscar constantes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Construtor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_TVARV_CPROG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ABAP: nome da variável de variante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_TVARV_DIRECT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ABAP: nome da variável de variante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_DIRECT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar se a movimentação está na constante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_PROGRAMA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verificar se o programa está na constante</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_VALIDO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se o registro é valido</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>W_J_1BNFDOC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ATRIBUIR_IDIOMA</CMPNAME>
+     <SCONAME>C_W_J_1BNFDOC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>I_W_J_1BNFDOC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_DIRECT</CMPNAME>
+     <SCONAME>CX_J1BNFE_INVALID_VALUE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exception NFe invalid value</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_PROGRAMA</CMPNAME>
+     <SCONAME>CX_SY_PROGRAM_NOT_FOUND</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Não encontrou programa na constante</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_VALIDO</CMPNAME>
+     <SCONAME>R_V_VALIDO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>variável booleana (X=verdade, -=falso, espaço=desconhecido)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

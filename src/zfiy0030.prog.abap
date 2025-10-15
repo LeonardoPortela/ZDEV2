@@ -1,0 +1,1395 @@
+************************************************************************
+*  A M A G G I  E X P O R T A Ç Ã O  E  I M P O R T A Ç Ã O  L T D A.  *
+*                                                                      *
+************************************************************************
+* Responsável ...: Projeto "La Expansion"                              *
+* Data desenv ...: 04.02.2013                                          *
+* Objetivo    ...: Recupero de IVA                                     *
+* Transação   ...: ZFIY0030                                            *
+************************************************************************
+* Data Modif    Autor         Descriçao      Hora           Request    *
+************************************************************************
+* 04.02.2013   Antonio Luiz   Criação       09:20          DEVK927235  *
+************************************************************************
+
+REPORT  ZFIY0030.
+
+*----------------------------------------------------------------------*
+* TABLES
+*----------------------------------------------------------------------*
+TABLES: BSAK.
+
+*----------------------------------------------------------------------*
+* ESTRUTURAS
+*----------------------------------------------------------------------*
+TYPES:
+
+      BEGIN OF TY_JOIN,
+        BUKRS  TYPE BSAK-BUKRS,
+        BELNR  TYPE BSAK-BELNR,
+        GJAHR  TYPE BSAK-GJAHR,
+        BLDAT  TYPE BSAK-BLDAT,
+        BUDAT  TYPE BSAK-BUDAT,
+        BLART  TYPE BSAK-BLART,
+        XBLNR  TYPE BSAK-XBLNR,
+        LIFNR  TYPE BSAK-LIFNR,
+        AUGBL  TYPE BSAK-AUGBL,
+        ORI(1) TYPE C,
+        XOFICIAL TYPE J_1AOTDETR-J_1APRTCHR,
+        DOCCLS   TYPE J_1AOTDETR-DOCCLS,
+      END OF TY_JOIN,
+
+      BEGIN OF TY_IMP,
+        BUKRS  TYPE BSAK-BUKRS,
+        AUGBL  TYPE BSAK-AUGBL,
+        GJAHR  TYPE BSAK-GJAHR,
+        BELNR  TYPE BSAK-BELNR,
+        LIFNR  TYPE BSAK-LIFNR,
+        AUGDT  TYPE BSAK-AUGDT,
+        DMBTR  TYPE BSAK-DMBTR,
+        BUZEI  TYPE BSAK-BUZEI,
+        ZLSCH  TYPE BSAK-ZLSCH,
+        HBKID  TYPE BSAK-HBKID,
+        SHKZG  TYPE BSAK-SHKZG,
+        BLART  TYPE BSAK-BLART,
+        UMSKZ  TYPE BSAK-UMSKZ,
+      END OF TY_IMP,
+
+      BEGIN OF TY_RBKP,
+         BELNR TYPE RBKP-BELNR,
+         GJAHR TYPE RBKP-GJAHR,
+         STBLG TYPE RBKP-STBLG,
+         IVTYP TYPE RBKP-IVTYP,
+      END OF TY_RBKP,
+
+      BEGIN OF TY_LFA1,
+         LIFNR TYPE LFA1-LIFNR,
+         STCD1 TYPE LFA1-STCD1,
+         NAME1 TYPE LFA1-NAME1,
+         KTOKK TYPE LFA1-KTOKK,
+      END OF TY_LFA1,
+
+       BEGIN OF TY_BSET,
+         BUKRS TYPE BSET-BUKRS,
+         BELNR TYPE BSET-BELNR,
+         GJAHR TYPE BSET-GJAHR,
+         MWSKZ TYPE BSET-MWSKZ,
+         HWBAS TYPE BSET-HWBAS,
+         HWSTE TYPE BSET-HWSTE,
+         SHKZG TYPE BSET-SHKZG,
+      END OF TY_BSET,
+
+      BEGIN OF TY_WITH_ITEM,
+         BUKRS    TYPE WITH_ITEM-BUKRS,
+         BELNR    TYPE WITH_ITEM-BELNR,
+         AUGBL    TYPE WITH_ITEM-AUGBL,
+         GJAHR    TYPE WITH_ITEM-GJAHR,
+         WITHT    TYPE WITH_ITEM-WITHT,
+         WT_QBSHH TYPE WITH_ITEM-WT_QBSHH,
+         AUGDT    TYPE WITH_ITEM-AUGDT,
+         CTNUMBER TYPE WITH_ITEM-CTNUMBER,
+      END OF TY_WITH_ITEM,
+
+      BEGIN OF TY_BKPF_S,
+         BUKRS      TYPE BKPF-BUKRS,
+         GJAHR      TYPE BKPF-GJAHR,
+         AWKEY      TYPE BKPF-AWKEY,
+         BKTXT      TYPE BKPF-BKTXT,
+         XSPLIT     TYPE BKPF-BELNR,
+         STBLG      TYPE BKPF-STBLG,
+         XVINCULO1  TYPE BKPF-BELNR,
+         BELNR_R    TYPE RSEG-BELNR,
+         GJAHR_R    TYPE RSEG-GJAHR,
+      END OF TY_BKPF_S,
+
+      BEGIN OF TY_BKPF,
+         BUKRS      TYPE BKPF-BUKRS,
+         BELNR      TYPE BKPF-BELNR,
+         GJAHR      TYPE BKPF-GJAHR,
+         BRNCH      TYPE BKPF-BRNCH,
+         AWKEY      TYPE BKPF-AWKEY,
+         XDIRETO    TYPE BKPF-BELNR,
+         STBLG      TYPE BKPF-STBLG,
+         XVINCULO2  TYPE BKPF-BELNR ,
+         FLAG(1)    TYPE C,
+         BELNR_R    TYPE RSEG-BELNR,
+         GJAHR_R    TYPE RSEG-GJAHR,
+      END OF TY_BKPF,
+
+      BEGIN OF TY_T042Z,
+         ZLSCH TYPE T042Z-ZLSCH,
+         TEXT1 TYPE T042Z-TEXT1,
+      END OF TY_T042Z,
+
+      BEGIN OF TY_T012T,
+         HBKID TYPE T012T-HBKID,
+         TEXT1 TYPE T012T-TEXT1,
+      END OF TY_T012T,
+
+      BEGIN OF TY_T003_I,
+          BLART  TYPE T003_I-BLART ,
+          DOCCLS TYPE T003_I-DOCCLS,
+      END OF TY_T003_I,
+
+      BEGIN OF TY_J_1AOTDETR,
+         DOCCLS     TYPE J_1AOTDETR-DOCCLS,
+         J_1APRTCHR TYPE J_1AOTDETR-J_1APRTCHR,
+         J_1AOFTP   TYPE J_1AOTDETR-J_1AOFTP,
+      END OF TY_J_1AOTDETR,
+
+      BEGIN OF TY_J_1AOFTPT,
+          J_1AOFTP  TYPE J_1AOFTPT-J_1AOFTP,
+          TEXT5     TYPE J_1AOFTPT-TEXT5,
+      END OF TY_J_1AOFTPT,
+
+      BEGIN OF TY_ZMMT_EE_ZGR,
+         NT_REMESSA TYPE ZMMT_EE_ZGR-NT_REMESSA,
+         MATERIAL   TYPE ZMMT_EE_ZGR-MATERIAL,
+         ENTRY_QNT  TYPE ZMMT_EE_ZGR-ENTRY_QNT,
+         LIFNR      TYPE ZMMT_EE_ZGR-LIFNR,
+      END OF TY_ZMMT_EE_ZGR,
+
+      BEGIN OF TY_MAKT,
+        MATNR TYPE MAKT-MATNR,
+        MAKTX TYPE MAKT-MAKTX,
+      END OF TY_MAKT,
+
+      BEGIN OF TY_PAYR,
+         VBLNR TYPE PAYR-VBLNR,
+         CHECF TYPE PAYR-CHECF,
+      END OF TY_PAYR,
+
+      BEGIN OF TY_RSEG,
+         BELNR TYPE RSEG-BELNR,
+         GJAHR TYPE RSEG-GJAHR,
+         MATNR  TYPE RSEG-MATNR,
+         MENGE  TYPE RSEG-MENGE,
+      END OF TY_RSEG,
+
+      BEGIN OF TY_BSIS,
+        BELNR TYPE BSIS-BELNR,
+        DMBTR  TYPE BSIS-DMBTR,
+      END OF TY_BSIS,
+
+      BEGIN OF TY_SAIDA,
+          BUKRS               TYPE BSAK-BUKRS,
+          BLDAT               TYPE BSAK-BLDAT,
+          BUDAT               TYPE BSAK-BUDAT,
+          TIPO                TYPE J_1AOFTPT-TEXT5,
+          BLART               TYPE BSAK-BLART,
+          J_1AOFTP            TYPE J_1AOTDETR-J_1AOFTP,
+          XBLNR               TYPE BSAK-XBLNR,
+          LIFNR               TYPE BSAK-LIFNR,
+          NAME1               TYPE LFA1-NAME1,
+          STCD1               TYPE LFA1-STCD1,
+          NETO                TYPE BSET-HWBAS,
+          NOGR                TYPE BSET-HWBAS,
+          IVAF                TYPE BSET-HWSTE,
+          TOTA                TYPE BSET-HWBAS,
+          CONC(1)             TYPE C,
+          MATERIAL            TYPE ZMMT_EE_ZGR-MATERIAL,
+          MAKTX               TYPE MAKT-MAKTX,
+          ENTRY_QNT           TYPE ZMMT_EE_ZGR-ENTRY_QNT,
+          LIFNRC(20) , "              TYPE BSAK-LIFNR,
+          NAME1C              TYPE LFA1-NAME1,
+          STCD1C              TYPE LFA1-STCD1,
+          KTOKKC              TYPE LFA1-KTOKK,
+          LIFNRP(20), "              TYPE BSAK-LIFNR,
+          NAME1P              TYPE LFA1-NAME1,
+          STCD1P              TYPE LFA1-STCD1,
+          KTOKK               TYPE LFA1-KTOKK,
+          AUGBL               TYPE BSAK-AUGBL,
+          AUGDT               TYPE BSAK-AUGDT,
+          DMBTR               TYPE BSAK-DMBTR,
+          ANTECIPO            TYPE BSAK-DMBTR,
+          WT_QBSHH_IVA        TYPE WITH_ITEM-WT_QBSHH,
+          AUGDT_IVA           TYPE WITH_ITEM-AUGDT,
+          CTNUMBER_IVA(15)    TYPE C,
+          WT_QBSHH_GCIAS      TYPE  WITH_ITEM-WT_QBSHH,
+          AUGDT_GCIAS         TYPE  WITH_ITEM-AUGDT,
+          CTNUMBER_GCIAS(15)  TYPE C,
+          WT_QBSHH_IIB        TYPE WITH_ITEM-WT_QBSHH,
+          AUGDT_IIB           TYPE WITH_ITEM-AUGDT,
+          CTNUMBER_IIB(15)    TYPE C,
+          WT_QBSHH_IIB_CB     TYPE WITH_ITEM-WT_QBSHH,
+          AUGDT_IIB_CB        TYPE WITH_ITEM-AUGDT,
+          CTNUMBER_IIB_CB(15) TYPE C,
+          WT_QBSHH_SUS        TYPE WITH_ITEM-WT_QBSHH,
+          AUGDT_SUS           TYPE WITH_ITEM-AUGDT,
+          CTNUMBER_SUS(15)    TYPE C,
+          TEXT1Z              TYPE T042Z-TEXT1,
+          TEXT1T              TYPE T012T-TEXT1,
+          CHECF               TYPE PAYR-CHECF,
+          PAGO(2)             TYPE C,
+      END OF TY_SAIDA.
+
+
+*----------------------------------------------------------------------*
+* TABELAS INTERNA
+*----------------------------------------------------------------------*
+DATA: IT_BSAK       TYPE TABLE OF BSAK,
+      IT_BSIK       TYPE TABLE OF BSIK,
+      IT_JOIN       TYPE TABLE OF TY_JOIN,
+      IT_IMP        TYPE TABLE OF TY_IMP,
+      IT_IMP2       TYPE TABLE OF TY_IMP,
+      IT_IMP_AUX    TYPE TABLE OF TY_IMP,
+      IT_RBKP       TYPE TABLE OF TY_RBKP,
+      IT_RBKP_AUX   TYPE TABLE OF TY_RBKP,
+      IT_LFA1       TYPE TABLE OF TY_LFA1,
+      IT_LFA1_AUX   TYPE TABLE OF TY_LFA1,
+      IT_BSET       TYPE TABLE OF TY_BSET,
+      IT_WITH_ITEM  TYPE TABLE OF TY_WITH_ITEM,
+      IT_WITH_ITEM2 TYPE TABLE OF TY_WITH_ITEM,
+      IT_BKPF       TYPE TABLE OF TY_BKPF,
+      IT_BKPF_B     TYPE TABLE OF TY_BKPF,
+      IT_BKPF_S     TYPE TABLE OF TY_BKPF_S,
+      IT_T042Z      TYPE TABLE OF TY_T042Z,
+      IT_T012T      TYPE TABLE OF TY_T012T,
+      IT_T003_I     TYPE TABLE OF TY_T003_I,
+      IT_J_1AOTDETR TYPE TABLE OF TY_J_1AOTDETR,
+      IT_J_1AOFTPT  TYPE TABLE OF TY_J_1AOFTPT,
+      IT_ZMMT_EE_ZGR TYPE TABLE OF TY_ZMMT_EE_ZGR,
+      IT_MAKT       TYPE TABLE OF TY_MAKT,
+      IT_MAKT_AUX   TYPE TABLE OF TY_MAKT,
+      IT_PAYR       TYPE TABLE OF TY_PAYR,
+      IT_RSEG       TYPE TABLE OF TY_RSEG,
+      IT_RSEG_AUX   TYPE TABLE OF TY_RSEG,
+      IT_BSIS       TYPE TABLE OF TY_BSIS,
+      IT_SAIDA      TYPE TABLE OF TY_SAIDA,
+      IT_SAIDA2     TYPE TABLE OF TY_SAIDA.
+
+
+*----------------------------------------------------------------------*
+* WORK AREA
+*----------------------------------------------------------------------*
+
+DATA: WA_JOIN       TYPE TY_JOIN,
+      WA_IMP        TYPE TY_IMP,
+      WA_IMP2       TYPE TY_IMP,
+      WA_RBKP       TYPE TY_RBKP,
+      WA_BSIK       TYPE BSIK,
+      WA_LFA1       TYPE TY_LFA1,
+      WA_BSET       TYPE TY_BSET,
+      WA_WITH_ITEM  TYPE TY_WITH_ITEM,
+      WA_WITH_ITEM2 TYPE TY_WITH_ITEM,
+      WA_BKPF       TYPE TY_BKPF,
+      WA_BKPF_B     TYPE TY_BKPF,
+      WA_BKPF_S     TYPE TY_BKPF_S,
+      WA_T042Z      TYPE TY_T042Z,
+      WA_T012T      TYPE TY_T012T,
+      WA_T003_I     TYPE TY_T003_I,
+      WA_J_1AOTDETR TYPE TY_J_1AOTDETR,
+      WA_J_1AOFTPT  TYPE TY_J_1AOFTPT,
+      WA_ZMMT_EE_ZGR TYPE TY_ZMMT_EE_ZGR,
+      WA_MAKT       TYPE TY_MAKT,
+      WA_PAYR       TYPE TY_PAYR,
+      WA_RSEG       TYPE TY_RSEG,
+      WA_BSIS       TYPE TY_BSIS,
+      WA_SAIDA      TYPE TY_SAIDA,
+      WA_SAIDA2     TYPE TY_SAIDA,
+
+      WA_CONT       TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      WA_ALV        TYPE REF TO CL_GUI_ALV_GRID,
+      WA_LAYOUT     TYPE LVC_S_LAYO.
+
+*----------------------------------------------------------------------*
+* Estrutura ALV
+*----------------------------------------------------------------------*
+TYPES: BEGIN OF TY_ESTRUTURA.
+        INCLUDE TYPE SLIS_FIELDCAT_MAIN.
+        INCLUDE TYPE SLIS_FIELDCAT_ALV_SPEC.
+TYPES: END OF TY_ESTRUTURA.
+
+DATA: IT_FCAT    TYPE TABLE OF TY_ESTRUTURA,
+      T_TOP      TYPE SLIS_T_LISTHEADER     ,
+      XS_EVENTS  TYPE SLIS_ALV_EVENT       ,
+      EVENTS     TYPE SLIS_T_EVENT         ,
+      GD_LAYOUT  TYPE SLIS_LAYOUT_ALV      ,
+      T_PRINT    TYPE SLIS_PRINT_ALV       ,
+      T_SORT     TYPE SLIS_T_SORTINFO_ALV WITH HEADER LINE,
+      V_REPORT   LIKE SY-REPID             .
+
+*----------------------------------------------------------------------*
+* TELA DE SELEÇÃO
+*----------------------------------------------------------------------*
+
+SELECTION-SCREEN: BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS:
+        P_BUKRS   FOR BSAK-BUKRS OBLIGATORY NO INTERVALS NO-EXTENSION ,
+        P_BUDAT   FOR BSAK-BUDAT OBLIGATORY,
+        P_BLDAT   FOR BSAK-BLDAT ,
+        P_LIFNR   FOR BSAK-LIFNR .
+SELECTION-SCREEN: END OF BLOCK B1.
+
+*----------------------------------------------------------------------*
+* START OF SELECTION
+*----------------------------------------------------------------------*
+START-OF-SELECTION.
+  PERFORM:
+            F_INICIAR_VARIAVES    , " Cabeçalho
+            F_SELECIONA_DADOS     , " Form seleciona dados
+            F_SAIDA               , " Saida relatorio
+            F_IMPRIME_DADOS       .
+
+
+
+END-OF-SELECTION.
+*&---------------------------------------------------------------------*
+*&      Form  F_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SELECIONA_DADOS .
+
+  DATA TABIX TYPE SY-TABIX.
+
+  CALL FUNCTION 'SAPGUI_PROGRESS_INDICATOR'
+    EXPORTING
+      TEXT = 'Preparando dados'.
+
+  SELECT BUKRS BELNR GJAHR BLDAT BUDAT BLART XBLNR LIFNR AUGBL
+     FROM BSAK
+     INTO TABLE IT_JOIN
+     WHERE BUKRS IN P_BUKRS
+     AND   BUDAT IN P_BUDAT
+     AND   BLDAT IN P_BLDAT
+     AND   LIFNR IN P_LIFNR
+     AND   MWSKZ  NE ''
+     AND   MWSKZ  NE '**'.
+
+  SELECT *
+    FROM BSIK
+    INTO TABLE IT_BSIK
+    WHERE BUKRS IN P_BUKRS
+    AND   BUDAT IN P_BUDAT
+    AND   BLDAT IN P_BLDAT
+    AND   LIFNR IN P_LIFNR
+    AND   MWSKZ  NE ''
+    AND   MWSKZ  NE '**'.
+
+  LOOP AT IT_BSIK INTO WA_BSIK.
+    WA_JOIN-BUKRS = WA_BSIK-BUKRS.
+    WA_JOIN-BELNR = WA_BSIK-BELNR.
+    WA_JOIN-GJAHR = WA_BSIK-GJAHR.
+    WA_JOIN-BLDAT = WA_BSIK-BLDAT.
+    WA_JOIN-BUDAT = WA_BSIK-BUDAT.
+    WA_JOIN-BLART = WA_BSIK-BLART.
+    WA_JOIN-XBLNR = WA_BSIK-XBLNR.
+    WA_JOIN-LIFNR = WA_BSIK-LIFNR.
+    WA_JOIN-AUGBL = WA_BSIK-AUGBL.
+    WA_JOIN-ORI   = 'I'.
+    APPEND WA_JOIN TO IT_JOIN.
+  ENDLOOP.
+
+  CHECK IT_JOIN[] IS NOT INITIAL.
+
+  SELECT BLART DOCCLS
+    FROM T003_I
+    INTO TABLE IT_T003_I
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE BLART EQ IT_JOIN-BLART.
+
+  SORT IT_T003_I BY BLART.
+  LOOP AT IT_JOIN INTO WA_JOIN.
+    TABIX = SY-TABIX.
+    READ TABLE IT_T003_I INTO WA_T003_I WITH KEY BLART = WA_JOIN-BLART BINARY SEARCH.
+    IF SY-SUBRC = 0.
+      WA_JOIN-DOCCLS   = WA_T003_I-DOCCLS.
+      WA_JOIN-XOFICIAL = WA_JOIN-XBLNR+4(1).
+      MODIFY IT_JOIN FROM WA_JOIN INDEX TABIX TRANSPORTING XOFICIAL DOCCLS.
+    ENDIF.
+    CLEAR WA_T003_I.
+  ENDLOOP.
+
+  SELECT   DOCCLS J_1APRTCHR J_1AOFTP
+    FROM J_1AOTDETR
+    INTO TABLE IT_J_1AOTDETR
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE LAND1    = 'AR'
+    AND ID_REPORT  = 'ZFIY0030'
+    AND DOCCLS     = IT_JOIN-DOCCLS
+    AND J_1APRTCHR = IT_JOIN-XOFICIAL.
+
+  IF NOT IT_J_1AOTDETR[] IS INITIAL.
+    SELECT J_1AOFTP TEXT5
+      FROM J_1AOFTPT
+      INTO TABLE IT_J_1AOFTPT
+      FOR ALL ENTRIES IN IT_J_1AOTDETR
+      WHERE J_1AOFTP EQ IT_J_1AOTDETR-J_1AOFTP
+      AND SPRAS	= 'S'.
+  ENDIF.
+
+  SELECT NT_REMESSA MATERIAL ENTRY_QNT LIFNR
+    FROM ZMMT_EE_ZGR
+    INTO TABLE IT_ZMMT_EE_ZGR
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE NT_REMESSA EQ IT_JOIN-XBLNR.
+
+  LOOP AT   IT_ZMMT_EE_ZGR INTO WA_ZMMT_EE_ZGR.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = WA_ZMMT_EE_ZGR-MATERIAL
+      IMPORTING
+        OUTPUT = WA_ZMMT_EE_ZGR-MATERIAL.
+    MODIFY IT_ZMMT_EE_ZGR FROM WA_ZMMT_EE_ZGR INDEX SY-TABIX TRANSPORTING MATERIAL.
+  ENDLOOP.
+
+  IF NOT IT_ZMMT_EE_ZGR[] IS INITIAL.
+    SELECT MATNR MAKTX
+      FROM MAKT
+      INTO TABLE IT_MAKT
+      FOR ALL ENTRIES IN IT_ZMMT_EE_ZGR
+      WHERE MATNR EQ IT_ZMMT_EE_ZGR-MATERIAL
+      AND SPRAS	= 'S'.
+  ENDIF.
+
+  SELECT BUKRS GJAHR AWKEY BKTXT BELNR STBLG
+   FROM BKPF
+   INTO TABLE IT_BKPF_S
+   WHERE BUKRS IN P_BUKRS.
+
+  DELETE IT_BKPF_S WHERE AWKEY+0(1) NE 'S'.
+
+  LOOP AT IT_BKPF_S INTO WA_BKPF_S.
+    TABIX = SY-TABIX.
+    WA_BKPF_S-XVINCULO1 = WA_BKPF_S-BKTXT+0(10).
+    WA_BKPF-BELNR_R   = WA_BKPF-AWKEY+0(10).
+    WA_BKPF-GJAHR_R   = WA_BKPF-AWKEY+10(4).
+    MODIFY IT_BKPF_S FROM WA_BKPF_S INDEX TABIX TRANSPORTING XVINCULO1 BELNR_R GJAHR_R.
+  ENDLOOP.
+  SORT IT_BKPF_S BY XVINCULO1.
+
+  SELECT BUKRS BELNR GJAHR BRNCH AWKEY  BELNR STBLG
+    FROM BKPF
+    INTO TABLE IT_BKPF
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE BUKRS  =  IT_JOIN-BUKRS
+    AND   BELNR  =  IT_JOIN-BELNR
+    AND   GJAHR  =  IT_JOIN-GJAHR.
+
+
+  LOOP AT IT_BKPF INTO WA_BKPF.
+    TABIX = SY-TABIX.
+    READ TABLE IT_BKPF_S INTO WA_BKPF_S WITH KEY XVINCULO1 = WA_BKPF-AWKEY+0(10).
+    IF SY-SUBRC = 0.
+      WA_BKPF-FLAG = 'X'.
+    ENDIF.
+    WA_BKPF-XVINCULO2 = WA_BKPF-AWKEY+0(10).
+    WA_BKPF-BELNR_R   = WA_BKPF-AWKEY+0(10).
+    WA_BKPF-GJAHR_R   = WA_BKPF-AWKEY+10(4).
+
+    MODIFY IT_BKPF FROM WA_BKPF INDEX TABIX TRANSPORTING XVINCULO2 FLAG BELNR_R GJAHR_R.
+  ENDLOOP.
+
+  IF NOT IT_BKPF[] IS INITIAL.
+    SELECT BELNR GJAHR MATNR MENGE
+      FROM RSEG
+      INTO TABLE IT_RSEG
+      FOR ALL ENTRIES IN IT_BKPF
+      WHERE BELNR = IT_BKPF-BELNR_R
+      AND   GJAHR = IT_BKPF-GJAHR_R.
+  ENDIF.
+
+  IF NOT IT_BKPF_S[] IS INITIAL.
+    SELECT BELNR GJAHR MATNR MENGE
+      FROM RSEG
+      INTO TABLE IT_RSEG_AUX
+      FOR ALL ENTRIES IN IT_BKPF_S
+      WHERE BELNR = IT_BKPF_S-BELNR_R
+      AND   GJAHR = IT_BKPF_S-GJAHR_R.
+
+    LOOP AT IT_RSEG_AUX INTO WA_RSEG.
+      APPEND WA_RSEG TO IT_RSEG.
+    ENDLOOP.
+
+  ENDIF.
+
+  IF NOT IT_RSEG[] IS INITIAL.
+    SELECT MATNR MAKTX
+    FROM MAKT
+    INTO TABLE IT_MAKT_AUX
+    FOR ALL ENTRIES IN IT_RSEG
+    WHERE MATNR EQ IT_RSEG-MATNR
+    AND SPRAS	= 'S'.
+  ENDIF.
+  LOOP AT IT_MAKT_AUX INTO WA_MAKT.
+    APPEND WA_MAKT  TO IT_MAKT.
+  ENDLOOP.
+
+  IF NOT IT_BKPF_S[] IS INITIAL.
+    SELECT BELNR GJAHR STBLG IVTYP
+      FROM RBKP
+      INTO TABLE IT_RBKP
+      FOR ALL ENTRIES IN IT_BKPF_S
+      WHERE BELNR = IT_BKPF_S-XVINCULO1.
+  ENDIF.
+
+  IF NOT IT_BKPF[]  IS INITIAL.
+    SELECT BELNR GJAHR STBLG IVTYP
+      FROM RBKP
+      INTO TABLE IT_RBKP_AUX
+      FOR ALL ENTRIES IN IT_BKPF
+      WHERE BELNR = IT_BKPF-XVINCULO2.
+
+    LOOP AT IT_RBKP_AUX INTO WA_RBKP.
+      APPEND WA_RBKP TO IT_RBKP.
+    ENDLOOP.
+  ENDIF.
+
+  IF NOT IT_BKPF_S[] IS INITIAL.
+    SELECT BUKRS AUGBL GJAHR BELNR LIFNR AUGDT DMBTR BUZEI ZLSCH HBKID SHKZG BLART UMSKZ
+       FROM BSAK
+       INTO TABLE IT_IMP
+       FOR ALL ENTRIES IN IT_BKPF_S
+       WHERE BUKRS  = IT_BKPF_S-BUKRS
+       AND BELNR  = IT_BKPF_S-XSPLIT
+       AND GJAHR  = IT_BKPF_S-GJAHR
+       AND BUZEI  NE '001'.
+  ENDIF.
+
+  IF NOT IT_BKPF[]  IS INITIAL.
+    SELECT BUKRS AUGBL GJAHR BELNR LIFNR AUGDT DMBTR BUZEI ZLSCH HBKID SHKZG BLART UMSKZ
+      FROM BSAK
+      INTO TABLE IT_IMP_AUX
+      FOR ALL ENTRIES IN IT_BKPF
+      WHERE BUKRS  = IT_BKPF-BUKRS
+      AND BELNR  = IT_BKPF-XDIRETO
+      AND GJAHR  = IT_BKPF-GJAHR.
+  ENDIF.
+
+  LOOP AT IT_IMP_AUX INTO WA_IMP.
+    APPEND WA_IMP TO IT_IMP.
+  ENDLOOP.
+
+  IF NOT IT_IMP[] IS INITIAL.
+    SELECT VBLNR CHECF
+      FROM PAYR
+      INTO TABLE IT_PAYR
+      FOR ALL ENTRIES IN IT_IMP
+      WHERE VBLNR = IT_IMP-AUGBL
+      AND ZBUKR    = '0100'.
+
+    SELECT BUKRS AUGBL GJAHR BELNR LIFNR AUGDT DMBTR BUZEI ZLSCH HBKID SHKZG BLART UMSKZ
+     FROM BSAK
+     INTO TABLE IT_IMP2
+     FOR ALL ENTRIES IN IT_IMP
+     WHERE BUKRS  = IT_IMP-BUKRS
+     AND BELNR  = IT_IMP-AUGBL
+     AND GJAHR  = IT_IMP-GJAHR.
+
+    SELECT BUKRS BELNR GJAHR BRNCH AWKEY  BELNR
+     FROM BKPF
+     INTO TABLE IT_BKPF_B
+     FOR ALL ENTRIES IN IT_IMP
+     WHERE BUKRS  = IT_IMP-BUKRS
+     AND BELNR  = IT_IMP-AUGBL
+     AND GJAHR  = IT_IMP-GJAHR.
+
+
+    SELECT ZLSCH TEXT1
+      FROM T042Z
+      INTO TABLE IT_T042Z
+      FOR ALL ENTRIES IN IT_IMP
+      WHERE ZLSCH = IT_IMP-ZLSCH
+      AND   LAND1 = 'AR'.
+
+    SELECT HBKID TEXT1
+      FROM T012T
+      INTO TABLE IT_T012T
+      FOR ALL ENTRIES IN IT_IMP
+      WHERE HBKID  = IT_IMP-HBKID
+      AND   SPRAS  = 'S'.
+
+    SELECT  BUKRS BELNR AUGBL GJAHR WITHT WT_QBSHH AUGDT CTNUMBER
+     FROM WITH_ITEM
+     INTO TABLE IT_WITH_ITEM
+     FOR ALL ENTRIES IN IT_IMP
+     WHERE BUKRS  = IT_IMP-BUKRS
+     AND BELNR  = IT_IMP-BELNR
+     AND AUGBL  = IT_IMP-AUGBL
+     AND GJAHR  = IT_IMP-GJAHR.
+
+    SELECT  BUKRS BELNR AUGBL GJAHR WITHT WT_QBSHH AUGDT CTNUMBER
+     FROM WITH_ITEM
+     INTO TABLE IT_WITH_ITEM2
+     FOR ALL ENTRIES IN IT_IMP
+     WHERE BUKRS  = IT_IMP-BUKRS
+     AND BELNR  = IT_IMP-AUGBL
+     AND GJAHR  = IT_IMP-GJAHR.
+
+    SELECT  LIFNR STCD1 NAME1 KTOKK
+      FROM LFA1
+      INTO TABLE IT_LFA1_AUX
+      FOR ALL ENTRIES IN IT_IMP
+      WHERE LIFNR = IT_IMP-LIFNR ORDER BY PRIMARY KEY .
+  ENDIF.
+
+  SELECT  BUKRS BELNR GJAHR MWSKZ HWBAS HWSTE SHKZG
+    FROM BSET
+    INTO TABLE IT_BSET
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE BUKRS	=	IT_JOIN-BUKRS
+    AND BELNR	=	IT_JOIN-BELNR
+    AND GJAHR	=	IT_JOIN-GJAHR.
+
+  SELECT  LIFNR STCD1 NAME1 KTOKK
+    FROM LFA1
+    INTO TABLE IT_LFA1
+    FOR ALL ENTRIES IN IT_JOIN
+    WHERE LIFNR = IT_JOIN-LIFNR ORDER BY PRIMARY KEY .
+
+  LOOP AT IT_LFA1_AUX INTO WA_LFA1.
+    APPEND WA_LFA1 TO IT_LFA1.
+  ENDLOOP.
+
+  REFRESH IT_LFA1_AUX.
+  IF NOT IT_ZMMT_EE_ZGR IS  INITIAL.
+    SELECT  LIFNR STCD1 NAME1 KTOKK
+      FROM LFA1
+      INTO TABLE IT_LFA1_AUX
+      FOR ALL ENTRIES IN IT_ZMMT_EE_ZGR
+      WHERE LIFNR = IT_ZMMT_EE_ZGR-LIFNR ORDER BY PRIMARY KEY .
+  ENDIF.
+
+  LOOP AT IT_LFA1_AUX INTO WA_LFA1.
+    APPEND WA_LFA1 TO IT_LFA1.
+  ENDLOOP.
+
+
+  DELETE ADJACENT DUPLICATES FROM IT_LFA1 COMPARING LIFNR.
+
+ENDFORM.                    " F_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*&      Form  F_SAIDA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SAIDA .
+
+  DATA: VCALC     TYPE BSAK-DMBTR,
+        VVINCULO  TYPE BSAK-BELNR,
+        VDMBTR    TYPE BSAK-DMBTR,
+        VANTECIPO TYPE BSAK-DMBTR,
+        XIMPOSTOS TYPE BSAK-DMBTR,
+        VFLAG_MAT(1),
+        TABIX     TYPE SY-TABIX,
+        WA_SETLEAF        TYPE SETLEAF,
+        VLIMIN    TYPE BSAK-DMBTR,
+        VLIMAX    TYPE BSAK-DMBTR.
+
+  SORT: IT_LFA1       BY LIFNR,
+        IT_BSET       BY BUKRS BELNR GJAHR MWSKZ,
+        IT_BKPF       BY BUKRS BELNR GJAHR,
+        IT_BKPF_B     BY BUKRS BELNR GJAHR,
+        IT_BKPF_S     BY XVINCULO1,
+        IT_WITH_ITEM  BY BUKRS BELNR AUGBL GJAHR WITHT,
+        IT_WITH_ITEM2 BY BUKRS AUGBL GJAHR WITHT,
+        IT_IMP        BY BELNR,
+        IT_IMP2       BY BELNR,
+        IT_T042Z      BY ZLSCH,
+        IT_RBKP       BY BELNR GJAHR,
+        IT_J_1AOTDETR BY DOCCLS J_1APRTCHR,
+        IT_ZMMT_EE_ZGR BY NT_REMESSA,
+        IT_MAKT       BY MATNR,
+        IT_J_1AOFTPT  BY J_1AOFTP,
+        IT_PAYR       BY VBLNR,
+        IT_RSEG       BY BELNR GJAHR,
+        IT_BSIS       BY BELNR,
+        IT_JOIN       BY XBLNR.
+
+  CALL FUNCTION 'SAPGUI_PROGRESS_INDICATOR'
+    EXPORTING
+      TEXT = 'Gerando relatório'.
+
+  SELECT SINGLE *
+      FROM SETLEAF
+      INTO WA_SETLEAF
+     WHERE SETNAME = 'MAGGI_ZFIY0030_TOLER'.
+
+  CALL FUNCTION 'HRCM_STRING_TO_AMOUNT_CONVERT'
+    EXPORTING
+      STRING              = WA_SETLEAF-VALFROM
+      DECIMAL_SEPARATOR   = ','
+      THOUSANDS_SEPARATOR = '.'
+    IMPORTING
+      BETRG               = VLIMIN
+    EXCEPTIONS
+      CONVERT_ERROR       = 1
+      OTHERS              = 2.
+
+  CALL FUNCTION 'HRCM_STRING_TO_AMOUNT_CONVERT'
+    EXPORTING
+      STRING              = WA_SETLEAF-VALTO
+      DECIMAL_SEPARATOR   = ','
+      THOUSANDS_SEPARATOR = '.'
+    IMPORTING
+      BETRG               = VLIMAX
+    EXCEPTIONS
+      CONVERT_ERROR       = 1
+      OTHERS              = 2.
+
+  LOOP AT IT_JOIN INTO WA_JOIN.
+    WA_SAIDA-BUKRS            = WA_JOIN-BUKRS.
+    WA_SAIDA-BLDAT            = WA_JOIN-BLDAT.
+    WA_SAIDA-BUDAT            = WA_JOIN-BUDAT.
+
+    WA_SAIDA-BLART            = WA_JOIN-BLART.
+
+    READ TABLE IT_J_1AOTDETR INTO WA_J_1AOTDETR WITH KEY DOCCLS     = WA_JOIN-DOCCLS
+                                                         J_1APRTCHR = WA_JOIN-XOFICIAL BINARY SEARCH.
+    IF SY-SUBRC = 0.
+      WA_SAIDA-J_1AOFTP         = WA_J_1AOTDETR-J_1AOFTP.
+    ELSE.
+      CLEAR WA_SAIDA-J_1AOFTP.
+    ENDIF.
+    IF NOT WA_SAIDA-J_1AOFTP IS INITIAL.
+      READ TABLE IT_J_1AOFTPT INTO WA_J_1AOFTPT WITH KEY J_1AOFTP = WA_J_1AOTDETR-J_1AOFTP BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-TIPO            = WA_J_1AOFTPT-TEXT5.
+      ELSE.
+        CLEAR WA_SAIDA-TIPO.
+      ENDIF.
+    ELSE.
+      CLEAR WA_SAIDA-TIPO.
+    ENDIF.
+
+    WA_SAIDA-XBLNR            = WA_JOIN-XBLNR.
+    WA_SAIDA-LIFNR            = WA_JOIN-LIFNR.
+
+    READ TABLE IT_LFA1 INTO WA_LFA1 WITH KEY LIFNR = WA_JOIN-LIFNR BINARY SEARCH.
+    IF SY-SUBRC = 0.
+      WA_SAIDA-NAME1            = WA_LFA1-NAME1.
+      WA_SAIDA-STCD1            = WA_LFA1-STCD1.
+    ENDIF.
+
+    READ TABLE IT_BSET INTO WA_BSET WITH KEY BUKRS = WA_JOIN-BUKRS
+                                             BELNR = WA_JOIN-BELNR
+                                             GJAHR = WA_JOIN-GJAHR.
+
+
+    CLEAR: WA_SAIDA-NETO, WA_SAIDA-NOGR,WA_SAIDA-IVAF.
+    LOOP AT IT_BSET INTO WA_BSET WHERE BUKRS = WA_JOIN-BUKRS
+                                 AND   BELNR = WA_JOIN-BELNR
+                                 AND   GJAHR = WA_JOIN-GJAHR.
+      IF 'C1_C2_C3' CS WA_BSET-MWSKZ.
+        IF WA_BSET-SHKZG = 'H'.
+          "WA_SAIDA-IVAF = WA_BSET-HWSTE * -1.
+          SUBTRACT WA_BSET-HWSTE FROM WA_SAIDA-IVAF.
+        ELSE.
+          "WA_SAIDA-IVAF = WA_BSET-HWSTE.
+          ADD WA_BSET-HWSTE TO WA_SAIDA-IVAF.
+        ENDIF.
+      ENDIF.
+      IF 'C1_C2_C3_D1_D2' CS WA_BSET-MWSKZ.
+        IF WA_BSET-SHKZG = 'H'.
+          "WA_SAIDA-NETO         = WA_BSET-HWBAS * -1.
+          SUBTRACT WA_BSET-HWBAS FROM WA_SAIDA-NETO.
+        ELSE.
+          "WA_SAIDA-NETO         = WA_BSET-HWBAS.
+          ADD WA_BSET-HWBAS TO WA_SAIDA-NETO.
+        ENDIF.
+      ELSEIF 'C0_C9' CS WA_BSET-MWSKZ.
+        IF WA_BSET-SHKZG = 'H'.
+          "WA_SAIDA-NOGR         = WA_BSET-HWBAS * -1.
+          SUBTRACT WA_BSET-HWBAS FROM WA_SAIDA-NOGR.
+        ELSE.
+          "WA_SAIDA-NOGR         = WA_BSET-HWBAS.
+          ADD WA_BSET-HWBAS TO WA_SAIDA-NOGR.
+        ENDIF.
+      ELSEIF NOT 'C1_C2_C3_C0_C9_D1_D2' CS WA_BSET-MWSKZ.
+        IF WA_BSET-SHKZG = 'H'.
+          "WA_SAIDA-NOGR         = WA_BSET-HWSTE * -1.
+          SUBTRACT WA_BSET-HWSTE FROM WA_SAIDA-NOGR.
+        ELSE.
+          "WA_SAIDA-NOGR         = WA_BSET-HWSTE.
+          ADD WA_BSET-HWSTE TO WA_SAIDA-NOGR.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+
+    WA_SAIDA-TOTA             = WA_SAIDA-NETO + WA_SAIDA-NOGR + WA_SAIDA-IVAF.
+    WA_SAIDA-CONC             = ''.
+
+    VFLAG_MAT = 'N'.
+    READ TABLE IT_ZMMT_EE_ZGR INTO WA_ZMMT_EE_ZGR WITH KEY NT_REMESSA = WA_JOIN-XBLNR BINARY SEARCH.
+    IF SY-SUBRC = 0.
+      VFLAG_MAT = 'S'.
+      WA_SAIDA-MATERIAL               = WA_ZMMT_EE_ZGR-MATERIAL.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+        EXPORTING
+          INPUT  = WA_SAIDA-MATERIAL
+        IMPORTING
+          OUTPUT = WA_SAIDA-MATERIAL.
+      WA_SAIDA-ENTRY_QNT              = WA_ZMMT_EE_ZGR-ENTRY_QNT.
+      READ TABLE IT_MAKT INTO WA_MAKT WITH KEY MATNR = WA_ZMMT_EE_ZGR-MATERIAL BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-MAKTX = WA_MAKT-MAKTX.
+      ELSE.
+        CLEAR WA_SAIDA-MAKTX .
+      ENDIF.
+      READ TABLE IT_LFA1 INTO WA_LFA1 WITH KEY LIFNR = WA_ZMMT_EE_ZGR-LIFNR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-LIFNRC = WA_ZMMT_EE_ZGR-LIFNR.
+        WA_SAIDA-NAME1C = WA_LFA1-NAME1.
+        WA_SAIDA-STCD1C = WA_LFA1-STCD1.
+        WA_SAIDA-KTOKKC = WA_LFA1-KTOKK.
+      ELSE.
+        CLEAR: WA_SAIDA-LIFNRC        ,
+               WA_SAIDA-NAME1C        ,
+               WA_SAIDA-STCD1C        ,
+               WA_SAIDA-KTOKKC .
+      ENDIF.
+    ENDIF.
+
+    "SEGUNDA PARTE
+    CLEAR WA_BKPF.
+    READ TABLE IT_BKPF INTO WA_BKPF WITH KEY  BUKRS = WA_JOIN-BUKRS
+                                              BELNR = WA_JOIN-BELNR
+                                              GJAHR = WA_JOIN-GJAHR BINARY SEARCH.
+    CLEAR WA_BKPF_S.
+    IF NOT WA_BKPF-STBLG IS INITIAL.
+      CONTINUE.
+    ENDIF.
+    READ TABLE IT_BKPF_S INTO WA_BKPF_S  WITH KEY XVINCULO1 = WA_BKPF-XVINCULO2 BINARY SEARCH.
+    IF NOT WA_BKPF_S-STBLG IS INITIAL.
+      CONTINUE.
+    ENDIF.
+    IF SY-SUBRC = 0.
+      VVINCULO = WA_BKPF_S-XSPLIT.
+      IF VFLAG_MAT = 'N'.
+        READ TABLE IT_RSEG INTO WA_RSEG WITH KEY BELNR = WA_BKPF_S-BELNR_R
+                                                 GJAHR = WA_BKPF_S-GJAHR_R BINARY SEARCH.
+        IF SY-SUBRC = 0.
+          WA_SAIDA-MATERIAL               = WA_RSEG-MATNR.
+          CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+            EXPORTING
+              INPUT  = WA_SAIDA-MATERIAL
+            IMPORTING
+              OUTPUT = WA_SAIDA-MATERIAL.
+          WA_SAIDA-ENTRY_QNT              = WA_RSEG-MENGE.
+          READ TABLE IT_MAKT INTO WA_MAKT WITH KEY MATNR = WA_RSEG-MATNR BINARY SEARCH.
+          IF SY-SUBRC = 0.
+            WA_SAIDA-MAKTX = WA_MAKT-MAKTX.
+          ELSE.
+            CLEAR WA_SAIDA-MAKTX .
+          ENDIF.
+        ELSE.
+          CLEAR: WA_SAIDA-MATERIAL,WA_SAIDA-ENTRY_QNT, WA_SAIDA-MAKTX .
+        ENDIF.
+      ENDIF.
+      READ TABLE IT_RBKP INTO WA_RBKP WITH KEY BELNR = WA_BKPF_S-XVINCULO1 GJAHR = WA_BKPF_S-GJAHR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        IF WA_RBKP-STBLG NE '' OR WA_RBKP-IVTYP = '5'.
+          CONTINUE.
+        ENDIF.
+      ENDIF.
+    ELSE.
+      VVINCULO = WA_BKPF-XDIRETO.
+      IF VFLAG_MAT = 'N'.
+        READ TABLE IT_RSEG INTO WA_RSEG WITH KEY BELNR = WA_BKPF-BELNR_R
+                                                 GJAHR = WA_BKPF-GJAHR_R BINARY SEARCH.
+        IF SY-SUBRC = 0.
+          WA_SAIDA-MATERIAL               = WA_RSEG-MATNR.
+          CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+            EXPORTING
+              INPUT  = WA_SAIDA-MATERIAL
+            IMPORTING
+              OUTPUT = WA_SAIDA-MATERIAL.
+          WA_SAIDA-ENTRY_QNT              = WA_RSEG-MENGE.
+          READ TABLE IT_MAKT INTO WA_MAKT WITH KEY MATNR = WA_RSEG-MATNR BINARY SEARCH.
+          IF SY-SUBRC = 0.
+            WA_SAIDA-MAKTX = WA_MAKT-MAKTX.
+          ELSE.
+            CLEAR WA_SAIDA-MAKTX .
+          ENDIF.
+        ELSE.
+          CLEAR: WA_SAIDA-MATERIAL,WA_SAIDA-ENTRY_QNT, WA_SAIDA-MAKTX .
+        ENDIF.
+      ENDIF.
+      READ TABLE IT_RBKP INTO WA_RBKP WITH KEY BELNR = WA_BKPF-XVINCULO2 GJAHR = WA_BKPF-GJAHR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        IF WA_RBKP-STBLG NE '' OR WA_RBKP-IVTYP = '5'.
+          CONTINUE.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+    IF VVINCULO IS NOT INITIAL.
+      LOOP AT IT_IMP INTO WA_IMP WHERE BELNR = VVINCULO.
+        WA_SAIDA-LIFNRP           = WA_IMP-LIFNR.
+        READ TABLE IT_LFA1 INTO WA_LFA1 WITH KEY LIFNR = WA_IMP-LIFNR BINARY SEARCH.
+        IF SY-SUBRC = 0.
+          WA_SAIDA-NAME1P           = WA_LFA1-NAME1.
+          WA_SAIDA-KTOKK            = WA_LFA1-KTOKK.
+          WA_SAIDA-STCD1P           = WA_LFA1-STCD1.
+        ENDIF.
+
+        IF WA_BKPF-FLAG = 'X' AND WA_IMP-BUZEI EQ '001'.
+          CONTINUE.
+        ENDIF.
+
+        " passo 1 importe OP
+        IF WA_IMP-SHKZG = 'S'.
+          WA_SAIDA-DMBTR      = WA_IMP-DMBTR * -1 .
+        ELSE.
+          WA_SAIDA-DMBTR      = WA_IMP-DMBTR .
+        ENDIF.
+
+        WA_SAIDA-AUGBL      = WA_IMP-AUGBL.
+        WA_SAIDA-AUGDT      = WA_IMP-AUGDT.
+
+        READ TABLE IT_PAYR INTO WA_PAYR WITH KEY VBLNR = WA_IMP-AUGBL BINARY SEARCH.
+        IF SY-SUBRC = 0.
+          WA_SAIDA-CHECF = WA_PAYR-CHECF.
+        ELSE.
+          CLEAR WA_SAIDA-CHECF.
+        ENDIF.
+
+
+        " passo 2 importe OP
+        VANTECIPO = 0.
+        LOOP AT IT_IMP2 INTO WA_IMP2 WHERE BELNR = WA_SAIDA-AUGBL.
+          IF NOT WA_IMP2-UMSKZ  IS INITIAL.
+            IF WA_IMP2-SHKZG = 'S'.
+              ADD WA_IMP2-DMBTR TO VANTECIPO.
+            ELSE.
+              SUBTRACT WA_IMP2-DMBTR FROM VANTECIPO.
+            ENDIF.
+          ENDIF.
+          IF WA_IMP2-SHKZG = 'S'.
+            ADD WA_IMP2-DMBTR TO VDMBTR.
+          ELSE.
+            SUBTRACT WA_IMP2-DMBTR FROM VDMBTR.
+          ENDIF.
+        ENDLOOP.
+
+        IF VANTECIPO LT 0.
+          WA_SAIDA-ANTECIPO    = VANTECIPO * -1.
+        ELSE.
+          WA_SAIDA-ANTECIPO    = VANTECIPO.
+        ENDIF.
+
+*        VDMBTR = 0.
+*        READ TABLE IT_BSIS INTO WA_BSIS WITH KEY BELNR = WA_SAIDA-AUGBL BINARY SEARCH.
+*        IF SY-SUBRC = 0.
+*          VDMBTR = WA_BSIS-DMBTR.
+*        ENDIF.
+*        WA_SAIDA-DMBTR       = VDMBTR.
+
+        IF NOT '15_20' CS WA_IMP-AUGBL+0(2).
+          WA_SAIDA-TEXT1Z           = 'Compesacion'.
+          WA_SAIDA-TEXT1T           = ' '.
+        ELSE.
+          READ TABLE IT_T042Z INTO WA_T042Z WITH KEY ZLSCH = WA_IMP-ZLSCH BINARY SEARCH.
+          IF SY-SUBRC = 0.
+            WA_SAIDA-TEXT1Z           = WA_T042Z-TEXT1.
+          ELSE.
+            CLEAR WA_SAIDA-TEXT1Z.
+          ENDIF.
+
+          READ TABLE IT_T012T INTO WA_T012T WITH KEY HBKID = WA_IMP-HBKID.
+          IF SY-SUBRC = 0.
+            WA_SAIDA-TEXT1T           = WA_T012T-TEXT1.
+          ELSE.
+            CLEAR WA_SAIDA-TEXT1T .
+          ENDIF.
+        ENDIF.
+
+        READ TABLE IT_BKPF_B INTO WA_BKPF_B WITH KEY  BUKRS = WA_IMP-BUKRS
+                                              BELNR = WA_IMP-AUGBL
+                                              GJAHR = WA_IMP-GJAHR BINARY SEARCH.
+        IF SY-SUBRC NE 0.
+          CLEAR WA_BKPF_B.
+        ENDIF.
+
+        READ TABLE IT_WITH_ITEM  INTO WA_WITH_ITEM WITH KEY BUKRS = WA_IMP-BUKRS
+                                                    BELNR = WA_IMP-BELNR
+                                                    AUGBL = WA_IMP-AUGBL
+                                                    GJAHR = WA_IMP-GJAHR BINARY SEARCH.
+        " passo 3 importe OP
+        XIMPOSTOS = 0.
+        LOOP AT IT_WITH_ITEM  INTO WA_WITH_ITEM WHERE BUKRS = WA_IMP-BUKRS
+                                                AND   BELNR = WA_IMP-BELNR
+                                                AND   AUGBL = WA_IMP-AUGBL
+                                                AND   GJAHR = WA_IMP-GJAHR.
+
+          READ TABLE IT_WITH_ITEM2 INTO WA_WITH_ITEM2 WITH KEY BUKRS = WA_IMP-BUKRS
+                                                               BELNR = WA_IMP-AUGBL
+                                                               GJAHR = WA_IMP-GJAHR
+                                                               WITHT = WA_WITH_ITEM-WITHT.
+          IF SY-SUBRC NE 0.
+            CLEAR WA_WITH_ITEM2.
+          ENDIF.
+          IF  WA_WITH_ITEM-WT_QBSHH LT 0.
+            WA_WITH_ITEM-WT_QBSHH =  WA_WITH_ITEM-WT_QBSHH * -1.
+          ENDIF.
+          IF WA_WITH_ITEM-WT_QBSHH NE 0.
+            IF 'IM_IV_IW_MI' CS WA_WITH_ITEM-WITHT.
+              "WA_SAIDA-WT_QBSHH_IVA     = WA_WITH_ITEM-WT_QBSHH.
+              ADD WA_WITH_ITEM-WT_QBSHH TO WA_SAIDA-WT_QBSHH_IVA.
+              WA_SAIDA-AUGDT_IVA        = WA_WITH_ITEM-AUGDT.
+              CONCATENATE WA_BKPF_B-BRNCH '-' WA_WITH_ITEM2-CTNUMBER INTO WA_SAIDA-CTNUMBER_IVA .
+            ELSEIF 'G1_G2_GA_GB_GM_MG' CS WA_WITH_ITEM-WITHT.
+              "WA_SAIDA-WT_QBSHH_GCIAS     = WA_WITH_ITEM-WT_QBSHH.
+              ADD  WA_WITH_ITEM-WT_QBSHH TO WA_SAIDA-WT_QBSHH_GCIAS    .
+              WA_SAIDA-AUGDT_GCIAS        = WA_WITH_ITEM-AUGDT.
+              CONCATENATE WA_BKPF_B-BRNCH '-' WA_WITH_ITEM2-CTNUMBER INTO WA_SAIDA-CTNUMBER_GCIAS .
+            ELSEIF 'BP_H1_H2_H3_H4_H5_H6_H7_H8_H9_HA_HB_HC_HD_HE_HF_I1_SC_SF_SP_SS_SL' CS WA_WITH_ITEM-WITHT.
+              "WA_SAIDA-WT_QBSHH_IIB     = WA_WITH_ITEM-WT_QBSHH.
+              ADD WA_WITH_ITEM-WT_QBSHH TO WA_SAIDA-WT_QBSHH_IIB.
+              WA_SAIDA-AUGDT_IIB        = WA_WITH_ITEM-AUGDT.
+              CONCATENATE WA_BKPF_B-BRNCH '-' WA_WITH_ITEM2-CTNUMBER INTO WA_SAIDA-CTNUMBER_IIB .
+            ELSEIF 'CB' CS WA_WITH_ITEM-WITHT.
+              ADD WA_WITH_ITEM-WT_QBSHH TO WA_SAIDA-WT_QBSHH_IIB_CB.
+              WA_SAIDA-AUGDT_IIB_CB        = WA_WITH_ITEM-AUGDT.
+              CONCATENATE WA_BKPF_B-BRNCH '-' WA_WITH_ITEM2-CTNUMBER INTO WA_SAIDA-CTNUMBER_IIB_CB.
+            ELSEIF 'EE_EG' CS WA_WITH_ITEM-WITHT.
+              "WA_SAIDA-WT_QBSHH_SUS       = WA_WITH_ITEM-WT_QBSHH.
+              ADD WA_WITH_ITEM-WT_QBSHH TO WA_SAIDA-WT_QBSHH_SUS.
+              WA_SAIDA-AUGDT_SUS          = WA_WITH_ITEM-AUGDT.
+              CONCATENATE WA_BKPF_B-BRNCH '-' WA_WITH_ITEM2-CTNUMBER INTO WA_SAIDA-CTNUMBER_SUS.
+            ENDIF.
+            ADD WA_WITH_ITEM-WT_QBSHH TO XIMPOSTOS.
+          ENDIF.
+        ENDLOOP.
+
+        " passo 4 importe OP
+        WA_SAIDA-DMBTR = WA_SAIDA-DMBTR - XIMPOSTOS - WA_SAIDA-ANTECIPO.
+
+        VCALC = WA_SAIDA-TOTA - WA_SAIDA-DMBTR - WA_SAIDA-ANTECIPO - WA_SAIDA-WT_QBSHH_IVA - WA_SAIDA-WT_QBSHH_GCIAS - WA_SAIDA-WT_QBSHH_IIB - WA_SAIDA-WT_QBSHH_SUS.
+
+        IF VCALC >= VLIMIN AND VCALC <= VLIMAX.
+          WA_SAIDA-PAGO             = 'Sí'.
+        ELSE.
+          WA_SAIDA-PAGO             = 'No'.
+        ENDIF.
+
+        APPEND WA_SAIDA TO IT_SAIDA.
+
+        CLEAR:   WA_J_1AOTDETR,
+                 WA_J_1AOFTPT.
+
+        CLEAR:   VCALC,
+                 WA_BKPF_B              ,
+                 WA_SAIDA-WT_QBSHH_IVA  ,
+                 WA_SAIDA-AUGDT_IVA     ,
+                 WA_SAIDA-CTNUMBER_IVA  ,
+                 WA_SAIDA-WT_QBSHH_GCIAS,
+                 WA_SAIDA-AUGDT_GCIAS   ,
+                 WA_SAIDA-CTNUMBER_GCIAS,
+                 WA_SAIDA-WT_QBSHH_IIB  ,
+                 WA_SAIDA-AUGDT_IIB     ,
+                 WA_SAIDA-CTNUMBER_IIB  ,
+                 WA_SAIDA-WT_QBSHH_SUS  ,
+                 WA_SAIDA-AUGDT_SUS     ,
+                 WA_SAIDA-CTNUMBER_SUS  ,
+                 WA_SAIDA-PAGO          ,
+                 WA_SAIDA-TEXT1Z        ,
+                 WA_SAIDA-CHECF         ,
+                 WA_SAIDA-TEXT1T        ,
+                 WA_SAIDA-NOGR          ,
+                 WA_SAIDA-NETO          ,
+                 WA_SAIDA-IVAF          .
+
+      ENDLOOP.
+      IF WA_SAIDA-LIFNRP IS INITIAL.
+        APPEND WA_SAIDA TO IT_SAIDA.
+      ENDIF.
+      CLEAR WA_SAIDA.
+    ELSE.
+      APPEND WA_SAIDA TO IT_SAIDA.
+      CLEAR: WA_SAIDA,  VCALC.
+    ENDIF.
+    CLEAR: VVINCULO, WA_BKPF_B.
+
+  ENDLOOP.
+
+  IT_SAIDA2[] = IT_SAIDA[].
+
+  SORT: IT_SAIDA  BY  BUKRS  XBLNR BLDAT BUDAT BLART LIFNR  .
+  SORT: IT_SAIDA2 BY  XBLNR.
+
+  LOOP AT IT_SAIDA INTO WA_SAIDA.
+*    IF WA_SAIDA-XBLNR = WA_SAIDA2-XBLNR.
+*      CONTINUE.
+*    ENDIF.
+    TABIX = SY-TABIX.
+    XIMPOSTOS = 0.
+    LOOP AT IT_SAIDA2 INTO WA_SAIDA2 WHERE XBLNR = WA_SAIDA-XBLNR.
+      XIMPOSTOS = XIMPOSTOS + ( WA_SAIDA2-DMBTR + WA_SAIDA2-ANTECIPO + WA_SAIDA2-WT_QBSHH_IVA + WA_SAIDA2-WT_QBSHH_GCIAS + WA_SAIDA2-WT_QBSHH_IIB + WA_SAIDA2-WT_QBSHH_SUS ).
+    ENDLOOP.
+    VCALC = WA_SAIDA-TOTA - XIMPOSTOS.
+
+    IF VCALC >= VLIMIN AND VCALC <= VLIMAX.
+      WA_SAIDA-PAGO             = 'Sí'.
+    ELSE.
+      WA_SAIDA-PAGO             = 'No'.
+    ENDIF.
+    MODIFY IT_SAIDA FROM WA_SAIDA INDEX TABIX TRANSPORTING PAGO.
+
+  ENDLOOP.
+
+ENDFORM.                    " F_SAIDA
+*&---------------------------------------------------------------------*
+*&      Form  F_INICIAR_VARIAVES
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_INICIAR_VARIAVES .
+  DATA:
+              W_TEXTO1(10),
+              W_TEXTO2(10),
+              W_TEXTO3(40),
+
+              W_EMPRESA_TEXTO(40),
+              W_EXER_TEXTO(40),
+              W_PER_TEXTO(40),
+
+              EMPRESA      TYPE C LENGTH 50,
+              PERIODO      TYPE C LENGTH 60.
+
+
+  V_REPORT = SY-REPID.
+
+  W_TEXTO3 = 'Recupero de IVA '.
+  PERFORM F_CONSTRUIR_CABECALHO USING 'H' W_TEXTO3.
+
+  IF P_BUKRS IS NOT INITIAL.
+    W_EMPRESA_TEXTO = 'Sociedad....................:'.
+    CONCATENATE W_EMPRESA_TEXTO P_BUKRS-LOW  INTO EMPRESA SEPARATED BY SPACE.
+    PERFORM F_CONSTRUIR_CABECALHO USING 'S' EMPRESA.
+  ENDIF.
+
+  IF ( NOT  P_BUDAT IS INITIAL ).
+    W_PER_TEXTO = 'Fecha de contabilización:'.
+    CONCATENATE P_BUDAT-LOW+6(2)   '.' P_BUDAT-LOW+4(2)  '.' P_BUDAT-LOW(4)  INTO W_TEXTO1.
+    CONCATENATE P_BUDAT-HIGH+6(2)  '.' P_BUDAT-HIGH+4(2) '.' P_BUDAT-HIGH(4) INTO W_TEXTO2.
+    CONCATENATE W_PER_TEXTO W_TEXTO1 ' - ' W_TEXTO2 INTO PERIODO   SEPARATED BY SPACE.
+    PERFORM F_CONSTRUIR_CABECALHO USING 'S' PERIODO .
+  ENDIF.
+
+  "Fecha OP
+  IF ( NOT  P_BLDAT IS INITIAL ).
+    W_PER_TEXTO = 'Fecha OP....................:'.
+    CONCATENATE P_BLDAT-LOW+6(2)   '.' P_BLDAT-LOW+4(2)  '.' P_BUDAT-LOW(4)  INTO W_TEXTO1.
+    CONCATENATE P_BLDAT-HIGH+6(2)  '.' P_BLDAT-HIGH+4(2) '.' P_BUDAT-HIGH(4) INTO W_TEXTO2.
+    CONCATENATE W_PER_TEXTO W_TEXTO1 ' - ' W_TEXTO2 INTO PERIODO   SEPARATED BY SPACE.
+    PERFORM F_CONSTRUIR_CABECALHO USING 'S' PERIODO .
+  ENDIF.
+
+  "Proveedor factura
+  IF ( NOT  P_LIFNR IS INITIAL ).
+    W_PER_TEXTO = 'Proveedor factura........:'.
+    CONCATENATE W_PER_TEXTO P_LIFNR-LOW ' - ' P_LIFNR-HIGH INTO PERIODO   SEPARATED BY SPACE.
+    PERFORM F_CONSTRUIR_CABECALHO USING 'S' PERIODO .
+  ENDIF.
+
+ENDFORM.                    " F_INICIAR_VARIAVES
+*&---------------------------------------------------------------------*
+*&      Form  F_CONSTRUIR_CABECALHO
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_1528   text
+*      -->P_PERIODO  text
+*----------------------------------------------------------------------*
+FORM F_CONSTRUIR_CABECALHO    USING TYP TEXT.
+  DATA: LS_LINE TYPE SLIS_LISTHEADER.
+  LS_LINE-TYP = TYP.
+  LS_LINE-INFO = TEXT.
+  APPEND LS_LINE TO T_TOP.
+ENDFORM.                    " F_CONSTRUIR_CABECALHO
+*&---------------------------------------------------------------------*
+*&      Form  F_IMPRIME_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_IMPRIME_DADOS .
+  PERFORM F_DEFINIR_EVENTOS.
+  PERFORM LAYOUT.
+  PERFORM F_ALV.
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+   EXPORTING
+     I_CALLBACK_PROGRAM      = V_REPORT
+     IS_LAYOUT               = GD_LAYOUT
+     "i_callback_pf_status_set  = 'SET_PF_STATUS'
+     "i_callback_user_command   = 'USER_COMMAND'
+     IT_FIELDCAT             = IT_FCAT[]
+     IT_SORT                 = T_SORT[]
+     I_SAVE                  = 'X'
+     IT_EVENTS               = EVENTS
+     IS_PRINT                = T_PRINT
+*      IS_VARIANT              = VG_VARIANT
+   TABLES
+     T_OUTTAB                = IT_SAIDA
+  EXCEPTIONS
+      PROGRAM_ERROR           = 1
+      OTHERS                  = 2.
+
+  IF SY-SUBRC <> 0.
+
+    MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+
+  ENDIF.
+ENDFORM.                    " F_IMPRIME_DADOS
+*&---------------------------------------------------------------------*
+*&      Form  F_DEFINIR_EVENTOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+
+FORM F_DEFINIR_EVENTOS .
+  PERFORM F_CARREGAR_EVENTOS USING:
+                                    SLIS_EV_TOP_OF_PAGE  'XTOP_OF_PAGE'.
+
+ENDFORM.                    " F_DEFINIR_EVENTOS
+
+*---------------------------------------------------------------------*
+*       FORM xtop_of_page                                            *
+*---------------------------------------------------------------------*
+FORM XTOP_OF_PAGE.                                          "#EC CALLED
+
+  CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
+    EXPORTING
+      IT_LIST_COMMENTARY = T_TOP.
+
+ENDFORM. "X_TOP_PAGE
+*&---------------------------------------------------------------------*
+*&      Form  F_CARREGAR_EVENTOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_SLIS_EV_TOP_OF_PAGE  text
+*      -->P_0621   text
+*----------------------------------------------------------------------*
+FORM F_CARREGAR_EVENTOS USING    NAME FORM.
+  CLEAR XS_EVENTS.
+  XS_EVENTS-NAME = NAME.
+  XS_EVENTS-FORM = FORM.
+  APPEND XS_EVENTS TO EVENTS.
+ENDFORM.                      " F_CARREGAR_EVENTOS
+*&---------------------------------------------------------------------*
+*&      Form  F_ALV
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_ALV .
+  PERFORM ALV_PREENCHE_CAT USING:
+                 'BUKRS'              TEXT-003       '10'       ' '     ' '    ' ' , " Sociedad
+                 'BLDAT'              TEXT-004       '25'       ' '     ' '    ' ' , " Fecha de documento
+                 'BUDAT'              TEXT-005       '25'       ' '     ' '    ' ' , " Fecha de contabilización
+                 'TIPO'               TEXT-006       '05'       ' '     ' '    ' ' , " Tipo
+                 'BLART'              TEXT-007       '10'       ' '     ' '    ' ' , " Classe. Dcto
+                 'J_1AOFTP'           TEXT-038       '10'       ' '     ' '    ' ' , " Cod. AFIP
+                 'XBLNR'              TEXT-008       '15'       ' '     ' '    ' ' , " NR. Factura
+                 'LIFNR'              TEXT-009       '15'       ' '     ' '    ' ' , " Cod. Proveedor
+                 'NAME1'              TEXT-010       '25'       ' '     ' '    ' ' , " Razon Social
+                 'STCD1'              TEXT-011       '20'       ' '     ' '    ' ' , " CUIT
+                 'NETO'               TEXT-012       '15'       ' '     ' '    ' ' , " Neto Gravado
+                 'NOGR'               TEXT-013       '15'       ' '     ' '    ' ' , " No Gravado
+                 'IVAF'               TEXT-014       '15'       ' '     ' '    ' ' , " IVA Facturado
+                 'TOTA'               TEXT-015       '15'       ' '     ' '    ' ' , " Total Facturado
+                 "'CONC'               TEXT-016       '05'       ' '     ' '    ' ' , " Concepto
+                 'MATERIAL'           TEXT-039       '10'       ' '     ' '    ' ' , " Cód. Material
+                 'MAKTX'              TEXT-040       '30'       ' '     ' '    ' ' , " Descr. Material
+                 'ENTRY_QNT'          TEXT-041       '15'       ' '     ' '    ' ' , " Cantidad
+                 'LIFNRC'             TEXT-045       '25'       ' '     ' '    ' ' , " Cód. Prov. Corredor
+                 'NAME1C'             TEXT-046       '20'       ' '     ' '    ' ' , " Razon Social Corredor
+                 'STCD1C'             TEXT-047       '20'       ' '     ' '    ' ' , " CUIT Corredor
+                 'KTOKKC'             TEXT-019       '10'       ' '     ' '    ' ' , " Grupo
+                 'LIFNRP'             TEXT-017       '25'       ' '     ' '    ' ' , " Cód. Prov. Pago
+                 "'NAME1P'             TEXT-018       '20'       ' '     ' '    ' ' , " Razon Social
+                 "'STCD1P'             TEXT-042       '20'       ' '     ' '    ' ' , " CUIT Prov. Pago
+                 "'KTOKK'              TEXT-019       '10'       ' '     ' '    ' ' , " Grupo
+                 'AUGBL'              TEXT-020       '15'       ' '     ' '    ' ' , " Nr. OP.
+                 'AUGDT'              TEXT-021       '15'       ' '     ' '    ' ' , " Fecha OP
+                 'DMBTR'              TEXT-022       '15'       ' '     ' '    ' ' , " Importe OP.
+                 'ANTECIPO'           TEXT-044       '15'       ' '     ' '    ' ' , " Antecipo
+                 'WT_QBSHH_IVA'       TEXT-023       '15'       ' '     ' '    ' ' , " Retencion IVA
+                 'AUGDT_IVA'          TEXT-024       '20'       ' '     ' '    ' ' , " Fecha Ret. IVA
+                 'CTNUMBER_IVA'       TEXT-025       '15'       ' '     ' '    ' ' , " Nr. Certif. IVA
+                 'WT_QBSHH_GCIAS'     TEXT-026       '15'       ' '     ' '    ' ' , " Ret. Gcias
+                 'AUGDT_GCIAS'        TEXT-027       '20'       ' '     ' '    ' ' , " Fecha Ret Gcias
+                 'CTNUMBER_GCIAS'     TEXT-028       '15'       ' '     ' '    ' ' , " Nro. Cert Gcias
+
+                 'WT_QBSHH_IIB'       TEXT-029       '15'       ' '     ' '    ' ' , " Ret. IIBB
+                 'AUGDT_IIB'          TEXT-030       '20'       ' '     ' '    ' ' , " Fecha Ret. IIBB
+                 'CTNUMBER_IIB'       TEXT-031       '15'       ' '     ' '    ' ' , " Nro. Cert IIBB
+                 'WT_QBSHH_IIB_CB'    TEXT-048       '15'       ' '     ' '    ' ' , " Ret. IIBB CABA
+                 'AUGDT_IIB_CB'       TEXT-049       '20'       ' '     ' '    ' ' , " Fecha Ret. IIBB CABA
+                 'CTNUMBER_IIB_CB'    TEXT-050       '15'       ' '     ' '    ' ' , " Nro. Cert IIBB CABA
+                 'WT_QBSHH_SUS'       TEXT-032       '15'       ' '     ' '    ' ' , " Ret SUSS
+                 'AUGDT_SUS'          TEXT-033       '20'       ' '     ' '    ' ' , " Fecha Ret SUSS
+                 'CTNUMBER_SUS'       TEXT-034       '15'       ' '     ' '    ' ' , " Nro. Cert. SUSS
+                 'TEXT1Z'             TEXT-035       '20'       ' '     ' '    ' ' , " Medio de Pago
+                 'CHECF'              TEXT-043       '20'       ' '     ' '    ' ' , " Nro. Cheque/Transf
+                 'TEXT1T'             TEXT-036       '20'       ' '     ' '    ' ' , " Banco
+                 'PAGO'               TEXT-037       '15'       ' '     ' '    ' ' . " Pago Total?
+
+ENDFORM.                    " F_AL
+*&---------------------------------------------------------------------*
+*&      Form  ALV_PREENCHE_CAT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+
+FORM ALV_PREENCHE_CAT  USING   P_CAMPO  TYPE C
+                               P_DESC   TYPE C
+                               P_TAM    TYPE C
+                               P_HOT    TYPE C
+                               P_ZERO   TYPE C
+                               P_SOMA   TYPE C.
+
+
+  DATA: WL_FCAT TYPE TY_ESTRUTURA.
+
+  WL_FCAT-TABNAME   = 'IT_SAIDA'.
+  WL_FCAT-FIELDNAME = P_CAMPO.
+  WL_FCAT-SELTEXT_S = P_DESC.
+  WL_FCAT-SELTEXT_M = P_DESC.
+  WL_FCAT-SELTEXT_L = P_DESC.
+  WL_FCAT-HOTSPOT   = P_HOT.
+  WL_FCAT-NO_ZERO   = P_ZERO.
+  WL_FCAT-OUTPUTLEN = P_TAM.
+  WL_FCAT-DO_SUM    = P_SOMA.
+  IF P_CAMPO = 'ICON'.
+    WL_FCAT-ICON      = 'X'.
+  ENDIF.
+  APPEND WL_FCAT TO IT_FCAT.
+ENDFORM.                    " ALV_PREENCHE_CAT
+*&---------------------------------------------------------------------*
+*&      Form  LAYOUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM LAYOUT .
+
+  GD_LAYOUT-NO_INPUT          = 'X'.
+  GD_LAYOUT-ZEBRA             = 'X'.
+  GD_LAYOUT-COLWIDTH_OPTIMIZE = 'X'.
+  "gd_layout-box_fieldname     = 'SEL'.
+  GD_LAYOUT-BOX_TABNAME       = 'IT_SAIDA'.
+  GD_LAYOUT-WINDOW_TITLEBAR   = 'Recupero de Iva'.
+  GD_LAYOUT-DETAIL_TITLEBAR   = 'Recupero de Iva'.
+ENDFORM.                    " LAYOUT

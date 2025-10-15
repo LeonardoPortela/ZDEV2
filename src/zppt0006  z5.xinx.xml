@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_XINX" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <XINX>
+    <DD12V>
+     <SQLTAB>ZPPT0006</SQLTAB>
+     <INDEXNAME>Z5</INDEXNAME>
+     <AS4LOCAL>A</AS4LOCAL>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DBINDEX>ZPPT0006~Z5</DBINDEX>
+     <DDTEXT>Performace Trace Cotton x SAP</DDTEXT>
+     <ISEXTIND>X</ISEXTIND>
+    </DD12V>
+    <T_DD17V>
+     <DD17V>
+      <SQLTAB>ZPPT0006</SQLTAB>
+      <INDEXNAME>Z5</INDEXNAME>
+      <POSITION>0001</POSITION>
+      <AS4LOCAL>A</AS4LOCAL>
+      <FIELDNAME>MANDT</FIELDNAME>
+     </DD17V>
+     <DD17V>
+      <SQLTAB>ZPPT0006</SQLTAB>
+      <INDEXNAME>Z5</INDEXNAME>
+      <POSITION>0002</POSITION>
+      <AS4LOCAL>A</AS4LOCAL>
+      <FIELDNAME>ACHARG</FIELDNAME>
+     </DD17V>
+     <DD17V>
+      <SQLTAB>ZPPT0006</SQLTAB>
+      <INDEXNAME>Z5</INDEXNAME>
+      <POSITION>0003</POSITION>
+      <AS4LOCAL>A</AS4LOCAL>
+      <FIELDNAME>STATUS_MSG</FIELDNAME>
+     </DD17V>
+    </T_DD17V>
+   </XINX>
+  </asx:values>
+ </asx:abap>
+</abapGit>

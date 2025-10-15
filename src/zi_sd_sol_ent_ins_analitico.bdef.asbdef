@@ -1,0 +1,6 @@
+unmanaged implementation in class zbp_i_sd_sol_ent_ins_analitico unique;
+
+define behavior for ZI_SD_SOL_ENT_INS_ANALITICO alias Solicitacao
+{
+
+}

@@ -1,0 +1,4 @@
+@EndUserText.label: 'Exibição relatorio MI'
+define service ZSD_ZI_MI_REPORT {
+  expose ZI_MI_OV_REPORT as relatorio_mi;
+}

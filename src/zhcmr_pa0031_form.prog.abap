@@ -1,0 +1,1103 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZHCMR_PA0031_FORM
+*&---------------------------------------------------------------------*
+
+
+FORM F_REFRESH_ALV USING P_ALV.
+
+  CASE P_ALV.
+    WHEN '0100'.
+      CALL METHOD OBJ_ALV_0100->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_REFRESH_OBJETOS .
+
+  CLEAR: GS_LAYOUT,
+         GS_VARIANT.
+
+  REFRESH: IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_CRIAR_CATALOG USING P_SCREEN.
+
+  FREE: WA_FCAT, IT_FCAT.
+
+  CASE P_SCREEN.
+    WHEN '0100'.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+       01  'BSIK'  'BUKRS'   'IT_SAIDA_0100' 'BUKRS'        'Empresa'             ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       01  'T001'  'BUTXT'   'IT_SAIDA_0100' 'BUTXT'        'Ds.Empresa'          ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       02  'BSIK'  'LIFNR'   'IT_SAIDA_0100' 'LIFNR'        'Código'              ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       03  'BSIK'  'NAME1'   'IT_SAIDA_0100' 'NAME1'        'Banco'               ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       04  'BSIK'  'BELNR'   'IT_SAIDA_0100' 'BELNR'        'Nro.Documento'       ' '   ' '    ''  ' ' 'X' 'X' ' ' '' ,
+       05  'BSIK'  'BSCHL'   'IT_SAIDA_0100' 'BSCHL'        'CL'                  ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       06  'BSIK'  'ZFBDT'   'IT_SAIDA_0100' 'ZFBDT'        'Data Pgto'           ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       07  'BSIK'  'DMBTR'   'IT_SAIDA_0100' 'DMBTR'        'Valor R$'            ' '   ' '    ''  ' ' 'X' ' ' ' ' '' ,
+       08  'BSIK'  'DMBTR'   'IT_SAIDA_0100' 'DMBTR_BX'     'Valor Baixa'         ' '   'X'    ''  ' ' 'X' ' ' ' ' '' ,
+       09  'BSIK'  'AUGBL'   'IT_SAIDA_0100' 'AUGBL'        'Doc.Comp.'           ' '   ' '    ''  ' ' 'X' 'X' ' ' '' ,
+       10  ''      ''        'IT_SAIDA_0100' 'NOME_ARQUIVO' 'Nome Arquivo'        '25'  'X'    ''  ' ' 'X' ' ' ' ' '' ,
+       11  ''      ''        'IT_SAIDA_0100' 'US_FILE '     'Arquivo Gerado por'  ' '   ' '    ''  ' ' 'X' ' ' ' ' '' .
+
+    WHEN '0110'.
+
+
+  ENDCASE.
+
+
+ENDFORM.
+
+FORM F_ESTRUTURA_ALV USING VALUE(P_COL_POS)       TYPE I
+                           VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                           VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                           VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                           VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                           VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                           VALUE(P_OUTPUTLEN)
+                           VALUE(P_EDIT)
+                           VALUE(P_SUM)
+                           VALUE(P_EMPHASIZE)
+                           VALUE(P_JUST)
+                           VALUE(P_HOTSPOT)
+                           VALUE(P_F4)
+                           VALUE(P_CHECK).
+
+  CLEAR WA_FCAT.
+
+  WA_FCAT-FIELDNAME   = P_FIELD.
+  WA_FCAT-TABNAME     = P_TABNAME.
+  WA_FCAT-REF_TABLE   = P_REF_TABNAME.
+  WA_FCAT-REF_FIELD   = P_REF_FIELDNAME.
+  WA_FCAT-KEY         = ' '.
+  WA_FCAT-EDIT        = P_EDIT.
+  WA_FCAT-COL_POS     = P_COL_POS.
+  WA_FCAT-OUTPUTLEN   = P_OUTPUTLEN.
+  WA_FCAT-NO_OUT      = ' '.
+  WA_FCAT-DO_SUM      = P_SUM.
+  WA_FCAT-REPTEXT     = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_S   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_M   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_L   = P_SCRTEXT_L.
+  WA_FCAT-EMPHASIZE   = P_EMPHASIZE.
+*  WA_FCAT-STYLE       = ' '.
+  WA_FCAT-JUST        = P_JUST.
+  WA_FCAT-HOTSPOT     = P_HOTSPOT.
+  WA_FCAT-F4AVAILABL  = P_F4.
+  WA_FCAT-CHECKBOX    = P_CHECK.
+
+  APPEND WA_FCAT TO IT_FCAT.
+
+ENDFORM.                    " ESTRUTURA_ALV
+
+FORM F_EXCLUDE_FCODE USING P_SCREEN.
+
+  APPEND CL_GUI_ALV_GRID=>MC_FC_REFRESH           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW      TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_CUT           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE         TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_CHECK             TO IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_LIMPA_VARIAVEIS .
+
+  CLEAR: WA_SAIDA_0100,
+         IT_SAIDA_0100[],
+         IT_SAIDA_COMP[],
+         TG_LFA1[],
+         TG_BSIK[],
+         TG_BKPF[],
+         TG_USER_ADDRP[],
+         R_GJAHR[],
+         R_LIFNR_SET[],
+         TG_T001[].
+
+
+ENDFORM.
+
+FORM F_SELECIONAR_DADOS .
+
+  DATA: WL_X001 TYPE X001.
+
+  PERFORM F_LIMPA_VARIAVEIS.
+
+  PERFORM F_GET_BANCO_SET.
+
+  CHECK TG_LFA1_SET[] IS NOT INITIAL.
+
+  LOOP AT TG_LFA1_SET.
+    R_LIFNR_SET-SIGN   = 'I'.
+    R_LIFNR_SET-OPTION = 'EQ'.
+    R_LIFNR_SET-LOW    = TG_LFA1_SET-LIFNR.
+    APPEND R_LIFNR_SET.
+  ENDLOOP.
+
+  IF ( P_ZFBDT-LOW    IS NOT INITIAL     ) AND
+     ( P_ZFBDT-HIGH   IS NOT INITIAL     ) AND
+     ( P_ZFBDT-LOW(4) NE P_ZFBDT-HIGH(4) ).
+    R_GJAHR-SIGN   = 'I'.
+    R_GJAHR-OPTION = 'BT'.
+    R_GJAHR-LOW    = P_ZFBDT-LOW(4).
+    R_GJAHR-HIGH   = P_ZFBDT-HIGH(4).
+    APPEND R_GJAHR.
+  ELSEIF ( P_ZFBDT-LOW IS NOT INITIAL ).
+    R_GJAHR-SIGN   = 'I'.
+    R_GJAHR-OPTION = 'EQ'.
+    R_GJAHR-LOW    = P_ZFBDT-LOW(4).
+    APPEND R_GJAHR.
+  ENDIF.
+
+  DATA(_BLART) = 'SR'.
+
+  SELECT BS~BUKRS, BS~LIFNR, BS~BELNR, BS~BUZEI, BS~BLDAT, BS~BUDAT, BS~GJAHR, BS~ZFBDT, BS~DMBTR,
+         BS~DMBE2, BS~HBKID, BS~WAERS, BS~UMSKS, BS~UMSKZ, BS~SHKZG, BS~GSBER, BS~KIDNO, BS~ZUONR,
+         BS~XBLNR, BS~BLART, BS~ZTERM, BS~SGTXT, BS~BSCHL
+    FROM BSIK AS BS
+    INTO TABLE @TG_BSIK
+   WHERE BS~BUKRS IN @P_BUKRS
+     AND BS~LIFNR IN @P_LIFNR
+     AND BS~LIFNR IN @R_LIFNR_SET
+     AND BS~GJAHR IN @R_GJAHR
+     AND BS~ZFBDT IN @P_ZFBDT
+     AND BS~BLART EQ @_BLART.
+
+  CHECK TG_BSIK[] IS NOT INITIAL.
+
+  SELECT BK~BUKRS, BK~BELNR, BK~GJAHR, BK~USNAM, BK~KURSF,
+         BK~KURS2, BK~STBLG, BK~CPUDT, BK~CPUTM
+    FROM BKPF AS BK INTO TABLE @TG_BKPF
+     FOR ALL ENTRIES IN @TG_BSIK
+   WHERE BK~BUKRS EQ @TG_BSIK-BUKRS
+     AND BK~BELNR EQ @TG_BSIK-BELNR
+     AND BK~GJAHR EQ @TG_BSIK-GJAHR.
+
+  DELETE TG_BKPF[] WHERE STBLG IS NOT INITIAL. "Deleta documentos estornados
+
+  CHECK TG_BKPF[] IS NOT INITIAL.
+
+  SELECT BNAME, NAME_FIRST
+    FROM USER_ADDRP INTO TABLE @TG_USER_ADDRP
+     FOR ALL ENTRIES IN @TG_BKPF
+   WHERE BNAME EQ @TG_BKPF-USNAM.
+
+
+  SELECT BUKRS,
+         HBKID,
+         HKONT
+    FROM T012K INTO TABLE @TG_T012K
+     FOR ALL ENTRIES IN @TG_BSIK
+   WHERE BUKRS EQ @TG_BSIK-BUKRS
+     AND HBKID EQ @TG_BSIK-HBKID.
+
+  SELECT BUKRS,
+         BUTXT,
+         WAERS
+     FROM T001 INTO CORRESPONDING FIELDS OF TABLE @TG_T001
+     FOR ALL ENTRIES IN @TG_BSIK
+   WHERE BUKRS = @TG_BSIK-BUKRS.
+
+  SORT TG_T001[] BY BUKRS WAERS ASCENDING.
+
+  LOOP AT TG_T001.
+    CLEAR: WL_X001.
+
+    CALL FUNCTION 'FI_CURRENCY_INFORMATION'
+      EXPORTING
+        I_BUKRS = TG_T001-BUKRS
+      IMPORTING
+        E_X001  = WL_X001.
+
+    TG_T001-WAERS2 = WL_X001-HWAE2.
+
+    MODIFY TG_T001.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM F_PROCESSA_DADOS .
+
+  SORT: TG_BKPF       BY BUKRS BELNR GJAHR,
+        TG_LFA1_SET   BY LIFNR,
+        TG_USER_ADDRP BY BNAME,
+        TG_T001       BY BUKRS,
+        TG_T012K      BY BUKRS HBKID.
+
+  IF TG_BSIK[] IS NOT INITIAL.
+
+    SORT TG_BSIK[] BY BUKRS LIFNR ASCENDING.
+
+    SELECT
+        Z~BUKRS,
+        Z~LIFNR,
+        Z~BELNR,
+        Z~ZFBDT,
+        Z~NOME_ARQUIVO
+    FROM ZHCMT_PY_0019 AS Z
+    INTO TABLE @DATA(T_PY0019)
+    FOR ALL ENTRIES IN @TG_BSIK[]
+    WHERE Z~BUKRS = @TG_BSIK-BUKRS  AND
+          Z~LIFNR = @TG_BSIK-LIFNR  AND
+          Z~BELNR = @TG_BSIK-BELNR  AND
+          Z~ZFBDT = @TG_BSIK-ZFBDT.
+
+  SORT T_PY0019 BY BUKRS LIFNR BELNR ZFBDT.
+ENDIF.
+
+  LOOP AT TG_BSIK.
+
+    CLEAR: WA_SAIDA_0100, TG_BKPF, TG_USER_ADDRP, TG_LFA1_SET, TG_T012K, TG_T001.
+
+    READ TABLE TG_T001 WITH KEY BUKRS = TG_BSIK-BUKRS BINARY SEARCH.
+
+    CHECK TG_T001-WAERS = 'BRL'.
+
+    READ TABLE TG_T012K WITH KEY BUKRS = TG_BSIK-BUKRS HBKID = TG_BSIK-HBKID BINARY SEARCH.
+
+    READ TABLE TG_BKPF WITH KEY BUKRS = TG_BSIK-BUKRS
+                                BELNR = TG_BSIK-BELNR
+                                GJAHR = TG_BSIK-GJAHR BINARY SEARCH.
+    CHECK SY-SUBRC = 0.
+
+    READ TABLE TG_LFA1_SET WITH KEY LIFNR = TG_BSIK-LIFNR BINARY SEARCH.
+
+    CHECK SY-SUBRC = 0.
+
+    READ TABLE TG_USER_ADDRP WITH KEY BNAME = TG_BKPF-USNAM BINARY SEARCH.
+
+    READ TABLE T_PY0019[] INTO DATA(W_PY0019) WITH KEY BUKRS = TG_BSIK-BUKRS
+                                                       LIFNR = TG_BSIK-LIFNR
+                                                       BELNR = TG_BSIK-BELNR
+                                                       ZFBDT = TG_BSIK-ZFBDT BINARY SEARCH.
+
+
+    WA_SAIDA_0100-BUKRS     = TG_BSIK-BUKRS.
+    WA_SAIDA_0100-BUTXT     = TG_T001-BUTXT.
+    WA_SAIDA_0100-GJAHR     = TG_BSIK-GJAHR.
+    WA_SAIDA_0100-LIFNR     = TG_BSIK-LIFNR.
+    WA_SAIDA_0100-NAME1     = TG_LFA1_SET-NAME1.
+    WA_SAIDA_0100-BELNR     = TG_BSIK-BELNR.
+    WA_SAIDA_0100-BUZEI     = TG_BSIK-BUZEI.
+    WA_SAIDA_0100-ZFBDT     = TG_BSIK-ZFBDT.
+    WA_SAIDA_0100-DMBTR     = TG_BSIK-DMBTR.
+    WA_SAIDA_0100-DMBE2     = TG_BSIK-DMBE2.
+    WA_SAIDA_0100-DMBTR_BX  = TG_BSIK-DMBTR.
+    WA_SAIDA_0100-HBKID     = TG_BSIK-HBKID.
+    WA_SAIDA_0100-BLDAT     = TG_BSIK-BLDAT.
+    WA_SAIDA_0100-BUDAT     = TG_BSIK-BUDAT.
+    WA_SAIDA_0100-WAERS     = TG_BSIK-WAERS.
+    WA_SAIDA_0100-SGTXT     = TG_BSIK-SGTXT.
+    WA_SAIDA_0100-BSCHL     = TG_BSIK-BSCHL.
+    WA_SAIDA_0100-UMSKS     = TG_BSIK-UMSKS.
+    WA_SAIDA_0100-UMSKZ     = TG_BSIK-UMSKZ.
+    WA_SAIDA_0100-SHKZG     = TG_BSIK-SHKZG.
+    WA_SAIDA_0100-GSBER     = TG_BSIK-GSBER.
+    WA_SAIDA_0100-KIDNO     = TG_BSIK-KIDNO.
+    WA_SAIDA_0100-ZUONR     = TG_BSIK-ZUONR.
+    WA_SAIDA_0100-XBLNR     = TG_BSIK-XBLNR.
+    WA_SAIDA_0100-BLART     = TG_BSIK-BLART.
+    WA_SAIDA_0100-ZTERM     = TG_BSIK-ZTERM.
+    WA_SAIDA_0100-KOART     = 'K'.
+
+    TRY.
+        WA_SAIDA_0100-NOME_ARQUIVO = T_PY0019[ BUKRS = TG_BSIK-BUKRS
+                                               LIFNR = TG_BSIK-LIFNR
+                                               BELNR = TG_BSIK-BELNR
+                                               ZFBDT = TG_BSIK-ZFBDT ]-NOME_ARQUIVO.
+      CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+    ENDTRY.
+
+    PERFORM F_GET_TAXA USING WA_SAIDA_0100-DMBTR
+                             WA_SAIDA_0100-DMBE2
+                    CHANGING WA_SAIDA_0100-KURSF.
+
+    CONCATENATE TG_BKPF-CPUDT+6(2) '/' TG_BKPF-CPUDT+4(2) '/' TG_BKPF-CPUDT(4)
+           INTO DATA(_DATA_FRM).
+
+    CONCATENATE TG_BKPF-CPUTM(2) ':' TG_BKPF-CPUTM+2(2) ':' TG_BKPF-CPUTM+4(2)
+           INTO DATA(_HORA_FRM).
+
+    CONCATENATE TG_BKPF-USNAM '-' TG_USER_ADDRP-NAME_FIRST '-'
+                'Data:' _DATA_FRM 'às' _HORA_FRM 'hrs'
+           INTO WA_SAIDA_0100-US_FILE  SEPARATED BY SPACE.
+
+    WA_SAIDA_0100-HKONT_BX = TG_T012K-HKONT.
+
+    APPEND WA_SAIDA_0100 TO IT_SAIDA_0100.
+
+  ENDLOOP.
+
+ENDFORM.
+
+FORM F_GET_BANCO_SET.
+
+  CLEAR: TG_LFA1_SET[].
+
+  SELECT *
+    FROM SETLEAF INTO TABLE @DATA(TG_SETLEAF)
+   WHERE SETNAME = 'MAGGI_BANCOS_FP'.
+
+  DELETE TG_SETLEAF WHERE VALFROM IS INITIAL.
+
+  IF TG_SETLEAF[] IS INITIAL.
+    MESSAGE 'Nenhum banco parametrizado!(SET MAGGI_BANCOS_FP)' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  LOOP AT TG_SETLEAF INTO DATA(WL_SETLEAF).
+    SELECT SINGLE *
+      FROM LFA1 INTO @DATA(_WL_LFA1)
+     WHERE LIFNR = @WL_SETLEAF-VALFROM.
+
+    IF SY-SUBRC = 0.
+      TG_LFA1_SET-LIFNR = _WL_LFA1-LIFNR.
+      TG_LFA1_SET-NAME1 = _WL_LFA1-NAME1.
+      APPEND TG_LFA1_SET.
+    ENDIF.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM F_COMPENSAR_LCTOS USING P_COMP_BANCO TYPE C.
+
+  DATA: VL_ERROR    TYPE C,
+        VAR_ANSWER  TYPE C,
+        VL_DOC_COMP TYPE BSAK-BELNR.
+
+  CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+  CALL METHOD OBJ_ALV_0100->GET_SELECTED_ROWS
+    IMPORTING
+      ET_INDEX_ROWS = IT_SEL_ROWS.
+
+  IF IT_SEL_ROWS[] IS INITIAL.
+    MESSAGE 'Selecione uma linha!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  IF P_COMP_BANCO IS INITIAL. "Compensar Lctos
+    IF LINES( IT_SEL_ROWS ) = 1 .
+      MESSAGE 'Selecione pelo menos duas linhas!' TYPE 'S'.
+      EXIT.
+    ENDIF.
+  ENDIF.
+
+  CALL FUNCTION 'POPUP_TO_CONFIRM'
+    EXPORTING
+      TITLEBAR              = 'Confirmação'
+      TEXT_QUESTION         = 'Deseja realmente compensar os registros selecionados?'
+      TEXT_BUTTON_1         = 'Sim'
+      TEXT_BUTTON_2         = 'Não'
+      DEFAULT_BUTTON        = '1'
+      DISPLAY_CANCEL_BUTTON = ''
+    IMPORTING
+      ANSWER                = VAR_ANSWER
+    EXCEPTIONS
+      TEXT_NOT_FOUND        = 1
+      OTHERS                = 2.
+
+  CHECK VAR_ANSWER EQ '1'.
+
+  CLEAR: IT_SAIDA_COMP[].
+
+  LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+
+    READ TABLE IT_SAIDA_0100 ASSIGNING FIELD-SYMBOL(<SAIDA_0100>) INDEX WA_SEL_ROWS-INDEX.
+
+    CHECK SY-SUBRC = 0.
+
+    CHECK <SAIDA_0100>-AUGBL IS INITIAL.
+
+    IF ( P_COMP_BANCO IS NOT INITIAL ) AND ( <SAIDA_0100>-HKONT_BX IS INITIAL ).
+      MESSAGE |Não foi encontrada a conta referente ao Banco empresa { <SAIDA_0100>-HBKID }! | TYPE 'S'.
+      CONTINUE.
+    ENDIF.
+
+    IF ( <SAIDA_0100>-WAERS NE 'BRL' ).
+      MESSAGE |Moeda diferente de BRL! | TYPE 'S'.
+      CONTINUE.
+    ENDIF.
+
+    IF ( <SAIDA_0100>-DMBTR_BX <= 0 ).
+      MESSAGE |Valor da baixa não informado! | TYPE 'S'.
+      CONTINUE.
+    ELSEIF ( <SAIDA_0100>-DMBTR_BX > <SAIDA_0100>-DMBTR ).
+      MESSAGE |Valor da baixa é maior que valor do documento! | TYPE 'S'.
+      CONTINUE.
+    ELSE .
+      CLEAR <SAIDA_0100>-VLR_RSD.
+
+      IF ( <SAIDA_0100>-DMBTR_BX < <SAIDA_0100>-DMBTR ).
+        <SAIDA_0100>-VLR_RSD  = <SAIDA_0100>-DMBTR - <SAIDA_0100>-DMBTR_BX.
+        PERFORM F_BAPI_F51_RESIDUAL CHANGING <SAIDA_0100>
+                                             VL_ERROR.
+        IF VL_ERROR IS NOT INITIAL.
+          IF P_COMP_BANCO IS NOT INITIAL.
+            CONTINUE.
+          ELSE.
+            RETURN.
+          ENDIF.
+        ENDIF.
+
+        COMMIT WORK.
+      ENDIF.
+    ENDIF.
+
+    IF P_COMP_BANCO IS NOT INITIAL.
+      PERFORM F_BAPI_F51 USING P_COMP_BANCO
+                      CHANGING <SAIDA_0100>
+                               VL_ERROR
+                               VL_DOC_COMP.
+      IF VL_ERROR IS INITIAL.
+        MESSAGE |Compensação efetuada com sucesso! Doc.Compensação: { VL_DOC_COMP } |  TYPE 'S'.
+        <SAIDA_0100>-AUGBL = VL_DOC_COMP.
+      ENDIF.
+    ELSE.
+      APPEND <SAIDA_0100> TO IT_SAIDA_COMP.
+    ENDIF.
+
+  ENDLOOP.
+
+  IF P_COMP_BANCO IS INITIAL.
+    PERFORM F_BAPI_F51 USING P_COMP_BANCO
+                    CHANGING <SAIDA_0100>
+                             VL_ERROR
+                             VL_DOC_COMP.
+    IF VL_ERROR IS INITIAL.
+      MESSAGE |Compensação efetuada com sucesso! Doc.Compensação: { VL_DOC_COMP } |  TYPE 'S'.
+
+      LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+
+        READ TABLE IT_SAIDA_0100 ASSIGNING <SAIDA_0100> INDEX WA_SEL_ROWS-INDEX.
+        CHECK SY-SUBRC = 0.
+
+        <SAIDA_0100>-AUGBL = VL_DOC_COMP.
+      ENDLOOP.
+
+    ENDIF.
+  ENDIF.
+
+  LEAVE TO SCREEN 0100.
+
+ENDFORM.
+
+FORM F_BAPI_F51_RESIDUAL CHANGING P_SAIDA_0100 TYPE TY_SAIDA_0100
+                                  P_ERRO.
+
+  DATA: WL_BSIK TYPE BSIK.
+
+  DATA: L_AUGLV   TYPE T041A-AUGLV   VALUE 'UMBUCHNG', "Posting with Clearing
+        L_TCODE   TYPE SY-TCODE      VALUE 'FB05',     "You get an error with any other value
+        L_SGFUNCT TYPE RFIPI-SGFUNCT VALUE 'C'.        "Post immediately
+
+  DATA: LT_BLNTAB  TYPE STANDARD TABLE OF BLNTAB  WITH HEADER LINE,
+        LT_FTCLEAR TYPE STANDARD TABLE OF FTCLEAR WITH HEADER LINE,
+        LT_FTPOST  TYPE STANDARD TABLE OF FTPOST  WITH HEADER LINE,
+        LT_FTTAX   TYPE STANDARD TABLE OF FTTAX   WITH HEADER LINE,
+        LDS_RETURN TYPE BAPIRET2.
+
+  DATA: VDATA(10),
+        VDATA_VENC(10),
+        CNUM_SEQ(2),
+        WL_VLR(16),
+        WL_TAXA(16),
+        WL_VLRC(16),
+        WL_VLRN        TYPE P DECIMALS 2,
+        VCAMPO(15),
+        V_KUR          TYPE BKPF-KURSF,
+        VVALOR_BAX     TYPE ZFIT0042-DMBE2,
+        MSG_NO         TYPE T100-MSGNR,
+        MSG_TEXT       TYPE STRING,
+        P_MODE         LIKE RFPDO-ALLGAZMD,
+        COUNT_FT       TYPE FTPOST-COUNT,
+        VL_DT_MOV      TYPE SY-DATUM.
+
+  IF P_SAIDA_0100-VLR_RSD <= 0.
+    MESSAGE 'Valor Residual inconsistente!' TYPE 'S'.
+    P_ERRO = 'X'.
+    RETURN.
+  ENDIF.
+
+  IF P_SAIDA_0100-KURSF <= 0.
+    MESSAGE 'Taxa para gerar residual não encontrada!' TYPE 'S'.
+    P_ERRO = 'X'.
+    RETURN.
+  ENDIF.
+
+  PERFORM F_MOEDA_EMPRESA USING P_SAIDA_0100-BUKRS
+                                'X'.
+  IF ( SY-SUBRC NE 0 ).
+    P_ERRO = 'X'.
+    RETURN.
+  ENDIF.
+
+  VL_DT_MOV = SY-DATUM.
+
+  P_MODE = 'N'.
+
+  CALL FUNCTION 'POSTING_INTERFACE_START'
+    EXPORTING
+      I_CLIENT           = SY-MANDT
+      I_FUNCTION         = 'C'
+      I_MODE             = P_MODE
+      I_UPDATE           = 'S'
+      I_USER             = SY-UNAME
+    EXCEPTIONS
+      CLIENT_INCORRECT   = 1
+      FUNCTION_INVALID   = 2
+      GROUP_NAME_MISSING = 3
+      MODE_INVALID       = 4
+      UPDATE_INVALID     = 5
+      OTHERS             = 6.
+
+  IF SY-SUBRC NE 0.
+    P_ERRO = 'X'.
+    MESSAGE 'Houve um erro ao desmembrar um documento' TYPE 'S'.
+    RETURN.
+  ENDIF.
+
+  CONCATENATE VL_DT_MOV+6(2) VL_DT_MOV+4(2) VL_DT_MOV(4) INTO VDATA SEPARATED BY '.'.
+  CONCATENATE P_SAIDA_0100-ZFBDT+6(2) P_SAIDA_0100-ZFBDT+4(2) P_SAIDA_0100-ZFBDT(4) INTO VDATA_VENC SEPARATED BY '.'.
+
+  WRITE: P_SAIDA_0100-KURSF TO WL_TAXA.
+  CONDENSE WL_TAXA NO-GAPS.
+
+  CLEAR: LT_BLNTAB,   LT_BLNTAB[],
+         LT_FTCLEAR,  LT_FTCLEAR[],
+         LT_FTPOST,   LT_FTPOST[],
+         LT_FTTAX,    LT_FTTAX[],
+         LDS_RETURN, P_ERRO.
+
+  COUNT_FT = 1.
+
+  LT_FTPOST-STYPE = 'K'."Header
+  LT_FTPOST-COUNT = COUNT_FT.  "number of Dynpro
+
+  LT_FTPOST-FNAM = 'BKPF-BUKRS'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-BUKRS.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-WAERS'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-WAERS.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-KURSF'.
+  LT_FTPOST-FVAL = WL_TAXA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BLDAT'.
+  LT_FTPOST-FVAL = VDATA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BUDAT'.
+  LT_FTPOST-FVAL = VDATA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-MONAT'.
+  LT_FTPOST-FVAL =  VL_DT_MOV+4(2).
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BLART'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-BLART.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-XBLNR'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-XBLNR.
+  APPEND LT_FTPOST.
+
+  LT_FTCLEAR-AGKOA  = P_SAIDA_0100-KOART.
+  LT_FTCLEAR-AGKON  = P_SAIDA_0100-LIFNR.
+  LT_FTCLEAR-AGUMS  = P_SAIDA_0100-UMSKZ.
+  LT_FTCLEAR-AGBUK  = P_SAIDA_0100-BUKRS.
+  LT_FTCLEAR-XNOPS  = 'X'.
+  LT_FTCLEAR-SELFD  = 'BELNR'.
+  CONCATENATE P_SAIDA_0100-BELNR P_SAIDA_0100-BUDAT(4) P_SAIDA_0100-BUZEI INTO LT_FTCLEAR-SELVON.
+  APPEND LT_FTCLEAR.
+
+  "Valor residual
+  DO 2 TIMES.
+
+    CLEAR: WL_VLRN, WL_VLRC.
+
+    ADD 1 TO COUNT_FT.
+
+    CASE SY-INDEX .
+      WHEN 1.
+        WL_VLRN = ABS( P_SAIDA_0100-DMBTR_BX ).
+      WHEN 2.
+        WL_VLRN = ABS( P_SAIDA_0100-VLR_RSD ).
+    ENDCASE.
+
+    WRITE: WL_VLRN TO WL_VLRC.
+
+    LT_FTPOST-STYPE = 'P'.
+    LT_FTPOST-COUNT = COUNT_FT .
+
+    LT_FTPOST-FNAM = 'RF05A-NEWBS'.
+    LT_FTPOST-FVAL =  P_SAIDA_0100-BSCHL.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-HKONT'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-LIFNR.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-GSBER'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-GSBER.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-SGTXT'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-SGTXT.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-KIDNO'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-KIDNO.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-ZUONR'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-ZUONR.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-HBKID'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-HBKID.
+    APPEND LT_FTPOST.
+
+    IF P_SAIDA_0100-ZFBDT IS NOT INITIAL.
+      LT_FTPOST-FNAM = 'BSEG-ZFBDT'.
+      LT_FTPOST-FVAL = VDATA_VENC.
+      APPEND LT_FTPOST.
+    ENDIF.
+
+*    IF ( P_SAIDA_0100-ZTERM IS NOT INITIAL ) AND ( P_SAIDA_0100-UMSKS IS INITIAL ).
+*      LT_FTPOST-FNAM = 'BSEG-ZTERM'.
+*      LT_FTPOST-FVAL = P_SAIDA_0100-ZTERM.
+*      APPEND LT_FTPOST.
+*    ENDIF.
+
+    IF P_SAIDA_0100-UMSKS IS NOT INITIAL. "Razão Especial
+      LT_FTPOST-FNAM = 'RF05A-NEWUM'.
+      LT_FTPOST-FVAL = P_SAIDA_0100-UMSKZ.
+      APPEND LT_FTPOST.
+    ENDIF.
+
+    LT_FTPOST-FNAM = 'BSEG-WRBTR'.
+    LT_FTPOST-FVAL =  WL_VLRC.
+    APPEND LT_FTPOST.
+
+    WL_VLRN = WL_VLRN / ABS( P_SAIDA_0100-KURSF ).
+    WRITE: WL_VLRN TO WL_VLRC.
+    LT_FTPOST-FNAM = 'BSEG-DMBE2'.
+    LT_FTPOST-FVAL =  WL_VLRC.
+    APPEND LT_FTPOST.
+
+  ENDDO.
+
+  CALL FUNCTION 'POSTING_INTERFACE_CLEARING'
+    EXPORTING
+      I_AUGLV                    = L_AUGLV
+      I_TCODE                    = L_TCODE
+      I_SGFUNCT                  = L_SGFUNCT
+      I_NO_AUTH                  = 'X'
+    IMPORTING
+      E_MSGID                    = LDS_RETURN-ID
+      E_MSGNO                    = LDS_RETURN-NUMBER
+      E_MSGTY                    = LDS_RETURN-TYPE
+      E_MSGV1                    = LDS_RETURN-MESSAGE_V1
+      E_MSGV2                    = LDS_RETURN-MESSAGE_V2
+      E_MSGV3                    = LDS_RETURN-MESSAGE_V3
+      E_MSGV4                    = LDS_RETURN-MESSAGE_V4
+    TABLES
+      T_BLNTAB                   = LT_BLNTAB
+      T_FTCLEAR                  = LT_FTCLEAR
+      T_FTPOST                   = LT_FTPOST
+      T_FTTAX                    = LT_FTTAX
+    EXCEPTIONS
+      CLEARING_PROCEDURE_INVALID = 1
+      CLEARING_PROCEDURE_MISSING = 2
+      TABLE_T041A_EMPTY          = 3
+      TRANSACTION_CODE_INVALID   = 4
+      AMOUNT_FORMAT_ERROR        = 5
+      TOO_MANY_LINE_ITEMS        = 6
+      COMPANY_CODE_INVALID       = 7
+      SCREEN_NOT_FOUND           = 8
+      NO_AUTHORIZATION           = 9
+      OTHERS                     = 10.
+
+
+  IF LT_BLNTAB[] IS INITIAL.
+    P_ERRO = 'X'.
+    WRITE LDS_RETURN-NUMBER TO MSG_NO.
+    CALL FUNCTION 'MESSAGE_PREPARE'
+      EXPORTING
+        MSG_ID                 = LDS_RETURN-ID
+        MSG_NO                 = MSG_NO
+        MSG_VAR1               = LDS_RETURN-MESSAGE_V1
+        MSG_VAR2               = LDS_RETURN-MESSAGE_V2
+        MSG_VAR3               = LDS_RETURN-MESSAGE_V3
+        MSG_VAR4               = LDS_RETURN-MESSAGE_V4
+      IMPORTING
+        MSG_TEXT               = MSG_TEXT
+      EXCEPTIONS
+        FUNCTION_NOT_COMPLETED = 1
+        MESSAGE_NOT_FOUND      = 2
+        OTHERS                 = 3.
+    MESSAGE MSG_TEXT TYPE 'S'.
+  ELSE.
+    READ TABLE LT_BLNTAB INDEX 1.
+
+    CLEAR: WL_BSIK.
+    SELECT SINGLE *
+      FROM BSIK INTO WL_BSIK
+     WHERE BUKRS = P_SAIDA_0100-BUKRS
+       AND GJAHR = VL_DT_MOV(4)
+       AND BELNR = LT_BLNTAB-BELNR
+       AND DMBTR = P_SAIDA_0100-DMBTR_BX.
+
+    IF SY-SUBRC NE 0 .
+      P_ERRO = 'X'.
+      MESSAGE 'Houve um erro ao desmembrar um documento' TYPE 'S'.
+      RETURN.
+    ENDIF.
+
+    "Faz a troca para o novo documento gerado com valor a ser baixado.
+    P_SAIDA_0100-BL_DESMEMB = P_SAIDA_0100-BELNR.
+    P_SAIDA_0100-BZ_DESMEMB = P_SAIDA_0100-BUZEI.
+    P_SAIDA_0100-BELNR      = WL_BSIK-BELNR.
+    P_SAIDA_0100-BUZEI      = WL_BSIK-BUZEI.
+    P_SAIDA_0100-GJAHR      = WL_BSIK-GJAHR.
+    P_SAIDA_0100-BLDAT      = WL_BSIK-BLDAT.
+    P_SAIDA_0100-BUDAT      = WL_BSIK-BUDAT.
+    P_SAIDA_0100-DMBTR_BX   = WL_BSIK-DMBTR.
+    P_SAIDA_0100-DMBE2      = WL_BSIK-DMBE2.
+  ENDIF.
+
+  "fim
+  CALL FUNCTION 'POSTING_INTERFACE_END'
+    EXPORTING
+      I_BDCIMMED              = 'X'
+    EXCEPTIONS
+      SESSION_NOT_PROCESSABLE = 1
+      OTHERS                  = 2.
+
+  IF SY-SUBRC <> 0.
+    EXIT.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_BAPI_F51 USING P_COMP_BANCO TYPE C
+             CHANGING P_SAIDA_0100 TYPE TY_SAIDA_0100
+                      P_ERRO
+                      P_DOC_COMP   TYPE BSAD-BELNR.
+
+  DATA: OBJ_ZCL_UTIL_SD TYPE REF TO ZCL_UTIL_SD,
+        VL_GDATU        TYPE GDATU_INV,
+        VG_TX_USD_BRL   TYPE UKURS_CURR.
+
+  DATA: VL_NAME1     TYPE KNA1-NAME1,
+        IT_0100_COMP TYPE TABLE OF TY_SAIDA_0100.
+
+  DATA: L_AUGLV   TYPE T041A-AUGLV   VALUE 'UMBUCHNG', "Posting with Clearing
+        L_TCODE   TYPE SY-TCODE      VALUE 'FB05',     "You get an error with any other value
+        L_SGFUNCT TYPE RFIPI-SGFUNCT VALUE 'C'.        "Post immediately
+
+  DATA: LT_BLNTAB  TYPE STANDARD TABLE OF BLNTAB  WITH HEADER LINE,
+        LT_FTCLEAR TYPE STANDARD TABLE OF FTCLEAR WITH HEADER LINE,
+        LT_FTPOST  TYPE STANDARD TABLE OF FTPOST  WITH HEADER LINE,
+        LT_FTTAX   TYPE STANDARD TABLE OF FTTAX   WITH HEADER LINE,
+        LDS_RETURN TYPE BAPIRET2.
+
+  DATA: VDATA(10),
+        VDATA_VENC(10),
+        CNUM_SEQ(2),
+        WL_VLR(16),
+        WL_TAXA(16),
+        WL_VLRC(16),
+        WL_VLRN        TYPE P DECIMALS 2,
+        VCAMPO(15),
+        V_KUR          TYPE BKPF-KURSF,
+        VVALOR_BAX     TYPE ZFIT0042-DMBE2,
+        MSG_NO         TYPE T100-MSGNR,
+        MSG_TEXT       TYPE STRING,
+        P_MODE         LIKE RFPDO-ALLGAZMD,
+        VL_DT_MOV      TYPE SY-DATUM,
+        COUNT_FT       TYPE FTPOST-COUNT.
+
+  CLEAR: P_DOC_COMP.
+
+  VL_DT_MOV = SY-DATUM.
+
+*----------------------------------------------------------------------*
+* Busca Taxa Cambio
+*----------------------------------------------------------------------*
+  CREATE OBJECT OBJ_ZCL_UTIL_SD.
+
+  MOVE VL_DT_MOV TO VL_GDATU.
+
+  OBJ_ZCL_UTIL_SD->SET_KURST('B').
+  OBJ_ZCL_UTIL_SD->SET_WAERK('USD').
+  OBJ_ZCL_UTIL_SD->SET_TCURR('BRL').
+  OBJ_ZCL_UTIL_SD->SET_DATA( VL_GDATU ).
+
+  VG_TX_USD_BRL = ABS( OBJ_ZCL_UTIL_SD->TAXA_CAMBIO( ) ).
+
+  IF VG_TX_USD_BRL = 0.
+    P_ERRO = 'X'.
+    MESSAGE 'Taxa de Câmbio não encontrada(USD/BRL)!' TYPE 'S'.
+    RETURN.
+  ENDIF.
+
+  P_MODE = 'N'.
+
+  CALL FUNCTION 'POSTING_INTERFACE_START'
+    EXPORTING
+      I_CLIENT           = SY-MANDT
+      I_FUNCTION         = 'C'
+      I_MODE             = P_MODE
+      I_UPDATE           = 'S'
+      I_USER             = SY-UNAME
+    EXCEPTIONS
+      CLIENT_INCORRECT   = 1
+      FUNCTION_INVALID   = 2
+      GROUP_NAME_MISSING = 3
+      MODE_INVALID       = 4
+      UPDATE_INVALID     = 5
+      OTHERS             = 6.
+
+  IF SY-SUBRC NE 0.
+    P_ERRO = 'X'.
+    ROLLBACK WORK.
+    MESSAGE 'Houve ao efeturar a compensação' TYPE 'S'.
+    RETURN.
+  ENDIF.
+
+  CONCATENATE  VL_DT_MOV+6(2) VL_DT_MOV+4(2) VL_DT_MOV(4) INTO VDATA SEPARATED BY '.'.
+
+  WRITE: VG_TX_USD_BRL TO WL_TAXA.
+  CONDENSE WL_TAXA NO-GAPS.
+
+  CLEAR: LT_BLNTAB,   LT_BLNTAB[],
+         LT_FTCLEAR,  LT_FTCLEAR[],
+         LT_FTPOST,   LT_FTPOST[],
+         LT_FTTAX,    LT_FTTAX[],
+         IT_0100_COMP[],
+         LDS_RETURN, P_ERRO.
+
+  COUNT_FT = 1.
+
+  LT_FTPOST-STYPE = 'K'."Header
+  LT_FTPOST-COUNT = COUNT_FT.  "number of Dynpro
+
+  LT_FTPOST-FNAM = 'BKPF-BUKRS'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-BUKRS.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-WAERS'.
+  LT_FTPOST-FVAL = P_SAIDA_0100-WAERS.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-KURSF'.
+  LT_FTPOST-FVAL = WL_TAXA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BLDAT'.
+  LT_FTPOST-FVAL = VDATA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BUDAT'.
+  LT_FTPOST-FVAL = VDATA.
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-MONAT'.
+  LT_FTPOST-FVAL =  VL_DT_MOV+4(2).
+  APPEND LT_FTPOST.
+
+  LT_FTPOST-FNAM = 'BKPF-BLART'.
+  LT_FTPOST-FVAL = 'KZ'.
+  APPEND LT_FTPOST.
+
+  IF P_COMP_BANCO IS NOT INITIAL.  "Compensação de Partida contra banco
+    LT_FTCLEAR-AGKOA  = P_SAIDA_0100-KOART.
+    LT_FTCLEAR-AGKON  = P_SAIDA_0100-LIFNR.
+    LT_FTCLEAR-AGUMS  = P_SAIDA_0100-UMSKZ.
+    LT_FTCLEAR-AGBUK  = P_SAIDA_0100-BUKRS.
+    LT_FTCLEAR-XNOPS  = 'X'.
+    LT_FTCLEAR-SELFD  = 'BELNR'.
+    CONCATENATE P_SAIDA_0100-BELNR P_SAIDA_0100-BUDAT(4) P_SAIDA_0100-BUZEI INTO LT_FTCLEAR-SELVON.
+    APPEND LT_FTCLEAR.
+
+    "Define Partida Banco --------------------------------------------------"
+    CLEAR: WL_VLRN, WL_VLRC, VL_NAME1.
+
+    PERFORM F_MOEDA_EMPRESA USING P_SAIDA_0100-BUKRS
+                                  'X'.
+    IF ( SY-SUBRC NE 0 ).
+      P_ERRO = 'X'.
+      RETURN.
+    ENDIF.
+
+    ADD 1 TO COUNT_FT.
+
+    IF ( P_SAIDA_0100-DMBTR_BX = 0 ) OR ( P_SAIDA_0100-DMBE2 = 0 ).
+      P_ERRO = 'X'.
+      MESSAGE 'Existem lançamentos com valores zerados!' TYPE 'S'.
+      RETURN.
+    ENDIF.
+
+    LT_FTPOST-STYPE = 'P'.
+    LT_FTPOST-COUNT = COUNT_FT .
+
+    LT_FTPOST-FNAM = 'RF05A-NEWBS'.
+    LT_FTPOST-FVAL =  '50'.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-HKONT'.
+    LT_FTPOST-FVAL = P_SAIDA_0100-HKONT_BX.
+    APPEND LT_FTPOST.
+
+    WL_VLRN = ABS( P_SAIDA_0100-DMBTR_BX ).
+    WRITE: WL_VLRN TO WL_VLRC.
+
+    LT_FTPOST-FNAM = 'BSEG-WRBTR'.
+    LT_FTPOST-FVAL =  WL_VLRC.
+    APPEND LT_FTPOST.
+
+    WL_VLRN = WL_VLRN / ABS( VG_TX_USD_BRL ).
+    WRITE: WL_VLRN TO WL_VLRC.
+    LT_FTPOST-FNAM = 'BSEG-DMBE2'.
+    LT_FTPOST-FVAL =  WL_VLRC.
+    APPEND LT_FTPOST.
+
+    LT_FTPOST-FNAM = 'BSEG-SGTXT'.
+    LT_FTPOST-FVAL = 'Pagamento Salário'.
+    APPEND LT_FTPOST.
+
+  ELSE. "Compensação de Partidas do fornecedor
+    IT_0100_COMP[] = IT_SAIDA_COMP[].
+    SORT IT_0100_COMP BY BELNR BUZEI.
+    DELETE ADJACENT DUPLICATES FROM IT_0100_COMP COMPARING BELNR BUZEI.
+
+    LOOP AT IT_0100_COMP INTO WA_SAIDA_0100.
+      LT_FTCLEAR-AGKOA  = WA_SAIDA_0100-KOART.
+      LT_FTCLEAR-AGKON  = WA_SAIDA_0100-LIFNR.
+      LT_FTCLEAR-AGUMS  = WA_SAIDA_0100-UMSKZ.
+      LT_FTCLEAR-AGBUK  = WA_SAIDA_0100-BUKRS.
+      LT_FTCLEAR-XNOPS  = 'X'.
+      LT_FTCLEAR-SELFD  = 'BELNR'.
+      CONCATENATE WA_SAIDA_0100-BELNR WA_SAIDA_0100-BUDAT(4) WA_SAIDA_0100-BUZEI INTO LT_FTCLEAR-SELVON.
+      APPEND LT_FTCLEAR.
+    ENDLOOP.
+  ENDIF.
+
+  CALL FUNCTION 'POSTING_INTERFACE_CLEARING'
+    EXPORTING
+      I_AUGLV                    = L_AUGLV
+      I_TCODE                    = L_TCODE
+      I_SGFUNCT                  = L_SGFUNCT
+      I_NO_AUTH                  = 'X'
+    IMPORTING
+      E_MSGID                    = LDS_RETURN-ID
+      E_MSGNO                    = LDS_RETURN-NUMBER
+      E_MSGTY                    = LDS_RETURN-TYPE
+      E_MSGV1                    = LDS_RETURN-MESSAGE_V1
+      E_MSGV2                    = LDS_RETURN-MESSAGE_V2
+      E_MSGV3                    = LDS_RETURN-MESSAGE_V3
+      E_MSGV4                    = LDS_RETURN-MESSAGE_V4
+    TABLES
+      T_BLNTAB                   = LT_BLNTAB
+      T_FTCLEAR                  = LT_FTCLEAR
+      T_FTPOST                   = LT_FTPOST
+      T_FTTAX                    = LT_FTTAX
+    EXCEPTIONS
+      CLEARING_PROCEDURE_INVALID = 1
+      CLEARING_PROCEDURE_MISSING = 2
+      TABLE_T041A_EMPTY          = 3
+      TRANSACTION_CODE_INVALID   = 4
+      AMOUNT_FORMAT_ERROR        = 5
+      TOO_MANY_LINE_ITEMS        = 6
+      COMPANY_CODE_INVALID       = 7
+      SCREEN_NOT_FOUND           = 8
+      NO_AUTHORIZATION           = 9
+      OTHERS                     = 10.
+
+
+  IF LT_BLNTAB[] IS INITIAL.
+    P_ERRO = 'X'.
+    WRITE LDS_RETURN-NUMBER TO MSG_NO.
+    CALL FUNCTION 'MESSAGE_PREPARE'
+      EXPORTING
+        MSG_ID                 = LDS_RETURN-ID
+        MSG_NO                 = MSG_NO
+        MSG_VAR1               = LDS_RETURN-MESSAGE_V1
+        MSG_VAR2               = LDS_RETURN-MESSAGE_V2
+        MSG_VAR3               = LDS_RETURN-MESSAGE_V3
+        MSG_VAR4               = LDS_RETURN-MESSAGE_V4
+      IMPORTING
+        MSG_TEXT               = MSG_TEXT
+      EXCEPTIONS
+        FUNCTION_NOT_COMPLETED = 1
+        MESSAGE_NOT_FOUND      = 2
+        OTHERS                 = 3.
+    MESSAGE MSG_TEXT TYPE 'S'.
+  ELSE.
+
+    P_DOC_COMP = LT_BLNTAB-BELNR.
+
+  ENDIF.
+
+  "fim
+  CALL FUNCTION 'POSTING_INTERFACE_END'
+    EXPORTING
+      I_BDCIMMED              = 'X'
+    EXCEPTIONS
+      SESSION_NOT_PROCESSABLE = 1
+      OTHERS                  = 2.
+
+  IF SY-SUBRC <> 0.
+    EXIT.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_GET_TAXA  USING P_DMBTR TYPE BSID-DMBTR
+                       P_DMBE2 TYPE BSID-DMBE2
+              CHANGING P_KURSF TYPE BKPF-KURSF.
+
+  CLEAR: P_KURSF.
+
+  IF ( P_DMBTR > 0 ) AND  ( P_DMBE2 > 0 ).
+    TRY.
+        P_KURSF = P_DMBTR / P_DMBE2.
+      CATCH CX_SY_ARITHMETIC_OVERFLOW.
+    ENDTRY.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_MOEDA_EMPRESA USING P_BUKRS TYPE T001-BUKRS
+                           P_MSG   TYPE C.
+
+  CLEAR: TG_T001.
+
+  READ TABLE TG_T001 WITH KEY BUKRS = P_BUKRS.
+
+  IF ( SY-SUBRC NE 0 ) OR ( TG_T001-WAERS IS INITIAL ) OR
+     ( TG_T001-WAERS2 IS INITIAL ) OR ( P_BUKRS IS INITIAL ).
+    CLEAR: TG_T001.
+    IF P_MSG = 'X'.
+      MESSAGE |Informações referente a moeda da empresa: { P_BUKRS }, não encontrado ou incompleto!| TYPE 'S'.
+    ENDIF.
+    SY-SUBRC = 4.
+  ENDIF.
+
+ENDFORM.

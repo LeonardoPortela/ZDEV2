@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_SD_DISTRIBUIR_SALDO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Distribuir Saldo</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <MSG_ID>ZSD_DISTRIBUIR</MSG_ID>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_NRO_SOL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.Solicitação Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_POSNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SEQ</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numc3, utilização interna</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SPART</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Setor de atividade</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VBELN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>BUSCA_DADOS</CMPNAME>
+     <SCONAME>CG_DADOS_CABEC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela ALV1-ZSDT0081 - Distribuição de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_ERROR</CMPNAME>
+     <SCONAME>RV_OK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>variável booleana (X=verdade, -=falso, espaço=desconhecido)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

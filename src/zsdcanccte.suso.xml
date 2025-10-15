@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZSDCANCCTE</OBJCT>
+    <FIEL1>Z_CANC_CTE</FIEL1>
+    <OCLSS>ZSD</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZSDCANCCTE</OBJECT>
+    <TTEXT>Objeto de Cancelamento de CT-e</TTEXT>
+   </TOBJT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

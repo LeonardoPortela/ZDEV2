@@ -1,0 +1,13 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZGF_PM_IMP_PROTHEUSD
+*&---------------------------------------------------------------------*
+
+ DATA: GW_VEICULO TYPE EQUZ.
+ DATA: GT_FATURA TYPE TABLE OF ZPMT0024.
+ DATA: GT_CUPOM TYPE TABLE OF ZPMT0026.
+ DATA: GT_RETURN TYPE TABLE OF ZPME0036.
+ DATA: T_RETURN TYPE TABLE OF ZPME0036.
+ DATA: CONT_CUPOM TYPE P DECIMALS 2.
+ DATA: IDCUPOM TYPE P DECIMALS 2.
+ DATA: IDMAT TYPE P DECIMALS 2.
+ DATA: IDNFE TYPE P DECIMALS 2.

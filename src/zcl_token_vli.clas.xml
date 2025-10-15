@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_TOKEN_VLI</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para Obter Token Acesso - Terminais VLI</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <MSG_ID>ZFERRO</MSG_ID>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Obtendo Token Autenticação VLI...</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_AUTH_WS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros p/ autenticação de webservices</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DADOS_DESCARGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de dados Descarga Ferroviária - Integração WS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DT_CHEGADA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Chegada</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SIGLA_TERMINAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sigla Terminal</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SRV_INTEGRACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Serviço de Integração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Consultar Descarga</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MONTA_CDATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Monta XML Descarga Srv 01</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_URL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Set URL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRATAR_CDATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tratar XML</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>HTTP_COMMUNICATION_FAILURE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Falha Comunicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>HTTP_INVALID_STATE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status Inválido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>HTTP_INVALID_TIMEOUT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>TimeOut</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>HTTP_PROCESSING_FAILED</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Falha no processamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>R_TOKEN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>ZCX_ENVIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro de Envio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_URL</CMPNAME>
+     <SCONAME>R_URL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Endereço URL fornecedor de conteúdo</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

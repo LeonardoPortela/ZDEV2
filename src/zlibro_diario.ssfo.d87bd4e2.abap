@@ -1,0 +1,24 @@
+
+WG_TOTAL_DEBITOS = WG_TOTAL_DEBITOS * 100.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

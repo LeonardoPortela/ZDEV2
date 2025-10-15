@@ -1,0 +1,506 @@
+*----------------------------------------------------------------------*
+***INCLUDE MZBALANCO_1015 .
+*----------------------------------------------------------------------*
+
+TABLES: ZGLT049.
+
+TYPES: BEGIN OF TY_ZGLT049C_ALV.
+TYPES:  CK_AGREGA TYPE XFELD,
+        KTEXT	    TYPE KTEXT.
+        INCLUDE STRUCTURE ZGLT049C.
+TYPES: END OF TY_ZGLT049C_ALV.
+
+TYPES: BEGIN OF TY_ZGLT049L_ALV.
+TYPES:  CK_AGREGA TYPE XFELD,
+        LTEXT	    TYPE LTEXT.
+        INCLUDE STRUCTURE ZGLT049L.
+TYPES: END OF TY_ZGLT049L_ALV.
+
+TYPES: BEGIN OF TY_ZGLT049M_ALV.
+TYPES:  CK_AGREGA TYPE XFELD,
+        WGBEZ60   TYPE WGBEZ60.
+        INCLUDE STRUCTURE ZGLT049M.
+TYPES: END OF TY_ZGLT049M_ALV.
+
+DATA: LC_BAL       TYPE ZFIED007,
+      LC_NOT       TYPE ZFIED010,
+      WA_ZGLT039   TYPE ZGLT039,
+      CK_PESQUISA  TYPE C LENGTH 1,
+      IT_041       TYPE TABLE OF ZGLT041 WITH HEADER LINE,
+      IT_1016_ALV  TYPE TABLE OF TY_ZGLT049C_ALV WITH HEADER LINE,
+      IT_1017_ALV  TYPE TABLE OF TY_ZGLT049L_ALV WITH HEADER LINE,
+      IT_1018_ALV  TYPE TABLE OF TY_ZGLT049M_ALV WITH HEADER LINE.
+
+DATA: CONTAINER_1016  TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      ALV_1016        TYPE REF TO CL_GUI_ALV_GRID,
+      CATALOGO_1016   TYPE LVC_T_FCAT,
+      CONTAINER_1017  TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      ALV_1017        TYPE REF TO CL_GUI_ALV_GRID,
+      CATALOGO_1017   TYPE LVC_T_FCAT,
+      CONTAINER_1018  TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      ALV_1018        TYPE REF TO CL_GUI_ALV_GRID,
+      CATALOGO_1018   TYPE LVC_T_FCAT.
+
+CONTROLS: TAB_1015 TYPE TABSTRIP,
+          TAB_1015_01 TYPE TABLEVIEW USING SCREEN TL_1016,
+          TAB_1015_02 TYPE TABLEVIEW USING SCREEN TL_1017,
+          TAB_1015_03 TYPE TABLEVIEW USING SCREEN TL_1018.
+
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_1015  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_1015 OUTPUT.
+
+  IF TL_1015_01 IS INITIAL.
+    TL_1015_01  = TL_1016.
+    CK_PESQUISA = ABAP_FALSE.
+    CLEAR: ZGLT049.
+    MOVE-CORRESPONDING IT_ZGLT049 TO ZGLT049.
+  ENDIF.
+
+  SET PF-STATUS 'PF1003'.
+  SET TITLEBAR 'TL1015'.
+
+  CLEAR: WA_ZGLT039, WA_ZGLT047_ALTERADO.
+
+  IF ZGLT049-NIVEL IS NOT INITIAL.
+    SELECT SINGLE * INTO WA_ZGLT047
+      FROM ZGLT047
+     WHERE VERSN EQ ZGLT049-VERSN
+       AND NIVEL EQ ZGLT049-NIVEL.
+  ENDIF.
+
+  IF ( ZGLT049-COD_CLAS_NOT IS NOT INITIAL ) AND
+     ( ZGLT049-COD_CLAS_BAL IS NOT INITIAL ).
+    SELECT SINGLE * INTO WA_ZGLT039
+      FROM ZGLT039
+     WHERE CODIGO   EQ ZGLT049-COD_CLAS_BAL
+       AND COD_NOTA EQ ZGLT049-COD_CLAS_NOT.
+
+    IF ( LC_BAL NE ZGLT049-COD_CLAS_BAL ) OR
+       ( LC_NOT NE ZGLT049-COD_CLAS_NOT ).
+
+      CLEAR: IT_041[].
+
+      SELECT * INTO TABLE IT_041
+        FROM ZGLT041
+       WHERE COD_CLAS_BAL  EQ ZGLT049-COD_CLAS_BAL
+         AND COD_CLAS_NOT2 EQ ZGLT049-COD_CLAS_NOT.
+
+      PERFORM PESQUISA_TIPO_CENTRO_CUSTO.
+      PERFORM PESQUISA_TIPO_CENTRO_LUCRO.
+      PERFORM PESQUISA_GRUPO_MERCADORIA.
+      LC_BAL = ZGLT049-COD_CLAS_BAL.
+      LC_NOT = ZGLT049-COD_CLAS_NOT.
+      CK_PESQUISA = ABAP_TRUE.
+    ENDIF.
+  ELSE.
+    CK_PESQUISA = ABAP_FALSE.
+  ENDIF.
+
+ENDMODULE.                 " STATUS_1015  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_1015_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_1015_EXIT INPUT.
+  CLEAR: IT_ZGLT049.
+  PERFORM LIMPAR_1015.
+  LEAVE TO SCREEN 0.
+ENDMODULE.                 " USER_COMMAND_1015_EXIT  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_1015  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_1015 INPUT.
+
+  DATA: CK_POS_MEIO(1),
+        CK_MARCA TYPE XFELD,
+        CK_VALIDA(1),
+        LC_POSICAO     TYPE ZDESQNIVEL,
+        IT_ZGLT049_AUX TYPE TABLE OF ZGLT049 WITH HEADER LINE,
+        WA_ZGLT049C    TYPE ZGLT049C,
+        WA_ZGLT049L    TYPE ZGLT049L,
+        WA_ZGLT049M    TYPE ZGLT049M.
+
+  CASE OK_CODE_1015.
+    WHEN OK_TAB01.
+      TL_1015_01 = TL_1016.
+      TAB_1015-ACTIVETAB = OK_TAB01.
+    WHEN OK_TAB02.
+      TL_1015_01 = TL_1017.
+      TAB_1015-ACTIVETAB = OK_TAB02.
+    WHEN OK_TAB03.
+      TL_1015_01 = TL_1018.
+      TAB_1015-ACTIVETAB = OK_TAB03.
+    WHEN OK_SELALL OR OK_DSELALL.
+
+      CLEAR: CK_MARCA.
+
+      IF OK_CODE_1015 = OK_SELALL.
+        CK_MARCA = ABAP_TRUE.
+      ENDIF.
+
+      CASE TL_1015_01.
+        WHEN TL_1016.
+          LOOP AT IT_1016_ALV WHERE CK_AGREGA NE CK_MARCA.
+            IT_1016_ALV-CK_AGREGA = CK_MARCA.
+            MODIFY IT_1016_ALV INDEX SY-TABIX TRANSPORTING CK_AGREGA.
+          ENDLOOP.
+        WHEN TL_1017.
+          LOOP AT IT_1017_ALV WHERE CK_AGREGA NE CK_MARCA.
+            IT_1017_ALV-CK_AGREGA = CK_MARCA.
+            MODIFY IT_1017_ALV INDEX SY-TABIX TRANSPORTING CK_AGREGA.
+          ENDLOOP.
+        WHEN TL_1018.
+          LOOP AT IT_1018_ALV WHERE CK_AGREGA NE CK_MARCA.
+            IT_1018_ALV-CK_AGREGA = CK_MARCA.
+            MODIFY IT_1018_ALV INDEX SY-TABIX TRANSPORTING CK_AGREGA.
+          ENDLOOP.
+      ENDCASE.
+    WHEN OK_CONF.
+
+      IF ( LC_BAL NE ZGLT049-COD_CLAS_BAL ) OR
+         ( LC_NOT NE ZGLT049-COD_CLAS_NOT ).
+        CK_PESQUISA = ABAP_FALSE.
+      ENDIF.
+
+      IF CK_PESQUISA EQ ABAP_TRUE.
+
+        PERFORM VERIFICA_NOTA_INFORMADA USING CK_VALIDA.
+
+        IF CK_VALIDA EQ ABAP_TRUE.
+
+*          SELECT * INTO TABLE IT_ZGLT049_AUX
+*            FROM ZGLT049
+*           WHERE VERSN EQ ZGLT049-VERSN
+*             AND NIVEL EQ ZGLT049-NIVEL
+*           ORDER BY SQNIVEL.
+*
+*          LC_POSICAO = 0.
+*          LOOP AT IT_ZGLT049_AUX.
+*
+*            ADD 1 TO LC_POSICAO.
+*
+*            IF LC_POSICAO EQ ZGLT049-SQNIVEL.
+*              ADD 1 TO LC_POSICAO.
+*              CK_POS_MEIO = ABAP_TRUE.
+*            ENDIF.
+*
+*            IT_ZGLT049_AUX-SQNIVEL = LC_POSICAO.
+*            MODIFY ZGLT049 FROM IT_ZGLT049_AUX.
+*
+*          ENDLOOP.
+*
+*          "Se não foi incluido no meio vai resceber a ultima posição da sequencia.
+*          IF CK_POS_MEIO EQ ABAP_FALSE.
+*            ADD 1 TO LC_POSICAO.
+*            ZGLT049-SQNIVEL = LC_POSICAO.
+*          ENDIF.
+*
+*          MOVE-CORRESPONDING ZGLT049 TO WA_ZGLT047_ALTERADO.
+*          MODIFY ZGLT049.
+
+          DELETE FROM ZGLT049C
+           WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+             AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+          DELETE FROM ZGLT049L
+           WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+             AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+          DELETE FROM ZGLT049M
+           WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+             AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+          LOOP AT IT_1016_ALV WHERE CK_AGREGA EQ ABAP_TRUE.
+            CLEAR WA_ZGLT049C.
+            MOVE-CORRESPONDING IT_1016_ALV TO WA_ZGLT049C.
+            MODIFY ZGLT049C FROM WA_ZGLT049C.
+          ENDLOOP.
+
+          LOOP AT IT_1017_ALV WHERE CK_AGREGA EQ ABAP_TRUE.
+            CLEAR WA_ZGLT049L.
+            MOVE-CORRESPONDING IT_1017_ALV TO WA_ZGLT049L.
+            MODIFY ZGLT049L FROM WA_ZGLT049L.
+          ENDLOOP.
+
+          LOOP AT IT_1018_ALV WHERE CK_AGREGA EQ ABAP_TRUE.
+            CLEAR WA_ZGLT049M.
+            MOVE-CORRESPONDING IT_1018_ALV TO WA_ZGLT049M.
+            MODIFY ZGLT049M FROM WA_ZGLT049M.
+          ENDLOOP.
+
+          COMMIT WORK.
+
+          PERFORM LIMPAR_1015.
+          LEAVE TO SCREEN 0.
+        ENDIF.
+      ENDIF.
+  ENDCASE.
+
+ENDMODULE.                 " USER_COMMAND_1015  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Form  PESQUISA_TIPO_CENTRO_CUSTO
+*&---------------------------------------------------------------------*
+*       Pesquisa Tipo de Centro de Custo Gravado/Informado na DRE
+*----------------------------------------------------------------------*
+FORM PESQUISA_TIPO_CENTRO_CUSTO.
+
+  DATA: IT_DRE      TYPE TABLE OF ZGL015_DRE_EST04 WITH HEADER LINE,
+        IT_TIPO     TYPE TABLE OF TKT05 WITH HEADER LINE,
+        IT_ZGLT049C TYPE TABLE OF ZGLT049C WITH HEADER LINE.
+
+  SELECT * INTO TABLE IT_ZGLT049C
+    FROM ZGLT049C
+   WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+     AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+  SORT IT_ZGLT049C BY KOSAR.
+
+  "Buscar Cadastros da DRE e Já informado.
+  SELECT * INTO TABLE IT_DRE
+    FROM ZGL015_DRE_EST04
+     FOR ALL ENTRIES IN IT_041
+   WHERE SAKNR EQ IT_041-SAKNR.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    "Informar sobre conta sem parâmetros de tipo de custo dentro da DRE
+  ELSE.
+    DELETE ADJACENT DUPLICATES FROM IT_DRE COMPARING KOSAR. "#EC CI_SORTED
+
+    SELECT * INTO TABLE IT_TIPO
+      FROM TKT05
+       FOR ALL ENTRIES IN IT_DRE
+     WHERE SPRAS EQ SY-LANGU
+       AND KOSAR EQ IT_DRE-KOSAR.
+
+    CLEAR: IT_1016_ALV[].
+
+    LOOP AT IT_TIPO.
+      READ TABLE IT_ZGLT049C WITH KEY KOSAR = IT_TIPO-KOSAR BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+        IT_1016_ALV-CK_AGREGA = ABAP_TRUE.
+      ELSE.
+        IT_1016_ALV-CK_AGREGA = ABAP_FALSE.
+      ENDIF.
+      IT_1016_ALV-KTEXT        = IT_TIPO-KTEXT.
+      IT_1016_ALV-COD_CLAS_BAL = ZGLT049-COD_CLAS_BAL.
+      IT_1016_ALV-COD_CLAS_NOT = ZGLT049-COD_CLAS_NOT.
+      IT_1016_ALV-KOSAR        = IT_TIPO-KOSAR.
+      APPEND IT_1016_ALV.
+    ENDLOOP.
+
+  ENDIF.
+
+ENDFORM.                    " PESQUISA_TIPO_CENTRO_CUSTO
+
+*&---------------------------------------------------------------------*
+*&      Form  PESQUISA_TIPO_CENTRO_LUCRO
+*&---------------------------------------------------------------------*
+*       Pesquisa Centro de Lucro Gravado/Informado na DRE
+*----------------------------------------------------------------------*
+FORM PESQUISA_TIPO_CENTRO_LUCRO .
+
+  DATA: IT_DRE  TYPE TABLE OF ZGL015_DRE_EST05 WITH HEADER LINE,
+        IT_TIPO TYPE TABLE OF CEPCT WITH HEADER LINE,
+        IT_ZGLT049L TYPE TABLE OF ZGLT049L WITH HEADER LINE.
+
+  SELECT * INTO TABLE IT_ZGLT049L
+    FROM ZGLT049L
+   WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+     AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+  SORT IT_ZGLT049L BY KOKRS PRCTR.
+
+  "Buscar Cadastros da DRE e Já informado.
+  SELECT * INTO TABLE IT_DRE
+    FROM ZGL015_DRE_EST05
+     FOR ALL ENTRIES IN IT_041
+   WHERE SAKNR EQ IT_041-SAKNR.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    "Informar sobre conta sem parâmetros de tipo de custo dentro da DRE
+  ELSE.
+    DELETE ADJACENT DUPLICATES FROM IT_DRE COMPARING KOKRS PRCTR. "#EC CI_SORTED
+
+    SELECT * INTO TABLE IT_TIPO
+      FROM CEPCT
+       FOR ALL ENTRIES IN IT_DRE
+     WHERE SPRAS EQ SY-LANGU
+       AND KOKRS EQ IT_DRE-KOKRS
+       AND PRCTR EQ IT_DRE-PRCTR.
+
+    CLEAR: IT_1017_ALV[].
+
+    LOOP AT IT_DRE.
+      READ TABLE IT_ZGLT049L WITH KEY KOKRS = IT_DRE-KOKRS
+                                      PRCTR = IT_DRE-PRCTR
+                                      BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+        IT_1017_ALV-CK_AGREGA = ABAP_TRUE.
+      ELSE.
+        IT_1017_ALV-CK_AGREGA = ABAP_FALSE.
+      ENDIF.
+
+      READ TABLE IT_TIPO WITH KEY KOKRS = IT_DRE-KOKRS
+                                  PRCTR = IT_DRE-PRCTR.
+      IF SY-SUBRC IS INITIAL.
+        IT_1017_ALV-LTEXT = IT_TIPO-LTEXT.
+      ELSE.
+        CLEAR: IT_1017_ALV-LTEXT.
+      ENDIF.
+
+      IT_1017_ALV-COD_CLAS_BAL = ZGLT049-COD_CLAS_BAL.
+      IT_1017_ALV-COD_CLAS_NOT = ZGLT049-COD_CLAS_NOT.
+      IT_1017_ALV-KOKRS        = IT_DRE-KOKRS.
+      IT_1017_ALV-PRCTR        = IT_DRE-PRCTR.
+      APPEND IT_1017_ALV.
+    ENDLOOP.
+
+  ENDIF.
+
+ENDFORM.                    " PESQUISA_TIPO_CENTRO_LUCRO
+
+*&---------------------------------------------------------------------*
+*&      Form  PESQUISA_GRUPO_MERCADORIA
+*&---------------------------------------------------------------------*
+*       Pesquisa Grupo de Mercadoria Gravado/Informado na DRE
+*----------------------------------------------------------------------*
+FORM PESQUISA_GRUPO_MERCADORIA .
+
+  DATA: IT_DRE  TYPE TABLE OF ZGL015_DRE_EST06 WITH HEADER LINE,
+        IT_TIPO TYPE TABLE OF T023T WITH HEADER LINE,
+        IT_ZGLT049M TYPE TABLE OF ZGLT049M WITH HEADER LINE.
+
+  SELECT * INTO TABLE IT_ZGLT049M
+    FROM ZGLT049M
+   WHERE COD_CLAS_BAL EQ ZGLT049-COD_CLAS_BAL
+     AND COD_CLAS_NOT EQ ZGLT049-COD_CLAS_NOT.
+
+  SORT IT_ZGLT049M BY MATKL.
+
+  "Buscar Cadastros da DRE e Já informado.
+  SELECT * INTO TABLE IT_DRE
+    FROM ZGL015_DRE_EST06
+     FOR ALL ENTRIES IN IT_041
+   WHERE SAKNR EQ IT_041-SAKNR.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    "Informar sobre conta sem parâmetros de tipo de custo dentro da DRE
+  ELSE.
+    DELETE ADJACENT DUPLICATES FROM IT_DRE COMPARING MATKL. "#EC CI_SORTED
+
+    SELECT * INTO TABLE IT_TIPO
+      FROM T023T
+       FOR ALL ENTRIES IN IT_DRE
+     WHERE SPRAS EQ SY-LANGU
+       AND MATKL EQ IT_DRE-MATKL.
+
+    CLEAR: IT_1018_ALV[].
+
+    LOOP AT IT_TIPO.
+      READ TABLE IT_ZGLT049M WITH KEY MATKL = IT_TIPO-MATKL BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+        IT_1018_ALV-CK_AGREGA = ABAP_TRUE.
+      ELSE.
+        IT_1018_ALV-CK_AGREGA = ABAP_FALSE.
+      ENDIF.
+      IT_1018_ALV-WGBEZ60      = IT_TIPO-WGBEZ60.
+      IT_1018_ALV-COD_CLAS_BAL = ZGLT049-COD_CLAS_BAL.
+      IT_1018_ALV-COD_CLAS_NOT = ZGLT049-COD_CLAS_NOT.
+      IT_1018_ALV-MATKL        = IT_TIPO-MATKL.
+      APPEND IT_1018_ALV.
+    ENDLOOP.
+
+  ENDIF.
+
+ENDFORM.                    " PESQUISA_GRUPO_MERCADORIA
+
+*&---------------------------------------------------------------------*
+*&      Form  LIMPAR_1015
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM LIMPAR_1015 .
+
+  CLEAR: TL_1015_01,
+         ZGLT049,
+         LC_BAL,
+         LC_NOT,
+         WA_ZGLT039,
+         IT_041[],
+         IT_1016_ALV[],
+         IT_1017_ALV[],
+         IT_1018_ALV[],
+         CATALOGO_1016,
+         CATALOGO_1017,
+         CATALOGO_1018.
+
+   TAB_1015-ACTIVETAB = OK_TAB01.
+
+   IF ALV_1016 IS NOT INITIAL.
+     CALL METHOD ALV_1016->FREE.
+   ENDIF.
+
+   IF ALV_1017 IS NOT INITIAL.
+     CALL METHOD ALV_1017->FREE.
+   ENDIF.
+
+   IF ALV_1018 IS NOT INITIAL.
+     CALL METHOD ALV_1018->FREE.
+   ENDIF.
+
+   IF CONTAINER_1016 IS NOT INITIAL.
+     CALL METHOD CONTAINER_1016->FREE.
+   ENDIF.
+
+   IF CONTAINER_1017 IS NOT INITIAL.
+     CALL METHOD CONTAINER_1017->FREE.
+   ENDIF.
+
+   IF CONTAINER_1018 IS NOT INITIAL.
+     CALL METHOD CONTAINER_1018->FREE.
+   ENDIF.
+
+   CLEAR: CONTAINER_1016,
+          CONTAINER_1017,
+          CONTAINER_1018,
+          ALV_1016,
+          ALV_1017,
+          ALV_1018.
+
+ENDFORM.                    " LIMPAR_1015
+
+*&---------------------------------------------------------------------*
+*&      Form  VERIFICA_NOTA_INFORMADA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM VERIFICA_NOTA_INFORMADA USING CK_VALIDA.
+
+  DATA: WA_39 TYPE ZGLT039.
+
+  CK_VALIDA = ABAP_TRUE.
+
+  SELECT SINGLE * INTO WA_39
+    FROM ZGLT039
+   WHERE CODIGO   EQ ZGLT049-COD_CLAS_BAL
+     AND COD_NOTA EQ ZGLT049-COD_CLAS_NOT.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    CK_VALIDA = ABAP_FALSE.
+    MESSAGE S014 WITH ZGLT049-COD_CLAS_BAL ZGLT049-COD_CLAS_NOT DISPLAY LIKE 'E'.
+  ENDIF.
+
+ENDFORM.                    " VERIFICA_NOTA_INFORMADA

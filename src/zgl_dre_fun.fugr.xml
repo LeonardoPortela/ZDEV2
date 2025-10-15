@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Funções para DRE</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGL_DRE_FUNTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGL_DRE_FUN</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZCONVERTE_NIVEL_MASK</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>NVL_IMPUT</PARAMETER>
+       <DBFIELD>ZGL002_DRE_EST-NIVEL</DBFIELD>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>NVL_OUTPUT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZORDNV</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>NVL_IMPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NVL_OUTPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

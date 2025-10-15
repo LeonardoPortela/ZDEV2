@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SHLP" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD30V>
+    <SHLPNAME>ZIM_COD_GRUPO</SHLPNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <DDTEXT>Ajusta de pesquisa Código grupo</DDTEXT>
+    <ISSIMPLE>X</ISSIMPLE>
+    <SELMETHOD>ZIM010</SELMETHOD>
+    <SELMTYPE>T</SELMTYPE>
+    <DIALOGTYPE>D</DIALOGTYPE>
+   </DD30V>
+   <DD32P_TABLE>
+    <DD32P>
+     <SHLPNAME>ZIM_COD_GRUPO</SHLPNAME>
+     <FIELDNAME>COD_GPO</FIELDNAME>
+     <FLPOSITION>0001</FLPOSITION>
+     <ROLLNAME>ZCOD_GPO</ROLLNAME>
+     <SHLPINPUT>X</SHLPINPUT>
+     <SHLPOUTPUT>X</SHLPOUTPUT>
+     <SHLPSELPOS>01</SHLPSELPOS>
+     <SHLPLISPOS>01</SHLPLISPOS>
+     <SCRLEN3>23</SCRLEN3>
+    </DD32P>
+    <DD32P>
+     <SHLPNAME>ZIM_COD_GRUPO</SHLPNAME>
+     <FIELDNAME>DESCR_GRUPO</FIELDNAME>
+     <FLPOSITION>0002</FLPOSITION>
+     <ROLLNAME>ZDESCR_GRUPO</ROLLNAME>
+     <SHLPINPUT>X</SHLPINPUT>
+     <SHLPOUTPUT>X</SHLPOUTPUT>
+     <SHLPSELPOS>02</SHLPSELPOS>
+     <SHLPLISPOS>02</SHLPLISPOS>
+     <SCRLEN3>20</SCRLEN3>
+    </DD32P>
+   </DD32P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

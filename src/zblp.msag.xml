@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZBLP</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Balanço Patrimonial / DRE DFs</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Versão de Estrutura &amp;1 do Balanço Patrimonial já existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Selecione um Nó da Estrutura para Incluir</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Nível &amp;1 já existe na estrutura &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Selecione um Nível da Estrutura &amp;1 p/ Alterar!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Item Selecionado não é um Nível de Estrutura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Nível &amp;1 da Versão &amp;2 excluido com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Somatório &amp;1 do Nível &amp;2 da Versão &amp;3 excluido com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Nota de Classificação &amp;1 excluida do Nível &amp;2 &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Conta do Razão Sem Código de reconciliação (A,D,K,V)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Selecione uma Estrutura para Carregar Níveis!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Selecione uma Estrutura para Excluir!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Estrutura para Excluida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Estrutura &amp;1 não compatível com Demonstrativo Selecionado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Código &amp;1 e Nota de Classidicação &amp;2 não existem.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Estrutura para Este tipo de Demonstrativo não Cadastrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Deve ser informado uma Estrutura p/ Demonstrativo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Moeda &amp;1 não prevista para empresa &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Empresa &amp;1 não cadastrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Empresa &amp;1 não prevista consiliação com empresa &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Para demonstrativo consolidado deve ser informado a Empresa Parceira!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Deve ser Informado uma Estrutura de DRE para Fechamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Deve ser Informado uma Estrutura de DRE para Comparativo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Deve ser Informado uma Estrutura de DRE para Fechamento! (Consolidado)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Deve ser Informado uma Estrutura de DRE para Comparativo! (Consolidado)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Estrutura de DRE &amp;1 não é da empresa &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBLP</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Para comparação deverá ser informado Mês e Ano de comparação.</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

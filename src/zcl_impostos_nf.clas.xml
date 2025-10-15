@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_IMPOSTOS_NF</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Impostos</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_J_1BAA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria de Nota Fiscal</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_LEIS_FISCAIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_NFTYPE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ctg.de nota fiscal</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PARID</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação do parceiro (cliente, fornecedor, loc.negócio)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PARVW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nota fiscal função parceiro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SHIPFROM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Região (estado federado, província, county)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SHIPTO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Região (estado federado, província, county)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_T_IMPOSTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_WERKS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Calculo dos Impostos da NF</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_31</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_43</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_71</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_72</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_76</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_AG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_BR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_D</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_F</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CT_LF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_COFINS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Base impostos COFINS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_ICMS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Base impostos ICMS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_IPI</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Base impostos IPI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_PIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Base impostos PIS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LEIS_FISCAIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Obter Leis Fiscais</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Define Origem/Destino busca impostos</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <SCONAME>E_IMPOSTOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <SCONAME>E_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <SCONAME>I_CHAVE_NFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Documento Fiscal Eletrônico</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <SCONAME>I_HEADER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULA_IMPOSTOS_BONIFICACAO</CMPNAME>
+     <SCONAME>I_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas individuais da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_COFINS</CMPNAME>
+     <SCONAME>E_CALC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_COFINS</CMPNAME>
+     <SCONAME>I_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas individuais da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_COFINS</CMPNAME>
+     <SCONAME>I_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_ICMS</CMPNAME>
+     <SCONAME>E_CALC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_ICMS</CMPNAME>
+     <SCONAME>I_HEADER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cabeçalho da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_ICMS</CMPNAME>
+     <SCONAME>I_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas individuais da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_ICMS</CMPNAME>
+     <SCONAME>I_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_IPI</CMPNAME>
+     <SCONAME>E_CALC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_IPI</CMPNAME>
+     <SCONAME>I_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas individuais da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_IPI</CMPNAME>
+     <SCONAME>I_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_PIS</CMPNAME>
+     <SCONAME>E_CALC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Lançamentos Fiscais NF.WRITER Impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_PIS</CMPNAME>
+     <SCONAME>I_ITENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Partidas individuais da nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BASE_IMPOSTO_PIS</CMPNAME>
+     <SCONAME>I_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LEIS_FISCAIS</CMPNAME>
+     <SCONAME>I_CHAVE_NFE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Documento Fiscal Eletrônico</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LEIS_FISCAIS</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LEIS_FISCAIS</CMPNAME>
+     <SCONAME>R_LEIS_FISCAIS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Determinação de CFOP e Leis Fiscais em Pedidos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LEIS_FISCAIS</CMPNAME>
+     <SCONAME>ZCX_NFE_INBOUND_EXCEPTION</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de NF-e Inbound</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>E_INDCOPER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Indicador se é dentro ou fora do estado.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>E_SHIPFROM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Região (estado federado, província, county)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>E_SHIPTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Região (estado federado, província, county)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>I_NFTYPE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ctg.de nota fiscal</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>I_PARID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação do parceiro (cliente, fornecedor, loc.negócio)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>I_PARVW</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nota fiscal função parceiro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DEFINE_ORIGEM_DESTINO</CMPNAME>
+     <SCONAME>I_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

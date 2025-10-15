@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Def - Aprovação Pedidos'
+define service ZUI_APP_APROV_PEDIDOS {
+  expose ZC_APROV_PEDIDOS as Pedidos;
+  expose zc_aprov_pedidos_item as Item;
+  expose ZC_APROV_PEDI_ESTR as Estra;
+}

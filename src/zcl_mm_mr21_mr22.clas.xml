@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MM_MR21_MR22</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Registro de modificação de preço em massa</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ON_USER_COMMAND</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ON_USER_COMMAND</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RB_MR21</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RB_MR22</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DADOS_SHDB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Setar Empresa, data, referencia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>S_BDCDATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Batch input nova estrutura do campo de tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>T_BDCDATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ctg.tabela p/BDCDATA</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>T_MSG_AUX</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de mensagens na transação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>T_ROWS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Linhas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>V_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>V_DATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>V_REF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de referência</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IB_MR21</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IB_MR22</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IV_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IV_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IV_REF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_FIELD</CMPNAME>
+     <SCONAME>IV_FNAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do campo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_FIELD</CMPNAME>
+     <SCONAME>IV_FVALUE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do campo BDC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_OKCODE</CMPNAME>
+     <SCONAME>IV_OKCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do campo BDC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXCHANGE_RATE</CMPNAME>
+     <SCONAME>RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Montante débito/crédito do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_COLUMNS_TECHNICAL</CMPNAME>
+     <SCONAME>IR_COLUMNS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>SAP List Viewer: elemento de dados para constantes</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_SHDB</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_SHDB</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DADOS_SHDB</CMPNAME>
+     <SCONAME>I_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº documento de referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ENABLED_CELLS</CMPNAME>
+     <SCONAME>IV_ENABLED</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>variável booleana (X=verdade, -=falso, espaço=desconhecido)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>START_DYNPRO</CMPNAME>
+     <SCONAME>IV_DYNPRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>NÚmero de tela BDC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>START_DYNPRO</CMPNAME>
+     <SCONAME>IV_PROG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Pool de módulos BDC</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

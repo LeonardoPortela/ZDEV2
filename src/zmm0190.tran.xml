@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZMM0190</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZMM0190</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZMM0190</TCODE>
+    <TTEXT>Cad. Características Classificação</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZMM0190</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZSDT0001RSW;P_STCNAM=ZSDT0001RSW_OUT;P_SCMANT=0132;P_TITLE=Cargas(Romaneios) - Classificação - Resultado;P_DB_01=ZSDT0001RS_03W;P_STC_01=ZSDT0001RS_03W_OUT;P_SC_01=0133;P_TI_01=Cargas(Romaneios) - Classif - Result - Avariado;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

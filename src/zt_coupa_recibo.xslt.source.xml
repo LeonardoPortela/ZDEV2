@@ -1,0 +1,22 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="INVENTORY_TRANSACTION" type="ddic:ZCOUPA_RECIBO"/>
+  <tt:template>
+    <inventory-transaction>
+      <quantity tt:value-ref=".INVENTORY_TRANSACTION.QUANTITY"/>
+      <type tt:value-ref=".INVENTORY_TRANSACTION.TYPE"/>
+      <transaction-date tt:value-ref=".INVENTORY_TRANSACTION.TRANSACTION_DATE"/>
+      <total tt:value-ref=".INVENTORY_TRANSACTION.TOTAL"/>
+      <status tt:value-ref=".INVENTORY_TRANSACTION.STATUS"/>
+      <exported tt:value-ref=".INVENTORY_TRANSACTION.EXPORTED"/>
+      <order-line>
+        <id tt:value-ref=".INVENTORY_TRANSACTION.ORDER_LINE.ID"/>
+        <order-header-id tt:value-ref=".INVENTORY_TRANSACTION.ORDER_LINE.ORDER_HEADER_ID"/>
+      </order-line>
+      <custom-fields>
+        <id-sap tt:value-ref=".INVENTORY_TRANSACTION.CUSTOM_FIELDS.ID_SAP"/>
+      </custom-fields>
+    </inventory-transaction>
+  </tt:template>
+</tt:transform>

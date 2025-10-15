@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_REMESSA_ARMAZENAGEM</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para Geração de Remessa de Armazenagem</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ESTORNAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>R_ESTORNADO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_REMESSA_COM_PESAGEM_OPUS</CMPNAME>
+     <SCONAME>I_CH_REF_ROMANEIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_REMESSA_COM_PESAGEM_OPUS</CMPNAME>
+     <SCONAME>I_LIFNR_SP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_REMESSA_COM_PESAGEM_OPUS</CMPNAME>
+     <SCONAME>R_DELIVERY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Fornecimento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>E_MBLNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do documento do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>E_MJAHR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ano do documento do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>I_CH_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave de Referência</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GERAR_SAIDA_ESTOQUE</CMPNAME>
+     <SCONAME>R_GEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

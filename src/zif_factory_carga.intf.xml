@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_FACTORY_CARGA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Gera Classe de Entrada de Grão</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_FACTORY_CARGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Classe de Entrada de Grão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RECEBE_ALGODAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recebimento Entrada FOB Algodão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RECEBE_GRANEL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recebimento Entrada FOB Granel</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RECEBE_GRANEL_SAIDA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saída Entrada FOB Granel</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SAIDA_OPUS_VIEW</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Saída OPUS, Somente Visualização</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FACTORY_OBJETO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna Objeto Factory</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria Instancia da Classe Singleton</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Objeto</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_FACTORY_OBJETO_ID</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Objeto</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>R_CARGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para Carga</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FACTORY_OBJETO_NAME</CMPNAME>
+     <SCONAME>R_FACTORY_CARGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Gera Classe de Entrada de Grão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>I_TP_CARGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Carga</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>I_TP_PRODUTO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Material da Carga</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO_ID</CMPNAME>
+     <SCONAME>I_ID_CARGA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id. da Carga.</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,532 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZJOB0003_0100.
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0100 OUTPUT.
+
+  DATA: URL(255)                TYPE C,
+        P_TEXT                  TYPE SDYDO_TEXT_ELEMENT,
+        SDYDO_TEXT_ELEMENT(255),
+        P_TEXT_TABLE            TYPE SDYDO_TEXT_TABLE,
+        VL_CONT                 TYPE I,
+        VL_GTEXT                TYPE TGSBT-GTEXT,
+        VL_LANDX                TYPE T005T-LANDX.
+
+  SET PF-STATUS 'PF0100'.
+  SET TITLEBAR 'TL0100'.
+
+
+  IF G_CUSTOM_CONTAINER IS INITIAL.
+
+    CREATE OBJECT G_CUSTOM_CONTAINER
+      EXPORTING
+        CONTAINER_NAME              = 'CONTAINER0100'
+      EXCEPTIONS
+        CNTL_ERROR                  = 1
+        CNTL_SYSTEM_ERROR           = 2
+        CREATE_ERROR                = 3
+        LIFETIME_ERROR              = 4
+        LIFETIME_DYNPRO_DYNPRO_LINK = 5.
+
+    IF SY-SUBRC <> 0.
+      MESSAGE A000(TREE_CONTROL_MSG).
+    ENDIF.
+
+    "--- Containers
+
+    CREATE OBJECT DG_SPLITTER_1
+      EXPORTING
+        PARENT  = G_CUSTOM_CONTAINER
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_1.
+
+    CALL METHOD DG_SPLITTER_1->GET_CONTAINER
+      EXPORTING
+        ROW       = 2
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_ALV.
+
+    CREATE OBJECT DG_SPLITTER_2
+      EXPORTING
+        PARENT  = DG_PARENT_1
+        ROWS    = 1
+        COLUMNS = 2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = DG_PARENT_2.
+
+    CALL METHOD DG_SPLITTER_2->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 2
+      RECEIVING
+        CONTAINER = DG_PARENT_2A.
+
+    CALL METHOD DG_SPLITTER_1->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 13.
+
+    CALL METHOD DG_SPLITTER_2->SET_COLUMN_WIDTH
+      EXPORTING
+        ID    = 1
+        WIDTH = 40.
+
+    CREATE OBJECT PICTURE
+      EXPORTING
+        PARENT = DG_PARENT_2A.
+
+    PERFORM F_PEGA_IMAGEM USING 'LOGO_NOVO' CHANGING URL.
+
+    CALL METHOD PICTURE->LOAD_PICTURE_FROM_URL
+      EXPORTING
+        URL = URL.
+
+    CALL METHOD PICTURE->SET_DISPLAY_MODE
+      EXPORTING
+        DISPLAY_MODE = PICTURE->DISPLAY_MODE_FIT_CENTER.
+
+
+    GS_LAYOUT-CWIDTH_OPT = 'X'.
+    GS_LAYOUT-SEL_MODE   = 'A'.
+
+    PERFORM FILL_IT_FIELDCATALOG.
+    PERFORM FILL_GS_VARIANT.
+
+    CREATE OBJECT CTL_ALV
+      EXPORTING
+        I_PARENT = DG_PARENT_ALV.
+
+    CALL METHOD CTL_ALV->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT       = GS_LAYOUT
+        IS_VARIANT      = GS_VARIANT
+        I_SAVE          = 'A'
+      CHANGING
+        IT_FIELDCATALOG = IT_FIELDCATALOG
+        IT_OUTTAB       = IT_SAIDA[].
+
+    CREATE OBJECT EVENT_HANDLER.
+    SET HANDLER EVENT_HANDLER->HANDLE_HOTSPOT_CLICK FOR CTL_ALV.
+    SET HANDLER EVENT_HANDLER->HANDLE_DOUBLE_CLICK  FOR CTL_ALV.
+
+    CREATE OBJECT DG_DYNDOC_ID
+      EXPORTING
+        STYLE = 'ALV_GRID'.
+
+    CALL METHOD DG_DYNDOC_ID->INITIALIZE_DOCUMENT.
+
+    CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+      EXPORTING
+        NO_OF_COLUMNS = 1
+        BORDER        = '0'
+        WIDTH         = '100%'
+      IMPORTING
+        TABLE         = TABLE_ELEMENT.
+
+    CALL METHOD TABLE_ELEMENT->ADD_COLUMN
+      IMPORTING
+        COLUMN = COLUMN.
+
+    CALL METHOD TABLE_ELEMENT->SET_COLUMN_STYLE
+      EXPORTING
+        COL_NO    = 1
+        "SAP_ALIGN = 'CENTER'
+        SAP_STYLE = CL_DD_DOCUMENT=>HEADING.
+
+    P_TEXT = TEXT-016.
+
+    CALL METHOD COLUMN->ADD_TEXT
+      EXPORTING
+        TEXT      = P_TEXT
+        SAP_STYLE = 'HEADING'.
+
+    CALL METHOD DG_DYNDOC_ID->ADD_TABLE
+      EXPORTING
+        NO_OF_COLUMNS = 2
+        BORDER        = '0'
+        WIDTH         = '100%'
+      IMPORTING
+        TABLE         = TABLE_ELEMENT2.
+
+    CALL METHOD TABLE_ELEMENT2->ADD_COLUMN
+      EXPORTING
+        SAP_STYLE   = 'SAP_BOLD'
+        STYLE_CLASS = 'SAP_BOLD'
+      IMPORTING
+        COLUMN      = COLUMN_1.
+
+    CLEAR: P_TEXT_TABLE.
+
+*003  Data Cancelamento
+*SELECT-OPTIONS: PDTCANC  FOR TBTCO-ENDDATE      NO-EXTENSION,
+    "---cabeçalho
+    IF PDTCANC IS NOT INITIAL.
+      LOOP AT PDTCANC.
+        IF PDTCANC-OPTION NE 'EQ' AND PDTCANC-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-003.
+          EXIT.
+        ELSEIF PDTCANC-OPTION EQ 'BT'.
+          CONCATENATE TEXT-003 PDTCANC-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PDTCANC-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-003 PDTCANC-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-003.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+*005  Nome JOB
+*                PNOMEJO  FOR TBTCO-JOBNAME      NO-EXTENSION,
+    IF PNOMEJO IS NOT INITIAL.
+      LOOP AT PNOMEJO.
+        IF PNOMEJO-OPTION NE 'EQ' AND PNOMEJO-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-005.
+          EXIT.
+        ELSEIF PNOMEJO-OPTION EQ 'BT'.
+          CONCATENATE TEXT-005 PNOMEJO-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PNOMEJO-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-005 PNOMEJO-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-005.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+*006  Programa
+*                PPROGRA  FOR TBTCP-PROGNAME     NO-EXTENSION,
+    IF PPROGRA IS NOT INITIAL.
+      LOOP AT PPROGRA.
+        IF PPROGRA-OPTION NE 'EQ' AND PPROGRA-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-006.
+          EXIT.
+        ELSEIF PPROGRA-OPTION EQ 'BT'.
+          CONCATENATE TEXT-006 PPROGRA-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PPROGRA-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-006 PPROGRA-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-006.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+*001  Analista Respnsavel
+*                PANALIS  FOR ZJOB0001-ANAL_RESP NO-EXTENSION,
+    IF PANALIS IS NOT INITIAL.
+      LOOP AT PANALIS.
+        IF PANALIS-OPTION NE 'EQ' AND PANALIS-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-001.
+          EXIT.
+        ELSEIF PANALIS-OPTION EQ 'BT'.
+          CONCATENATE TEXT-001 PANALIS-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PANALIS-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-001 PANALIS-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-001.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+*004  Modulo SAP
+*                PMODULO  FOR ZJOB0001-MOD_SAP   NO-EXTENSION,
+    IF PMODULO IS NOT INITIAL.
+      LOOP AT PMODULO.
+        IF PMODULO-OPTION NE 'EQ' AND PMODULO-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-004.
+          EXIT.
+        ELSEIF PMODULO-OPTION EQ 'BT'.
+          CONCATENATE TEXT-004 PMODULO-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PMODULO-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-004 PMODULO-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-004.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+*002  Area Responsavel
+*                PAREARE  FOR ZJOB0001-AREA_RESP NO-EXTENSION.
+    IF PAREARE IS NOT INITIAL.
+      LOOP AT PAREARE.
+        IF PAREARE-OPTION NE 'EQ' AND PAREARE-OPTION NE 'BT'.
+          SDYDO_TEXT_ELEMENT = TEXT-002.
+          EXIT.
+        ELSEIF PAREARE-OPTION EQ 'BT'.
+          CONCATENATE TEXT-002 PAREARE-LOW '-' INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+          CONCATENATE SDYDO_TEXT_ELEMENT PAREARE-HIGH INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ELSE.
+          CONCATENATE TEXT-002 PAREARE-LOW INTO SDYDO_TEXT_ELEMENT SEPARATED BY SPACE.
+        ENDIF.
+      ENDLOOP.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ELSE.
+      SDYDO_TEXT_ELEMENT = TEXT-002.
+      APPEND SDYDO_TEXT_ELEMENT TO P_TEXT_TABLE.
+      CLEAR: SDYDO_TEXT_ELEMENT.
+    ENDIF.
+
+    "------------------
+
+    CALL METHOD COLUMN_1->ADD_TEXT
+      EXPORTING
+        TEXT_TABLE = P_TEXT_TABLE
+        FIX_LINES  = 'X'.
+
+    CALL METHOD DG_DYNDOC_ID->MERGE_DOCUMENT.
+
+    CREATE OBJECT DG_HTML_CNTRL
+      EXPORTING
+        PARENT = DG_PARENT_2.
+
+    DG_DYNDOC_ID->HTML_CONTROL = DG_HTML_CNTRL.
+
+    CALL METHOD DG_DYNDOC_ID->DISPLAY_DOCUMENT
+      EXPORTING
+        REUSE_CONTROL      = 'X'
+        PARENT             = DG_PARENT_2
+      EXCEPTIONS
+        HTML_DISPLAY_ERROR = 1.
+  ELSE.
+    CALL METHOD CTL_ALV->REFRESH_TABLE_DISPLAY.
+  ENDIF.
+
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100_EXIT INPUT.
+  LEAVE TO SCREEN 0.
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100 INPUT.
+
+  CASE SY-UCOMM.
+    WHEN 'JUSTIFICAR'.
+
+      VG_ACAO = SY-UCOMM.
+
+      IF CTL_ALV IS NOT INITIAL.
+        CALL METHOD CTL_ALV->GET_SELECTED_ROWS
+          IMPORTING
+            ET_INDEX_ROWS = TG_SELECTED_ROWS.
+      ENDIF.
+
+      FREE: IT_JUSTIFICA.
+
+      LOOP AT TG_SELECTED_ROWS INTO WG_SELECTED_ROWS WHERE INDEX IS NOT INITIAL.
+
+        READ TABLE IT_SAIDA INTO WA_SAIDA INDEX WG_SELECTED_ROWS-INDEX.
+
+          WA_SAIDA_INDEX-SAIDA_ID = SY-TABIX.
+          WA_SAIDA_INDEX-SAIDA_INDEX = WG_SELECTED_ROWS-INDEX.
+
+          APPEND WA_SAIDA_INDEX TO IT_SAIDA_INDEX.
+
+          IF WA_SAIDA-ICO_JUSTIFICADO EQ 'ICON_RELEASE'.
+            MESSAGE 'Job selecionado já foi justificado!' TYPE 'I'.
+            EXIT.
+          ELSE.
+            APPEND WA_SAIDA TO IT_JUSTIFICA.
+          ENDIF.
+
+      ENDLOOP.
+
+      FREE: TL_TLINES.
+      PERFORM JUSTIFICAR_CANCELAMENTO_BTN.
+      PERFORM ATUALIZA_TELA.
+      CALL SCREEN 0100.
+
+    WHEN ''.
+    WHEN OTHERS.
+  ENDCASE.
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*&      Form  F_PEGA_IMAGEM
+*&---------------------------------------------------------------------*
+FORM F_PEGA_IMAGEM  USING    NOME_LOGO
+                    CHANGING URL.
+
+  DATA: BEGIN OF GRAPHIC_TABLE OCCURS 0,
+          LINE(255) TYPE X,
+        END OF GRAPHIC_TABLE.
+
+  DATA: L_GRAPHIC_XSTR TYPE XSTRING.
+  DATA: GRAPHIC_SIZE   TYPE I.
+  DATA: L_GRAPHIC_CONV TYPE I.
+  DATA: L_GRAPHIC_OFFS TYPE I.
+
+  REFRESH GRAPHIC_TABLE.
+
+  CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+    EXPORTING
+      P_OBJECT = 'GRAPHICS'
+      P_NAME   = NOME_LOGO
+      P_ID     = 'BMAP'
+      P_BTYPE  = 'BCOL'
+    RECEIVING
+      P_BMP    = L_GRAPHIC_XSTR.
+
+  GRAPHIC_SIZE = XSTRLEN( L_GRAPHIC_XSTR ).
+  L_GRAPHIC_CONV = GRAPHIC_SIZE.
+  L_GRAPHIC_OFFS = 0.
+
+  WHILE L_GRAPHIC_CONV > 255.
+    GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(255).
+    APPEND GRAPHIC_TABLE.
+    L_GRAPHIC_OFFS = L_GRAPHIC_OFFS + 255.
+    L_GRAPHIC_CONV = L_GRAPHIC_CONV - 255.
+  ENDWHILE.
+
+  GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(L_GRAPHIC_CONV).
+  APPEND GRAPHIC_TABLE.
+
+  CALL FUNCTION 'DP_CREATE_URL'
+    EXPORTING
+      TYPE     = 'IMAGE'
+      SUBTYPE  = 'X-UNKNOWN'
+      SIZE     = GRAPHIC_SIZE
+      LIFETIME = 'T'
+    TABLES
+      DATA     = GRAPHIC_TABLE
+    CHANGING
+      URL      = URL.
+
+ENDFORM.                    " F_PEGA_IMAGEM
+
+*&---------------------------------------------------------------------*
+*&      Form  FILL_IT_FIELDCATALOG
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM FILL_IT_FIELDCATALOG.
+
+  DATA: I_CONTADOR_2 TYPE LVC_COLPOS.
+
+  CLEAR: IT_FIELDCATALOG[], IT_FIELDCATALOG.
+
+  CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+    EXPORTING
+      I_STRUCTURE_NAME = 'ZDE_ZJOB0002_ALV'
+    CHANGING
+      CT_FIELDCAT      = IT_FIELDCATALOG.
+
+  I_CONTADOR_2 = 2.
+
+  LOOP AT IT_FIELDCATALOG ASSIGNING FIELD-SYMBOL(<FS_FIELDCATALOG>).
+    <FS_FIELDCATALOG>-EDIT = ABAP_FALSE.
+    CASE <FS_FIELDCATALOG>-FIELDNAME.
+      WHEN 'ICO_JUSTIFICADO'.
+        <FS_FIELDCATALOG>-COL_POS = 1.
+        <FS_FIELDCATALOG>-HOTSPOT = ABAP_TRUE.
+        <FS_FIELDCATALOG>-ICON    = ABAP_TRUE.
+        <FS_FIELDCATALOG>-JUST    = 'C'.
+      WHEN OTHERS.
+*        <FS_FIELDCATALOG>-NO_OUT  = ABAP_TRUE.
+        <FS_FIELDCATALOG>-COL_POS = I_CONTADOR_2.
+        ADD 1 TO I_CONTADOR_2.
+    ENDCASE.
+  ENDLOOP.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  FILL_GS_VARIANT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM FILL_GS_VARIANT.
+
+  GS_VARIANT-REPORT      = SY-REPID.
+  GS_VARIANT-HANDLE      = '0100'.
+  GS_VARIANT-LOG_GROUP   = ABAP_FALSE.
+  GS_VARIANT-USERNAME    = ABAP_FALSE.
+  GS_VARIANT-VARIANT     = ABAP_FALSE.
+  GS_VARIANT-TEXT        = ABAP_FALSE.
+  GS_VARIANT-DEPENDVARS  = ABAP_FALSE.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  ATUALIZA_TELA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM ATUALIZA_TELA .
+
+  DATA: GS_ALV_REFRES_COND TYPE LVC_S_STBL.
+
+  CHECK CTL_ALV IS NOT INITIAL.
+
+  GS_ALV_REFRES_COND-ROW = ABAP_TRUE.
+  GS_ALV_REFRES_COND-COL = ABAP_TRUE.
+
+  CALL METHOD CTL_ALV->REFRESH_TABLE_DISPLAY
+    EXPORTING
+      IS_STABLE      = GS_ALV_REFRES_COND
+      I_SOFT_REFRESH = ABAP_TRUE.
+
+  CALL METHOD CL_GUI_CFW=>FLUSH.
+
+ENDFORM.

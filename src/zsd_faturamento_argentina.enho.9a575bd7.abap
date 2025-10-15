@@ -1,0 +1,13 @@
+"Name: \FU:RV_INVOICE_REFRESH\SE:BEGIN\EI
+ENHANCEMENT 0 ZSD_FATURAMENTO_ARGENTINA.
+*
+*-#130592-10.01.2024-JT- inicio
+*--Exportdaten verbuchen
+    CALL FUNCTION 'EXPIMP_POSTING_TRIGGER'
+      EXPORTING
+        i_ahbas   = '2FA'
+      TABLES
+        i_t_xvbrk = xvbrk.
+*-#130592-10.01.2024-JT- fim
+*
+ENDENHANCEMENT.

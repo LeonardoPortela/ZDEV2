@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_HCM_RSDATA_TGG</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Integração SSO x RSData</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DATA_BASE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data base para integração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IT_DADOS_EMPREGADO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Dados Empregados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IT_DADOS_EMPRESA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela Dados Emrpesa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RG_PERNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Range de Matrículas encontradas</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DADOS_EMPREGADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca dados para método - Insert Empregados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LISTA_PERNR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca Matrículas de acordo com filtros</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LISTA_PERNR_RETROATIVO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca Matrículas de acordo com filtros Retroativo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INICIA_CLASSE_WEBSERVICE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Start na classe de comunicação com WebService</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_ABSENTEISMO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia ausências dos colaboradores</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_ABSENTEISMO_RETROATIVO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia ausências dos colaboradores Retroativo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_EMPREGADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia lista de colaboradores</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_EMPREGADOS_TURNOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia os dados de horário do trabalhador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_EMPRESA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Insere ou atualiza dados e detalhes da empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_FERIAS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia os dados de férias do colaborador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT_FERIAS_RETROATIVO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia os dados de férias do colaborador Retroativo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_HEADER_SECURITY</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Adiciona dados de segurança para envio de dados ao RSData</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSFER_EMPREGADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Envia colaboradores transferidos</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_EMPREGADOS</CMPNAME>
+     <SCONAME>IT_FUNCIONARIOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tp. Tabela para retorno - Lista de Funcionários</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_EMPREGADOS</CMPNAME>
+     <SCONAME>I_INSERT_EMPREGADOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_EMPREGADOS</CMPNAME>
+     <SCONAME>I_REQUEST</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Proxy Structure (generated)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LISTA_PERNR</CMPNAME>
+     <SCONAME>IT_FUNCIONARIOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tp. Tabela para retorno - Lista de Funcionários</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LISTA_PERNR</CMPNAME>
+     <SCONAME>R_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura RANGE para empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LISTA_PERNR</CMPNAME>
+     <SCONAME>R_PERNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura RANGES para matrículas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LISTA_PERNR</CMPNAME>
+     <SCONAME>R_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura RANGES para centros</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LISTA_PERNR_RETROATIVO</CMPNAME>
+     <SCONAME>IT_FUNCIONARIOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tp. Tabela para retorno - Lista de Funcionários</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INICIA_CLASSE_WEBSERVICE</CMPNAME>
+     <SCONAME>I_PORT_NAME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome da porta lógica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERT_EMPREGADOS</CMPNAME>
+     <SCONAME>I_REQUEST</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Proxy Structure (generated)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

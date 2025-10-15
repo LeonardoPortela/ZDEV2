@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZFIR0008</NAME>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <RSTAT>K</RSTAT>
+    <RLOAD>P</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Tela de Seleção</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Tipo de Lançamento de Documento</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Automação Lança Fatura de Energia - JOB Pedido/MIGO/MIRO</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>RB_MIGO</KEY>
+     <ENTRY>Lançamento Doc. Material</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>RB_MIRO</KEY>
+     <ENTRY>Lançamento Doc. Faturamento</ENTRY>
+     <LENGTH>35</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>RB_PEDID</KEY>
+     <ENTRY>Lançamento Doc. Pedido</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,6593 @@
+*&                        DESENVOLVIMENTO INTERNO                     &*
+*&--------------------------------------------------------------------&*
+*& PROJETO..: AMAGGI                                                  &*
+*& AUTOR....: ANTONIO LUIZ R. DA SILVA                                &*
+*& DATA.....: 15/02/2013                                              &*
+*& DESCRIÇÃO: CADASTRO DE LANÇAMENTOS DE IMPOSTOS                     &*
+*& TRANSAÇÃO: ZIMP53                                                  &*
+*---------------------------------------------------------------------&*
+
+REPORT  ZIMP53.
+
+*&--------------------------------------------------------------------&*
+*& ESTRUTURAS                                                         &*
+*&--------------------------------------------------------------------&*
+
+TABLES: ZIMP_CAD_LOTE.
+
+TYPE-POOLS: ICON.
+
+TYPES: BEGIN OF TY_CADLAN,
+         DOC_IMPOSTO      TYPE ZIMP_LANC_IMPOST-DOC_IMPOSTO,
+         LOTE             TYPE ZIMP_CAD_LOTE-LOTE,
+         DESCR_LOTE       TYPE ZIMP_CAD_LOTE-DESCR_LOTE,
+         COD_IMPOSTO      TYPE ZIMP_CAD_IMPOSTO-COD_IMPOSTO,
+         DESCR_IMPOSTO    TYPE ZIMP_CAD_IMPOSTO-DESCR_IMPOSTO,
+         TP_IMPOSTO       TYPE ZIMP_CAD_IMPOSTO-TP_IMPOSTO,
+         ARRECADACAO      TYPE ZIMP_TIPOS_IMPOS-ARRECADACAO,
+         REF_IMPOSTO      TYPE ZIMP_CAD_IMPOSTO-REF_IMPOSTO,
+         COD_PGTO         TYPE ZIMP_CAD_IMPOSTO-COD_PGTO,
+         BUKRS            TYPE ZIMP_CAD_LOTE-BUKRS,
+         BUTXT            TYPE T001-BUTXT,
+         CONV_BANCO       TYPE ZIMP_CAD_IMPOSTO-CONV_BANCO,
+         HBKID            TYPE ZIMP_CAD_IMPOSTO-HBKID,
+         GSBER            TYPE ZIMP_LANC_IMPOST-GSBER,
+         NAMEFIL          TYPE J_1BBRANCH-NAME,
+         BANKA            TYPE BNKA-BANKA,
+         DT_APURACAO      TYPE ZIMP_LANC_IMPOST-DT_APURACAO,
+         MES_APURACAO     TYPE ZIMP_LANC_IMPOST-MES_APURACAO,
+         ANO_APURACAO     TYPE ZIMP_LANC_IMPOST-ANO_APURACAO,
+         DT_VENC          TYPE ZIMP_CAD_LOTE-DT_VENC,
+         OBSERVACAO       TYPE ZIMP_LANC_IMPOST-OBSERVACAO,
+         COD_BARRAS       TYPE ZIMP_LANC_IMPOST-COD_BARRAS,
+         QRCODE           TYPE ZIMP_LANC_IMPOST-QRCODE, "US - 128395 - CBRAND
+         WAERS            TYPE ZIMP_LANC_IMPOST-WAERS,
+         WAERS_F          TYPE ZIMP_LANC_IMPOST-WAERS_F,
+         IDENTIFICADOR    TYPE ZIMP_LANC_IMPOST-IDENTIFICADOR,
+         DOC_CONTABIL     TYPE ZIB_CONTABIL_CHV-BELNR,
+         BUDAT            TYPE BKPF-BUDAT,
+         USUARIO          TYPE ZIMP_LANC_IMPOST-USUARIO,
+         DATA_ATUAL       TYPE ZIMP_LANC_IMPOST-DATA_ATUAL,
+         HORA_ATUAL       TYPE ZIMP_LANC_IMPOST-HORA_ATUAL,
+         MOEDA_GP_HIST    TYPE ZIMP_LANC_IMPOST-MOEDA_GP_HIST,
+         ST_FECHA         TYPE ZIMP_LANC_IMPOST-ST_FECHA,
+*Inicio Alteração - Leandro Valentim Ferreira - 18.09.23 - #122779
+         ZIMP_LANC_IMPOST TYPE ZIMP_LANC_IMPOST-ZIMP_LANC_IMPOST,
+*Fim Alteração - Leandro Valentim Ferreira - 18.09.23 - #122779
+         ICON(4),
+         ICONC(4),
+       END OF TY_CADLAN,
+
+       BEGIN OF TY_ZIB_CONTABIL_ERR,
+         OBJ_KEY        TYPE ZIB_CONTABIL_ERR-OBJ_KEY,
+         NR_ITEM        TYPE ZIB_CONTABIL_ERR-NR_ITEM,
+         INTERFACE      TYPE ZIB_CONTABIL_ERR-INTERFACE,
+         DT_ATUALIZACAO TYPE ZIB_CONTABIL_ERR-DT_ATUALIZACAO,
+         HR_ATUALIZACAO TYPE ZIB_CONTABIL_ERR-HR_ATUALIZACAO,
+         TYPE           TYPE ZIB_CONTABIL_ERR-TYPE,
+         ID             TYPE ZIB_CONTABIL_ERR-ID,
+         NUM            TYPE ZIB_CONTABIL_ERR-NUM,
+         MESSAGE        TYPE ZIB_CONTABIL_ERR-MESSAGE,
+         MESSAGE_V1     TYPE ZIB_CONTABIL_ERR-MESSAGE_V1,
+         MESSAGE_V2     TYPE ZIB_CONTABIL_ERR-MESSAGE_V2,
+         MESSAGE_V3     TYPE ZIB_CONTABIL_ERR-MESSAGE_V3,
+         MESSAGE_V4     TYPE ZIB_CONTABIL_ERR-MESSAGE_V4,
+       END OF TY_ZIB_CONTABIL_ERR,
+
+       BEGIN OF TY_ZIB_CONTABIL_CHV,
+         OBJ_KEY TYPE ZIB_CONTABIL_CHV-OBJ_KEY,
+         BELNR   TYPE ZIB_CONTABIL_CHV-BELNR,
+         BUKRS   TYPE ZIB_CONTABIL_CHV-BUKRS,
+         GJAHR   TYPE ZIB_CONTABIL_CHV-GJAHR,
+       END OF TY_ZIB_CONTABIL_CHV,
+
+*       BEGIN OF ty_bkpf,  "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (Alteração na Estrutura)
+*         bukrs TYPE bkpf-bukrs,
+*         belnr TYPE bkpf-belnr,
+*         gjahr TYPE bkpf-gjahr,
+*         budat TYPE bkpf-budat,
+*       END OF ty_bkpf,
+
+       BEGIN OF TY_FIELDS,
+         CAMPO(30) TYPE C,
+         GROUP1(5) TYPE C,
+         VALUE     TYPE SY-TABIX,
+         INVISIBLE TYPE SY-TABIX,
+       END   OF TY_FIELDS,
+
+       BEGIN OF TY_EDITOR,
+         LINE(72),
+       END   OF TY_EDITOR,
+
+       BEGIN OF TY_OBJ,
+         MARK(1),
+         SEQITEM         TYPE ZIMP_CAD_IMP_CON-SEQITEM,
+         IVA(40)         TYPE C,
+         VLR_MOEDA_DOC   TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+         VLR_MOEDA_FORTE TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_FORTE,
+         QUANTITY        TYPE ZIMP_CAD_IMP_CON-QUANTITY,
+         BASE_UOM        TYPE ZIMP_CAD_IMP_CON-BASE_UOM,
+       END OF TY_OBJ.
+
+TYPES BEGIN OF TY_BKPF. "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (Alteração na Estrutura)
+INCLUDE STRUCTURE BKPF.
+*         bukrs TYPE bkpf-bukrs,
+*         belnr TYPE bkpf-belnr,
+*         gjahr TYPE bkpf-gjahr,
+*         budat TYPE bkpf-budat,
+TYPES END OF TY_BKPF.
+
+*&--------------------------------------------------------------------&*
+*& DECLARAÇÃO DE TABELAS E WORK AREAS                                 &*
+*&--------------------------------------------------------------------&*
+DATA: OK-CODE          TYPE SY-UCOMM,
+      WG_CADLAN        TYPE TY_CADLAN,
+      WG_CADLAN_CL     TYPE TY_CADLAN,
+      WG_CADLAN_AUX    TYPE TY_CADLAN,
+      TG_SELECTEDCELL  TYPE LVC_T_CELL,
+      WG_SELECTEDCELL  TYPE LVC_S_CELL,
+      X_FIELD(30),
+      VG_INF_IDENTIFIC TYPE C,
+      VTEXTO(50),
+      V_edit(1),
+
+      BEGIN OF TG_ITENS OCCURS 0,
+        MARK(1),
+        CHECK(1),
+        CHECKBOX(1),
+        COD_IMPOSTO     TYPE ZIMP_CAD_IMP_CON-COD_IMPOSTO,
+        COD_ABERTURA    TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        DESCR_CAMP_GUIA TYPE ZIMP_CAMPOS_GUIA-DESCR_CAMP_GUIA,
+        BSCHL           TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        UMSKZ           TYPE ZIMP_CAD_IMP_CON-UMSKZ,
+        HKONT           TYPE ZIMP_CAD_IMP_CON-HKONT,
+        LIFNR           TYPE ZIMP_LANC_IMP_CT-LIFNR,
+        KUNNR           TYPE ZIMP_LANC_IMP_CT-KUNNR,
+        KOSTL_C(1)      TYPE C,
+        DEBCRE(1)       TYPE C,
+        VLR_MOEDA_DOC   TYPE ZIMP_LANC_IMP_CT-VLR_MOEDA_DOC,
+        VALOR_IMP       TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+* ---> S4 Migration - 20/06/2023 - MA
+*        valor_for       TYPE zimp_lanc_imp_ct-valor_imp,
+        VALOR_FOR       TYPE DMBE2,
+*<--- 20/06/2023 - Migração S4 - MA
+        XCLASSE(1)      TYPE C,
+        STYLE           TYPE LVC_T_STYL,
+        SEQITEM         TYPE ZIMP_LANC_IMP_CT-SEQITEM,
+      END OF TG_ITENS,
+
+      BEGIN OF TG_ITENS_CL OCCURS 0,
+        MARK(1),
+        CHECK(1),
+        CHECKBOX(1),
+        ICON(4)         TYPE C,
+        BUKRS           TYPE ZIMP_CAD_LOTE-BUKRS,
+        GSBER           TYPE ZIMP_LANC_IMPOST-GSBER,
+        WAERS           TYPE ZIMP_LANC_IMPOST-WAERS,
+        BSCHL           TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLC          TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLDC         TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        COD_IMPOSTO     TYPE ZIMP_CAD_IMPOSTO-COD_IMPOSTO,
+        COD_BARRAS      TYPE ZIMP_LANC_IMPOST-COD_BARRAS,
+        QRCODE          TYPE ZIMP_LANC_IMPOST-QRCODE, "US - 128395 - CSB
+        OBSERVACAO      TYPE ZIMP_LANC_IMPOST-OBSERVACAO,
+        MES_APURACAO    TYPE ZIMP_LANC_IMPOST-MES_APURACAO,
+        ANO_APURACAO    TYPE ZIMP_LANC_IMPOST-ANO_APURACAO,
+        COD_ABERTURAD   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCD  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURAC   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCC  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURADC  TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCDC TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        DOC_IMPOSTO     TYPE ZIMP_LANC_IMPOST-DOC_IMPOSTO,
+        KOSTL           TYPE ZIMP_LANC_IMP_CT-KOSTL,
+        LIFNR           TYPE ZIMP_LANC_IMP_CT-LIFNR,
+        KUNNR           TYPE ZIMP_LANC_IMP_CT-KUNNR,
+        HKONT           TYPE ZIMP_LANC_IMP_CT-HKONT,
+        DT_APURACAO     TYPE ZIMP_LANC_IMP_CT-DATA_ATUAL,
+        ZCHECK_CCUSTO   TYPE CHAR01,
+      END OF TG_ITENS_CL,
+
+      BEGIN OF TG_ITENS_CLX OCCURS 0,
+        MARK(1),
+        CHECK(1),
+        CHECKBOX(1),
+        ICON(4)         TYPE C,
+        BUKRS           TYPE ZIMP_CAD_LOTE-BUKRS,
+        GSBER           TYPE ZIMP_LANC_IMPOST-GSBER,
+        WAERS           TYPE ZIMP_LANC_IMPOST-WAERS,
+        BSCHL           TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLC          TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLDC         TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        COD_IMPOSTO     TYPE ZIMP_CAD_IMPOSTO-COD_IMPOSTO,
+        COD_BARRAS      TYPE ZIMP_LANC_IMPOST-COD_BARRAS,
+        QRCODE          TYPE ZIMP_LANC_IMPOST-QRCODE, "US - 128395 - CSB
+        OBSERVACAO      TYPE ZIMP_LANC_IMPOST-OBSERVACAO,
+        MES_APURACAO    TYPE ZIMP_LANC_IMPOST-MES_APURACAO,
+        ANO_APURACAO    TYPE ZIMP_LANC_IMPOST-ANO_APURACAO,
+        COD_ABERTURAD   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCD  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURAC   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCC  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURADC  TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCDC TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        DOC_IMPOSTO     TYPE ZIMP_LANC_IMPOST-DOC_IMPOSTO,
+        KOSTL           TYPE CSKS-KOSTL,
+        LIFNR           TYPE ZIMP_LANC_IMP_CT-LIFNR,
+        KUNNR           TYPE ZIMP_LANC_IMP_CT-KUNNR,
+        HKONT           TYPE ZIMP_LANC_IMP_CT-HKONT,
+        DT_APURACAO     TYPE ZIMP_LANC_IMP_CT-DATA_ATUAL,
+        ZCHECK_CCUSTO   TYPE CHAR01,
+      END OF TG_ITENS_CLX,
+
+      BEGIN OF TG_ITENS_CLD OCCURS 0,
+        MARK(1),
+        CHECK(1),
+        CHECKBOX(1),
+        ICON(4)         TYPE C,
+        BUKRS           TYPE ZIMP_CAD_LOTE-BUKRS,
+        GSBER           TYPE ZIMP_LANC_IMPOST-GSBER,
+        WAERS           TYPE ZIMP_LANC_IMPOST-WAERS,
+        BSCHL           TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLC          TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        BSCHLDC         TYPE ZIMP_CAD_IMP_CON-BSCHL,
+        COD_IMPOSTO     TYPE ZIMP_CAD_IMPOSTO-COD_IMPOSTO,
+        COD_BARRAS      TYPE ZIMP_LANC_IMPOST-COD_BARRAS,
+        QRCODE          TYPE ZIMP_LANC_IMPOST-QRCODE, "US - 128395 - CSB
+        OBSERVACAO      TYPE ZIMP_LANC_IMPOST-OBSERVACAO,
+        MES_APURACAO    TYPE ZIMP_LANC_IMPOST-MES_APURACAO,
+        ANO_APURACAO    TYPE ZIMP_LANC_IMPOST-ANO_APURACAO,
+        COD_ABERTURAD   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCD  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURAC   TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCC  TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        COD_ABERTURADC  TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        VLR_MOEDA_DOCDC TYPE ZIMP_CAD_IMP_CON-VLR_MOEDA_DOC,
+        DOC_IMPOSTO     TYPE ZIMP_LANC_IMPOST-DOC_IMPOSTO,
+      END OF TG_ITENS_CLD,
+
+      BEGIN OF TG_ITENS_C OCCURS 0,
+        COD_ABERTURA TYPE ZIMP_CAD_IMP_CON-COD_ABERTURA,
+        KOSTL        TYPE ZIMP_LANC_IMP_CT-KOSTL,
+        KTEXT        TYPE CSKT-KTEXT,
+        PRCTR        TYPE ZIMP_LANC_IMP_CT-PRCTR,
+        AUFNR        TYPE ZIMP_LANC_IMP_CT-AUFNR,
+        MATNR        TYPE ZIMP_LANC_IMP_CT-MATNR,
+        VALOR_CUS    TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+        VALOR_FOR    TYPE ZIMP_LANC_IMP_CT-VALOR_FOR,
+        SEQITEM      TYPE ZIMP_LANC_IMP_CT-SEQITEM,
+      END OF TG_ITENS_C.
+
+** CRIAÇÃO DE TABELA DINAMICA
+DATA: T_FIELDCATALOG      TYPE LVC_T_FCAT,
+      T_FIELDCATALOG_CL   TYPE LVC_T_FCAT,
+      W_FIELDCATALOG      TYPE LVC_S_FCAT,
+      WA_LAYOUT           TYPE LVC_S_LAYO,
+      WA_STABLE           TYPE LVC_S_STBL,
+      WG_EDITOR           TYPE TY_EDITOR,
+      WA_ZIB_CONTABIL_CHV TYPE TY_ZIB_CONTABIL_CHV,
+      WA_ZIB_CONTABIL_ERR TYPE TY_ZIB_CONTABIL_ERR,
+      WA_BKPF             TYPE TY_BKPF,
+      WA_T012K            TYPE T012K,
+
+      IT_ZIB_CONTABIL_ERR TYPE TABLE OF TY_ZIB_CONTABIL_ERR  WITH HEADER LINE,
+      WG_ITENS            LIKE LINE OF TG_ITENS_C,
+      WG_ITEMMMM          LIKE LINE OF TG_ITENS,
+      TG_FIELDS           TYPE TABLE OF TY_FIELDS   WITH HEADER LINE,
+      TG_IMP_LANC_IMPOST  TYPE TABLE OF ZIMP_LANC_IMPOST WITH HEADER LINE,
+      TG_IMP_LANC_IMPOSTX TYPE TABLE OF ZIMP_LANC_IMPOST WITH HEADER LINE,
+      TG_IMP_LANC_IMP_CT  TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+      TG_IMP_LANC_IMP_CTX TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+      TG_EDITOR           TYPE TABLE OF TY_EDITOR,
+      IT_ZIMP_CAD_IMP_CON TYPE TABLE OF ZIMP_CAD_IMP_CON,
+      TG_MSG_RET          TYPE TABLE OF ZFIWRS0002 WITH HEADER LINE,
+
+      TG_ITENS_CL2        LIKE TABLE OF TG_ITENS_CL,
+      WL_ITENC_CL2        LIKE LINE OF TG_ITENS_CL,
+
+      TG_ITENS_C2         LIKE TABLE OF TG_ITENS_C,
+      WL_ITENC_C2         LIKE LINE OF TG_ITENS_C,
+
+      VG_BUKRS            TYPE ZIMP_CAD_LOTE-BUKRS.
+
+"WG_ITENS           TYPE LINE OF  TG_ITENS_C.
+
+*&SPWIZARD: FUNCTION CODES FOR TABSTRIP 'TAB_STRIP_NF'
+CONSTANTS: BEGIN OF C_TAB_STRIP_IMP,
+             TAB1 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC1',
+             TAB2 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC2',
+             TAB3 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC3',
+*             tab4 LIKE sy-ucomm VALUE 'TAB_STRIP_IMP_FC4',
+           END OF C_TAB_STRIP_IMP.
+
+CONSTANTS: BEGIN OF C_TAB_STRIP_IMP_CL,
+             TAB1 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC4',
+           END OF C_TAB_STRIP_IMP_CL.
+
+CONTROLS:  TAB_STRIP_IMP_CL TYPE TABSTRIP.
+DATA: BEGIN OF G_TAB_STRIP_IMP_CL,
+        SUBSCREEN   LIKE SY-DYNNR,
+        PROG        LIKE SY-REPID VALUE 'ZIMP53',
+        PRESSED_TAB LIKE SY-UCOMM VALUE C_TAB_STRIP_IMP_CL-TAB1,
+      END OF G_TAB_STRIP_IMP_CL.
+
+*&SPWIZARD: DATA FOR TABSTRIP 'TAB_STRIP_NF'
+CONTROLS:  TAB_STRIP_IMP TYPE TABSTRIP.
+DATA: BEGIN OF G_TAB_STRIP_IMP,
+        SUBSCREEN   LIKE SY-DYNNR,
+        PROG        LIKE SY-REPID VALUE 'ZIMP53',
+        PRESSED_TAB LIKE SY-UCOMM VALUE C_TAB_STRIP_IMP-TAB1,
+      END OF G_TAB_STRIP_IMP.
+
+DATA: OK_CODE          LIKE SY-UCOMM,
+      WG_MENSAGEM(30),
+      E_DB_CLICK       TYPE  ZFIWRS0002,
+      WG_ACAO(30),
+      VDT_APURACAO(1),
+      VMES_APURACAO(1),
+      VKOKRS           TYPE TKA02-KOKRS,
+      XCLASSE(1),
+      XMODIF(1),
+      XCONV(1),
+      XFORTE(1),
+      XTOTAL           TYPE ZIMP_LANC_IMP_CT-VALOR_IMP VALUE 0,
+      XTOTALD          TYPE ZIMP_LANC_IMP_CT-VALOR_IMP VALUE 0,
+      XFLAGVAL(1)      VALUE 'N',
+      VCOD_ABERTURA    TYPE  ZIMP_LANC_IMP_CT-COD_ABERTURA,
+      VAGRUP(1)        TYPE  C,
+      VSEQITEM         TYPE  ZIMP_LANC_IMP_CT-SEQITEM,
+      TG_OBJ           TYPE TABLE OF TY_OBJ,
+      WG_OBJ           TYPE TY_OBJ.
+
+
+
+
+*CLASS DEFINITION FOR ALV TOOLBAR
+CLASS:      LCL_ALV_TOOLBAR   DEFINITION DEFERRED.
+*            LCL_ALV_TOOLBAR2  DEFINITION DEFERRED.
+*            LCL_ALV_TOOLBAR3  DEFINITION DEFERRED.
+*&--------------------------------------------------------------------&*
+*& DECLARAÇÃO DE OBJETOS/CLASSES                                      &*
+*&--------------------------------------------------------------------&*
+DATA: G_CONTAINER          TYPE SCRFNAME VALUE 'CC_ITENS_IMP',
+      G_COPIALOTE          TYPE SCRFNAME VALUE 'CC_COPIALOTE',
+      LT_F4                TYPE LVC_T_F4     WITH HEADER LINE,
+      G_CUSTOM_CONTAINER   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      OBG_CONTEINER_ERR    TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      G_COPIA_LOTE         TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      CONTAINER_1          TYPE REF TO CL_GUI_CONTAINER,       "SPLITTER CONTEINER 1
+      CONTAINER_2          TYPE REF TO CL_GUI_CONTAINER,       "SPLITTER CONTEINER 2
+      CONTAINER_4          TYPE REF TO CL_GUI_CONTAINER,       "SPLITTER CONTEINER 4
+      SPLITTER             TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+      GRID1                TYPE REF TO CL_GUI_ALV_GRID,
+      GRID2                TYPE REF TO CL_GUI_ALV_GRID,
+      GRID3                TYPE REF TO CL_GUI_ALV_GRID,
+      GRID4                TYPE REF TO CL_GUI_ALV_GRID,
+      OBG_TOOLBAR          TYPE REF TO LCL_ALV_TOOLBAR,
+      OBG_TOOLBAR2         TYPE REF TO LCL_ALV_TOOLBAR,
+      C_ALV_TOOLBARMANAGER TYPE REF TO CL_ALV_GRID_TOOLBAR_MANAGER,
+      G_DESCBOX            TYPE SCRFNAME VALUE 'CC_DESC',
+      G_CC_ERR             TYPE SCRFNAME VALUE 'CC_ERR',
+      G_CUSTOM_CONT_DESC   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      OBG_DESCBOX          TYPE REF TO CL_GUI_TEXTEDIT,
+      OBG_DOCKING          TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+      WA_STYLE             TYPE LVC_S_STYL,
+      "WA_STYLE             TYPE LVC_S_STYL,
+      STYLE                TYPE LVC_T_STYL  WITH HEADER LINE,
+      STYLE2               TYPE LVC_T_STYL WITH HEADER LINE.
+
+* ALRS
+*DECLARATION FOR TOOLBAR BUTTONS
+DATA : TY_TOOLBAR TYPE STB_BUTTON.
+*** TREE DE MENSAGENS.
+DATA NODE_ITAB LIKE NODE_STR OCCURS 0.
+DATA NODE LIKE NODE_STR.
+
+DATA: VL_GDATU TYPE GDATU_INV,
+      VL_UKURS TYPE UKURS_CURR.
+
+DATA: OBJ_ZCL_UTIL_SD TYPE REF TO ZCL_UTIL_SD.
+
+DATA CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+DATA SPLITTER_MSG TYPE REF TO CL_GUI_EASY_SPLITTER_CONTAINER.
+DATA RIGHT TYPE REF TO CL_GUI_CONTAINER.
+DATA LEFT  TYPE REF TO CL_GUI_CONTAINER.
+
+DATA EDITOR TYPE REF TO CL_GUI_TEXTEDIT.
+DATA TREE TYPE REF TO CL_GUI_SIMPLE_TREE.
+
+DATA BEHAVIOUR_LEFT TYPE REF TO CL_DRAGDROP.
+DATA BEHAVIOUR_RIGHT TYPE REF TO CL_DRAGDROP.
+
+DATA HANDLE_TREE TYPE I.
+DATA NUM_ROW TYPE I VALUE 0.
+*&--------------------------------------------------------------------&*
+*& CONSTANTES                                                         &*
+*&--------------------------------------------------------------------&*
+CONSTANTS: C_0               TYPE C VALUE '0',
+           C_1               TYPE C VALUE '1',
+           C_2               TYPE C VALUE '2',
+           C_B               TYPE C VALUE 'B',
+           C_S               TYPE C VALUE 'S',
+           C_L               TYPE C VALUE 'L',
+           C_X               TYPE C VALUE 'X',
+           C_D               TYPE C VALUE 'D',
+           C_K               TYPE C VALUE 'K',
+           C_W               TYPE C VALUE 'W',
+           C_F               TYPE C VALUE 'F',
+           C_T               TYPE C VALUE 'T',
+           C_I               TYPE C VALUE 'I',
+           C_N               TYPE C VALUE 'N',
+           C_H               TYPE C VALUE 'H',
+           C_AG(2)           TYPE C VALUE 'AG',
+           C_NE(2)           TYPE C VALUE 'NE',
+           C_01(2)           TYPE C VALUE '01',
+           C_30(2)           TYPE C VALUE '30',
+           C_40(2)           TYPE C VALUE '40',
+           C_50(4)           TYPE C VALUE '0050',
+           C_76(2)           TYPE C VALUE '76',
+           C_71(2)           TYPE C VALUE '71',
+           C_72(2)           TYPE C VALUE '72',
+           C_BR(2)           TYPE C VALUE 'BR',
+           C_LF(2)           TYPE C VALUE 'LF',
+           C_LR(2)           TYPE C VALUE 'LR',
+           C_Z1(2)           TYPE C VALUE 'Z1',
+           C_ADD(3)          TYPE C VALUE 'ADD',
+           C_DEL(3)          TYPE C VALUE 'DEL',
+           C_DG1(3)          TYPE C VALUE 'DG1',
+           C_DG2(3)          TYPE C VALUE 'DG2',
+           C_DUMMY_HEADER(3) TYPE C VALUE '099',
+           C_DUMMY_ITENS(3)  TYPE C VALUE '098',
+           C_EXIT(4)         TYPE C VALUE 'EXIT',
+           C_ROOT(4)         TYPE C VALUE 'ROOT',
+           C_MINIMIZAR(4)    TYPE C VALUE '@K2@',
+           C_MAXIMIZAR(4)    TYPE C VALUE '@K1@',
+           C_BACK(4)         TYPE C VALUE 'BACK',
+           C_SAVE(4)         TYPE C VALUE 'SAVE',
+           C_DESAT(5)        TYPE C VALUE 'DESAT',
+           C_DMBTR(5)        TYPE C VALUE 'DMBTR',
+           C_MODIF(5)        TYPE C VALUE 'MODIF',
+           C_CANCEL(6)       TYPE C VALUE 'CANCEL',
+           C_REINICIA(8)     TYPE C VALUE 'REINICIA',
+           C_DELDOC(6)       TYPE C VALUE 'DELDOC',
+           C_AGR(3)          TYPE C VALUE 'AGR',
+           C_DISPLA(6)       TYPE C VALUE 'DISPLA',
+           C_DCLICK(6)       TYPE C VALUE 'DCLICK',
+           C_SEARCH(6)       TYPE C VALUE 'SEARCH',
+           C_ATUALI(6)       TYPE C VALUE 'ATUALI',
+           C_ADD_MSG(7)      TYPE C VALUE 'ADD_MSG',
+           C_DEL_MSG(7)      TYPE C VALUE 'DEL_MSG',
+           C_CLOS_MSG(8)     TYPE C VALUE 'CLOS_MSG',
+           C_SAVE_MSG(8)     TYPE C VALUE 'SAVE_MSG',
+           C_SHOW_MSGRE(10)  TYPE C VALUE 'SHOW_MSGRE'.
+
+DATA: WG_DG1(4) VALUE C_MINIMIZAR,
+      WG_DG2(4) VALUE C_MINIMIZAR.
+
+
+DATA:   VG_CHAMADA.
+
+*ALRS
+*-----------------------------------------------------------------------
+* CLASSE
+*-----------------------------------------------------------------------
+CLASS LCL_EVENT_HANDLER DEFINITION.
+
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      ON_DOUBLE_CLICK FOR EVENT DOUBLE_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW E_COLUMN.
+
+    CLASS-METHODS:
+      ON_DATA_CHANGED FOR EVENT DATA_CHANGED OF CL_GUI_ALV_GRID
+        IMPORTING ER_DATA_CHANGED E_ONF4 E_ONF4_BEFORE E_ONF4_AFTER E_UCOMM .
+
+    CLASS-METHODS:
+      ON_DATA_CHANGED_FINISHED FOR EVENT DATA_CHANGED_FINISHED OF CL_GUI_ALV_GRID
+        IMPORTING E_MODIFIED ET_GOOD_CELLS.
+
+    CLASS-METHODS:
+      ON_DATA_CHANGED2 FOR EVENT DATA_CHANGED OF CL_GUI_ALV_GRID
+        IMPORTING ER_DATA_CHANGED E_ONF4 E_ONF4_BEFORE E_ONF4_AFTER E_UCOMM .
+    CLASS-METHODS:
+      ON_DATA_CHANGED_FINISHED2 FOR EVENT DATA_CHANGED_FINISHED OF CL_GUI_ALV_GRID
+        IMPORTING E_MODIFIED ET_GOOD_CELLS.
+
+ENDCLASS.                    "LCL_EVENT_HANDLER DEFINITION
+
+*---------------------------------------------------------------------*
+*       CLASS LCL_TREEOBJECT DEFINITION
+*---------------------------------------------------------------------*
+*       DEFINITION OF DATA CONTAINER                                  *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAG_OBJECT DEFINITION.
+  PUBLIC SECTION.
+    DATA TEXT TYPE MTREESNODE-TEXT.
+ENDCLASS.                    "LCL_DRAG_OBJECT DEFINITION
+*---------------------------------------------------------------------*
+*       CLASS DRAGDROP_RECEIVER DEFINITION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAGDROP_RECEIVER DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      NODE_DOUBLE_CLICK FOR EVENT NODE_DOUBLE_CLICK OF CL_GUI_SIMPLE_TREE
+        IMPORTING NODE_KEY.
+
+ENDCLASS.                    "LCL_DRAGDROP_RECEIVER DEFINITION
+*---------------------------------------------------------------------*
+*       CLASS LCL_ALV_TOOLBAR DEFINITION
+*---------------------------------------------------------------------*
+*       ALV EVENT HANDLER
+*---------------------------------------------------------------------*
+CLASS LCL_ALV_TOOLBAR DEFINITION.
+  PUBLIC SECTION.
+*CONSTRUCTOR
+    METHODS: CONSTRUCTOR
+      IMPORTING IO_ALV_GRID TYPE REF TO CL_GUI_ALV_GRID,
+*EVENT FOR TOOLBAR
+      ON_TOOLBAR FOR EVENT TOOLBAR OF CL_GUI_ALV_GRID
+        IMPORTING E_OBJECT,
+
+      HANDLE_USER_COMMAND FOR EVENT USER_COMMAND OF CL_GUI_ALV_GRID
+        IMPORTING E_UCOMM.
+
+ENDCLASS.                    "LCL_ALV_TOOLBAR DEFINITION
+
+*---------------------------------------------------------------------*
+*       CLASS LCL_ALV_TOOLBAR IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ALV EVENT HANDLER
+*---------------------------------------------------------------------*
+CLASS LCL_ALV_TOOLBAR IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   CREATE ALV TOOLBAR MANAGER INSTANCE
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "CONSTRUCTOR
+
+  METHOD ON_TOOLBAR.
+    DATA: WL_DESACTIVE.
+    CLEAR WL_DESACTIVE.
+*    IF WG_ACAO NE C_MODIF.
+*      WL_DESACTIVE = 1.
+*    ENDIF.
+
+    TY_TOOLBAR-ICON      =  ICON_INSERT_ROW.
+    TY_TOOLBAR-FUNCTION  =  C_ADD.
+    TY_TOOLBAR-DISABLED  = WL_DESACTIVE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+
+    TY_TOOLBAR-ICON      =  ICON_DELETE_ROW.
+    TY_TOOLBAR-FUNCTION  =  C_DEL.
+    TY_TOOLBAR-DISABLED  = WL_DESACTIVE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-BUTN_TYPE = 3.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+*   VARIABLE FOR TOOLBAR BUTTON
+    TY_TOOLBAR-ICON      =  ICON_VIEW_CLOSE.
+    TY_TOOLBAR-FUNCTION  =  C_CLOS_MSG.
+    TY_TOOLBAR-DISABLED  = SPACE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+**   CALL REORGANIZE METHOD OF TOOLBAR MANAGER TO
+**   DISPLAY THE TOOLBAR
+    CALL METHOD C_ALV_TOOLBARMANAGER->REORGANIZE
+      EXPORTING
+        IO_ALV_TOOLBAR = E_OBJECT.
+  ENDMETHOD.                    "ON_TOOLBAR
+  METHOD HANDLE_USER_COMMAND.
+    DATA: TL_ITENS_AUX  LIKE TABLE OF TG_ITENS_C,
+          WL_ITENS      LIKE LINE OF TG_ITENS_C,
+          WL_LINES      TYPE SY-TABIX,
+          TL_ITENSC_AUX LIKE TABLE OF TG_ITENS_CL,
+          WL_ITENSC     LIKE LINE OF TG_ITENS_CL,
+          WL_LINESC     TYPE SY-TABIX,
+          WL_ITENS_COD  LIKE LINE OF TG_ITENS,
+          WL_ITENSC_COD LIKE LINE OF TG_ITENS_CL,
+          XTOTAL        TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+          XTOTALF       TYPE ZIMP_LANC_IMP_CT-VALOR_FOR,
+          XLINHA        TYPE I.
+
+    REFRESH: TL_ITENS_AUX.
+    IF VCOD_ABERTURA IS NOT INITIAL.
+
+      CASE E_UCOMM.
+        WHEN C_CLOS_MSG.
+          CALL METHOD SPLITTER->SET_ROW_HEIGHT
+            EXPORTING
+              ID     = 1
+              HEIGHT = 100.
+        WHEN C_ADD.
+          TL_ITENS_AUX[] = TG_ITENS_C2[].
+          REFRESH: TG_ITENS_C2.
+          LOOP AT TL_ITENS_AUX INTO WL_ITENS.
+            APPEND WL_ITENS TO TG_ITENS_C2.
+          ENDLOOP.
+          CLEAR: WL_ITENS.
+          WL_ITENS-COD_ABERTURA = VCOD_ABERTURA.
+          APPEND WL_ITENS TO TG_ITENS_C2.
+
+          CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+        WHEN C_DEL.
+          CALL METHOD GRID2->GET_SELECTED_CELLS
+            IMPORTING
+              ET_CELL = TG_SELECTEDCELL.
+
+          LOOP AT TG_SELECTEDCELL INTO WG_SELECTEDCELL.
+            DELETE TG_ITENS_C2 INDEX WG_SELECTEDCELL-ROW_ID-INDEX.
+          ENDLOOP.
+
+          DELETE TG_ITENS_C WHERE COD_ABERTURA = VCOD_ABERTURA.
+          LOOP AT TG_ITENS_C2 INTO WL_ITENS.
+            APPEND WL_ITENS TO TG_ITENS_C.
+          ENDLOOP.
+
+          CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+          XTOTAL = 0.
+          XTOTALF = 0.
+          LOOP AT TG_ITENS_C INTO WL_ITENS.
+            ADD WL_ITENS-VALOR_CUS  TO XTOTAL.
+            ADD WL_ITENS-VALOR_FOR  TO XTOTALF.
+          ENDLOOP.
+          CLEAR XLINHA.
+          LOOP AT TG_ITENS INTO WL_ITENS_COD.
+            IF WL_ITENS_COD-COD_ABERTURA = VCOD_ABERTURA.
+              XLINHA = SY-TABIX.
+              EXIT.
+            ENDIF.
+          ENDLOOP.
+          IF XTOTAL > 0.
+            WL_ITENS_COD-KOSTL_C = 'X'.
+            WL_ITENS_COD-VALOR_IMP = XTOTAL.
+*---> 13/06/2023 - Migração S4 - JS
+*             wl_itens_cod-valor_for = xtotalf.
+            WL_ITENS_COD-VALOR_FOR = CONV #( XTOTALF ).
+*<--- 13/06/2023 - Migração S4 - JS
+          ELSE.
+            WL_ITENS_COD-KOSTL_C = ' '.
+            WL_ITENS_COD-VALOR_IMP = 0.
+            WL_ITENS_COD-VALOR_FOR = 0.
+          ENDIF.
+
+*-PBI 64611 - 23.08.2021 - JT - inicio
+          IF XLINHA IS NOT INITIAL.
+            MODIFY TG_ITENS FROM WL_ITENS_COD INDEX XLINHA TRANSPORTING KOSTL_C VALOR_IMP VALOR_FOR.
+          ENDIF.
+*-PBI 64611 - 23.08.2021 - JT - inicio
+          CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+      ENDCASE.
+
+    ENDIF.
+
+    IF VAGRUP IS NOT INITIAL. "RJF
+
+      CASE E_UCOMM.
+        WHEN C_CLOS_MSG.
+          CALL METHOD SPLITTER->SET_ROW_HEIGHT
+            EXPORTING
+              ID     = 1
+              HEIGHT = 100.
+        WHEN C_ADD.
+          REFRESH: TG_ITENS_CL2.
+          CLEAR: WL_ITENSC.
+          APPEND WL_ITENSC TO TG_ITENS_CL2.
+
+          CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+          LOOP AT TG_ITENS_CL2 INTO WL_ITENSC.
+            MOVE ICON_LED_YELLOW TO WL_ITENSC-ICON.
+            APPEND WL_ITENSC TO TG_ITENS_CL.
+          ENDLOOP.
+
+          CALL METHOD GRID4->CHECK_CHANGED_DATA.
+
+          CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+        WHEN C_DEL.
+          READ TABLE TG_ITENS_CL INTO DATA(WL_I) WITH KEY CHECKBOX = ABAP_TRUE.
+          IF SY-SUBRC IS INITIAL.
+            DELETE TG_ITENS_CL WHERE CHECKBOX EQ ABAP_TRUE.
+          ELSE.
+            MESSAGE 'Selecionar registro(s) através do checkbox.' TYPE 'I'.
+          ENDIF.
+
+          CALL METHOD GRID4->CHECK_CHANGED_DATA.
+
+          CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+      ENDCASE.
+
+      CALL METHOD GRID4->CHECK_CHANGED_DATA.
+
+      CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+    ENDIF.
+  ENDMETHOD.                    "ZM_HANDLE_USER_COMMAND
+
+
+
+ENDCLASS.                    "LCL_ALV_TOOLBAR IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS LCL_ALV_TOOLBAR IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ALV EVENT HANDLER
+*---------------------------------------------------------------------*
+
+"LCL_ALV_TOOLBAR IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS LCL_EVENT_HANDLER IMPLEMENTATION
+*---------------------------------------------------------------------*
+CLASS LCL_EVENT_HANDLER IMPLEMENTATION.
+
+
+* MÉTODO DE  EXECUÇÃO PARA DUPLO-CLICK
+  METHOD ON_DOUBLE_CLICK.
+
+
+    DATA: WL_ITENS LIKE LINE OF TG_ITENS.
+
+    DATA: EVENT       TYPE CNTL_SIMPLE_EVENT,
+          EVENTS      TYPE CNTL_SIMPLE_EVENTS,
+          TL_FILTER   TYPE LVC_T_FILT,
+          WL_FILTER   TYPE LVC_S_FILT,
+          TL_FUNCTION TYPE UI_FUNCTIONS,
+          WL_FUNCTION LIKE LINE OF TL_FUNCTION.
+
+    CLEAR VCOD_ABERTURA.
+*-PBI 64611 - 23.08.2021 - JT - inicio
+    IF E_ROW-INDEX GT 0 .
+*-PBI 64611 - 23.08.2021 - JT - fim
+      READ TABLE TG_ITENS INTO WL_ITENS INDEX E_ROW.
+      IF  WL_ITENS-COD_IMPOSTO IS NOT INITIAL
+        AND WL_ITENS-COD_ABERTURA IS NOT INITIAL
+        AND WL_ITENS-CHECKBOX = 'X'
+        AND WL_ITENS-XCLASSE = 'X'.
+*    POSICIONA SPLITER NA ALTURA X
+        VCOD_ABERTURA = WL_ITENS-COD_ABERTURA.
+        CALL METHOD SPLITTER->SET_ROW_HEIGHT
+          EXPORTING
+            ID     = 1
+            HEIGHT = 0.
+
+        " VG_SUBSCREEN1 = C_DUMMY_HEADER.
+
+        IF GRID2 IS NOT INITIAL.
+          CALL METHOD GRID2->FREE.
+
+        ENDIF.
+
+        FREE: CONTAINER_2, GRID2.
+
+        CALL METHOD SPLITTER->GET_CONTAINER
+          EXPORTING
+            ROW       = 2
+            COLUMN    = 1
+          RECEIVING
+            CONTAINER = CONTAINER_2.
+        IF GRID2 IS INITIAL.
+          "WA_LAYOUT-NO_TOOLBAR = C_X.
+          CREATE OBJECT GRID2
+            EXPORTING
+              I_PARENT = CONTAINER_2.
+
+          "WA_LAYOUT-CWIDTH_OPT = C_X.
+          WA_LAYOUT-EDIT = SPACE.
+          CONDENSE E_ROW NO-GAPS.
+          CONCATENATE 'CENTROS CUSTO PARA CODIGO ABERTURA' '-' WL_ITENS-COD_ABERTURA INTO WA_LAYOUT-GRID_TITLE SEPARATED BY SPACE.
+
+          PERFORM MONTAR_LAYOUT_CENTRO.
+          IF WG_CADLAN-WAERS_F = 'USD'.
+            PERFORM MONTAR_ESTRUTURA USING:
+                   7 'ZIMP_LANC_IMP_CT'         'VALOR_FOR'       'TG_ITENS_C' 'VALOR_FOR'        'VALOR U$'       '15' 'X' ' ' ' '.
+          ENDIF.
+
+          CREATE OBJECT OBG_TOOLBAR
+            EXPORTING
+              IO_ALV_GRID = GRID2.
+
+*            * REGISTER EVENT HANDLER
+          SET HANDLER OBG_TOOLBAR->ON_TOOLBAR FOR GRID2.
+          SET HANDLER OBG_TOOLBAR->HANDLE_USER_COMMAND FOR GRID2.
+
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_CHECK.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+          WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+          APPEND WL_FUNCTION TO TL_FUNCTION.
+
+          REFRESH TG_ITENS_C2.
+
+          LOOP AT TG_ITENS_C INTO WL_ITENC_C2.
+            IF WL_ITENC_C2-COD_ABERTURA = WL_ITENS-COD_ABERTURA.
+              APPEND WL_ITENC_C2 TO TG_ITENS_C2.
+            ENDIF.
+          ENDLOOP.
+
+          CALL METHOD GRID2->SET_TABLE_FOR_FIRST_DISPLAY
+            EXPORTING
+              IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+              IS_LAYOUT            = WA_LAYOUT
+            CHANGING
+              IT_FIELDCATALOG      = T_FIELDCATALOG[]
+              IT_OUTTAB            = TG_ITENS_C2[].
+
+          CALL METHOD GRID2->REGISTER_EDIT_EVENT
+            EXPORTING
+              I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+          CALL METHOD GRID2->REGISTER_EDIT_EVENT
+            EXPORTING
+              I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+          SET HANDLER:
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED_FINISHED2 FOR GRID2,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED2 FOR GRID2.
+
+*      *** MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+          CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+        ELSE.
+
+*      *** MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+          CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+        ENDIF.
+        WG_DG1 = C_MAXIMIZAR.
+        LEAVE TO SCREEN 100.
+      ELSE.
+*    POSICIONA SPLITER NA ALTURA X
+        CALL METHOD SPLITTER->SET_ROW_HEIGHT
+          EXPORTING
+            ID     = 1
+            HEIGHT = 100.
+      ENDIF.
+    ELSE.
+*    POSICIONA SPLITER NA ALTURA X
+      CALL METHOD SPLITTER->SET_ROW_HEIGHT
+        EXPORTING
+          ID     = 1
+          HEIGHT = 100.
+    ENDIF.
+
+
+  ENDMETHOD.                    "ON_DOUBLE_CLICK
+
+  METHOD ON_DATA_CHANGED2.
+
+
+    DATA: LS_GOOD          TYPE LVC_S_MODI,
+          LV_VALUE         TYPE LVC_VALUE,
+          LV_VALUEF        TYPE LVC_VALUE,
+          VL_VALUE         TYPE LVC_VALUE,
+          WL_CSKT          TYPE CSKT,
+          VDATAX           TYPE SY-DATUM,
+          TAXA_MOEDA_FORTE TYPE TCURR-UKURS.
+
+*
+
+
+    DATA: W_TKA02 TYPE TKA02,
+          WL_CSKS TYPE CSKS.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                             INTO LS_GOOD.
+      " WHERE FIELDNAME = 'KOSTL'.
+
+      IF LS_GOOD-FIELDNAME EQ 'KOSTL'.
+        LV_VALUE = LS_GOOD-VALUE.
+        CONDENSE LV_VALUE NO-GAPS.
+      ELSE.
+        CLEAR LV_VALUE.
+      ENDIF.
+
+      CHECK LV_VALUE IS NOT INITIAL.
+* Determinação área de contabilidade de custos
+      SELECT SINGLE * FROM TKA02
+        INTO W_TKA02
+        WHERE BUKRS	= WG_CADLAN-BUKRS.
+
+* Valida se o centro de custo existe para filial
+      SELECT SINGLE *
+        FROM CSKS
+        INTO WL_CSKS
+          WHERE KOKRS EQ  W_TKA02-KOKRS
+          AND KOSTL   EQ  LV_VALUE
+          AND GSBER   EQ  WG_CADLAN-GSBER.
+
+      IF SY-SUBRC IS NOT INITIAL.
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'KOSTL'
+            I_VALUE     = LV_VALUE.
+
+        MESSAGE S000(ZWRM001) DISPLAY LIKE 'E' WITH 'Centro de Custo informado não é desta filial.'.
+
+      ELSE.
+
+* Valida vencimento e bloqueio
+        SELECT SINGLE *
+          FROM CSKS
+          INTO WL_CSKS
+            WHERE KOKRS EQ  W_TKA02-KOKRS
+            AND KOSTL   EQ  LV_VALUE
+            AND BKZKP   EQ 'X'
+            AND BKZKS   EQ 'X'
+            AND GSBER   EQ  WG_CADLAN-GSBER
+            AND DATBI >= SY-DATUM.
+
+        IF SY-SUBRC IS NOT INITIAL.
+
+          SELECT SINGLE *
+            FROM CSKT
+            INTO WL_CSKT
+              WHERE SPRAS EQ 'P'
+              AND KOKRS   EQ  VKOKRS
+              AND KOSTL   EQ LV_VALUE.
+
+          IF SY-SUBRC IS INITIAL.
+            MOVE WL_CSKT-KTEXT TO LV_VALUE.
+
+          ELSE.
+            CLEAR LV_VALUE.
+          ENDIF.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'KTEXT'
+              I_VALUE     = LV_VALUE.
+
+        ELSE.
+
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'KOSTL'
+              I_VALUE     = LV_VALUE.
+
+          MESSAGE S000(ZWRM001) DISPLAY LIKE 'E' WITH 'O centro de custo' 'informado está bloqueado' 'para lançamento'.
+
+        ENDIF.
+
+      ENDIF.
+
+    ENDLOOP.
+
+
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                             INTO LS_GOOD
+                             WHERE FIELDNAME = 'VALOR_CUS'.
+
+      CLEAR: LV_VALUE, VDATAX, VL_UKURS, VL_GDATU, LV_VALUEF.
+
+      LV_VALUE = LS_GOOD-VALUE.
+      CONDENSE LV_VALUE NO-GAPS.
+
+      IF WG_CADLAN-DATA_ATUAL IS NOT INITIAL.
+        VDATAX = WG_CADLAN-DATA_ATUAL.
+
+        IF WG_CADLAN-ST_FECHA IS NOT INITIAL.
+          VDATAX = |{ VDATAX(4) }{ VDATAX+4(2) }01|.
+        ENDIF.
+
+      ENDIF.
+
+      CREATE OBJECT OBJ_ZCL_UTIL_SD.
+
+      OBJ_ZCL_UTIL_SD->SET_KURST( 'B' ).
+      OBJ_ZCL_UTIL_SD->SET_WAERK( 'USD' ).
+      OBJ_ZCL_UTIL_SD->SET_TCURR( 'BRL' ).
+
+      LV_VALUEF = LV_VALUE.
+
+
+      MOVE  VDATAX TO VL_GDATU.
+      OBJ_ZCL_UTIL_SD->SET_DATA( VL_GDATU ).
+      VL_UKURS = OBJ_ZCL_UTIL_SD->TAXA_CAMBIO( ).
+      MOVE  VL_UKURS TO TAXA_MOEDA_FORTE .
+
+      IF TAXA_MOEDA_FORTE LT 0.
+        MULTIPLY TAXA_MOEDA_FORTE BY -1.
+        LV_VALUEF = LV_VALUEF * TAXA_MOEDA_FORTE.
+      ELSE.
+        LV_VALUEF = LV_VALUEF / TAXA_MOEDA_FORTE .
+      ENDIF.
+
+      CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+        EXPORTING
+          I_ROW_ID    = LS_GOOD-ROW_ID
+          I_FIELDNAME = 'VALOR_FOR'
+          I_VALUE     = LV_VALUEF.
+
+    ENDLOOP.
+
+  ENDMETHOD.                    "ON_DATA_CHANGED2
+
+  METHOD ON_DATA_CHANGED.
+    DATA: LS_GOOD             TYPE LVC_S_MODI,
+          V_ROUND(15)         TYPE P DECIMALS 0,
+          FLAG_R(1),
+          LV_VALUE            TYPE LVC_VALUE,
+          VL_VALUE            TYPE LVC_VALUE,
+          LV_VALUEG           TYPE LVC_VALUE,
+          LV_VALUEF           TYPE LVC_VALUE,
+          LV_VALUETESTE       TYPE LVC_VALUE,
+          WL_ITENS            LIKE LINE OF TG_ITENS,
+          WL_ZIMP_CAMPOS_GUIA TYPE ZIMP_CAMPOS_GUIA,
+          WL_CADIMP           TYPE ZIMP_CAD_IMP_CON,
+          TL_IMP_CAD_IMP_CON  TYPE TABLE OF ZIMP_CAD_IMP_CON,
+          WL_ITENS_CL         LIKE LINE OF TG_ITENS_CL,
+          TL_TBSL             TYPE TABLE OF TBSL,
+          WL_TCURR_G          TYPE TCURR,
+          WL_TCURR_F          TYPE TCURR,
+          WL_TCURR            TYPE TCURR,
+          TL_TCURR            TYPE TABLE OF TCURR,
+          VDATA               TYPE TCURR-GDATU,
+          WL_T005             TYPE T005,
+          WL_T001             TYPE T001,
+          VDATA_F             TYPE TCURR-GDATU,
+          WL_TBSL             TYPE          TBSL,
+          VG_SINAL(1),
+          VDATAX              TYPE SY-DATUM,
+          CHDAT(8)            TYPE C,
+          HOUTPUT(8)          TYPE N,
+          DATA_LANC(8)        TYPE C.
+
+    IF SY-DYNNR EQ '0600'.
+
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                                 INTO LS_GOOD
+                                 WHERE FIELDNAME = 'GSBER'. " GSBER
+        READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+        SELECT SINGLE *
+        FROM J_1BBRANCH
+        INTO  @DATA(WL_J_1BBRANCH)
+        WHERE BUKRS = @VG_BUKRS
+        AND   BRANCH = @LS_GOOD-VALUE.
+
+        IF SY-SUBRC IS NOT INITIAL AND WL_J_1BBRANCH IS INITIAL.
+          MESSAGE 'Filial não pertencente a empresa!' TYPE 'I'.
+
+          LV_VALUE = WL_ITENS_CL-GSBER.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'GSBER'
+              I_VALUE     = LV_VALUE.
+          FREE LV_VALUE.
+
+*        ELSE.
+*
+*          lv_value = wl_itens_cl-gsber.
+*          CALL METHOD er_data_changed->modify_cell
+*            EXPORTING
+*              i_row_id    = ls_good-row_id
+*              i_fieldname = 'GSBER'
+*              i_value     = lv_value.
+*          FREE lv_value.
+
+        ENDIF.
+
+      ENDLOOP.
+
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                                INTO LS_GOOD
+                                WHERE FIELDNAME = 'VLR_MOEDA_DOCC'. " VLR_MOEDA_DOCD
+        READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+        IF SY-SUBRC IS INITIAL
+          AND WL_ITENS_CL-COD_IMPOSTO IS NOT INITIAL
+          AND WL_ITENS_CL-COD_ABERTURAD IS NOT INITIAL
+          AND WL_ITENS_CL-COD_ABERTURAC IS NOT INITIAL.
+
+          IF WL_ITENS_CL-VLR_MOEDA_DOCD IS NOT INITIAL
+          AND WL_ITENS_CL-VLR_MOEDA_DOCC IS NOT INITIAL
+          AND WL_ITENS_CL-COD_ABERTURADC IS NOT INITIAL.
+*          AND wl_itens_cl-vlr_moeda_docdc EQ 0.
+            IF LS_GOOD-VALUE GT 0.
+
+              DATA(LV_VX) = LS_GOOD-VALUE * ( -1 ).
+
+              DATA(LV_PROV) = LV_VX + WL_ITENS_CL-VLR_MOEDA_DOCD + WL_ITENS_CL-VLR_MOEDA_DOCDC.
+              IF LV_PROV EQ 0.
+                LV_VALUE = ICON_LED_YELLOW. "icon_checked.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'ICON'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+
+                LV_VALUE = LV_VX.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'VLR_MOEDA_DOCC'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+              ELSE.
+                LV_VALUE = ICON_MESSAGE_ERROR. "icon_checked.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'ICON'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+
+                LV_VALUE = LV_VX.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'VLR_MOEDA_DOCC'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+              ENDIF.
+
+*            DATA(lv_vx) = wl_itens_cl-vlr_moeda_docc * ( -1 ).
+*            IF wl_itens_cl-vlr_moeda_docd EQ lv_vx.
+*              lv_value = icon_led_yellow. "icon_checked.
+*              CALL METHOD er_data_changed->modify_cell
+*                EXPORTING
+*                  i_row_id    = ls_good-row_id
+*                  i_fieldname = 'ICON'
+*                  i_value     = lv_value.
+*              FREE lv_value.
+*
+*              lv_value = wl_itens_cl-vlr_moeda_docc.
+*              CALL METHOD er_data_changed->modify_cell
+*                EXPORTING
+*                  i_row_id    = ls_good-row_id
+*                  i_fieldname = 'VLR_MOEDA_DOCC'
+*                  i_value     = lv_value.
+*              FREE lv_value.
+*
+*            ENDIF.
+            ENDIF.
+          ELSEIF WL_ITENS_CL-VLR_MOEDA_DOCD IS NOT INITIAL
+          AND WL_ITENS_CL-VLR_MOEDA_DOCC IS NOT INITIAL
+          AND WL_ITENS_CL-COD_ABERTURADC IS INITIAL.
+
+            LV_VALUE = WL_ITENS_CL-VLR_MOEDA_DOCC.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'VLR_MOEDA_DOCC'
+                I_VALUE     = LV_VALUE.
+            FREE LV_VALUE.
+
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+
+*----
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                               INTO LS_GOOD
+                               WHERE FIELDNAME = 'COD_ABERTURADC'. " VLR_MOEDA_DOCD
+        READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+        IF WL_ITENS_CL-VLR_MOEDA_DOCDC EQ 0 AND WL_ITENS_CL-COD_ABERTURADC IS INITIAL.
+
+          IF SY-SUBRC IS INITIAL
+            AND WL_ITENS_CL-COD_IMPOSTO IS NOT INITIAL
+            AND WL_ITENS_CL-COD_ABERTURAD IS NOT INITIAL
+            AND WL_ITENS_CL-COD_ABERTURAC IS NOT INITIAL.
+
+            IF WL_ITENS_CL-VLR_MOEDA_DOCD IS NOT INITIAL
+            AND WL_ITENS_CL-VLR_MOEDA_DOCC IS NOT INITIAL.
+              DATA(LV_V) = WL_ITENS_CL-VLR_MOEDA_DOCC * ( -1 ).
+              IF WL_ITENS_CL-VLR_MOEDA_DOCD EQ LV_V.
+                LV_VALUE = ICON_LED_YELLOW."icon_checked.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'ICON'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+
+                CLEAR LV_VALUE.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'VLR_MOEDA_DOCDC'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+
+                CLEAR LV_VALUE.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'COD_ABERTURADC'
+                    I_VALUE     = LV_VALUE.
+                FREE LV_VALUE.
+
+              ENDIF.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+
+      ENDLOOP.
+
+*----
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                               INTO LS_GOOD
+                               WHERE FIELDNAME = 'VLR_MOEDA_DOCDC'. " VLR_MOEDA_DOCD
+        READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+        IF WL_ITENS_CL-COD_ABERTURADC IS NOT INITIAL AND
+          LS_GOOD-VALUE IS NOT INITIAL AND WL_ITENS_CL-BSCHLDC IS NOT INITIAL.
+
+* Verificar sinal
+
+          SELECT SINGLE SHKZG
+           FROM TBSL
+           INTO @DATA(LV_SHKZG)
+           WHERE BSCHL = @WL_ITENS_CL-BSCHLDC.
+
+          IF LV_SHKZG = 'H'. "C
+
+            IF LS_GOOD-VALUE GT 0.
+              LV_VALUE = LS_GOOD-VALUE * ( -1 ).
+
+              CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                EXPORTING
+                  I_ROW_ID    = LS_GOOD-ROW_ID
+                  I_FIELDNAME = 'VLR_MOEDA_DOCDC'
+                  I_VALUE     = LV_VALUE.
+
+            ENDIF.
+
+          ENDIF.
+
+* Somar as 3
+
+*If diferente de 0 marcar linha
+          CLEAR LV_VALUE.
+          LV_VALUE = WL_ITENS_CL-VLR_MOEDA_DOCD + WL_ITENS_CL-VLR_MOEDA_DOCC + LS_GOOD-VALUE.
+          IF LV_VALUE NE 0.
+*            CALL METHOD er_data_changed->modify_cell
+*              EXPORTING
+*                i_row_id    = ls_good-row_id
+*                i_fieldname = 'VLR_MOEDA_DOCDC'
+*                i_value     = lv_value.
+
+            LV_VALUE = ICON_MESSAGE_ERROR.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'ICON'
+                I_VALUE     = LV_VALUE.
+            FREE LV_VALUE.
+          ELSE.
+            LV_VALUE = ICON_LED_YELLOW.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'ICON'
+                I_VALUE     = LV_VALUE.
+            FREE LV_VALUE.
+
+          ENDIF.
+
+        ELSEIF WL_ITENS_CL-COD_ABERTURADC IS INITIAL.
+
+          CLEAR LV_VALUE.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'VLR_MOEDA_DOCDC'
+              I_VALUE     = LV_VALUE.
+          FREE LV_VALUE.
+
+        ENDIF.
+
+
+*        IF wl_itens_cl-vlr_moeda_docdc EQ 0 and wl_itens_cl-cod_aberturadc is not initial.
+*
+*          IF sy-subrc IS INITIAL
+*            AND wl_itens_cl-cod_imposto IS NOT INITIAL
+*            AND wl_itens_cl-cod_aberturad IS NOT INITIAL
+*            AND wl_itens_cl-cod_aberturac IS NOT INITIAL.
+*
+*            IF wl_itens_cl-vlr_moeda_docd IS NOT INITIAL
+*            AND wl_itens_cl-vlr_moeda_docc IS NOT INITIAL.
+*              DATA(lv_v1) = wl_itens_cl-vlr_moeda_docc * ( -1 ).
+*              IF wl_itens_cl-vlr_moeda_docd EQ lv_v1.
+*                lv_value = icon_led_yellow. "icon_checked.
+*                CALL METHOD er_data_changed->modify_cell
+*                  EXPORTING
+*                    i_row_id    = ls_good-row_id
+*                    i_fieldname = 'ICON'
+*                    i_value     = lv_value.
+*                FREE lv_value.
+*
+*                CLEAR lv_value.
+*                CALL METHOD er_data_changed->modify_cell
+*                  EXPORTING
+*                    i_row_id    = ls_good-row_id
+*                    i_fieldname = 'VLR_MOEDA_DOCDC'
+*                    i_value     = lv_value.
+*                FREE lv_value.
+*
+*                CLEAR lv_value.
+*                CALL METHOD er_data_changed->modify_cell
+*                  EXPORTING
+*                    i_row_id    = ls_good-row_id
+*                    i_fieldname = 'COD_ABERTURADC'
+*                    i_value     = lv_value.
+*                FREE lv_value.
+*
+*              ENDIF.
+*            ENDIF.
+*          ENDIF.
+*        ENDIF.
+
+      ENDLOOP.
+*----
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                               INTO LS_GOOD
+                               WHERE FIELDNAME = 'VLR_MOEDA_DOCD'. " VLR_MOEDA_DOCD
+        IF LS_GOOD-VALUE IS NOT INITIAL.
+          LV_VALUE = LS_GOOD-VALUE * ( -1 ).
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'VLR_MOEDA_DOCC'
+              I_VALUE     = LV_VALUE.
+
+          READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+          LV_VALUE = LV_VALUE + LS_GOOD-VALUE + WL_ITENS_CL-VLR_MOEDA_DOCDC.
+          IF LV_VALUE NE 0.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'VLR_MOEDA_DOCDC'
+                I_VALUE     = LV_VALUE.
+
+            LV_VALUE = ICON_MESSAGE_ERROR.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'ICON'
+                I_VALUE     = LV_VALUE.
+            FREE LV_VALUE.
+* colocar do code ini
+
+            READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+            IF SY-SUBRC IS INITIAL
+              AND WL_ITENS_CL-COD_IMPOSTO IS NOT INITIAL
+              AND WL_ITENS_CL-COD_ABERTURAD IS NOT INITIAL
+              AND WL_ITENS_CL-COD_ABERTURAC IS NOT INITIAL.
+
+              SELECT *
+              FROM ZIMP_CAD_IMP_CON
+              INTO TABLE TL_IMP_CAD_IMP_CON
+              WHERE COD_IMPOSTO EQ WL_ITENS_CL-COD_IMPOSTO
+                AND AGRUPAMENTO EQ ABAP_TRUE.
+
+              IF SY-SUBRC EQ 0 AND TL_IMP_CAD_IMP_CON[] IS NOT INITIAL.
+
+                SELECT *
+                 FROM TBSL
+                 INTO TABLE TL_TBSL
+                 FOR ALL ENTRIES IN TL_IMP_CAD_IMP_CON
+                 WHERE BSCHL = TL_IMP_CAD_IMP_CON-BSCHL.
+                IF SY-SUBRC EQ 0 AND TL_TBSL[] IS NOT INITIAL.
+
+                  LOOP AT TL_IMP_CAD_IMP_CON INTO WL_CADIMP.
+
+                    READ TABLE TL_TBSL INTO WL_TBSL
+                      WITH KEY BSCHL = WL_CADIMP-BSCHL.
+                    IF WL_TBSL-SHKZG = 'H'. "C
+
+                      READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+                      IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL AND WL_ITENS_CL-COD_ABERTURAC IS INITIAL. "
+                        LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                          EXPORTING
+                            I_ROW_ID    = LS_GOOD-ROW_ID
+                            I_FIELDNAME = 'COD_ABERTURAC'
+                            I_VALUE     = LV_VALUE.
+
+                        WL_ITENS_CL-BSCHLC = WL_CADIMP-BSCHL.
+                        MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                        FREE LV_VALUE.
+                      ELSEIF WL_ITENS_CL-COD_ABERTURAC IS NOT INITIAL AND WL_ITENS_CL-COD_ABERTURAC NE WL_CADIMP-COD_ABERTURA.
+                        LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                          EXPORTING
+                            I_ROW_ID    = LS_GOOD-ROW_ID
+                            I_FIELDNAME = 'COD_ABERTURADC'
+                            I_VALUE     = LV_VALUE.
+
+                        WL_ITENS_CL-BSCHLDC = WL_CADIMP-BSCHL.
+                        MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                        FREE LV_VALUE.
+                      ENDIF.
+                    ELSE.
+                      READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                      IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL AND WL_ITENS_CL-COD_ABERTURAD IS INITIAL. "
+                        LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                          EXPORTING
+                            I_ROW_ID    = LS_GOOD-ROW_ID
+                            I_FIELDNAME = 'COD_ABERTURAD'
+                            I_VALUE     = LV_VALUE.
+
+                        WL_ITENS_CL-BSCHL = WL_CADIMP-BSCHL.
+                        MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                        FREE LV_VALUE.
+                      ENDIF.
+
+                      READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+                      IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL AND WL_ITENS_CL-COD_ABERTURADC IS INITIAL
+                        AND WL_ITENS_CL-VLR_MOEDA_DOCDC IS NOT INITIAL. "
+                        LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                          EXPORTING
+                            I_ROW_ID    = LS_GOOD-ROW_ID
+                            I_FIELDNAME = 'COD_ABERTURADC'
+                            I_VALUE     = LV_VALUE.
+
+                        WL_ITENS_CL-BSCHLDC = WL_CADIMP-BSCHL.
+                        MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                        FREE LV_VALUE.
+                      ENDIF.
+
+                    ENDIF.
+                  ENDLOOP.
+
+                ENDIF.
+              ELSE.
+
+                FREE: LV_VALUE.
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'COD_ABERTURAC'
+                    I_VALUE     = LV_VALUE.
+
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'COD_ABERTURAD'
+                    I_VALUE     = LV_VALUE.
+
+                CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                  EXPORTING
+                    I_ROW_ID    = LS_GOOD-ROW_ID
+                    I_FIELDNAME = 'COD_ABERTURADC'
+                    I_VALUE     = LV_VALUE.
+
+              ENDIF.
+            ELSE.
+              MESSAGE 'Código Imposto vazio, necessário preeenchimento!' TYPE 'I'.
+            ENDIF.
+
+          ELSE.
+            LV_VALUE = ICON_LED_YELLOW. "icon_checked.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'ICON'
+                I_VALUE     = LV_VALUE.
+            FREE LV_VALUE.
+          ENDIF.
+
+        ENDIF.
+
+      ENDLOOP.
+*----
+      DATA: LV_JD TYPE C,
+            LV_JC TYPE C.
+
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                               INTO LS_GOOD
+                               WHERE FIELDNAME = 'COD_IMPOSTO'. " COD_IMPOSTO
+
+
+        READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+        IF SY-SUBRC IS INITIAL.
+          SELECT *
+          FROM ZIMP_CAD_IMP_CON
+          INTO TABLE TL_IMP_CAD_IMP_CON
+          WHERE COD_IMPOSTO EQ LS_GOOD-VALUE
+            AND AGRUPAMENTO EQ ABAP_TRUE.
+
+          IF SY-SUBRC EQ 0 AND TL_IMP_CAD_IMP_CON[] IS NOT INITIAL.
+
+            SELECT *
+             FROM TBSL
+             INTO TABLE TL_TBSL
+             FOR ALL ENTRIES IN TL_IMP_CAD_IMP_CON
+             WHERE BSCHL = TL_IMP_CAD_IMP_CON-BSCHL.
+            IF SY-SUBRC EQ 0 AND TL_TBSL[] IS NOT INITIAL.
+
+              FREE LV_VALUE.
+              CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                EXPORTING
+                  I_ROW_ID    = LS_GOOD-ROW_ID
+                  I_FIELDNAME = 'COD_ABERTURADC'
+                  I_VALUE     = LV_VALUE.
+
+              LOOP AT TL_IMP_CAD_IMP_CON INTO WL_CADIMP.
+
+                READ TABLE TL_TBSL INTO WL_TBSL
+                  WITH KEY BSCHL = WL_CADIMP-BSCHL.
+                IF WL_TBSL-SHKZG = 'H'. "C
+
+                  READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+                  IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL AND LV_JC EQ ABAP_FALSE. "AND wl_itens_cl-cod_aberturac IS INITIAL
+                    LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                    CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                      EXPORTING
+                        I_ROW_ID    = LS_GOOD-ROW_ID
+                        I_FIELDNAME = 'COD_ABERTURAC'
+                        I_VALUE     = LV_VALUE.
+
+                    LV_JC = ABAP_TRUE.
+
+                    WL_ITENS_CL-BSCHLC = WL_CADIMP-BSCHL.
+                    MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                  ELSEIF LV_JC IS NOT INITIAL.
+                    READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+                    IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL. "AND wl_itens_cl-cod_aberturadc IS INITIAL.
+*                      AND wl_itens_cl-vlr_moeda_docdc IS NOT INITIAL. "
+                      LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                      CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                        EXPORTING
+                          I_ROW_ID    = LS_GOOD-ROW_ID
+                          I_FIELDNAME = 'COD_ABERTURADC'
+                          I_VALUE     = LV_VALUE.
+
+                      WL_ITENS_CL-BSCHLDC = WL_CADIMP-BSCHL.
+                      MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                    ENDIF.
+
+                  ENDIF.
+                ELSE.
+                  READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                  IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL AND LV_JD EQ ABAP_FALSE. "AND wl_itens_cl-cod_aberturad IS INITIAL
+                    LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                    CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                      EXPORTING
+                        I_ROW_ID    = LS_GOOD-ROW_ID
+                        I_FIELDNAME = 'COD_ABERTURAD'
+                        I_VALUE     = LV_VALUE.
+
+                    LV_JD = ABAP_TRUE.
+                    WL_ITENS_CL-BSCHL = WL_CADIMP-BSCHL.
+                    MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                  ELSEIF LV_JD IS NOT INITIAL.
+                    READ TABLE TG_ITENS_CL INTO WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+                    IF WL_CADIMP-COD_ABERTURA IS NOT INITIAL." AND wl_itens_cl-cod_aberturadc IS INITIAL.
+*                      AND wl_itens_cl-vlr_moeda_docdc IS NOT INITIAL. "
+                      LV_VALUE = WL_CADIMP-COD_ABERTURA.
+                      CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+                        EXPORTING
+                          I_ROW_ID    = LS_GOOD-ROW_ID
+                          I_FIELDNAME = 'COD_ABERTURADC'
+                          I_VALUE     = LV_VALUE.
+
+                      WL_ITENS_CL-BSCHLDC = WL_CADIMP-BSCHL.
+                      MODIFY TG_ITENS_CL FROM WL_ITENS_CL INDEX LS_GOOD-ROW_ID.
+
+                    ENDIF.
+                  ENDIF.
+                ENDIF.
+              ENDLOOP.
+
+            ENDIF.
+          ELSE.
+
+            MESSAGE 'Agrupamento para esse imposto não foi definido.' TYPE 'I'.
+
+            LV_VALUE = WL_ITENS_CL-COD_IMPOSTO.
+            CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+              EXPORTING
+                I_ROW_ID    = LS_GOOD-ROW_ID
+                I_FIELDNAME = 'COD_IMPOSTO'
+                I_VALUE     = LV_VALUE.
+*
+*            CALL METHOD er_data_changed->modify_cell
+*              EXPORTING
+*                i_row_id    = ls_good-row_id
+*                i_fieldname = 'COD_ABERTURAD'
+*                i_value     = lv_value.
+
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+
+      PERFORM MONTAR_LAYOUT_CL.
+      CALL METHOD GRID4->SET_FRONTEND_FIELDCATALOG
+        EXPORTING
+          IT_FIELDCATALOG = T_FIELDCATALOG[].
+      CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+    ENDIF.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                             INTO LS_GOOD
+                             WHERE FIELDNAME = 'KUNNR'.
+      READ TABLE TG_ITENS INTO WL_ITENS INDEX LS_GOOD-ROW_ID.
+      SELECT SINGLE *
+      FROM TBSL
+      INTO WL_TBSL
+      WHERE BSCHL EQ WL_ITENS-BSCHL.
+      IF WL_TBSL-KOART = 'D'.
+        SELECT SINGLE *
+          FROM ZIMP_CAD_IMP_CON
+          INTO WL_CADIMP
+          WHERE COD_IMPOSTO  = WL_ITENS-COD_IMPOSTO
+          AND   COD_ABERTURA = WL_ITENS-COD_ABERTURA.
+        IF WL_CADIMP-KUNNR IS NOT INITIAL. " MANTEM O CÓDIGO
+          LV_VALUE = WL_CADIMP-KUNNR.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'KUNNR'
+              I_VALUE     = LV_VALUE.
+        ENDIF.
+      ELSE.
+        CLEAR LV_VALUE .
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'KUNNR'
+            I_VALUE     = LV_VALUE.
+      ENDIF.
+
+    ENDLOOP.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                             INTO LS_GOOD
+                             WHERE FIELDNAME = 'LIFNR'.
+      READ TABLE TG_ITENS INTO WL_ITENS INDEX LS_GOOD-ROW_ID.
+      SELECT SINGLE *
+      FROM TBSL
+      INTO WL_TBSL
+      WHERE BSCHL EQ WL_ITENS-BSCHL.
+      IF WL_TBSL-KOART = 'K'.
+        SELECT SINGLE *
+          FROM ZIMP_CAD_IMP_CON
+          INTO WL_CADIMP
+          WHERE COD_IMPOSTO  = WL_ITENS-COD_IMPOSTO
+          AND   COD_ABERTURA = WL_ITENS-COD_ABERTURA.
+        IF WL_CADIMP-LIFNR IS NOT INITIAL. " MANTEM O CÓDIGO
+          LV_VALUE = WL_CADIMP-LIFNR.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'LIFNR'
+              I_VALUE     = LV_VALUE.
+        ENDIF.
+      ELSE.
+        CLEAR LV_VALUE .
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'LIFNR'
+            I_VALUE     = LV_VALUE.
+      ENDIF.
+
+    ENDLOOP.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                             INTO LS_GOOD
+                             WHERE FIELDNAME = 'COD_ABERTURA'.
+      LV_VALUE = LS_GOOD-VALUE.
+      CONDENSE LV_VALUE NO-GAPS.
+
+      SELECT SINGLE *
+        FROM ZIMP_CAMPOS_GUIA
+        INTO WL_ZIMP_CAMPOS_GUIA
+          WHERE COD_CAMP_GUIA EQ LV_VALUE.
+
+      IF SY-SUBRC IS INITIAL.
+        MOVE WL_ZIMP_CAMPOS_GUIA-DESCR_CAMP_GUIA TO LV_VALUE.
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'DESCR_CAMP_GUIA'
+            I_VALUE     = LV_VALUE.
+      ELSE.
+
+      ENDIF.
+
+    ENDLOOP.
+
+    IF SY-DYNNR NE '0600'.
+      LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                              INTO LS_GOOD
+                              WHERE FIELDNAME = 'CHECKBOX'.
+        READ TABLE TG_ITENS INTO WL_ITENS INDEX LS_GOOD-ROW_ID.
+        IF WL_ITENS-CHECKBOX EQ 'X'.
+          LV_VALUE = 0.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'VALOR_IMP'
+              I_VALUE     = LV_VALUE.
+        ENDIF.
+
+      ENDLOOP.
+    ENDIF.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                                 INTO LS_GOOD
+                                 WHERE FIELDNAME = 'VALOR_IMP'.
+      CLEAR: WL_TCURR_G, WL_TCURR.
+      LV_VALUE  = LS_GOOD-VALUE.
+      LV_VALUEG = LS_GOOD-VALUE.
+      LV_VALUEF = LS_GOOD-VALUE.
+      CONDENSE LV_VALUE  NO-GAPS.
+      CONDENSE LV_VALUEG NO-GAPS.
+      CONDENSE LV_VALUEF NO-GAPS.
+
+      IF WG_CADLAN-DATA_ATUAL IS NOT INITIAL.
+        VDATAX = WG_CADLAN-DATA_ATUAL.
+
+        IF WG_CADLAN-ST_FECHA IS NOT INITIAL.
+          VDATAX = |{ VDATAX(4) }{ VDATAX+4(2) }01|.
+        ENDIF.
+
+      ENDIF.
+
+      DATA: TAXA_MOEDA_FORTE TYPE TCURR-UKURS.
+
+      CREATE OBJECT OBJ_ZCL_UTIL_SD.
+
+
+      OBJ_ZCL_UTIL_SD->SET_KURST( 'B' ).
+      OBJ_ZCL_UTIL_SD->SET_WAERK( 'USD' ).
+      OBJ_ZCL_UTIL_SD->SET_TCURR( 'BRL' ).
+
+      MOVE  VDATAX TO VL_GDATU.
+      OBJ_ZCL_UTIL_SD->SET_DATA( VL_GDATU ).
+      VL_UKURS = OBJ_ZCL_UTIL_SD->TAXA_CAMBIO( ).
+      MOVE  VL_UKURS TO TAXA_MOEDA_FORTE .
+
+
+      READ TABLE TG_ITENS INTO WL_ITENS INDEX LS_GOOD-ROW_ID.
+      IF WL_ITENS-CHECKBOX NE 'X'.
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_IMP'
+            I_VALUE     = LV_VALUE.
+
+
+        IF TAXA_MOEDA_FORTE LT 0.
+          MULTIPLY TAXA_MOEDA_FORTE BY -1.
+          LV_VALUEF = LV_VALUEF * TAXA_MOEDA_FORTE.
+        ELSE.
+          LV_VALUEF = LV_VALUEF / TAXA_MOEDA_FORTE .
+        ENDIF.
+
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_FOR'
+            I_VALUE     = LV_VALUEF.
+      ENDIF.
+
+      IF WL_ITENS-KOSTL_C = 'X' OR WL_ITENS-XCLASSE = 'X' .
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_IMP'
+            I_VALUE     = LV_VALUE.
+
+
+      ELSEIF TAXA_MOEDA_FORTE NE 0 AND WG_CADLAN-WAERS NE WL_T005-WAERS .
+
+
+        IF TAXA_MOEDA_FORTE LT 0.
+          MULTIPLY TAXA_MOEDA_FORTE BY -1.
+          LV_VALUEF = LV_VALUEF * TAXA_MOEDA_FORTE.
+        ELSE.
+          LV_VALUEF = LV_VALUEF / TAXA_MOEDA_FORTE .
+        ENDIF.
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_FOR'
+            I_VALUE     = LV_VALUEF.
+
+        FLAG_R = 'X'.
+
+
+        VG_SINAL = '+'.
+        IF WL_TCURR_G-UKURS LT 0.
+          VG_SINAL = '-'.
+          MULTIPLY WL_TCURR_G-UKURS BY -1.
+        ENDIF.
+
+        FLAG_R = 'X'.
+      ELSEIF  WG_CADLAN-WAERS = WL_T005-WAERS .
+
+        "MOEDA FORTE
+        IF WG_CADLAN-WAERS NE WL_T005-CURHA.
+*
+
+          IF TAXA_MOEDA_FORTE LT 0.
+            MULTIPLY  TAXA_MOEDA_FORTE BY -1.
+            LV_VALUEF = LV_VALUEF * TAXA_MOEDA_FORTE .
+          ELSE.
+            LV_VALUEF = LV_VALUEF / TAXA_MOEDA_FORTE.
+          ENDIF.
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'VALOR_FOR'
+              I_VALUE     = LV_VALUEF.
+          FLAG_R = 'X'.
+        ELSE.
+
+          CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+            EXPORTING
+              I_ROW_ID    = LS_GOOD-ROW_ID
+              I_FIELDNAME = 'VALOR_FOR'
+              I_VALUE     = LV_VALUEF.
+        ENDIF.
+
+        FLAG_R = 'X'.
+      ENDIF.
+
+    ENDLOOP.
+
+    LOOP AT ER_DATA_CHANGED->MT_GOOD_CELLS
+                         INTO LS_GOOD
+                         WHERE FIELDNAME = 'VALOR_FOR'.
+      READ TABLE TG_ITENS INTO WL_ITENS INDEX LS_GOOD-ROW_ID.
+      IF WL_ITENS-CHECKBOX NE 'X'.
+
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_FOR'
+            I_VALUE     = LV_VALUEF.
+
+
+      ELSEIF WL_ITENS-KOSTL_C = 'X' OR WL_ITENS-XCLASSE = 'X' .
+        LV_VALUE = WL_ITENS-VALOR_FOR.
+        CALL METHOD ER_DATA_CHANGED->MODIFY_CELL
+          EXPORTING
+            I_ROW_ID    = LS_GOOD-ROW_ID
+            I_FIELDNAME = 'VALOR_FOR'
+            I_VALUE     = LV_VALUE.
+
+      ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.                    "ON_DATA_CHANGED
+
+  METHOD ON_DATA_CHANGED_FINISHED.
+
+    IF OK-CODE NE 'AGR' AND SY-DYNNR NE '0600'.
+
+*** MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+      CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+      PERFORM VERIFICA_ERROS.
+      PERFORM F_ATUALIZA_ALV.
+      CALL FUNCTION 'Z_DOC_CHECK_NEW'
+        EXPORTING
+          I_SCREEN      = '100'
+          I_SHOW        = SPACE
+          I_REPID       = SY-REPID
+          I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+          I_SET_FIELD   = 'X_FIELD'
+        IMPORTING
+          E_MESSAGEM    = WG_MENSAGEM
+        TABLES
+          IT_MSGS       = TG_MSG_RET.
+
+    ELSEIF SY-DYNNR EQ '0600'.
+
+**** MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+*      CALL METHOD grid4->refresh_table_display
+*        EXPORTING
+*          is_stable = wa_stable.
+
+      PERFORM VERIFICA_ERROS.
+*    PERFORM f_atualiza_alv.
+      CALL FUNCTION 'Z_DOC_CHECK_NEW'
+        EXPORTING
+          I_SCREEN      = '600'
+          I_SHOW        = SPACE
+          I_REPID       = SY-REPID
+          I_PRESSED_TAB = 'G_TAB_STRIP_IMP_cl-PRESSED_TAB'
+          I_SET_FIELD   = 'X_FIELD'
+        IMPORTING
+          E_MESSAGEM    = WG_MENSAGEM
+        TABLES
+          IT_MSGS       = TG_MSG_RET.
+
+    ENDIF.
+
+  ENDMETHOD.                    "ON_DATA_CHANGED_FINISHED
+
+  METHOD ON_DATA_CHANGED_FINISHED2.
+    DATA: WL_ITENS     LIKE LINE OF TG_ITENS_C,
+          WL_ITENS_COD LIKE LINE OF TG_ITENS,
+          XTOTAL       TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+          XTOTALF      TYPE ZIMP_LANC_IMP_CT-VALOR_FOR,
+          XLINHA       TYPE I.
+
+    IF VCOD_ABERTURA IS NOT INITIAL.
+      DELETE TG_ITENS_C WHERE COD_ABERTURA = VCOD_ABERTURA.
+      LOOP AT TG_ITENS_C2 INTO WL_ITENS.
+        APPEND WL_ITENS TO TG_ITENS_C.
+      ENDLOOP.
+      XTOTAL = 0.
+      XTOTALF = 0.
+      LOOP AT TG_ITENS_C2 INTO WL_ITENS.
+        ADD WL_ITENS-VALOR_CUS  TO XTOTAL.
+        ADD WL_ITENS-VALOR_FOR  TO XTOTALF.
+      ENDLOOP.
+      CLEAR XLINHA.
+      LOOP AT TG_ITENS INTO WL_ITENS_COD.
+        IF WL_ITENS_COD-COD_ABERTURA = VCOD_ABERTURA.
+          XLINHA = SY-TABIX.
+          EXIT.
+        ENDIF.
+      ENDLOOP.
+      IF XTOTAL > 0.
+        WL_ITENS_COD-KOSTL_C = 'X'.
+        WL_ITENS_COD-VALOR_IMP = XTOTAL.
+*---> 13/06/2023 - Migração S4 - JS
+*            wl_itens_cod-valor_for = xtotalf.
+        WL_ITENS_COD-VALOR_FOR = CONV #( XTOTALF ).
+*<--- 13/06/2023 - Migração S4 - JS
+      ELSE.
+        WL_ITENS_COD-KOSTL_C = ' '.
+        WL_ITENS_COD-VALOR_IMP = 0.
+        WL_ITENS_COD-VALOR_FOR = 0.
+      ENDIF.
+
+*-PBI 64611 - 23.08.2021 - JT - inicio
+      IF XLINHA IS NOT INITIAL.
+        MODIFY TG_ITENS FROM WL_ITENS_COD INDEX XLINHA TRANSPORTING KOSTL_C VALOR_IMP VALOR_FOR.
+      ENDIF.
+*-PBI 64611 - 23.08.2021 - JT - fim
+
+      CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    ENDIF.
+  ENDMETHOD.                    "ON_DATA_CHANGED_FINISHED2
+ENDCLASS.                    "LCL_EVENT_HANDLER IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS DRAGDROP_RECEIVER IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAGDROP_RECEIVER IMPLEMENTATION.
+  METHOD NODE_DOUBLE_CLICK.
+
+  ENDMETHOD.                    "DROP_COMPLETE
+ENDCLASS.                    "LCL_DRAGDROP_RECEIVER IMPLEMENTATION
+
+*ALRS FIM
+*&---------------------------------------------------------------------*
+*&      MODULE  TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE TRATA_FIELDS OUTPUT.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - INICIO
+  IF V_EDIT IS NOT INITIAL.
+    "
+    LOOP AT TG_FIELDS.
+      LOOP AT SCREEN.
+        IF SCREEN-NAME = 'WG_CADLAN-COD_BARRAS' or SCREEN-NAME = 'WG_CADLAN-OBSERVACAO' or SCREEN-NAME = 'WG_CADLAN-DT_APURACAO' OR SCREEN-NAME = C_SAVE. "CS2025000099 REVERSÃO TRAVAS ZIMP53 e ZIMP57 - BG #164810
+          SCREEN-INPUT     = 1.
+        ELSE.
+          SCREEN-INPUT     = 0.
+          MODIFY SCREEN.
+        ENDIF.
+      ENDLOOP.
+    ENDLOOP.
+
+  ELSE.
+    LOOP AT TG_FIELDS.
+      LOOP AT SCREEN.
+        IF SCREEN-NAME EQ TG_FIELDS-CAMPO
+        OR SCREEN-GROUP1 EQ TG_FIELDS-GROUP1.
+          SCREEN-INPUT     = TG_FIELDS-VALUE.
+          SCREEN-INVISIBLE = TG_FIELDS-INVISIBLE.
+          MODIFY SCREEN.
+*        EXIT.
+        ENDIF.
+
+        IF SCREEN-NAME = 'WG_CADLAN-DT_APURACAO' AND ( TG_FIELDS-VALUE = 1 AND SCREEN-GROUP1 EQ TG_FIELDS-GROUP1 ).
+          IF VDT_APURACAO = 'X' .
+            SCREEN-INPUT     = 1.
+          ELSE.
+            SCREEN-INPUT     = 0.
+            CLEAR WG_CADLAN-DT_APURACAO.
+          ENDIF.
+          MODIFY SCREEN.
+        ENDIF.
+        IF ( SCREEN-NAME = 'WG_CADLAN-MES_APURACAO' OR SCREEN-NAME = 'WG_CADLAN-ANO_APURACAO' ) AND ( TG_FIELDS-VALUE = 1 AND SCREEN-GROUP1 EQ TG_FIELDS-GROUP1 ) .
+          IF VMES_APURACAO = 'X' .
+            SCREEN-INPUT     = 1.
+          ELSE.
+            SCREEN-INPUT     = 0.
+            CLEAR: WG_CADLAN-MES_APURACAO,WG_CADLAN-ANO_APURACAO.
+          ENDIF.
+          MODIFY SCREEN.
+        ENDIF.
+*** US - 128395 - Inicio - CBRAND
+        IF ( SCREEN-NAME = 'WG_CADLAN-QRCODE' OR  SCREEN-NAME = 'WG_CADLAN-COD_BARRAS' ) AND WG_ACAO <> 'DISPLA'.
+          IF WG_CADLAN-TP_IMPOSTO IS NOT INITIAL.
+            SELECT SINGLE * INTO @DATA(WL_ZIMP_TP_IMP)
+              FROM ZIMP_TIPOS_IMPOS
+              WHERE TP_ARREC = @WG_CADLAN-TP_IMPOSTO.
+
+            IF WL_ZIMP_TP_IMP-QRCODE = 'X' AND SCREEN-NAME = 'WG_CADLAN-COD_BARRAS'  .
+              SCREEN-INPUT     = 0.
+              "screen-invisible = 1.
+            ELSE.
+              IF WL_ZIMP_TP_IMP-QRCODE = 'X' AND SCREEN-NAME = 'WG_CADLAN-QRCODE' .
+                SCREEN-INPUT     = 1.
+                "screen-invisible = 0.
+              ELSE.
+                IF WL_ZIMP_TP_IMP-QRCODE IS INITIAL AND SCREEN-NAME = 'WG_CADLAN-QRCODE' .
+                  SCREEN-INPUT     = 0.
+                ELSE.
+                  IF WL_ZIMP_TP_IMP-QRCODE IS INITIAL AND SCREEN-NAME = 'WG_CADLAN-COD_BARRAS' .
+                    SCREEN-INPUT     = 1.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+          ELSE.
+            SCREEN-INPUT     = 0.
+          ENDIF.
+          MODIFY SCREEN.
+        ENDIF.
+*** US - 128395 - Inicio - CBRAND
+      ENDLOOP.
+    ENDLOOP.
+  ENDIF.
+
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - FIM
+  IF XCONV = 'N'.
+    LOOP AT SCREEN.
+      IF SCREEN-NAME = 'WG_CADLAN-CONV_BANCO'.
+        SCREEN-INPUT     = 1.
+        MODIFY SCREEN.
+        EXIT.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+  IF X_FIELD IS NOT INITIAL.
+    SET CURSOR FIELD X_FIELD."'WG_DESC_OPERACAO'.
+  ENDIF.
+ENDMODULE.                 " TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE STATUS_0100 OUTPUT.
+  DATA: FCODE TYPE TABLE OF SY-UCOMM.
+
+  REFRESH: FCODE.
+
+
+  IF WG_ACAO IS INITIAL OR WG_ACAO = C_DISPLA.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - INICIO
+    IF V_EDIT IS INITIAL.
+      APPEND C_SAVE TO FCODE.
+    ENDIF.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - INICIO
+    APPEND C_DELDOC TO FCODE.
+    IF XMODIF = 'X' OR WG_ACAO IS INITIAL OR WG_CADLAN-DOC_IMPOSTO IS INITIAL.
+      APPEND C_MODIF TO FCODE.
+    ENDIF.
+  ELSEIF XMODIF = 'X' .
+    APPEND C_MODIF TO FCODE.
+  ENDIF.
+  SET PF-STATUS 'Z001' EXCLUDING FCODE.
+
+  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '100'.
+ENDMODULE.                 " STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  TAB_STRIP_IMP_ACTIVE_TAB_GET  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE TAB_STRIP_IMP_ACTIVE_TAB_GET INPUT.
+  OK_CODE = SY-UCOMM.
+  CASE OK_CODE.
+    WHEN C_TAB_STRIP_IMP-TAB1.
+      G_TAB_STRIP_IMP-PRESSED_TAB = C_TAB_STRIP_IMP-TAB1.
+    WHEN C_TAB_STRIP_IMP-TAB2.
+      G_TAB_STRIP_IMP-PRESSED_TAB = C_TAB_STRIP_IMP-TAB2.
+    WHEN C_TAB_STRIP_IMP-TAB3.
+      G_TAB_STRIP_IMP-PRESSED_TAB = C_TAB_STRIP_IMP-TAB3.
+*    WHEN c_tab_strip_imp-tab4.
+*      g_tab_strip_imp-pressed_tab = c_tab_strip_imp-tab4.
+    WHEN OTHERS.
+*&SPWIZARD:      DO NOTHING
+  ENDCASE.
+ENDMODULE.                 " TAB_STRIP_IMP_ACTIVE_TAB_GET  INPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  TAB_STRIP_IMP_ACTIVE_TAB_SET  OUTPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE TAB_STRIP_IMP_ACTIVE_TAB_SET OUTPUT.
+  PERFORM VERIFICA_ERROS.
+*  IF ok-code EQ 'AGR' AND g_tab_strip_imp-pressed_tab NE c_tab_strip_imp-tab4.
+*    g_tab_strip_imp-pressed_tab = c_tab_strip_imp-tab4.
+*  ENDIF.
+  TAB_STRIP_IMP-ACTIVETAB = G_TAB_STRIP_IMP-PRESSED_TAB.
+  CASE G_TAB_STRIP_IMP-PRESSED_TAB.
+    WHEN C_TAB_STRIP_IMP-TAB1.
+      G_TAB_STRIP_IMP-SUBSCREEN = '0200'.
+    WHEN C_TAB_STRIP_IMP-TAB2.
+      G_TAB_STRIP_IMP-SUBSCREEN = '0500'.
+    WHEN C_TAB_STRIP_IMP-TAB3.
+      G_TAB_STRIP_IMP-SUBSCREEN = '0400'.
+*    WHEN c_tab_strip_imp-tab4.
+*      g_tab_strip_imp-subscreen = '0700'.
+    WHEN OTHERS.
+*&SPWIZARD:      DO NOTHING
+  ENDCASE.
+ENDMODULE.                 " TAB_STRIP_IMP_ACTIVE_TAB_SET  OUTPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  USER_COMMAND_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_EXIT INPUT.
+  CASE OK-CODE.
+    WHEN C_BACK OR 'CANCEL'.
+      SET SCREEN 0.
+    WHEN C_EXIT.
+      LEAVE PROGRAM.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*&      FORM  VERIFICA_ERROS
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM VERIFICA_ERROS .
+  DATA: WL_ZIMP_CAD_IMPOSTO TYPE ZIMP_CAD_IMPOSTO,
+        WL_T001             TYPE T001,
+        WL_TCURC            TYPE TCURC,
+        WL_J_1BBRANCH       TYPE J_1BBRANCH,
+        WL_AUFK             TYPE AUFK,
+        WL_MARA             TYPE MARA,
+        TL_IMP_CAD_IMP_CON  TYPE TABLE OF ZIMP_CAD_IMP_CON,
+        WL_LINHA(6),
+        WL_LINHA2(6),
+        TABIX               TYPE SY-TABIX,
+        TL_LFA1             TYPE TABLE OF LFA1       WITH HEADER LINE,
+        TL_KNA1             TYPE TABLE OF KNA1       WITH HEADER LINE,
+        TL_CSKS             TYPE TABLE OF CSKS       WITH HEADER LINE,
+        TL_TKA02            TYPE TABLE OF TKA02      WITH HEADER LINE,
+        TL_TBSL             TYPE TABLE OF TBSL       WITH HEADER LINE,
+        TL_AUFK             TYPE TABLE OF AUFK       WITH HEADER LINE,
+        TL_CEPC             TYPE TABLE OF CEPC       WITH HEADER LINE.
+* ---> S4 Migration - 17/07/2023 - CA
+*        tl_cskb             TYPE TABLE OF cskb       WITH HEADER LINE.
+  DATA: LT_RETURNS         TYPE TABLE OF BAPIRET2,
+        LT_COSTLIST        TYPE TABLE OF BAPI1030_CELIST,
+        LS_COELDES         TYPE BAPI1030_CEOUTPUTLIST,
+        LV_CONTROLLINGAREA TYPE BAPI1030_GEN-CO_AREA,
+        LV_COSTELEMENT     TYPE BAPI1030_GEN-COST_ELEM,
+        LV_KEYDATE         TYPE BAPI1030_GEN-SOME_DATE.
+* <--- S4 Migration - 17/07/2023 - CA
+*jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - INICIO
+  DATA: W_TKA02 TYPE TKA02,
+        WL_CSKS TYPE CSKS.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - FIM
+
+  REFRESH: TG_MSG_RET.
+  CLEAR: TG_MSG_RET, WL_ZIMP_CAD_IMPOSTO,WL_T001.
+
+* RJF - Início
+  IF SY-DYNNR EQ '0600' AND TG_ITENS_CL[] IS NOT INITIAL.
+
+    DATA(TG_DUPLIC) = TG_ITENS_CL[].
+    SORT TG_DUPLIC BY GSBER COD_IMPOSTO.
+    DELETE ADJACENT DUPLICATES FROM TG_DUPLIC COMPARING GSBER COD_IMPOSTO.
+    IF SY-SUBRC IS INITIAL.
+
+      MOVE: 'Duplicidade'             TO TG_MSG_RET-MSG,
+            'gsber'                   TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'Filial vs Imposto' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+
+    ENDIF.
+
+    FREE: TL_IMP_CAD_IMP_CON.
+    SELECT * FROM ZIMP_CAD_IMP_CON
+    INTO TABLE TL_IMP_CAD_IMP_CON
+    FOR ALL ENTRIES IN TG_ITENS_CL
+    WHERE COD_IMPOSTO EQ TG_ITENS_CL-COD_IMPOSTO.
+*    AND cod_abertura EQ tg_itens_cl-cod_aberturad.
+
+    LOOP AT TG_ITENS_CL ASSIGNING FIELD-SYMBOL(<FS_ITENS_CL>).
+
+      IF <FS_ITENS_CL>-GSBER IS INITIAL.
+
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'GSBER'                   TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'FILIAL' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ELSE.
+        SELECT SINGLE *
+        FROM J_1BBRANCH
+        INTO  WL_J_1BBRANCH
+        WHERE BUKRS = VG_BUKRS
+        AND   BRANCH = <FS_ITENS_CL>-GSBER.
+        IF SY-SUBRC NE 0.
+          MOVE 'GSBER'           TO TG_MSG_RET-FIELD.
+          CONCATENATE TEXT-E04 ' FILIAL '  INTO  TG_MSG_RET-MSG.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ENDIF.
+
+      ENDIF.
+
+      IF <FS_ITENS_CL>-WAERS IS INITIAL.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'waers'                   TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'MOEDA' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ELSE.
+        SELECT SINGLE *
+           FROM TCURC
+           INTO WL_TCURC
+            WHERE  WAERS EQ <FS_ITENS_CL>-WAERS.
+        IF SY-SUBRC NE 0.
+          CONCATENATE TEXT-E04 ' MOEDA' INTO  TG_MSG_RET-MSG.
+          MOVE 'WAERS'                  TO TG_MSG_RET-FIELD.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ENDIF.
+      ENDIF.
+
+      IF <FS_ITENS_CL>-COD_IMPOSTO IS INITIAL.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'cod_imposto'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Código Imposto' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ELSE.
+        SELECT SINGLE *
+           FROM ZIMP_CAD_IMPOSTO
+           INTO WL_ZIMP_CAD_IMPOSTO
+            WHERE  COD_IMPOSTO EQ <FS_ITENS_CL>-COD_IMPOSTO.
+        IF SY-SUBRC NE 0.
+          MOVE 'COD_IMPOSTO'          TO TG_MSG_RET-FIELD.
+          CONCATENATE TEXT-E04 ' COD.IMPOSTO' INTO  TG_MSG_RET-MSG.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ELSEIF WL_ZIMP_CAD_IMPOSTO-LOEKZ = 'X'.
+          MOVE 'COD_IMPOSTO'          TO TG_MSG_RET-FIELD.
+          CONCATENATE TEXT-E10 <FS_ITENS_CL>-COD_IMPOSTO INTO  TG_MSG_RET-MSG.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ENDIF.
+
+      ENDIF.
+
+      IF <FS_ITENS_CL>-OBSERVACAO IS INITIAL.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'observacao'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Texto Contábil' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ENDIF.
+
+*mes_apuracao
+      IF <FS_ITENS_CL>-MES_APURACAO  IS INITIAL.
+
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'mes_apuracao'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Mês Apuração' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ENDIF.
+*ano_apuracao
+      IF <FS_ITENS_CL>-ANO_APURACAO  IS INITIAL.
+
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'ano_apuracao'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Ano Apuração' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+
+      ENDIF.
+*cod_aberturad
+
+      IF <FS_ITENS_CL>-COD_ABERTURAD  IS INITIAL.
+
+        MOVE: TEXT-E01                   TO TG_MSG_RET-MSG,
+              'cod_aberturad'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Código Abertura Débito' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ENDIF.
+
+*vlr_moeda_docd
+      IF <FS_ITENS_CL>-VLR_MOEDA_DOCD  IS INITIAL.
+        MOVE: TEXT-E01                   TO TG_MSG_RET-MSG,
+              'vlr_moeda_docd'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Valor Débito' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ENDIF.
+*cod_aberturac
+      IF <FS_ITENS_CL>-COD_ABERTURAC  IS INITIAL.
+
+        MOVE: TEXT-E01                   TO TG_MSG_RET-MSG,
+              'cod_aberturac'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'Código Abertura Crédito' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+
+      ENDIF.
+
+*icon
+      IF <FS_ITENS_CL>-ICON EQ ICON_MESSAGE_ERROR.
+        MOVE: TEXT-EX1                   TO TG_MSG_RET-MSG,
+              'vlr_moeda_dc'             TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'analisar!'(EX2) INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+
+      IF <FS_ITENS_CL>-KOSTL IS INITIAL AND <FS_ITENS_CL>-ZCHECK_CCUSTO IS NOT INITIAL.
+        "Valida centro de custo.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+        'kostl'                         TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'centro de custo' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+
+      IF <FS_ITENS_CL>-DT_APURACAO IS INITIAL.
+        "Valida centro de custo.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+        'dt_apuracao'                         TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'data da operação' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+
+      "Verifica centro de custo.
+      LOOP AT TL_IMP_CAD_IMP_CON ASSIGNING FIELD-SYMBOL(<LS_IMP_CAD_IMP_CON>) WHERE COD_IMPOSTO EQ <FS_ITENS_CL>-COD_IMPOSTO.
+        IF <LS_IMP_CAD_IMP_CON>-LIFNR IS NOT INITIAL.
+          <FS_ITENS_CL>-LIFNR = <LS_IMP_CAD_IMP_CON>-LIFNR.
+        ENDIF.
+
+        IF <LS_IMP_CAD_IMP_CON>-KUNNR IS NOT INITIAL.
+          <FS_ITENS_CL>-KUNNR = <LS_IMP_CAD_IMP_CON>-KUNNR.
+        ENDIF.
+
+        IF <LS_IMP_CAD_IMP_CON>-HKONT IS NOT INITIAL.
+          <FS_ITENS_CL>-HKONT = <LS_IMP_CAD_IMP_CON>-HKONT.
+        ENDIF.
+      ENDLOOP.
+
+
+      "Verifica centro de custo.
+      IF <FS_ITENS_CL>-KOSTL IS INITIAL.
+        SELECT SINGLE *
+        FROM TKA02
+        INTO @DATA(WL_TKA02)
+        WHERE BUKRS  = @WG_CADLAN-BUKRS.
+        IF SY-SUBRC EQ 0.
+          MOVE WL_TKA02-KOKRS TO VKOKRS.
+
+* ---> S4 Migration - 17/07/2023 - CA
+*            SELECT SINGLE *
+*              FROM cskb
+*              INTO wl_cskb
+*              WHERE  kokrs  = wl_tka02-kokrs
+*              AND    kstar  = <fs_itens_cl>-hkont.
+*              AND    datab  LE sy-datum
+*              AND    datbi  GE sy-datum.
+
+          LV_CONTROLLINGAREA  = WL_TKA02-KOKRS.
+          LV_COSTELEMENT      = <FS_ITENS_CL>-HKONT.
+          LV_KEYDATE          = SY-DATUM.
+
+          CLEAR: LT_RETURNS[], LS_COELDES.
+
+          CALL FUNCTION 'K_COSTELEM_BAPI_GETDETAIL'
+            EXPORTING
+              CONTROLLINGAREA   = LV_CONTROLLINGAREA
+              COSTELEMENT       = LV_COSTELEMENT
+              KEYDATE           = LV_KEYDATE
+            IMPORTING
+              COSTELEMENTDETAIL = LS_COELDES
+            TABLES
+              RETURN            = LT_RETURNS.
+
+          READ TABLE LT_RETURNS TRANSPORTING NO FIELDS WITH KEY TYPE = 'E'.
+
+          IF SY-SUBRC <> 0.
+*            IF sy-subrc = 0.
+* <--- S4 Migration - 17/07/2023 - CA
+            "Informar o centro de custo"
+            MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'kostl'                         TO TG_MSG_RET-FIELD.
+            CONCATENATE  TG_MSG_RET-MSG 'centro de custo' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+            APPEND TG_MSG_RET.
+            CLEAR: TG_MSG_RET.
+
+            <FS_ITENS_CL>-ZCHECK_CCUSTO = ABAP_TRUE.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+      CLEAR: WL_TKA02, WL_TKA02.
+
+    ENDLOOP.
+
+    CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+
+  ENDIF.
+* RJF - Fim
+
+  IF SY-DYNNR NE '0600'.
+
+    IF WG_CADLAN-LOTE IS INITIAL.
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-LOTE'         TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'LOTE PAGAMENTO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+
+    IF WG_CADLAN-DOC_IMPOSTO IS INITIAL .
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-DOC_IMPOSTO'         TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'DOCUMENTO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+    IF WG_CADLAN-BUKRS IS INITIAL .
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-BUKRS'         TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'EMPRESA' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ELSE.
+      SELECT SINGLE *
+         FROM T001
+         INTO WL_T001
+          WHERE  BUKRS EQ WG_CADLAN-BUKRS.
+      IF SY-SUBRC NE 0.
+        CONCATENATE TEXT-E04 ' EMPRESA' INTO  TG_MSG_RET-MSG.
+        MOVE 'WG_CADLAN-BUKRS'         TO TG_MSG_RET-FIELD.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+
+    IF WG_CADLAN-WAERS IS INITIAL .
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-WAERS'         TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'MOEDA' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ELSE.
+      SELECT SINGLE *
+         FROM TCURC
+         INTO WL_TCURC
+          WHERE  WAERS EQ WG_CADLAN-WAERS.
+      IF SY-SUBRC NE 0.
+        CONCATENATE TEXT-E04 ' MOEDA' INTO  TG_MSG_RET-MSG.
+        MOVE 'WG_CADLAN-WAERS'         TO TG_MSG_RET-FIELD.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+
+    IF WG_CADLAN-COD_IMPOSTO IS  INITIAL .
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-COD_IMPOSTO'          TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'COD.IMPOSTO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ELSE.
+      SELECT SINGLE *
+         FROM ZIMP_CAD_IMPOSTO
+         INTO WL_ZIMP_CAD_IMPOSTO
+          WHERE  COD_IMPOSTO EQ WG_CADLAN-COD_IMPOSTO.
+      IF SY-SUBRC NE 0.
+        MOVE 'WG_CADLAN-COD_IMPOSTO'          TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E04 ' COD.IMPOSTO' INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ELSEIF WL_ZIMP_CAD_IMPOSTO-LOEKZ = 'X'.
+        MOVE 'WG_CADLAN-COD_IMPOSTO'          TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E10 '' INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+*Inicio Alteração - Leandro Valentim Ferreira - 18.09.23 - #122779
+    IF WG_CADLAN-TP_IMPOSTO EQ '14' AND WG_CADLAN-ZIMP_LANC_IMPOST EQ '00000000000000000000'.
+      MOVE: TEXT-E01                      TO TG_MSG_RET-MSG,
+            'WG_CADLAN-ZIMP_LANC_IMPOST'  TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'Nº Referencia GRU' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+*Fim Alteração - Leandro Valentim Ferreira - 18.09.23 - #122779
+*    ** US - 128395 - Inicio - CBRAND
+    IF WG_CADLAN-TP_IMPOSTO IS NOT INITIAL.
+      SELECT SINGLE * INTO @DATA(WL_ZIMP_TP_IMP)
+        FROM ZIMP_TIPOS_IMPOS
+        WHERE TP_ARREC = @WG_CADLAN-TP_IMPOSTO.
+
+      IF WL_ZIMP_TP_IMP-QRCODE = 'X' AND WG_CADLAN-QRCODE IS INITIAL..
+        MOVE 'WG_CADLAN-QRCODE'   TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E13 '' INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+*    ** US - 128395 - Inicio - CBRAND
+    SELECT SINGLE *
+     FROM T012K
+     INTO WA_T012K
+     WHERE BUKRS = WG_CADLAN-BUKRS
+     AND   HBKID = WG_CADLAN-HBKID .
+
+    IF SY-SUBRC NE 0.
+      IF WG_CADLAN-CONV_BANCO = 'X'.
+        MOVE: TEXT-E06                  TO TG_MSG_RET-MSG,
+         'WG_CADLAN-CONV_BANCO' TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'CONVÊNIO BANCÁRIO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ELSE.
+*    IF WG_CADLAN-CONV_BANCO NE 'X'.
+*      MOVE: TEXT-E07                  TO TG_MSG_RET-MSG,
+*       'WG_CADLAN-CONV_BANCO' TO TG_MSG_RET-FIELD.
+*      CONCATENATE  TG_MSG_RET-MSG 'CONVÊNIO BANCÁRIO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+*      APPEND TG_MSG_RET.
+*      CLEAR: TG_MSG_RET.
+*    ENDIF.
+    ENDIF.
+
+    IF WG_CADLAN-CONV_BANCO IS NOT INITIAL AND WG_CADLAN-HBKID IS INITIAL.
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-HBKID' TO TG_MSG_RET-FIELD.
+      CONCATENATE  TG_MSG_RET-MSG 'BANCO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ELSEIF NOT 'BBD_BBRA' CS WG_CADLAN-HBKID.
+      MOVE 'WG_CADLAN-HBKID' TO TG_MSG_RET-FIELD.
+      CONCATENATE TEXT-E04 ' BANCO' INTO  TG_MSG_RET-MSG.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+
+
+    IF VDT_APURACAO = 'X'.
+      IF WG_CADLAN-DT_APURACAO IS  INITIAL .
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+              'WG_CADLAN-DT_APURACAO'   TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'DT. APURAÇÃO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+
+    IF VMES_APURACAO = 'X'.
+      IF WG_CADLAN-MES_APURACAO IS INITIAL OR WG_CADLAN-MES_APURACAO IS INITIAL.
+        MOVE: TEXT-E01                   TO TG_MSG_RET-MSG,
+              'WG_CADLAN-MES_APURACAO'   TO TG_MSG_RET-FIELD.
+        CONCATENATE  TG_MSG_RET-MSG 'MÊS/ANO APURAÇÃO' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+
+    IF WG_CADLAN-GSBER IS INITIAL.
+      MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+            'WG_CADLAN-GSBER'         TO TG_MSG_RET-FIELD.
+      CONCATENATE TEXT-E01 ' FILIAL  '  INTO  TG_MSG_RET-MSG.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ELSE.
+      SELECT SINGLE *
+      FROM J_1BBRANCH
+      INTO  WL_J_1BBRANCH
+      WHERE BUKRS = WG_CADLAN-BUKRS
+      AND   BRANCH = WG_CADLAN-GSBER.
+      IF SY-SUBRC NE 0.
+        MOVE 'WG_CADLAN-GSBER'           TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E04 ' FILIAL '  INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+
+    IF  WG_CADLAN-IDENTIFICADOR IS INITIAL.
+      IF '03_07' CS WG_CADLAN-TP_IMPOSTO.
+        MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+             'WG_CADLAN-IDENTIFICADOR'         TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E01 ' IDENTIFICADOR  '  INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ELSE.
+      REFRESH TL_LFA1.
+      SELECT *
+        FROM LFA1
+        INTO TABLE TL_LFA1
+        WHERE STCD1 = WG_CADLAN-IDENTIFICADOR.
+      IF SY-SUBRC NE 0.
+        MOVE 'WG_CADLAN-IDENTIFICADOR'       TO TG_MSG_RET-FIELD.
+        CONCATENATE TEXT-E04 ' IDENTIFICADOR '  INTO  TG_MSG_RET-MSG.
+        APPEND TG_MSG_RET.
+        CLEAR: TG_MSG_RET.
+      ENDIF.
+    ENDIF.
+    IF TG_ITENS[] IS NOT INITIAL.
+      REFRESH TL_LFA1.
+      SELECT *
+        FROM LFA1
+        INTO TABLE TL_LFA1
+        FOR ALL ENTRIES IN TG_ITENS
+        WHERE LIFNR = TG_ITENS-LIFNR.
+
+      REFRESH TL_KNA1.
+      SELECT *
+        FROM KNA1
+        INTO TABLE TL_KNA1
+        FOR ALL ENTRIES IN TG_ITENS
+        WHERE KUNNR = TG_ITENS-KUNNR.
+
+      SELECT *
+       FROM TBSL
+       INTO TABLE TL_TBSL
+       FOR ALL ENTRIES IN TG_ITENS
+        WHERE BSCHL EQ TG_ITENS-BSCHL.
+    ENDIF.
+    IF TG_ITENS_C[] IS NOT INITIAL.
+* ---> S4 Migration - 17/07/2023 - CA
+*    SELECT  *
+*       FROM cskb
+*       INTO TABLE tl_cskb
+*       WHERE  kokrs  = vkokrs
+*       AND    datab  LE sy-datum
+*       AND    datbi  GE sy-datum.
+
+      LV_CONTROLLINGAREA  = VKOKRS.
+      LV_KEYDATE          = SY-DATUM.
+
+      CLEAR: LT_RETURNS[], LS_COELDES.
+
+      CALL FUNCTION 'K_COSTELEM_BAPI_GETLIST'
+        EXPORTING
+          CONTROLLINGAREA = LV_CONTROLLINGAREA
+          DATE            = LV_KEYDATE
+        TABLES
+          COSTELEMENTLIST = LT_COSTLIST
+          RETURN          = LT_RETURNS.
+
+      IF LT_COSTLIST[] IS NOT INITIAL.
+        SORT LT_COSTLIST BY COST_ELEM.
+      ENDIF.
+
+      FREE LT_RETURNS.
+* <--- S4 Migration - 17/07/2023 - CA
+
+      SELECT *
+       FROM CSKS
+       INTO TABLE TL_CSKS
+       FOR ALL ENTRIES IN TG_ITENS_C
+       WHERE KOKRS = VKOKRS
+       AND   KOSTL = TG_ITENS_C-KOSTL.
+
+      SELECT  *
+          FROM CEPC
+          INTO TABLE TL_CEPC
+          WHERE  KOKRS  = VKOKRS
+          AND    DATAB  LE SY-DATUM
+          AND    DATBI  GE SY-DATUM.
+
+      SELECT *
+        FROM AUFK
+        INTO TABLE TL_AUFK
+        FOR ALL ENTRIES IN TG_ITENS_C
+        WHERE AUFNR EQ TG_ITENS_C-AUFNR.
+
+    ENDIF.
+
+    SORT: TL_LFA1     BY LIFNR,
+          TL_KNA1     BY KUNNR,
+          TL_CSKS     BY KOSTL,
+          TL_TBSL     BY BSCHL,
+          TG_ITENS_C  BY COD_ABERTURA KOSTL.
+
+* ---> S4 Migration - 17/07/2023 - CA
+    SORT:  LT_COSTLIST BY COST_ELEM,
+*  SORT:  tl_cskb     BY kstar,
+* <--- S4 Migration - 17/07/2023 - CA
+             TL_CEPC     BY PRCTR.
+*xxxxxxxxxxxxxxxxxxx
+
+*---> 05/07/2023 - Migração S4 - DL
+    SORT TL_AUFK BY AUFNR.
+*<--- 05/07/2023 - Migração S4 - DL
+
+    XFLAGVAL = 'N'.
+    XTOTAL = 0.
+    XTOTALD = 0.
+    LOOP AT TG_ITENS.
+      WL_LINHA = SY-TABIX.
+      IF TG_ITENS-CHECKBOX = 'X'.
+        ADD TG_ITENS-VALOR_IMP TO XTOTAL.
+        IF TG_ITENS-VALOR_IMP NE 0.
+          XFLAGVAL = 'S'.
+        ENDIF.
+        ADD TG_ITENS-VALOR_FOR TO XTOTALD.
+        IF WG_CADLAN-WAERS_F = 'USD' AND TG_ITENS-VALOR_FOR EQ 0.
+          MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+          CONCATENATE TEXT-E08 ' LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ENDIF.
+        IF TG_ITENS-XCLASSE = 'X' AND TG_ITENS-KOSTL_C IS INITIAL.
+          MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+          CONCATENATE TEXT-E02 ' LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG.
+          APPEND TG_MSG_RET.
+          CLEAR: TG_MSG_RET.
+        ENDIF.
+
+*CS2025000099 REVERSÃO TRAVAS ZIMP53 e ZIMP57 - BG #164810 - INICIO
+        IF TG_ITENS-KOSTL_C IS NOT INITIAL.
+
+* Valida se o centro de custo existe para filial
+          SELECT SINGLE *
+            FROM CSKS
+            INTO WL_CSKS
+              WHERE KOKRS EQ  VKOKRS
+              AND KOSTL   EQ  TG_ITENS_C-KOSTL
+              AND GSBER   EQ  WG_CADLAN-GSBER.
+
+          IF SY-SUBRC IS NOT INITIAL.
+
+            CONCATENATE  'O centro de custo' TG_ITENS_C-KOSTL 'não pertende a filial informada!' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+            APPEND TG_MSG_RET.
+            CLEAR: TG_MSG_RET.
+
+          ELSE.
+
+            SELECT SINGLE *
+              FROM CSKS
+              INTO wl_CSKS
+                WHERE KOKRS EQ  VKOKRS
+                AND KOSTL   EQ  TG_ITENS_C-KOSTL
+                AND BKZKP   EQ 'X'
+                AND BKZKS   EQ 'X'
+                "AND GSBER   EQ TG_ITENS-
+                AND DATBI >= SY-DATUM.
+
+            IF SY-SUBRC IS INITIAL.
+              CONCATENATE  'O centro de custo' TG_ITENS_C-KOSTL 'está bloqueado para lançamento' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+              APPEND TG_MSG_RET.
+              CLEAR: TG_MSG_RET.
+            ENDIF.
+
+
+          ENDIF.
+        ENDIF.
+*CS2025000099 REVERSÃO TRAVAS ZIMP53 e ZIMP57 - BG #164810 - FIM
+
+        READ TABLE TL_TBSL
+              WITH KEY BSCHL = TG_ITENS-BSCHL
+             BINARY SEARCH.
+
+        IF TL_TBSL-KOART = 'K'.
+          IF TG_ITENS-LIFNR IS INITIAL.
+            MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+            CONCATENATE TEXT-E01 'FORNECEDOR, LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG SEPARATED BY SPACE.
+            APPEND TG_MSG_RET.
+            CLEAR: TG_MSG_RET.
+          ELSE.
+            READ TABLE TL_LFA1
+            WITH KEY LIFNR = TG_ITENS-LIFNR
+                       BINARY SEARCH.
+            IF SY-SUBRC NE 0.
+              MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+              CONCATENATE TEXT-E04 ' FORNECEDOR ' ' LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG.
+              APPEND TG_MSG_RET.
+              CLEAR: TG_MSG_RET.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+
+        IF TL_TBSL-KOART = 'D'.
+          IF TG_ITENS-KUNNR IS INITIAL.
+            MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+            CONCATENATE TEXT-E01 'CLIENTE, LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG SEPARATED BY SPACE.
+            APPEND TG_MSG_RET.
+            CLEAR: TG_MSG_RET.
+          ELSE.
+            READ TABLE TL_KNA1
+            WITH KEY KUNNR = TG_ITENS-KUNNR
+                       BINARY SEARCH.
+            IF SY-SUBRC NE 0.
+              MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+              CONCATENATE TEXT-E04 ' CLIENTE' ' LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG.
+              APPEND TG_MSG_RET.
+              CLEAR: TG_MSG_RET.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+
+        IF TG_ITENS-UMSKZ IS INITIAL.
+          CLEAR: TL_TBSL.
+          READ TABLE TL_TBSL INTO TL_TBSL WITH KEY BSCHL = TG_ITENS-BSCHL
+                                                    XSONU = 'X'
+                                           BINARY SEARCH.
+          IF SY-SUBRC EQ 0.
+            MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+            CONCATENATE 'RAZÃO ESPECIAL - OBRIGATÓRIO' ' LINHA: ' WL_LINHA INTO  TG_MSG_RET-MSG.
+            APPEND TG_MSG_RET.
+            CLEAR: TG_MSG_RET.
+          ENDIF.
+        ENDIF.
+
+        LOOP AT TG_ITENS_C WHERE COD_ABERTURA = TG_ITENS-COD_ABERTURA.
+          TABIX  = SY-TABIX.
+          IF '40_50' CS TG_ITENS-BSCHL.
+* ---> S4 Migration - 17/07/2023 - CA
+*          CLEAR: tl_cskb.
+*          READ TABLE tl_cskb INTO tl_cskb WITH KEY kstar = tg_itens-hkont+0(10)
+*                                          BINARY SEARCH.
+            READ TABLE LT_COSTLIST INTO DATA(LS_COSTLIST) WITH KEY COST_ELEM = TG_ITENS-HKONT+0(10) BINARY SEARCH.
+* <--- S4 Migration - 17/07/2023 - CA
+            IF SY-SUBRC EQ 0.
+              CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+                EXPORTING
+                  INPUT  = TG_ITENS_C-PRCTR
+                IMPORTING
+                  OUTPUT = TG_ITENS_C-PRCTR.
+
+* ---> S4 Migration - 17/07/2023 - CA
+              LV_CONTROLLINGAREA  = LS_COSTLIST-CO_AREA.
+              LV_COSTELEMENT      = LS_COSTLIST-COST_ELEM.
+              LV_KEYDATE          = SY-DATUM.
+
+              CLEAR: LT_RETURNS[], LS_COELDES.
+
+              CALL FUNCTION 'K_COSTELEM_BAPI_GETDETAIL'
+                EXPORTING
+                  CONTROLLINGAREA   = LV_CONTROLLINGAREA
+                  COSTELEMENT       = LV_COSTELEMENT
+                  KEYDATE           = LV_KEYDATE
+                IMPORTING
+                  COSTELEMENTDETAIL = LS_COELDES
+                TABLES
+                  RETURN            = LT_RETURNS.
+
+              READ TABLE LT_RETURNS TRANSPORTING NO FIELDS WITH KEY TYPE = 'E'.
+              IF SY-SUBRC <> 0 AND
+                 LS_COELDES-CELEM_CATEGORY NE '01'.
+*            IF tl_cskb-katyp NE '01'.
+* <--- S4 Migration - 17/07/2023 - CA
+                IF TG_ITENS_C-MATNR IS NOT INITIAL.
+                  SELECT SINGLE *
+                    FROM MARA
+                    INTO WL_MARA
+                   WHERE MATNR = TG_ITENS_C-MATNR.
+
+                  IF SY-SUBRC IS NOT INITIAL.
+                    MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                    CONCATENATE TEXT-E80 '' WL_LINHA INTO  TG_MSG_RET-MSG SEPARATED BY SPACE.
+                    APPEND TG_MSG_RET.  CLEAR: TG_MSG_RET.
+                  ENDIF.
+
+                ELSE.
+                  MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                  CONCATENATE TEXT-E01 'ARTIGO, LINHA: ' WL_LINHA INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+                  APPEND TG_MSG_RET.  CLEAR: TG_MSG_RET.
+                ENDIF.
+              ENDIF.
+
+* ---> S4 Migration - 17/07/2023 - CA
+              IF LS_COELDES-CELEM_CATEGORY EQ '01' AND TG_ITENS_C-MATNR IS NOT INITIAL .
+*            IF tl_cskb-katyp EQ '01' AND tg_itens_c-matnr IS NOT INITIAL .
+* <--- S4 Migration - 17/07/2023 - CA
+                MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                CONCATENATE TEXT-EE2 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                APPEND TG_MSG_RET.
+                CLEAR: TG_MSG_RET.
+              ENDIF.
+
+* ---> S4 Migration - 17/07/2023 - CA
+              IF LS_COELDES-CELEM_CATEGORY EQ '01' AND TG_ITENS_C-KOSTL IS INITIAL .
+*            IF tl_cskb-katyp EQ '01' AND tg_itens_c-kostl IS INITIAL .
+* <--- S4 Migration - 17/07/2023 - CA
+                IF TG_ITENS_C-AUFNR IS INITIAL.
+                  MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                  CONCATENATE TEXT-E12 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                  APPEND TG_MSG_RET.
+                  CLEAR: TG_MSG_RET.
+                ENDIF.
+* ---> S4 Migration - 17/07/2023 - CA
+              ELSEIF LS_COELDES-CELEM_CATEGORY EQ '01' AND TG_ITENS_C-AUFNR IS NOT INITIAL .
+*            ELSEIF tl_cskb-katyp EQ '01' AND tg_itens_c-aufnr IS NOT INITIAL .
+* <--- S4 Migration - 17/07/2023 - CA
+                "CHECAR CCUSTO DA ORDEM AQUI
+                SELECT SINGLE *
+                     FROM AUFK
+                     INTO WL_AUFK
+                     WHERE BUKRS  = WG_CADLAN-BUKRS
+                     AND   AUFNR  = TG_ITENS_C-AUFNR.
+                IF SY-SUBRC EQ 0.
+                  IF TG_ITENS_C-KOSTL NE WL_AUFK-KOSTV.
+                    MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                    CONCATENATE TEXT-E77 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                    APPEND TG_MSG_RET.
+                    CLEAR: TG_MSG_RET.
+                  ENDIF.
+                ENDIF.
+* ---> S4 Migration - 17/07/2023 - CA
+              ELSEIF '11_12' CS LS_COELDES-CELEM_CATEGORY  AND TG_ITENS_C-PRCTR IS INITIAL AND TG_ITENS_C-MATNR IS INITIAL.
+*            ELSEIF '11_12' CS tl_cskb-katyp  AND tg_itens_c-prctr IS INITIAL AND tg_itens_c-matnr IS INITIAL.
+* <--- S4 Migration - 17/07/2023 - CA
+                MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                CONCATENATE TEXT-E98 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                APPEND TG_MSG_RET.
+                CLEAR: TG_MSG_RET.
+* ---> S4 Migration - 17/07/2023 - CA
+              ELSEIF '11_12' CS LS_COELDES-CELEM_CATEGORY AND TG_ITENS_C-PRCTR EQ '0000009900' AND TG_ITENS_C-MATNR IS INITIAL.
+*            ELSEIF '11_12' CS tl_cskb-katyp AND tg_itens_c-prctr EQ '0000009900' AND tg_itens_c-matnr IS INITIAL.
+* <--- S4 Migration - 17/07/2023 - CA
+                MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                CONCATENATE TEXT-E99 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                APPEND TG_MSG_RET.
+                CLEAR: TG_MSG_RET.
+* ---> S4 Migration - 17/07/2023 - CA
+              ELSEIF '11_12' CS LS_COELDES-CELEM_CATEGORY AND TG_ITENS_C-PRCTR NE '0000009900' AND TG_ITENS_C-MATNR IS NOT INITIAL.
+*            ELSEIF '11_12' CS tl_cskb-katyp AND tg_itens_c-prctr NE '0000009900' AND tg_itens_c-matnr IS NOT INITIAL.
+* <--- S4 Migration - 17/07/2023 - CA
+                TG_ITENS_C-PRCTR = '0000009900'.
+                MODIFY TG_ITENS_C INDEX TABIX TRANSPORTING PRCTR.
+* ---> S4 Migration - 17/07/2023 - CA
+              ELSEIF '11_12' CS LS_COELDES-CELEM_CATEGORY  AND TG_ITENS_C-PRCTR IS NOT INITIAL.
+*            ELSEIF '11_12' CS tl_cskb-katyp  AND tg_itens_c-prctr IS NOT INITIAL.
+* <--- S4 Migration - 17/07/2023 - CA
+                READ TABLE TL_CEPC INTO TL_CEPC WITH KEY  PRCTR = TG_ITENS_C-PRCTR
+                                          BINARY SEARCH.
+                IF SY-SUBRC NE 0.
+                  MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                  CONCATENATE TEXT-E77 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                  APPEND TG_MSG_RET.
+                  CLEAR: TG_MSG_RET.
+                ENDIF.
+              ENDIF.
+* ---> S4 Migration - 17/07/2023 - CA
+              IF '11_12' CS LS_COELDES-CELEM_CATEGORY AND TG_ITENS_C-KOSTL IS NOT INITIAL.
+*            IF '11_12' CS tl_cskb-katyp AND tg_itens_c-kostl IS NOT INITIAL.
+* <--- S4 Migration - 17/07/2023 - CA
+                MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+                CONCATENATE TEXT-EE3 '' WL_LINHA INTO  TG_MSG_RET-MSG.
+                APPEND TG_MSG_RET.
+                CLEAR: TG_MSG_RET.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+          IF TG_ITENS_C-KOSTL IS NOT INITIAL.
+            WL_LINHA2 = SY-TABIX.
+            READ TABLE TL_CSKS
+            WITH KEY KOSTL = TG_ITENS_C-KOSTL
+                     BINARY SEARCH.
+            IF SY-SUBRC NE 0.
+              MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+              CONCATENATE TEXT-E04 ' CENTRO DE CUSTO LINHA: ' WL_LINHA '/' WL_LINHA2 INTO  TG_MSG_RET-MSG.
+              APPEND TG_MSG_RET.
+              CLEAR: TG_MSG_RET.
+            ENDIF.
+          ENDIF.
+
+          IF TG_ITENS_C-AUFNR IS NOT INITIAL.
+            WL_LINHA2 = SY-TABIX.
+            READ TABLE TL_AUFK
+            WITH KEY AUFNR = TG_ITENS_C-AUFNR
+                     BINARY SEARCH.
+            IF SY-SUBRC NE 0.
+              MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+              CONCATENATE TEXT-E04 ' ORDEM LINHA: ' WL_LINHA '/' WL_LINHA2 INTO  TG_MSG_RET-MSG.
+              APPEND TG_MSG_RET.
+              CLEAR: TG_MSG_RET.
+            ENDIF.
+          ENDIF.
+
+        ENDLOOP.
+      ENDIF.
+    ENDLOOP.
+
+    IF XFLAGVAL EQ 'N'.
+      MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+      MOVE: TEXT-E05                   TO TG_MSG_RET-MSG.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+
+    IF WG_CADLAN-WAERS_F = 'USD' AND XTOTALD NE 0..
+      MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+      MOVE: TEXT-E09                   TO TG_MSG_RET-MSG.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+
+    IF XTOTAL NE 0.
+      MOVE:  C_TAB_STRIP_IMP-TAB1 TO TG_MSG_RET-ABA.
+      MOVE: TEXT-E03                   TO TG_MSG_RET-MSG.
+      APPEND TG_MSG_RET.
+      CLEAR: TG_MSG_RET.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.                    " VERIFICA_ERROS
+*&---------------------------------------------------------------------*
+*&      MODULE  CRIA_OBJETOS  OUTPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE CRIA_OBJETOS OUTPUT.
+  DATA: EVENT       TYPE CNTL_SIMPLE_EVENT,
+        EVENTS      TYPE CNTL_SIMPLE_EVENTS,
+        TL_FILTER   TYPE LVC_T_FILT,
+        WL_FILTER   TYPE LVC_S_FILT,
+        TL_FUNCTION TYPE UI_FUNCTIONS,
+        WL_FUNCTION LIKE TL_FUNCTION WITH HEADER LINE.
+  DATA: WAREF      TYPE REF TO DATA.
+  IF G_CUSTOM_CONTAINER IS INITIAL.
+*    WA_LAYOUT-CWIDTH_OPT = C_X.
+    WA_LAYOUT-ZEBRA      = C_X.
+*    WA_LAYOUT-NO_TOOLBAR = C_X.
+*    WA_LAYOUT-SGL_CLK_HD = C_X.
+    WA_LAYOUT-NO_ROWMARK = C_X.
+*    WA_LAYOUT-COL_OPT    = C_X.
+    WA_STABLE-ROW        = C_X.
+    WA_LAYOUT-SEL_MODE   = 'A'.
+    WA_LAYOUT-CWIDTH_OPT   = 'X'.
+    WA_LAYOUT-BOX_FNAME    = 'MARK'.
+    WA_LAYOUT-NO_TOOLBAR = C_X.
+
+    CREATE OBJECT G_CUSTOM_CONTAINER
+      EXPORTING
+        CONTAINER_NAME = G_CONTAINER.
+
+    CREATE OBJECT SPLITTER
+      EXPORTING
+        PARENT  = G_CUSTOM_CONTAINER
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD SPLITTER->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = CONTAINER_1.
+
+    CREATE OBJECT GRID1
+      EXPORTING
+        I_PARENT = CONTAINER_1.
+
+
+    PERFORM MONTAR_LAYOUT.
+
+*    CREATE OBJECT OBG_TOOLBAR
+*      EXPORTING
+*        IO_ALV_GRID = GRID1.
+*
+**      * REGISTER EVENT HANDLER
+*    SET HANDLER OBG_TOOLBAR->ON_TOOLBAR FOR GRID1.
+*    SET HANDLER OBG_TOOLBAR->HANDLE_USER_COMMAND FOR GRID1.
+
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_CHECK.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+    CALL METHOD GRID1->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+        IS_LAYOUT            = WA_LAYOUT
+      CHANGING
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = TG_ITENS[].
+
+    CALL METHOD GRID1->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD GRID1->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    SET HANDLER:
+              LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK FOR GRID1,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED_FINISHED FOR GRID1,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED FOR GRID1.
+
+*    POSICIONA SPLITER NA ALTURA X
+    CALL METHOD SPLITTER->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 100.
+  ELSE.
+    IF GRID2 IS NOT INITIAL.
+      PERFORM MONTAR_LAYOUT_CENTRO.
+      IF WG_CADLAN-WAERS_F = 'USD'.
+        PERFORM MONTAR_ESTRUTURA USING:
+               5 'ZIMP_LANC_IMP_CT'         'VALOR_FOR'       'TG_ITENS_C' 'VALOR_FOR'        'VALOR U$'       '15' 'X' ' ' ' '.
+      ENDIF.
+      CALL METHOD GRID2->SET_FRONTEND_FIELDCATALOG
+        EXPORTING
+          IT_FIELDCATALOG = T_FIELDCATALOG[].
+      CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    ENDIF.
+
+    REFRESH T_FIELDCATALOG.
+    IF WG_CADLAN-WAERS_F = 'USD'.
+      PERFORM MONTAR_LAYOUT.
+      PERFORM MONTAR_ESTRUTURA USING:
+              10 'ZIMP_LANC_IMP_CT'         'VALOR_FOR'       'TG_ITENS' 'VALOR_FOR'        'VALOR U$'       '18' 'X' 'X' 'X'.
+
+    ELSE.
+      PERFORM MONTAR_LAYOUT.
+    ENDIF.
+    LOOP AT T_FIELDCATALOG INTO W_FIELDCATALOG
+       WHERE FIELDNAME EQ 'KOSTL_'
+          OR FIELDNAME EQ 'GSBER'
+          OR FIELDNAME EQ 'HKONT'
+          OR FIELDNAME EQ 'DESCR_CAMP_GUIA'
+          OR FIELDNAME EQ 'VALOR_IMP'.
+      IF W_FIELDCATALOG-FIELDNAME EQ 'HKONT'.
+        W_FIELDCATALOG-OUTPUTLEN = '15'.
+      ELSEIF W_FIELDCATALOG-FIELDNAME EQ 'DESCR_CAMP_GUIA'.
+        W_FIELDCATALOG-OUTPUTLEN = '20'.
+      ELSEIF WG_CADLAN-LOTE IS NOT INITIAL AND WG_CADLAN-COD_IMPOSTO IS NOT INITIAL.
+        W_FIELDCATALOG-EDIT      = 'X'.
+        W_FIELDCATALOG-EMPHASIZE = 'X'.
+        IF W_FIELDCATALOG-FIELDNAME EQ 'GSBER'.
+          W_FIELDCATALOG-F4AVAILABL = 'X'.
+        ENDIF.
+        IF W_FIELDCATALOG-FIELDNAME EQ 'VALOR_IMP'.
+          W_FIELDCATALOG-OUTPUTLEN = '15'.
+        ENDIF.
+      ELSE.
+        W_FIELDCATALOG-EDIT      = ' '.
+        W_FIELDCATALOG-EMPHASIZE = ' '.
+      ENDIF.
+      MODIFY T_FIELDCATALOG FROM W_FIELDCATALOG.
+    ENDLOOP.
+    LOOP AT T_FIELDCATALOG INTO W_FIELDCATALOG
+       WHERE FIELDNAME EQ 'KOSTL_'
+          OR FIELDNAME EQ 'VALOR_IMP'
+          OR FIELDNAME EQ 'VALOR_FOR'
+          OR FIELDNAME EQ 'CHECKBOX'.
+      IF WG_ACAO = C_DISPLA.
+        W_FIELDCATALOG-EDIT     = ' '.
+        W_FIELDCATALOG-EMPHASIZE = ' '.
+      ELSE.
+        W_FIELDCATALOG-EDIT      = 'X'.
+        W_FIELDCATALOG-EMPHASIZE = 'X'.
+      ENDIF.
+      MODIFY T_FIELDCATALOG FROM W_FIELDCATALOG.
+    ENDLOOP.
+
+    CALL METHOD GRID1->SET_FRONTEND_FIELDCATALOG
+      EXPORTING
+        IT_FIELDCATALOG = T_FIELDCATALOG[].
+    CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+
+    IF GRID4 IS NOT INITIAL.
+      PERFORM MONTAR_LAYOUT_CL.
+      CALL METHOD GRID4->SET_FRONTEND_FIELDCATALOG
+        EXPORTING
+          IT_FIELDCATALOG = T_FIELDCATALOG[].
+      CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    ENDIF.
+
+  ENDIF.
+
+  IF G_CUSTOM_CONT_DESC IS INITIAL.
+    CREATE OBJECT G_CUSTOM_CONT_DESC
+      EXPORTING
+        CONTAINER_NAME = G_DESCBOX.
+
+    IF G_CUSTOM_CONT_DESC IS NOT INITIAL.
+      CREATE OBJECT OBG_DESCBOX
+        EXPORTING
+          PARENT            = G_CUSTOM_CONT_DESC
+          WORDWRAP_MODE     = CL_GUI_TEXTEDIT=>WORDWRAP_AT_FIXED_POSITION
+          WORDWRAP_POSITION = 72
+          MAX_NUMBER_CHARS  = 350.
+
+      CALL METHOD OBG_DESCBOX->SET_TOOLBAR_MODE
+        EXPORTING
+          TOOLBAR_MODE = '0'.
+
+      CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+        EXPORTING
+          READONLY_MODE = 1.
+    ENDIF.
+  ENDIF.
+
+  "GRID3
+  IF OBG_CONTEINER_ERR IS INITIAL.
+    CREATE OBJECT OBG_CONTEINER_ERR
+      EXPORTING
+        CONTAINER_NAME = G_CC_ERR.
+
+
+    CREATE OBJECT GRID3
+      EXPORTING
+        I_PARENT = OBG_CONTEINER_ERR.
+
+
+    PERFORM MONTAR_LAYOUT_ERR.
+
+    REFRESH: TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+*    WA_LAYOUT-CWIDTH_OPT = C_X.
+    WA_LAYOUT-NO_TOOLBAR = SPACE.
+*     WA_LAYOUT-COL_OPT    = C_X.
+
+    "PERFORM MONTAR_LAYOUT_DOCS.
+
+    CALL METHOD GRID3->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = WA_LAYOUT
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+      CHANGING
+        IT_FILTER            = TL_FILTER
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = IT_ZIB_CONTABIL_ERR[].
+
+    CALL METHOD GRID3->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+  ELSE.
+    CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+*  "Grid4
+*  IF g_copia_lote IS INITIAL.
+*    "RJF
+**    WA_LAYOUT-CWIDTH_OPT = C_X.
+*    wa_layout-zebra      = c_x.
+**    WA_LAYOUT-NO_TOOLBAR = C_X.
+**    WA_LAYOUT-SGL_CLK_HD = C_X.
+*    wa_layout-no_rowmark = c_x.
+**    WA_LAYOUT-COL_OPT    = C_X.
+*    wa_stable-row        = c_x.
+*    wa_layout-sel_mode   = 'A'.
+*    wa_layout-cwidth_opt   = 'X'.
+*    wa_layout-box_fname    = 'MARK'.
+*
+**  CREATE OBJECT g_copia_lote
+**      EXPORTING
+**        container_name = g_copialote.
+**
+**     CREATE OBJECT grid3
+**      EXPORTING
+**        i_parent = g_copia_lote.
+*
+*    CREATE OBJECT g_copia_lote
+*      EXPORTING
+*        container_name = g_copialote. "G_CONTAINER.
+*
+*    CREATE OBJECT splitter
+*      EXPORTING
+*        parent  = g_copia_lote
+*        rows    = 2
+*        columns = 1.
+*
+*    CALL METHOD splitter->get_container
+*      EXPORTING
+*        row       = 1
+*        column    = 1
+*      RECEIVING
+*        container = container_4.
+*
+*    CREATE OBJECT grid4
+*      EXPORTING
+*        i_parent = container_4.
+*
+*    "RJF
+*
+*    PERFORM montar_layout_cl.
+*    CREATE OBJECT obg_toolbar
+*      EXPORTING
+*        io_alv_grid = grid4.
+*
+**      * Register event handler
+*    SET HANDLER obg_toolbar->on_toolbar FOR grid4.
+*    SET HANDLER obg_toolbar->handle_user_command FOR grid4.
+*
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_delete_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_insert_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_move_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_paste.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_paste_new_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_undo.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_append_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_copy.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_copy_row.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_cut.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_loc_cut.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_check.
+*    APPEND wl_function TO tl_function.
+*    wl_function = cl_gui_alv_grid=>mc_fc_refresh.
+*    APPEND wl_function TO tl_function.
+*
+*    CALL METHOD grid4->set_table_for_first_display
+*      EXPORTING
+*        it_toolbar_excluding = tl_function
+*        is_layout            = wa_layout
+*      CHANGING
+*        it_fieldcatalog      = t_fieldcatalog[]
+*        it_outtab            = tg_itens[].
+*
+*    CALL METHOD grid4->register_edit_event
+*      EXPORTING
+*        i_event_id = cl_gui_alv_grid=>mc_evt_modified.
+*
+*    CALL METHOD grid4->register_edit_event
+*      EXPORTING
+*        i_event_id = cl_gui_alv_grid=>mc_evt_enter.
+*
+**    lt_f4-fieldname = 'UMSKZ'.
+**    lt_f4-register  = 'X'.
+**    lt_f4-getbefore = 'X'.
+**    APPEND lt_f4.
+**
+**
+**    CALL METHOD grid4->register_f4_for_fields
+**      EXPORTING
+**        it_f4 = lt_f4[].
+*
+**    SET HANDLER:
+**              LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK FOR GRID4,
+**              LCL_EVENT_HANDLER=>ON_DATA_CHANGED_FINISHED FOR GRID4,
+**              LCL_EVENT_HANDLER=>ON_DATA_CHANGED FOR GRID4,
+**              LCL_EVENT_HANDLER=>ON_ONF4         FOR GRID4.
+*
+*    SET HANDLER:
+*              lcl_event_handler=>on_double_click FOR grid4,
+*              lcl_event_handler=>on_data_changed_finished FOR grid4,
+*              lcl_event_handler=>on_data_changed FOR grid4.
+*
+*
+**    posiciona spliter na altura x
+*    CALL METHOD splitter->set_row_height
+*      EXPORTING
+*        id     = 1
+*        height = 100.
+*  ELSE.
+*    CALL METHOD grid4->set_frontend_fieldcatalog
+*      EXPORTING
+*        it_fieldcatalog = t_fieldcatalog[].
+*
+*    CALL METHOD grid4->refresh_table_display
+*      EXPORTING
+*        is_stable = wa_stable.
+*
+*
+*  ENDIF.
+
+ENDMODULE.                 " CRIA_OBJETOS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100 INPUT.
+  DATA: W_ANSWER.
+  DATA: P_BUKRS  TYPE T001-BUKRS,
+        P_LOTE   TYPE ZIMP_LANC_IMPOST-LOTE,
+        P_DESC   TYPE ZIMP_CAD_LOTE-DESCR_LOTE,
+        XTOTAL_R TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+        P_CHEQ   TYPE ZIMP_LANC_IMPOST-ST_FECHA.
+  DATA: LN_CONT(1) TYPE N.
+  DATA: CURSORFIELD(30) TYPE C,
+        CURSORLINE(30)  TYPE C,
+        CURSORVALUE(30) TYPE C.
+
+* ---> S4 Migration - 17/07/2023 - CA
+  DATA: LT_RETURNS         TYPE TABLE OF BAPIRET2,
+        LS_COELDES         TYPE BAPI1030_CEOUTPUTLIST,
+        LV_CONTROLLINGAREA TYPE BAPI1030_GEN-CO_AREA,
+        LV_COSTELEMENT     TYPE BAPI1030_GEN-COST_ELEM,
+        LV_KEYDATE         TYPE BAPI1030_GEN-SOME_DATE.
+* <--- S4 Migration - 17/07/2023 - CA
+
+  CASE OK-CODE.
+    WHEN 'ZIMP54'.
+*      SUBMIT zimp54 WITH p_bukrs EQ WG_CADLAN-BUKRS
+*                    WITH p_lote  EQ WG_CADLAN-LOTE AND RETURN.
+    WHEN 'ZIMP57'.
+      CALL TRANSACTION 'ZIMP57' AND SKIP FIRST SCREEN.
+    WHEN 'PICK'.
+      GET CURSOR FIELD CURSORFIELD LINE CURSORLINE VALUE CURSORVALUE.
+      IF NOT WA_ZIB_CONTABIL_CHV IS INITIAL AND  NOT CURSORVALUE IS INITIAL AND CURSORFIELD = 'WG_CADLAN-DOC_CONTABIL'.
+        SET PARAMETER ID 'BLN' FIELD CURSORVALUE.
+        SET PARAMETER ID 'BUK' FIELD WA_ZIB_CONTABIL_CHV-BUKRS.
+        SET PARAMETER ID 'GJR' FIELD WA_ZIB_CONTABIL_CHV-GJAHR.
+        CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+      ENDIF.
+    WHEN C_DELDOC.
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+*         TITLEBAR              = ' '
+*         DIAGNOSE_OBJECT       = ' '
+          TEXT_QUESTION         = 'CONFIRMA A EXCLUSÃO DO IMPOSTO?'
+          TEXT_BUTTON_1         = 'SIM'(001)
+          ICON_BUTTON_1         = 'ICON_OKAY '
+          TEXT_BUTTON_2         = 'NÃO'(002)
+          ICON_BUTTON_2         = 'ICON_CANCEL'
+          DEFAULT_BUTTON        = '1'
+          DISPLAY_CANCEL_BUTTON = ' '
+*         USERDEFINED_F1_HELP   = ' '
+          START_COLUMN          = 25
+          START_ROW             = 6
+*         POPUP_TYPE            =
+*         IV_QUICKINFO_BUTTON_1 = ' '
+*         IV_QUICKINFO_BUTTON_2 = ' '
+        IMPORTING
+          ANSWER                = W_ANSWER
+*       TABLES
+*         PARAMETER             =
+        EXCEPTIONS
+          TEXT_NOT_FOUND        = 1
+          OTHERS                = 2.
+      .
+      IF SY-SUBRC <> 0.
+        MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+                WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      ENDIF.
+      IF W_ANSWER = '1'.
+        PERFORM ELIMINAR_LANCTO.
+      ENDIF.
+    WHEN C_REINICIA.
+      PERFORM LIMPA_CAMPOS.
+      CLEAR: WG_CADLAN-BUKRS,
+             WG_CADLAN-LOTE ,
+             WG_CADLAN-DESCR_LOTE.
+
+      REFRESH: TG_FIELDS.
+      PERFORM TRATA_CAMPOS USING SPACE
+                               'GR4'
+                                C_0       "INPUT 1     NO INPUT 0
+                                C_1.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR3'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_0.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR2'
+                                    C_1       "INPUT 1     NO INPUT 0
+                                    C_0.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                                'GR1'
+                                 C_1       "INPUT 1     NO INPUT 0
+                                 C_0.      "INVISIBLE 1 VISIBLE 0
+
+      CALL METHOD OBG_DESCBOX->SET_TEXT_AS_R3TABLE
+        EXPORTING
+          TABLE = TG_EDITOR.
+      CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+        EXPORTING
+          READONLY_MODE = 1.
+    WHEN C_SEARCH.
+      "CLEAR xmodif. 142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (Motivo de habilitar ao apertar o Enter)
+      PERFORM BUSCA_DADOS.
+      PERFORM VERIFICA_ERROS.
+      CALL FUNCTION 'Z_DOC_CHECK_NEW'
+        EXPORTING
+          I_SCREEN      = '100'
+          I_SHOW        = ''
+          I_REPID       = SY-REPID
+          I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+          I_SET_FIELD   = 'X_FIELD'
+        IMPORTING
+          E_MESSAGEM    = WG_MENSAGEM
+        TABLES
+          IT_MSGS       = TG_MSG_RET.
+    WHEN C_SAVE.
+
+
+      "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (cÓDIGO DE barras)
+**********************************************************************
+      "Se o Código de barras existir ele entra na condição abaixo
+      IF WG_CADLAN-COD_BARRAS IS NOT INITIAL.
+
+        SELECT SINGLE * FROM ZIMP_LANC_IMPOST
+          WHERE COD_BARRAS = @WG_CADLAN-COD_BARRAS
+          AND DOC_IMPOSTO NE @WG_CADLAN-DOC_IMPOSTO "CS2025000099 REVERSÃO TRAVAS ZIMP53 e ZIMP57 - BG #164810
+          INTO @DATA(aux_ZIMP_LANC_IMPOST).
+
+        IF aux_ZIMP_LANC_IMPOST-LOTE > 0 AND aux_ZIMP_LANC_IMPOST-LOEKZ IS INITIAL.
+
+          "Verifica o lote para pegar se esta aprovado ou não
+          SELECT SINGLE *
+            FROM ZIMP_CAD_LOTE
+            INTO @DATA(AUX_ZIMP_CAD_LOTE)
+             WHERE  LOTE EQ @aux_ZIMP_LANC_IMPOST-LOTE
+            AND LOEKZ NE 'X'. "IR211783 - Desconsiderar lote deletado na validação de código de barras #160309 - BG
+
+          DATA(MSG1) = |Já existe um lote { AUX_ZIMP_CAD_LOTE-BUKRS } / { AUX_ZIMP_CAD_LOTE-LOTE } / { AUX_ZIMP_LANC_IMPOST-DOC_IMPOSTO } para este código de barras, excluir o lote para seguir com o lançamento.|.
+          DATA(MSG2) = |Já existe um lote { AUX_ZIMP_CAD_LOTE-BUKRS } / { AUX_ZIMP_CAD_LOTE-LOTE } / { AUX_ZIMP_LANC_IMPOST-DOC_IMPOSTO } para este código de barras.|.
+
+          IF  AUX_ZIMP_CAD_LOTE IS NOT INITIAL.
+
+            CASE AUX_ZIMP_CAD_LOTE-STATUS_LOTE.
+              WHEN 'A'.
+
+                "CONCATENATE '%' aux_ZIMP_LANC_IMPOST-lote INTO DATA(aux_xblnr).
+
+                CONCATENATE 'ZP' aux_ZIMP_LANC_IMPOST-BUKRS aux_ZIMP_LANC_IMPOST-DOC_IMPOSTO SY-DATUM+0(4) INTO DATA(aux_AWKEY).
+
+                SELECT SINGLE *
+                 FROM BKPF
+                 WHERE BUKRS = @aux_ZIMP_LANC_IMPOST-BUKRS
+                 AND   AWKEY = @aux_AWKEY
+                 "AND   xblnr = @aux_xblnr
+                               INTO @DATA(AUX_BKPF).
+
+                IF   AUX_BKPF-STGRD IS NOT INITIAL
+                AND AUX_BKPF-AWREF_REV IS NOT INITIAL AND AUX_ZIMP_CAD_LOTE-LOEKZ IS INITIAL.
+                  MESSAGE MSG1 TYPE 'S' DISPLAY LIKE 'E'.
+                  EXIT.
+                ELSEIF  AUX_BKPF-STGRD IS INITIAL
+                AND AUX_BKPF-AWREF_REV IS INITIAL AND AUX_ZIMP_CAD_LOTE-LOEKZ IS INITIAL.
+                  MESSAGE MSG2 TYPE 'S' DISPLAY LIKE 'E'.
+                  EXIT.
+                ENDIF.
+
+              WHEN OTHERS.
+                MESSAGE MSG2 TYPE 'S' DISPLAY LIKE 'E'.
+                EXIT.
+            ENDCASE.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+
+**********************************************************************
+
+
+
+      AUTHORITY-CHECK OBJECT 'A_S_WERK'
+      ID 'BUKRS' FIELD WG_CADLAN-BUKRS
+      ID 'WERKS' FIELD WG_CADLAN-GSBER.
+      IF SY-SUBRC <> 0.
+        CONCATENATE  'SEM AUTORIZAÇÃO EMPRESA/FILIAL' WG_CADLAN-BUKRS '/' WG_CADLAN-GSBER INTO VTEXTO SEPARATED BY SPACE .
+        MESSAGE VTEXTO TYPE 'E'.
+        EXIT.
+      ENDIF.
+      DELETE TG_ITENS WHERE  COD_ABERTURA IS INITIAL.
+
+      CALL METHOD GRID1->CHECK_CHANGED_DATA.
+      PERFORM VERIFICA_ERROS.
+      IF TG_MSG_RET[] IS INITIAL.
+        CLEAR WG_ACAO.
+        PERFORM GRAVA_DADOS.
+        REFRESH: TG_FIELDS.
+        PERFORM TRATA_CAMPOS USING SPACE
+                                'GR4'
+                                   C_0       "INPUT 1     NO INPUT 0
+                                   C_1.      "INVISIBLE 1 VISIBLE 0
+        PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR3'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_0.      "INVISIBLE 1 VISIBLE 0
+        PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR2'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_0.      "INVISIBLE 1 VISIBLE 0
+        PERFORM TRATA_CAMPOS USING SPACE
+                                  'GR1'
+                                   C_1       "INPUT 1     NO INPUT 0
+                                   C_0.      "INVISIBLE 1 VISIBLE 0
+        CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+          EXPORTING
+            READONLY_MODE = 1.
+
+      ELSE.
+        MESSAGE S000(ZWRM001) DISPLAY LIKE 'E' WITH 'HÁ ERRO NO DOCUMENTO.'.
+        CALL FUNCTION 'Z_DOC_CHECK_NEW'
+          EXPORTING
+            I_SCREEN      = '100'
+            I_SHOW        = C_X
+            I_REPID       = SY-REPID
+            I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+            I_SET_FIELD   = 'X_FIELD'
+          IMPORTING
+            E_MESSAGEM    = WG_MENSAGEM
+          TABLES
+            IT_MSGS       = TG_MSG_RET.
+      ENDIF.
+
+    WHEN C_BACK.
+      CLEAR WG_ACAO.
+    WHEN C_DISPLA.
+      WG_ACAO = C_DISPLA.
+      PERFORM LIMPA_CAMPOS.
+      CLEAR: WG_CADLAN-LOTE, WG_CADLAN-BUKRS, WG_CADLAN-DESCR_LOTE, WG_CADLAN-DOC_IMPOSTO.
+      REFRESH: TG_FIELDS.
+      PERFORM TRATA_CAMPOS USING SPACE
+                               'GR4'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_1.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR3'
+                                    C_1       "INPUT 1     NO INPUT 0
+                                    C_0.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                           'GR2'
+                              C_0       "INPUT 1     NO INPUT 0
+                              C_0.      "INVISIBLE 1 VISIBLE 0
+      PERFORM TRATA_CAMPOS USING SPACE
+                                'GR1'
+                                 C_0       "INPUT 1     NO INPUT 0
+                                 C_0.      "INVISIBLE 1 VISIBLE 0
+    WHEN C_ADD.
+      PERFORM F_ACTION_ADD.
+
+    WHEN C_CANCEL.
+      CLEAR WG_ACAO.
+    WHEN C_ATUALI.
+
+    WHEN C_MODIF.
+
+      "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (cÓDIGO DE barras)
+**********************************************************************
+
+      SELECT SINGLE *
+        FROM ZIMP_CAD_LOTE
+        INTO @DATA(AUX2_ZIMP_CAD_LOTE)
+         WHERE  LOTE EQ @WG_CADLAN-LOTE.
+
+      IF  AUX2_ZIMP_CAD_LOTE IS NOT INITIAL.
+        DATA(MSG3) = |O doc. contábil encontra-se estornado, fazer a exclusão do lote|.
+        DATA(MSG4) = |O lote encontra-se aprovado, não sendo possível de modificação|.
+        CASE AUX2_ZIMP_CAD_LOTE-STATUS_LOTE.
+          WHEN 'A'.
+
+            CONCATENATE 'ZP' WG_CADLAN-BUKRS WG_CADLAN-DOC_IMPOSTO '%' INTO DATA(AUX2_XOBJ_KEY).
+
+            SELECT SINGLE *
+           FROM ZIB_CONTABIL_CHV
+           WHERE OBJ_KEY LIKE @AUX2_XOBJ_KEY
+           AND   BUKRS   EQ @WG_CADLAN-BUKRS
+                      INTO @DATA(AUX2_ZIB_CONTABIL_CHV).
+
+            SELECT SINGLE *
+             FROM BKPF
+             WHERE BUKRS = @AUX2_ZIB_CONTABIL_CHV-BUKRS
+             AND   BELNR = @AUX2_ZIB_CONTABIL_CHV-BELNR
+             AND   GJAHR = @AUX2_ZIB_CONTABIL_CHV-GJAHR
+                           INTO @DATA(AUX2_BKPF).
+
+            IF   AUX2_BKPF-STGRD IS NOT INITIAL
+            AND AUX2_BKPF-AWREF_REV IS NOT INITIAL.
+              IF AUX2_ZIMP_CAD_LOTE-LOEKZ IS INITIAL.
+                MESSAGE MSG3 TYPE 'S' DISPLAY LIKE 'E'.
+                XMODIF = 'X'.
+                "EXIT.
+              ELSEIF   AUX2_BKPF-STGRD IS INITIAL
+              AND AUX2_BKPF-AWREF_REV IS INITIAL.
+                IF AUX2_ZIMP_CAD_LOTE-LOEKZ IS INITIAL.
+                  MESSAGE MSG4 TYPE 'S' DISPLAY LIKE 'E'.
+                  EXIT.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          WHEN OTHERS.
+
+        ENDCASE.
+      ENDIF.
+
+**********************************************************************
+
+      IF WG_CADLAN-DOC_IMPOSTO IS NOT INITIAL.
+        IF WG_ACAO = C_MODIF.
+          CLEAR WG_ACAO.
+          REFRESH: TG_FIELDS.
+          PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR4'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_1.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                   'GR3'
+                                      C_0       "INPUT 1     NO INPUT 0
+                                      C_0.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                   'GR2'
+                                      C_0       "INPUT 1     NO INPUT 0
+                                      C_0.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                    'GR1'
+                                     C_1       "INPUT 1     NO INPUT 0
+                                     C_0.      "INVISIBLE 1 VISIBLE 0
+          CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+            EXPORTING
+              READONLY_MODE = 1.
+        ELSE.
+          WG_ACAO = C_MODIF.
+          REFRESH: TG_FIELDS.
+          PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR4'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_1.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                   'GR3'
+                                      C_0       "INPUT 1     NO INPUT 0
+                                      C_0.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                     'GR2'
+                                        C_1       "INPUT 1     NO INPUT 0
+                                        C_0.      "INVISIBLE 1 VISIBLE 0
+          PERFORM TRATA_CAMPOS USING SPACE
+                                    'GR1'
+                                     C_0       "INPUT 1     NO INPUT 0
+                                     C_0.      "INVISIBLE 1 VISIBLE 0
+          CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+            EXPORTING
+              READONLY_MODE = 0.
+        ENDIF.
+      ENDIF.
+    WHEN C_SHOW_MSGRE.
+      " CLEAR WG_ACAO.
+      PERFORM VERIFICA_ERROS.
+      IF TG_MSG_RET[] IS NOT INITIAL.
+        CALL FUNCTION 'Z_DOC_CHECK_NEW'
+          EXPORTING
+            I_SCREEN      = '100'
+            I_SHOW        = C_X
+            I_REPID       = SY-REPID
+            I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+            I_SET_FIELD   = 'X_FIELD'
+          IMPORTING
+            E_MESSAGEM    = WG_MENSAGEM
+          TABLES
+            IT_MSGS       = TG_MSG_RET.
+
+      ENDIF.
+*---------------------------------------------
+* Início RJF
+    WHEN C_AGR.
+* Agrupamento Processamento
+      VAGRUP = ABAP_TRUE.
+      FREE: TG_ITENS_CL, TG_IMP_LANC_IMPOST, TG_IMP_LANC_IMP_CT.
+      IF WG_CADLAN-LOTE IS NOT INITIAL.
+        SELECT SINGLE LOTE, DESCR_LOTE, BUKRS, USUARIO
+          FROM ZIMP_CAD_LOTE
+          INTO @DATA(WL_LOTE)
+          WHERE LOTE = @WG_CADLAN-LOTE
+          AND LOEKZ = ''
+          AND STATUS_LOTE = ''.
+        IF SY-SUBRC IS INITIAL AND WL_LOTE-LOTE IS NOT INITIAL.
+
+          VG_BUKRS = WL_LOTE-BUKRS.
+          SELECT
+                A~DOC_IMPOSTO,
+                A~BUKRS,
+                A~LOTE,
+                A~DT_VENC,
+                A~DT_APURACAO,
+                A~MES_APURACAO,
+                A~ANO_APURACAO,
+                A~OBSERVACAO,
+                A~COD_IMPOSTO,
+                A~REF_IMPOSTO,
+                A~TP_IMPOSTO,
+                A~COD_PGTO,
+                A~CONV_BANCO,
+                A~HBKID,
+                A~GSBER,
+                A~WAERS,
+                A~WAERS_F,
+                A~IDENTIFICADOR,
+                A~COD_BARRAS,
+                A~QRCODE, "US - 128395
+                A~DATA_ATUAL,
+                A~HORA_ATUAL,
+                A~USUARIO,
+                A~LOEKZ,
+                A~MOEDA_GP_HIST,
+                A~ST_FECHA
+            FROM ZIMP_LANC_IMPOST AS A
+            INNER JOIN J_1BBRANCH AS B
+                                       ON A~BUKRS  EQ B~BUKRS
+                                       AND A~GSBER EQ B~BRANCH
+            INTO TABLE @DATA(LT_IMP_LANC_IMPOST)
+            WHERE A~LOTE        EQ @WG_CADLAN-LOTE
+              AND A~LOEKZ       EQ @ABAP_FALSE.
+
+          IF LT_IMP_LANC_IMPOST IS NOT INITIAL.
+
+            MOVE-CORRESPONDING LT_IMP_LANC_IMPOST[] TO TG_IMP_LANC_IMPOST[].
+
+            SELECT * FROM ZIMP_LANC_IMP_CT
+              INTO TABLE @TG_IMP_LANC_IMP_CT"@DATA(lt_imp_lanc_imp_ct)
+              FOR ALL ENTRIES IN @LT_IMP_LANC_IMPOST
+              WHERE BUKRS        EQ @LT_IMP_LANC_IMPOST-BUKRS
+                AND DOC_IMPOSTO  EQ @LT_IMP_LANC_IMPOST-DOC_IMPOSTO.
+            IF SY-SUBRC IS INITIAL.
+              SORT TG_IMP_LANC_IMP_CT BY DOC_IMPOSTO SEQITEM.
+            ENDIF.
+
+            IF TG_IMP_LANC_IMP_CT[] IS NOT INITIAL.
+              SELECT *
+               FROM TBSL
+               INTO TABLE @DATA(TL_TBSL)
+               FOR ALL ENTRIES IN @TG_IMP_LANC_IMP_CT
+               WHERE BSCHL EQ @TG_IMP_LANC_IMP_CT-BSCHL.
+              IF SY-SUBRC IS INITIAL.
+                SORT TL_TBSL BY BSCHL.
+              ENDIF.
+
+              SELECT * FROM ZIMP_CAD_IMP_CON
+                INTO TABLE @DATA(TL_IMP_CAD_IMP_CON)
+                FOR ALL ENTRIES IN @TG_IMP_LANC_IMP_CT
+                WHERE COD_IMPOSTO EQ @TG_IMP_LANC_IMP_CT-COD_IMPOSTO
+                  AND COD_ABERTURA EQ @TG_IMP_LANC_IMP_CT-COD_ABERTURA.
+*                AND agrupamento EQ @abap_true.
+              IF SY-SUBRC IS INITIAL.
+                SORT TL_IMP_CAD_IMP_CON BY COD_IMPOSTO COD_ABERTURA.
+*            ELSE.
+*              " Não é possível realizar o agrupamento
+*              MESSAGE 'Não é possível realizar o agrupamento'(EE8) TYPE 'I'.
+*              EXIT.
+              ENDIF.
+            ENDIF.
+
+*          FREE ln_cont.
+*          LOOP AT tg_itens WHERE checkbox IS NOT INITIAL.
+*            READ TABLE tl_imp_cad_imp_con INTO DATA(wl_valid)
+*                                        WITH KEY cod_abertura = tg_itens-cod_abertura
+*                                        BINARY SEARCH.
+*            IF sy-subrc IS INITIAL.
+*              ln_cont = ln_cont + 1.
+*            ENDIF.
+*          ENDLOOP.
+*
+*          IF ln_cont LT 2.
+*            MESSAGE 'Não é possível realizar o agrupamento(Contabilização)'(EE9) TYPE 'I'.
+*            EXIT.
+*          ENDIF.
+
+            LOOP AT LT_IMP_LANC_IMPOST INTO DATA(WA_LANC).
+              MOVE-CORRESPONDING WA_LANC TO TG_ITENS_CL.
+              IF TG_ITENS_CL-MES_APURACAO EQ 0 OR TG_ITENS_CL-MES_APURACAO IS INITIAL.
+                TG_ITENS_CL-MES_APURACAO = WA_LANC-DT_APURACAO+4(2).
+              ENDIF.
+              IF TG_ITENS_CL-ANO_APURACAO EQ 0 OR TG_ITENS_CL-ANO_APURACAO IS INITIAL.
+                TG_ITENS_CL-ANO_APURACAO = WA_LANC-DT_APURACAO(4).
+              ENDIF.
+              MOVE ICON_LED_YELLOW TO TG_ITENS_CL-ICON. " MOVE icon_checked TO tg_itens_cl-icon.
+              IF TG_ITENS_CL-OBSERVACAO IS INITIAL AND TG_ITENS_CL-DOC_IMPOSTO IS INITIAL.
+                MOVE: WG_CADLAN-OBSERVACAO TO TG_ITENS_CL-OBSERVACAO.
+              ENDIF.
+
+              LOOP AT TG_IMP_LANC_IMP_CT INTO DATA(WA_LANC_IMP_CT) WHERE DOC_IMPOSTO EQ WA_LANC-DOC_IMPOSTO.
+
+
+
+                IF TL_TBSL[] IS NOT INITIAL.
+
+                  READ TABLE TL_TBSL ASSIGNING FIELD-SYMBOL(<FS_TBSL>)
+                    WITH KEY BSCHL = WA_LANC_IMP_CT-BSCHL
+                    BINARY SEARCH.
+
+                  IF WA_LANC_IMP_CT-SEQITEM LE 2.
+
+                    IF <FS_TBSL> IS ASSIGNED AND <FS_TBSL>-SHKZG NE 'H'.
+                      TG_ITENS_CL-KOSTL = WA_LANC_IMP_CT-KOSTL.
+                      TG_ITENS_CL-BSCHL = WA_LANC_IMP_CT-BSCHL.
+                      TG_ITENS_CL-COD_ABERTURAD  = WA_LANC_IMP_CT-COD_ABERTURA.
+                      TG_ITENS_CL-VLR_MOEDA_DOCD = WA_LANC_IMP_CT-VALOR_IMP.
+                      ADD WA_LANC_IMP_CT-VALOR_IMP TO XTOTAL_R.
+                      DATA(LV_CDEB) = ABAP_TRUE.
+                    ELSE.
+                      IF WA_LANC_IMP_CT-VALOR_IMP GT 0.
+                        TG_ITENS_CL-VLR_MOEDA_DOCC = WA_LANC_IMP_CT-VALOR_IMP * ( - 1 ).
+                      ELSE.
+                        TG_ITENS_CL-VLR_MOEDA_DOCC = WA_LANC_IMP_CT-VALOR_IMP.
+                      ENDIF.
+                      TG_ITENS_CL-COD_ABERTURAC  = WA_LANC_IMP_CT-COD_ABERTURA.
+                      TG_ITENS_CL-BSCHLC = WA_LANC_IMP_CT-BSCHL.
+
+                      ADD WA_LANC_IMP_CT-VALOR_IMP TO XTOTAL_R.
+                      DATA(LV_CCRED) = ABAP_TRUE.
+                    ENDIF.
+                  ENDIF.
+                  IF WA_LANC_IMP_CT-SEQITEM GT 2.
+
+                    IF <FS_TBSL> IS ASSIGNED AND <FS_TBSL>-SHKZG NE 'H'.
+                      TG_ITENS_CL-KOSTL = WA_LANC_IMP_CT-KOSTL.
+                      TG_ITENS_CL-BSCHLDC = WA_LANC_IMP_CT-BSCHL.
+                      TG_ITENS_CL-COD_ABERTURADC  = WA_LANC_IMP_CT-COD_ABERTURA.
+                      TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CT-VALOR_IMP.
+                      ADD WA_LANC_IMP_CT-VALOR_IMP TO XTOTAL_R.
+                    ELSE.
+                      IF WA_LANC_IMP_CT-VALOR_IMP GT 0.
+                        TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CT-VALOR_IMP * ( - 1 ).
+                      ELSE.
+                        TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CT-VALOR_IMP.
+                      ENDIF.
+                      TG_ITENS_CL-COD_ABERTURADC  = WA_LANC_IMP_CT-COD_ABERTURA.
+                      TG_ITENS_CL-BSCHLDC = WA_LANC_IMP_CT-BSCHL.
+
+                      ADD WA_LANC_IMP_CT-VALOR_IMP TO XTOTAL_R.
+                    ENDIF.
+                  ENDIF.
+                ENDIF.
+              ENDLOOP.
+
+              IF XTOTAL_R NE 0.
+                MOVE ICON_MESSAGE_ERROR TO TG_ITENS_CL-ICON.
+                READ TABLE TG_IMP_LANC_IMP_CT
+                ASSIGNING FIELD-SYMBOL(<FS_IMP_CTX>)
+                WITH KEY DOC_IMPOSTO = WA_LANC-DOC_IMPOSTO
+                         VALOR_IMP = XTOTAL_R.
+                IF <FS_IMP_CTX> IS ASSIGNED AND <FS_IMP_CTX> IS NOT INITIAL.
+                  TG_ITENS_CL-COD_ABERTURADC  = <FS_IMP_CTX>-COD_ABERTURA.
+                ENDIF.
+              ENDIF.
+
+              APPEND TG_ITENS_CL TO TG_ITENS_CL.
+              CLEAR: TG_ITENS_CL, XTOTAL_R.
+            ENDLOOP.
+          ENDIF.
+
+
+*BUG IMPEDITIVO 96635* / Anderson Oenning
+          "Setar forncedor, cliente e conta.
+          LOOP AT TG_ITENS_CL ASSIGNING FIELD-SYMBOL(<LS_ITENS_CL>).
+            LOOP AT TL_IMP_CAD_IMP_CON ASSIGNING FIELD-SYMBOL(<LS_IMP_CAD_IMP_CON>) WHERE COD_IMPOSTO EQ <LS_ITENS_CL>-COD_IMPOSTO.
+              IF <LS_IMP_CAD_IMP_CON>-LIFNR IS NOT INITIAL.
+                <LS_ITENS_CL>-LIFNR = <LS_IMP_CAD_IMP_CON>-LIFNR.
+              ENDIF.
+
+              IF <LS_IMP_CAD_IMP_CON>-KUNNR IS NOT INITIAL.
+                <LS_ITENS_CL>-KUNNR = <LS_IMP_CAD_IMP_CON>-KUNNR.
+              ENDIF.
+
+              IF <LS_IMP_CAD_IMP_CON>-HKONT IS NOT INITIAL.
+                <LS_ITENS_CL>-HKONT = <LS_IMP_CAD_IMP_CON>-HKONT.
+              ENDIF.
+            ENDLOOP.
+
+
+            SELECT SINGLE *
+            FROM TKA02
+            INTO @DATA(WL_TKA02)
+            WHERE BUKRS  = @WG_CADLAN-BUKRS.
+            IF SY-SUBRC EQ 0.
+              MOVE WL_TKA02-KOKRS TO VKOKRS.
+
+* ---> S4 Migration - 17/07/2023 - CA
+*            SELECT SINGLE *
+*              FROM cskb
+*              INTO wl_cskb
+*              WHERE  kokrs  = wl_tka02-kokrs
+*              AND    kstar  = @<ls_itens_cl>-hkont
+*              AND    datab  LE sy-datum
+*              AND    datbi  GE sy-datum.
+
+              LV_CONTROLLINGAREA  = WL_TKA02-KOKRS.
+              LV_COSTELEMENT      = <LS_ITENS_CL>-HKONT.
+              LV_KEYDATE          = SY-DATUM.
+
+              CLEAR: LT_RETURNS[], LS_COELDES.
+
+              CALL FUNCTION 'K_COSTELEM_BAPI_GETDETAIL'
+                EXPORTING
+                  CONTROLLINGAREA   = LV_CONTROLLINGAREA
+                  COSTELEMENT       = LV_COSTELEMENT
+                  KEYDATE           = LV_KEYDATE
+                IMPORTING
+                  COSTELEMENTDETAIL = LS_COELDES
+                TABLES
+                  RETURN            = LT_RETURNS.
+
+              READ TABLE LT_RETURNS TRANSPORTING NO FIELDS WITH KEY TYPE = 'E'.
+
+              IF SY-SUBRC <> 0.
+*            IF sy-subrc = 0.
+* <--- S4 Migration - 17/07/2023 - CA
+                "Informar o centro de custo"
+                MOVE: TEXT-E01                  TO TG_MSG_RET-MSG,
+                'kostl'                         TO TG_MSG_RET-FIELD.
+                CONCATENATE  TG_MSG_RET-MSG 'Informe o centro de custo' INTO TG_MSG_RET-MSG SEPARATED BY SPACE.
+                APPEND TG_MSG_RET.
+                CLEAR: TG_MSG_RET.
+
+                <LS_ITENS_CL>-ZCHECK_CCUSTO = ABAP_TRUE.
+              ENDIF.
+            ENDIF.
+            CLEAR: WL_TKA02, WL_TKA02.
+          ENDLOOP.
+
+          " Screen Agrupamento
+          CALL SCREEN 0600 STARTING AT 10 1.
+
+          VAGRUP = ABAP_FALSE.
+          FREE: TG_MSG_RET.
+
+          CALL FUNCTION 'Z_DOC_CHECK_NEW'
+            EXPORTING
+              I_SCREEN      = '100'
+              I_SHOW        = ''
+              I_REPID       = SY-REPID
+              I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+              I_SET_FIELD   = 'X_FIELD'
+            IMPORTING
+              E_MESSAGEM    = WG_MENSAGEM
+            TABLES
+              IT_MSGS       = TG_MSG_RET.
+        ELSE. " lote
+          MESSAGE 'Lote não existente!'(I02) TYPE 'I'.
+        ENDIF.
+      ELSE.
+        MESSAGE 'Preencher o campo Lote!'(I03) TYPE 'I'.
+      ENDIF.
+    WHEN C_EXIT.
+      LEAVE PROGRAM.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*&      FORM  MONTAR_LAYOUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT .
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 ' '                        ' '               'TG_ITENS' 'CHECKBOX'         ' '           '03' 'X' ' ' ' ',
+        1 'ZIMP_CAMPOS_GUIA'         'COD_CAMP_GUIA'   'TG_ITENS' 'COD_ABERTURA'     'COD.ABER'    '10' ' ' ' ' ' ',
+        2 'ZIMP_CAMPOS_GUIA'         'DESCR_CAMP_GUIA' 'TG_ITENS' 'DESCR_CAMP_GUIA'  'DESCRIÇÃO'   '20' ' ' ' ' ' ',
+        3 'ZIMP_CAD_IMP_CON'         'BSCHL'           'TG_ITENS' 'BSCHL'            ' '           '07' ' ' ' ' ' ',
+        3 'ZIMP_CAD_IMP_CON'         'UMSKZ'           'TG_ITENS' 'UMSKZ'            'RZ.ESP '     '05' ' ' ' ' ' ',
+        4 'ZFIWRT0003'               'HKONT'           'TG_ITENS' 'HKONT'            'CONTA '      '10' ' ' ' ' ' ',
+        5 'ZIMP_LANC_IMP_CT'         'LIFNR'           'TG_ITENS' 'LIFNR'            'FORNECEDOR'  '10' 'X' ' ' ' ',
+        5 'ZIMP_LANC_IMP_CT'         'KUNNR'           'TG_ITENS' 'KUNNR'            'CLIENTE'     '10' 'X' ' ' ' ',
+        6 ' '                        ' '               'TG_ITENS' 'KOSTL_C'          'C.CUSTO '    '08' ' ' ' ' ' ',
+        8 'ZIMP_CAD_IMP_CON'         'DEBCRE'          'TG_ITENS' 'DEBCRE'           'D\C'         '05' ' ' ' ' ' ',
+        9 'ZIMP_LANC_IMP_CT'         'VALOR_IMP'       'TG_ITENS' 'VALOR_IMP'        'VALOR R$'    '15' ' ' 'X' ' '.
+
+ENDFORM.                    " MONTAR_LAYOUT
+*&---------------------------------------------------------------------*
+*&      FORM  MONTAR_ESTRUTURA
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+FORM MONTAR_ESTRUTURA USING VALUE(P_COL_POS)       TYPE I
+                            VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                            VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                            VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                            VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                            VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                            VALUE(P_OUTPUTLEN)
+                            VALUE(P_EDIT)
+                            VALUE(P_SUM)
+                            VALUE(P_EMPHASIZE).
+
+  CLEAR W_FIELDCATALOG.
+  W_FIELDCATALOG-FIELDNAME     = P_FIELD.
+  W_FIELDCATALOG-TABNAME       = P_TABNAME.
+  W_FIELDCATALOG-REF_TABLE     = P_REF_TABNAME.
+  W_FIELDCATALOG-REF_FIELD     = P_REF_FIELDNAME.
+  W_FIELDCATALOG-KEY           = ' '.
+  W_FIELDCATALOG-EDIT          = P_EDIT.
+  W_FIELDCATALOG-DO_SUM        = P_SUM.
+
+  W_FIELDCATALOG-COL_POS         = P_COL_POS.
+  IF P_OUTPUTLEN IS NOT INITIAL.
+    W_FIELDCATALOG-OUTPUTLEN      = P_OUTPUTLEN.
+  ENDIF.
+  W_FIELDCATALOG-NO_OUT        = ' '.
+  W_FIELDCATALOG-REPTEXT       = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_S     = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_M     = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_L     = P_SCRTEXT_L.
+  W_FIELDCATALOG-EMPHASIZE     = P_EMPHASIZE.
+
+  IF P_FIELD EQ 'CHECKBOX'.
+    W_FIELDCATALOG-CHECKBOX = C_X.
+  ENDIF.
+
+  IF P_FIELD EQ 'KOSTL_C'.
+    W_FIELDCATALOG-CHECKBOX = C_X.
+  ENDIF.
+
+  APPEND W_FIELDCATALOG TO T_FIELDCATALOG.
+
+ENDFORM.                    " MONTAR_ESTRUTURA
+*&---------------------------------------------------------------------*
+*&      FORM  BUSCA_DADOS
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM BUSCA_DADOS .
+  DATA: WL_ZIMP_LANC_IMPOST     TYPE ZIMP_LANC_IMPOST,
+        WL_ZIMP_CAD_IMPOSTO     TYPE ZIMP_CAD_IMPOSTO,
+        WL_ZIMP_CAD_LOTE        TYPE ZIMP_CAD_LOTE,
+        WL_ZIMP_TIPOS_IMPOS     TYPE ZIMP_TIPOS_IMPOS,
+        WL_T001                 TYPE T001,
+        WL_J_1BBRANCH           TYPE J_1BBRANCH,
+        WL_T012                 TYPE T012,
+        WL_BNKA                 TYPE BNKA,
+        WL_TKA02                TYPE TKA02,
+* ---> S4 Migration - 17/07/2023 - CA
+*        wl_cskb                 TYPE cskb,
+*        tl_cskb                 TYPE TABLE OF cskb,
+* <--- S4 Migration - 17/07/2023 - CA
+        WL_TBSL                 TYPE TBSL,
+        TL_TBSL                 TYPE TABLE OF TBSL             WITH HEADER LINE,
+        TL_ZIMP_LANC_IMP_CT     TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+        TL_ZIMP_LANC_IMP_CT_AUX TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+        TL_ZIMP_CAD_IMP_CON     TYPE TABLE OF ZIMP_CAD_IMP_CON WITH HEADER LINE,
+        TL_ZIMP_CAMPOS_GUIA     TYPE TABLE OF ZIMP_CAMPOS_GUIA WITH HEADER LINE,
+        TL_CSKT                 TYPE TABLE OF CSKT             WITH HEADER LINE,
+        WL_CONT                 TYPE SY-TABIX,
+        WL_CONT_AUX             TYPE SY-TABIX,
+        WL_CONT_AUX2            TYPE SY-TABIX,
+        XTOTAL                  TYPE ZIMP_LANC_IMP_CT-VALOR_IMP VALUE 0,
+        XOBJ_KEY                TYPE ZIB_CONTABIL-OBJ_KEY,
+        XLIMPA(1),
+        VDESCR_IMPOSTO          TYPE ZIMP_CAD_IMPOSTO-DESCR_IMPOSTO,
+        XTOTAL_R                TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+        XTOTAL_U                TYPE ZIMP_LANC_IMP_CT-VALOR_IMP,
+        XCONTADOR               TYPE I.
+
+* ---> S4 Migration - 17/07/2023 - CA
+  DATA: LT_RETURNS         TYPE TABLE OF BAPIRET2,
+        LS_COELDES         TYPE BAPI1030_CEOUTPUTLIST,
+        LV_CONTROLLINGAREA TYPE BAPI1030_GEN-CO_AREA,
+        LV_COSTELEMENT     TYPE BAPI1030_GEN-COST_ELEM,
+        LV_KEYDATE         TYPE BAPI1030_GEN-SOME_DATE.
+* <--- S4 Migration - 17/07/2023 - CA
+
+
+  IF NOT WG_CADLAN-DESCR_IMPOSTO IS INITIAL.
+    MOVE WG_CADLAN-COD_IMPOSTO TO WL_ZIMP_LANC_IMPOST-COD_IMPOSTO.
+    SELECT SINGLE *
+    FROM T012K
+    INTO WA_T012K
+    WHERE BUKRS = WG_CADLAN-BUKRS
+    AND   HBKID = WG_CADLAN-HBKID .
+    XCONV = 'S'.
+    IF SY-SUBRC NE 0.
+      IF WG_CADLAN-CONV_BANCO = 'X'.
+        MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'PARA ESTA EMPRESA NÃO EXISTE CONVÊNIO BANCÁRIO'.
+        XCONV = 'N'.
+      ENDIF.
+    ENDIF.
+
+    SELECT SINGLE DESCR_IMPOSTO
+       FROM ZIMP_CAD_IMPOSTO
+       INTO VDESCR_IMPOSTO
+        WHERE  COD_IMPOSTO EQ WG_CADLAN-COD_IMPOSTO.
+
+  ENDIF.
+
+  IF WG_CADLAN-LOTE IS NOT INITIAL. "  AND WG_ACAO = C_MODIF.
+    SELECT SINGLE *
+      FROM ZIMP_CAD_LOTE
+      INTO WL_ZIMP_CAD_LOTE
+       WHERE  LOTE EQ WG_CADLAN-LOTE
+       AND LOEKZ = ''.
+    IF SY-SUBRC IS NOT INITIAL.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'Nº DE LOTE NÃO ENCONTRADO!'.
+      CLEAR WG_CADLAN-LOTE.
+      LEAVE TO SCREEN 100.
+    ELSEIF WL_ZIMP_CAD_IMPOSTO-LOEKZ IS NOT INITIAL.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'Nº DE IMPOSTO FOI ELIMINADO!'.
+      LEAVE TO SCREEN 100.
+    ELSEIF WL_ZIMP_CAD_LOTE-STATUS_LOTE = 'L'.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'LOTE JÁ LIBERADO!'.
+      LEAVE TO SCREEN 100.
+    ELSEIF WL_ZIMP_CAD_LOTE-STATUS_LOTE = 'A'.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'LOTE JÁ FINALIZADO!'.
+      LEAVE TO SCREEN 100.
+    ENDIF.
+    WG_CADLAN-BUKRS = WL_ZIMP_CAD_LOTE-BUKRS.
+    WG_CADLAN-DESCR_LOTE = WL_ZIMP_CAD_LOTE-DESCR_LOTE.
+    WG_CADLAN-DT_VENC    = WL_ZIMP_CAD_LOTE-DT_VENC.
+
+    SELECT SINGLE *
+         FROM T001
+         INTO WL_T001
+         WHERE BUKRS = WL_ZIMP_CAD_LOTE-BUKRS.
+
+    IF SY-SUBRC = 0.
+      MOVE: WL_T001-BUTXT   TO WG_CADLAN-BUTXT.
+    ENDIF.
+  ENDIF.
+  IF WG_CADLAN-BUKRS IS NOT INITIAL AND WG_CADLAN-GSBER IS NOT  INITIAL AND WG_ACAO NE C_DISPLA.
+    SELECT SINGLE *
+      FROM J_1BBRANCH
+      INTO WL_J_1BBRANCH
+      WHERE BUKRS = WG_CADLAN-BUKRS
+      AND   BRANCH = WG_CADLAN-GSBER.
+    IF SY-SUBRC = 0.
+      MOVE: WL_J_1BBRANCH-NAME   TO WG_CADLAN-NAMEFIL.
+    ENDIF.
+
+  ENDIF.
+
+  IF WG_CADLAN-COD_IMPOSTO IS NOT INITIAL AND WG_ACAO IS NOT INITIAL AND WG_ACAO NE C_DISPLA.
+    SELECT *
+     FROM ZIMP_LANC_IMP_CT
+     INTO TABLE TL_ZIMP_LANC_IMP_CT
+      WHERE DOC_IMPOSTO  EQ WG_CADLAN-DOC_IMPOSTO
+      AND   BUKRS        EQ WG_CADLAN-BUKRS.
+    IF SY-SUBRC EQ 0 OR WL_ZIMP_LANC_IMPOST IS INITIAL OR VDESCR_IMPOSTO NE WG_CADLAN-DESCR_IMPOSTO.
+      IF TL_ZIMP_LANC_IMP_CT-COD_IMPOSTO NE WG_CADLAN-COD_IMPOSTO.
+        SELECT SINGLE *
+        FROM ZIMP_CAD_IMPOSTO
+        INTO WL_ZIMP_CAD_IMPOSTO
+         WHERE  COD_IMPOSTO EQ WG_CADLAN-COD_IMPOSTO.
+        MOVE-CORRESPONDING WG_CADLAN TO WG_CADLAN_AUX.
+        MOVE-CORRESPONDING WL_ZIMP_CAD_IMPOSTO TO WG_CADLAN.
+        MOVE: SY-UNAME TO WG_CADLAN-USUARIO,
+              SY-DATUM TO WG_CADLAN-DATA_ATUAL,
+              SY-UZEIT TO WG_CADLAN-HORA_ATUAL.
+        MOVE WG_CADLAN_AUX-BUKRS TO WG_CADLAN-BUKRS.
+
+        SELECT SINGLE *
+            FROM T012K
+            INTO WA_T012K
+            WHERE BUKRS = WG_CADLAN-BUKRS
+            AND   HBKID = WG_CADLAN-HBKID .
+        XCONV = 'S'.
+        IF SY-SUBRC NE 0.
+          IF WG_CADLAN-CONV_BANCO = 'X'.
+            MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'PARA ESTA EMPRESA NÃO EXISTE CONVÊNIO BANCÁRIO'.
+            XCONV = 'N'.
+          ENDIF.
+        ENDIF.
+
+        IF WG_CADLAN-GSBER IS INITIAL.
+          MOVE   WG_CADLAN_AUX-GSBER TO WG_CADLAN-GSBER.
+        ENDIF.
+        "ENDIF.
+        REFRESH: TG_EDITOR.
+        CLEAR: WL_CONT_AUX2, WL_CONT_AUX, WL_CONT.
+        WL_CONT = STRLEN( WL_ZIMP_CAD_IMPOSTO-REF_IMPOSTO ).
+        WL_CONT_AUX = WL_CONT / 72.
+
+        DO.
+          MOVE: WL_ZIMP_CAD_IMPOSTO-REF_IMPOSTO+WL_CONT_AUX2 TO WG_EDITOR-LINE.
+          ADD 72 TO WL_CONT_AUX2.
+          APPEND WG_EDITOR TO TG_EDITOR.
+
+          IF WL_CONT_AUX2 GT WL_CONT.
+            EXIT.
+
+          ENDIF.
+        ENDDO.
+        CALL METHOD OBG_DESCBOX->SET_TEXT_AS_R3TABLE
+          EXPORTING
+            TABLE = TG_EDITOR.
+        CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+          EXPORTING
+            READONLY_MODE = 1.
+
+*        SELECT SINGLE *
+*          FROM T001
+*          INTO WL_T001
+*          WHERE BUKRS = WL_ZIMP_CAD_LOTE-BUKRS.
+*
+*        IF SY-SUBRC = 0.
+*          MOVE: WL_T001-BUTXT   TO WG_CADLAN-BUTXT.
+*        ENDIF.
+
+        SELECT SINGLE *
+          FROM ZIMP_LANC_IMPOST
+          INTO WL_ZIMP_LANC_IMPOST
+          WHERE DOC_IMPOSTO  EQ WG_CADLAN-DOC_IMPOSTO
+          AND   BUKRS        EQ WG_CADLAN-BUKRS.
+
+        SELECT SINGLE *
+          FROM J_1BBRANCH
+          INTO WL_J_1BBRANCH
+          WHERE BUKRS = WL_ZIMP_CAD_LOTE-BUKRS
+          AND   BRANCH = WL_ZIMP_LANC_IMPOST-GSBER.
+
+        IF SY-SUBRC = 0.
+          MOVE: WL_J_1BBRANCH-NAME   TO WG_CADLAN-NAMEFIL.
+        ENDIF.
+
+        SELECT SINGLE *
+          FROM ZIMP_TIPOS_IMPOS
+          INTO WL_ZIMP_TIPOS_IMPOS
+          WHERE TP_ARREC = WL_ZIMP_CAD_IMPOSTO-TP_IMPOSTO.
+
+        IF SY-SUBRC = 0.
+          MOVE: WL_ZIMP_TIPOS_IMPOS-ARRECADACAO   TO WG_CADLAN-ARRECADACAO,
+                WL_ZIMP_TIPOS_IMPOS-DT_APURACAO   TO VDT_APURACAO,
+                WL_ZIMP_TIPOS_IMPOS-MES_APURACAO  TO VMES_APURACAO.
+        ENDIF.
+
+        SELECT SINGLE *
+          FROM T012
+          INTO WL_T012
+          WHERE BUKRS = WG_CADLAN-BUKRS
+          AND   HBKID = WL_ZIMP_CAD_IMPOSTO-HBKID.
+
+        IF SY-SUBRC = 0.
+          SELECT SINGLE *
+            FROM BNKA
+            INTO WL_BNKA
+            WHERE BANKL = WL_T012-BANKL .
+          IF SY-SUBRC = 0.
+            MOVE WL_BNKA-BANKA TO WG_CADLAN-BANKA.
+          ENDIF.
+        ENDIF.
+
+        SELECT *
+        FROM ZIMP_CAD_IMP_CON
+        INTO TABLE TL_ZIMP_CAD_IMP_CON
+         WHERE  COD_IMPOSTO EQ WG_CADLAN-COD_IMPOSTO.
+
+        SELECT *
+        FROM TBSL
+        INTO TABLE TL_TBSL
+        FOR ALL ENTRIES IN TL_ZIMP_CAD_IMP_CON
+        WHERE BSCHL = TL_ZIMP_CAD_IMP_CON-BSCHL.
+
+        "
+        SELECT *
+        FROM ZIMP_CAMPOS_GUIA
+        INTO TABLE TL_ZIMP_CAMPOS_GUIA
+        FOR ALL ENTRIES IN TL_ZIMP_CAD_IMP_CON
+        WHERE COD_CAMP_GUIA = TL_ZIMP_CAD_IMP_CON-COD_ABERTURA.
+
+        SORT: TL_ZIMP_CAMPOS_GUIA BY COD_CAMP_GUIA,
+              TL_TBSL             BY BSCHL  .
+
+        XLIMPA = 'N'.
+        IF TG_ITENS[] IS NOT INITIAL.
+          READ TABLE TG_ITENS INDEX 1.
+          IF WG_CADLAN-COD_IMPOSTO NE TG_ITENS-COD_IMPOSTO.
+            XLIMPA = 'S'.
+          ENDIF.
+        ELSE.
+          XLIMPA = 'S'.
+        ENDIF.
+
+        IF XLIMPA = 'S'.
+          REFRESH: TG_ITENS.
+          CLEAR TG_ITENS.
+          LOOP AT TL_ZIMP_CAD_IMP_CON.
+            MOVE-CORRESPONDING TL_ZIMP_CAD_IMP_CON TO TG_ITENS.
+
+            SELECT SINGLE *
+            FROM TKA02
+            INTO WL_TKA02
+            WHERE BUKRS  = WG_CADLAN-BUKRS.
+            MOVE WL_TKA02-KOKRS TO VKOKRS.
+
+* ---> S4 Migration - 17/07/2023 - CA
+*            SELECT SINGLE *
+*              FROM cskb
+*              INTO wl_cskb
+*              WHERE  kokrs  = wl_tka02-kokrs
+*              AND    kstar  = tl_zimp_cad_imp_con-hkont
+*              AND    datab  LE sy-datum
+*              AND    datbi  GE sy-datum.
+
+            LV_CONTROLLINGAREA  = WL_TKA02-KOKRS.
+            LV_COSTELEMENT      = TL_ZIMP_CAD_IMP_CON-HKONT.
+            LV_KEYDATE          = SY-DATUM.
+
+            CLEAR: LT_RETURNS[], LS_COELDES.
+
+            CALL FUNCTION 'K_COSTELEM_BAPI_GETDETAIL'
+              EXPORTING
+                CONTROLLINGAREA   = LV_CONTROLLINGAREA
+                COSTELEMENT       = LV_COSTELEMENT
+                KEYDATE           = LV_KEYDATE
+              IMPORTING
+                COSTELEMENTDETAIL = LS_COELDES
+              TABLES
+                RETURN            = LT_RETURNS.
+
+            READ TABLE LT_RETURNS TRANSPORTING NO FIELDS WITH KEY TYPE = 'E'.
+
+            IF SY-SUBRC <> 0.
+*            IF sy-subrc = 0.
+* <--- S4 Migration - 17/07/2023 - CA
+              MOVE 'X' TO TG_ITENS-XCLASSE.
+            ENDIF.
+
+            READ TABLE TL_TBSL
+              WITH KEY BSCHL = TL_ZIMP_CAD_IMP_CON-BSCHL.
+            IF TL_TBSL-SHKZG = 'H'.
+              MOVE  'C'  TO TG_ITENS-DEBCRE.
+            ELSE.
+              MOVE  'D'  TO TG_ITENS-DEBCRE.
+            ENDIF.
+
+            READ TABLE TL_ZIMP_CAMPOS_GUIA
+              WITH KEY COD_CAMP_GUIA = TL_ZIMP_CAD_IMP_CON-COD_ABERTURA.
+
+            MOVE TL_ZIMP_CAMPOS_GUIA-DESCR_CAMP_GUIA TO TG_ITENS-DESCR_CAMP_GUIA.
+            APPEND TG_ITENS.
+            CLEAR: TG_ITENS.
+          ENDLOOP.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  ENDIF.
+
+  IF WG_CADLAN-DOC_IMPOSTO IS NOT INITIAL  AND WG_CADLAN-BUKRS IS NOT INITIAL AND WG_ACAO EQ C_DISPLA.
+    SELECT SINGLE *
+      FROM ZIMP_LANC_IMPOST
+      INTO WL_ZIMP_LANC_IMPOST
+       WHERE DOC_IMPOSTO  EQ WG_CADLAN-DOC_IMPOSTO
+       AND   BUKRS  EQ WG_CADLAN-BUKRS.
+    IF SY-SUBRC IS NOT INITIAL.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'Nº DE LANÇAMENTO NÃO ENCONTRADO!'.
+      LEAVE TO SCREEN 100.
+    ELSEIF WL_ZIMP_LANC_IMPOST-LOEKZ IS NOT INITIAL.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'Nº DE LANÇAMENTO FOI ELIMINADO!'.
+      LEAVE TO SCREEN 100.
+    ELSE.
+      MOVE-CORRESPONDING WL_ZIMP_LANC_IMPOST TO WG_CADLAN.
+      SELECT SINGLE *
+     FROM ZIMP_CAD_LOTE
+     INTO WL_ZIMP_CAD_LOTE
+      WHERE  LOTE EQ WG_CADLAN-LOTE
+      AND LOEKZ = ''.
+      WG_CADLAN-DESCR_LOTE = WL_ZIMP_CAD_LOTE-DESCR_LOTE.
+      WG_CADLAN-DT_VENC = WL_ZIMP_CAD_LOTE-DT_VENC.
+
+
+      SELECT SINGLE *
+         FROM T012
+         INTO WL_T012
+         WHERE BUKRS = WG_CADLAN-BUKRS
+         AND   HBKID = WL_ZIMP_LANC_IMPOST-HBKID.
+
+      IF SY-SUBRC = 0.
+        SELECT SINGLE *
+          FROM BNKA
+          INTO WL_BNKA
+          WHERE BANKL = WL_T012-BANKL .
+        IF SY-SUBRC = 0.
+          MOVE WL_BNKA-BANKA TO WG_CADLAN-BANKA.
+        ENDIF.
+      ENDIF.
+
+      CONCATENATE 'ZP' WL_ZIMP_LANC_IMPOST-BUKRS WL_ZIMP_LANC_IMPOST-DOC_IMPOSTO '%' INTO XOBJ_KEY.
+      SELECT SINGLE OBJ_KEY BELNR BUKRS GJAHR
+        FROM ZIB_CONTABIL_CHV
+        INTO WA_ZIB_CONTABIL_CHV
+        WHERE OBJ_KEY LIKE XOBJ_KEY
+        AND   BUKRS   EQ WG_CADLAN-BUKRS.
+      IF SY-SUBRC NE 0.
+        CONCATENATE 'ZIMP' WL_ZIMP_LANC_IMPOST-DOC_IMPOSTO '%' INTO XOBJ_KEY.
+        SELECT SINGLE OBJ_KEY BELNR BUKRS GJAHR
+       FROM ZIB_CONTABIL_CHV
+       INTO WA_ZIB_CONTABIL_CHV
+       WHERE OBJ_KEY LIKE XOBJ_KEY
+       AND   BUKRS   EQ WG_CADLAN-BUKRS.
+      ENDIF.
+
+      CLEAR WG_CADLAN-ICONC.
+      "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA (Alteração na Estrutura)
+      IF SY-SUBRC = 0.
+        WG_CADLAN-DOC_CONTABIL =  WA_ZIB_CONTABIL_CHV-BELNR.
+        WG_CADLAN-ICONC        = ICON_CHECKED .
+        SELECT SINGLE * "bukrs belnr gjahr budat
+        FROM BKPF
+        INTO WA_BKPF
+        WHERE BUKRS = WA_ZIB_CONTABIL_CHV-BUKRS
+        AND   BELNR = WA_ZIB_CONTABIL_CHV-BELNR
+        AND   GJAHR = WA_ZIB_CONTABIL_CHV-GJAHR.
+        IF SY-SUBRC = 0.
+          WG_CADLAN-BUDAT = WA_BKPF-BUDAT.
+        ENDIF.
+      ELSE.
+        CLEAR: WG_CADLAN-DOC_CONTABIL,
+               WA_ZIB_CONTABIL_CHV,
+               WG_CADLAN-BUDAT.
+      ENDIF.
+      REFRESH IT_ZIB_CONTABIL_ERR.
+      CONCATENATE 'ZP' WL_ZIMP_LANC_IMPOST-BUKRS WL_ZIMP_LANC_IMPOST-DOC_IMPOSTO '%' INTO XOBJ_KEY.
+      SELECT  OBJ_KEY NR_ITEM INTERFACE DT_ATUALIZACAO HR_ATUALIZACAO TYPE ID NUM MESSAGE MESSAGE_V1 MESSAGE_V2 MESSAGE_V3  MESSAGE_V4
+       FROM ZIB_CONTABIL_ERR
+       INTO TABLE IT_ZIB_CONTABIL_ERR
+       WHERE OBJ_KEY LIKE XOBJ_KEY.
+
+      IF SY-SUBRC = 0.
+        WG_CADLAN-ICONC        = ICON_MESSAGE_ERROR.
+      ENDIF.
+      SELECT SINGLE *
+         FROM T001
+         INTO WL_T001
+         WHERE BUKRS = WL_ZIMP_LANC_IMPOST-BUKRS.
+
+      IF SY-SUBRC = 0.
+        MOVE: WL_T001-BUTXT   TO WG_CADLAN-BUTXT.
+      ENDIF.
+
+
+      SELECT SINGLE *
+        FROM J_1BBRANCH
+        INTO WL_J_1BBRANCH
+        WHERE BUKRS = WL_ZIMP_LANC_IMPOST-BUKRS
+        AND   BRANCH = WL_ZIMP_LANC_IMPOST-GSBER.
+
+      IF SY-SUBRC = 0.
+        MOVE: WL_J_1BBRANCH-NAME   TO WG_CADLAN-NAMEFIL.
+      ENDIF.
+
+      DELETE TG_FIELDS WHERE GROUP1 = 'GR4'.
+      IF WL_ZIMP_CAD_LOTE-STATUS_LOTE EQ ''.
+        PERFORM TRATA_CAMPOS USING SPACE
+                               'GR4'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_1.      "INVISIBLE 1 VISIBLE 0
+      ELSE.
+        XMODIF = 'X'.
+        PERFORM TRATA_CAMPOS USING SPACE
+                               'GR4'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+      ENDIF.
+      IF WL_ZIMP_CAD_LOTE-STATUS_LOTE = 'L'.
+        WG_CADLAN-ICON = ICON_YELLOW_LIGHT.
+      ELSEIF WL_ZIMP_CAD_LOTE-STATUS_LOTE = 'A'.
+        WG_CADLAN-ICON = ICON_GREEN_LIGHT.
+      ENDIF.
+    ENDIF.
+
+    SELECT SINGLE *
+    FROM ZIMP_CAD_IMPOSTO
+    INTO WL_ZIMP_CAD_IMPOSTO
+    WHERE  COD_IMPOSTO EQ WL_ZIMP_LANC_IMPOST-COD_IMPOSTO.
+    MOVE  WL_ZIMP_CAD_IMPOSTO-DESCR_IMPOSTO TO WG_CADLAN-DESCR_IMPOSTO.
+
+*    IF WG_CADLAN-WAERS IS INITIAL.
+*      WG_CADLAN-WAERS = WL_ZIMP_CAD_IMPOSTO-WAERS.
+*    ENDIF.
+*
+*    IF WG_CADLAN-BUKRS IS INITIAL.
+*      WG_CADLAN-BUKRS = WL_ZIMP_CAD_IMPOSTO-BUKRS.
+*      WG_CADLAN-GSBER = WL_ZIMP_CAD_IMPOSTO-GSBER.
+*    ENDIF.
+
+
+    SELECT SINGLE *
+      FROM ZIMP_TIPOS_IMPOS
+      INTO WL_ZIMP_TIPOS_IMPOS
+      WHERE TP_ARREC = WL_ZIMP_LANC_IMPOST-TP_IMPOSTO.
+
+    IF SY-SUBRC = 0.
+      MOVE: WL_ZIMP_TIPOS_IMPOS-ARRECADACAO   TO WG_CADLAN-ARRECADACAO,
+            WL_ZIMP_TIPOS_IMPOS-DT_APURACAO   TO VDT_APURACAO,
+            WL_ZIMP_TIPOS_IMPOS-MES_APURACAO  TO VMES_APURACAO.
+    ENDIF.
+
+    REFRESH: TG_EDITOR.
+    CLEAR: WL_CONT_AUX2, WL_CONT_AUX, WL_CONT.
+    WL_CONT = STRLEN( WL_ZIMP_CAD_IMPOSTO-REF_IMPOSTO ).
+    WL_CONT_AUX = WL_CONT / 72.
+
+    DO.
+      MOVE: WL_ZIMP_CAD_IMPOSTO-REF_IMPOSTO+WL_CONT_AUX2 TO WG_EDITOR-LINE.
+      ADD 72 TO WL_CONT_AUX2.
+      APPEND WG_EDITOR TO TG_EDITOR.
+
+      IF WL_CONT_AUX2 GT WL_CONT.
+        EXIT.
+
+      ENDIF.
+    ENDDO.
+    CALL METHOD OBG_DESCBOX->SET_TEXT_AS_R3TABLE
+      EXPORTING
+        TABLE = TG_EDITOR.
+    CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+      EXPORTING
+        READONLY_MODE = 1.
+
+    IF WG_ACAO NE C_DISPLA.
+      CLEAR WG_ACAO.
+    ENDIF.
+
+    DELETE TG_FIELDS WHERE GROUP1 = 'GR1'.
+    DELETE TG_FIELDS WHERE GROUP1 = 'GR2'.
+    DELETE TG_FIELDS WHERE GROUP1 = 'GR3'.
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR3'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR2'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                              'GR1'
+                               C_0       "INPUT 1     NO INPUT 0
+                               C_0.      "INVISIBLE 1 VISIBLE 0
+    SELECT *
+      FROM ZIMP_LANC_IMP_CT
+      INTO TABLE TL_ZIMP_LANC_IMP_CT
+       WHERE DOC_IMPOSTO  EQ WG_CADLAN-DOC_IMPOSTO
+       AND   BUKRS        EQ WG_CADLAN-BUKRS.
+    IF SY-SUBRC = 0.
+      SELECT *
+      FROM ZIMP_CAMPOS_GUIA
+      INTO TABLE TL_ZIMP_CAMPOS_GUIA
+      FOR ALL ENTRIES IN TL_ZIMP_LANC_IMP_CT
+      WHERE COD_CAMP_GUIA = TL_ZIMP_LANC_IMP_CT-COD_ABERTURA.
+
+      SELECT *
+       FROM TBSL
+       INTO TABLE TL_TBSL
+       FOR ALL ENTRIES IN TL_ZIMP_LANC_IMP_CT
+       WHERE BSCHL = TL_ZIMP_LANC_IMP_CT-BSCHL.
+
+      SORT: TL_ZIMP_CAMPOS_GUIA BY COD_CAMP_GUIA,
+            TL_TBSL             BY BSCHL  .
+
+      REFRESH: TG_ITENS,TG_ITENS_C.
+      CLEAR TG_ITENS.
+
+      SELECT SINGLE *
+      FROM TKA02
+      INTO WL_TKA02
+      WHERE BUKRS  = WG_CADLAN-BUKRS.
+
+      MOVE WL_TKA02-KOKRS TO VKOKRS.
+
+      SELECT *
+      FROM CSKT
+      INTO TABLE TL_CSKT
+      FOR ALL ENTRIES IN TL_ZIMP_LANC_IMP_CT
+      WHERE KOKRS = VKOKRS
+      AND   KOSTL = TL_ZIMP_LANC_IMP_CT-KOSTL.
+
+      TL_ZIMP_LANC_IMP_CT_AUX[] = TL_ZIMP_LANC_IMP_CT[].
+
+      SORT: TL_ZIMP_LANC_IMP_CT     BY COD_ABERTURA SEQITEM,
+            TL_ZIMP_LANC_IMP_CT_AUX BY COD_ABERTURA SEQITEM,
+            TL_CSKT                 BY KOSTL.
+
+      LOOP AT TL_ZIMP_LANC_IMP_CT.
+        MOVE-CORRESPONDING TL_ZIMP_LANC_IMP_CT TO TG_ITENS.
+        XTOTAL_R = 0.
+        XTOTAL_U = 0.
+        XCONTADOR = 0.
+        IF TL_ZIMP_LANC_IMP_CT-COD_ABERTURA = TL_ZIMP_LANC_IMP_CT_AUX-COD_ABERTURA.
+          CONTINUE.
+        ENDIF.
+        LOOP AT TL_ZIMP_LANC_IMP_CT_AUX WHERE COD_ABERTURA = TL_ZIMP_LANC_IMP_CT-COD_ABERTURA.
+          ADD TL_ZIMP_LANC_IMP_CT_AUX-VALOR_IMP TO XTOTAL_R.
+          ADD TL_ZIMP_LANC_IMP_CT_AUX-VALOR_FOR TO XTOTAL_U.
+          IF NOT TL_ZIMP_LANC_IMP_CT_AUX-KOSTL IS INITIAL.
+            ADD 1 TO XCONTADOR.
+            TG_ITENS_C-COD_ABERTURA       = TL_ZIMP_LANC_IMP_CT_AUX-COD_ABERTURA.
+            TG_ITENS_C-KOSTL              = TL_ZIMP_LANC_IMP_CT_AUX-KOSTL.
+            TG_ITENS_C-PRCTR              = TL_ZIMP_LANC_IMP_CT_AUX-PRCTR.
+            TG_ITENS_C-MATNR              = TL_ZIMP_LANC_IMP_CT_AUX-MATNR.
+            READ TABLE TL_CSKT WITH KEY KOSTL = TL_ZIMP_LANC_IMP_CT_AUX-KOSTL BINARY SEARCH.
+            IF SY-SUBRC = 0.
+              TG_ITENS_C-KTEXT = TL_CSKT-KTEXT.
+            ELSE.
+              CLEAR TG_ITENS_C-KTEXT.
+            ENDIF.
+            TG_ITENS_C-AUFNR              = TL_ZIMP_LANC_IMP_CT-AUFNR.
+            TG_ITENS_C-VALOR_CUS          = TL_ZIMP_LANC_IMP_CT_AUX-VALOR_IMP.
+            TG_ITENS_C-VALOR_FOR          = TL_ZIMP_LANC_IMP_CT_AUX-VALOR_FOR.
+            APPEND TG_ITENS_C.
+          ENDIF.
+        ENDLOOP.
+        MOVE: XTOTAL_R TO TG_ITENS-VALOR_IMP,
+              XTOTAL_U TO TG_ITENS-VALOR_FOR.
+
+        IF XCONTADOR > 0.
+          TG_ITENS-KOSTL_C = 'X'.
+        ELSE.
+          CLEAR TG_ITENS-KOSTL_C .
+        ENDIF.
+
+        IF TG_ITENS-VALOR_IMP NE 0.
+          TG_ITENS-CHECKBOX = 'X'.
+        ENDIF.
+
+        SELECT SINGLE *
+         FROM TKA02
+         INTO WL_TKA02
+         WHERE BUKRS  = WG_CADLAN-BUKRS.
+        MOVE WL_TKA02-KOKRS TO VKOKRS.
+
+* ---> S4 Migration - 17/07/2023 - CA
+*        SELECT SINGLE *
+*          FROM cskb
+*          INTO wl_cskb
+*          WHERE  kokrs  = wl_tka02-kokrs
+*          AND    kstar  = tl_zimp_lanc_imp_ct-hkont
+*          AND    datab  LE sy-datum
+*          AND    datbi  GE sy-datum.
+
+        LV_CONTROLLINGAREA  = WL_TKA02-KOKRS.
+        LV_COSTELEMENT      = TL_ZIMP_LANC_IMP_CT-HKONT.
+        LV_KEYDATE          = SY-DATUM.
+
+        CLEAR: LT_RETURNS[], LS_COELDES.
+
+        CALL FUNCTION 'K_COSTELEM_BAPI_GETDETAIL'
+          EXPORTING
+            CONTROLLINGAREA   = LV_CONTROLLINGAREA
+            COSTELEMENT       = LV_COSTELEMENT
+            KEYDATE           = LV_KEYDATE
+          IMPORTING
+            COSTELEMENTDETAIL = LS_COELDES
+          TABLES
+            RETURN            = LT_RETURNS.
+
+        READ TABLE LT_RETURNS TRANSPORTING NO FIELDS WITH KEY TYPE = 'E'.
+        IF SY-SUBRC <> 0.
+*        IF sy-subrc = 0.
+* <--- S4 Migration - 17/07/2023 - CA
+          MOVE 'X' TO TG_ITENS-XCLASSE.
+        ENDIF.
+
+
+        READ TABLE TL_TBSL
+          WITH KEY BSCHL = TL_ZIMP_LANC_IMP_CT-BSCHL.
+        IF TL_TBSL-SHKZG = 'H'.
+          MOVE  'C'  TO TG_ITENS-DEBCRE.
+          TL_ZIMP_LANC_IMP_CT-VALOR_IMP = TL_ZIMP_LANC_IMP_CT-VALOR_IMP * -1.
+        ELSE.
+          MOVE  'D'  TO TG_ITENS-DEBCRE.
+        ENDIF.
+        READ TABLE TL_ZIMP_CAMPOS_GUIA
+          WITH KEY COD_CAMP_GUIA = TL_ZIMP_LANC_IMP_CT-COD_ABERTURA.
+
+        MOVE TL_ZIMP_CAMPOS_GUIA-DESCR_CAMP_GUIA TO TG_ITENS-DESCR_CAMP_GUIA.
+        APPEND TG_ITENS.
+        CLEAR: TG_ITENS.
+      ENDLOOP.
+
+    ENDIF.
+  ELSEIF  WG_ACAO EQ C_DISPLA.
+    IF WG_CADLAN-DOC_IMPOSTO IS INITIAL.
+      MESSAGE S836(SD) WITH 'INFORME O DOCUMENTO'.
+    ELSEIF  WG_CADLAN-BUKRS IS INITIAL.
+      MESSAGE S836(SD) WITH 'INFORME A EMPRESA!'.
+    ENDIF.
+  ENDIF.
+
+  "142043 CS2024000429 ZIMP DEVK9A22AQ - PSA
+  IF WL_ZIMP_CAD_LOTE-STATUS_LOTE = 'A'.
+    IF WA_BKPF-STGRD IS INITIAL AND WA_BKPF-AWREF_REV IS INITIAL.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - INICIO
+        MESSAGE 'Lote está APROVADO! É possivel editar apenas o Código de Barras, Texto Contabil ou Período de Apuração' TYPE 'I'.
+        XMODIF = 'X'.
+        V_EDIT = 'X'.
+* US 142043 ZIMP - Lote com Cod barras BUG #160417 - BG - FIM
+    ELSE. "Habilita o botão editar
+      IF XMODIF = 'X'.
+        CLEAR: XMODIF.
+      ENDIF.
+    ENDIF.
+  ELSE.
+  ENDIF.
+
+
+
+ENDFORM.                    " BUSCA_DADOS
+*&---------------------------------------------------------------------*
+*&      FORM  ELIMINAR_LANCTO
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM ELIMINAR_LANCTO .
+  DATA: WL_ZIMP_LANC_IMPOST TYPE ZIMP_LANC_IMPOST.
+
+  SELECT  SINGLE *
+    FROM ZIMP_LANC_IMPOST
+    INTO WL_ZIMP_LANC_IMPOST
+     WHERE DOC_IMPOSTO EQ WG_CADLAN-DOC_IMPOSTO
+     AND   BUKRS       EQ WG_CADLAN-BUKRS.
+
+  IF SY-SUBRC IS INITIAL.
+    IF WL_ZIMP_LANC_IMPOST-LOEKZ IS INITIAL.
+      MOVE: C_X TO WL_ZIMP_LANC_IMPOST-LOEKZ.
+      MODIFY ZIMP_LANC_IMPOST FROM WL_ZIMP_LANC_IMPOST.
+      MESSAGE S836(SD) WITH 'O DOCUMENTO FOI ELIMINADO!'.
+    ELSE.
+      MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'IMPOSSIVEL ELIMINAR, O DOCUMENTO'
+                            'JÁ FOI MARCADO PARA ELIMINAÇÃO!'.
+    ENDIF.
+  ENDIF.
+ENDFORM.                    " ELIMINAR_LANCTO
+*&---------------------------------------------------------------------*
+*&      FORM  GRAVA_DADOS
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM GRAVA_DADOS .
+  DATA: WL_INPUT_CADLAN TYPE ZIMP_LANC_IMPOST,
+        TL_INPUT_CADLAN TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+        VFLAG_CUS(1).
+
+  MOVE-CORRESPONDING WG_CADLAN TO WL_INPUT_CADLAN.
+  MOVE: SY-MANDT                TO WL_INPUT_CADLAN-MANDT,
+        SY-UNAME TO WL_INPUT_CADLAN-USUARIO,
+        SY-DATUM TO WL_INPUT_CADLAN-DATA_ATUAL,
+        SY-UZEIT TO WL_INPUT_CADLAN-HORA_ATUAL.
+
+
+  REFRESH: TG_EDITOR.
+  IF OBG_DESCBOX IS NOT INITIAL.
+    CALL METHOD OBG_DESCBOX->GET_TEXT_AS_R3TABLE
+      IMPORTING
+        TABLE = TG_EDITOR.
+
+    LOOP AT TG_EDITOR INTO WG_EDITOR.
+      IF SY-TABIX EQ 1.
+        WL_INPUT_CADLAN-REF_IMPOSTO = WG_EDITOR-LINE.
+
+      ELSEIF SY-TABIX GE 2.
+        CONCATENATE WL_INPUT_CADLAN-REF_IMPOSTO  WG_EDITOR-LINE INTO WL_INPUT_CADLAN-REF_IMPOSTO.
+
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+  SORT TG_ITENS_C BY COD_ABERTURA.
+  VSEQITEM = 0.
+  LOOP AT TG_ITENS.
+    MOVE-CORRESPONDING TG_ITENS TO TL_INPUT_CADLAN.
+
+    MOVE: SY-MANDT               TO TL_INPUT_CADLAN-MANDT,
+          SY-UNAME               TO TL_INPUT_CADLAN-USUARIO,
+          SY-DATUM               TO TL_INPUT_CADLAN-DATA_ATUAL,
+          SY-UZEIT               TO TL_INPUT_CADLAN-HORA_ATUAL,
+          WG_CADLAN-DOC_IMPOSTO  TO TL_INPUT_CADLAN-DOC_IMPOSTO,
+          WG_CADLAN-BUKRS        TO TL_INPUT_CADLAN-BUKRS.
+
+    VFLAG_CUS = 'N'.
+    LOOP AT TG_ITENS_C WHERE COD_ABERTURA = TG_ITENS-COD_ABERTURA.
+      VFLAG_CUS = 'S'.
+      ADD 1 TO VSEQITEM .
+      MOVE: TG_ITENS_C-KOSTL       TO TL_INPUT_CADLAN-KOSTL,
+            TG_ITENS_C-PRCTR       TO TL_INPUT_CADLAN-PRCTR,
+            VSEQITEM               TO TL_INPUT_CADLAN-SEQITEM,
+            TG_ITENS_C-AUFNR       TO TL_INPUT_CADLAN-AUFNR,
+            TG_ITENS_C-MATNR       TO TL_INPUT_CADLAN-MATNR,
+            TG_ITENS_C-VALOR_CUS   TO TL_INPUT_CADLAN-VALOR_IMP,
+            TG_ITENS_C-VALOR_FOR   TO TL_INPUT_CADLAN-VALOR_FOR.
+      APPEND TL_INPUT_CADLAN.
+    ENDLOOP.
+    IF VFLAG_CUS = 'N'.
+      ADD 1 TO VSEQITEM .
+      MOVE VSEQITEM   TO TL_INPUT_CADLAN-SEQITEM.
+      APPEND TL_INPUT_CADLAN.
+    ENDIF.
+    CLEAR TL_INPUT_CADLAN.
+  ENDLOOP.
+  "
+  DELETE FROM ZIMP_LANC_IMP_CT WHERE DOC_IMPOSTO = WG_CADLAN-DOC_IMPOSTO
+                               AND   BUKRS       = WG_CADLAN-BUKRS.
+  MODIFY ZIMP_LANC_IMPOST FROM       WL_INPUT_CADLAN.
+  MODIFY ZIMP_LANC_IMP_CT FROM TABLE TL_INPUT_CADLAN.
+
+
+  MESSAGE S836(SD) WITH 'LANÇAMENTO'
+                         WG_CADLAN-DOC_IMPOSTO
+                         ', CRIADO/MODIFICADO COM SUCESSO!'.
+ENDFORM.                    " GRAVA_DADOS
+*&---------------------------------------------------------------------*
+*&      FORM  LIMPA_CAMPOS
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM LIMPA_CAMPOS .
+  P_BUKRS = WG_CADLAN-BUKRS.
+  P_LOTE = WG_CADLAN-LOTE.
+  P_DESC = WG_CADLAN-DESCR_LOTE.
+  P_CHEQ = WG_CADLAN-ST_FECHA.
+  CLEAR: WG_CADLAN , TG_EDITOR,WG_MENSAGEM, VDT_APURACAO, VMES_APURACAO,XCLASSE,VKOKRS, IT_ZIB_CONTABIL_ERR, X_FIELD,XCONV, VG_INF_IDENTIFIC.
+  REFRESH: TG_ITENS,TG_ITENS_C,TG_ITENS_C2, TG_EDITOR, TG_MSG_RET.
+
+  WG_CADLAN-BUKRS = P_BUKRS.
+  WG_CADLAN-LOTE  = P_LOTE.
+  WG_CADLAN-DESCR_LOTE  = P_DESC.
+  WG_CADLAN-ST_FECHA = P_CHEQ.
+
+*  IF GRID2 IS NOT INITIAL.
+*    CALL METHOD GRID2->FREE.
+*  ENDIF.
+  CALL FUNCTION 'Z_DOC_CHECK_NEW'
+    EXPORTING
+      I_SCREEN      = '100'
+      I_SHOW        = C_X
+      I_REPID       = SY-REPID
+      I_PRESSED_TAB = 'G_TAB_STRIP_IMP-PRESSED_TAB'
+      I_SET_FIELD   = 'X_FIELD'
+    IMPORTING
+      E_MESSAGEM    = WG_MENSAGEM
+    TABLES
+      IT_MSGS       = TG_MSG_RET.
+ENDFORM.                    " LIMPA_CAMPOS
+*&---------------------------------------------------------------------*
+*&      FORM  OBTEM_PROXIMO
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM OBTEM_PROXIMO .
+  DATA: VNUM(10)            TYPE C,
+        VSEQ(10)            TYPE P,
+        WL_ZIMP_LANC_IMPOST TYPE ZIMP_LANC_IMPOST.
+
+  IF WG_CADLAN-BUKRS IS NOT INITIAL.
+    CALL FUNCTION 'NUMBER_GET_NEXT'
+      EXPORTING
+        NR_RANGE_NR = 'ZT'
+        OBJECT      = 'RF_BELEG'
+        SUBOBJECT   = WG_CADLAN-BUKRS
+      IMPORTING
+        NUMBER      = VSEQ.      "SUBOBJECT = W_ZIMP_CABECALHO-BUK
+
+    VNUM = VSEQ .
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = VNUM
+      IMPORTING
+        OUTPUT = VNUM.
+
+    WG_CADLAN-DOC_IMPOSTO = VNUM.
+    SELECT SINGLE *
+      FROM ZIMP_LANC_IMPOST
+      INTO WL_ZIMP_LANC_IMPOST
+      WHERE BUKRS       = WG_CADLAN-BUKRS
+      AND   DOC_IMPOSTO =  WG_CADLAN-DOC_IMPOSTO.
+
+    IF SY-SUBRC = 0.
+      CLEAR WG_CADLAN-DOC_IMPOSTO.
+      MESSAGE S000(ZWRM001) DISPLAY LIKE 'E' WITH 'ERRO FATAL NA NUMERAÇÃO, DOCUMENTO JÁ EXISTE.'.
+    ENDIF.
+
+  ELSE.
+    CLEAR WG_CADLAN-DOC_IMPOSTO.
+  ENDIF.
+ENDFORM.                    " OBTEM_PROXIMO
+*&---------------------------------------------------------------------*
+*&      FORM  TRATA_CAMPOS
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*      -->P_SPACE  TEXT
+*      -->P_1740   TEXT
+*      -->P_C_0  TEXT
+*      -->P_C_0  TEXT
+*----------------------------------------------------------------------*
+FORM TRATA_CAMPOS  USING    P_FIELD
+                            P_GROUP1
+                            P_VALUE
+                            P_INVISIBLE.
+
+  TG_FIELDS-CAMPO     = P_FIELD.
+  TG_FIELDS-GROUP1    = P_GROUP1.
+  TG_FIELDS-VALUE     = P_VALUE.
+  TG_FIELDS-INVISIBLE = P_INVISIBLE.
+  APPEND TG_FIELDS.
+
+ENDFORM.                    " TRATA_CAMPOS
+*&---------------------------------------------------------------------*
+*&      MODULE  SEARCH_LOTE  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE SEARCH_LOTE INPUT.
+  DATA: TL_RETURN_TAB TYPE TABLE OF DDSHRETVAL WITH HEADER LINE,
+        TL_DSELC      TYPE TABLE OF DSELC      WITH HEADER LINE.
+
+  DATA: BEGIN OF TL_LOTE OCCURS 0,
+          LOTE       TYPE ZIMP_CAD_LOTE-LOTE,
+          DESCR_LOTE TYPE ZIMP_CAD_LOTE-DESCR_LOTE,
+          BUKRS      TYPE ZIMP_CAD_LOTE-BUKRS,
+          USUARIO    TYPE ZIMP_CAD_LOTE-USUARIO,
+        END OF TL_LOTE.
+
+  SELECT LOTE DESCR_LOTE BUKRS USUARIO
+    FROM ZIMP_CAD_LOTE
+    INTO TABLE TL_LOTE
+    WHERE LOEKZ = ''
+    AND STATUS_LOTE = ''.
+
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'LOTE'
+      DYNPPROG        = SY-REPID
+      DYNPNR          = SY-DYNNR
+      DYNPROFIELD     = 'ZIMP_CAD_LOTE-LOTE'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = TL_LOTE
+      RETURN_TAB      = TL_RETURN_TAB
+      DYNPFLD_MAPPING = TL_DSELC.
+ENDMODULE.                 " SEARCH_LOTE  INPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  INICIALIZA_TELA  OUTPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE INICIALIZA_TELA OUTPUT.
+
+  IF SY-CALLD = 'X' AND WG_CADLAN-BUKRS IS INITIAL.
+    GET PARAMETER ID 'BUK' FIELD WG_CADLAN-BUKRS.
+    GET PARAMETER ID 'BLN' FIELD WG_CADLAN-DOC_IMPOSTO.
+    WG_ACAO = C_DISPLA.
+
+    IF ( WG_CADLAN-BUKRS IS INITIAL ) OR ( WG_CADLAN-DOC_IMPOSTO IS INITIAL ).
+      CLEAR: WG_ACAO.
+    ENDIF.
+  ENDIF.
+
+  IF WG_ACAO IS INITIAL.
+    REFRESH: TG_FIELDS.
+    PERFORM TRATA_CAMPOS USING SPACE
+                                 'GR4'
+                                    C_0       "INPUT 1     NO INPUT 0
+                                    C_1.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR3'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR2'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                              'GR1'
+                               C_1       "INPUT 1     NO INPUT 0
+                               C_0.      "INVISIBLE 1 VISIBLE 0
+  ENDIF.
+
+ENDMODULE.                 " INICIALIZA_TELA  OUTPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  SEARCH_IMPOSTO  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE SEARCH_IMPOSTO INPUT.
+
+
+  DATA: BEGIN OF TL_IMPOSTO OCCURS 0,
+          COD_IMPOSTO   TYPE ZIMP_CAD_IMPOSTO-COD_IMPOSTO,
+          DESCR_IMPOSTO TYPE ZIMP_CAD_IMPOSTO-DESCR_IMPOSTO,
+        END OF TL_IMPOSTO.
+
+  SELECT COD_IMPOSTO DESCR_IMPOSTO
+    FROM ZIMP_CAD_IMPOSTO
+    INTO TABLE TL_IMPOSTO
+    WHERE LOEKZ = ''.
+
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'COD_IMPOSTO'
+      DYNPPROG        = SY-REPID
+      DYNPNR          = SY-DYNNR
+      DYNPROFIELD     = 'ZIMP_CAD_IMPOSTO-COD_IMPOSTO'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = TL_IMPOSTO
+      RETURN_TAB      = TL_RETURN_TAB
+      DYNPFLD_MAPPING = TL_DSELC.
+ENDMODULE.                 " SEARCH_IMPOSTO  INPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  VALIDA_PARAMETROS  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE VALIDA_PARAMETROS INPUT.
+  IF WG_CADLAN-LOTE IS NOT INITIAL AND WG_CADLAN-DOC_IMPOSTO IS NOT INITIAL AND  WG_ACAO IS NOT INITIAL.
+    PERFORM LIMPA_CAMPOS.
+    CLEAR  WG_CADLAN-BUKRS.
+  ENDIF.
+
+ENDMODULE.                 " VALIDA_PARAMETROS  INPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  SEARCH_FILIAL  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE SEARCH_FILIAL INPUT.
+
+  DATA: BEGIN OF TL_BRANCH OCCURS 0,
+          BRANCH TYPE J_1BBRANCH-BRANCH,
+          NAME   TYPE J_1BBRANCH-NAME,
+        END OF TL_BRANCH.
+
+  SELECT BRANCH NAME
+    FROM J_1BBRANCH
+    INTO TABLE TL_BRANCH
+    WHERE BUKRS = WG_CADLAN-BUKRS.
+
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'BRANCH'
+      DYNPPROG        = SY-REPID
+      DYNPNR          = SY-DYNNR
+      DYNPROFIELD     = 'ZIMP_LANC_IMPOST-GSBER'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = TL_BRANCH
+      RETURN_TAB      = TL_RETURN_TAB
+      DYNPFLD_MAPPING = TL_DSELC.
+ENDMODULE.                 " SEARCH_FILIAL  INPUT
+*&---------------------------------------------------------------------*
+*&      MODULE  SEARCH_DOC  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE SEARCH_DOC INPUT.
+
+  DATA  IT_LOTE TYPE TABLE OF ZIMP_CAD_LOTE WITH HEADER LINE.
+
+  DATA: BEGIN OF TL_DOCS OCCURS 0,
+          DOC_IMPOSTO TYPE ZIMP_LANC_IMPOST-DOC_IMPOSTO,
+          BUKRS       TYPE ZIMP_LANC_IMPOST-BUKRS,
+          LOTE        TYPE ZIMP_LANC_IMPOST-LOTE,
+          DT_VENC     TYPE ZIMP_LANC_IMPOST-DT_VENC,
+          DESCR_LOTE  TYPE ZIMP_CAD_LOTE-DESCR_LOTE,
+        END OF TL_DOCS.
+
+  DATA: L_DYNPFIELDS LIKE DYNPREAD OCCURS 0 WITH HEADER LINE.
+  REFRESH L_DYNPFIELDS.
+  CLEAR   L_DYNPFIELDS.
+  IF WG_CADLAN-BUKRS IS  INITIAL.
+    L_DYNPFIELDS-FIELDNAME  = 'WG_CADLAN-BUKRS'.
+    APPEND L_DYNPFIELDS.
+
+    CALL FUNCTION 'DYNP_VALUES_READ'
+      EXPORTING
+        DYNAME     = SY-REPID
+        DYNUMB     = SY-DYNNR
+      TABLES
+        DYNPFIELDS = L_DYNPFIELDS.
+    READ TABLE L_DYNPFIELDS INDEX 1.
+    MOVE L_DYNPFIELDS-FIELDVALUE TO WG_CADLAN-BUKRS.
+  ENDIF.
+
+  IF WG_CADLAN-BUKRS IS NOT INITIAL.
+    SELECT DOC_IMPOSTO BUKRS LOTE DT_VENC
+      FROM ZIMP_LANC_IMPOST
+      INTO TABLE TL_DOCS
+      WHERE BUKRS = WG_CADLAN-BUKRS.
+
+    SELECT *
+      FROM ZIMP_CAD_LOTE
+      INTO TABLE IT_LOTE
+      FOR ALL ENTRIES IN TL_DOCS
+      WHERE LOTE = TL_DOCS-LOTE.
+    SORT IT_LOTE BY LOTE.
+    LOOP AT TL_DOCS.
+      READ TABLE IT_LOTE
+      WITH KEY LOTE = TL_DOCS-LOTE
+               BINARY SEARCH.
+      TL_DOCS-DESCR_LOTE = IT_LOTE-DESCR_LOTE.
+      MODIFY TL_DOCS .
+    ENDLOOP.
+  ENDIF.
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'DOC_IMPOSTO'
+      DYNPPROG        = SY-REPID
+      DYNPNR          = SY-DYNNR
+      DYNPROFIELD     = 'ZIMP_LANC_IMPOST-DOC_IMPOSTO'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = TL_DOCS
+      RETURN_TAB      = TL_RETURN_TAB
+      DYNPFLD_MAPPING = TL_DSELC.
+ENDMODULE.                 " SEARCH_DOC  INPUT
+*&---------------------------------------------------------------------*
+*&      FORM  MONTAR_LAYOUT_ERR
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT_ERR .
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 'ZIB_CONTABIL_ERR'         'OBJ_KEY'        'IT_ZIB_CONTABIL_ERR' 'OBJ_KEY'         ' '   '20' ' ' ' ' ' ',
+        1 'ZIB_CONTABIL_ERR'         'NR_ITEM'        'IT_ZIB_CONTABIL_ERR' 'NR_ITEM'         ' '   '10' ' ' ' ' ' ',
+        2 'ZIB_CONTABIL_ERR'         'INTERFACE'      'IT_ZIB_CONTABIL_ERR' 'INTERFACE'       ' '   '15' ' ' ' ' ' ',
+        3 'ZIB_CONTABIL_ERR'         'DT_ATUALIZACAO' 'IT_ZIB_CONTABIL_ERR' 'DT_ATUALIZACAO'  ' '   '15' ' ' ' ' ' ',
+        4 'ZIB_CONTABIL_ERR'         'HR_ATUALIZACAO' 'IT_ZIB_CONTABIL_ERR' 'HR_ATUALIZACAO'  ' '   '15' ' ' ' ' ' ',
+        5 'ZIB_CONTABIL_ERR'         'TYPE'           'IT_ZIB_CONTABIL_ERR' 'TYPE'            ' '   '08' ' ' ' ' ' ',
+        6 'ZIB_CONTABIL_ERR'         'ID'             'IT_ZIB_CONTABIL_ERR' 'ID'              ' '   '10' ' ' ' ' ' ',
+        7 'ZIB_CONTABIL_ERR'         'NUM'            'IT_ZIB_CONTABIL_ERR' 'NUM'             ' '   '10' ' ' ' ' ' ',
+        "8 'ZIB_CONTABIL_ERR'         'MESSAGE'        'IT_ZIB_CONTABIL_ERR' 'MESSAGE'         ' '   '20' ' ' ' ' ' ',
+        8 ' '                        ' '              'IT_ZIB_CONTABIL_ERR' 'MESSAGE'         'MENSAGEM DE ERRO '   '100' ' ' ' ' ' ',
+        9 'ZIB_CONTABIL_ERR'         'MESSAGE_V1'     'IT_ZIB_CONTABIL_ERR' 'MESSAGE_V1'      ' '   '50' ' ' ' ' ' ',
+       10 'ZIB_CONTABIL_ERR'         'MESSAGE_V2'     'IT_ZIB_CONTABIL_ERR' 'MESSAGE_V2'      ' '   '30' ' ' ' ' ' ',
+       11 'ZIB_CONTABIL_ERR'         'MESSAGE_V3'     'IT_ZIB_CONTABIL_ERR' 'MESSAGE_V3'      ' '   '30' ' ' ' ' ' ',
+       12 'ZIB_CONTABIL_ERR'         'MESSAGE_V4'     'IT_ZIB_CONTABIL_ERR' 'MESSAGE_V4'      ' '   '30' ' ' ' ' ' '.
+ENDFORM.                    " MONTAR_LAYOUT_ERR
+*&---------------------------------------------------------------------*
+*&      MODULE  BUS_BAN  INPUT
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+MODULE BUS_BAN INPUT.
+  DATA: WL_T012 TYPE T012,
+        WL_BNKA TYPE BNKA.
+  IF WG_CADLAN-CONV_BANCO = 'X'.
+    WG_CADLAN-HBKID = 'BBD'.
+  ELSE.
+    WG_CADLAN-HBKID = 'BBRA'.
+  ENDIF.
+  SELECT SINGLE *
+  FROM T012
+  INTO WL_T012
+  WHERE BUKRS = WG_CADLAN-BUKRS
+  AND   HBKID = WG_CADLAN-HBKID.
+
+  IF SY-SUBRC = 0.
+    SELECT SINGLE *
+      FROM BNKA
+      INTO WL_BNKA
+      WHERE BANKL = WL_T012-BANKL .
+    IF SY-SUBRC = 0.
+      MOVE WL_BNKA-BANKA TO WG_CADLAN-BANKA.
+    ENDIF.
+  ENDIF.
+ENDMODULE.                 " BUS_BAN  INPUT
+*&---------------------------------------------------------------------*
+*&      FORM  MONTAR_LAYOUT_CENTRO
+*&---------------------------------------------------------------------*
+*       TEXT
+*----------------------------------------------------------------------*
+*  -->  P1        TEXT
+*  <--  P2        TEXT
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT_CENTRO .
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 'CSKS'                     'KOSTL'           'TG_ITENS_C' 'KOSTL'            'C.CUSTO '           '20' 'X' ' ' ' ',
+        2 'CSKT'                     'KTEXT'           'TG_ITENS_C' 'KTEXT'            ' '                  '30' ' ' ' ' ' ',
+        3 'CEPC'                     'PRCTR'           'TG_ITENS_C' 'PRCTR'            'C.LUCRO '           '20' 'X' ' ' ' ',
+        4 'AUFK'                     'AUFNR'           'TG_ITENS_C' 'AUFNR'            'ORDEM '             '18' 'X' ' ' ' ',
+        5 'ZIMP_LANC_IMP_CT'         'MATNR'           'TG_ITENS_C' 'MATNR'            'ARTIGO '            '18' 'X' ' ' ' ',
+        6 'ZIMP_LANC_IMP_CT'         'VALOR_IMP'       'TG_ITENS_C' 'VALOR_CUS'        'VALOR R$'           '15' 'X' ' ' ' '.
+
+ENDFORM.                    " MONTAR_LAYOUT_CENTRO
+
+MODULE COMPLETA_CAMPOS INPUT.
+
+  PERFORM F_COMPLETA_IDENTIFICADOR.
+
+ENDMODULE.
+
+FORM F_COMPLETA_IDENTIFICADOR.
+
+  DATA: V_LIFNR TYPE LFA1-LIFNR.
+
+  CHECK WG_CADLAN-GSBER IS NOT INITIAL.
+
+  CHECK ( VG_INF_IDENTIFIC IS INITIAL ) AND ( WG_CADLAN-IDENTIFICADOR IS INITIAL ).
+
+  SELECT SINGLE *
+    FROM J_1BBRANCH INTO @DATA(_WL_BRANCH)
+   WHERE BRANCH = @WG_CADLAN-GSBER.
+
+  CHECK SY-SUBRC EQ 0.
+
+  V_LIFNR = WG_CADLAN-GSBER.
+
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+    EXPORTING
+      INPUT  = V_LIFNR
+    IMPORTING
+      OUTPUT = V_LIFNR.
+
+  SELECT SINGLE *
+    FROM LFA1 INTO @DATA(_WL_LFA1)
+   WHERE LIFNR = @V_LIFNR.
+
+  CHECK SY-SUBRC EQ 0.
+
+  WG_CADLAN-IDENTIFICADOR  = _WL_LFA1-STCD1.
+
+  VG_INF_IDENTIFIC = ABAP_TRUE.
+
+
+ENDFORM.
+
+FORM F_ACTION_ADD.
+
+  IF WG_CADLAN-BUKRS IS NOT INITIAL AND WG_ACAO NE C_DISPLA.
+    CLEAR XMODIF.
+    WG_ACAO = C_ADD.
+    PERFORM LIMPA_CAMPOS.
+    PERFORM OBTEM_PROXIMO.
+    REFRESH: TG_FIELDS.
+    PERFORM TRATA_CAMPOS USING SPACE
+                             'GR4'
+                              C_0       "INPUT 1     NO INPUT 0
+                              C_1.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR3'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR2'
+                                  C_1       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                              'GR1'
+                               C_1       "INPUT 1     NO INPUT 0
+                               C_0.      "INVISIBLE 1 VISIBLE 0
+
+    CALL METHOD OBG_DESCBOX->SET_TEXT_AS_R3TABLE
+      EXPORTING
+        TABLE = TG_EDITOR.
+    CALL METHOD OBG_DESCBOX->SET_READONLY_MODE
+      EXPORTING
+        READONLY_MODE = 1.
+  ELSEIF WG_ACAO = C_DISPLA.
+    WG_ACAO = C_ADD.
+    PERFORM LIMPA_CAMPOS.
+    CLEAR: WG_CADLAN-LOTE, WG_CADLAN-BUKRS, WG_CADLAN-DESCR_LOTE.
+    REFRESH: TG_FIELDS.
+    PERFORM TRATA_CAMPOS USING SPACE
+                            'GR4'
+                             C_0       "INPUT 1     NO INPUT 0
+                             C_1.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR3'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                               'GR2'
+                                  C_0       "INPUT 1     NO INPUT 0
+                                  C_0.      "INVISIBLE 1 VISIBLE 0
+    PERFORM TRATA_CAMPOS USING SPACE
+                              'GR1'
+                               C_1       "INPUT 1     NO INPUT 0
+                               C_0.      "INVISIBLE 1 VISIBLE 0
+  ELSE.
+    MESSAGE S836(SD) DISPLAY LIKE 'E' WITH 'INFORME A EMPRESA!'.
+    CLEAR WG_CADLAN-LOTE.
+    LEAVE TO SCREEN 100.
+  ENDIF.
+
+ENDFORM.
+
+MODULE INICIA_LCTO OUTPUT.
+
+  DATA: V_LOTE_ZIMP TYPE ZIMP_CAD_LOTE-LOTE.
+
+  IF ( SY-CALLD   EQ 'X'                ) AND
+     ( VG_CHAMADA NE 'X'                ) AND
+     ( WG_CADLAN-DOC_IMPOSTO IS INITIAL ) AND
+     ( WG_CADLAN-LOTE        IS INITIAL ).
+
+    CLEAR: V_LOTE_ZIMP.
+
+    VG_CHAMADA = 'X'.
+
+    GET PARAMETER ID 'LOTEZIMP' FIELD V_LOTE_ZIMP.
+    IF V_LOTE_ZIMP IS NOT INITIAL.
+
+      DELETE FROM MEMORY ID 'LOTEZIMP'.
+
+      SELECT SINGLE *
+        FROM ZIMP_CAD_LOTE INTO @DATA(_WL_ZIMP_CAD_LOTE)
+       WHERE LOTE = @V_LOTE_ZIMP.
+
+      CHECK SY-SUBRC EQ 0.
+
+      WG_CADLAN-LOTE  = _WL_ZIMP_CAD_LOTE-LOTE.
+      WG_CADLAN-BUKRS = _WL_ZIMP_CAD_LOTE-BUKRS.
+
+      PERFORM F_ACTION_ADD.
+    ENDIF.
+
+  ENDIF.
+
+ENDMODULE.
+
+FORM F_ATUALIZA_ALV.
+  DATA: FG_DOC(1),
+        VLR_TOLER   TYPE ZIMP_LANC_IMP_CT-VLR_MOEDA_DOC,
+        VLR_TOT_DOC TYPE ZIMP_LANC_IMP_CT-VLR_MOEDA_DOC,
+        VLR_TOT_FOR TYPE ZIMP_LANC_IMP_CT-VALOR_FOR.
+
+  CALL METHOD GRID1->GET_SELECTED_CELLS
+    IMPORTING
+      ET_CELL = TG_SELECTEDCELL.
+
+  CLEAR : FG_DOC, VLR_TOT_DOC, VLR_TOT_FOR.
+
+  LOOP AT TG_SELECTEDCELL INTO WG_SELECTEDCELL.
+    LOOP AT TG_ITENS INTO WG_ITEMMMM.
+
+      IF WG_ITEMMMM-DEBCRE = 'C'.
+
+        IF WG_ITEMMMM-VALOR_FOR >= 0.
+          WG_ITEMMMM-VALOR_FOR  = WG_ITEMMMM-VALOR_FOR * -1.
+        ENDIF.
+
+        IF WG_ITEMMMM-VALOR_IMP >= 0.
+          WG_ITEMMMM-VALOR_IMP  = WG_ITEMMMM-VALOR_IMP * -1.
+        ENDIF.
+      ENDIF.
+      "Arredondamento
+      ADD WG_ITEMMMM-VALOR_IMP  TO VLR_TOT_DOC.
+      ADD WG_ITEMMMM-VALOR_FOR TO VLR_TOT_FOR.
+
+      IF WG_CADLAN-DT_VENC IS NOT INITIAL AND ( WG_CADLAN-DT_VENC <  WG_CADLAN-DATA_ATUAL ).
+        CLEAR: WG_CADLAN-DT_VENC.
+        MODIFY TG_ITENS FROM WG_ITEMMMM.
+        MESSAGE 'Dt.Vencimento deve ser maior que Dt.de Lançamento' TYPE 'I'.
+        EXIT.
+      ENDIF.
+
+      CLEAR: WA_STYLE.
+      REFRESH: WG_ITEMMMM-STYLE, STYLE.
+      IF WG_ITEMMMM-XCLASSE = 'X'.
+
+        WA_STYLE-FIELDNAME = 'VALOR_FOR'.
+        WA_STYLE-STYLE = CL_GUI_ALV_GRID=>MC_STYLE_DISABLED.
+        INSERT  WA_STYLE INTO TABLE STYLE .
+
+        WA_STYLE-FIELDNAME = 'VALOR_IMP'.
+        WA_STYLE-STYLE = CL_GUI_ALV_GRID=>MC_STYLE_DISABLED.
+        INSERT  WA_STYLE INTO TABLE STYLE .
+      ENDIF.
+      INSERT LINES OF STYLE INTO TABLE  WG_ITEMMMM-STYLE.
+
+      MODIFY TG_ITENS FROM WG_ITEMMMM.
+    ENDLOOP.
+
+  ENDLOOP.
+
+  IF WG_ACAO = C_DISPLA.
+    EXIT.
+  ENDIF.
+
+
+  VLR_TOLER = 2 / 100.
+
+  IF FG_DOC IS INITIAL AND VLR_TOT_DOC = 0 AND
+      ABS( VLR_TOT_FOR ) GT 0
+      AND  ABS( VLR_TOT_FOR ) LE VLR_TOLER. "Arredondar
+    LOOP AT TG_ITENS INTO WG_ITEMMMM.
+      IF WG_ITEMMMM-CHECKBOX NE 'X'.
+        CONTINUE.
+      ENDIF.
+      IF VLR_TOT_FOR GT 0.
+        IF WG_ITEMMMM-DEBCRE = 'D'.
+          SUBTRACT VLR_TOT_FOR FROM WG_ITEMMMM-VALOR_FOR.
+          MODIFY TG_ITENS FROM WG_ITEMMMM INDEX SY-TABIX TRANSPORTING VALOR_FOR.
+          IF WG_ITEMMMM-XCLASSE = 'X'.
+            LOOP AT TG_OBJ INTO WG_OBJ WHERE SEQITEM = WG_ITEMMMM-SEQITEM.
+              IF WG_OBJ-VLR_MOEDA_FORTE EQ 0.
+                CONTINUE.
+              ENDIF.
+              VLR_TOT_FOR = ABS( VLR_TOT_FOR ).
+              SUBTRACT VLR_TOT_FOR FROM WG_OBJ-VLR_MOEDA_FORTE.
+              MODIFY TG_OBJ FROM WG_OBJ INDEX SY-TABIX TRANSPORTING VLR_MOEDA_FORTE.
+              EXIT.
+            ENDLOOP.
+          ENDIF.
+          EXIT.
+        ENDIF.
+      ELSE.
+        IF WG_ITEMMMM-DEBCRE = 'C'.
+          SUBTRACT VLR_TOT_FOR FROM WG_ITEMMMM-VALOR_FOR.
+          MODIFY TG_ITENS FROM WG_ITEMMMM INDEX SY-TABIX TRANSPORTING VALOR_FOR.
+          IF WG_ITEMMMM-XCLASSE = 'X'.
+            LOOP AT TG_OBJ INTO WG_OBJ WHERE SEQITEM = WG_ITEMMMM-SEQITEM.
+              IF WG_OBJ-VLR_MOEDA_FORTE EQ 0.
+                CONTINUE.
+              ENDIF.
+              VLR_TOT_FOR = ABS( VLR_TOT_FOR ).
+              SUBTRACT VLR_TOT_FOR FROM  WG_OBJ-VLR_MOEDA_FORTE.
+              MODIFY TG_OBJ FROM WG_OBJ INDEX SY-TABIX TRANSPORTING VLR_MOEDA_FORTE.
+              EXIT.
+            ENDLOOP.
+          ENDIF.
+          EXIT.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0600  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0600 INPUT.
+
+  DATA: TL_INPUT_CADLANC  TYPE TABLE OF ZIMP_LANC_IMPOST WITH HEADER LINE,
+        TL_INPUT_CADLANCX TYPE TABLE OF ZIMP_LANC_IMPOST WITH HEADER LINE.
+
+  CASE OK-CODE.
+    WHEN 'CANCELA'.
+      FREE: TG_MSG_RET.
+      LEAVE TO SCREEN 0.
+    WHEN C_SHOW_MSGRE.
+      PERFORM VERIFICA_ERROS.
+      IF TG_MSG_RET[] IS NOT INITIAL.
+        CALL FUNCTION 'Z_DOC_CHECK_NEW'
+          EXPORTING
+            I_SCREEN      = '600'
+            I_SHOW        = C_X
+            I_REPID       = SY-REPID
+            I_PRESSED_TAB = 'G_TAB_STRIP_IMP_CL-PRESSED_TAB'
+            I_SET_FIELD   = 'X_FIELD'
+          IMPORTING
+            E_MESSAGEM    = WG_MENSAGEM
+          TABLES
+            IT_MSGS       = TG_MSG_RET.
+      ENDIF.
+
+*       MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+      CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+    WHEN 'CANCCL'.
+
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+          TEXT_QUESTION         = 'Deseja cancelar todos os lançamentos?'
+          TEXT_BUTTON_1         = 'SIM'(001)
+          ICON_BUTTON_1         = 'ICON_OKAY '
+          TEXT_BUTTON_2         = 'NÃO'(002)
+          ICON_BUTTON_2         = 'ICON_CANCEL'
+          DEFAULT_BUTTON        = '1'
+          DISPLAY_CANCEL_BUTTON = ' '
+          START_COLUMN          = 25
+          START_ROW             = 6
+        IMPORTING
+          ANSWER                = W_ANSWER
+        EXCEPTIONS
+          TEXT_NOT_FOUND        = 1
+          OTHERS                = 2.
+
+      IF SY-SUBRC <> 0.
+        MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+                WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      ENDIF.
+      IF W_ANSWER = '1'.
+
+        DELETE TG_ITENS_CL[] WHERE DOC_IMPOSTO IS INITIAL.
+        IF TG_ITENS_CL[] IS NOT INITIAL.
+
+          SELECT * FROM ZIMP_LANC_IMPOST
+            INTO TABLE TL_INPUT_CADLANCX
+            FOR ALL ENTRIES IN TG_ITENS_CL[]
+            WHERE DOC_IMPOSTO EQ TG_ITENS_CL-DOC_IMPOSTO
+              AND BUKRS       EQ TG_ITENS_CL-BUKRS.
+
+          IF SY-SUBRC IS INITIAL AND TL_INPUT_CADLANCX[] IS NOT INITIAL.
+
+            LOOP AT TL_INPUT_CADLANCX.
+              MOVE-CORRESPONDING TL_INPUT_CADLANCX TO TL_INPUT_CADLANC.
+              TL_INPUT_CADLANC-LOEKZ = ABAP_TRUE.
+              APPEND TL_INPUT_CADLANC.
+              CLEAR TL_INPUT_CADLANC.
+            ENDLOOP.
+            IF TL_INPUT_CADLANC[] IS NOT INITIAL.
+              MODIFY ZIMP_LANC_IMPOST FROM TABLE TL_INPUT_CADLANC.
+              IF SY-SUBRC IS INITIAL. "AND tg_msg_ret[] IS INITIAL.
+                FREE TG_ITENS_CL.
+
+
+
+                MESSAGE S836(SD) WITH 'LANÇAMENTO(S)'(EA1)
+                                      'CANCELADOS COM SUCESSO!'(EA2).
+
+*       MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+                CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+                  EXPORTING
+                    IS_STABLE = WA_STABLE.
+
+              ELSE.
+*                MESSAGE 'Erro!' TYPE 'E'.
+              ENDIF.
+            ENDIF.
+          ELSE.
+            MESSAGE 'Erro documento não encontrado!'(EA4) TYPE 'E'.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+
+    WHEN 'SALVACL'.
+
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+          TEXT_QUESTION         = 'Deseja gerar todos os lançamentos?'(I01)
+          TEXT_BUTTON_1         = 'SIM'(001)
+          ICON_BUTTON_1         = 'ICON_OKAY '
+          TEXT_BUTTON_2         = 'NÃO'(002)
+          ICON_BUTTON_2         = 'ICON_CANCEL'
+          DEFAULT_BUTTON        = '1'
+          DISPLAY_CANCEL_BUTTON = ' '
+          START_COLUMN          = 25
+          START_ROW             = 6
+        IMPORTING
+          ANSWER                = W_ANSWER
+        EXCEPTIONS
+          TEXT_NOT_FOUND        = 1
+          OTHERS                = 2.
+
+      IF SY-SUBRC <> 0.
+        MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+                WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      ENDIF.
+      IF W_ANSWER = '1'.
+
+        AUTHORITY-CHECK OBJECT 'A_S_WERK'
+        ID 'BUKRS' FIELD WG_CADLAN-BUKRS
+        ID 'WERKS' FIELD WG_CADLAN-GSBER.
+        IF SY-SUBRC <> 0.
+          CONCATENATE  'SEM AUTORIZAÇÃO EMPRESA/FILIAL' WG_CADLAN-BUKRS '/' WG_CADLAN-GSBER INTO VTEXTO SEPARATED BY SPACE .
+          MESSAGE VTEXTO TYPE 'E'.
+          EXIT.
+        ENDIF.
+
+        CALL METHOD GRID4->CHECK_CHANGED_DATA.
+        PERFORM VERIFICA_ERROS.
+        IF TG_MSG_RET[] IS INITIAL.
+          PERFORM GRAVA_DADOS_CL.
+          REFRESH: TG_FIELDS.
+*          PERFORM trata_campos USING space
+*                                    'GR1'
+*                                     c_1       "INPUT 1     NO INPUT 0
+*                                     c_0.      "INVISIBLE 1 VISIBLE 0
+*          CALL METHOD obg_descbox->set_readonly_mode
+*            EXPORTING
+*              readonly_mode = 1.
+
+        ELSE.
+          MESSAGE S000(ZWRM001) DISPLAY LIKE 'E' WITH 'HÁ ERRO NO DOCUMENTO.'.
+          CALL FUNCTION 'Z_DOC_CHECK_NEW'
+            EXPORTING
+              I_SCREEN      = '600'
+              I_SHOW        = C_X
+              I_REPID       = SY-REPID
+              I_PRESSED_TAB = 'G_TAB_STRIP_IMP_CL-PRESSED_TAB'
+              I_SET_FIELD   = 'X_FIELD'
+            IMPORTING
+              E_MESSAGEM    = WG_MENSAGEM
+            TABLES
+              IT_MSGS       = TG_MSG_RET.
+        ENDIF.
+
+        IF SY-SUBRC IS INITIAL AND TG_MSG_RET[] IS INITIAL.
+          MESSAGE S836(SD) WITH 'LANÇAMENTO(S)'
+                                'CRIADO/MODIFICADO COM SUCESSO!'.
+
+        ELSE.
+*          MESSAGE 'Erro' TYPE 'E'.
+        ENDIF.
+
+      ENDIF.
+    WHEN 'BTNCOPY'.
+
+      IF ZIMP_CAD_LOTE-LOTE IS NOT INITIAL.
+        CLEAR: XTOTAL_R.
+
+        SELECT SINGLE LOTE, DESCR_LOTE, BUKRS, USUARIO
+         FROM ZIMP_CAD_LOTE
+         INTO @DATA(WL_LOTEX)
+         WHERE LOTE = @ZIMP_CAD_LOTE-LOTE
+         AND LOEKZ = ''
+         AND STATUS_LOTE = ''.
+        IF SY-SUBRC IS INITIAL AND WL_LOTEX-LOTE IS NOT INITIAL.
+
+          SELECT
+                 A~DOC_IMPOSTO,
+                 A~BUKRS,
+                 A~LOTE,
+                 A~DT_VENC,
+                 A~DT_APURACAO,
+                 A~MES_APURACAO,
+                 A~ANO_APURACAO,
+                 A~OBSERVACAO,
+                 A~COD_IMPOSTO,
+                 A~REF_IMPOSTO,
+                 A~TP_IMPOSTO,
+                 A~COD_PGTO,
+                 A~CONV_BANCO,
+                 A~HBKID,
+                 A~GSBER,
+                 A~WAERS,
+                 A~WAERS_F,
+                 A~IDENTIFICADOR,
+                 A~COD_BARRAS,
+                 A~QRCODE, "US - 128395
+                 A~DATA_ATUAL,
+                 A~HORA_ATUAL,
+                 A~USUARIO,
+                 A~LOEKZ,
+                 A~MOEDA_GP_HIST,
+                 A~ST_FECHA
+             FROM ZIMP_LANC_IMPOST AS A
+             INNER JOIN J_1BBRANCH AS B
+                                        ON A~BUKRS  EQ B~BUKRS
+                                        AND A~GSBER EQ B~BRANCH
+             INTO TABLE @DATA(LT_IMP_LANC_IMPOSTX)
+             WHERE
+                   A~LOTE        EQ @ZIMP_CAD_LOTE-LOTE
+               AND A~LOEKZ       EQ @ABAP_FALSE.
+
+          IF LT_IMP_LANC_IMPOSTX IS NOT INITIAL.
+
+            MOVE-CORRESPONDING LT_IMP_LANC_IMPOSTX[] TO TG_IMP_LANC_IMPOSTX[].
+
+            SELECT * FROM ZIMP_LANC_IMP_CT     " Lançamento de Impostos - Item
+              INTO TABLE @TG_IMP_LANC_IMP_CTX  "@DATA(lt_imp_lanc_imp_ct)
+              FOR ALL ENTRIES IN @LT_IMP_LANC_IMPOSTX
+              WHERE BUKRS        EQ @LT_IMP_LANC_IMPOSTX-BUKRS
+                AND DOC_IMPOSTO  EQ @LT_IMP_LANC_IMPOSTX-DOC_IMPOSTO.
+            IF SY-SUBRC IS INITIAL.
+              SORT TG_IMP_LANC_IMP_CTX BY DOC_IMPOSTO.
+            ENDIF.
+
+            IF TG_IMP_LANC_IMP_CTX[] IS NOT INITIAL.
+              SELECT *
+               FROM TBSL
+               INTO TABLE @DATA(TL_TBSLX)
+               FOR ALL ENTRIES IN @TG_IMP_LANC_IMP_CTX
+               WHERE BSCHL EQ @TG_IMP_LANC_IMP_CTX-BSCHL.
+              IF SY-SUBRC IS INITIAL.
+                SORT TL_TBSLX BY BSCHL.
+              ENDIF.
+
+              SELECT * FROM ZIMP_CAD_IMP_CON
+                INTO TABLE @DATA(TL_IMP_CAD_IMP_CONX)
+                FOR ALL ENTRIES IN @TG_IMP_LANC_IMP_CTX
+                WHERE COD_IMPOSTO EQ @TG_IMP_LANC_IMP_CTX-COD_IMPOSTO
+                  AND COD_ABERTURA EQ @TG_IMP_LANC_IMP_CTX-COD_ABERTURA
+                  AND AGRUPAMENTO EQ @ABAP_TRUE.
+              IF SY-SUBRC IS INITIAL.
+                SORT TL_IMP_CAD_IMP_CONX BY COD_IMPOSTO COD_ABERTURA.
+              ELSE.
+                " Não é possível realizar o agrupamento
+                MESSAGE 'Não é possível realizar o agrupamento'(EE6) TYPE 'I'.
+                EXIT.
+              ENDIF.
+            ENDIF.
+
+            LOOP AT LT_IMP_LANC_IMPOSTX INTO DATA(WA_LANCX).
+              MOVE-CORRESPONDING WA_LANCX TO TG_ITENS_CL.
+              IF TG_ITENS_CL-MES_APURACAO EQ 0 OR TG_ITENS_CL-MES_APURACAO IS INITIAL.
+                TG_ITENS_CL-MES_APURACAO = WA_LANCX-DT_APURACAO+4(2).
+              ENDIF.
+              IF TG_ITENS_CL-ANO_APURACAO EQ 0 OR TG_ITENS_CL-ANO_APURACAO IS INITIAL.
+                TG_ITENS_CL-ANO_APURACAO = WA_LANC-DT_APURACAO(4).
+              ENDIF.
+              MOVE ICON_LED_YELLOW TO TG_ITENS_CL-ICON.
+
+              LOOP AT TG_IMP_LANC_IMP_CTX INTO DATA(WA_LANC_IMP_CTX) WHERE DOC_IMPOSTO EQ WA_LANCX-DOC_IMPOSTO.
+
+                IF TL_TBSLX[] IS NOT INITIAL.
+
+                  READ TABLE TL_TBSLX ASSIGNING FIELD-SYMBOL(<FS_TBSLX>)
+                    WITH KEY BSCHL = WA_LANC_IMP_CTX-BSCHL
+                    BINARY SEARCH.
+
+                  IF <FS_TBSLX> IS ASSIGNED AND <FS_TBSLX>-SHKZG NE 'H'.
+                    TG_ITENS_CL-BSCHL = WA_LANC_IMP_CTX-BSCHL.
+                    TG_ITENS_CL-COD_ABERTURAD  = WA_LANC_IMP_CTX-COD_ABERTURA.
+                    TG_ITENS_CL-VLR_MOEDA_DOCD = WA_LANC_IMP_CTX-VALOR_IMP.
+                    ADD WA_LANC_IMP_CTX-VALOR_IMP TO XTOTAL_R.
+                  ELSE.
+                    IF WA_LANC_IMP_CTX-VALOR_IMP GT 0.
+                      TG_ITENS_CL-VLR_MOEDA_DOCC = WA_LANC_IMP_CTX-VALOR_IMP * ( - 1 ).
+                    ELSE.
+                      TG_ITENS_CL-VLR_MOEDA_DOCC = WA_LANC_IMP_CTX-VALOR_IMP.
+                    ENDIF.
+                    TG_ITENS_CL-COD_ABERTURAC  = WA_LANC_IMP_CTX-COD_ABERTURA.
+                    TG_ITENS_CL-BSCHLC = WA_LANC_IMP_CTX-BSCHL.
+
+                    ADD WA_LANC_IMP_CTX-VALOR_IMP TO XTOTAL_R.
+                  ENDIF.
+
+                  IF WA_LANC_IMP_CTX-SEQITEM GT 2.
+                    IF <FS_TBSLX> IS ASSIGNED AND <FS_TBSLX>-SHKZG NE 'H'.
+                      TG_ITENS_CL-BSCHLDC = WA_LANC_IMP_CTX-BSCHL.
+                      TG_ITENS_CL-COD_ABERTURADC  = WA_LANC_IMP_CTX-COD_ABERTURA.
+                      TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CTX-VALOR_IMP.
+                      ADD WA_LANC_IMP_CTX-VALOR_IMP TO XTOTAL_R.
+                    ELSE.
+                      IF WA_LANC_IMP_CTX-VALOR_IMP GT 0.
+                        TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CTX-VALOR_IMP * ( - 1 ).
+                      ELSE.
+                        TG_ITENS_CL-VLR_MOEDA_DOCDC = WA_LANC_IMP_CTX-VALOR_IMP.
+                      ENDIF.
+                      TG_ITENS_CL-COD_ABERTURADC  = WA_LANC_IMP_CTX-COD_ABERTURA.
+                      TG_ITENS_CL-BSCHLDC = WA_LANC_IMP_CTX-BSCHL.
+
+                      ADD WA_LANC_IMP_CTX-VALOR_IMP TO XTOTAL_R.
+                    ENDIF.
+                  ENDIF.
+                ENDIF.
+              ENDLOOP.
+
+              IF XTOTAL_R NE 0.
+                MOVE ICON_MESSAGE_ERROR TO TG_ITENS_CL-ICON.
+                READ TABLE TG_IMP_LANC_IMP_CTX
+                ASSIGNING FIELD-SYMBOL(<FS_IMP_CTXX>)
+                WITH KEY DOC_IMPOSTO = WA_LANCX-DOC_IMPOSTO
+                         VALOR_IMP = XTOTAL_R.
+                IF <FS_IMP_CTXX> IS ASSIGNED AND <FS_IMP_CTXX> IS NOT INITIAL.
+                  TG_ITENS_CL-COD_ABERTURADC  = <FS_IMP_CTXX>-COD_ABERTURA.
+                ENDIF.
+              ENDIF.
+
+              MOVE XTOTAL_R TO TG_ITENS_CL-VLR_MOEDA_DOCDC.
+              CLEAR: TG_ITENS_CL-DOC_IMPOSTO, XTOTAL_R.
+              APPEND TG_ITENS_CL TO TG_ITENS_CL.
+              CLEAR TG_ITENS_CL.
+            ENDLOOP.
+          ELSE.
+            MESSAGE 'Lote não encontrado!'(EE4) TYPE 'E'.
+          ENDIF.
+
+*       MÉTODO DE ATUALIZAÇÃO DE DADOS NA TELA
+          CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+            EXPORTING
+              IS_STABLE = WA_STABLE.
+
+        ELSE.
+          MESSAGE 'Lote não encontrado!'(I04) TYPE 'E'.
+        ENDIF.
+
+      ELSE.
+        MESSAGE 'Campo Lote vazio!'(EE5) TYPE 'E'.
+      ENDIF.
+  ENDCASE.
+
+  CALL METHOD GRID4->CHECK_CHANGED_DATA.
+
+  CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+    EXPORTING
+      IS_STABLE = WA_STABLE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Form  MONTAR_LAYOUT_CL
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT_CL .
+
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1  ' '                        ' '               'TG_ITENS_CL' 'ICON'              'Status '          '07' ' ' ' ' ' ',
+        1  ' '                        ' '               'TG_ITENS_CL' 'CHECKBOX'          'Seleção '         '03' 'X' ' ' ' ',
+        1  'TGSB'                     'GSBER_KONS'      'TG_ITENS_CL' 'GSBER'             'Filial '          '07' 'X' ' ' ' ',
+        2  'ZIMP_LANC_IMPOST'         'WAERS'           'TG_ITENS_CL' 'WAERS'             'Moeda '           '04' 'X' ' ' ' ',
+        3  'ZIMP_CAD_IMPOSTO'         'COD_IMPOSTO'     'TG_ITENS_CL' 'COD_IMPOSTO'       'Cód. Imposto '    '15' 'X' ' ' ' ',
+        4  'ZIMP_LANC_IMPOST'         'COD_BARRAS'      'TG_ITENS_CL' 'COD_BARRAS'        'Cód. Barras '     '14' 'X' ' ' ' ',
+        5  'ZIMP_LANC_IMPOST'         'OBSERVACAO'      'TG_ITENS_CL' 'OBSERVACAO'        'Texto contábil '  '20' 'X' ' ' ' ',
+        6  'ZIMP_LANC_IMPOST'         'MES_APURACAO'    'TG_ITENS_CL' 'MES_APURACAO'      'Mês '             '03' 'X' ' ' ' ',
+        7  'ZIMP_LANC_IMPOST'         'ANO_APURACAO'    'TG_ITENS_CL' 'ANO_APURACAO'      'Ano '             '05' 'X' ' ' ' ',
+        8  'ZIMP_LANC_IMPOST'         'DT_APURACAO '    'TG_ITENS_CL' 'DT_APURACAO '      'Data apuração  '  'X'  'X' ' ' ' ',
+        9  'CSKS            '         'KOSTL       '    'TG_ITENS_CL' 'KOSTL       '      'Centro de custo'  '13' 'X' ' ' ' ',
+       10  'ZIMP_LANC_IMPOST'         'LIFNR       '    'TG_ITENS_CL' 'LIFNR       '      'Fornecedor'       '13' ' ' ' ' ' ',
+       11  'ZIMP_LANC_IMPOST'         'KUNNR       '    'TG_ITENS_CL' 'KUNNR       '      'Cliente        '  '13' ' ' ' ' ' ',
+       12  'ZIMP_LANC_IMPOST'         'HKONT       '    'TG_ITENS_CL' 'HKONT       '      'Conta do Razão '  '13' ' ' ' ' ' ',
+       13  'ZIMP_CAD_IMP_CON'         'COD_ABERTURA'    'TG_ITENS_CL' 'COD_ABERTURAD'     'Cod.Aber(D) '     '11' ' ' ' ' ' ', "
+       14  'ZIMP_CAD_IMP_CON'         'VLR_MOEDA_DOC'   'TG_ITENS_CL' 'VLR_MOEDA_DOCD'    'Valor(D) '        '09' 'X' ' ' ' ', "
+       15  'ZIMP_CAD_IMP_CON'         'COD_ABERTURA'    'TG_ITENS_CL' 'COD_ABERTURAC'     'Cod.Aber(C) '     '11' ' ' ' ' ' ', "
+       16  'ZIMP_CAD_IMP_CON'         'VLR_MOEDA_DOC'   'TG_ITENS_CL' 'VLR_MOEDA_DOCC'    'Valor(C) '        '09' 'X' ' ' ' ',
+       17  'ZIMP_CAD_IMP_CON'         'COD_ABERTURA'    'TG_ITENS_CL' 'COD_ABERTURADC'    'Cod.Aber(DC) '    '12' ' ' ' ' ' ', "
+       18  'ZIMP_CAD_IMP_CON'         'VLR_MOEDA_DOC'   'TG_ITENS_CL' 'VLR_MOEDA_DOCDC'   'Valor(DC) '       '10' 'X' ' ' ' ',
+       19  'ZIMP_LANC_IMPOST'         'DOC_IMPOSTO'     'TG_ITENS_CL' 'DOC_IMPOSTO'       'Nro.documento '   '15' ' ' ' ' ' '. "
+
+  MOVE T_FIELDCATALOG TO T_FIELDCATALOG_CL.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Module  TB_STRIP_IMP_ACT_SET_CL  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE TB_STRIP_IMP_ACT_SET_CL OUTPUT.
+  CLEAR ZIMP_CAD_LOTE-LOTE.
+  TAB_STRIP_IMP_CL-ACTIVETAB = G_TAB_STRIP_IMP_CL-PRESSED_TAB.
+  CASE G_TAB_STRIP_IMP_CL-PRESSED_TAB.
+    WHEN C_TAB_STRIP_IMP_CL-TAB1.
+      G_TAB_STRIP_IMP_CL-SUBSCREEN = '0700'.
+    WHEN OTHERS.
+*&SPWIZARD:      DO NOTHING
+  ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  CRIA_OBJETOS_CL  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CRIA_OBJETOS_CL OUTPUT.
+  " Grid4 - Agrupamento
+  IF G_COPIA_LOTE IS INITIAL.
+    WA_LAYOUT-ZEBRA        = C_X.
+    WA_LAYOUT-NO_ROWMARK   = C_X.
+    WA_STABLE-ROW          = C_X.
+    WA_LAYOUT-SEL_MODE     = 'A'.
+    WA_LAYOUT-CWIDTH_OPT   = C_X.
+    WA_LAYOUT-BOX_FNAME    = 'MARK'.
+
+    CREATE OBJECT G_COPIA_LOTE
+      EXPORTING
+        CONTAINER_NAME = G_COPIALOTE. "G_CONTAINER.
+
+    CREATE OBJECT SPLITTER
+      EXPORTING
+        PARENT  = G_COPIA_LOTE
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD SPLITTER->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = CONTAINER_4.
+
+    CREATE OBJECT GRID4
+      EXPORTING
+        I_PARENT = CONTAINER_4.
+
+    PERFORM MONTAR_LAYOUT_CL.
+    CREATE OBJECT OBG_TOOLBAR
+      EXPORTING
+        IO_ALV_GRID = GRID4.
+
+*    Register event handler
+    SET HANDLER OBG_TOOLBAR->ON_TOOLBAR FOR GRID4.
+    SET HANDLER OBG_TOOLBAR->HANDLE_USER_COMMAND FOR GRID4.
+
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_CHECK.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+
+
+    CALL METHOD GRID4->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+        IS_LAYOUT            = WA_LAYOUT
+      CHANGING
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = TG_ITENS_CL[].
+
+    CALL METHOD GRID4->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD GRID4->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    SET HANDLER:
+              LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK FOR GRID4,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED_FINISHED FOR GRID4,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED FOR GRID4.
+
+*    Posiciona spliter na altura x
+    CALL METHOD SPLITTER->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 100.
+
+    CALL METHOD GRID4->CHECK_CHANGED_DATA.
+
+    PERFORM MONTAR_LAYOUT_CL.
+    CALL METHOD GRID4->SET_FRONTEND_FIELDCATALOG
+      EXPORTING
+        IT_FIELDCATALOG = T_FIELDCATALOG[].
+    CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+
+  ELSE.
+
+    PERFORM MONTAR_LAYOUT_CL.
+    CALL METHOD GRID4->SET_FRONTEND_FIELDCATALOG
+      EXPORTING
+        IT_FIELDCATALOG = T_FIELDCATALOG[].
+    CALL METHOD GRID4->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0600  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0600 OUTPUT.
+
+  SET PF-STATUS 'Z006'.
+  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '600'.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Form  GRAVA_DADOS_CL
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM GRAVA_DADOS_CL .
+
+  DATA: WL_INPUT_CADLAN     TYPE ZIMP_LANC_IMPOST,
+        WL_ITEM_CLX         LIKE LINE OF TG_ITENS_CL,
+        TL_ZIMP_CAD_IMP_CON TYPE TABLE OF ZIMP_CAD_IMP_CON,
+        TL_INPUT_CADLANC    TYPE TABLE OF ZIMP_LANC_IMPOST WITH HEADER LINE,
+        TL_INPUT_CADLAN     TYPE TABLE OF ZIMP_LANC_IMP_CT WITH HEADER LINE,
+        VFLAG_CUS(1).
+
+*Estrutura de rep. para pegar filiais
+  DELETE TG_ITENS_CL WHERE GSBER IS INITIAL.
+  MOVE: TG_ITENS_CL[] TO TG_ITENS_CLX[].
+
+  SORT TG_ITENS_CLX BY GSBER COD_IMPOSTO.
+  DELETE ADJACENT DUPLICATES FROM TG_ITENS_CLX COMPARING GSBER COD_IMPOSTO.
+
+  FREE: TL_IMP_CAD_IMP_CON.
+  SELECT * FROM ZIMP_CAD_IMP_CON INTO TABLE TL_IMP_CAD_IMP_CON
+    FOR ALL ENTRIES IN TG_ITENS_CL
+    WHERE COD_IMPOSTO EQ TG_ITENS_CL-COD_IMPOSTO.
+  SORT TL_IMP_CAD_IMP_CON BY COD_IMPOSTO COD_ABERTURA.
+
+  LOOP AT TG_ITENS_CLX ASSIGNING FIELD-SYMBOL(<WL_ITENS_CLX>)
+                       WHERE ICON NE ICON_MESSAGE_ERROR. "Cab...
+
+*    MOVE-CORRESPONDING wg_cadlan  TO tl_input_cadlanc.
+    TL_INPUT_CADLANC-OBSERVACAO   = <WL_ITENS_CLX>-OBSERVACAO.
+    TL_INPUT_CADLANC-COD_BARRAS   = <WL_ITENS_CLX>-COD_BARRAS.
+    TL_INPUT_CADLANC-QRCODE       = <WL_ITENS_CLX>-QRCODE.
+    TL_INPUT_CADLANC-LOTE         = WG_CADLAN-LOTE.
+    TL_INPUT_CADLANC-BUKRS        = VG_BUKRS.
+    TL_INPUT_CADLANC-WAERS        = <WL_ITENS_CLX>-WAERS.
+    TL_INPUT_CADLANC-COD_IMPOSTO  = <WL_ITENS_CLX>-COD_IMPOSTO.
+    TL_INPUT_CADLANC-DT_APURACAO  = <WL_ITENS_CLX>-DT_APURACAO.
+    TL_INPUT_CADLANC-DT_VENC      = WG_CADLAN-DT_VENC.
+    TL_INPUT_CADLANC-MES_APURACAO = <WL_ITENS_CLX>-MES_APURACAO.
+    TL_INPUT_CADLANC-ANO_APURACAO = <WL_ITENS_CLX>-ANO_APURACAO.
+    TL_INPUT_CADLANC-KOSTL        = <WL_ITENS_CLX>-KOSTL.
+    TL_INPUT_CADLANC-GSBER        = <WL_ITENS_CLX>-GSBER.
+
+    SELECT SINGLE TP_IMPOSTO, COD_PGTO,CONV_BANCO,HBKID
+    FROM ZIMP_CAD_IMPOSTO
+    INTO ( @TL_INPUT_CADLANC-TP_IMPOSTO, @TL_INPUT_CADLANC-COD_PGTO, @TL_INPUT_CADLANC-CONV_BANCO, @TL_INPUT_CADLANC-HBKID )
+    WHERE  COD_IMPOSTO EQ @<WL_ITENS_CLX>-COD_IMPOSTO.
+
+    SELECT SINGLE *
+        FROM J_1BBRANCH
+        INTO  @DATA(WL_J_1BBRANCH)
+        WHERE BUKRS = @VG_BUKRS
+        AND   BRANCH = @<WL_ITENS_CLX>-GSBER.
+
+    TL_INPUT_CADLANC-IDENTIFICADOR = WL_J_1BBRANCH-STCD1.
+
+    IF <WL_ITENS_CLX>-DOC_IMPOSTO IS INITIAL. "Cria
+
+      PERFORM OBTEM_PROX_CL.
+
+      IF WG_CADLAN_CL-DOC_IMPOSTO IS NOT INITIAL.
+        TL_INPUT_CADLANC-DOC_IMPOSTO = WG_CADLAN_CL-DOC_IMPOSTO.
+        <WL_ITENS_CLX>-DOC_IMPOSTO = TL_INPUT_CADLANC-DOC_IMPOSTO.
+
+      ELSE.
+* marcar verm.
+        SORT TG_ITENS_CL BY GSBER.
+        READ TABLE TG_ITENS_CL INTO DATA(WA_ITEMM) WITH KEY GSBER = <WL_ITENS_CLX>-GSBER
+                               BINARY SEARCH.
+        IF SY-SUBRC IS INITIAL.
+* marcar verd.
+          MOVE-CORRESPONDING <WL_ITENS_CLX> TO WA_ITEMM.
+          MOVE ICON_MESSAGE_ERROR TO WA_ITEMM-ICON.
+          MODIFY TG_ITENS_CL FROM WA_ITEMM INDEX SY-TABIX.
+        ENDIF.
+        CONTINUE.
+      ENDIF.
+
+    ELSE.
+      TL_INPUT_CADLANC-DOC_IMPOSTO = <WL_ITENS_CLX>-DOC_IMPOSTO.
+    ENDIF.
+
+    MOVE: SY-MANDT TO TL_INPUT_CADLANC-MANDT,
+          SY-UNAME TO TL_INPUT_CADLANC-USUARIO,
+          SY-DATUM TO TL_INPUT_CADLANC-DATA_ATUAL,
+          SY-UZEIT TO TL_INPUT_CADLANC-HORA_ATUAL.
+
+    REFRESH: TG_EDITOR.
+*    SORT tl_imp_cad_imp_con BY bschl.
+    IF OBG_DESCBOX IS NOT INITIAL.
+      CALL METHOD OBG_DESCBOX->GET_TEXT_AS_R3TABLE
+        IMPORTING
+          TABLE = TG_EDITOR.
+
+      LOOP AT TG_EDITOR INTO WG_EDITOR.
+        IF SY-TABIX EQ 1.
+          TL_INPUT_CADLANC-REF_IMPOSTO = WG_EDITOR-LINE.
+
+        ELSEIF SY-TABIX GE 2.
+          CONCATENATE TL_INPUT_CADLANC-REF_IMPOSTO  WG_EDITOR-LINE INTO TL_INPUT_CADLANC-REF_IMPOSTO.
+
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+    SORT TG_ITENS_C BY COD_ABERTURA.
+
+    APPEND TL_INPUT_CADLANC.
+    CLEAR TL_INPUT_CADLANC.
+
+    VSEQITEM = 0.
+    LOOP AT TG_ITENS_CL WHERE GSBER EQ <WL_ITENS_CLX>-GSBER
+                          AND COD_IMPOSTO EQ <WL_ITENS_CLX>-COD_IMPOSTO
+                          AND ICON NE ICON_MESSAGE_ERROR.
+      MOVE-CORRESPONDING TG_ITENS_CL TO TL_INPUT_CADLAN.
+
+      MOVE: SY-MANDT               TO TL_INPUT_CADLAN-MANDT,
+            SY-UNAME               TO TL_INPUT_CADLAN-USUARIO,
+            SY-DATUM               TO TL_INPUT_CADLAN-DATA_ATUAL,
+            SY-UZEIT               TO TL_INPUT_CADLAN-HORA_ATUAL,
+            VG_BUKRS               TO TL_INPUT_CADLAN-BUKRS.
+
+      IF TL_INPUT_CADLAN-DOC_IMPOSTO IS INITIAL.
+        MOVE <WL_ITENS_CLX>-DOC_IMPOSTO TO TL_INPUT_CADLAN-DOC_IMPOSTO.
+      ENDIF.
+
+      READ TABLE TG_ITENS_C INTO DATA(WA_ITENS_C) INDEX 1.
+
+      ADD 1 TO VSEQITEM .
+      MOVE:
+            WA_ITENS_C-KOSTL             TO TL_INPUT_CADLAN-KOSTL,
+            WA_ITENS_C-PRCTR             TO TL_INPUT_CADLAN-PRCTR,
+            VSEQITEM                     TO TL_INPUT_CADLAN-SEQITEM,
+            WA_ITENS_C-AUFNR             TO TL_INPUT_CADLAN-AUFNR,
+            WA_ITENS_C-MATNR             TO TL_INPUT_CADLAN-MATNR,
+            TG_ITENS_CL-BSCHL            TO TL_INPUT_CADLAN-BSCHL,
+            TG_ITENS_CL-VLR_MOEDA_DOCD   TO TL_INPUT_CADLAN-VALOR_IMP,
+            TG_ITENS_CL-COD_ABERTURAD    TO TL_INPUT_CADLAN-COD_ABERTURA.
+
+      READ TABLE TL_IMP_CAD_IMP_CON INTO DATA(WA_ITENS_X) WITH KEY COD_IMPOSTO = TL_INPUT_CADLAN-COD_IMPOSTO
+                                                                  COD_ABERTURA = TL_INPUT_CADLAN-COD_ABERTURA BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+        MOVE:
+                    WA_ITENS_X-UMSKZ             TO TL_INPUT_CADLAN-UMSKZ,
+                    WA_ITENS_X-HKONT             TO TL_INPUT_CADLAN-HKONT,
+                    WA_ITENS_X-LIFNR             TO TL_INPUT_CADLAN-LIFNR,
+                    WA_ITENS_X-KUNNR             TO TL_INPUT_CADLAN-KUNNR.
+
+        IF TL_INPUT_CADLAN-HKONT IS NOT INITIAL.
+          TL_INPUT_CADLAN-KOSTL = TG_ITENS_CL-KOSTL.
+        ENDIF.
+
+      ENDIF.
+
+      APPEND TL_INPUT_CADLAN.
+      CLEAR TL_INPUT_CADLAN.
+    ENDLOOP.
+
+    LOOP AT TG_ITENS_CL WHERE GSBER EQ <WL_ITENS_CLX>-GSBER
+                          AND COD_IMPOSTO EQ <WL_ITENS_CLX>-COD_IMPOSTO
+                          AND ICON NE ICON_MESSAGE_ERROR.
+
+      MOVE-CORRESPONDING TG_ITENS_CL TO TL_INPUT_CADLAN.
+
+      MOVE: SY-MANDT               TO TL_INPUT_CADLAN-MANDT,
+            SY-UNAME               TO TL_INPUT_CADLAN-USUARIO,
+            SY-DATUM               TO TL_INPUT_CADLAN-DATA_ATUAL,
+            SY-UZEIT               TO TL_INPUT_CADLAN-HORA_ATUAL,
+            VG_BUKRS               TO TL_INPUT_CADLAN-BUKRS.
+
+      IF TL_INPUT_CADLAN-DOC_IMPOSTO IS INITIAL.
+        MOVE: <WL_ITENS_CLX>-DOC_IMPOSTO TO TL_INPUT_CADLAN-DOC_IMPOSTO.
+      ENDIF.
+
+      READ TABLE TG_ITENS_C INTO DATA(WA_ITENS_CX) INDEX 1.
+
+      ADD 1 TO VSEQITEM .
+      MOVE:
+            WA_ITENS_CX-KOSTL            TO TL_INPUT_CADLAN-KOSTL,
+            WA_ITENS_CX-PRCTR            TO TL_INPUT_CADLAN-PRCTR,
+            VSEQITEM                     TO TL_INPUT_CADLAN-SEQITEM,
+            WA_ITENS_CX-AUFNR            TO TL_INPUT_CADLAN-AUFNR,
+            WA_ITENS_CX-MATNR            TO TL_INPUT_CADLAN-MATNR,
+            TG_ITENS_CL-BSCHLC           TO TL_INPUT_CADLAN-BSCHL,
+            TG_ITENS_CL-VLR_MOEDA_DOCC   TO TL_INPUT_CADLAN-VALOR_IMP,
+            TG_ITENS_CL-COD_ABERTURAC    TO TL_INPUT_CADLAN-COD_ABERTURA.
+
+
+      READ TABLE TL_IMP_CAD_IMP_CON INTO DATA(WA_ITENS_X1) WITH KEY COD_IMPOSTO = TL_INPUT_CADLAN-COD_IMPOSTO
+                                                                   COD_ABERTURA = TL_INPUT_CADLAN-COD_ABERTURA BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+        MOVE:
+                    WA_ITENS_X1-UMSKZ             TO TL_INPUT_CADLAN-UMSKZ,
+                    WA_ITENS_X1-HKONT             TO TL_INPUT_CADLAN-HKONT,
+                    WA_ITENS_X1-LIFNR             TO TL_INPUT_CADLAN-LIFNR,
+                    WA_ITENS_X1-KUNNR             TO TL_INPUT_CADLAN-KUNNR.
+
+        IF TL_INPUT_CADLAN-HKONT IS NOT INITIAL.
+          TL_INPUT_CADLAN-KOSTL = TG_ITENS_CL-KOSTL.
+        ENDIF.
+
+      ENDIF.
+
+
+
+      APPEND TL_INPUT_CADLAN.
+      CLEAR TL_INPUT_CADLAN.
+    ENDLOOP.
+
+    LOOP AT TG_ITENS_CL WHERE GSBER EQ <WL_ITENS_CLX>-GSBER
+                          AND COD_IMPOSTO EQ <WL_ITENS_CLX>-COD_IMPOSTO
+                          AND ICON NE ICON_MESSAGE_ERROR
+                          AND BSCHLDC IS NOT INITIAL.
+
+      MOVE-CORRESPONDING TG_ITENS_CL TO TL_INPUT_CADLAN.
+
+      MOVE: SY-MANDT               TO TL_INPUT_CADLAN-MANDT,
+            SY-UNAME               TO TL_INPUT_CADLAN-USUARIO,
+            SY-DATUM               TO TL_INPUT_CADLAN-DATA_ATUAL,
+            SY-UZEIT               TO TL_INPUT_CADLAN-HORA_ATUAL,
+            VG_BUKRS               TO TL_INPUT_CADLAN-BUKRS.
+
+      IF TL_INPUT_CADLAN-DOC_IMPOSTO IS INITIAL.
+        MOVE: <WL_ITENS_CLX>-DOC_IMPOSTO TO TL_INPUT_CADLAN-DOC_IMPOSTO.
+      ENDIF.
+
+      READ TABLE TG_ITENS_C INTO DATA(WA_ITENS_CXX) INDEX 1.
+
+      ADD 1 TO VSEQITEM .
+
+      MOVE:
+            WA_ITENS_CXX-KOSTL            TO TL_INPUT_CADLAN-KOSTL,
+            WA_ITENS_CXX-PRCTR            TO TL_INPUT_CADLAN-PRCTR,
+            VSEQITEM                      TO TL_INPUT_CADLAN-SEQITEM,
+            WA_ITENS_CXX-AUFNR            TO TL_INPUT_CADLAN-AUFNR,
+            WA_ITENS_CXX-MATNR            TO TL_INPUT_CADLAN-MATNR,
+            TG_ITENS_CL-BSCHLDC           TO TL_INPUT_CADLAN-BSCHL,
+            TG_ITENS_CL-VLR_MOEDA_DOCDC   TO TL_INPUT_CADLAN-VALOR_IMP,
+            TG_ITENS_CL-COD_ABERTURADC    TO TL_INPUT_CADLAN-COD_ABERTURA.
+
+      READ TABLE TL_IMP_CAD_IMP_CON INTO DATA(WA_ITENS_X2) WITH KEY COD_IMPOSTO = TL_INPUT_CADLAN-COD_IMPOSTO
+                                                                   COD_ABERTURA = TL_INPUT_CADLAN-COD_ABERTURA BINARY SEARCH.
+      IF SY-SUBRC IS INITIAL.
+
+        MOVE:
+                    WA_ITENS_X2-UMSKZ             TO TL_INPUT_CADLAN-UMSKZ,
+                    WA_ITENS_X2-HKONT             TO TL_INPUT_CADLAN-HKONT,
+                    WA_ITENS_X2-LIFNR             TO TL_INPUT_CADLAN-LIFNR,
+                    WA_ITENS_X2-KUNNR             TO TL_INPUT_CADLAN-KUNNR.
+
+        IF TL_INPUT_CADLAN-HKONT IS NOT INITIAL.
+          TL_INPUT_CADLAN-KOSTL = TG_ITENS_CL-KOSTL.
+        ENDIF.
+
+      ENDIF.
+
+      APPEND TL_INPUT_CADLAN.
+      CLEAR TL_INPUT_CADLAN.
+    ENDLOOP.
+
+    SORT TG_ITENS_CL BY GSBER.
+    READ TABLE TG_ITENS_CL INTO DATA(WA_ITEM) WITH KEY GSBER = <WL_ITENS_CLX>-GSBER
+                           BINARY SEARCH.
+    IF SY-SUBRC IS INITIAL.
+* marcar verd.
+      MOVE-CORRESPONDING <WL_ITENS_CLX> TO WA_ITEM.
+      MOVE ICON_CHECKED TO WA_ITEM-ICON.
+      MODIFY TG_ITENS_CL FROM WA_ITEM INDEX SY-TABIX.
+    ENDIF.
+  ENDLOOP.
+
+  IF TL_INPUT_CADLAN[] IS NOT INITIAL AND TL_INPUT_CADLANC[] IS NOT INITIAL.
+    MODIFY ZIMP_LANC_IMPOST FROM TABLE TL_INPUT_CADLANC.
+    MODIFY ZIMP_LANC_IMP_CT FROM TABLE TL_INPUT_CADLAN.
+  ELSE.
+    MESSAGE 'Erro no momento da gravação, verificar registros!'(EE7) TYPE 'I'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  OBTEM_PROX_CL
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM OBTEM_PROX_CL .
+  DATA: VNUM(10)            TYPE C,
+        VSEQ(10)            TYPE P,
+        WL_ZIMP_LANC_IMPOST TYPE ZIMP_LANC_IMPOST.
+
+  IF VG_BUKRS IS NOT INITIAL.
+    CALL FUNCTION 'NUMBER_GET_NEXT'
+      EXPORTING
+        NR_RANGE_NR = 'ZT'
+        OBJECT      = 'RF_BELEG'
+        SUBOBJECT   = VG_BUKRS "wg_cadlan-bukrs
+      IMPORTING
+        NUMBER      = VSEQ.      "SUBOBJECT = W_ZIMP_CABECALHO-BUK
+
+    VNUM = VSEQ .
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = VNUM
+      IMPORTING
+        OUTPUT = VNUM.
+
+    WG_CADLAN_CL-DOC_IMPOSTO = VNUM.
+    SELECT SINGLE *
+      FROM ZIMP_LANC_IMPOST
+      INTO WL_ZIMP_LANC_IMPOST
+      WHERE BUKRS       = VG_BUKRS
+      AND   DOC_IMPOSTO =  WG_CADLAN_CL-DOC_IMPOSTO.
+
+    IF SY-SUBRC = 0.
+      CLEAR WG_CADLAN_CL-DOC_IMPOSTO.
+*      MESSAGE s000(zwrm001) DISPLAY LIKE 'E' WITH 'ERRO FATAL NA NUMERAÇÃO, DOCUMENTO JÁ EXISTE.'.
+* Colocar nas mensagerias - pendente
+    ENDIF.
+
+  ELSE.
+    CLEAR WG_CADLAN_CL-DOC_IMPOSTO.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Module  TB_STRIP_IMP_ACT_GET_CL  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE TB_STRIP_IMP_ACT_GET_CL INPUT.
+
+  OK_CODE = SY-UCOMM.
+  CASE OK_CODE.
+    WHEN C_TAB_STRIP_IMP_CL-TAB1.
+      G_TAB_STRIP_IMP-PRESSED_TAB = C_TAB_STRIP_IMP_CL-TAB1.
+    WHEN OTHERS.
+*&SPWIZARD:      DO NOTHING
+  ENDCASE.
+
+ENDMODULE.

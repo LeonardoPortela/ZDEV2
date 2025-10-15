@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_TAXA_CURVA_DB</CLSNAME>
+    <LANGU>P</LANGU>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ATUALIZAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsável por atualizar no banco.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ATUALIZAR_FRAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método resopnsável por atualizar processo frame.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERIR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsável por inserir no banco.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERIR_FRAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsável para inserir no banco ZSDT0095</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERIR_IN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsável por inserir no banco Insumos.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ATUALIZAR</CMPNAME>
+     <SCONAME>OBJ_TAXA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa Curva</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ATUALIZAR_FRAME</CMPNAME>
+     <SCONAME>OBJ_TAXA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa Curva</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR</CMPNAME>
+     <SCONAME>OBJ_TAXA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa Curva</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR_FRAME</CMPNAME>
+     <SCONAME>I_AUART</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR_FRAME</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data em formato CHAR</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR_FRAME</CMPNAME>
+     <SCONAME>I_ZSDT0055</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Solicitação Ordem de Venda – Logistica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR_FRAME</CMPNAME>
+     <SCONAME>I_ZSDT0059</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Solicitação Ordem de Venda – PRECO</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR_IN</CMPNAME>
+     <SCONAME>OBJ_TAXA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Taxa Curva</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

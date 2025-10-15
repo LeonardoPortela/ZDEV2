@@ -1,0 +1,29 @@
+*&---------------------------------------------------------------------*
+*& Report  ZLESR0110_URI
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZLESR0110_URI MESSAGE-ID ZAVSEGURO.
+
+TABLES: ZLEST0144.
+
+DATA: I_FILTRO  TYPE ZDE_ZLEST0144_FILTRO.
+
+SELECTION-SCREEN: BEGIN OF BLOCK BA WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: P0001 FOR ZLEST0144-CD_SEGURADORA,
+                P0002 FOR ZLEST0144-DT_CADASTRO DEFAULT SY-DATUM,
+                P0003 FOR ZLEST0144-US_CADASTRO DEFAULT SY-UNAME.
+SELECTION-SCREEN: END OF BLOCK BA.
+
+
+START-OF-SELECTION.
+
+  MOVE: P0001[] TO I_FILTRO-CD_SEGURADORA,
+        P0002[] TO I_FILTRO-DT_CADASTRO,
+        P0003[] TO I_FILTRO-US_CADASTRO.
+
+  CALL FUNCTION 'ZLES_CADASTRO_AVSEG_URI'
+    EXPORTING
+      I_FILTRO = I_FILTRO.

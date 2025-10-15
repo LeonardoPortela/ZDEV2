@@ -1,0 +1,43 @@
+*&---------------------------------------------------------------------*
+*& Report  ZRD_ZMMT0125_EXIT
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZRD_ZMMT0125_EXIT.
+
+FORM F_EXIT_ZMMT0125_0002 USING P_REGISTRO_MANTER TYPE ANY
+                       CHANGING P_ERROR.
+
+  DATA: WL_ZMMT0125 TYPE ZMMT0125.
+
+  CLEAR: WL_ZMMT0125.
+
+  MOVE-CORRESPONDING P_REGISTRO_MANTER TO WL_ZMMT0125.
+
+  CLEAR: P_ERROR.
+
+  IF WL_ZMMT0125-MWSKZ IS INITIAL.
+    P_ERROR = ABAP_TRUE.
+    MESSAGE 'Deve ser informado o IVA!' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+ENDFORM.
+
+FORM F_EXIT_ZMMT0125_0003 USING P_REGISTRO_MANTER TYPE ANY.
+
+  DATA: WL_ZMMT0125 TYPE ZMMT0125.
+
+  CLEAR: WL_ZMMT0125.
+
+  MOVE-CORRESPONDING P_REGISTRO_MANTER TO WL_ZMMT0125.
+
+  WL_ZMMT0125-ZDT_ATUAL = SY-DATUM.
+  WL_ZMMT0125-ZHR_ATUAL = SY-UZEIT.
+  WL_ZMMT0125-USNAM     = SY-UNAME.
+
+  MOVE-CORRESPONDING WL_ZMMT0125 TO P_REGISTRO_MANTER.
+
+ENDFORM.

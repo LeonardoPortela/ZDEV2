@@ -1,0 +1,23 @@
+QUANTIDADE_DEVOLVIDA = GW_ITEM_EPI-QTD_DEVOLVIDA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

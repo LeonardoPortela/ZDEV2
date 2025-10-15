@@ -1,0 +1,12 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE cte_status_0107.
+
+  CALL SUBSCREEN: sub0107 INCLUDING sy-repid cte_dynnr_ifn.
+
+PROCESS AFTER INPUT.
+
+  MODULE user_command_0107.
+
+  CALL SUBSCREEN: sub0107.

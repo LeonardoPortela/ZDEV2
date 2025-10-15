@@ -1,0 +1,15 @@
+"Name: \PR:SAPLV14A\EX:RV_CONDITION_SAVE_01\EI
+ENHANCEMENT 0 Z_BLOQUEIA_TK13.
+*
+  data: zlv_tcode TYPE sy-tcode.
+
+  IF SY-TCODE = 'TK13'.
+    zlv_tcode = 'TK12'.
+    AUTHORITY-CHECK OBJECT 'S_TCODE' ID 'TCD' FIELD zlv_tcode.
+    IF sy-subrc NE 0.
+      MESSAGE I103(ZLES).
+      LEAVE PROGRAM.
+    ENDIF.
+  ENDIF.
+
+ENDENHANCEMENT.

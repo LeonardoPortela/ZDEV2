@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_FACTORY_MAT_DESTINACAO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Factory Material Destinado</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_OBJETO_ARMAZEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Objeto Armazenagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_OBJETO_DEVOLUCAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Objeto Devolução</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_OBJETO_RETORNO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Objeto Retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IF_FACTORY_MAT_DESTINACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Factory Material Destinado</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>R_IF_MATERIAL_DESTINACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de Material Destinacao</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>R_FACTORY_MAT_DESTINACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Factory Material Destinado</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>I_ID_DESTINACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id. do Lanlamento de Destinação da Mercadoria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>I_TP_DESTINACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Destinação da Mercadoria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FACTORY_OBJETO</CMPNAME>
+     <SCONAME>R_FACTORY_MAT_DESTINACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Factory Material Destinado</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

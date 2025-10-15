@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_REPOM_PEDAGIO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Pedágio REPOM</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CD_CID_DESTINO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cidade de Destino</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CD_CID_ORIGEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cidade de Origem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CD_PAIS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Chave do país</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CK_ALTEROU</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Aponta se Existiu Alteração de Valor de Atributos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DOCUMENTOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documentos da Viagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DS_NR_CARTAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do Cartão Pedágio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DT_EMISSAO_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Emissão do Pedágio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PEDAGIO_CLIENTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca Informações de um Contrato de Vale Pedágio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PEDAGIO_TKNUM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Busca Informações do Documento de Transporte</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GRAVAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Salva Contrato</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_FILIAL_CLIENTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Filial Código Cliente</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_PERCURSO_REPOM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificador de Percurso REPOM</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_PROC_CLIENTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id.Vale Pedágio Cliente</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificador de Rota REPOM - Cliente</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_ROTA_REPOM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificador de Rota REPOM</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ID_VIAGEM_CODIGO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificador de Viagem REPOM</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MOEDA_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Moeda do Pedágio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MOTORISTA_CPF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CPF do Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MOTORISTA_FONE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Telefone do Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MOTORISTA_NOME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MOTORISTA_RG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Registro Geral (RG) do Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PEDAGIOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Pedágios da Viagem - REPOM (Concessionárias/Praças) - Tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TKNUM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº transporte</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TP_STATUS_AUT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status de Autorização de Pedágio REPOM</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TP_STATUS_CAN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Status de Cancelamento de Pedágio REPOM</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VEICULO_EIXOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Qtde de eixos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VEICULO_PLACA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VLR_TOTAL_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor total do pedágio</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>I_ID_PROC_CLIENTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id.Vale Pedágio Cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>I_TKNUM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº transporte</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PEDAGIO_CLIENTE</CMPNAME>
+     <SCONAME>I_ID_PROC_CLIENTE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id.Vale Pedágio Cliente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PEDAGIO_TKNUM</CMPNAME>
+     <SCONAME>I_TKNUM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº transporte</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

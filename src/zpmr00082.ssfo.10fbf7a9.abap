@@ -1,0 +1,22 @@
+w_equnr = wa_saida_c-equnr.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

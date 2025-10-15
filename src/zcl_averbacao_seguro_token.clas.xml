@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_AVERBACAO_SEGURO_TOKEN</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para Token de Averbação de Seguro</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <MSG_ID>ZAVSEGURO</MSG_ID>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BRANCH</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Branch</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Bukrs</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_VALIDADE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Data de Validade</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_NR_TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Nr. Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TOKEN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Token de Averbação de Seguro</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TOKEN</CMPNAME>
+     <SCONAME>R_ZLEST0145</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Token de Averbação de Seguro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BRANCH</CMPNAME>
+     <SCONAME>I_BRANCH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_VALIDADE</CMPNAME>
+     <SCONAME>I_DT_VALIDADE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Validade</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_NR_TOKEN</CMPNAME>
+     <SCONAME>I_NR_TOKEN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do Token</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

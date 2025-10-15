@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZSD_SEQOV</OBJECT>
+    <DOMLEN>NUMC15</DOMLEN>
+    <PERCENTAGE>10.0</PERCENTAGE>
+    <BUFFER>X</BUFFER>
+    <NOIVBUFFER>00000010</NOIVBUFFER>
+    <UNAME>DDIC</UNAME>
+    <UDATE>2023-12-07</UDATE>
+    <UTIME>10:53:58</UTIME>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZSD_SEQOV</OBJECT>
+    <TXT>Sequenciador Gerador Documentos - Ordem de VerEnda</TXT>
+    <TXTSHORT>Sequenciador Ger.OVD</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

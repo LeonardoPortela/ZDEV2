@@ -1,0 +1,4 @@
+@EndUserText.label: 'Serice definition'
+define service ZSD_BN0001 {
+  expose ZCDS_BN0001;
+}

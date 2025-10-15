@@ -1,0 +1,3007 @@
+
+REPORT  ZFIR0026.
+*&---------------------------------------------------------------------*
+*& Report  ZFIR0026
+*&
+*&---------------------------------------------------------------------*
+*&TITULO: Contas a Receber das Invoices – Maggi International
+*&AUTOR : ANTONIO LUIZ RODRIGUES DA SILVA
+*&DATA. : 15.04.2013
+*&---------------------------------------------------------------------*
+
+*----------------------------------------------------------------------*
+* TYPE POOLS
+*----------------------------------------------------------------------*
+TYPE-POOLS: ICON,
+            SLIS.
+*----------------------------------------------------------------------*
+* TABLES
+*----------------------------------------------------------------------*
+TABLES: ZIB_CONTABIL , ZFIT0036.
+
+
+*----------------------------------------------------------------------*
+* ESTRUTURAS
+*----------------------------------------------------------------------*
+
+DATA: BEGIN OF IT_MSG OCCURS 0.
+        INCLUDE STRUCTURE BDCMSGCOLL.
+DATA: END OF IT_MSG.
+DATA: WL_MODE(1).
+
+
+TYPES: BEGIN OF TY_ZIB_CONTABIL.
+        INCLUDE STRUCTURE ZIB_CONTABIL.
+TYPES:  MARK TYPE C,
+        DATA TYPE SY-DATUM,
+        END OF TY_ZIB_CONTABIL.
+
+TYPES: BEGIN OF TY_ZFIT0037.
+        INCLUDE STRUCTURE ZFIT0037.
+TYPES:  MARK TYPE C,
+        END OF TY_ZFIT0037.
+
+TYPES:
+
+  BEGIN OF TY_CADINVO,
+    WAERS     TYPE ZIMP_CAD_IMPOSTO-WAERS,
+    DT_PGTO   TYPE ZFIT0036-DT_PGTO,
+    TX_CAMBIO TYPE ZFIT0036-TX_CAMBIO,
+  END OF TY_CADINVO,
+
+  BEGIN OF TY_CADLIQ,
+    HBKID         TYPE T012-HBKID,
+    LAUFI         TYPE ZFIT0037-LAUFI,
+    MOTIVO_TRANSF TYPE ZFIT0037-MOTIVO_TRANSF,
+    NOME_ARQ(20),
+    PATH(250),
+    LOCAL(1),
+    SERVIDOR(1),
+  END OF TY_CADLIQ,
+
+  BEGIN OF TY_ATACH,
+    DOWN(1),
+    UPDL(1),
+    PATH(100),
+  END OF TY_ATACH,
+
+  BEGIN OF TY_CADLIQR,
+    DT_DOC    TYPE DATS,
+    DT_LAN    TYPE DATS,
+    MOEDA     TYPE ZIMP_CAD_IMPOSTO-WAERS,
+    VALOR_INV TYPE ANLP-NAFAZ,
+    VALOR_CRE TYPE ANLP-NAFAZ,
+    VALOR_TAR TYPE ANLP-NAFAZ,
+    SALDO_INV TYPE ANLP-NAFAZ,
+    HKONT     TYPE ZIMP_CAD_IMP_CON-HKONT,
+    TXT50     TYPE SKAT-TXT50,
+    HKONT_T   TYPE ZIMP_CAD_IMP_CON-HKONT,
+    TXT50T    TYPE SKAT-TXT50,
+  END OF TY_CADLIQR,
+
+  BEGIN OF TY_ZIB_CONTABIL_CHV,
+    OBJ_KEY TYPE ZIB_CONTABIL_CHV-OBJ_KEY,
+    BELNR   TYPE ZIB_CONTABIL_CHV-BELNR,
+    BUKRS   TYPE ZIB_CONTABIL_CHV-BUKRS,
+    HKONT   TYPE ZIB_CONTABIL-HKONT,
+  END OF TY_ZIB_CONTABIL_CHV,
+
+  BEGIN OF TY_ZFIT0036,
+    OBJ_KEY         TYPE ZFIT0036-OBJ_KEY,
+    BUKRS           TYPE ZFIT0036-BUKRS,
+    INVOICE         TYPE ZFIT0036-INVOICE,
+    NAVIO           TYPE ZFIT0036-NAVIO,
+    LOTE            TYPE ZFIT0036-LOTE,
+    DT_PGTO         TYPE ZFIT0036-DT_PGTO,
+    TX_CAMBIO       TYPE ZFIT0036-TX_CAMBIO,
+    MOEDA_PGTO      TYPE ZFIT0036-MOEDA_PGTO,
+    VLR_PGTO        TYPE ZFIT0036-VLR_PGTO,
+    HBKID           TYPE ZFIT0036-HBKID,
+    OBSERVACAO      TYPE ZFIT0036-OBSERVACAO,
+    STATUS          TYPE ZFIT0036-STATUS,
+    RG_ATUALIZADO   TYPE ZFIT0036-RG_ATUALIZADO,
+    STATUS_CTAS_REC TYPE ZFIT0036-STATUS_CTAS_REC,
+    STATUS_ARQ_INV  TYPE ZFIT0036-STATUS_ARQ_INV,
+    BELNR36         TYPE ZFIT0036-BELNR,
+    BUZEI36         TYPE ZFIT0036-BUZEI,
+  END OF TY_ZFIT0036,
+
+  BEGIN OF TY_BSAD,
+    BUKRS TYPE BSAD-BUKRS,
+    KUNNR TYPE BSAD-KUNNR,
+    BELNR TYPE BSAD-BELNR,
+    AUGDT TYPE BSAD-AUGDT,
+    AUGBL TYPE BSAD-AUGBL,
+    DMBTR TYPE BSAD-DMBTR,
+    DMBE2 TYPE BSAD-DMBE2,
+    WAERS TYPE BSAD-WAERS,
+    GJAHR TYPE BSAD-GJAHR,
+  END OF TY_BSAD,
+
+  BEGIN OF TY_BSID,
+    BUKRS TYPE BSID-BUKRS,
+    KUNNR TYPE BSID-KUNNR,
+    BELNR TYPE BSID-BELNR,
+    DMBTR TYPE BSID-DMBTR,
+    DMBE2 TYPE BSID-DMBE2,
+    WAERS TYPE BSID-WAERS,
+  END OF TY_BSID,
+
+
+  BEGIN OF TY_KNA1,
+    KUNNR TYPE KNA1-KUNNR,
+    NAME1 TYPE KNA1-NAME1,
+    STCD1 TYPE KNA1-STCD1,
+  END OF TY_KNA1,
+
+
+  BEGIN OF TY_BNKA,
+    BANKL TYPE BNKA-BANKL,
+    SWIFT TYPE BNKA-SWIFT,
+    STRAS TYPE BNKA-STRAS,
+    BANKA TYPE BNKA-BANKA,
+  END OF TY_BNKA,
+
+  BEGIN OF TY_T012K,
+    BUKRS TYPE T012K-BUKRS,
+    HBKID TYPE T012K-HBKID,
+    BANKN TYPE T012K-BANKN,
+    HKONT TYPE T012K-HKONT,
+  END OF TY_T012K,
+
+  BEGIN OF TY_LINHA,
+    OBJ_KEY(35)     TYPE C,
+    STCD1(14)       TYPE C,
+    WAERS(04)       TYPE C,
+    DMBE2(15)       TYPE N,
+    DATA_EMB(10)    TYPE C,
+    DATA_AVE(10)    TYPE C,
+    TIPO_EMB(03)    TYPE C,
+    COD_PAGADOR(11) TYPE C,
+    NOM_PAGADOR(50) TYPE C,
+    COD_BACEN(04)   TYPE C,
+    INVOICE(20)     TYPE C,
+    DT_VENCTO(10)   TYPE C,
+    ANORE(04)       TYPE C,
+    NUMERORE(07)    TYPE C,
+    SEQIRE(03)      TYPE C,
+    SEQFRE(03)      TYPE C,
+    INDSE(01)       TYPE N,
+    NUMEROSD(11)    TYPE C,
+    TIPOCOMAG(02)   TYPE C,
+    VALORCOMAG(15)  TYPE N,
+  END OF TY_LINHA,
+
+  TY_ARQUIVO(463) TYPE C,
+
+  BEGIN OF TY_SAIDA,
+    MARK(1),
+    ICON0(4)      TYPE C,                        "Attachment
+    ICON1(4)      TYPE C,                        "St.Liquid
+    ICON2(4)      TYPE C,                        "St.Lib
+    LOTE          TYPE ZFIT0036-LOTE,            "Lote Pg
+    INVOICE       TYPE ZFIT0036-INVOICE,         "Invoice
+    BELNR         TYPE ZIB_CONTABIL_CHV-BELNR,   "Doc.Cta
+    BUDAT         TYPE ZIB_CONTABIL-BUDAT,       "Dt.Lcto
+    KUNNR         TYPE ZIB_CONTABIL-HKONT,       "Cliente
+    NAME1         TYPE KNA1-NAME1,
+    DMBTR         TYPE ZIB_CONTABIL-DMBTR,
+    DMBE2         TYPE ZIB_CONTABIL-DMBE2,
+    NAVIO         TYPE ZFIT0036-NAVIO,
+    AUGBL         TYPE BSAD-AUGBL,
+    AUGDT         TYPE BSAD-AUGDT,
+    HBKID         TYPE ZFIT0036-HBKID,
+    OBSERVACAO    TYPE ZFIT0036-OBSERVACAO,
+    OBJ_KEY       TYPE ZFIT0036-OBJ_KEY,
+    MOEDA_PGTO    TYPE ZFIT0036-MOEDA_PGTO,
+    DT_PGTO       TYPE ZFIT0036-DT_PGTO,
+    VLR_PGTO      TYPE ZFIT0036-VLR_PGTO,
+    STATUS        TYPE ZFIT0036-STATUS,
+    WAERS         TYPE ZIB_CONTABIL-WAERS,
+    GSBER         TYPE ZIB_CONTABIL-GSBER,
+    HKONT         TYPE ZIB_CONTABIL-HKONT,
+    ZFBDT         TYPE ZIB_CONTABIL-ZFBDT,
+    DIAS_ATRASO   TYPE I,
+    RG_ATUALIZADO TYPE ZFIT0036-RG_ATUALIZADO,
+    STCD1         TYPE KNA1-STCD1,
+    BUKRS         TYPE ZFIT0036-BUKRS,
+    BELNR36       TYPE ZFIT0036-BELNR,
+    BUZEI36       TYPE ZFIT0036-BUZEI,
+  END OF TY_SAIDA.
+
+TYPES: BEGIN OF TY_ESTRUTURA.
+        INCLUDE TYPE SLIS_FIELDCAT_MAIN.
+        INCLUDE TYPE SLIS_FIELDCAT_ALV_SPEC.
+TYPES: END OF TY_ESTRUTURA.
+
+TYPES: BEGIN OF TY_LINES,
+         LINHA TYPE C LENGTH 1000.
+TYPES: END OF TY_LINES.
+
+
+
+
+*----------------------------------------------------------------------*
+* TABELAS INTERNA
+*----------------------------------------------------------------------*
+
+DATA: TI_BDCDATA          TYPE STANDARD TABLE OF BDCDATA ,   "Guarda o mapeamento
+      T_MESSTAB           TYPE TABLE OF BDCMSGCOLL,
+
+      IT_SAIDA            TYPE TABLE OF TY_SAIDA,
+      IT_ZFIT0076         TYPE TABLE OF ZFIT0076,
+      IT_ZFIT0036         TYPE TABLE OF TY_ZFIT0036,
+      IT_ZFIT0037         TYPE TABLE OF TY_ZFIT0037,
+      IT_ZIB_CONTABIL     TYPE TABLE OF TY_ZIB_CONTABIL,
+      IT_ZIB_CONTABIL_CHV TYPE TABLE OF TY_ZIB_CONTABIL_CHV,
+      IT_BSAD             TYPE TABLE OF TY_BSAD,
+      IT_BSAD_AUGBL       TYPE TABLE OF TY_BSAD,
+      IT_BSID             TYPE TABLE OF TY_BSID,
+      IT_KNA1             TYPE TABLE OF TY_KNA1,
+      IT_BNKA             TYPE TABLE OF TY_BNKA,
+      T_ARQUIVO           TYPE TABLE OF TY_ARQUIVO,
+      IT_COLOR            TYPE TABLE OF LVC_S_SCOL,
+      IT_LINES            TYPE STANDARD TABLE OF TY_LINES.
+
+*----------------------------------------------------------------------*
+* WORK AREA
+*----------------------------------------------------------------------*
+DATA:
+  WA_CONT             TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+  WA_ALV              TYPE REF TO CL_GUI_ALV_GRID,
+  "WA_LAYOUT TYPE LVC_S_LAYO,
+  WA_BDCDATA          LIKE LINE OF TI_BDCDATA,
+
+  WA_SAIDA            TYPE TY_SAIDA,
+  WA_ZIB_CONTABIL     TYPE TY_ZIB_CONTABIL,
+  WA_ZIB_CONTABIL_CHV TYPE TY_ZIB_CONTABIL_CHV,
+  WA_ZFIT0076         TYPE ZFIT0076,
+  WA_ZFIT0036         TYPE TY_ZFIT0036,
+  WA_ZFIT0037         TYPE TY_ZFIT0037,
+  WA_BKPF             TYPE BKPF,
+  WA_BSAD             TYPE TY_BSAD,
+  WA_BSAD_AUGBL       TYPE TY_BSAD,
+  WA_BSID             TYPE TY_BSID,
+  WA_KNA1             TYPE TY_KNA1,
+  WA_BNKA             TYPE TY_BNKA,
+  WA_T012K            TYPE TY_T012K,
+  WA_COLOR            TYPE LVC_S_SCOL,
+  WG_CADINVO          TYPE TY_CADINVO,
+  WG_CADLIQ           TYPE TY_CADLIQ,
+  WG_CADLIQR          TYPE TY_CADLIQR,
+  WG_ATACH            TYPE TY_ATACH,
+  W_ARQUIVO           TYPE TY_ARQUIVO,
+  LV_NOME_ARQUIVO     TYPE STRING,
+  W_LINHA             TYPE TY_LINHA.
+
+*----------------------------------------------------------------------*
+* Estrutura ALV
+*----------------------------------------------------------------------*
+DATA:
+  IT_FCAT         TYPE TABLE OF TY_ESTRUTURA,
+  S_VARIANT       TYPE DISVARIANT           , " Tabela Estrutura co
+  T_TOP           TYPE SLIS_T_LISTHEADER,
+  XS_EVENTS       TYPE SLIS_ALV_EVENT,
+  EVENTS          TYPE SLIS_T_EVENT,
+  GD_LAYOUT       TYPE SLIS_LAYOUT_ALV,
+  T_PRINT         TYPE SLIS_PRINT_ALV,
+  V_REPORT        LIKE SY-REPID,
+  T_SORT          TYPE SLIS_T_SORTINFO_ALV WITH HEADER LINE,
+  IT_SETLEAF      LIKE TABLE OF SETLEAF INITIAL SIZE 0 WITH HEADER LINE,
+  ESTRUTURA       TYPE TABLE OF TY_ESTRUTURA,
+  VG_I            TYPE I,
+  W_FLAG_SALDO(1).
+
+DATA: OK-CODE          TYPE SY-UCOMM,
+      VNUM(10)         TYPE C,
+      VSEQ(10)         TYPE P,
+      WL_ERRO(1),
+      WG_DOCUMENTO(10),
+      VSTATUS(1),
+      INDROW           TYPE LVC_T_ROW,
+      W_IND            TYPE LVC_T_ROW WITH HEADER LINE,
+      W_CONT           TYPE I,
+      W_LINHA_SELEC    TYPE I,
+      W_CONTC(5),
+      W_MENSAGEM(50),
+      VDATAD(10),
+      VDATAL(10),
+      WL_VLR(16),
+      WL_VLRC(16),
+      WL_VLRT(16),
+      WL_VLRS(16),
+      VFILENAME        TYPE STRING,
+      VFILENAME_SRV    TYPE RFPDO-RFBIFILE.
+
+
+************************************************************************
+* Variaveis ALV
+************************************************************************
+*& Declaração de Objetos/Classes                                      &*
+*&--------------------------------------------------------------------&*
+************************************************************************
+DATA: EDITCONTAINER   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      CL_CONTAINER    TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      EDITOR          TYPE REF TO CL_GUI_TEXTEDIT,
+      CL_CONTAINER_95 TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+      CL_CONTAINER_05 TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+      OBJ_DYNDOC_ID   TYPE REF TO CL_DD_DOCUMENT,
+      CL_GRID         TYPE REF TO CL_GUI_ALV_GRID,
+      WA_AFIELD       TYPE LVC_S_FCAT,
+      IT_FIELDCAT     TYPE LVC_T_FCAT,
+      I_SORT          TYPE LVC_T_SORT,
+      WA_LAYOUT       TYPE LVC_S_LAYO,
+      IS_STABLE       TYPE LVC_S_STBL VALUE 'XX',
+      WG_REPNAME      LIKE SY-REPID,
+      WG_X_VARIANT    LIKE DISVARIANT,
+      WG_EXIT(1)      TYPE C,
+      WG_SAVE(1)      TYPE C,
+      WG_VARIANT      LIKE DISVARIANT,
+      FILENAME        TYPE RLGRAP-FILENAME,
+      TABLE           TYPE CHAR15.
+*ALRS fim
+
+************************************************************************
+* D E F I N I T I O N
+************************************************************************
+CLASS LCL_EVENT_RECEIVER DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      CATCH_HOTSPOT
+                    FOR EVENT HOTSPOT_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID
+                    E_COLUMN_ID
+                    ES_ROW_NO.
+
+ENDCLASS.                    "lcl_event_receiver DEFINITION
+
+************************************************************************
+* I M P L E M E N T A T I O N
+************************************************************************
+CLASS LCL_EVENT_RECEIVER IMPLEMENTATION.
+
+
+  METHOD CATCH_HOTSPOT.
+    READ TABLE IT_SAIDA INTO WA_SAIDA INDEX E_ROW_ID-INDEX.
+    IF SY-SUBRC = 0.
+      IF E_COLUMN_ID = 'BELNR'.
+        SET PARAMETER ID 'BLN' FIELD WA_SAIDA-BELNR.
+        SET PARAMETER ID 'BUK' FIELD WA_SAIDA-BUKRS.
+        SET PARAMETER ID 'GJR' FIELD WA_SAIDA-BUDAT+6(4).
+        CALL TRANSACTION 'FB03' AND SKIP FIRST SCREEN.
+      ELSEIF E_COLUMN_ID = 'ICON0'.
+        REFRESH IT_ZFIT0076.
+        CLEAR WG_ATACH.
+        WG_ATACH-UPDL = 'X'.
+        CLEAR WG_ATACH-DOWN.
+        SELECT *
+          FROM ZFIT0076
+          INTO TABLE IT_ZFIT0076
+          WHERE OBJ_KEY = WA_SAIDA-OBJ_KEY
+          AND   BELNR   = WA_SAIDA-BELNR36
+          AND   BUZEI   = WA_SAIDA-BUZEI36
+          ORDER BY POS.
+        IF IT_ZFIT0076[] IS NOT INITIAL.
+          WG_ATACH-DOWN = 'X'.
+          CLEAR WG_ATACH-UPDL.
+        ENDIF.
+
+        CALL SCREEN 4000 STARTING AT 050 3
+                         ENDING   AT 165 13.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "CATCH_HOTSPOT
+
+
+
+ENDCLASS.                    "LCL_EVENT_RECEIVER IMPLEMENTATION
+
+DATA: EVENT_RECEIVER   TYPE REF TO LCL_EVENT_RECEIVER.
+
+
+*&--------------------------------------------------------------------&*
+*& Constantes                                                         &*
+*&--------------------------------------------------------------------&*
+CONSTANTS: C_0               TYPE C VALUE '0',
+           C_1               TYPE C VALUE '1',
+           C_2               TYPE C VALUE '2',
+           C_B               TYPE C VALUE 'B',
+           C_S               TYPE C VALUE 'S',
+           C_L               TYPE C VALUE 'L',
+           C_X               TYPE C VALUE 'X',
+           C_D               TYPE C VALUE 'D',
+           C_K               TYPE C VALUE 'K',
+           C_W               TYPE C VALUE 'W',
+           C_F               TYPE C VALUE 'F',
+           C_T               TYPE C VALUE 'T',
+           C_I               TYPE C VALUE 'I',
+           C_N               TYPE C VALUE 'N',
+           C_H               TYPE C VALUE 'H',
+           C_AG(2)           TYPE C VALUE 'AG',
+           C_NE(2)           TYPE C VALUE 'NE',
+           C_01(2)           TYPE C VALUE '01',
+           C_30(2)           TYPE C VALUE '30',
+           C_40(2)           TYPE C VALUE '40',
+           C_50(4)           TYPE C VALUE '0050',
+           C_76(2)           TYPE C VALUE '76',
+           C_71(2)           TYPE C VALUE '71',
+           C_72(2)           TYPE C VALUE '72',
+           C_BR(2)           TYPE C VALUE 'BR',
+           C_LF(2)           TYPE C VALUE 'LF',
+           C_LR(2)           TYPE C VALUE 'LR',
+           C_Z1(2)           TYPE C VALUE 'Z1',
+           C_ADD(3)          TYPE C VALUE 'ADD',
+           C_DEL(3)          TYPE C VALUE 'DEL',
+           C_DG1(3)          TYPE C VALUE 'DG1',
+           C_DG2(3)          TYPE C VALUE 'DG2',
+           C_DUMMY_HEADER(3) TYPE C VALUE '099',
+           C_DUMMY_ITENS(3)  TYPE C VALUE '098',
+           C_EXIT(4)         TYPE C VALUE 'EXIT',
+           C_ROOT(4)         TYPE C VALUE 'ROOT',
+           C_MINIMIZAR(4)    TYPE C VALUE '@K2@',
+           C_MAXIMIZAR(4)    TYPE C VALUE '@K1@',
+           C_BACK(4)         TYPE C VALUE 'BACK',
+           C_SAVE(4)         TYPE C VALUE 'SAVE',
+           C_DESAT(5)        TYPE C VALUE 'DESAT',
+           C_DMBTR(5)        TYPE C VALUE 'DMBTR',
+           C_MODIF(5)        TYPE C VALUE 'MODIF',
+           C_CANCEL(6)       TYPE C VALUE 'CANCEL',
+           C_DELDOC(6)       TYPE C VALUE 'DELDOC',
+           C_DCLICK(6)       TYPE C VALUE 'DCLICK',
+           C_SEARCH(6)       TYPE C VALUE 'SEARCH',
+           C_ATUALI(6)       TYPE C VALUE 'ATUALI',
+           C_ADD_MSG(7)      TYPE C VALUE 'ADD_MSG',
+           C_DEL_MSG(7)      TYPE C VALUE 'DEL_MSG',
+           C_CLOS_MSG(8)     TYPE C VALUE 'CLOS_MSG',
+           C_SAVE_MSG(8)     TYPE C VALUE 'SAVE_MSG',
+           C_SHOW_MSGRE(10)  TYPE C VALUE 'SHOW_MSGRE'.
+*----------------------------------------------------------------------*
+* TELA DE SELEÇÃO
+*----------------------------------------------------------------------*
+
+SELECTION-SCREEN: BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+PARAMETERS    : P_BUKRS TYPE ZFIT0036-BUKRS." OBLIGATORY.
+SELECT-OPTIONS: P_CLI   FOR ZIB_CONTABIL-HKONT,
+                P_INVO  FOR ZFIT0036-INVOICE  ,
+                P_GSBER FOR ZIB_CONTABIL-GSBER,
+                P_DATA  FOR SY-DATUM," OBLIGATORY,
+                P_AUGDT FOR SY-DATUM .
+SELECTION-SCREEN: END OF BLOCK B1.
+
+SELECTION-SCREEN: BEGIN OF BLOCK B2 WITH FRAME TITLE TEXT-002.
+
+PARAMETERS: R_ST_A   RADIOBUTTON GROUP RAD1 DEFAULT 'X'.
+
+SELECTION-SCREEN: BEGIN OF LINE.
+PARAMETERS: R_ST_U   RADIOBUTTON GROUP RAD1.
+SELECTION-SCREEN POSITION 3.
+SELECTION-SCREEN COMMENT (33) TEXT-013.
+SELECTION-SCREEN POSITION 64.
+PARAMETERS: R_ST_U_F TYPE RLGRAP-FILENAME.
+SELECTION-SCREEN: END OF LINE.
+
+SELECTION-SCREEN: BEGIN OF LINE.
+PARAMETERS: R_ST_I   RADIOBUTTON GROUP RAD1.
+SELECTION-SCREEN POSITION 3.
+SELECTION-SCREEN COMMENT (30) TEXT-014.
+SELECTION-SCREEN POSITION 37.
+SELECTION-SCREEN COMMENT (24) TEXT-015.
+SELECTION-SCREEN POSITION 64.
+PARAMETERS: R_ST_I_C TYPE RLGRAP-FILENAME.
+SELECTION-SCREEN: END OF LINE.
+
+SELECTION-SCREEN: BEGIN OF LINE.
+SELECTION-SCREEN POSITION 37.
+SELECTION-SCREEN COMMENT (24) TEXT-016.
+SELECTION-SCREEN POSITION 64.
+PARAMETERS: R_ST_I_N TYPE RLGRAP-FILENAME.
+SELECTION-SCREEN: END OF LINE.
+
+PARAMETERS:  R_ST_L   RADIOBUTTON GROUP RAD1.
+
+SELECTION-SCREEN: END OF BLOCK B2.
+
+*&---------------------------------------------------------------------*
+*& START OF SELECTION
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR R_ST_U_F.
+  PERFORM FILE_BOX CHANGING R_ST_U_F.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR R_ST_I_C.
+  PERFORM FILE_BOX CHANGING R_ST_I_C.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR R_ST_I_N.
+  PERFORM FILE_BOX CHANGING R_ST_I_N.
+
+*&---------------------------------------------------------------------*
+*& START OF SELECTION
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+
+  IF ( R_ST_U IS NOT INITIAL AND R_ST_U_F IS NOT INITIAL ) OR
+     ( R_ST_I IS NOT INITIAL AND R_ST_I_C IS NOT INITIAL ) OR
+     ( R_ST_I IS NOT INITIAL AND R_ST_I_N IS NOT INITIAL ).
+
+    IF ( R_ST_I_C IS NOT INITIAL AND R_ST_I_N IS NOT INITIAL ).
+      MESSAGE TEXT-017 TYPE 'S' DISPLAY LIKE 'E'.
+      STOP.
+    ENDIF.
+
+    IF R_ST_U_F IS NOT INITIAL.
+      FILENAME = R_ST_U_F.
+      TABLE = 'R_ST_U_F'.
+    ELSEIF R_ST_I_C IS NOT INITIAL.
+      FILENAME = R_ST_I_C.
+      TABLE = 'R_ST_I_C'.
+    ELSE.
+      FILENAME = R_ST_I_N.
+      TABLE = 'R_ST_I_N'.
+    ENDIF.
+
+    PERFORM UPDATE_FILE USING FILENAME
+                              TABLE.
+
+  ELSE.
+
+    IF P_BUKRS IS INITIAL OR P_DATA IS INITIAL.
+      MESSAGE TEXT-018 TYPE 'S' DISPLAY LIKE 'E'.
+      STOP.
+    ENDIF.
+
+    PERFORM: F_SELECIONA_DADOS, " Form seleciona dados
+             F_SAIDA, " Form de saida
+             F_IMPRIME_DADOS.
+
+  ENDIF.
+
+
+
+END-OF-SELECTION.
+*&---------------------------------------------------------------------*
+*&      Form  F_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SELECIONA_DADOS .
+
+  IF R_ST_A  = 'X' OR R_ST_I = 'X'.
+    VSTATUS = ' '.
+  ENDIF.
+
+  IF R_ST_U = 'X'.
+    SELECT   OBJ_KEY BUKRS INVOICE NAVIO LOTE DT_PGTO TX_CAMBIO MOEDA_PGTO VLR_PGTO HBKID OBSERVACAO STATUS RG_ATUALIZADO STATUS_CTAS_REC STATUS_ARQ_INV BELNR BUZEI
+        FROM ZFIT0036
+        INTO TABLE IT_ZFIT0036
+        WHERE STATUS_ARQ_INV = ' '
+        AND   INVOICE IN P_INVO.
+
+  ELSEIF R_ST_L = 'X'.
+    SELECT   OBJ_KEY BUKRS INVOICE NAVIO LOTE DT_PGTO TX_CAMBIO MOEDA_PGTO VLR_PGTO HBKID OBSERVACAO STATUS RG_ATUALIZADO STATUS_CTAS_REC STATUS_ARQ_INV BELNR BUZEI
+     FROM ZFIT0036
+     INTO TABLE IT_ZFIT0036
+     WHERE STATUS_CTAS_REC  = 'P'
+     AND   INVOICE IN P_INVO.
+  ELSE.
+    SELECT   OBJ_KEY BUKRS INVOICE NAVIO LOTE DT_PGTO TX_CAMBIO MOEDA_PGTO VLR_PGTO HBKID OBSERVACAO STATUS RG_ATUALIZADO STATUS_CTAS_REC STATUS_ARQ_INV BELNR BUZEI
+         FROM ZFIT0036
+         INTO TABLE IT_ZFIT0036
+         WHERE STATUS_CTAS_REC  = VSTATUS
+         AND   INVOICE IN P_INVO.
+  ENDIF.
+
+
+  CHECK IT_ZFIT0036[] IS NOT INITIAL.
+
+  SELECT *
+    FROM ZIB_CONTABIL
+    INTO TABLE IT_ZIB_CONTABIL
+    FOR ALL ENTRIES IN IT_ZFIT0036
+    WHERE OBJ_KEY EQ IT_ZFIT0036-OBJ_KEY
+    AND   GSBER   IN P_GSBER
+    AND   BSCHL    IN ('01','11','09','19')
+    AND   RG_ATUALIZADO EQ  'S'
+    "AND   BLART  EQ 'NE'
+    AND   HKONT IN P_CLI
+    AND   BUKRS EQ P_BUKRS.
+
+  LOOP AT IT_ZIB_CONTABIL INTO WA_ZIB_CONTABIL.
+    CONCATENATE WA_ZIB_CONTABIL-BUDAT+6(4) WA_ZIB_CONTABIL-BUDAT+3(2) WA_ZIB_CONTABIL-BUDAT+0(2) INTO  WA_ZIB_CONTABIL-DATA .
+    MODIFY IT_ZIB_CONTABIL FROM WA_ZIB_CONTABIL INDEX SY-TABIX TRANSPORTING DATA.
+  ENDLOOP.
+  DELETE IT_ZIB_CONTABIL WHERE DATA  NOT IN  P_DATA.
+
+  IF NOT IT_ZIB_CONTABIL[] IS INITIAL.
+    SELECT KUNNR NAME1 STCD1
+      FROM KNA1
+      INTO TABLE IT_KNA1
+      FOR ALL ENTRIES IN IT_ZIB_CONTABIL
+      WHERE KUNNR = IT_ZIB_CONTABIL-HKONT.
+
+
+
+    SELECT ZIB_CONTABIL_CHV~OBJ_KEY ZIB_CONTABIL_CHV~BELNR ZIB_CONTABIL_CHV~BUKRS ZIB_CONTABIL~HKONT
+      FROM ZIB_CONTABIL_CHV
+      INNER JOIN ZIB_CONTABIL
+      ON ZIB_CONTABIL~OBJ_KEY EQ ZIB_CONTABIL_CHV~OBJ_KEY
+      INTO TABLE  IT_ZIB_CONTABIL_CHV
+      FOR ALL ENTRIES IN IT_ZIB_CONTABIL
+      WHERE ZIB_CONTABIL_CHV~OBJ_KEY EQ IT_ZIB_CONTABIL-OBJ_KEY.
+
+    SELECT BUKRS KUNNR BELNR AUGDT AUGBL DMBTR DMBE2 WAERS
+      FROM BSAD
+      INTO TABLE IT_BSAD
+      FOR ALL ENTRIES IN IT_ZIB_CONTABIL_CHV
+      WHERE BUKRS EQ IT_ZIB_CONTABIL_CHV-BUKRS
+      AND   KUNNR EQ IT_ZIB_CONTABIL_CHV-HKONT
+      AND   BELNR EQ IT_ZIB_CONTABIL_CHV-BELNR.
+
+    SELECT BUKRS KUNNR BELNR DMBTR DMBE2 WAERS
+      FROM BSID
+      INTO TABLE IT_BSID
+      FOR ALL ENTRIES IN IT_ZIB_CONTABIL_CHV
+      WHERE BUKRS EQ IT_ZIB_CONTABIL_CHV-BUKRS
+      AND   KUNNR EQ IT_ZIB_CONTABIL_CHV-HKONT
+      AND   BELNR EQ IT_ZIB_CONTABIL_CHV-BELNR.
+
+
+  ENDIF.
+
+ENDFORM.                    " F_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*&      Form  F_SAIDA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SAIDA .
+  SORT: IT_ZIB_CONTABIL      BY OBJ_KEY,
+          IT_ZIB_CONTABIL_CHV  BY OBJ_KEY,
+          IT_BSAD              BY BUKRS KUNNR BELNR,
+          IT_BSID              BY BUKRS KUNNR BELNR,
+          IT_KNA1              BY KUNNR,
+          IT_BNKA              BY BANKL.
+
+  DATA:  XACHOU(1),
+         V_BELNR   TYPE BKPF-BELNR,
+         TAB_LINES LIKE SY-TABIX,
+         V_DTVENC  TYPE SY-DATUM,
+         XLIMITE   TYPE I.
+
+  LOOP AT IT_ZFIT0036 INTO WA_ZFIT0036.
+    WA_SAIDA-ICON0    =  ICON_ATTACHMENT.
+    WA_SAIDA-OBJ_KEY = WA_ZFIT0036-OBJ_KEY.
+    WA_SAIDA-BELNR36 = WA_ZFIT0036-BELNR36.
+    WA_SAIDA-BUZEI36 = WA_ZFIT0036-BUZEI36.
+    IF WA_ZFIT0036-STATUS_CTAS_REC  NE 'L'.
+      WA_SAIDA-ICON1    =   ICON_MESSAGE_WARNING.
+    ELSEIF WA_ZFIT0036-STATUS_CTAS_REC  EQ 'P'.
+      WA_SAIDA-ICON1    =   ICON_SYSTEM_OKAY.
+    ENDIF.
+    IF WA_ZFIT0036-STATUS_ARQ_INV  EQ ' '.
+      WA_SAIDA-ICON2    =   ICON_INITIAL.
+    ELSEIF WA_ZFIT0036-STATUS_ARQ_INV  EQ 'X'.
+      WA_SAIDA-ICON2    =   ICON_RELEASE.
+    ENDIF.
+    WA_SAIDA-BUKRS = P_BUKRS.
+*
+*    IF WA_ZFIT0036-STATUS EQ 'L' AND WA_ZFIT0036-RG_ATUALIZADO = 'S'.
+*      WA_SAIDA-ICON1 = ICON_ACTIVITY.
+*    ENDIF.
+
+    LOOP AT IT_ZIB_CONTABIL INTO WA_ZIB_CONTABIL WHERE OBJ_KEY = WA_ZFIT0036-OBJ_KEY .
+      WA_SAIDA-INVOICE  = WA_ZFIT0036-INVOICE.
+      WA_SAIDA-GSBER    = WA_ZIB_CONTABIL-GSBER.
+
+      READ TABLE IT_ZIB_CONTABIL_CHV INTO WA_ZIB_CONTABIL_CHV WITH KEY OBJ_KEY = WA_ZIB_CONTABIL-OBJ_KEY BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-BELNR    = WA_ZIB_CONTABIL_CHV-BELNR.
+      ELSE.
+        CLEAR WA_SAIDA-BELNR.
+      ENDIF.
+
+      WA_SAIDA-BUDAT    = WA_ZIB_CONTABIL-BUDAT.
+      WA_SAIDA-KUNNR    = WA_ZIB_CONTABIL-HKONT.
+      WA_SAIDA-ZFBDT    = WA_ZIB_CONTABIL-ZFBDT.
+
+      READ TABLE IT_KNA1 INTO WA_KNA1 WITH KEY KUNNR = WA_ZIB_CONTABIL-HKONT BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-NAME1    = WA_KNA1-NAME1.
+        WA_SAIDA-STCD1    = WA_KNA1-STCD1.
+      ELSE.
+        CLEAR WA_SAIDA-NAME1 .
+      ENDIF.
+
+      WA_SAIDA-NAVIO      = WA_ZFIT0036-NAVIO.
+      WA_SAIDA-LOTE       = WA_ZFIT0036-LOTE.
+      WA_SAIDA-HBKID      = WA_ZFIT0036-HBKID.
+      WA_SAIDA-OBSERVACAO = WA_ZFIT0036-OBSERVACAO.
+
+      READ TABLE IT_BSAD INTO WA_BSAD WITH KEY  BUKRS = WA_ZIB_CONTABIL-BUKRS
+                                                KUNNR = WA_ZIB_CONTABIL-HKONT
+                                                BELNR = WA_ZIB_CONTABIL_CHV-BELNR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-AUGBL    = WA_BSAD-AUGBL.
+        WA_SAIDA-AUGDT    = WA_BSAD-AUGDT.
+        WA_SAIDA-DMBTR    = WA_BSAD-DMBTR.
+        WA_SAIDA-DMBE2    = WA_BSAD-DMBE2.
+        WA_SAIDA-WAERS    = WA_BSAD-WAERS.
+      ELSE.
+        CLEAR:  WA_SAIDA-AUGBL, WA_SAIDA-AUGDT,  WA_SAIDA-DMBTR, WA_SAIDA-DMBE2.
+      ENDIF.
+      READ TABLE IT_BSID INTO WA_BSID WITH KEY  BUKRS = WA_ZIB_CONTABIL-BUKRS
+                                                KUNNR = WA_ZIB_CONTABIL-HKONT
+                                                BELNR = WA_ZIB_CONTABIL_CHV-BELNR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_SAIDA-DMBTR    = WA_BSID-DMBTR.
+        WA_SAIDA-DMBE2    = WA_BSID-DMBE2.
+        WA_SAIDA-WAERS    = WA_BSID-WAERS.
+        CLEAR:  WA_SAIDA-AUGBL,
+                WA_SAIDA-AUGDT.
+      ELSE. " procurar aberto
+        LOOP AT IT_BSAD INTO WA_BSAD WHERE BUKRS = WA_ZIB_CONTABIL-BUKRS
+                                     AND   KUNNR = WA_ZIB_CONTABIL-HKONT
+                                     AND   BELNR = WA_ZIB_CONTABIL_CHV-BELNR .
+          XACHOU = ''.
+          V_BELNR = WA_BSAD-AUGBL.
+          IF V_BELNR IS INITIAL.
+            CONTINUE.
+          ENDIF.
+          XLIMITE = 0.
+          WHILE XACHOU = ''.
+            ADD 1 TO XLIMITE. " evitar loop infinito
+            "VERIFICA SE HÁ DOCUMENTO COMPENSADO
+            REFRESH IT_BSAD_AUGBL.
+            SELECT   BUKRS KUNNR BELNR AUGDT AUGBL DMBTR DMBE2 WAERS GJAHR
+            FROM BSAD
+            INTO TABLE IT_BSAD_AUGBL
+            WHERE BUKRS EQ WA_BSAD-BUKRS
+            AND   KUNNR EQ WA_BSAD-KUNNR
+            AND   BELNR EQ V_BELNR.
+            IF SY-SUBRC NE 0.
+              XACHOU = 'X'. " sai do Loop e vai utilizar  o belnr original
+              CONTINUE.
+            ENDIF.
+            DESCRIBE TABLE IT_BSAD_AUGBL LINES TAB_LINES.
+            IF TAB_LINES GT 1.
+              " APAGA AUGBL E BELNR IGUAIS
+              LOOP AT IT_BSAD_AUGBL INTO WA_BSAD_AUGBL.
+                IF WA_BSAD_AUGBL-AUGBL EQ WA_BSAD_AUGBL-BELNR.
+                  DELETE IT_BSAD_AUGBL INDEX SY-TABIX.
+                ENDIF.
+              ENDLOOP.
+            ENDIF.
+*            " APAGA AUGBL E BELNR COM SEQUENCIAS DIFERENTES
+*            LOOP AT IT_BSAD_AUGBL INTO WA_BSAD_AUGBL.
+*              IF WA_BSAD_AUGBL-AUGBL+0(3) NE WA_BSAD_AUGBL-BELNR+0(3).
+*                DELETE IT_BSAD_AUGBL INDEX SY-TABIX.
+*              ENDIF.
+*            ENDLOOP.
+
+            CLEAR WA_BSAD_AUGBL.
+            IF IT_BSAD_AUGBL[] IS NOT INITIAL.
+              READ TABLE IT_BSAD_AUGBL INTO WA_BSAD_AUGBL INDEX 1.
+              SELECT SINGLE BUKRS KUNNR BELNR DMBTR DMBE2 WAERS
+              FROM BSID
+              INTO WA_BSID
+              WHERE BUKRS	EQ  WA_BSAD_AUGBL-BUKRS
+              AND   BELNR EQ  WA_BSAD_AUGBL-AUGBL
+              AND   GJAHR EQ  WA_BSAD_AUGBL-GJAHR.
+              IF SY-SUBRC = 0.
+                XACHOU = 'X'. "em aberto
+                WA_SAIDA-BELNR    = WA_BSID-BELNR.
+                WA_SAIDA-BUDAT    = WA_BSAD_AUGBL-AUGDT.
+                WA_SAIDA-DMBTR    = WA_BSID-DMBTR.
+                WA_SAIDA-DMBE2    = WA_BSID-DMBE2.
+                WA_SAIDA-WAERS    = WA_BSID-WAERS.
+                CLEAR:  WA_SAIDA-AUGBL,
+                        WA_SAIDA-AUGDT.
+              ELSE.
+                V_BELNR = WA_BSAD_AUGBL-AUGBL.
+                IF V_BELNR IS INITIAL.
+                  XACHOU = 'X'.
+                ELSEIF WA_BSAD_AUGBL-BELNR = WA_BSAD_AUGBL-AUGBL. " Chegou no final e nao encontrou
+                  XACHOU = 'X'.
+                ENDIF.
+              ENDIF.
+            ELSE.
+              XACHOU = 'X'.
+            ENDIF.
+
+            IF XLIMITE  GT 10.
+              XACHOU = 'X'.
+            ENDIF.
+          ENDWHILE.
+
+        ENDLOOP.
+      ENDIF.
+
+      WA_SAIDA-MOEDA_PGTO     = WA_ZFIT0036-MOEDA_PGTO.
+      WA_SAIDA-DT_PGTO        = WA_ZFIT0036-DT_PGTO.
+      WA_SAIDA-VLR_PGTO       = WA_ZFIT0036-VLR_PGTO.
+      WA_SAIDA-STATUS         = WA_ZFIT0036-STATUS.
+      WA_SAIDA-RG_ATUALIZADO  = WA_ZFIT0036-RG_ATUALIZADO.
+      WA_SAIDA-WAERS          = WA_ZIB_CONTABIL-WAERS.
+      WA_SAIDA-GSBER          = WA_ZIB_CONTABIL-GSBER.
+      WA_SAIDA-HKONT          = WA_ZIB_CONTABIL-HKONT.
+      WA_SAIDA-DIAS_ATRASO = 0.
+      IF R_ST_L = 'X'.
+        IF WA_ZIB_CONTABIL-ZFBDT IS NOT INITIAL.
+          CONCATENATE WA_ZIB_CONTABIL-ZFBDT+6(4) WA_ZIB_CONTABIL-ZFBDT+3(2) WA_ZIB_CONTABIL-ZFBDT+0(2) INTO V_DTVENC.
+          IF WA_SAIDA-AUGDT IS NOT INITIAL.
+            WA_SAIDA-DIAS_ATRASO = WA_SAIDA-AUGDT - V_DTVENC.
+          ELSE.
+            WA_SAIDA-DIAS_ATRASO = 999.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+
+      APPEND WA_SAIDA TO IT_SAIDA.
+      CLEAR WA_SAIDA.
+    ENDLOOP.
+  ENDLOOP.
+  IF P_AUGDT IS NOT INITIAL.
+    DELETE IT_SAIDA WHERE AUGDT NOT IN P_AUGDT.
+  ENDIF.
+ENDFORM.                    " F_SAIDA
+*&---------------------------------------------------------------------*
+*&      Form  F_IMPRIME_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_IMPRIME_DADOS .
+
+  "CHECK IT_ZFIT0036[] IS NOT INITIAL.
+  PERFORM F_ALV_FIELDCAT.
+
+  WA_LAYOUT-ZEBRA      = 'X'.
+*  wa_layout-cell_merge          = 'X'.    "Desneccessário
+  WA_LAYOUT-NO_ROWMOVE = 'X'.
+  WA_LAYOUT-NO_ROWINS  = 'X'.
+  WA_LAYOUT-NO_ROWMARK = SPACE.
+  IF VSTATUS = ' '.
+    WA_LAYOUT-GRID_TITLE = 'Em Aberto'.
+  ELSEIF VSTATUS = 'A'.
+    WA_LAYOUT-GRID_TITLE = 'Aguardando Aprovação'.
+  ELSEIF VSTATUS = 'L'.
+    WA_LAYOUT-GRID_TITLE = 'Liberadas'.
+  ELSEIF VSTATUS = 'P'.
+    WA_LAYOUT-GRID_TITLE = 'Pagas'.
+  ELSE.
+    CLEAR WA_LAYOUT-GRID_TITLE .
+  ENDIF.
+  WA_LAYOUT-SEL_MODE   = 'A'.
+  WA_LAYOUT-CWIDTH_OPT   = 'X'.
+  WA_LAYOUT-BOX_FNAME       = 'MARK'.
+
+  CALL SCREEN 0100.
+ENDFORM.                    " F_IMPRIME_DADOS
+
+*&---------------------------------------------------------------------*
+*&      Form  F_ALV_FIELDCAT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM F_ALV_FIELDCAT .
+  DATA I TYPE I.
+  WA_AFIELD-TABNAME     = 'IT_SAIDA'.
+  WA_AFIELD-COLDDICTXT = 'M'.
+  WA_AFIELD-SELDDICTXT = 'M'.
+  WA_AFIELD-TIPDDICTXT = 'M'.
+  WA_AFIELD-COL_OPT = 'X'.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'ICON0'.
+  WA_AFIELD-ICON          = 'X'.
+  WA_AFIELD-SCRTEXT_S = 'Attach'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-HOTSPOT       = 'X'.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'ICON1'.
+  WA_AFIELD-ICON          = 'X'.
+  WA_AFIELD-SCRTEXT_S = 'St.Liquid'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'ICON2'.
+  WA_AFIELD-ICON          = 'X'.
+  WA_AFIELD-SCRTEXT_S = 'St.UPLOAD'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'GSBER'.
+  WA_AFIELD-SCRTEXT_S = 'Divisão'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'INVOICE'.
+  WA_AFIELD-SCRTEXT_S = TEXT-003.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'BELNR'.
+  WA_AFIELD-SCRTEXT_S = TEXT-004.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-HOTSPOT       = 'X'.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'BUDAT'.
+  WA_AFIELD-SCRTEXT_S = TEXT-005.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'HKONT'.
+  WA_AFIELD-SCRTEXT_S = TEXT-006.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'NAME1'.
+  WA_AFIELD-SCRTEXT_S = TEXT-007.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 40.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'DMBTR'.
+  WA_AFIELD-SCRTEXT_S = TEXT-008.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 15.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'DMBE2'.
+  WA_AFIELD-SCRTEXT_S = TEXT-009.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 15.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'WAERS'.
+  WA_AFIELD-SCRTEXT_S = 'Moeda Pgto'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 15.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'NAVIO'.
+  WA_AFIELD-SCRTEXT_S = TEXT-010.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'AUGBL'.
+  WA_AFIELD-SCRTEXT_S = TEXT-011.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 12.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'AUGDT'.
+  WA_AFIELD-SCRTEXT_S = TEXT-012.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 10.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'HBKID'.
+  WA_AFIELD-SCRTEXT_S = 'Banco'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  I = I + 1.
+  CLEAR WA_AFIELD.
+  WA_AFIELD-COL_POS       = I.
+  WA_AFIELD-FIELDNAME     = 'OBSERVACAO'.
+  WA_AFIELD-SCRTEXT_S = 'Observação'.
+  WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+  WA_AFIELD-EDIT          = ''.
+  WA_AFIELD-KEY           = ''.
+  WA_AFIELD-OUTPUTLEN     = 30.
+  APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  IF R_ST_L = 'X'.
+    I = I + 1.
+    CLEAR WA_AFIELD.
+    WA_AFIELD-COL_POS       = I.
+    WA_AFIELD-FIELDNAME     = 'ZFBDT'.
+    WA_AFIELD-SCRTEXT_S = 'Dt.Venc'.
+    WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+    WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+    WA_AFIELD-EDIT          = ''.
+    WA_AFIELD-KEY           = ''.
+    APPEND WA_AFIELD TO IT_FIELDCAT.
+
+    I = I + 1.
+    CLEAR WA_AFIELD.
+    WA_AFIELD-COL_POS       = I.
+    WA_AFIELD-FIELDNAME     = 'DIAS_ATRASO'.
+    WA_AFIELD-SCRTEXT_S = 'Atraso'.
+    WA_AFIELD-SCRTEXT_L = WA_AFIELD-SCRTEXT_S.
+    WA_AFIELD-SCRTEXT_M = WA_AFIELD-SCRTEXT_S.
+    WA_AFIELD-EDIT          = ''.
+    WA_AFIELD-KEY           = ''.
+    APPEND WA_AFIELD TO IT_FIELDCAT.
+
+  ENDIF.
+ENDFORM.                    " F_ALV_FIELDCAT
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0100 OUTPUT.
+  DATA: FCODE TYPE TABLE OF SY-UCOMM.
+  REFRESH: FCODE.
+
+  IF R_ST_U NE 'X'.
+    APPEND '&GERAR' TO FCODE.
+  ENDIF.
+  IF R_ST_I NE 'X'.
+    APPEND '&LIQR' TO FCODE.
+  ENDIF.
+
+  IF R_ST_L NE 'X'.
+    APPEND '&RET' TO FCODE.
+  ENDIF.
+
+  SET PF-STATUS 'F_SET_PF' EXCLUDING FCODE.
+  SET TITLEBAR  'ZFTITLE'.
+
+
+
+  IF CL_CONTAINER_95 IS INITIAL.
+    CREATE OBJECT CL_CONTAINER_95
+      EXPORTING
+        SIDE  = '4'
+        RATIO = '80'.
+  ENDIF.
+
+  IF NOT CL_GRID IS INITIAL.
+    LOOP AT IT_SAIDA INTO WA_SAIDA.
+      IF WA_SAIDA-RG_ATUALIZADO = 'S'.
+        WA_SAIDA-ICON1 = ICON_ACTIVITY.
+        MODIFY IT_SAIDA FROM WA_SAIDA INDEX SY-TABIX TRANSPORTING ICON1.
+      ENDIF.
+    ENDLOOP.
+    PERFORM ZF_ALV_HEADER.
+    CALL METHOD CL_GRID->REFRESH_TABLE_DISPLAY.
+    IF SY-SUBRC <> 0.
+*     MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*                WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    ENDIF.
+
+  ELSE.
+    CREATE OBJECT OBJ_DYNDOC_ID
+      EXPORTING
+*       STYLE      =
+*       BACKGROUND_COLOR =
+*       BDS_STYLESHEET =
+        NO_MARGINS = 'X'.
+
+    PERFORM ZF_ALV_HEADER .
+
+
+    IF EDITCONTAINER IS INITIAL .
+      CREATE OBJECT EDITCONTAINER
+        EXPORTING
+          CONTAINER_NAME = 'HEADER'.
+    ENDIF .
+
+    CALL METHOD OBJ_DYNDOC_ID->MERGE_DOCUMENT.
+
+    CALL METHOD OBJ_DYNDOC_ID->DISPLAY_DOCUMENT
+      EXPORTING
+        REUSE_CONTROL      = 'X'
+        PARENT             = EDITCONTAINER
+      EXCEPTIONS
+        HTML_DISPLAY_ERROR = 1.
+
+
+    CREATE OBJECT CL_GRID
+      EXPORTING
+        I_PARENT      = CL_CONTAINER_95
+*       I_PARENT      = CL_CONTAINER
+        I_APPL_EVENTS = 'X'.
+
+
+    CALL METHOD CL_GRID->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+
+
+    CALL METHOD CL_GRID->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_VARIANT      = WG_X_VARIANT
+        I_SAVE          = WG_SAVE
+        IS_LAYOUT       = WA_LAYOUT
+      CHANGING
+        IT_FIELDCATALOG = IT_FIELDCAT[]
+        IT_SORT         = I_SORT[]
+        IT_OUTTAB       = IT_SAIDA[].
+
+
+    CREATE OBJECT EVENT_RECEIVER.
+    SET HANDLER EVENT_RECEIVER->CATCH_HOTSPOT              FOR CL_GRID.
+
+
+
+  ENDIF.
+ENDMODULE.                 " STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100 INPUT.
+
+
+  IF NOT CL_GRID IS INITIAL.
+    CALL METHOD CL_GRID->DISPATCH
+      EXPORTING
+        CARGO         = SY-UCOMM
+        EVENTID       = 19
+        IS_SHELLEVENT = ' '.
+
+    IF SY-UCOMM IS INITIAL.
+      CALL METHOD CL_GRID->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = IS_STABLE.
+    ENDIF.
+  ENDIF.
+
+  CASE SY-UCOMM.
+    WHEN 'BACK' OR 'UP'.
+      REFRESH IT_SAIDA.
+      CALL METHOD CL_GRID->REFRESH_TABLE_DISPLAY.
+      LEAVE TO SCREEN 0.
+    WHEN 'CANCEL'.
+      LEAVE PROGRAM.
+    WHEN '&GERAR'.
+      CLEAR WG_CADLIQ.
+      CALL SCREEN 3000 STARTING AT 050 3
+                       ENDING   AT 165 13.
+
+    WHEN '&RET'.
+      REFRESH INDROW.
+      CALL METHOD CL_GRID->GET_SELECTED_ROWS
+        IMPORTING
+          ET_INDEX_ROWS = INDROW.
+
+      LOOP AT IT_SAIDA INTO WA_SAIDA.
+        WA_SAIDA-MARK = ' '.
+        MODIFY IT_SAIDA FROM WA_SAIDA.
+      ENDLOOP.
+      W_CONT = 0.
+
+      LOOP AT INDROW INTO W_IND.
+        READ TABLE IT_SAIDA INTO WA_SAIDA INDEX W_IND-INDEX.
+        WA_SAIDA-MARK = 'X'.
+        ADD 1 TO W_CONT.
+        MODIFY IT_SAIDA FROM WA_SAIDA INDEX W_IND-INDEX.
+        MOVE W_IND-INDEX TO W_LINHA_SELEC.
+      ENDLOOP.
+      IF W_CONT = 0.
+        MESSAGE 'Selecione uma linha' TYPE 'I'.
+      ELSEIF W_CONT GT 1.
+        MESSAGE 'Selecione apenas uma linha' TYPE 'I'.
+      ELSE.
+        SELECT SINGLE *
+          FROM BKPF
+          INTO WA_BKPF
+          WHERE BUKRS = WA_SAIDA-BUKRS
+          AND   BELNR = WA_SAIDA-AUGBL
+          AND   GJAHR = WA_SAIDA-AUGDT+0(4).
+        IF WA_BKPF-STBLG IS NOT INITIAL.
+          UPDATE ZFIT0036 SET STATUS_CTAS_REC = ''
+          WHERE OBJ_KEY = WA_SAIDA-OBJ_KEY
+          AND   BELNR   = WA_SAIDA-BELNR36
+          AND   BUZEI   = WA_SAIDA-BUZEI36.
+        ELSE.
+          MESSAGE 'Compensação deve ser estornada para voltar para aberto' TYPE 'I'.
+        ENDIF.
+      ENDIF.
+
+    WHEN '&LIQR'.
+      REFRESH INDROW.
+      CALL METHOD CL_GRID->GET_SELECTED_ROWS
+        IMPORTING
+          ET_INDEX_ROWS = INDROW.
+
+      LOOP AT IT_SAIDA INTO WA_SAIDA.
+        WA_SAIDA-MARK = ' '.
+        MODIFY IT_SAIDA FROM WA_SAIDA.
+      ENDLOOP.
+      W_CONT = 0.
+
+      LOOP AT INDROW INTO W_IND.
+        READ TABLE IT_SAIDA INTO WA_SAIDA INDEX W_IND-INDEX.
+        WA_SAIDA-MARK = 'X'.
+        ADD 1 TO W_CONT.
+        MODIFY IT_SAIDA FROM WA_SAIDA INDEX W_IND-INDEX.
+        MOVE W_IND-INDEX TO W_LINHA_SELEC.
+      ENDLOOP.
+      IF W_CONT = 0.
+        MESSAGE 'Selecione uma linha' TYPE 'I'.
+      ELSEIF W_CONT GT 1.
+        MESSAGE 'Selecione apenas uma linha' TYPE 'I'.
+      ELSE.
+        CLEAR WG_CADLIQR.
+        READ TABLE IT_SAIDA INTO WA_SAIDA INDEX W_LINHA_SELEC.
+        CONCATENATE WA_SAIDA-BUDAT+6(4) WA_SAIDA-BUDAT+3(2)  WA_SAIDA-BUDAT+0(2) INTO WG_CADLIQR-DT_DOC.
+        WG_CADLIQR-DT_LAN    = WG_CADLIQR-DT_DOC.
+        WG_CADLIQR-MOEDA     = WA_SAIDA-WAERS.
+        WG_CADLIQR-VALOR_INV = WA_SAIDA-DMBE2 .
+        WG_CADLIQR-VALOR_CRE = WA_SAIDA-DMBE2.
+        WG_CADLIQR-HKONT     = ''.
+        WG_CADLIQR-HKONT_T   = 422513.
+        WG_CADLIQR-VALOR_TAR = 0.
+        WG_CADLIQR-SALDO_INV = 0.
+        CALL SCREEN 2000 STARTING AT 050 3
+                         ENDING   AT 150 14.
+      ENDIF.
+    WHEN OTHERS.
+
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*&      Form  ZF_ALV_HEADER
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM ZF_ALV_HEADER .
+  DATA:   WL_DATA(10),
+            WL_HORA(8),
+            WL_LINHA(60),
+            WL_TEXT TYPE SDYDO_TEXT_ELEMENT.
+
+*R_ST_A	Em Aberto
+*R_ST_I	Importar Arquivo Reconciliação
+*R_ST_L	Liquidadas
+*R_ST_U	Gerar UPLOAD Faturas Itaú
+
+  IF R_ST_A  = 'X'.
+    WL_TEXT = 'Em Aberto'.
+  ELSEIF R_ST_I  = 'X'.
+    WL_TEXT = 'Importar Arquivo Reconciliação'.
+  ELSEIF R_ST_L  = 'X'.
+    WL_TEXT = 'Liquidadas'.
+  ELSEIF R_ST_U  = 'X'.
+    WL_TEXT = 'Gerar UPLOAD Faturas Itaú'.
+  ENDIF.
+
+
+  CALL METHOD OBJ_DYNDOC_ID->ADD_TEXT
+    EXPORTING
+      TEXT         = WL_TEXT
+      SAP_STYLE    = CL_DD_AREA=>HEADING
+      SAP_FONTSIZE = CL_DD_AREA=>EXTRA_LARGE
+      SAP_COLOR    = CL_DD_AREA=>LIST_HEADING_INT.
+
+
+  CONCATENATE  'Empresa:' P_BUKRS
+          INTO WL_LINHA SEPARATED BY SPACE.
+  WL_TEXT = WL_LINHA.
+  CALL METHOD OBJ_DYNDOC_ID->NEW_LINE.
+
+  CALL METHOD OBJ_DYNDOC_ID->ADD_TEXT
+    EXPORTING
+      TEXT         = WL_TEXT "WL_LINHA
+*     SAP_STYLE    = CL_DD_AREA=>HEADING
+      SAP_FONTSIZE = CL_DD_AREA=>LIST_NORMAL.
+*      SAP_COLOR    = CL_DD_AREA=>LIST_HEADING_INT.
+
+  IF P_CLI IS NOT INITIAL.
+    IF P_CLI-HIGH IS INITIAL.
+      CONCATENATE 'Cliente  :' P_CLI-LOW
+       INTO WL_LINHA SEPARATED BY SPACE.
+    ELSE.
+      CONCATENATE 'Cliente  :' P_CLI-LOW 'à' P_CLI-HIGH
+      INTO WL_LINHA SEPARATED BY SPACE.
+    ENDIF.
+    WL_TEXT = WL_LINHA.
+    CALL METHOD OBJ_DYNDOC_ID->NEW_LINE.
+
+    CALL METHOD OBJ_DYNDOC_ID->ADD_TEXT
+      EXPORTING
+        TEXT         = WL_TEXT "WL_LINHA
+*       SAP_STYLE    = CL_DD_AREA=>HEADING
+        SAP_FONTSIZE = CL_DD_AREA=>LIST_NORMAL.
+*        SAP_COLOR    = CL_DD_AREA=>LIST_HEADING_INT.
+
+  ENDIF.
+
+
+  IF P_INVO IS NOT INITIAL.
+    IF P_INVO-HIGH IS INITIAL.
+      CONCATENATE 'Invoice  :' P_INVO-LOW
+      INTO WL_LINHA SEPARATED BY SPACE.
+    ELSE.
+      CONCATENATE 'Invoice  :'  P_INVO-LOW 'à' P_INVO-HIGH
+      INTO WL_LINHA SEPARATED BY SPACE.
+    ENDIF.
+    WL_TEXT = WL_LINHA.
+    CALL METHOD OBJ_DYNDOC_ID->NEW_LINE.
+
+    CALL METHOD OBJ_DYNDOC_ID->ADD_TEXT
+      EXPORTING
+        TEXT         = WL_TEXT "WL_LINHA
+*       SAP_STYLE    = CL_DD_AREA=>HEADING
+        SAP_FONTSIZE = CL_DD_AREA=>LIST_NORMAL.
+*         SAP_COLOR    = CL_DD_AREA=>LIST_HEADING_INT.
+  ENDIF.
+
+  IF P_DATA IS NOT INITIAL.
+    CONCATENATE P_DATA-LOW+6(2) P_DATA-LOW+4(2) P_DATA-LOW+0(4) INTO  WL_DATA SEPARATED BY '.'.
+    IF P_DATA-HIGH IS INITIAL.
+      CONCATENATE 'Data Lançamento  :' WL_DATA
+      INTO WL_LINHA SEPARATED BY SPACE.
+    ELSE.
+      CONCATENATE 'Data Lançamento  :' WL_DATA  INTO WL_LINHA SEPARATED BY SPACE.
+      CONCATENATE P_DATA-HIGH+6(2) P_DATA-HIGH+4(2) P_DATA-HIGH+0(4) INTO  WL_DATA SEPARATED BY '.'.
+      CONCATENATE WL_LINHA 'à' WL_DATA  INTO WL_LINHA SEPARATED BY SPACE.
+    ENDIF.
+    WL_TEXT = WL_LINHA.
+    CALL METHOD OBJ_DYNDOC_ID->NEW_LINE.
+
+    CALL METHOD OBJ_DYNDOC_ID->ADD_TEXT
+      EXPORTING
+        TEXT         = WL_TEXT "WL_LINHA
+*       SAP_STYLE    = CL_DD_AREA=>HEADING
+        SAP_FONTSIZE = CL_DD_AREA=>LIST_NORMAL.
+*         SAP_COLOR    = CL_DD_AREA=>LIST_HEADING_INT.
+  ENDIF.
+
+ENDFORM.                    " ZF_ALV_HEADER
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_3000  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_3000 INPUT.
+  CASE OK-CODE.
+    WHEN 'GERAR'.
+      DATA W_PROC TYPE I.
+
+      W_PROC = 0.
+      LOOP AT IT_SAIDA INTO WA_SAIDA.
+        CLEAR W_LINHA.
+        W_LINHA-OBJ_KEY      = WA_SAIDA-OBJ_KEY.
+        W_LINHA-STCD1        = WA_SAIDA-STCD1.
+        W_LINHA-WAERS        = WA_SAIDA-WAERS.
+        W_LINHA-DMBE2        = WA_SAIDA-DMBE2.
+        W_LINHA-DATA_EMB     = ''.
+        W_LINHA-DATA_AVE     = ''.
+        W_LINHA-TIPO_EMB     = ''.
+        W_LINHA-COD_PAGADOR  = ''.
+        W_LINHA-NOM_PAGADOR  = WA_SAIDA-NAME1.
+        W_LINHA-COD_BACEN    = ''.
+        W_LINHA-INVOICE      = WA_SAIDA-INVOICE.
+        W_LINHA-DT_VENCTO    = ''.
+        W_LINHA-ANORE        = ''.
+        W_LINHA-NUMERORE     = ''.
+        W_LINHA-SEQIRE       = ''.
+        W_LINHA-SEQFRE       = ''.
+        W_LINHA-INDSE        = '0'.
+        W_LINHA-NUMEROSD     = ''.
+        W_LINHA-TIPOCOMAG    = ''.
+        W_LINHA-VALORCOMAG   = '000000000000000'.
+        W_ARQUIVO = W_LINHA.
+        APPEND W_ARQUIVO TO T_ARQUIVO.
+        CLEAR W_LINHA.
+        ADD 1 TO W_PROC.
+      ENDLOOP.
+
+      IF W_PROC > 0.
+        PERFORM ZF_GRAVA_ARQUIVO.
+      ENDIF.
+
+    WHEN 'SAIR'.
+      SET SCREEN 0.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_3000  INPUT
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_EXIT INPUT.
+  CASE OK-CODE.
+    WHEN C_BACK.
+      SET SCREEN 0.
+    WHEN C_CANCEL.
+      SET SCREEN 0.
+
+    WHEN C_EXIT.
+      LEAVE PROGRAM.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_3000  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_3000 OUTPUT.
+  SET PF-STATUS 'Z001'.
+*  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '3000'.
+ENDMODULE.                 " STATUS_3000  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Form  ZF_GRAVA_ARQUIVO
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM ZF_GRAVA_ARQUIVO .
+  DATA:
+    WL_TABNAME(15),
+    WL_INDEX(2).
+  FIELD-SYMBOLS <FS_TAB> TYPE ANY TABLE.
+
+  WL_TABNAME = 't_arquivo[]'.
+  ASSIGN (WL_TABNAME) TO <FS_TAB>.
+  IF SY-SUBRC = 0.
+    IF NOT <FS_TAB> IS INITIAL.
+      MOVE WG_CADLIQ-PATH  TO LV_NOME_ARQUIVO.
+      MOVE <FS_TAB>        TO T_ARQUIVO[].
+      IF WG_CADLIQ-LOCAL IS INITIAL.
+        OPEN DATASET LV_NOME_ARQUIVO FOR OUTPUT IN TEXT MODE ENCODING DEFAULT.
+
+        IF SY-SUBRC <> 0.
+          MESSAGE 'Caminho ou nome de arquivo inválido. Impossível continuar!'
+          TYPE 'A'.
+        ENDIF.
+
+        LOOP AT T_ARQUIVO INTO W_ARQUIVO.
+          TRANSFER W_ARQUIVO TO LV_NOME_ARQUIVO.
+        ENDLOOP.
+
+        CLOSE DATASET LV_NOME_ARQUIVO.
+      ELSE.
+        DATA: WL_FILENAME TYPE RLGRAP-FILENAME.
+        MOVE: LV_NOME_ARQUIVO TO WL_FILENAME.
+
+        CALL FUNCTION 'WS_DOWNLOAD'
+          EXPORTING
+            FILENAME                = WL_FILENAME
+          TABLES
+            DATA_TAB                = T_ARQUIVO
+          EXCEPTIONS
+            FILE_OPEN_ERROR         = 1
+            FILE_WRITE_ERROR        = 2
+            INVALID_FILESIZE        = 3
+            INVALID_TYPE            = 4
+            NO_BATCH                = 5
+            UNKNOWN_ERROR           = 6
+            INVALID_TABLE_WIDTH     = 7
+            GUI_REFUSE_FILETRANSFER = 8
+            CUSTOMER_ERROR          = 9
+            NO_AUTHORITY            = 10
+            OTHERS                  = 11.
+        IF SY-SUBRC <> 0.
+          MESSAGE ID '00' TYPE 'E' NUMBER '398' WITH
+             'Erro ao criar o arquivo'
+             'na pasta'
+             WG_CADLIQ-PATH .
+        ENDIF.
+
+
+      ENDIF.
+
+
+    ENDIF.
+  ENDIF.
+
+
+  WRITE:/ SY-ULINE.
+  FORMAT COLOR COL_HEADING INTENSIFIED ON.
+
+
+  WRITE:/1 SY-VLINE,
+         2 'Arquivo Gerado:',
+         19 LV_NOME_ARQUIVO,
+         202 SY-VLINE.
+
+
+  WRITE:/1 SY-ULINE.
+ENDFORM.                    " ZF_GRAVA_ARQUIVO
+*&---------------------------------------------------------------------*
+*&      Module  SEARCH_PATH  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE SEARCH_PATH INPUT.
+  DATA: L_DYNPFIELDS LIKE DYNPREAD OCCURS 0 WITH HEADER LINE.
+  REFRESH L_DYNPFIELDS.
+  CLEAR   L_DYNPFIELDS.
+
+  L_DYNPFIELDS-FIELDNAME  = 'WG_CADLIQ-LOCAL'.
+  APPEND L_DYNPFIELDS.
+
+  CALL FUNCTION 'DYNP_VALUES_READ'
+    EXPORTING
+      DYNAME     = SY-REPID
+      DYNUMB     = SY-DYNNR
+    TABLES
+      DYNPFIELDS = L_DYNPFIELDS.
+  READ TABLE L_DYNPFIELDS INDEX 1.
+  MOVE L_DYNPFIELDS-FIELDVALUE TO WG_CADLIQ-LOCAL.
+
+  IF WG_CADLIQ-LOCAL = 'X'.
+    CALL FUNCTION 'WS_FILENAME_GET'
+      EXPORTING
+        DEF_FILENAME     = ' '
+        DEF_PATH         = 'C:\'
+        MASK             = '*.TXT'
+        MODE             = 'S'
+        TITLE            = 'Busca de Arquivo'
+      IMPORTING
+        FILENAME         = WG_CADLIQ-PATH
+      EXCEPTIONS
+        INV_WINSYS       = 1
+        NO_BATCH         = 2
+        SELECTION_CANCEL = 3
+        SELECTION_ERROR  = 4
+        OTHERS           = 5.
+  ELSE.
+    DATA: WL_PATH TYPE DXLPATH.
+    CALL FUNCTION 'F4_DXFILENAME_TOPRECURSION'
+      EXPORTING
+        I_LOCATION_FLAG = ' '
+*       i_server        = lv_servername
+        I_PATH          = '//'
+        FILEMASK        = '*.*'
+        FILEOPERATION   = 'R'
+      IMPORTING
+*       O_LOCATION_FLAG =
+*       O_SERVER        =
+        O_PATH          = WL_PATH
+*       ABEND_FLAG      =
+      EXCEPTIONS
+        RFC_ERROR       = 1
+        OTHERS          = 2.
+    MOVE WL_PATH TO WG_CADLIQ-PATH.
+  ENDIF.
+ENDMODULE.                 " SEARCH_PATH  INPUT
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_2000  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_2000 OUTPUT.
+  SET PF-STATUS 'Z001'.
+  DATA WK_SKAT      TYPE SKAT.
+*  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '2000'.
+  LOOP AT SCREEN.
+    IF SCREEN-NAME = 'WG_CADLIQR-SALDO_INV'.
+      W_FLAG_SALDO = ''.
+      WG_CADLIQR-SALDO_INV  =  WG_CADLIQR-VALOR_INV - ( WG_CADLIQR-VALOR_CRE + WG_CADLIQR-VALOR_TAR ).
+      IF WG_CADLIQR-SALDO_INV LT 0.
+        W_FLAG_SALDO = 'X'.
+      ENDIF.
+      MODIFY SCREEN.
+    ELSEIF SCREEN-NAME = 'WG_CADLIQR-TXT50'.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = WG_CADLIQR-HKONT
+        IMPORTING
+          OUTPUT = WG_CADLIQR-HKONT.
+      SELECT SINGLE *
+        FROM SKAT
+        INTO WK_SKAT
+        WHERE SPRAS = 'PT'
+        AND KTOPL   = '0050'
+        AND SAKNR   = WG_CADLIQR-HKONT.
+      IF SY-SUBRC = 0.
+        WG_CADLIQR-TXT50 = WK_SKAT-TXT50.
+      ENDIF.
+      MODIFY SCREEN.
+    ELSEIF SCREEN-NAME = 'WG_CADLIQR-TXT50T'.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = WG_CADLIQR-HKONT_T
+        IMPORTING
+          OUTPUT = WG_CADLIQR-HKONT_T.
+      SELECT SINGLE *
+        FROM SKAT
+        INTO WK_SKAT
+        WHERE SPRAS = 'PT'
+        AND KTOPL   = '0050'
+        AND SAKNR   = WG_CADLIQR-HKONT_T.
+      IF SY-SUBRC = 0.
+        WG_CADLIQR-TXT50T = WK_SKAT-TXT50.
+      ENDIF.
+      MODIFY SCREEN.
+    ENDIF.
+  ENDLOOP.
+ENDMODULE.                 " STATUS_2000  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2000  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_2000 INPUT.
+  CASE OK-CODE.
+    WHEN 'GERAR'.
+      CLEAR WL_ERRO.
+      WG_CADLIQR-SALDO_INV  =  WG_CADLIQR-VALOR_INV - ( WG_CADLIQR-VALOR_CRE + WG_CADLIQR-VALOR_TAR ).
+      IF WG_CADLIQR-SALDO_INV LT 0.
+        MESSAGE 'Saldo não pode ser negativo' TYPE 'I'.
+      ELSEIF WG_CADLIQR-HKONT IS INITIAL.
+        MESSAGE 'Conta credito deve ser informada' TYPE 'I'.
+      ELSEIF WG_CADLIQR-HKONT_T IS INITIAL.
+        MESSAGE 'Conta tarifa deve ser informada' TYPE 'I'.
+      ELSE.
+        READ TABLE IT_SAIDA INTO WA_SAIDA INDEX W_LINHA_SELEC.
+        IF WA_SAIDA-ICON1    =   ICON_SYSTEM_OKAY.
+          MESSAGE 'Invoice já está processada' TYPE 'I'.
+        ELSE.
+          IF WG_CADLIQR-VALOR_TAR = 0 AND WG_CADLIQR-SALDO_INV = 0.
+            PERFORM F_SHDB_TOTAL CHANGING WA_SAIDA WL_ERRO.
+          ELSEIF WG_CADLIQR-VALOR_TAR NE 0 AND WG_CADLIQR-SALDO_INV = 0.
+            PERFORM F_SHDB_BXTAR CHANGING WA_SAIDA WL_ERRO.
+          ELSEIF WG_CADLIQR-VALOR_TAR EQ 0 AND WG_CADLIQR-SALDO_INV NE 0.
+            PERFORM F_SHDB_BXPSTAR CHANGING WA_SAIDA WL_ERRO.
+          ELSEIF WG_CADLIQR-VALOR_TAR NE 0 AND WG_CADLIQR-SALDO_INV NE 0.
+            PERFORM F_SHDB_BXPCTAR CHANGING WA_SAIDA WL_ERRO.
+          ENDIF.
+          IF WL_ERRO NE 'X' AND WG_DOCUMENTO IS NOT INITIAL.
+            IF WG_CADLIQR-SALDO_INV = 0.
+              UPDATE ZFIT0036 SET STATUS_CTAS_REC = 'P'
+                            USUARIO    = SY-UNAME
+                            DATA_ATUAL = SY-DATUM
+                            HORA_ATUAL = SY-UZEIT
+              WHERE OBJ_KEY = WA_SAIDA-OBJ_KEY.
+            ENDIF.
+            WA_SAIDA-ICON1    =   ICON_SYSTEM_OKAY.
+            MODIFY IT_SAIDA FROM WA_SAIDA INDEX W_LINHA_SELEC.
+            MESSAGE S836(SD) WITH 'Lançamento'
+                         WG_DOCUMENTO
+                         ', criado com sucesso!'.
+          ELSE.
+            MESSAGE 'Erro de execução' TYPE 'I'.
+          ENDIF.
+        ENDIF.
+        SET SCREEN 0.
+      ENDIF.
+    WHEN 'SAIR'.
+      SET SCREEN 0.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_2000  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Form  F_SHDB
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SHDB_TOTAL CHANGING P_ALV LIKE WA_SAIDA P_ERRO.
+
+  REFRESH TI_BDCDATA.
+  WRITE: P_ALV-DMBE2 TO WL_VLR.
+  WRITE: WG_CADLIQR-VALOR_CRE TO WL_VLRC.
+  WRITE: WG_CADLIQR-SALDO_INV TO WL_VLRS.
+
+  CONCATENATE  WG_CADLIQR-DT_DOC+6(2) WG_CADLIQR-DT_DOC+4(2) WG_CADLIQR-DT_DOC(4) INTO VDATAD SEPARATED BY '.'.
+  CONCATENATE  WG_CADLIQR-DT_LAN+6(2) WG_CADLIQR-DT_LAN+4(2) WG_CADLIQR-DT_LAN(4) INTO VDATAL SEPARATED BY '.'.
+
+  PERFORM F_BDC_DATA USING:
+    'SAPMF05A'  '0103'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-BLDAT'        VDATAD,
+    ''          ''      ''   'BKPF-BLART'       'DZ',
+    ''          ''      ''   'BKPF-BUKRS'       P_BUKRS,
+    ''          ''      ''   'BKPF-BUDAT'       VDATAL,
+    ''          ''      ''   'BKPF-MONAT'       WG_CADLIQR-DT_LAN+4(2),
+    ''          ''      ''   'BKPF-WAERS'       P_ALV-WAERS,
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-KONTO'      WG_CADLIQR-HKONT,
+    ''          ''      ''   'BSEG-GSBER'       P_ALV-GSBER,
+    ''          ''      ''   'BSEG-WRBTR'       WL_VLRC,
+    ''          ''      ''   'RF05A-AGKON'      P_ALV-HKONT,
+    ''          ''      ''   'RF05A-AGKOA'      'D',
+    ''          ''      ''   'RF05A-XNOPS'      'X',
+    ''          ''      ''   'RF05A-XPOS1(01)'  '',
+    ''          ''      ''   'RF05A-XPOS1(03)'  'X',
+    'SAPMF05A'  '0731'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PA',
+    ''          ''      ''   'RF05A-SEL01(01)'  P_ALV-BELNR,
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PI',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BS',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPMF05A'  '0700' 'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BU',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE.
+
+  CLEAR P_ERRO.
+  PERFORM ZF_CALL_TRANSACTION USING 'F-28' CHANGING P_ERRO.
+
+ENDFORM.                    " F_SHDB
+
+*&---------------------------------------------------------------------*
+*&      Form  F_BDC_DATA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_program   programa
+*      -->P_dynpro    tela
+*      -->P_start     define a tela
+*      -->P_fnam      nome do campo ou comando
+*      -->P_fval      conteúdo do campo ou comando
+*----------------------------------------------------------------------*
+FORM F_BDC_DATA  USING P_PROGRAM P_DYNPRO P_START P_FNAM P_FVAL.
+* Este form recebe cada conteúdo passado em ordem para os parâmetros de
+* entrada e abaixo preenche a wa_bdcdata que por sua vez carrega a ti_bdcdata.
+  CLEAR WA_BDCDATA.
+  WA_BDCDATA-PROGRAM   = P_PROGRAM.
+  WA_BDCDATA-DYNPRO    = P_DYNPRO.
+  WA_BDCDATA-DYNBEGIN  = P_START.
+  WA_BDCDATA-FNAM      = P_FNAM.
+  WA_BDCDATA-FVAL      = P_FVAL.
+  APPEND WA_BDCDATA TO TI_BDCDATA.
+
+ENDFORM.                    " F_BDC_DATA
+
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_CALL_TRANSACTION
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_TRANS    text
+*----------------------------------------------------------------------*
+FORM ZF_CALL_TRANSACTION USING P_TRANS CHANGING P_ERRO.
+  CONSTANTS: C_MSGID LIKE IT_MSG-MSGID VALUE 'F5',
+             C_MSGNR LIKE IT_MSG-MSGNR VALUE '312'.
+
+  REFRESH IT_MSG.
+
+  WL_MODE = 'E'.
+  CALL TRANSACTION P_TRANS USING TI_BDCDATA
+        MODE WL_MODE
+        MESSAGES INTO IT_MSG.
+
+  READ TABLE IT_MSG WITH KEY MSGTYP = 'A'.
+  IF SY-SUBRC = 0.
+    P_ERRO = 'X'.
+  ELSE.
+    READ TABLE IT_MSG WITH KEY MSGTYP = 'E'.
+    IF SY-SUBRC = 0.
+      P_ERRO = 'X'.
+    ENDIF.
+  ENDIF.
+
+  CLEAR WG_DOCUMENTO.
+  READ TABLE IT_MSG WITH KEY MSGID = C_MSGID
+                             MSGNR = C_MSGNR
+                             MSGTYP = 'S'.
+  IF SY-SUBRC = 0.
+    MOVE IT_MSG-MSGV1 TO WG_DOCUMENTO.
+  ENDIF.
+
+
+ENDFORM.                    "ZF_CALL_TRANSACTION
+*&---------------------------------------------------------------------*
+*&      Form  F_SHDB_BXTAR
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      <--P_WA_SAIDA  text
+*      <--P_WL_ERRO  text
+*----------------------------------------------------------------------*
+FORM F_SHDB_BXTAR  CHANGING P_ALV LIKE WA_SAIDA P_ERRO.
+
+
+  REFRESH TI_BDCDATA.
+  WRITE: P_ALV-DMBE2 TO WL_VLR.
+  WRITE: WG_CADLIQR-VALOR_CRE TO WL_VLRC.
+  WRITE: WG_CADLIQR-VALOR_TAR TO WL_VLRT.
+
+  CONCATENATE  WG_CADLIQR-DT_DOC+6(2) WG_CADLIQR-DT_DOC+4(2) WG_CADLIQR-DT_DOC(4) INTO VDATAD SEPARATED BY '.'.
+  CONCATENATE  WG_CADLIQR-DT_LAN+6(2) WG_CADLIQR-DT_LAN+4(2) WG_CADLIQR-DT_LAN(4) INTO VDATAL SEPARATED BY '.'.
+
+  PERFORM F_BDC_DATA USING:
+    'SAPMF05A'  '0103'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-BLDAT'        VDATAD,
+    ''          ''      ''   'BKPF-BLART'       'DZ',
+    ''          ''      ''   'BKPF-BUKRS'       P_BUKRS,
+    ''          ''      ''   'BKPF-BUDAT'       VDATAL,
+    ''          ''      ''   'BKPF-MONAT'       WG_CADLIQR-DT_LAN+4(2),
+    ''          ''      ''   'BKPF-WAERS'       P_ALV-WAERS,
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-KONTO'      WG_CADLIQR-HKONT,
+    ''          ''      ''   'BSEG-GSBER'       P_ALV-GSBER,
+    ''          ''      ''   'BSEG-WRBTR'       WL_VLRC,
+    ''          ''      ''   'RF05A-AGKON'      P_ALV-HKONT,
+    ''          ''      ''   'RF05A-AGKOA'      'D',
+    ''          ''      ''   'RF05A-XNOPS'      'X',
+    ''          ''      ''   'RF05A-XPOS1(01)'  '',
+    ''          ''      ''   'RF05A-XPOS1(03)'  'X',
+    'SAPMF05A'  '0731'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PA',
+    ''          ''      ''   'RF05A-SEL01(01)'  P_ALV-BELNR,
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PI',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=KMD',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPMF05A'  '0700'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-NEWBS'      '40',
+    ''          ''      ''   'RF05A-NEWKO'      WG_CADLIQR-HKONT_T,
+    'SAPMF05A'  '0300'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BS',
+    ''          ''      ''   'BSEG-WRBTR'        WL_VLRT,
+    ''          ''      ''   'BSEG-SGTXT'        P_ALV-INVOICE,
+    ''          ''      ''   'BDC_SUBSCR'        'SAPLKACB                                1006BLOCK',
+    'SAPLKACB'  '0002'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'COBL-GSBER'        P_ALV-GSBER,
+    'SAPMF05A'  '0700'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BU',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE.
+
+  CLEAR P_ERRO.
+  PERFORM ZF_CALL_TRANSACTION USING 'F-28' CHANGING P_ERRO.
+
+
+ENDFORM.                    " F_SHDB_BXTAR
+*&---------------------------------------------------------------------*
+*&      Form  F_SHDB_BXPSTAR
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      <--P_WA_SAIDA  text
+*      <--P_WL_ERRO  text
+*----------------------------------------------------------------------*
+FORM F_SHDB_BXPSTAR  CHANGING P_ALV LIKE WA_SAIDA P_ERRO.
+  DATA: VSALDO TYPE ANLP-NAFAZ.
+  REFRESH TI_BDCDATA.
+  WRITE: P_ALV-DMBE2 TO WL_VLR.
+  WRITE: WG_CADLIQR-VALOR_CRE TO WL_VLRC.
+  VSALDO = WG_CADLIQR-SALDO_INV * -1.
+  WRITE: VSALDO TO WL_VLRS.
+
+  CONCATENATE  WG_CADLIQR-DT_DOC+6(2) WG_CADLIQR-DT_DOC+4(2) WG_CADLIQR-DT_DOC(4) INTO VDATAD SEPARATED BY '.'.
+  CONCATENATE  WG_CADLIQR-DT_LAN+6(2) WG_CADLIQR-DT_LAN+4(2) WG_CADLIQR-DT_LAN(4) INTO VDATAL SEPARATED BY '.'.
+
+  PERFORM F_BDC_DATA USING:
+    'SAPMF05A'  '0103'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-BLDAT'        VDATAD,
+    ''          ''      ''   'BKPF-BLART'       'DZ',
+    ''          ''      ''   'BKPF-BUKRS'       P_BUKRS,
+    ''          ''      ''   'BKPF-BUDAT'       VDATAL,
+    ''          ''      ''   'BKPF-MONAT'       WG_CADLIQR-DT_LAN+4(2),
+    ''          ''      ''   'BKPF-WAERS'       P_ALV-WAERS,
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-KONTO'      WG_CADLIQR-HKONT,
+    ''          ''      ''   'BSEG-GSBER'       P_ALV-GSBER,
+    ''          ''      ''   'BSEG-WRBTR'       WL_VLRC,
+    ''          ''      ''   'RF05A-AGKON'      P_ALV-HKONT,
+    ''          ''      ''   'RF05A-AGKOA'      'D',
+    ''          ''      ''   'RF05A-XNOPS'      'X',
+    ''          ''      ''   'RF05A-XPOS1(01)'  '',
+    ''          ''      ''   'RF05A-XPOS1(03)'  'X',
+    'SAPMF05A'  '0731'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PA',
+    ''          ''      ''   'RF05A-SEL01(01)'  P_ALV-BELNR,
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PI',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PI',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BS',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    ''          ''      ''   'RF05A-AKOBT'      WL_VLRS,
+    'SAPMF05A'  '0700'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BU',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE.
+
+  CLEAR P_ERRO.
+  PERFORM ZF_CALL_TRANSACTION USING 'F-28' CHANGING P_ERRO.
+ENDFORM.                    " F_SHDB_BXPSTAR
+*&---------------------------------------------------------------------*
+*&      Form  F_SHDB_BXPCTAR
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      <--P_WA_SAIDA  text
+*      <--P_WL_ERRO  text
+*----------------------------------------------------------------------*
+FORM F_SHDB_BXPCTAR  CHANGING P_ALV LIKE WA_SAIDA P_ERRO.
+
+  DATA: VALOR_TOTAL  TYPE TY_CADLIQR-VALOR_CRE,
+        WL_VLRCT(16).
+
+
+  VALOR_TOTAL = WG_CADLIQR-VALOR_CRE + WG_CADLIQR-VALOR_TAR.
+
+  REFRESH TI_BDCDATA.
+  WRITE: P_ALV-DMBE2 TO WL_VLR.
+  WRITE: WG_CADLIQR-VALOR_CRE TO WL_VLRC.
+  WRITE: WG_CADLIQR-VALOR_TAR TO WL_VLRT.
+  WRITE: WG_CADLIQR-SALDO_INV TO WL_VLRS.
+  WRITE: VALOR_TOTAL          TO WL_VLRCT.
+
+  CONCATENATE  WG_CADLIQR-DT_DOC+6(2) WG_CADLIQR-DT_DOC+4(2) WG_CADLIQR-DT_DOC(4) INTO VDATAD SEPARATED BY '.'.
+  CONCATENATE  WG_CADLIQR-DT_LAN+6(2) WG_CADLIQR-DT_LAN+4(2) WG_CADLIQR-DT_LAN(4) INTO VDATAL SEPARATED BY '.'.
+
+  PERFORM F_BDC_DATA USING:
+    'SAPMF05A'  '0103'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-BLDAT'        VDATAD,
+    ''          ''      ''   'BKPF-BLART'       'DZ',
+    ''          ''      ''   'BKPF-BUKRS'       P_BUKRS,
+    ''          ''      ''   'BKPF-BUDAT'       VDATAL,
+    ''          ''      ''   'BKPF-MONAT'       WG_CADLIQR-DT_LAN+4(2),
+    ''          ''      ''   'BKPF-WAERS'       P_ALV-WAERS,
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-KONTO'      WG_CADLIQR-HKONT,
+    ''          ''      ''   'BSEG-GSBER'       P_ALV-GSBER,
+    ''          ''      ''   'BSEG-WRBTR'       WL_VLRC,
+    ''          ''      ''   'RF05A-AGKON'      P_ALV-HKONT,
+    ''          ''      ''   'RF05A-AGKOA'      'D',
+    ''          ''      ''   'RF05A-XNOPS'      'X',
+    ''          ''      ''   'RF05A-XPOS1(01)'  '',
+    ''          ''      ''   'RF05A-XPOS1(03)'  'X',
+    'SAPMF05A'  '0731'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PA',
+    ''          ''      ''   'RF05A-SEL01(01)'  P_ALV-BELNR,
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=REST',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=PI',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    ''          ''      ''   'DF05B-PSDIF(01)'  WL_VLRC,
+
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    ''          ''      ''   'DF05B-PSDIF(01)'  WL_VLRCT,
+
+    'SAPDF05X'  '3100'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+    ''          ''      ''   'DF05B-PSDIF(01)'  WL_VLRS,
+
+    'SAPDF05X'  '3100'  'X'  ''                 '',
+    ''          ''      ''   'BDC_OKCODE'	      '=KMD',
+    ''          ''      ''   'BDC_SUBSCR'	      'SAPDF05X                                6102PAGE',
+    ''          ''      ''   'RF05A-ABPOS'      '1',
+
+    'SAPMF05A'  '0700'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE,
+    ''          ''      ''   'RF05A-NEWBS'      '40',
+    ''          ''      ''   'RF05A-NEWKO'      WG_CADLIQR-HKONT_T,
+    'SAPMF05A'  '0300'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BS',
+    ''          ''      ''   'BSEG-WRBTR'        WL_VLRT,
+    ''          ''      ''   'BSEG-SGTXT'        P_ALV-INVOICE,
+    ''          ''      ''   'BDC_SUBSCR'        'SAPLKACB                                1006BLOCK',
+    'SAPLKACB'  '0002'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '/00',
+    ''          ''      ''   'COBL-GSBER'        P_ALV-GSBER,
+    'SAPMF05A'  '0700'  'X'  ''                 ' ',
+    ''          ''      ''   'BDC_OKCODE'	      '=BU',
+    ''          ''      ''   'BKPF-XBLNR'       P_ALV-INVOICE.
+
+  CLEAR P_ERRO.
+  PERFORM ZF_CALL_TRANSACTION USING 'F-28' CHANGING P_ERRO.
+
+
+ENDFORM.                    " F_SHDB_BXPCTAR
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_4000  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_4000 OUTPUT.
+  SET PF-STATUS 'Z002'.
+*  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '4000'.
+
+ENDMODULE.                 " STATUS_4000  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  SEARCH_PATH_A  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE SEARCH_PATH_A INPUT.
+  CALL FUNCTION 'WS_FILENAME_GET'
+    EXPORTING
+      DEF_FILENAME     = ' '
+      DEF_PATH         = 'C:\'
+      MODE             = 'S'       " MASK = '*.TXT'
+      TITLE            = 'Busca de Arquivo'
+    IMPORTING
+      FILENAME         = WG_ATACH-PATH
+    EXCEPTIONS
+      INV_WINSYS       = 1
+      NO_BATCH         = 2
+      SELECTION_CANCEL = 3
+      SELECTION_ERROR  = 4
+      OTHERS           = 5.
+
+ENDMODULE.                 " SEARCH_PATH_A  INPUT
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_4000  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_4000 INPUT.
+  CASE OK-CODE.
+    WHEN 'ARQ'.
+      IF WG_ATACH-PATH IS INITIAL AND  WG_ATACH-UPDL IS NOT INITIAL.
+        MESSAGE 'Informe o caminho do arquivo .PDF (Invoice)' TYPE 'I'.
+      ELSE.
+        PERFORM ZF_GRAVA_INVOICE.
+        SET SCREEN 0.
+      ENDIF.
+    WHEN 'SAIR'.
+      SET SCREEN 0.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_4000  INPUT
+*&---------------------------------------------------------------------*
+*&      Form  ZF_GRAVA_INVOICE
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM ZF_GRAVA_INVOICE .
+
+  DATA: BEGIN OF ITAB OCCURS 0,
+          FIELD(256),
+        END OF ITAB.
+
+  DATA: LENGTH  LIKE SY-TABIX,
+        LENGTHN LIKE SY-TABIX,
+        VARQTMP TYPE STRING VALUE 'c:\temp\invoice.pdf'. "visualizar
+
+  VFILENAME     = WG_ATACH-PATH. " Diretorio Windows
+
+  IF WG_ATACH-UPDL IS NOT INITIAL.
+    CALL FUNCTION 'GUI_UPLOAD'
+      EXPORTING
+        FILENAME   = VFILENAME
+        FILETYPE   = 'BIN'
+      IMPORTING
+        FILELENGTH = LENGTH
+      TABLES
+        DATA_TAB   = ITAB.
+
+    MOVE: WA_SAIDA-OBJ_KEY TO WA_ZFIT0076-OBJ_KEY,
+          WA_SAIDA-BELNR36 TO WA_ZFIT0076-BELNR,
+          WA_SAIDA-BUZEI36 TO WA_ZFIT0076-BUZEI.
+
+    REFRESH IT_ZFIT0076.
+    LOOP AT ITAB.
+      MOVE: SY-TABIX   TO WA_ZFIT0076-POS,
+            ITAB-FIELD+0(128)   TO WA_ZFIT0076-LINHA,
+            ITAB-FIELD+128(128) TO WA_ZFIT0076-LINHA2.
+      APPEND WA_ZFIT0076 TO IT_ZFIT0076.
+    ENDLOOP.
+
+    CLEAR ITAB.
+    REFRESH ITAB.
+    DELETE FROM ZFIT0076 WHERE OBJ_KEY = WA_SAIDA-OBJ_KEY
+                         AND   BELNR   = WA_SAIDA-BELNR36
+                         AND   BUZEI   = WA_SAIDA-BUZEI36.
+
+    MODIFY ZFIT0076 FROM TABLE IT_ZFIT0076.
+
+*    "Grava Local
+    UPDATE ZFIT0036 SET PATH = VFILENAME
+      WHERE OBJ_KEY = WA_SAIDA-OBJ_KEY
+      AND   BELNR   = WA_SAIDA-BELNR36
+      AND   BUZEI   = WA_SAIDA-BUZEI36.
+
+    MESSAGE 'Upload efetuado com sucesso ' TYPE 'I'.
+  ELSE.
+    CLEAR ITAB.
+    LOOP AT IT_ZFIT0076 INTO WA_ZFIT0076.
+      MOVE WA_ZFIT0076-LINHA TO ITAB-FIELD.
+      CONCATENATE ITAB-FIELD WA_ZFIT0076-LINHA2 INTO ITAB-FIELD.
+      APPEND ITAB.
+      CLEAR ITAB.
+    ENDLOOP.
+
+    CALL FUNCTION 'GUI_DOWNLOAD'
+      EXPORTING
+        FILENAME     = VARQTMP
+        FILETYPE     = 'BIN'
+        BIN_FILESIZE = LENGTH
+      IMPORTING
+        FILELENGTH   = LENGTHN
+      TABLES
+        DATA_TAB     = ITAB.
+
+    CALL METHOD CL_GUI_FRONTEND_SERVICES=>EXECUTE
+      EXPORTING
+        DOCUMENT = VARQTMP.
+*    minimized = 'X'.
+  ENDIF.
+ENDFORM.                    " ZF_GRAVA_INVOICE
+*&---------------------------------------------------------------------*
+*&      Module  TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE TRATA_FIELDS OUTPUT.
+  LOOP AT SCREEN.
+    IF WG_ATACH-DOWN = 'X'.
+      IF SCREEN-NAME EQ 'WG_ATACH-UPDL'.
+        CLEAR WG_ATACH-UPDL.
+        MODIFY SCREEN.
+        EXIT.
+      ENDIF.
+    ELSEIF SCREEN-NAME EQ 'WG_ATACH-DOWN'.
+      CLEAR WG_ATACH-DOWN.
+      MODIFY SCREEN.
+      EXIT.
+    ENDIF.
+  ENDLOOP.
+ENDMODULE.                 " TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Form  UPDATE_FILE
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM UPDATE_FILE USING P_FILENAME TYPE RLGRAP-FILENAME
+                       P_TABLE TYPE CHAR15.
+
+  TYPES BEGIN OF TY_SPLIT.
+  TYPES: VALOR TYPE C LENGTH 500.
+  TYPES END OF TY_SPLIT.
+
+  DATA: IT_ZFIT0127 TYPE STANDARD TABLE OF ZFIT0127,
+        IT_ZFIT0128 TYPE STANDARD TABLE OF ZFIT0128,
+        IT_ZFIT0129 TYPE STANDARD TABLE OF ZFIT0129,
+        WA_ZFIT0127 TYPE ZFIT0127,
+        WA_ZFIT0128 TYPE ZFIT0128,
+        WA_ZFIT0129 TYPE ZFIT0129,
+        IT_SPLIT    TYPE STANDARD TABLE OF TY_SPLIT,
+        FILE        TYPE STRING,
+        WA_LINES    TYPE TY_LINES,
+        WA_SPLIT    TYPE TY_SPLIT,
+        VL_COUNT    TYPE I.
+
+  CLEAR: IT_LINES, VL_COUNT.
+
+  FILE = P_FILENAME.
+
+  CALL FUNCTION 'GUI_UPLOAD'
+    EXPORTING
+      FILENAME = FILE
+    TABLES
+      DATA_TAB = IT_LINES.
+
+  IF P_TABLE EQ 'R_ST_U_F'.
+
+    LOOP AT IT_LINES INTO WA_LINES.
+
+      CLEAR: WA_ZFIT0127.
+
+      SPLIT WA_LINES-LINHA AT ';' INTO TABLE IT_SPLIT.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 1.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_REF_EMB.
+
+*        WA_ZFIT0127-Z_REF_EMB = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 2.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_CNPJ_EXP.
+
+*        WA_ZFIT0127-Z_CNPJ_EXP = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 3.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_COD.
+
+*        WA_ZFIT0127-Z_COD = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 4.
+      IF SY-SUBRC IS INITIAL.
+
+        REPLACE ALL OCCURRENCES OF '.' IN WA_SPLIT-VALOR WITH ','.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0127-Z_VALOR
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 5.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0127-Z_DATA_EMB.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 6.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0127-Z_DATA_AVERB.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 7.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_TP_EMB.
+
+*        WA_ZFIT0127-Z_TP_EMB = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 8.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_COD_COB.
+
+*        WA_ZFIT0127-Z_COD_COB = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 9.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_PAGADOR.
+
+*        WA_ZFIT0127-Z_PAGADOR = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 10.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_PAGADOR_BACEN.
+
+*        WA_ZFIT0127-Z_PAGADOR_BACEN = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 11.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_FATURA.
+
+*        WA_ZFIT0127-Z_FATURA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 12.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0127-Z_VENC.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 13.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_ANO_RE.
+
+*        WA_ZFIT0127-Z_ANO_RE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 14.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_RE.
+
+*        WA_ZFIT0127-Z_RE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 15.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_RE_INI.
+
+*        WA_ZFIT0127-Z_RE_INI = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 16.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_RE_FIM.
+
+*        WA_ZFIT0127-Z_RE_FIM = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 17.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_DSE.
+
+*        WA_ZFIT0127-Z_DSE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 18.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_SD.
+
+*        WA_ZFIT0127-Z_SD = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 19.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0127-Z_TP_COMAG.
+
+*        WA_ZFIT0127-Z_TP_COMAG = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 20.
+      IF SY-SUBRC IS INITIAL.
+
+        REPLACE ALL OCCURRENCES OF '.' IN WA_SPLIT-VALOR WITH ','.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0127-Z_COMAG
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+      ENDIF.
+
+      APPEND WA_ZFIT0127 TO IT_ZFIT0127.
+
+    ENDLOOP.
+
+    CHECK IT_ZFIT0127 IS NOT INITIAL.
+
+    SELECT COUNT(*)
+      FROM ZFIT0127
+      INTO VL_COUNT
+      FOR ALL ENTRIES IN IT_ZFIT0127
+      WHERE Z_REF_EMB  EQ IT_ZFIT0127-Z_REF_EMB
+        AND Z_CNPJ_EXP EQ IT_ZFIT0127-Z_CNPJ_EXP.
+
+    IF VL_COUNT GT 0.
+      MESSAGE TEXT-019 TYPE 'S' DISPLAY LIKE 'E'.
+    ELSE.
+      MODIFY ZFIT0127 FROM TABLE IT_ZFIT0127.
+      IF SY-SUBRC IS INITIAL.
+        MESSAGE TEXT-020 TYPE 'S' DISPLAY LIKE 'S'.
+      ELSE.
+        MESSAGE TEXT-021 TYPE 'S' DISPLAY LIKE 'E'.
+      ENDIF.
+    ENDIF.
+
+  ELSEIF P_TABLE EQ 'R_ST_I_C'.
+
+    LOOP AT IT_LINES INTO WA_LINES.
+
+      CLEAR: WA_ZFIT0128.
+
+      SPLIT WA_LINES-LINHA AT ';' INTO TABLE IT_SPLIT.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 1.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_REF_CRED.
+
+*        WA_ZFIT0128-Z_REF_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 2.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_BIC.
+
+*        WA_ZFIT0128-Z_BIC = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 3.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT               = WA_SPLIT-VALOR
+          IMPORTING
+*           OUTPUT              = WA_ZFIT0128-Z_CONTA.
+            WA_ZFIT0128-Z_CONTA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 4.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_MOEDA.
+
+*        WA_ZFIT0128-Z_MOEDA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 5.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0128-Z_DATA_CRED.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 6.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0128-Z_VAL_CRE
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+*        WA_ZFIT0128-Z_VAL_CRE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 7.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_PAG_CRE.
+
+*        WA_ZFIT0128-Z_PAG_CRE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 8.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_70_CRED.
+
+*        WA_ZFIT0128-Z_70_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 9.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_72_CRED.
+
+*        WA_ZFIT0128-Z_72_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 10.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_REF_EMB_FAT_1.
+
+*        WA_ZFIT0128-Z_REF_EMB_FAT_1 = WA_SPLIT-VALOR(255).
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 11.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_REF_EMB_FAT_2.
+
+*        WA_ZFIT0128-Z_REF_EMB_FAT_2 = WA_SPLIT-VALOR+255(45).
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 12.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_CNPJ_EXP.
+
+*        WA_ZFIT0128-Z_CNPJ_EXP = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 13.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0128-Z_VAL_EMB_FAT
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+*        WA_ZFIT0128-Z_VAL_EMB_FAT = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 14.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0128-Z_DATA_EMB.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 15.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_DEV_EMB.
+
+*        WA_ZFIT0128-Z_DEV_EMB = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 16.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0128-Z_VAL_VINC
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+*        WA_ZFIT0128-Z_VAL_VINC = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 17.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_TP_VINC.
+
+*        WA_ZFIT0128-Z_TP_VINC = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 18.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_FATURA.
+
+*        WA_ZFIT0128-Z_FATURA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 19.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0128-Z_REF_SWIFT.
+
+*        WA_ZFIT0128-Z_REF_SWIFT = WA_SPLIT-VALOR.
+      ENDIF.
+
+      APPEND WA_ZFIT0128 TO IT_ZFIT0128.
+
+    ENDLOOP.
+
+    CHECK IT_ZFIT0128 IS NOT INITIAL.
+
+    SELECT COUNT(*)
+      FROM ZFIT0128
+      INTO VL_COUNT
+      FOR ALL ENTRIES IN IT_ZFIT0128
+      WHERE Z_REF_CRED EQ IT_ZFIT0128-Z_REF_CRED.
+
+    IF VL_COUNT GT 0.
+      MESSAGE TEXT-019 TYPE 'S' DISPLAY LIKE 'E'.
+    ELSE.
+      UPDATE ZFIT0128 FROM TABLE IT_ZFIT0128.
+      IF SY-SUBRC IS INITIAL.
+        MESSAGE TEXT-020 TYPE 'S' DISPLAY LIKE 'S'.
+      ELSE.
+        MESSAGE TEXT-021 TYPE 'S' DISPLAY LIKE 'E'.
+      ENDIF.
+    ENDIF.
+
+  ELSE.
+
+    LOOP AT IT_LINES INTO WA_LINES.
+
+      CLEAR: WA_ZFIT0129.
+
+      SPLIT WA_LINES-LINHA AT ';' INTO TABLE IT_SPLIT.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 1.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_REF_CRED.
+
+*        WA_ZFIT0129-Z_REF_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 2.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_BIC.
+
+*        WA_ZFIT0129-Z_BIC = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 3.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_CONTA.
+
+*        WA_ZFIT0129-Z_CONTA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 4.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_MOEDA.
+
+*        WA_ZFIT0129-Z_MOEDA = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 5.
+      IF SY-SUBRC IS INITIAL.
+        CONCATENATE WA_SPLIT-VALOR+1(4) WA_SPLIT-VALOR+6(2) WA_SPLIT-VALOR+9(2) INTO WA_ZFIT0129-Z_DATA_CRED.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 6.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            CHR             = WA_SPLIT-VALOR
+          IMPORTING
+            NUM             = WA_ZFIT0129-Z_VAL_CRE
+          EXCEPTIONS
+            CONVT_NO_NUMBER = 1
+            CONVT_OVERFLOW  = 2
+            OTHERS          = 3.
+
+*        WA_ZFIT0129-Z_VAL_CRE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 7.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_PAG_CRE.
+
+        WA_ZFIT0129-Z_PAG_CRE = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 8.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_70_CRED.
+
+*        WA_ZFIT0129-Z_70_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 9.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_72_CRED.
+
+*        WA_ZFIT0129-Z_72_CRED = WA_SPLIT-VALOR.
+      ENDIF.
+
+      READ TABLE IT_SPLIT INTO WA_SPLIT INDEX 10.
+      IF SY-SUBRC IS INITIAL.
+
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = WA_SPLIT-VALOR
+          IMPORTING
+            OUTPUT = WA_ZFIT0129-Z_REF_SWIFT.
+
+*        WA_ZFIT0129-Z_REF_SWIFT = WA_SPLIT-VALOR.
+      ENDIF.
+
+      APPEND WA_ZFIT0129 TO IT_ZFIT0129.
+
+    ENDLOOP.
+
+    CHECK IT_ZFIT0129 IS NOT INITIAL.
+
+    SELECT COUNT(*)
+      FROM ZFIT0129
+      INTO VL_COUNT
+      FOR ALL ENTRIES IN IT_ZFIT0129
+      WHERE Z_REF_CRED EQ IT_ZFIT0129-Z_REF_CRED.
+
+    IF VL_COUNT GT 0.
+      MESSAGE TEXT-019 TYPE 'S' DISPLAY LIKE 'E'.
+    ELSE.
+      UPDATE ZFIT0129 FROM TABLE IT_ZFIT0129.
+      IF SY-SUBRC IS INITIAL.
+        MESSAGE TEXT-020 TYPE 'S' DISPLAY LIKE 'S'.
+      ELSE.
+        MESSAGE TEXT-021 TYPE 'S' DISPLAY LIKE 'E'.
+      ENDIF.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  FILE_BOX
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      <--P_R_ST_U_F  text
+*----------------------------------------------------------------------*
+FORM FILE_BOX  CHANGING FILENAME TYPE RLGRAP-FILENAME.
+
+  CALL FUNCTION 'WS_FILENAME_GET'
+    EXPORTING
+      DEF_FILENAME     = FILENAME
+      MASK             = ',*.txt.'
+      MODE             = 'O'
+      TITLE            = 'Upload File'(078)
+    IMPORTING
+      FILENAME         = FILENAME
+    EXCEPTIONS
+      INV_WINSYS       = 1
+      NO_BATCH         = 2
+      SELECTION_CANCEL = 3
+      SELECTION_ERROR  = 4
+      OTHERS           = 5.
+
+ENDFORM.

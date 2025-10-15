@@ -1,0 +1,990 @@
+*&---------------------------------------------------------------------*
+*& Report  ZSDR018
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZSDR018.
+
+TYPES: BEGIN OF TY_SAIDA,
+         DOC_SIMULACAO  TYPE ZSDT0090-DOC_SIMULACAO,
+         AUARTV         TYPE ZSDT0090-AUARTV,
+         VBELV          TYPE ZSDT0090-VBELV,
+         POSNV          TYPE ZSDT0090-POSNV,
+         SPARTV         TYPE ZSDT0090-SPARTV,
+         ZMENGV         TYPE STRING,
+         "         ZMENGV            TYPE ZSDT0090-ZMENGV,
+         MENGV          TYPE ZSDT0090-ZMENGV,
+         ZIEMEV         TYPE ZSDT0090-ZIEMEV,
+         "NETPRV(11)        TYPE N,
+         NETPRV         TYPE STRING,
+         KMEINV         TYPE ZSDT0090-KMEINV,
+         CHARGV         TYPE ZSDT0090-CHARGV,
+         MATNRV         TYPE ZSDT0090-MATNRV,
+         MAKTXV         TYPE MAKT-MAKTX,
+         MATKLV         TYPE ZSDT0090-MATKLV,
+         INCO1V         TYPE ZSDT0090-INCO1V,
+         WERKSV         TYPE ZSDT0090-WERKSV,
+         KUNNRV         TYPE ZSDT0090-KUNNRV,
+         NAME1          TYPE KNA1-NAME1,
+         NAME2          TYPE KNA1-NAME1,
+         AUART          TYPE ZSDT0090-AUART,
+         VBELN          TYPE ZSDT0090-VBELN,
+         POSNN          TYPE ZSDT0090-POSNN,
+         SPART          TYPE ZSDT0090-SPART,
+         ZMENG          TYPE STRING,
+         ZIEME          TYPE ZSDT0090-ZIEME,
+         NETPR          TYPE STRING,
+         KMEIN          TYPE ZSDT0090-KMEIN,
+         CHARG          TYPE ZSDT0090-CHARG,
+         MATNR          TYPE ZSDT0090-MATNR,
+         MAKTX          TYPE MAKT-MAKTX,
+         MATKL          TYPE ZSDT0090-MATKL,
+         INCO1          TYPE ZSDT0090-INCO1,
+         WERKS          TYPE ZSDT0090-WERKS,
+         KUNNR          TYPE ZSDT0090-KUNNR,
+         DATA_ATUAL(10) TYPE C,
+         HORA_ATUAL(10) TYPE C,
+         KURRF          TYPE STRING,
+         VALDT(10)      TYPE C,
+         DESC_ABSOLUTO  TYPE STRING,
+         COD_PARC       TYPE ZSDT0090-COD_PARC,
+         DESC_PARC      TYPE LFA1-NAME1,
+         ZPESAGEM       TYPE ZSDT0090-ZPESAGEM,
+         ROUTE          TYPE ZSDT0090-ROUTE,
+         LGORT          TYPE ZSDT0090-LGORT,
+       END OF TY_SAIDA.
+
+
+TYPES: BEGIN OF TY_ZSDT0040,
+         DOC_SIMULACAO TYPE ZSDT0040-DOC_SIMULACAO,
+         VKBUR         TYPE ZSDT0040-VKBUR,
+       END OF TY_ZSDT0040.
+
+TYPES: BEGIN OF TY_ZSDT0060,
+         VKBUR    TYPE  ZSDT0060-VKBUR,
+         PROGRAMA TYPE  ZSDT0060-PROGRAMA,
+         EMAIL    TYPE  ZSDT0060-EMAIL,
+       END OF TY_ZSDT0060.
+
+TYPES: BEGIN OF TY_MAKT,
+         MAKTX TYPE MAKT-MAKTX,
+         SPRAS TYPE MAKT-SPRAS,
+         MATNR TYPE MAKT-MATNR,
+       END OF TY_MAKT.
+
+TYPES: BEGIN OF TY_KNA1,
+         NAME1 TYPE KNA1-NAME1,
+         KUNNR TYPE KNA1-KUNNR,
+       END OF TY_KNA1.
+
+TYPES: BEGIN OF TY_LFA1,
+         NAME1 TYPE LFA1-NAME1,
+         LIFNR TYPE LFA1-LIFNR,
+       END OF TY_LFA1.
+
+DATA:  T_SAIDA    TYPE TABLE OF TY_SAIDA,
+       W_SAIDA    TYPE TY_SAIDA,
+       T_ZSDT0090 TYPE TABLE OF ZSDT0090,
+       W_ZSDT0090 TYPE ZSDT0090,
+       T_ZSDT0040 TYPE TABLE OF TY_ZSDT0040,
+       W_ZSDT0040 TYPE TY_ZSDT0040,
+       T_ZSDT0060 TYPE TABLE OF TY_ZSDT0060,
+       W_ZSDT0060 TYPE TY_ZSDT0060,
+       T_MAKT     TYPE TABLE OF TY_MAKT,
+       W_MAKT     TYPE TY_MAKT,
+       T_MAKT2    TYPE TABLE OF TY_MAKT,
+       W_MAKT2    TYPE TY_MAKT,
+       T_KNA1     TYPE TABLE OF TY_KNA1,
+       W_KNA1     TYPE TY_KNA1,
+       T_KNA2     TYPE TABLE OF TY_KNA1,
+       W_KNA2     TYPE TY_KNA1,
+       T_LFA1     TYPE TABLE OF TY_LFA1,
+       W_LFA1     TYPE TY_LFA1.
+
+DATA: LT_MAILSUBJECT     TYPE SODOCCHGI1,
+      LT_MAILRECIPIENTES TYPE STANDARD TABLE OF SOMLREC90 WITH HEADER LINE,
+      LT_MAILTXT         TYPE STANDARD TABLE OF SOLI WITH HEADER LINE.
+
+DATA: VG_JOB      TYPE I.
+DATA: XV_JOBNM TYPE BTCJOB.
+DATA: XV_STEPC TYPE BTCSTEPCNT.
+
+START-OF-SELECTION.
+
+  CALL FUNCTION 'GET_JOB_RUNTIME_INFO'
+    IMPORTING
+      JOBNAME         = XV_JOBNM
+      STEPCOUNT       = XV_STEPC
+    EXCEPTIONS
+      NO_RUNTIME_INFO = 1
+      OTHERS          = 2.
+
+  IF XV_JOBNM = 'LOG_ALT_OV_INSUMOS'.
+    SELECT SINGLE COUNT(*) INTO VG_JOB
+     FROM TBTCO
+    WHERE JOBNAME EQ 'LOG_ALT_OV_INSUMOS'
+      AND STATUS EQ 'R'.
+  ENDIF.
+
+  IF ( VG_JOB EQ 1 ).
+    PERFORM BUSCA_DADOS.
+    PERFORM MONTAR_EMAIL.
+  ENDIF.
+
+END-OF-SELECTION.
+
+FORM BUSCA_DADOS.
+
+  SELECT *
+    FROM ZSDT0090
+    INTO TABLE T_ZSDT0090
+   WHERE ESTORNO <> 'X'
+    AND  EMAIL <> 'X'.
+
+  IF T_ZSDT0090 IS NOT INITIAL.
+
+    SORT T_ZSDT0090 BY DATA_ATUAL HORA_ATUAL.
+
+    SELECT DOC_SIMULACAO  VKBUR
+      FROM ZSDT0040
+      INTO TABLE T_ZSDT0040
+    FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE DOC_SIMULACAO EQ T_ZSDT0090-DOC_SIMULACAO.
+
+    SELECT DISTINCT VKBUR PROGRAMA  EMAIL
+      FROM ZSDT0060
+      INTO TABLE T_ZSDT0060
+      FOR ALL ENTRIES IN T_ZSDT0040
+    WHERE VKBUR    EQ T_ZSDT0040-VKBUR
+    AND   PROGRAMA EQ 'ZSDR016'
+    AND   EMAIL    NE ABAP_FALSE.
+
+    SELECT MAKTX SPRAS MATNR
+      FROM MAKT
+     INTO TABLE T_MAKT
+     FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE MATNR EQ T_ZSDT0090-MATNR
+      AND SPRAS = SY-LANGU.
+
+    SELECT MAKTX SPRAS MATNR
+      FROM MAKT
+     INTO TABLE T_MAKT2
+     FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE MATNR EQ T_ZSDT0090-MATNRV
+      AND SPRAS = SY-LANGU.
+
+    SELECT NAME1 KUNNR
+      FROM KNA1
+     INTO  TABLE T_KNA1
+     FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE KUNNR EQ T_ZSDT0090-KUNNR.
+
+    SELECT NAME1 KUNNR
+      FROM KNA1
+     INTO  TABLE T_KNA2
+     FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE KUNNR EQ T_ZSDT0090-KUNNRV.
+
+    SELECT NAME1 LIFNR
+      FROM LFA1
+     INTO  TABLE T_LFA1
+     FOR ALL ENTRIES IN T_ZSDT0090
+    WHERE LIFNR EQ T_ZSDT0090-COD_PARC.
+  ENDIF.
+ENDFORM.
+
+FORM MONTAR_EMAIL.
+
+  LOOP AT  T_ZSDT0090 INTO W_ZSDT0090.
+
+    READ TABLE T_ZSDT0040 INTO W_ZSDT0040 WITH KEY DOC_SIMULACAO = W_ZSDT0090-DOC_SIMULACAO.
+
+    LOOP AT T_ZSDT0060 INTO W_ZSDT0060 WHERE VKBUR EQ W_ZSDT0040-VKBUR AND PROGRAMA EQ 'ZSDR016'.
+
+      LT_MAILRECIPIENTES-REC_TYPE = 'U'.
+      LT_MAILRECIPIENTES-RECEIVER =  W_ZSDT0060-EMAIL.
+      APPEND LT_MAILRECIPIENTES.
+
+    ENDLOOP.
+
+    IF SY-SUBRC EQ 4.
+      CLEAR: W_SAIDA, W_KNA1, W_MAKT, W_ZSDT0090, W_ZSDT0040, W_ZSDT0060, LT_MAILRECIPIENTES, LT_MAILTXT.
+      CONTINUE.
+    ENDIF.
+
+    IF W_ZSDT0090-CATEGORIA IS INITIAL OR W_ZSDT0090-CATEGORIA = 'D' OR
+       W_ZSDT0090-CATEGORIA = 'M'      OR W_ZSDT0090-CATEGORIA = 'R'.
+
+      PERFORM ASSUNTO01.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'A' OR W_ZSDT0090-CATEGORIA = 'E'.
+      PERFORM ASSUNTO02.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'C'.
+      PERFORM ASSUNTO03.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'O'  .
+      PERFORM ASSUNTO04.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'V'.
+      PERFORM ASSUNTO05.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'W' OR W_ZSDT0090-CATEGORIA = 'Y'.
+      PERFORM ASSUNTO06.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'P' OR W_ZSDT0090-CATEGORIA = 'G' OR
+           W_ZSDT0090-CATEGORIA = 'I' OR W_ZSDT0090-CATEGORIA = 'F'.
+      PERFORM ASSUNTO07.
+
+    ELSEIF W_ZSDT0090-CATEGORIA = 'L'.
+      PERFORM ASSUNTO08.
+    ENDIF.
+
+    CLEAR: W_SAIDA, W_KNA1, W_KNA2, W_KNA2, W_MAKT, W_MAKT2, W_ZSDT0090, W_ZSDT0040, W_ZSDT0060, LT_MAILRECIPIENTES, LT_MAILTXT.
+    FREE: LT_MAILRECIPIENTES, LT_MAILTXT.
+
+  ENDLOOP.
+
+ENDFORM.
+
+
+FORM ASSUNTO01.
+
+  READ TABLE T_MAKT INTO W_MAKT WITH KEY MATNR = W_ZSDT0090-MATNR.
+  READ TABLE T_MAKT2 INTO W_MAKT2 WITH KEY MATNR = W_ZSDT0090-MATNRV.
+  READ TABLE T_KNA1 INTO W_KNA1 WITH KEY KUNNR = W_ZSDT0090-KUNNR.
+  READ TABLE T_KNA2 INTO W_KNA2 WITH KEY KUNNR = W_ZSDT0090-KUNNRV.
+
+
+  "de
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-POSNV         =   W_ZSDT0090-POSNV.
+  W_SAIDA-SPARTV        =   W_ZSDT0090-SPARTV.
+  W_SAIDA-ZMENGV        =   ABS( W_ZSDT0090-ZMENGV ).
+  W_SAIDA-ZIEMEV        =   W_ZSDT0090-ZIEMEV.
+  W_SAIDA-NETPRV        =   W_ZSDT0090-NETPRV.
+  W_SAIDA-KMEINV        =   W_ZSDT0090-KMEINV.
+  W_SAIDA-CHARGV        =   W_ZSDT0090-CHARGV.
+  W_SAIDA-MATNRV        =   W_ZSDT0090-MATNRV.
+  W_SAIDA-MAKTXV        =   W_MAKT2-MAKTX.
+  W_SAIDA-MATKLV        =   W_ZSDT0090-MATKLV.
+  W_SAIDA-INCO1V        =   W_ZSDT0090-INCO1V.
+  W_SAIDA-WERKSV        =   W_ZSDT0090-WERKSV.
+  W_SAIDA-KUNNRV        =   W_ZSDT0090-KUNNRV.
+  W_SAIDA-NAME2         =   W_KNA2-NAME1.
+
+  "para
+  W_SAIDA-AUART         =   W_ZSDT0090-AUART.
+  W_SAIDA-VBELN         =   W_ZSDT0090-VBELN.
+  W_SAIDA-POSNN         =   W_ZSDT0090-POSNN.
+  W_SAIDA-SPART         =   W_ZSDT0090-SPART.
+  W_SAIDA-ZMENG         =   W_ZSDT0090-ZMENG.
+  W_SAIDA-ZIEME         =   W_ZSDT0090-ZIEME.
+  W_SAIDA-NETPR         =   W_ZSDT0090-NETPR.
+  W_SAIDA-KMEIN         =   W_ZSDT0090-KMEIN.
+  W_SAIDA-CHARG         =   W_ZSDT0090-CHARG.
+  W_SAIDA-MATNR         =   W_ZSDT0090-MATNR.
+  W_SAIDA-MAKTX         =   W_MAKT-MAKTX.
+  W_SAIDA-MATKL         =   W_ZSDT0090-MATKL.
+  W_SAIDA-INCO1         =   W_ZSDT0090-INCO1.
+  W_SAIDA-WERKS         =   W_ZSDT0090-WERKS.
+  W_SAIDA-KUNNR         =   W_ZSDT0090-KUNNR.
+  W_SAIDA-NAME1         =   W_KNA1-NAME1.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+
+  IF W_ZSDT0090-CATEGORIA IS INITIAL.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Transferência de Ordem'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'D'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Desmembramento de Ordem'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'M'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Troca de Material'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'R'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Redistribuição'.
+    APPEND LT_MAILTXT.
+  ENDIF.
+
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>                   </td> <td>' '<b>De:</b>           </td> <td>' '<b>Para:</b>           </td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> <td>' W_SAIDA-AUART         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> <td>' W_SAIDA-VBELN         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item               </td> <td>' W_SAIDA-POSNV         '</td> <td>' W_SAIDA-POSNN         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Setor Atividade    </td> <td>' W_SAIDA-SPARTV        '</td> <td>' W_SAIDA-SPART         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Quantidade         </td> <td>' W_SAIDA-ZMENGV        '</td> <td>' W_SAIDA-ZMENG         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M                </td> <td>' W_SAIDA-ZIEMEV        '</td> <td>' W_SAIDA-ZIEME         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Preço              </td> <td>' W_SAIDA-NETPRV        '</td> <td>' W_SAIDA-NETPR         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M Preço          </td> <td>' W_SAIDA-KMEINV        '</td> <td>' W_SAIDA-KMEIN         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Lote               </td> <td>' W_SAIDA-CHARGV        '</td> <td>' W_SAIDA-CHARG         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Material      </td> <td>' W_SAIDA-MATNRV        '</td> <td>' W_SAIDA-MATNR         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Material     </td> <td>' W_SAIDA-MAKTXV        '</td> <td>' W_SAIDA-MAKTX         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Grupo de Mercadoria</td> <td>' W_SAIDA-MATKLV        '</td> <td>' W_SAIDA-MATKL         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Incoterms          </td> <td>' W_SAIDA-INCO1V        '</td> <td>' W_SAIDA-INCO1         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Centro             </td> <td>' W_SAIDA-WERKSV        '</td> <td>' W_SAIDA-WERKS         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Cliente       </td> <td>' W_SAIDA-KUNNRV        '</td> <td>' W_SAIDA-KUNNR         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Cliente      </td> <td>' W_SAIDA-NAME2         '</td> <td>' W_SAIDA-NAME1         '</td> </tr>' INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO02.
+
+  READ TABLE T_MAKT2 INTO W_MAKT2 WITH KEY MATNR = W_ZSDT0090-MATNRV.
+  READ TABLE T_KNA2 INTO W_KNA2 WITH KEY KUNNR = W_ZSDT0090-KUNNRV.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-POSNV         =   W_ZSDT0090-POSNV.
+  W_SAIDA-SPARTV        =   W_ZSDT0090-SPARTV.
+  W_SAIDA-ZMENGV        =   W_ZSDT0090-ZMENGV.
+  W_SAIDA-ZIEMEV        =   W_ZSDT0090-ZIEMEV.
+  W_SAIDA-NETPRV        =   W_ZSDT0090-NETPRV.
+  W_SAIDA-KMEINV        =   W_ZSDT0090-KMEINV.
+  W_SAIDA-CHARGV        =   W_ZSDT0090-CHARGV.
+  W_SAIDA-MATNRV        =   W_ZSDT0090-MATNRV.
+  W_SAIDA-MAKTXV        =   W_MAKT2-MAKTX.
+  W_SAIDA-MATKLV        =   W_ZSDT0090-MATKLV.
+  W_SAIDA-INCO1V        =   W_ZSDT0090-INCO1V.
+  W_SAIDA-WERKSV        =   W_ZSDT0090-WERKSV.
+  W_SAIDA-KUNNRV        =   W_ZSDT0090-KUNNRV.
+  W_SAIDA-NAME2         =   W_KNA2-NAME1.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de Venda - INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+
+  IF W_ZSDT0090-CATEGORIA = 'A'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração de Quantidade'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'E'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Encerramento de OV'.
+    APPEND LT_MAILTXT.
+  ENDIF.
+
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item               </td> <td>' W_SAIDA-POSNV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Setor Atividade    </td> <td>' W_SAIDA-SPARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Quantidade         </td> <td>' W_SAIDA-ZMENGV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M                </td> <td>' W_SAIDA-ZIEMEV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Preço              </td> <td>' W_SAIDA-NETPRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M Preço          </td> <td>' W_SAIDA-KMEINV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Lote               </td> <td>' W_SAIDA-CHARGV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Material      </td> <td>' W_SAIDA-MATNRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Material     </td> <td>' W_SAIDA-MAKTXV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Grupo de Mercadoria</td> <td>' W_SAIDA-MATKLV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Incoterms          </td> <td>' W_SAIDA-INCO1V        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Centro             </td> <td>' W_SAIDA-WERKSV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Cliente       </td> <td>' W_SAIDA-KUNNRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Cliente      </td> <td>' W_SAIDA-NAME2         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO03.
+
+
+  READ TABLE T_KNA2 INTO W_KNA2 WITH KEY KUNNR = W_ZSDT0090-KUNNRV.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-INCO1V        =   W_ZSDT0090-INCO1V.
+  W_SAIDA-WERKSV        =   W_ZSDT0090-WERKSV.
+  W_SAIDA-KUNNRV        =   W_ZSDT0090-KUNNRV.
+  W_SAIDA-NAME2         =   W_KNA2-NAME1.
+  W_SAIDA-KURRF         =   W_ZSDT0090-KURRF.
+
+  "W_SAIDA-VALDT         =   W_ZSDT0090-VALDT.
+
+
+  CONCATENATE W_ZSDT0090-VALDT+6(2) '.'     W_ZSDT0090-VALDT+4(2) '.' W_ZSDT0090-VALDT+0(4) INTO W_SAIDA-VALDT.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<b>Tipo:&nbsp;</b> Trava de Câmbio'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Incoterms          </td> <td>' W_SAIDA-INCO1V        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Centro             </td> <td>' W_SAIDA-WERKSV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Cliente       </td> <td>' W_SAIDA-KUNNRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Cliente      </td> <td>' W_SAIDA-NAME2         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Taxa de Câmbio     </td> <td>' W_SAIDA-KURRF         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Data de Vencimento </td> <td>' W_SAIDA-VALDT         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO04.
+
+
+  READ TABLE T_MAKT2 INTO W_MAKT2 WITH KEY MATNR = W_ZSDT0090-MATNRV.
+  READ TABLE T_KNA2 INTO W_KNA2 WITH KEY KUNNR = W_ZSDT0090-KUNNRV.
+
+
+  W_SAIDA-DOC_SIMULACAO   =  W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV          =  W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV           =  W_ZSDT0090-VBELV.
+  W_SAIDA-POSNV           =  W_ZSDT0090-POSNV.
+  W_SAIDA-MATNRV          =  W_ZSDT0090-MATNRV.
+  W_SAIDA-MAKTXV          =  W_MAKT2-MAKTX.
+  W_SAIDA-INCO1V          =  W_ZSDT0090-INCO1V.
+  W_SAIDA-WERKSV          =  W_ZSDT0090-WERKSV.
+  W_SAIDA-KUNNRV          =  W_ZSDT0090-KUNNRV.
+  W_SAIDA-NAME2           =  W_KNA2-NAME1.
+  W_SAIDA-DESC_ABSOLUTO   =  W_ZSDT0090-DESC_ABSOLUTO.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<b>Tipo:&nbsp;</b> Desconto Absoluto'.
+  APPEND LT_MAILTXT.
+
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item               </td> <td>' W_SAIDA-POSNV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Material      </td> <td>' W_SAIDA-MATNRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Material     </td> <td>' W_SAIDA-MAKTXV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Incoterms          </td> <td>' W_SAIDA-INCO1V        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Centro             </td> <td>' W_SAIDA-WERKSV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Cliente       </td> <td>' W_SAIDA-KUNNRV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Cliente      </td> <td>' W_SAIDA-NAME2         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desconto Absoluto  </td> <td>' W_SAIDA-DESC_ABSOLUTO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO05.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  "W_SAIDA-VALDT         =   W_ZSDT0090-VALDT.
+
+  CONCATENATE W_ZSDT0090-VALDT+6(2)      '.'  W_ZSDT0090-VALDT+4(2)      '.'  W_ZSDT0090-VALDT+0(4)      INTO W_SAIDA-VALDT.
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração de Vencimento'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Data Vencimento    </td> <td>' W_SAIDA-VALDT         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO06.
+
+
+  READ TABLE T_MAKT INTO W_MAKT WITH KEY MATNR = W_ZSDT0090-MATNR.
+  READ TABLE T_KNA1 INTO W_KNA1 WITH KEY KUNNR = W_ZSDT0090-KUNNR.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-POSNV         =   W_ZSDT0090-POSNV.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELN         =   W_ZSDT0090-VBELN.
+  W_SAIDA-POSNN         =   W_ZSDT0090-POSNN.
+  W_SAIDA-SPART         =   W_ZSDT0090-SPART.
+  W_SAIDA-ZMENG         =   W_ZSDT0090-ZMENG.
+  W_SAIDA-ZIEME         =   W_ZSDT0090-ZIEME.
+  W_SAIDA-NETPR         =   W_ZSDT0090-NETPR.
+  W_SAIDA-KMEIN         =   W_ZSDT0090-KMEIN.
+  W_SAIDA-CHARG         =   W_ZSDT0090-CHARG.
+  W_SAIDA-MATNR         =   W_ZSDT0090-MATNR.
+  W_SAIDA-MAKTX         =   W_MAKT-MAKTX.
+  W_SAIDA-MATKL         =   W_ZSDT0090-MATKL.
+  W_SAIDA-INCO1         =   W_ZSDT0090-INCO1.
+  W_SAIDA-WERKS         =   W_ZSDT0090-WERKS.
+  W_SAIDA-KUNNR         =   W_ZSDT0090-KUNNR.
+  W_SAIDA-NAME1         =   W_KNA1-NAME1.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  IF W_ZSDT0090-CATEGORIA = 'W'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b>Complemento'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'Y'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b>Devolução'.
+    APPEND LT_MAILTXT.
+  ENDIF.
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<tr><td>Nº Simulador          </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda origem </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item                  </td> <td>' W_SAIDA-POSNV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem         </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda        </td> <td>' W_SAIDA-VBELN         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item                  </td> <td>' W_SAIDA-POSNN         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Setor Atividade       </td> <td>' W_SAIDA-SPART         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Quantidade            </td> <td>' W_SAIDA-ZMENG         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M                   </td> <td>' W_SAIDA-ZIEME         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Preço                 </td> <td>' W_SAIDA-NETPR         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>U.M Preço             </td> <td>' W_SAIDA-KMEIN         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Lote                  </td> <td>' W_SAIDA-CHARG         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Material         </td> <td>' W_SAIDA-MATNR         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Material        </td> <td>' W_SAIDA-MAKTX         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Grupo de Mercadoria   </td> <td>' W_SAIDA-MATKL         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Incoterms             </td> <td>' W_SAIDA-INCO1         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Centro                </td> <td>' W_SAIDA-WERKS         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Cód. Cliente          </td> <td>' W_SAIDA-KUNNR         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Desc. Cliente         </td> <td>' W_SAIDA-NAME1         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ASSUNTO07.
+
+  READ TABLE T_KNA2 INTO W_KNA2 WITH KEY KUNNR = W_ZSDT0090-KUNNRV.
+  READ TABLE T_LFA1 INTO W_LFA1 WITH KEY LIFNR = W_ZSDT0090-COD_PARC.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-INCO1         =   W_ZSDT0090-INCO1.
+  W_SAIDA-WERKSV        =   W_ZSDT0090-WERKSV.
+  W_SAIDA-KUNNRV        =   W_ZSDT0090-KUNNRV.
+  W_SAIDA-NAME2         =   W_KNA2-NAME1.
+  W_SAIDA-COD_PARC      =   W_ZSDT0090-COD_PARC.
+  W_SAIDA-DESC_PARC     =   W_LFA1-NAME1.
+  W_SAIDA-ZPESAGEM      =   W_ZSDT0090-ZPESAGEM.
+  W_SAIDA-ROUTE        =   W_ZSDT0090-ROUTE.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  IF W_ZSDT0090-CATEGORIA = 'P'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração do Parceiro'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'G'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração de Pesagem'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'I'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração de Itinerário'.
+    APPEND LT_MAILTXT.
+  ELSEIF W_ZSDT0090-CATEGORIA = 'F'.
+    LT_MAILTXT = '<b>Tipo:&nbsp;</b> Troca do Tipo de Frete'.
+    APPEND LT_MAILTXT.
+  ENDIF.
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  IF W_ZSDT0090-CATEGORIA EQ 'F'.
+    CONCATENATE '<tr><td>Incoterms Novo   </td> <td>' W_SAIDA-INCO1        '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+    CONCATENATE '<tr><td>Centro             </td> <td>' W_SAIDA-WERKSV        '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+    CONCATENATE '<tr><td>Cód. Cliente       </td> <td>' W_SAIDA-KUNNRV        '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+    CONCATENATE '<tr><td>Desc. Cliente      </td> <td>' W_SAIDA-NAME2         '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+  ENDIF.
+  IF W_ZSDT0090-CATEGORIA EQ 'P'.
+    CONCATENATE '<tr><td>Parceiro "PC"      </td> <td>' W_SAIDA-COD_PARC      '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+    CONCATENATE '<tr><td>Desc. Parceiro     </td> <td>' W_SAIDA-DESC_PARC     '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+  ENDIF.
+  IF W_ZSDT0090-CATEGORIA EQ 'G'.
+    CONCATENATE '<tr><td>Tipo de Pesagem    </td> <td>' W_SAIDA-ZPESAGEM      '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+  ENDIF.
+  IF W_ZSDT0090-CATEGORIA EQ 'I'.
+    CONCATENATE '<tr><td>Itinerário         </td> <td>' W_SAIDA-ROUTE        '</td> </tr>'  INTO LT_MAILTXT.
+    APPEND LT_MAILTXT.
+  ENDIF.
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+
+ENDFORM.
+
+FORM ASSUNTO08.
+
+
+  W_SAIDA-DOC_SIMULACAO =   W_ZSDT0090-DOC_SIMULACAO.
+  W_SAIDA-AUARTV        =   W_ZSDT0090-AUARTV.
+  W_SAIDA-VBELV         =   W_ZSDT0090-VBELV.
+  W_SAIDA-POSNV         =   W_ZSDT0090-POSNV.
+  W_SAIDA-LGORT         =   W_ZSDT0090-LGORT.
+  W_SAIDA-CHARG         =   W_ZSDT0090-CHARG.
+
+  CONCATENATE W_ZSDT0090-DATA_ATUAL+6(2) '.'  W_ZSDT0090-DATA_ATUAL+4(2) '.'  W_ZSDT0090-DATA_ATUAL+0(4) INTO W_SAIDA-DATA_ATUAL.
+  CONCATENATE W_ZSDT0090-HORA_ATUAL+0(2) ':'  W_ZSDT0090-HORA_ATUAL+2(2) ':'  W_ZSDT0090-HORA_ATUAL+4(2) INTO W_SAIDA-HORA_ATUAL.
+
+  APPEND W_SAIDA TO T_SAIDA.
+
+  LT_MAILSUBJECT-OBJ_LANGU = SY-LANGU.
+  LT_MAILSUBJECT-OBJ_DESCR = 'Alterações em Ordens de venda – INSUMOS'.
+
+  LT_MAILTXT = '<html><head><body><br>'.
+  APPEND LT_MAILTXT.
+
+
+  CONCATENATE '<b>Data:&nbsp;</b>' W_SAIDA-DATA_ATUAL  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<b>Horário:&nbsp;</b>' W_SAIDA-HORA_ATUAL   INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  LT_MAILTXT = '<br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<b>Tipo:&nbsp;</b> Alteração de Depósito/Lote'.
+  APPEND LT_MAILTXT.
+
+
+  LT_MAILTXT = '<br><br><br>'.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '<table border="1">'.
+  APPEND LT_MAILTXT.
+
+  CONCATENATE '<tr><td>Nº Simulador       </td> <td>' W_SAIDA-DOC_SIMULACAO '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Tipo de Ordem      </td> <td>' W_SAIDA-AUARTV        '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Ordem de Venda     </td> <td>' W_SAIDA-VBELV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Item               </td> <td>' W_SAIDA-POSNV         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Depósito Novo      </td> <td>' W_SAIDA-LGORT         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+  CONCATENATE '<tr><td>Lote Novo          </td> <td>' W_SAIDA-CHARG         '</td> </tr>'  INTO LT_MAILTXT.
+  APPEND LT_MAILTXT.
+
+  LT_MAILTXT = '</table></body></html>'.
+  APPEND LT_MAILTXT.
+
+  PERFORM ENVIAR.
+
+ENDFORM.
+
+FORM ENVIAR.
+
+  DATA: VUSER         TYPE SY-UNAME.
+
+  VUSER = SY-UNAME.
+  SY-UNAME = 'JOBADM'.
+
+  CALL FUNCTION 'SO_NEW_DOCUMENT_SEND_API1'
+    EXPORTING
+      DOCUMENT_DATA              = LT_MAILSUBJECT
+      DOCUMENT_TYPE              = 'HTM'
+    TABLES
+      OBJECT_CONTENT             = LT_MAILTXT
+      RECEIVERS                  = LT_MAILRECIPIENTES
+    EXCEPTIONS
+      TOO_MANY_RECEIVERS         = 1
+      DOCUMENT_NOT_SENT          = 2
+      DOCUMENT_TYPE_NOT_EXIST    = 3
+      OPERATION_NO_AUTHORIZATION = 4
+      PARAMETER_ERROR            = 5
+      X_ERROR                    = 6
+      ENQUEUE_ERROR              = 7
+      OTHERS                     = 8.
+
+  SY-UNAME = VUSER.
+
+  IF SY-SUBRC EQ 0.
+
+    COMMIT WORK.
+
+    W_ZSDT0090-EMAIL = 'X'.
+    W_ZSDT0090-DT_EMAIL = SY-DATUM.
+    W_ZSDT0090-HR_EMAIL = SY-UZEIT.
+    MODIFY ZSDT0090 FROM W_ZSDT0090.
+
+  ENDIF.
+ENDFORM.

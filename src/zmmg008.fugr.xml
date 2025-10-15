@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Consulta de Estrategia de Aprovação</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZMMG008F01</SOBJ_NAME>
+    <SOBJ_NAME>LZMMG008TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZMMG008</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZMMF0071_ESTRATEGIA_APROVACAO</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CENTRO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>FRE_RANGE_T_WERKS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_TIPO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>ZRANGE_T_ATWRT</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CCUSTO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>FAGL_RANGE_T_KOSTL</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>T_RESULT</PARAMETER>
+       <TYP>ZMME0111_T</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_ERRO</PARAMETER>
+       <TYP>STRING</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CENTRO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_TIPO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CCUSTO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_RESULT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ERRO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

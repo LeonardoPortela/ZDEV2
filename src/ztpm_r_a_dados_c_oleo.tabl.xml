@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZTPM_R_A_DADOS_C_OLEO</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Retorno dados da coleta int SAPxALS(s360) - DadosColetaGeral</DDTEXT>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>HORASOLEO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000020</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Horas do óleo</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>OLEO</FIELDNAME>
+     <ROLLNAME>ZTPM_R_A_DADOS_D_OLEO</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <DATATYPE>STRU</DATATYPE>
+     <MASK>  STRUS</MASK>
+     <COMPTYPE>S</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>OLEOTROCADO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000040</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000020</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Ação da manutenção troca ou remonta.</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>VOLUMEADICIONADO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000016</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000008</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Volume adicionado</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>DATACOLETA</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>D</INTTYPE>
+     <INTLEN>000016</INTLEN>
+     <DATATYPE>DATS</DATATYPE>
+     <LENG>000008</LENG>
+     <MASK>  DATS</MASK>
+     <DDTEXT>Data da coleta</DDTEXT>
+     <SHLPORIGIN>T</SHLPORIGIN>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

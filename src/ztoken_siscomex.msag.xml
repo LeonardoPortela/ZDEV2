@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Autenticação efetuada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Empresa não foi definida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Perfil não foi definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Token(JW) não foi definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Token(CSRF) não foi definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Tempo Expiração Token não foi definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Houve um erro na autenticação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Falha de Comunicação com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Status de comunicação com &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Falha de processamento com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>TimeOut com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Serviço de Autenticação não parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Parâmetros Autenticação não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>SSL Id. não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZTOKEN_SISCOMEX</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Objeto Numeração de Token não parâmetrizado!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

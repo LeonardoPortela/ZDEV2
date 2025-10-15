@@ -1,0 +1,14 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_9970.
+
+  CALL SUBSCREEN: sub9970 INCLUDING sy-repid cte_dynnr_000.
+
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN: sub9970.
+
+  MODULE user_command_9970_exit AT EXIT-COMMAND.
+
+  MODULE user_command_9970.

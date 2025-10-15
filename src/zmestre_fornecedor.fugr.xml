@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Criar/Modificar cadastro fornecedor</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZMESTRE_FORNECEDORTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZMESTRE_FORNECEDOR</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZEXPANDIR_D_MESTRE_FORNECEDOR</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>BUKRS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>P_LIFNR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LIFNR</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>P_LIFNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

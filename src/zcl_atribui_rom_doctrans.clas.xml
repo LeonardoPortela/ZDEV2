@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ATRIBUI_ROM_DOCTRANS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe de Atribuição</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_OV_OC</CMPNAME>
+     <SCONAME>I_ID_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem de Carregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_OV_OC</CMPNAME>
+     <SCONAME>I_NR_ORDEM_VENDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_OV_OC</CMPNAME>
+     <SCONAME>ZCX_ORDEM_VENDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro Genérica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_ORDEM_ROMANEIO</CMPNAME>
+     <SCONAME>I_ID_ORDEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordem de Carregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_ORDEM_ROMANEIO</CMPNAME>
+     <SCONAME>I_ZSDT0001</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Informações para preenchimento dos dados de remessa. (OPUS)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_ORDEM_ROMANEIO</CMPNAME>
+     <SCONAME>R_CK_ALTEROU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INFO_ROM_DOC_TRANS</CMPNAME>
+     <SCONAME>I_DOCTRANS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>TransportBAPI, Dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_INFO_ROM_DOC_TRANS</CMPNAME>
+     <SCONAME>I_ROM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura para LES de Saída de Carga</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENQU" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD25V>
+    <VIEWNAME>EZGLT081</VIEWNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <AGGTYPE>E</AGGTYPE>
+    <ROOTTAB>ZGLT081</ROOTTAB>
+    <DDTEXT>Itens Pagamento Contratos Corporativos</DDTEXT>
+   </DD25V>
+   <DD26E_TABLE>
+    <DD26E>
+     <VIEWNAME>EZGLT081</VIEWNAME>
+     <TABNAME>ZGLT081</TABNAME>
+     <TABPOS>0001</TABPOS>
+     <FORTABNAME>ZGLT081</FORTABNAME>
+     <ENQMODE>E</ENQMODE>
+    </DD26E>
+   </DD26E_TABLE>
+   <DD27P_TABLE>
+    <DD27P>
+     <VIEWNAME>EZGLT081</VIEWNAME>
+     <OBJPOS>0001</OBJPOS>
+     <VIEWFIELD>MANDT</VIEWFIELD>
+     <TABNAME>ZGLT081</TABNAME>
+     <FIELDNAME>MANDT</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>E</ENQMODE>
+    </DD27P>
+    <DD27P>
+     <VIEWNAME>EZGLT081</VIEWNAME>
+     <OBJPOS>0002</OBJPOS>
+     <VIEWFIELD>SEQ_LCTO</VIEWFIELD>
+     <TABNAME>ZGLT081</TABNAME>
+     <FIELDNAME>SEQ_LCTO</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>E</ENQMODE>
+    </DD27P>
+    <DD27P>
+     <VIEWNAME>EZGLT081</VIEWNAME>
+     <OBJPOS>0003</OBJPOS>
+     <VIEWFIELD>SEQITEM</VIEWFIELD>
+     <TABNAME>ZGLT081</TABNAME>
+     <FIELDNAME>SEQITEM</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>E</ENQMODE>
+    </DD27P>
+   </DD27P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZPM0103</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZPM0103</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZPM0103</TCODE>
+    <TTEXT>Cadastro de contratos - Equipamentos</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZPM0103</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZPMT0078;P_TITLE=Cadastro de contratos - Equipamentos;P_SCMANT=226;P_STCNAM=ZPMT0078_OUT;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

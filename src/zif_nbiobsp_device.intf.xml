@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_NBIOBSP_DEVICE</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <SCONAME>ZCX_NBIOBSP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Leitura de Biometria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ERRORCODE</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ERRORDESCRIPTION</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN</CMPNAME>
+     <SCONAME>ZCX_NBIOBSP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Leitura de Biometria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FPBACKCOLOR</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FPBACKCOLOR</CMPNAME>
+     <SCONAME>ZCX_NBIOBSP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Leitura de Biometria</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FPFORECOLOR</CMPNAME>
+     <SCONAME>R_DEVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface Device Leitura Biométrica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FPFORECOLOR</CMPNAME>
+     <SCONAME>ZCX_NBIOBSP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Leitura de Biometria</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

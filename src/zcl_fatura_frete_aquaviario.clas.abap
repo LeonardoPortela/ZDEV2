@@ -1,0 +1,195 @@
+class ZCL_FATURA_FRETE_AQUAVIARIO definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_FATURA_FRETE_AQUAVIARIO .
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL_FATURA_FRETE_AQUAVIARIO IMPLEMENTATION.
+
+
+  METHOD ZIF_FATURA_FRETE_AQUAVIARIO~GET_INSTANCE.
+
+    IF ZIF_FATURA_FRETE_AQUAVIARIO~AT_FATURA_FRETE_AQUAVIARIO IS NOT BOUND.
+      CREATE OBJECT ZIF_FATURA_FRETE_AQUAVIARIO~AT_FATURA_FRETE_AQUAVIARIO TYPE ZCL_FATURA_FRETE_AQUAVIARIO.
+      R_INSTANCE = ZIF_FATURA_FRETE_AQUAVIARIO~AT_FATURA_FRETE_AQUAVIARIO.
+    ELSE.
+      R_INSTANCE = ZIF_FATURA_FRETE_AQUAVIARIO~AT_FATURA_FRETE_AQUAVIARIO.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_FATURA_FRETE_AQUAVIARIO~GET_NEW_ID_FATURA_FRETE.
+
+    CLEAR: E_ID_FATURA_FRETE.
+
+    R_INSTANCE = ME.
+
+    CALL FUNCTION 'NUMBER_RANGE_ENQUEUE'
+      EXPORTING
+        OBJECT           = 'ZAQUAFRETE'
+      EXCEPTIONS
+        FOREIGN_LOCK     = 1
+        OBJECT_NOT_FOUND = 2
+        SYSTEM_FAILURE   = 3
+        OTHERS           = 4.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+    CALL FUNCTION 'NUMBER_GET_NEXT'
+      EXPORTING
+        NR_RANGE_NR             = '01'
+        OBJECT                  = 'ZAQUAFRETE'
+        QUANTITY                = '00000000000000000001'
+        IGNORE_BUFFER           = 'X'
+      IMPORTING
+        NUMBER                  = E_ID_FATURA_FRETE
+      EXCEPTIONS
+        INTERVAL_NOT_FOUND      = 1
+        NUMBER_RANGE_NOT_INTERN = 2
+        OBJECT_NOT_FOUND        = 3
+        QUANTITY_IS_0           = 4
+        QUANTITY_IS_NOT_1       = 5
+        INTERVAL_OVERFLOW       = 6
+        BUFFER_OVERFLOW         = 7
+        OTHERS                  = 8.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+* Desbloqueia o objeto de numeração
+    CALL FUNCTION 'NUMBER_RANGE_DEQUEUE'
+      EXPORTING
+        OBJECT           = 'ZAQUAFRETE'
+      EXCEPTIONS
+        OBJECT_NOT_FOUND = 1
+        OTHERS           = 2.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_FATURA_FRETE_AQUAVIARIO~GET_NEW_ID_FATURA_FRETE_ITEM.
+
+    CLEAR: E_ID_FATURA_FRETE_ITEM.
+
+    R_INSTANCE = ME.
+
+    CALL FUNCTION 'NUMBER_RANGE_ENQUEUE'
+      EXPORTING
+        OBJECT           = 'ZAQUAFTITM'
+      EXCEPTIONS
+        FOREIGN_LOCK     = 1
+        OBJECT_NOT_FOUND = 2
+        SYSTEM_FAILURE   = 3
+        OTHERS           = 4.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+    CALL FUNCTION 'NUMBER_GET_NEXT'
+      EXPORTING
+        NR_RANGE_NR             = '01'
+        OBJECT                  = 'ZAQUAFTITM'
+        QUANTITY                = '00000000000000000001'
+        IGNORE_BUFFER           = 'X'
+      IMPORTING
+        NUMBER                  = E_ID_FATURA_FRETE_ITEM
+      EXCEPTIONS
+        INTERVAL_NOT_FOUND      = 1
+        NUMBER_RANGE_NOT_INTERN = 2
+        OBJECT_NOT_FOUND        = 3
+        QUANTITY_IS_0           = 4
+        QUANTITY_IS_NOT_1       = 5
+        INTERVAL_OVERFLOW       = 6
+        BUFFER_OVERFLOW         = 7
+        OTHERS                  = 8.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+* Desbloqueia o objeto de numeração
+    CALL FUNCTION 'NUMBER_RANGE_DEQUEUE'
+      EXPORTING
+        OBJECT           = 'ZAQUAFTITM'
+      EXCEPTIONS
+        OBJECT_NOT_FOUND = 1
+        OTHERS           = 2.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      RAISE EXCEPTION TYPE ZCX_FATURA_FRETE_AQUAVIARIO
+        EXPORTING
+          TEXTID = VALUE #( MSGID = SY-MSGID MSGNO = SY-MSGNO ATTR1 = CONV #( SY-MSGV1 ) ATTR2 = CONV #( SY-MSGV2 ) ATTR3 = CONV #( SY-MSGV3 ) ATTR4 = CONV #( SY-MSGV4 ) )
+          MSGID  = SY-MSGID
+          MSGNO  = SY-MSGNO
+          MSGTY  = 'E'
+          MSGV1  = SY-MSGV1
+          MSGV2  = SY-MSGV2
+          MSGV3  = SY-MSGV3
+          MSGV4  = SY-MSGV4.
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.

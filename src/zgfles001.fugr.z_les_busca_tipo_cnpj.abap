@@ -1,0 +1,68 @@
+FUNCTION Z_LES_BUSCA_TIPO_CNPJ.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_CNPJ) TYPE  ZLEST0035-CNPJ
+*"     REFERENCE(I_NR_NF) TYPE  ZLEST0041-NR_NF
+*"     REFERENCE(I_SERIE) TYPE  ZLEST0041-SERIE
+*"  EXPORTING
+*"     REFERENCE(E_TIPO_CNPJ) TYPE  CHAR1
+*"  TABLES
+*"      TE_LFA1 STRUCTURE  LFA1 OPTIONAL
+*"----------------------------------------------------------------------
+  DATA: BEGIN OF TL_0041 OCCURS 0.
+          INCLUDE TYPE ZLEST0041.
+  DATA:  LIFNR TYPE LFA1-LIFNR,
+        END OF TL_0041.
+
+  DATA: TL_LFA1 TYPE TABLE OF LFA1 WITH HEADER LINE.
+*        TL_0041 TYPE TABLE OF ZLEST0041 WITH HEADER LINE.
+
+  REFRESH: TL_LFA1, TL_0041.
+
+  SELECT *
+    FROM LFA1
+    INTO TABLE TL_LFA1
+     WHERE STCD1 EQ I_CNPJ.
+
+  IF SY-SUBRC IS INITIAL.
+    SELECT *
+      FROM ZLEST0041
+      INTO TABLE TL_0041
+       FOR ALL ENTRIES IN TL_LFA1
+       WHERE COD_CLIENTE EQ TL_LFA1-LIFNR
+         AND NR_NF       EQ I_NR_NF
+         AND SERIE       EQ I_SERIE.
+
+    IF SY-SUBRC IS INITIAL.
+      E_TIPO_CNPJ = '1'.
+      LOOP AT TL_0041.
+        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+          EXPORTING
+            INPUT  = TL_0041-CENTRO_COMPRADOR
+          IMPORTING
+            OUTPUT = TL_0041-LIFNR.
+
+        MODIFY TL_0041.
+
+      ENDLOOP.
+
+      SELECT *
+        FROM LFA1
+        INTO TABLE TL_LFA1
+        FOR ALL ENTRIES IN TL_0041
+          WHERE LIFNR EQ TL_0041-LIFNR.
+
+        te_lfa1[] = tl_lfa1[].
+
+    ELSE.
+      E_TIPO_CNPJ = '0'.
+
+    ENDIF.
+
+  ENDIF.
+
+
+
+
+ENDFUNCTION.

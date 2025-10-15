@@ -1,0 +1,26 @@
+
+READ TABLE TG_MAKT INTO WG_MAKT
+  WITH KEY MATNR = WG_ITENS-MATNR
+           BINARY SEARCH.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

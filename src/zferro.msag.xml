@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZFERRO</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagem Genérica p/ Ferroviário</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Peso de Chegada p/ DCL &amp;1 gravado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Peso de Chegada p/ DCL &amp;1 excluído!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Necessário Informar um ID p/ Agrupamento de Importação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Data de Chegada deve ser Maior ou Igual a Data de Saída!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Registro de Entrada não está gravado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Peso de Saída p/ DCL &amp;1 excluído!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Peso de Saída p/ DCL &amp;1 gravado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>DCL/Vagão &amp;1/&amp;2 já existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Deve ser Informado o Nr.DCL!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Deve ser Informado a Série DCL!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Deve ser Informado o Fornecedor!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Deve ser Informado o Vagão!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Deve ser Informado ao menos uma nota fiscal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Deve ser Informado a Data de Saída do Vagão!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Data de Sáida do Vagão, não pode ser menor que &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Peso de Saída da Nota Fiscal &amp;1 passa de &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>DCL/Vagão &amp;1/&amp;2 possui lançamento de descarga (L3)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Serviço de Carregamento Ferroviário(&amp;1) não foi parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Serviço de Carregamento inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Não foi possível gerar o XML de Consulta Carregamento</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Falha de Comunicação com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Status de comunicação com &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Falha de processamento com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>TimeOut com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Não foi possível gerar numeração do Objeto ZREG_L2_WS!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Não há registro para gravar!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Não foi possível gerar o XML de Consulta Descarga</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Não foi possível gerar numeração do Objeto ZREG_L3_WS!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Serviço de Autenticação VLI não foi parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Serviço de Descarga inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFERRO</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Serviço de Descarga Ferroviária(&amp;1) não foi parametrizado!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

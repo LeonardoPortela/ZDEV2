@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Mensagens de Texto de Planejamento de Exportação</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Deve ser selecionado uma Nomeação de Transporte!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Deve ser informado a Quantidade da Programação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Saldo da Nomeação Ultrapassado em &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Deve ser selecionado uma Programação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Deve ser selecionado uma Programação Planejada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Remessa não Encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Registros de Exportação não Encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Empresa/Filial desta Remessa não pode ser utilizado nesta Programação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Filial desta Remessa não está parametrizada como centro virtual!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Deve ser selecionado uma Remessa/Reg.Exportação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Esta programação possui remessas vinculadas!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Remessa &amp;1 está vinculada p/ RE &amp;2, ZSDT0014!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>O Documento &amp;1 deve ser primeiro estornado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Registros de Exportação não pode ser utilizada nesta nomeação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>O Material da Reg. Exportação &amp;1 não é equivalente a &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>O Material da Remessa &amp;1 não é equivalente a &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Saldo de RE &amp;1 não Suficiente para Remessa Selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Remessa/Reg.Exportação com fatura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Erro -&gt; ZDOC_EXP não loc. Remessa: &amp;1 RE: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Deve ser selecionado uma Remessa/RE!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Usuário sem permissão, Planejar filial &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Usuário sem permissão, Executar filial &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Deve ser vinculado conhecimentos até o volume ser igual ao da Remessa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Remessa sem documento fiscal gerado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Esta programação não pode ser alterada p/ volume abaixo do Planejado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Nota Fiscal &amp;1 da Remessa não está estornada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Caso não seja informado filial, deve ser informado Cliente (FOB FOB)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Remessa &amp;1 com quantidade superior ao permitido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Deve ser Selecionado um Estado Produtor!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Quantidade de produtores vinculados diferente do volume da remessa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Produtor &amp;1 foi vinculado mais que o possível!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Deve ser informado nf exportação ou nf de recusa/dev da exportação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Nota fiscal não é ligada a uma fatura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Documento &amp;1 não é de entrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Documento &amp;1 não é Nota Fiscal ou Restituição!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Fatura &amp;1 está Estornada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Fatura &amp;1 é documento de estorno do faturamento &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Ordem de Venda não é de devolução!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Nota Fiscal de Exportação não encontrada ou estornada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Remessa &amp;1 não possui Planejamento de Compromisso Exportação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Não encontrado Ordens de Devolução!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Recusa/Devolução de Compromisso cancelado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>Recusa/Devolução parte Empresa possível em &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Para gerar a Recusa deve ser vinculado todo o volume da mesma.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Remessa com compromisso de exportação, informar o(s) Rementente(s)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Remessa sem compromisso de exportação, não informar o(s) Rementente(s)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>Esta Programação possui &amp;1 &amp;2 de Volume Recusado/Devolvido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Fatura &amp;1 possui recusa vinculada de exportação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>Documento Fiscal &amp;1 comprovado em Memorando de Exportação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>Documento Fiscal &amp;1 não planejado em compromisso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Não encontrado produtores para o Estado informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>A programação selecionada possui contrato gerado, não é possivel excluir.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>DU-e não Encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>DU-e não está vinculada a Remessa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>Informe Número RE ou Número DU-e!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>Deve ser Selecionado um País do Produtor!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPLAN_NOMEACAO</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>Quantidade Efetiva: &amp;1 Excedida! Quantidade NF: &amp;2 ! Docnum: &amp;3!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

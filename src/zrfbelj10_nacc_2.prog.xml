@@ -1,0 +1,2773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZRFBELJ10_NACC_2</NAME>
+    <DBAPL>F</DBAPL>
+    <DBNA>BR</DBNA>
+    <CLAS>BABS</CLAS>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <RSTAT>T</RSTAT>
+    <RLOAD>P</RLOAD>
+    <LDBNAME>BRF</LDBNAME>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Transpor.</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Total página</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Total</ENTRY>
+     <LENGTH>5</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Nº doc.... DtaCPU</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Acumulado</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>TSL/I</ENTRY>
+     <LENGTH>7</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>*** Início da lista ***</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>**** Fim da lista ****</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>102</KEY>
+     <ENTRY>Ano. Moeda Ep   Me C Montant.-Déb. MI Montante-Créd MI C Montante-Déb. MI Montante-Créd MI C Montante-Déb. MI Montante-Créd MI</ENTRY>
+     <LENGTH>126</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>103</KEY>
+     <ENTRY>.... ..... .... .. C ................ ................ C ................ ................ C ................ ................</ENTRY>
+     <LENGTH>126</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>104</KEY>
+     <ENTRY>Nº doc.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>110</KEY>
+     <ENTRY>Nº seq.</ENTRY>
+     <LENGTH>8</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>111</KEY>
+     <ENTRY>DtaCPU</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>112</KEY>
+     <ENTRY>Nº doc.</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>113</KEY>
+     <ENTRY>DtLçto</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>114</KEY>
+     <ENTRY>DtaDoc</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>115</KEY>
+     <ENTRY>TD</ENTRY>
+     <LENGTH>2</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>116</KEY>
+     <ENTRY>Nº referência...</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>117</KEY>
+     <ENTRY>Texto cabeçalho documento</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>120</KEY>
+     <ENTRY>Denominação de conta......</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>121</KEY>
+     <ENTRY>Llç</ENTRY>
+     <LENGTH>3</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>122</KEY>
+     <ENTRY>C</ENTRY>
+     <LENGTH>1</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>123</KEY>
+     <ENTRY>Nº conta..</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>124</KEY>
+     <ENTRY>DIV</ENTRY>
+     <LENGTH>4</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>125</KEY>
+     <ENTRY>CL</ENTRY>
+     <LENGTH>2</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>126</KEY>
+     <ENTRY>Razão</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>127</KEY>
+     <ENTRY>IV</ENTRY>
+     <LENGTH>2</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>128</KEY>
+     <ENTRY>...mont.em FI</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>129</KEY>
+     <ENTRY>Moeda</ENTRY>
+     <LENGTH>5</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>130</KEY>
+     <ENTRY>Valor Débito</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>131</KEY>
+     <ENTRY>Valor Crédito</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>200</KEY>
+     <ENTRY>Log de erros</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>B01</KEY>
+     <ENTRY>Lista acessíveis</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>C01</KEY>
+     <ENTRY>Saída razão geral visualizar informações</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>C02</KEY>
+     <ENTRY>Saída alternativa número da conta</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>C03</KEY>
+     <ENTRY>Saída de reconciliação em vez Subledger conta</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>C04</KEY>
+     <ENTRY>Considere documentos estatísticos</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>F01</KEY>
+     <ENTRY>Controlar o fluxo programa</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>F02</KEY>
+     <ENTRY>Saída de controle: cabeçalho</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>F03</KEY>
+     <ENTRY>Saída de controle: lista</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>F04</KEY>
+     <ENTRY>Controle de Saída: Totais, triagem, e sumarização</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>F05</KEY>
+     <ENTRY>Manuseio Especial: fechamento postagens: Antes ano</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Diário de documentos</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>BUDATSUM</KEY>
+     <ENTRY>Totais por data de lançamento</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>COMPRESS</KEY>
+     <ENTRY>Compactação de documento</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>GB_COMP</KEY>
+     <ENTRY>Compactação de divisão</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>LISTSEP</KEY>
+     <ENTRY>Com separação de listas</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>NOHEADER</KEY>
+     <ENTRY>Título breve</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>NO_CPU</KEY>
+     <ENTRY>Lista sem data CPU</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PAR_DOCC</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>22</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>POSTEN</KEY>
+     <ENTRY>Só partidas individuais</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_ACCSEQ</KEY>
+     <ENTRY>Cta.reconc. antes da cta.terc.</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_ALL</KEY>
+     <ENTRY>Todas as páginas de saída</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_ALTKT</KEY>
+     <ENTRY>Nº conta alternativo</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_DATE</KEY>
+     <ENTRY>Interv.tempo seleção no título</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_MIFFL</KEY>
+     <ENTRY>Saída de linha microficha</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_PAG</KEY>
+     <ENTRY>Página</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_VAT</KEY>
+     <ENTRY>Saída número do IVA</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEGMTEXT</KEY>
+     <ENTRY>Texto de segmento</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SEIT_SUM</KEY>
+     <ENTRY>Totais de páginas</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SORT_KEY</KEY>
+     <ENTRY>Código de ordenação</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_BELEGE</KEY>
+     <ENTRY>Documentos especiais</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_HKONT</KEY>
+     <ENTRY>Conta do Razão</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_SBLART</KEY>
+     <ENTRY>Tipo de documento especial</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_SCPUDT</KEY>
+     <ENTRY>Data CPU docs.especiais</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>TABSUM</KEY>
+     <ENTRY>Somente folhas de totais</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>TEST</KEY>
+     <ENTRY>Execução de teste</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>TEXTLINE</KEY>
+     <ENTRY>Texto dos dados mestre</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>TITLE</KEY>
+     <ENTRY>Cabeçalho adicional</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>Z_NUMMER</KEY>
+     <ENTRY>Nº documento da contagem</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Uebertrag</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Seiten-Summe</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Summe</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Beleg-nr.. CPUdat</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Kumuliert</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Vortrag</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>*** Anfang der Liste ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>*** Ende der Liste ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Jahr Waehr Bk   Mo K ..Soll-Betrag Hw .Haben-Betrag HW K ..Soll-Betrag Hw .Haben-Betrag Hw K ..Soll-Betrag Hw .Haben-Betrag Hw</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>.... ..... .... .. a ................ ................ a ................ ................ a ................ ................</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>Beleg-nr..</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Lfd.-Nr.</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>CPUdat</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>112</KEY>
+       <ENTRY>Beleg-Nr..</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Bu-Dat</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Beldat</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Ba</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>Referenznr......</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>Belegkopf-Text............</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Konto-Bezeichnung.........</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>BUZ</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>K</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>Konto-Nr..</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>GSBR</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>BS</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Hauptbuch.</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>MW</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>...Betrag in FW</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Waehr</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>.Soll-Betrag HW</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>Haben-Betrag HW</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>Fehlerprotokoll</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>B01</KEY>
+       <ENTRY>Barrierefreie Liste</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C01</KEY>
+       <ENTRY>Informationen der Hauptbuchsicht ausgeben</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C02</KEY>
+       <ENTRY>Alternative Kontonummer ausgeben</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C03</KEY>
+       <ENTRY>Mitbuch- statt Personenkonto ausgeben</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C04</KEY>
+       <ENTRY>Statistische Belege berücksichtigen</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F01</KEY>
+       <ENTRY>Programmablaufsteuerung</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F02</KEY>
+       <ENTRY>Ausgabesteuerung: Kopfzeile</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F03</KEY>
+       <ENTRY>Ausgabesteuerung: Liste</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F04</KEY>
+       <ENTRY>Ausgabesteuerung: Summen, Sortierung und Verdichtung</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F05</KEY>
+       <ENTRY>Sonderbehandlung Abschlussbuchungen Vorjahr</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Beleg-Journal</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BUDATSUM</KEY>
+       <ENTRY>Summen pro Buchungsdatum</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMPRESS</KEY>
+       <ENTRY>Belegverdichtung</ENTRY>
+       <LENGTH>24</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>GB_COMP</KEY>
+       <ENTRY>Geschäftsbereich-Verdichtung</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTSEP</KEY>
+       <ENTRY>Listseparation gewünscht</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NOHEADER</KEY>
+       <ENTRY>Kurz-Header</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NO_CPU</KEY>
+       <ENTRY>CPU-Datum nicht ausgeben</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DOCC</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>POSTEN</KEY>
+       <ENTRY>Nur Einzelpostenseiten</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ACCSEQ</KEY>
+       <ENTRY>Mitbuch- statt Personenkonto</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALL</KEY>
+       <ENTRY>Alle Seiten ausgeben</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALTKT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>31</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_DATE</KEY>
+       <ENTRY>Selektionszeitraum ausgeben</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_MIFFL</KEY>
+       <ENTRY>Mikrofiche-Zeile ausgeben</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_VAT</KEY>
+       <ENTRY>Umsatzsteuer-ID ausgeben</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEGMTEXT</KEY>
+       <ENTRY>Belegzeilentext ausgeben</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEIT_SUM</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>21</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SORT_KEY</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>26</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_BELEGE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_HKONT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SBLART</KEY>
+       <ENTRY>Sonder-Belegart</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SCPUDT</KEY>
+       <ENTRY>CPU-Datum Sonderbelege</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TABSUM</KEY>
+       <ENTRY>Nur Summenseiten</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEST</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>16</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEXTLINE</KEY>
+       <ENTRY>Detail Stammdatentextausgabe</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>Z_NUMMER</KEY>
+       <ENTRY>Zähl-Belegnummer ausgeben</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Carryfwd</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Pages Total</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Total</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Doc.No. CPU Date</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Cumulated</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Carryfw</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>*** Start of List ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>***  End of List  ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Year Curr. CC   Mo A LC debit amount  LC credit amount A LC debit amount  LC credit amount A LC debit amount  LC credit amount</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>                   T                                   T                                   t</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>Document No.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Seq.no.</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>CPUdte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>112</KEY>
+       <ENTRY>Doc. No.</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>PstDte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>DocDte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>DT</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>Reference No.</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>Document Header Text......</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Account Name..............</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>LIt</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>A</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>Acct No.</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>BA</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>PK</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>G/L</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>VA</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>...Amt in FC</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Curr.</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>LC Debit amount</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>LC Cred. amount</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>Error Log</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>B01</KEY>
+       <ENTRY>Accessible List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C01</KEY>
+       <ENTRY>Output General Ledger View Information</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C02</KEY>
+       <ENTRY>Output Alternative Account Number</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C03</KEY>
+       <ENTRY>Output Reconciliation Account Instead Subledger Account</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C04</KEY>
+       <ENTRY>Consider Statistical Documents</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F01</KEY>
+       <ENTRY>Controlling the Program Flow</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F02</KEY>
+       <ENTRY>Output Control: Header</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F03</KEY>
+       <ENTRY>Output Control: List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F04</KEY>
+       <ENTRY>Output Control: Totals, Sorting, and Summarization</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F05</KEY>
+       <ENTRY>Special Handling: Closing Postings: Prior Year</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Document Journal</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BUDATSUM</KEY>
+       <ENTRY>Totals per Posting Date</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMPRESS</KEY>
+       <ENTRY>Document Summarization</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>GB_COMP</KEY>
+       <ENTRY>Business Area Summarization</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTSEP</KEY>
+       <ENTRY>List Separation Required</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NOHEADER</KEY>
+       <ENTRY>Short Header</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NO_CPU</KEY>
+       <ENTRY>Do Not Output CPU Date</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>POSTEN</KEY>
+       <ENTRY>Line Item Pages Only</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ACCSEQ</KEY>
+       <ENTRY>Reconcil. Not Subledger Acct</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALL</KEY>
+       <ENTRY>Output All Pages</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_DATE</KEY>
+       <ENTRY>Output Selection Period</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_MIFFL</KEY>
+       <ENTRY>Issue Microfiche Line</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_VAT</KEY>
+       <ENTRY>Output VAT Registration Number</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEGMTEXT</KEY>
+       <ENTRY>Output Line Item Text</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SBLART</KEY>
+       <ENTRY>Special Document Type</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SCPUDT</KEY>
+       <ENTRY>CPU Date Special Documents</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TABSUM</KEY>
+       <ENTRY>Totals Sheets Only</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEXTLINE</KEY>
+       <ENTRY>Detail:Master Data Text Output</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>Z_NUMMER</KEY>
+       <ENTRY>Output Consecutive Doc. Number</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DOCC</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALTKT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>31</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEIT_SUM</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>21</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SORT_KEY</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>26</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_BELEGE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_HKONT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEST</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>16</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>S</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Carryfwd</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Pages Total</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Total</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Doc.No. CPU Date</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Cumulated</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Carryfw</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>*** Start of List ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>***  End of List  ***</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Year Curr. CC   Mo A LC debit amount  LC credit amount A LC debit amount  LC credit amount A LC debit amount  LC credit amount</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>                   T                                   T                                   t</ENTRY>
+       <LENGTH>126</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>Document No.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Seq.no.</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>CPUdte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>112</KEY>
+       <ENTRY>Doc. No.</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>PstDte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>DocDte</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>DT</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>116</KEY>
+       <ENTRY>Reference No.</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>117</KEY>
+       <ENTRY>Document Header Text......</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Account Name..............</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>LIt</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>A</ENTRY>
+       <LENGTH>1</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>123</KEY>
+       <ENTRY>Acct No.</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>124</KEY>
+       <ENTRY>BA</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>PK</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>G/L</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>VA</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>...Amt in FC</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Curr.</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>LC Debit amount</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>LC Cred. amount</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>Error Log</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>B01</KEY>
+       <ENTRY>Accessible List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C01</KEY>
+       <ENTRY>Output General Ledger View Information</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C02</KEY>
+       <ENTRY>Output Alternative Account Number</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C03</KEY>
+       <ENTRY>Output Reconciliation Account Instead Subledger Account</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>C04</KEY>
+       <ENTRY>Consider Statistical Documents</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F01</KEY>
+       <ENTRY>Controlling the Program Flow</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F02</KEY>
+       <ENTRY>Output Control: Header</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F03</KEY>
+       <ENTRY>Output Control: List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F04</KEY>
+       <ENTRY>Output Control: Totals, Sorting, and Summarization</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>F05</KEY>
+       <ENTRY>Special Handling: Closing Postings: Prior Year</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Document Journal</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BUDATSUM</KEY>
+       <ENTRY>Totals per Posting Date</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>COMPRESS</KEY>
+       <ENTRY>Document Summarization</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>GB_COMP</KEY>
+       <ENTRY>Business Area Summarization</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>LISTSEP</KEY>
+       <ENTRY>List Separation Required</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NOHEADER</KEY>
+       <ENTRY>Short Header</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>NO_CPU</KEY>
+       <ENTRY>Do Not Output CPU Date</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PAR_DOCC</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>POSTEN</KEY>
+       <ENTRY>Line Item Pages Only</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ACCSEQ</KEY>
+       <ENTRY>Reconcil. Not Subledger Acct</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALL</KEY>
+       <ENTRY>Output All Pages</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ALTKT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>31</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_DATE</KEY>
+       <ENTRY>Output Selection Period</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_MIFFL</KEY>
+       <ENTRY>Issue Microfiche Line</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_VAT</KEY>
+       <ENTRY>Output VAT Registration Number</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEGMTEXT</KEY>
+       <ENTRY>Output Line Item Text</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SEIT_SUM</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>21</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SORT_KEY</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>26</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_BELEGE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>27</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_HKONT</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>22</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SBLART</KEY>
+       <ENTRY>Special Document Type</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SCPUDT</KEY>
+       <ENTRY>CPU Date Special Documents</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TABSUM</KEY>
+       <ENTRY>Totals Sheets Only</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEST</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>16</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TEXTLINE</KEY>
+       <ENTRY>Detail:Master Data Text Output</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>TITLE</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>25</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>Z_NUMMER</KEY>
+       <ENTRY>Output Consecutive Doc. Number</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFBELJ10_NACC_2</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0006</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00093</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFBELJ10_NACC_2</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00006</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Das Belegjournal wird monatlich erstellt und beinhaltet alle Buchungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>der Buchungsperiode. Das Belegjournal zeigt die wichtigsten Daten aus</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Belegkopf und Belegpositionen im Zusammenhang. In manchen Ländern muss</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>das Belegjournal auf Grund der Rechnungslegungsvorschriften auf</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>notariell vorgestempeltem Papier ausgedruckt werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Weitere Abgrenzungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Es ist möglich bestimmte Hauptbuchkonten vom Journal auszuschließen. Der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>umgekehrte Ansatz, das Journal nur für bestimmte Konten zu erstellen,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ist aus Performancegründen dagegen nicht zu empfehlen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Programmablaufsteuerung</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Mittels des Parameters &lt;ZH&gt;Test&lt;/&gt; kann man steuern, ob die aktuellen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Soll- und Habensummen der Monatsmeldung in der Tabelle TRVOR hinterlegt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>werden sollen. Falls der Parameter &lt;ZH&gt;Test&lt;/&gt; nicht angekreuzt wird,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>erfolgt eine Fortschreibung auf die folgenden Felder der Tabelle TRVOR:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Argument:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Reportname</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Buchungskreis</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Geschäftsjahr aus der Buchungsperiode</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Funktionsteil:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Höchstes gedrucktes Buchungsdatum</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Fortlaufende Sollendsumme</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Fortlaufende Habenendsumme</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Letzte vergebene Zählbelegnummer</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>CPU-Datum des Laufs</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Bei jedem neuen Monatslauf werden die Soll- und Habensummen aus der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Tabelle TRVOR entnommen und als Vortrag im Belegjournal ausgewiesen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Ist das neue Hauptbuch aktiv, so erfolgt die Fortschreibung in der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Tabelle FAGL_TRVOR anstelle der Tabelle TRVOR.  Die Fortschreibung der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Daten erfolgt dort pro Ledger.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Liste</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Abhängig von Parametern auf dem Selektionsbildschirm wird eine Liste</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>erstellt. Es besteht z.B. die Möglichkeit zwischen verschiedenen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Detaillierungsgraden und Summationsstufen zu wählen, die Positionen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>fortlaufend zu nummerieren oder die alternative Kontonummer anstatt der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>im Beleg angegebenen auszugeben.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Zu jeder Belegposition wird der Buchungsschlüssel und gegebenfalls das</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sonderhauptbuchkennzeichen gedruckt. Wenn die Belegposition negativ</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gebucht wurde, wird an den Buchungsschlüssel ein &apos;-&apos; angefügt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Bei aktivem neuen Hauptbuch besteht die Möglichkeit, alternativ zu den</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Beleginformationen aus der Erfassungssicht Informationen der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Hauptbuchsicht darzustellen. Verwenden Sie hierzu den Parameter</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Hauptbuchsicht.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Auf einem Summenblatt werden die Soll- und Habensummen getrennt nach</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Kontoarten je Buchungsperiode, Währung und Geschäftsjahr ausgewiesen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Diese Summenblätter sind zur Abstimmung mit den Saldenlisten (große</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Umsatzprobe) geeignet.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Für Italien ist es erforderlich die Liste ohne CPU Datum zu erstellen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Der Schalter Kurz-Header verkürzt die auf jeder Seite wiederkehrende</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Überschrift.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Eine Besonderheit stellt die Sonderbelegart dar. Durch Angabe einer</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Belegart in diesem Parameterfeld und Angabe eines Datumsintervalls für</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>die Belegerfassung wird für die betreffenden Belege das Buchungsdatum</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mit dem Belegdatum ersetzt und umgekehrt. Diese Funktionalität wird in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Italien benutzt. Dort sind während der ersten Monate eines neuen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Geschäftsjahres noch Buchungen in das zurückliegende Geschäftsjahr</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>notwendig. Die zugehörigen Belege müssen jedoch im Belegkompaktjournal</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>des neuen Geschäftsjahres gedruckt werden. Daher wird der Tausch von</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchungs- und Belegdatum nur für solche Belege durchgeführt, deren</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchungsdatum im vorherigen Geschäftsjahr liegt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;ZH&gt;Beispiel:&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Ein Beleg wird im April mit Buchungsdatum 15.04. des aktuellen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Geschäftsjahres und Belegdatum 31.12. des Vorjahres gebucht. Die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchungen werden am 15.04. des aktuellen Geschäftsjahres gebucht (d.h.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>das CPU-Datum im Belegkopf hat somit den entsprechenden Wert). Die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Belegart sei &apos;BC&apos;. Im Report wird dann die Sonderbelegart &apos;BC&apos; mit dem</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>CPU-Datum 15.04. abgegrenzt. Der beschriebene Beleg wird dann mit</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchungsdatum 31.12. und Belegdatum 15.04. gedruckt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Um eine korrektes Journal sicherzustellen, muß für die Sonderbelegart</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ein Nummerkreis gewählt werden, der keine Überschneidungen mit den</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Nummerkreisen für die anderen verwendeten Belegarten aufweist.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Mikrofiche-Zeile</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Der variable Teil der Mikrofiche-Zeile hat folgenden Aufbau:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>K1</TDFORMAT>
+       <TDLINE>Feld,,Anzahl Stellen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Buchungskreis,, 4</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Geschäftsjahr,, 4</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Belegnummer  ,,10</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Buchungsdatum,, 8 (Format YYYYMMDD)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>&amp;DEPENDENCIES&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Auf Grund der legalen Anforderungen an die Formatierung der Ausgabe ist</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>die Liste, welche dieses Programm erstellt, nicht barrierefrei</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(Stichwort Accessibility). Da das Programm primär dem Ausdruck der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Informationen und nicht dem Überprüfen am Bildschirm dient, kann auf</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>eine Umstellung dieser Liste verzichtet werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Zusätzlich zu diesem Programm gibt es noch das Programm RFBELJ10,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>welches die Informationen in ähnlichem Format zur Verfügung stellt. Die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgabe des Programms RFBELJ10 ist barrierefrei und kann somit für eine</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entsprechende Analyse verwendet werden. Sie können dieses Programm über</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>die Funktionstaste &lt;ZH&gt;Barrierefreie Liste&lt;/&gt; auf dem Selektionsbild</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>oder aber über den Menüpfad &lt;LS&gt;System &gt; Dienste &gt; Reporting&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>erreichen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Die legalen Anforderungen an ein Belegjournal werden jedoch</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ausschließlich in der nicht barrierefreien Version des Programms</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>abgedeckt.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFBELJ10_NACC_2</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0006</VERSION>
+      <TXTLINES>00096</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFBELJ10_NACC_2</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00006</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The document journal is created monthly and contains all postings of the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>posting period in the context of documents. The document journal</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>displays the most important data from the document header and line items</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>together. Depending on the accounting principles applied in the given</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>country, it may be necessary to print the document journal on paper</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>bearing a legal stamp.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If sort indicator &quot;2&quot; is selected, a subtotal for each posting date is</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>also output.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If you wish, you can exclude certain G/L accounts from the journal. The</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>reverse scenario - creating the journal for certain accounts only is</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>inadvisable for performance reasons.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>For performance reasons, the classic list (selection parameters) should</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>always be used for large volumes of data.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>By means of the &quot;Test&quot; parameter, you can control whether the current</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>debit and credit totals of the monthly report are to be stored in table</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>TRVOR. If the &quot;Test&quot; parameter is not set, an update is carried out to</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the following fields of table TRVOR:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Argument:        - report name</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - company code</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - fiscal year from the posting period</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Functional part: - highest printed posting date</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - consecutive debit total</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - consecutive credit total</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - last assigned consecutive document number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                 - CPU date of the run</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>During every new monthly run, the debit and credit totals from table</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>TRVOR are taken and displayed as a carryforward in the document journal.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If New General Ledger Accounting is active, updates are made to table</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>FAGL_TRVOR instead of table TRVOR. The data is updated there for each</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ledger.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>When New General Ledger Accounting is active, it is also possible to</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>summarize document information using the instruction &lt;LS&gt;Document</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Summarization&lt;/&gt;. If this parameter is selected, the data from the line</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>items of the entry view (table BSEG) are output, otherwise the line item</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>data from the entry view is merged with the data from the general ledger</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>line items. This could mean that line items from the entry view are each</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>split into multiple lines due to document splitting. Furthermore,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>applying the &lt;LS&gt;Document Summarization&lt;/&gt; parameter also changed the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(default) sort setting. If the parameter is not selected, the sort uses</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the general ledger document number (DOCNR) instead of the entry document</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>number (BELNR).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>In a summary sheet, the debit and credit totals are displayed separately</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>according to account types per posting period, currency, company code</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>and fiscal year. The summary sheet is output again for every company</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>code during control break. These summary sheets can be used for</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>reconciliation with the account balance lists (accounting reconciliation</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>on a larger scale).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Sorting</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Sort indicator 1:                 Company code</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Document number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Fiscal year</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Fiscal period</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Posting date</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Line item</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Sort indicator 2:                 Company code</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Fiscal year</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Fiscal period</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Posting date</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Document number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>                                  Line item</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>List</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>A list is created in accordance with the parameters you entered on the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selection screen. For example, you can choose between different levels</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>of detail and cumulation levels. You can also have the items numbered in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ascending order or have the alternative account number output  instead</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>of that defined in the document output.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The posting key, and, where appropriate, the special G/L indicator is</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>printed for each line item. If the line item was a negative posting, a</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&quot;-&quot; is added to the posting key.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>In Italy, the list must be created minus CPU date. The indicator short</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>header shortens the title that is displayed on every page.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>A feature of note is the special document type. By entering a document</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>type in this parameter field and a date interval for document entry, the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>system replaces the posting date with the document date (and vice versa)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>for the relevant documents. This function is used in Italy where</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>postings to the previous fiscal year are required during the initial</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>months of a new fiscal year. Note however, that the relevant documents</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>must be printed in the document journal for the current period.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Example:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>You post a document in April with posting date 15.04 and document date</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>31.12 of the previous year. The document type is &quot;BC&quot;. In the report,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the special document type &quot;BC&quot; is restricted by the CPU date 15.04. This</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>document is then printed with posting date 31.12 and document date</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>15.04.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>To ensure the journal is correct, you must choose a number range for the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>special document type that does not overlap with the number ranges for</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the other document types.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>With large data volumes, the classic list should be used for printing in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the background for performance reasons. If indexing is to occur in the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Optical Archive, it can only be performed with the classic list.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Microfiche Line</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The variable part of the microfiche line has the following structure:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Company code    ,, 4 places</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Fiscal year     ,, 4 places</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Document number,, 10 places</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Posting date    ,, 8 places (format YYYYMMDD)</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZRFBELJ10_NACC_2</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0006</VERSION>
+      <TXTLINES>00090</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZRFBELJ10_NACC_2</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00006</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>O diário de documentos é criado todos os meses e contém todos os</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documentos do período contábil. O diário de documentos exibe os dados</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mais importantes do cabeçalho e dos itens do documento em conjunto.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Devido aos princípios contábeis, em alguns países é necessário imprimir</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>o diário de documentos previamente carimbados por tabelião.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Outras delimitações</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>É possível excluir determinadas contas do Razão do diário. No entanto,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>por motivos de performance, não se recomenda criar o diário somente para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>determinadas contas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U3</TDFORMAT>
+       <TDLINE>Controle da execução do programa</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>O parâmetro &lt;ZH&gt;Teste&lt;/&gt; permite controlar se os totais de débito e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>crédito da declaração mensal devem ser gravados na tabela TRVOR. Se o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>parâmetro &lt;ZH&gt;Teste&lt;/&gt; não for selecionado, são atualizados os seguintes</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>campos da tabela TRVOR:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Argumento:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Nome do report</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Empresa</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Exercício fiscal do período contábil</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Segmento da função:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Data de lançamento mais recente impressa</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Total de débito seqüencial</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Total de crédito seqüencial</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Último número de documento da contagem atribuído</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Data CPU da execução</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Em cada nova execução mensal, totais de débito e crédito são retirados</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>da tabela TRVOR e exibidos como transporte de saldo inicial no diário de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documentos.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Se o novo Razão estiver ativo, a atualização é efetuada na tabela</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>FAGL_TRVOR em vez da tabela TRVOR. Nesse caso, a atualização dos dados é</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>efetuada por ledger.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Lista</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>É criada uma lista em função de parâmetros na tela de seleção. Por</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>exemplo, é possível selecionar entre diferentes graus de detalhamento e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>níveis de soma, numerar os itens seqüencialmente ou editar o número</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>alternativo da conta em vez do número indicado no documento.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Para cada item do documento, é impressa a chave de lançamento e,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>eventualmente, o código do Razão especial. Se o item do documento tiver</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>sido lançado como negativo, é anexado um &apos;-&apos; à chave de lançamento.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Se o Razão novo estiver ativo, existe a possibilidade de representar as</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>informações da visão do Razão, como alternativa às informações do</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documento da visão de entrada. Utilizar, para tal, o parâmetro &apos;Visão do</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Razão&apos;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>*</TDFORMAT>
+       <TDLINE>Em uma folha de totais, os totais de débito e crédito são exibidos por</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tipos de conta para cada período de lançamento, moeda e exercício</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>fiscal. Essas folhas de totais são apropriadas para a compensação com</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>listas de saldos (conciliação contábil).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Para a Itália, é necessário criar a lista sem data CPU. O comutador</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Cabeçalho breve&apos; encurta o título repetido em cada página.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>O tipo de documento especial constitui um caso especial. Ao indicar um</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tipo de documento nesse campo de parâmetro e um intervalo de tempo para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>a entrada de documento, a data de lançamento é substituída pela data do</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documento, e vice-versa, para os documentos em questão. Aí ainda são</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>necessários lançamentos no exercício fiscal passado durante os primeiros</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>meses de um exercício fiscal. Contudo, os documentos correspondentes têm</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de ser impressos no diário compacto de documentos do exercício fiscal</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>novo. Por isso, a substituição de data de lançamento e do documento será</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>apenas efetuada para documentos cuja data de lançamento se encontra no</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>exercício fiscal anterior.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;ZH&gt;Exemplo:&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Um documento é lançado em abril com a data de lançamento 15.04. do</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>exercício fiscal atual e a data do documento 31.12. do ano passado. Os</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>lançamentos são efetuados no dia 15.04. do exercício fiscal atual (ou</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>seja, isso significa que a data CPU no cabeçalho do documento tem o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>valor correspondente). O tipo do documento é &apos;BC&apos;. Nesse caso, no report</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>é delimitado o tipo de documento especial &apos;BC&apos; com a data CPU 15.04. O</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documento descrito será então impresso com a data de lançamento 31.12. e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>a data do documento 15.04.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Para assegurar um diário correto, é necessário selecionar, para o tipo</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de documento especial, um intervalo de numeração que não tenha</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>sobreposições em relação aos intervalos de numeração para os outros</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tipos de documento utilizados.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>Linha de microficha</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>A parte variável da linha de microficha tem a seguinte estrutura:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>K1</TDFORMAT>
+       <TDLINE>Campo,,Número de posições</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Empresa,, 4</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Exercício fiscal,, 4</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Nº do documento,, 10</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>T1</TDFORMAT>
+       <TDLINE>Data de lançamento,, 8 (formato AAAAMMDD)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U4</TDFORMAT>
+       <TDLINE>&amp;DEPENDENCIES&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Devido aos requisitos legais em relação à formatação da edição, a lista</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>que este programa cria não é acessível (cf. acessibilidade). Uma vez que</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>o programa serve principalmente para imprimir as informações e não para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>efetuar uma verificação na tela, não é necessário converter esta lista.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Além desse programa, existe também o programa RFBELJ10, o qual</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>disponibiliza as informações em um formato similar. A edição do programa</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>RFBELJ10 é acessível e pode, por isso, ser utilizada para uma análise</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>correspondente. Esse programa pode ser acessado pela tecla de função</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;ZH&gt;Lista acessível&lt;/&gt; na tela de seleção ou mediante o caminho de menu</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;LS&gt;Sistema &gt; Serviços &gt; Reporting&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>No entanto, os requisitos legais em relação a um diário de documentos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>são apenas preenchidos na versão não acessível do programa.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

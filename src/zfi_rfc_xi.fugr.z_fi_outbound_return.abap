@@ -1,0 +1,61 @@
+FUNCTION Z_FI_OUTBOUND_RETURN .
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  TABLES
+*"      OUTRETURN STRUCTURE  ZFIE_RET_DOCUMENT
+*"----------------------------------------------------------------------
+
+* ---> S4 Migration - 28/08/2023 - JGP - Inicio
+  DATA:
+    CL_PROXY TYPE REF TO ZCO_Z_FI_OUTBOUND_RETURN_PORT,
+    V_INPUT  TYPE ZZFI_OUTBOUND_RETURN_INPUT,
+    "v_output TYPE zzfi_outbound_return_output,
+    W_ITEM   TYPE ZZFIE_RET_DOCUMENT.
+
+
+  CHECK OUTRETURN[] IS NOT INITIAL.
+  "CHECK outreturn IS NOT INITIAL.
+
+  TRY.
+      IF CL_PROXY IS NOT BOUND.
+        CREATE OBJECT CL_PROXY.
+      ENDIF.
+
+      LOOP AT OUTRETURN INTO DATA(W_OUTRETURN).
+        W_ITEM-OBJ_KEY          = W_OUTRETURN-OBJ_KEY.
+        W_ITEM-INTERFACE        = W_OUTRETURN-INTERFACE.
+        W_ITEM-DT_ATUALIZACAO   = W_OUTRETURN-DT_ATUALIZACAO.
+        W_ITEM-HR_ATUALIZACAO   = W_OUTRETURN-HR_ATUALIZACAO.
+        W_ITEM-TYPE             = W_OUTRETURN-TYPE.
+        W_ITEM-ID               = W_OUTRETURN-ID.
+        W_ITEM-NUM              = W_OUTRETURN-NUM.
+        W_ITEM-MESSAGE          = W_OUTRETURN-MESSAGE.
+        W_ITEM-MESSAGE_V1       = W_OUTRETURN-MESSAGE_V1.
+        W_ITEM-MESSAGE_V2       = W_OUTRETURN-MESSAGE_V2.
+        W_ITEM-MESSAGE_V3       = W_OUTRETURN-MESSAGE_V3.
+        W_ITEM-MESSAGE_V4       = W_OUTRETURN-MESSAGE_V4.
+        W_ITEM-ID_REGISTRO      = W_OUTRETURN-ID_REGISTRO.
+        W_ITEM-INFO_ADICIONAL_1 = W_OUTRETURN-INFO_ADICIONAL_1.
+        W_ITEM-INFO_ADICIONAL_2 = W_OUTRETURN-INFO_ADICIONAL_2.
+        W_ITEM-INFO_ADICIONAL_3 = W_OUTRETURN-INFO_ADICIONAL_3.
+        IF W_ITEM-ID = '8B'.
+          W_ITEM-MESSAGE_V1 =  'Verificar Centro Real e Virtual'.
+
+        ENDIF.
+        APPEND W_ITEM TO V_INPUT-OUTRETURN-ITEM.
+        CLEAR W_ITEM.
+      ENDLOOP.
+
+      CALL METHOD CL_PROXY->Z_FI_OUTBOUND_RETURN
+        EXPORTING
+          INPUT = V_INPUT.
+      "IMPORTING
+      "output = v_output.
+
+    CATCH CX_AI_SYSTEM_FAULT INTO DATA(LV_FAULT).
+      DATA(LV_MSG) = LV_FAULT->ERRORTEXT.
+  ENDTRY.
+* <--- S4 Migration - 28/08/2023 - JGP - Fim
+
+
+ENDFUNCTION.

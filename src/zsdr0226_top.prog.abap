@@ -1,0 +1,401 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZFIR0065_TOP
+*&---------------------------------------------------------------------*
+
+
+TYPE-POOLS ICON.
+
+TYPES: BEGIN OF TY_SAIDA,
+         ICONE              TYPE ICON_D,
+         STYLE              TYPE LVC_T_STYL,   " Estilo da célula
+         EDIT(1)            TYPE C,
+         BOTAO_MOTIVO(1)    TYPE C,
+         BOTAO_HISTORICO(1) TYPE C.
+         INCLUDE TYPE ZSDT0392.
+TYPES: END OF TY_SAIDA.
+
+TYPES: BEGIN OF TY_ZSDT0393,
+         BOTAO_MOTIVO_HISTORICO(1) TYPE C,
+         STYLE                     TYPE LVC_T_STYL.   " Estilo da célula
+         INCLUDE TYPE ZSDT0393.
+TYPES: END OF TY_ZSDT0393.
+
+TYPES: BEGIN OF TY_MOTIVO,
+         TDFORMAT TYPE TLINE-TDFORMAT,
+         TDLINE   TYPE TLINE-TDLINE.
+TYPES:   END OF TY_MOTIVO.
+
+TYPES: BEGIN OF TY_LEGENDA,
+         ICONE      TYPE CHAR6,
+         DESCR(150) TYPE C.
+TYPES: END OF TY_LEGENDA.
+
+TYPES: TY_TLINE_TAB TYPE STANDARD TABLE OF TLINE WITH DEFAULT KEY.
+
+*-------------------------------------------------------------------
+* Tabelas Internas and Work Areas.
+*-------------------------------------------------------------------
+DATA: IT_SAIDA        TYPE TABLE OF TY_SAIDA WITH HEADER LINE,
+      IT_SAIDA_AUX    TYPE TABLE OF TY_SAIDA WITH HEADER LINE,
+      WA_SAIDA        TYPE TY_SAIDA,
+      IT_ZSDT0392     TYPE TABLE OF ZSDT0392,
+      WA_ZSDT0392     TYPE ZSDT0392,
+      IT_ZSDT0393     TYPE TABLE OF ZSDT0393,
+      WA_ZSDT0393     TYPE ZSDT0393,
+      IT_ZSDT0393_AUX TYPE TABLE OF TY_ZSDT0393,
+      WA_ZSDT0393_AUX TYPE TY_ZSDT0393,
+      IT_MOTIVO       TYPE TABLE OF TY_MOTIVO,
+      WA_MOTIVO       TYPE TY_MOTIVO,
+      WL_NAME         TYPE THEAD-TDNAME,
+      LT_LINES        TYPE TY_TLINE_TAB,
+      IT_LEGENDA      TYPE STANDARD TABLE OF TY_LEGENDA.
+
+FIELD-SYMBOLS: <FS_ZSDT0393> TYPE ZSDT0393.
+
+* Objetos
+DATA: C_ALV_TOOLBARMANAGER TYPE REF TO CL_ALV_GRID_TOOLBAR_MANAGER,
+      TY_TOOLBAR           TYPE STB_BUTTON.
+
+DATA: OBJ_ALV       TYPE REF TO CL_GUI_ALV_GRID,
+      OBJ_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+
+* Parâmetros do popup
+DATA: OK_CODE             TYPE SY-UCOMM,
+      GR_GRID             TYPE REF TO CL_GUI_ALV_GRID,
+      GR_DIALOG_CONTAINER TYPE REF TO CL_GUI_DIALOGBOX_CONTAINER,
+      GT_FIELDCAT         TYPE LVC_T_FCAT,
+      LS_LAYOUT           TYPE LVC_S_LAYO,
+      IT_ESTRUTURA        TYPE LVC_T_FCAT,
+      WA_ESTRUTURA        TYPE LVC_S_FCAT,
+      LT_FIELDCAT_SLIS    TYPE SLIS_T_FIELDCAT_ALV.
+
+DATA: GR_ALV_GRID  TYPE REF TO CL_GUI_ALV_GRID,
+      GR_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      GT_DATA      TYPE TABLE OF ZSDT0393, " Use sua tabela aqui
+      GT_FCAT      TYPE LVC_T_FCAT.
+
+DATA: GT_F4    TYPE LVC_T_F4 WITH HEADER LINE,
+      GV_ERRO  TYPE C,
+      GV_MODIF TYPE C.
+
+DATA: TG_TEXTO     TYPE CATSXT_LONGTEXT_ITAB,
+      TG_TEXTO_AUX TYPE CATSXT_LONGTEXT_ITAB,
+      WA_TEXTO     TYPE LINE OF CATSXT_LONGTEXT_ITAB,
+      WL_TEXTO     TYPE LINE OF CATSXT_LONGTEXT_ITAB,
+      WL_DISPLAY.
+
+DATA: TL_TLINES LIKE TLINE OCCURS 0 WITH HEADER LINE,
+      WL_HEADER TYPE THEAD.
+
+*----------------------------------------------------------------------*
+* TIPOS PARA ALV
+*----------------------------------------------------------------------*
+DATA: IT_SEL_ROWS TYPE LVC_T_ROW,
+      WA_SEL_ROWS TYPE LVC_S_ROW.
+
+DATA: GT_CATALOG TYPE LVC_T_FCAT,
+      GW_CATALOG TYPE LVC_S_FCAT.
+
+DATA: IT_SELECTED_ROWS TYPE LVC_T_ROW,
+      WA_SELECTED_ROWS TYPE LVC_S_ROW.
+
+* ALV field catalogs
+DATA: IT_FCAT TYPE LVC_T_FCAT,
+      WA_FCAT TYPE LVC_S_FCAT.
+
+* ALV cores
+DATA: LT_COLOR TYPE LVC_T_SCOL,
+      LS_COLOR TYPE LVC_S_SCOL,
+      LS_STYLE TYPE LVC_S_STYL.
+
+* ALV excluded functions
+DATA: IT_EXCLUDE_FCODE TYPE UI_FUNCTIONS,
+      WA_EXCLUDE_FCODE LIKE LINE OF IT_EXCLUDE_FCODE.
+
+* Alv Styles
+DATA: STYLE    TYPE LVC_T_STYL WITH HEADER LINE,
+      WA_STYLE TYPE LVC_S_STYL.
+
+* ALV layout variant
+DATA: GS_VARIANT       TYPE DISVARIANT.
+
+* ALV layout
+DATA: GS_LAYOUT        TYPE LVC_S_LAYO.
+
+* ALV Stable
+DATA: WA_STABLE        TYPE LVC_S_STBL.
+
+DATA: G_CUSTOM_CONTAINER_POP_6001 TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      CTL_ALV1_POP_6001           TYPE REF TO CL_GUI_ALV_GRID,
+      GS_LAYOUT_POP_6001          TYPE LVC_S_LAYO,
+      IT_FIELDCATALOG_POP_6001    TYPE LVC_T_FCAT,
+      _STABLE                     TYPE LVC_S_STBL VALUE 'XX'.
+
+*-------------------------------------------------------------------
+* Variaveis
+*-------------------------------------------------------------------
+DATA: VG_ERRO      TYPE C,
+      V_PREFIX_ENT TYPE ZPREFIX,
+      V_MENSAGEM   TYPE BAPI_MSG,
+      T_DIR_LOC_F  TYPE TABLE OF SDOKPATH,
+      T_DIR_LOCAL  TYPE TABLE OF SDOKPATH,
+      T_DIR_UNIX   TYPE TABLE OF EPSFILI,
+      V_FILE_AUX   TYPE DRAW-FILEP,
+      V_FILE_AUX2  TYPE DRAW-FILEP,
+      IT_XML_FORN  TYPE TABLE OF ZXML,
+      WA_XML_FORN  TYPE ZXML.
+
+**---------------------------------------------------------------------*
+**  Inicio Implementação Classes
+**---------------------------------------------------------------------*
+
+*----------------------------------------------------------------------*
+*       CLASS lcl_event_handler_0106 DEFINITION
+*----------------------------------------------------------------------*
+*
+*----------------------------------------------------------------------*
+CLASS LCL_EVENT_HANDLER DEFINITION.
+
+  PUBLIC SECTION.                                           "
+    CLASS-METHODS:
+      ON_F4                      FOR EVENT ONF4                 OF CL_GUI_ALV_GRID
+        IMPORTING E_FIELDNAME
+                  ES_ROW_NO
+                  ER_EVENT_DATA
+                  ET_BAD_CELLS
+                  E_DISPLAY.
+
+    CLASS-METHODS:
+      HANDLE_BUTTON_CLICK FOR EVENT BUTTON_CLICK
+        OF CL_GUI_ALV_GRID
+        IMPORTING ES_COL_ID
+                  ES_ROW_NO.
+
+    CLASS-METHODS:
+      ON_CLOSE  FOR EVENT CLOSE
+        OF CL_GUI_DIALOGBOX_CONTAINER.
+
+ENDCLASS.               "lcl_event_handler_0102 DEFINITION  "
+
+*----------------------------------------------------------------------*
+*       CLASS lcl_event_handler_0103 IMPLEMENTATION
+*----------------------------------------------------------------------*
+*
+*----------------------------------------------------------------------*
+CLASS LCL_EVENT_HANDLER IMPLEMENTATION.                "
+
+  METHOD ON_F4.
+
+  ENDMETHOD.             "ON_F4
+
+  METHOD HANDLE_BUTTON_CLICK.
+    DATA: C_ZSDT0392        TYPE C,
+          NR_APROVACAO(120) TYPE C.
+
+    FREE: IT_MOTIVO.
+    CLEAR: WL_TEXTO, WL_DISPLAY, NR_APROVACAO, C_ZSDT0392.
+
+    SELECT SINGLE * FROM ZSDTVINC_APROV INTO @DATA(WA_ZSDTVINC_APROV) WHERE APROVADOR EQ @SY-UNAME.
+
+    IF ES_COL_ID-FIELDNAME = 'BOTAO_MOTIVO'.
+      FREE: IT_ZSDT0392, IT_ZSDT0393.
+      CLEAR: WA_ZSDT0392, WA_ZSDT0393, IT_SAIDA.
+
+      IF WA_ZSDTVINC_APROV IS INITIAL.
+        MESSAGE sy-uname && ' não é um Usuário Aprovador' TYPE 'S' DISPLAY LIKE 'E'.
+        EXIT.
+      ENDIF.
+
+      SELECT SINGLE *
+        FROM ZSDT0393
+        WHERE DT_APROVACAO = ( SELECT MAX( DT_APROVACAO ) FROM ZSDT0393 )
+        AND   HR_APROVACAO = ( SELECT MAX( HR_APROVACAO ) FROM ZSDT0393 WHERE DT_APROVACAO = ( SELECT MAX( DT_APROVACAO ) FROM ZSDT0393 ) )
+        INTO @WA_ZSDT0393.
+
+      READ TABLE IT_SAIDA[] INTO IT_SAIDA INDEX 1.
+      IF ( TG_TEXTO IS INITIAL AND IT_SAIDA-EDIT IS INITIAL ) OR ( TG_TEXTO IS NOT INITIAL AND IT_SAIDA-EDIT IS INITIAL ).
+        WL_DISPLAY = 'X'.
+        C_ZSDT0392 = ABAP_TRUE.
+        PERFORM F_EXIBIR_MOTIVO USING ES_ROW_NO C_ZSDT0392.
+      ELSEIF TG_TEXTO IS NOT INITIAL AND IT_SAIDA-EDIT IS NOT INITIAL.
+        CLEAR: WL_DISPLAY.
+        C_ZSDT0392 = ABAP_TRUE.
+        PERFORM F_EXIBIR_MOTIVO USING ES_ROW_NO C_ZSDT0392.
+      ELSE.
+        CLEAR: WL_DISPLAY.
+        REFRESH: TG_TEXTO.
+
+        CALL FUNCTION 'CATSXT_SIMPLE_TEXT_EDITOR'
+          EXPORTING
+            IM_TITLE        = 'Texto para Motivo'
+            IM_DISPLAY_MODE = WL_DISPLAY " Somente vizualizar ou inserir
+          CHANGING
+            CH_TEXT         = TG_TEXTO.
+      ENDIF.
+
+      IF WL_DISPLAY IS INITIAL.
+        DATA: WA_LINHA TYPE CACS_CHAR1000SF.
+
+        CLEAR: WA_TEXTO, WA_LINHA.
+
+        " Se tiver mais de uma linha.
+        LOOP AT TG_TEXTO INTO WA_TEXTO.
+          CLEAR WA_MOTIVO.
+
+          MOVE: '*'      TO WA_MOTIVO-TDFORMAT,
+                WA_TEXTO TO WA_MOTIVO-TDLINE.
+
+          APPEND WA_MOTIVO TO IT_MOTIVO.
+        ENDLOOP.
+
+        IF WA_ZSDT0393 IS NOT INITIAL.
+          NR_APROVACAO = |ID_MOTIVO_ZSDR0226_{ WA_ZSDT0393-ID_APROVACAO + 1 }|.
+        ELSE.
+          NR_APROVACAO = |ID_MOTIVO_ZSDR0226_{ 1 }|.
+        ENDIF.
+
+        MOVE NR_APROVACAO TO IT_SAIDA-MOTIVO.
+
+        MODIFY IT_SAIDA FROM IT_SAIDA INDEX ES_ROW_NO-ROW_ID .
+
+      ENDIF.
+
+    ELSEIF ES_COL_ID-FIELDNAME = 'BOTAO_HISTORICO'.
+
+      PERFORM F_FECHAR_HIST.
+      PERFORM F_EXIBIR_HIST.
+
+    ELSEIF ES_COL_ID-FIELDNAME = 'BOTAO_MOTIVO_HISTORICO'.
+
+      WL_DISPLAY = 'X'.
+      C_ZSDT0392 = ABAP_FALSE.
+      PERFORM F_EXIBIR_MOTIVO USING ES_ROW_NO C_ZSDT0392.
+
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD ON_CLOSE.
+
+    PERFORM F_FECHAR_HIST.
+
+  ENDMETHOD.
+
+ENDCLASS.           "lcl_event_handler_0102 IMPLEMENTATION
+
+
+
+CLASS LCL_ALV_TOOLBAR DEFINITION.
+  PUBLIC SECTION.
+
+    METHODS: CONSTRUCTOR
+      IMPORTING IO_ALV_GRID TYPE REF TO CL_GUI_ALV_GRID,
+
+      ON_TOOLBAR FOR EVENT TOOLBAR OF CL_GUI_ALV_GRID
+        IMPORTING E_OBJECT,
+
+      HANDLE_USER_COMMAND FOR EVENT USER_COMMAND OF CL_GUI_ALV_GRID
+        IMPORTING E_UCOMM,
+
+      HANDLE_DATA_CHANGED
+        FOR EVENT DATA_CHANGED_FINISHED OF CL_GUI_ALV_GRID
+        IMPORTING ET_GOOD_CELLS,
+
+      ON_HOTSPOT_CLICK FOR EVENT HOTSPOT_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID E_COLUMN_ID.
+
+ENDCLASS.                    "LCL_ALV_TOOLBAR DEFINITION
+
+
+CLASS LCL_ALV_TOOLBAR IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+
+  ENDMETHOD.                    "on_toolbar
+
+  METHOD HANDLE_USER_COMMAND.
+
+*    CASE E_UCOMM.
+*      WHEN 'DEL'.
+*        PERFORM DELETAR_REG.
+*      WHEN 'DEL_TIPO_DOC'.
+*        PERFORM DEL_VALUE USING 'TIPO_DOC'.
+*      WHEN 'DEL_TIPO_PED'.
+*        PERFORM DEL_VALUE USING 'TIPO_PED'.
+*      WHEN 'DEL_TIPO_OV'.
+*        PERFORM DEL_VALUE USING 'TIPO_OV'.
+*      WHEN 'DEL_BLOQ_PGTO'.
+*        PERFORM DEL_VALUE USING 'BLOQ_PGTO'.
+*
+*    ENDCASE.
+
+  ENDMETHOD.                    "HANDLE_USER_COMMAND
+
+  METHOD HANDLE_DATA_CHANGED.
+
+  ENDMETHOD.
+
+  METHOD ON_HOTSPOT_CLICK.
+    DATA: LS_APROVADO TYPE TY_SAIDA,
+          LT_FIELDS   TYPE STANDARD TABLE OF SVAL,
+          LS_FIELDS   TYPE SVAL,
+          LV_MOTIVO   TYPE STRING.
+
+    FREE: IT_ZSDT0393.
+    CLEAR: WA_ZSDT0393.
+    SELECT SINGLE *
+      FROM ZSDT0393
+      WHERE DT_APROVACAO = ( SELECT MAX( DT_APROVACAO ) FROM ZSDT0393 )
+      AND   HR_APROVACAO = ( SELECT MAX( HR_APROVACAO ) FROM ZSDT0393 WHERE DT_APROVACAO = ( SELECT MAX( DT_APROVACAO ) FROM ZSDT0393 ) )
+      INTO @WA_ZSDT0393.
+
+    SELECT SINGLE * FROM ZSDTVINC_APROV INTO @DATA(WA_ZSDTVINC_APROV) WHERE APROVADOR EQ @SY-UNAME.
+
+    IF E_COLUMN_ID-FIELDNAME = 'ICONE'.
+      IF WA_ZSDTVINC_APROV IS INITIAL.
+        MESSAGE sy-uname && ' não é um Usuário Aprovador' TYPE 'S' DISPLAY LIKE 'E'.
+        EXIT.
+      ENDIF.
+      READ TABLE IT_SAIDA INTO LS_APROVADO INDEX E_ROW_ID-INDEX.
+      IF LS_APROVADO-ICONE = '@06@'. "Verifica se está desativado
+        LS_APROVADO-STATUS = 'A'.    "Muda o status para ativado
+        LS_APROVADO-ICONE = '@07@'.  "Aberto
+        IF WA_ZSDT0393-STATUS <> LS_APROVADO-STATUS.
+          LS_APROVADO-EDIT = ABAP_TRUE.
+        ELSE.
+          LS_APROVADO-EDIT = ABAP_FALSE.
+        ENDIF.
+      ELSE. "Caso esteja ativado
+        LS_APROVADO-STATUS = 'D'.   "Muda o status para desativado
+        LS_APROVADO-ICONE = '@06@'. "Fechado
+        IF WA_ZSDT0393-STATUS <> LS_APROVADO-STATUS.
+          LS_APROVADO-EDIT = ABAP_TRUE.
+        ELSE.
+          LS_APROVADO-EDIT = ABAP_FALSE.
+        ENDIF.
+      ENDIF.
+
+      LOOP AT IT_SAIDA ASSIGNING FIELD-SYMBOL(<FS_APROVADO>).
+        <FS_APROVADO>-ICONE = LS_APROVADO-ICONE.
+        <FS_APROVADO>-STATUS = LS_APROVADO-STATUS.
+        <FS_APROVADO>-EDIT = LS_APROVADO-EDIT.
+      ENDLOOP.
+
+      OBJ_ALV->REFRESH_TABLE_DISPLAY( ).
+    ENDIF.
+
+  ENDMETHOD.
+*-
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION
+
+*-------------------------------------------------------------------
+* OBJ_TOOLBAR
+*-------------------------------------------------------------------
+DATA: OBJ_TOOLBAR TYPE REF TO LCL_ALV_TOOLBAR,
+      GR_HANDLER  TYPE REF TO LCL_EVENT_HANDLER.

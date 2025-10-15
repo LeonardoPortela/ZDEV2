@@ -1,0 +1,10 @@
+"Name: \PR:SAPLCOIH\FO:CONTRACT_CHK_TK\SE:BEGIN\EI
+ENHANCEMENT 0 Z_LCOIHF0H_PRCTR.
+*
+*-US 154383-07-11-2024-#154383-RJF-Inicio
+IF afvgd-steus EQ 'PM04'. "Grupo comprador
+  break rfreitas.
+  afvgd-ekgrp = 'C03'.
+ENDIF.
+*-US 154383-07-11-2024-#154383-RJF-Fim
+ENDENHANCEMENT.

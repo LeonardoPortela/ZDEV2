@@ -1,0 +1,1541 @@
+*&--------------------------------------------------------------------&*
+*&                        ROLLOUT - Consultoria                       &*
+*&--------------------------------------------------------------------&*
+*& Projeto..: AMaggi                                                  &*
+*& Autor....: Eduardo Ruttkowski Tavares                              &*
+*& Data.....: 28/04/2010                                              &*
+*& Descrição: Dados de Materiais e Estoque                            &*
+*& Transação: ZMM0014                                                 &*
+*&--------------------------------------------------------------------&*
+*& Projeto  :                                                         &*
+*& Código Espec.Funcional/Técnica:                                    &*
+*&--------------------------------------------------------------------&*
+*&                    Histórico de Modificações                       &*
+*& Autor           Request      Data         Descrição                &*
+*&--------------------------------------------------------------------&*
+
+REPORT  ZMM0014.
+
+INCLUDE <ICON>.
+
+TABLES: MARA, MARD, MBEW, MSEG, MCHB.
+
+*&---------------------------------------------------------------------*
+*& Definições para ALV
+*&---------------------------------------------------------------------*
+
+TYPE-POOLS: SLIS,
+            KKBLO.
+
+
+DATA: REPID           LIKE SY-REPID.
+DATA: FIELDCAT        TYPE SLIS_T_FIELDCAT_ALV WITH HEADER LINE.
+DATA: LAYOUT          TYPE SLIS_LAYOUT_ALV.
+DATA: PRINT           TYPE SLIS_PRINT_ALV.
+DATA: SORT      TYPE SLIS_T_SORTINFO_ALV WITH HEADER LINE,
+      EVENTS    TYPE SLIS_T_EVENT,
+      T_TOP     TYPE SLIS_T_LISTHEADER,
+      XS_EVENTS TYPE SLIS_ALV_EVENT.
+
+DATA: VARIANTE     LIKE DISVARIANT,
+      DEF_VARIANTE LIKE DISVARIANT.
+DATA: W_TIT(70).
+
+DATA: CL_ALV TYPE REF TO CL_GUI_ALV_GRID.
+
+DATA: BEGIN OF T_T001W OCCURS 0,
+        WERKS LIKE T001W-WERKS,
+        NAME1 LIKE T001W-NAME1,
+        WAERS LIKE T001-WAERS,
+      END OF T_T001W.
+
+DATA: BEGIN OF T_MARA OCCURS 0,
+        MATNR   LIKE MARA-MATNR,
+        MTART   LIKE MARA-MTART,
+        MEINS   LIKE MARA-MEINS,
+        MATKL   LIKE MARA-MATKL,
+        BRGEW   LIKE MARA-BRGEW,
+        NTGEW   LIKE MARA-NTGEW,
+        VOLUM   LIKE MARA-VOLUM,
+        BISMT   LIKE MARA-BISMT,
+        MTBEZ   LIKE T134T-MTBEZ,
+        MAKTX   LIKE MAKT-MAKTX,
+        BWESB   LIKE MARC-BWESB,
+        GLGMG   LIKE MARC-GLGMG,
+        TRAME   LIKE MARC-TRAME,
+        UMLMC   LIKE MARC-UMLMC,
+        STEUC   LIKE MARC-STEUC,
+        EISLO   LIKE MARC-EISLO,
+        MABST   LIKE MARC-MABST,
+        EISBE   LIKE MARC-EISBE,
+        MMSTD   LIKE MARC-MMSTD,
+        WERKS   LIKE MARD-WERKS,
+        LGORT   LIKE MARD-LGORT,
+        LABST   LIKE MARD-LABST,
+        UMLME   LIKE MARD-UMLME,
+        INSME   LIKE MARD-INSME,
+        EINME   LIKE MARD-EINME,
+        SPEME   LIKE MARD-SPEME,
+        RETME   LIKE MARD-RETME,
+        LGPBE   LIKE MARD-LGPBE,
+        WGBEZ60 LIKE T023T-WGBEZ60,
+      END OF T_MARA.
+
+
+DATA: BEGIN OF TG_MARA_2 OCCURS 0,
+        MATNR LIKE MARA-MATNR,
+        MTART LIKE MARA-MTART,
+        MEINS LIKE MARA-MEINS,
+        MATKL LIKE MARA-MATKL,
+        BRGEW LIKE MARA-BRGEW,
+        NTGEW LIKE MARA-NTGEW,
+        VOLUM LIKE MARA-VOLUM,
+        BISMT LIKE MARA-BISMT,
+        MAKTX LIKE MAKT-MAKTX,
+      END OF TG_MARA_2,
+
+      BEGIN OF TG_MARC_2 OCCURS 0,
+        MATNR LIKE MARC-MATNR,
+        WERKS LIKE MARC-WERKS,
+        BWESB LIKE MARC-BWESB,
+        GLGMG LIKE MARC-GLGMG,
+        TRAME LIKE MARC-TRAME,
+        UMLMC LIKE MARC-UMLMC,
+        STEUC LIKE MARC-STEUC,
+        EISLO LIKE MARC-EISLO,
+        MABST LIKE MARC-MABST,
+        EISBE LIKE MARC-EISBE,
+        MMSTD LIKE MARC-MMSTD,
+        MINBE LIKE MARC-MINBE,
+        WZEIT LIKE MARC-WZEIT,
+      END OF TG_MARC_2,
+
+      BEGIN OF TG_MCHB_2 OCCURS 0,
+        MATNR LIKE MCHB-MATNR,
+        WERKS LIKE MCHB-WERKS,
+        LGORT LIKE MCHB-LGORT,
+        CLABS LIKE MCHB-CLABS,
+        CHARG LIKE MCHB-CHARG,
+        CUMLM LIKE MCHB-CUMLM,
+        CINSM LIKE MCHB-CINSM,
+        CEINM LIKE MCHB-CEINM,
+        CSPEM LIKE MCHB-CSPEM,
+        CRETM LIKE MCHB-CRETM,
+      END OF TG_MCHB_2,
+
+      BEGIN OF TG_MCH1_2 OCCURS 0,
+        CHARG TYPE MCH1-CHARG,
+        MATNR TYPE MCH1-MATNR,
+        VFDAT LIKE MCH1-VFDAT,
+      END OF TG_MCH1_2,
+
+      BEGIN OF TG_MKPF_2 OCCURS 0,
+        MBLNR TYPE MKPF-MBLNR,
+        MJAHR TYPE MKPF-MJAHR,
+        BUDAT TYPE MKPF-BUDAT,
+      END OF TG_MKPF_2,
+
+      BEGIN OF TG_MSEG_2 OCCURS 0,
+        MBLNR TYPE MSEG-MBLNR,
+        MJAHR TYPE MSEG-MJAHR,
+        BWART TYPE MSEG-BWART,
+        MATNR TYPE MSEG-MATNR,
+        WERKS TYPE MSEG-WERKS,
+        LGORT TYPE MSEG-LGORT,
+        MENGE TYPE MSEG-MENGE,
+        LFBNR TYPE MSEG-LFBNR,
+        SMBLN TYPE MSEG-SMBLN,
+        SJAHR TYPE MSEG-SJAHR,
+        CHARG TYPE MSEG-CHARG,
+      END OF TG_MSEG_2,
+
+      TG_MSEG_2_ESTORNO LIKE TABLE OF TG_MSEG_2 WITH HEADER LINE,
+
+      BEGIN OF TG_S032_2 OCCURS 0,
+        WERKS    TYPE S032-WERKS,
+        LGORT    TYPE S032-LGORT,
+        MATNR    TYPE S032-MATNR,
+        LETZTVER TYPE S032-LETZTVER,
+      END OF TG_S032_2,
+
+
+      BEGIN OF TG_RESB_2 OCCURS 0,
+        MATNR TYPE RESB-MATNR,
+        WERKS TYPE RESB-WERKS,
+        BDTER TYPE RESB-BDTER,
+        BDMNG TYPE RESB-BDMNG,
+        ENMNG TYPE RESB-ENMNG,
+      END OF TG_RESB_2,
+
+      BEGIN OF TG_MBEW_2 OCCURS 0,
+        MATNR TYPE MBEW-MATNR,
+        BWKEY TYPE MBEW-BWKEY,
+        VERPR TYPE MBEW-VERPR,
+      END OF TG_MBEW_2.
+
+DATA: BEGIN OF T_MBEW OCCURS 0,
+        MATNR LIKE MBEW-MATNR,
+        BWKEY LIKE MBEW-BWKEY,
+        BWTAR LIKE MBEW-BWTAR,
+        LBKUM LIKE MBEW-LBKUM,
+        SALK3 LIKE MBEW-SALK3,
+        STPRS LIKE MBEW-STPRS,
+      END OF T_MBEW.
+
+DATA: BEGIN OF T_MKPF OCCURS 0,
+        MBLNR LIKE MKPF-MBLNR,
+        MJAHR LIKE MKPF-MJAHR,
+        BUDAT LIKE MKPF-BUDAT,
+        CPUTM LIKE MKPF-CPUTM,
+      END OF T_MKPF.
+
+DATA: T_MKPF_101 LIKE T_MKPF OCCURS 0 WITH HEADER LINE.
+DATA: T_MKPF_201    LIKE T_MKPF OCCURS 0 WITH HEADER LINE,
+      TG_MKPF_2_AUX LIKE TABLE OF TG_MKPF_2 WITH HEADER LINE,
+      TG_MSEG_2_101 LIKE TABLE OF TG_MSEG_2 WITH HEADER LINE,
+      TG_MSEG_2_201 LIKE TABLE OF TG_MSEG_2 WITH HEADER LINE.
+
+DATA: BEGIN OF T_MSEG OCCURS 0,
+        MBLNR LIKE MSEG-MBLNR,
+        MJAHR LIKE MSEG-MJAHR,
+        ZEILE LIKE MSEG-ZEILE,
+        MATNR LIKE MSEG-MATNR,
+        WERKS LIKE MSEG-WERKS,
+        BWART LIKE MSEG-BWART,
+        DMBTR LIKE MSEG-DMBTR,
+        MENGE LIKE MSEG-MENGE,
+      END OF T_MSEG.
+
+DATA: T_MSEG_101 LIKE T_MSEG OCCURS 0 WITH HEADER LINE .
+DATA: T_MSEG_201 LIKE T_MSEG OCCURS 0 WITH HEADER LINE .
+
+DATA: BEGIN OF T_M101 OCCURS 0,
+        MATNR LIKE MSEG-MATNR,
+        WERKS LIKE MSEG-WERKS,
+        LGORT LIKE MSEG-LGORT,
+        DMBTR LIKE MSEG-DMBTR,
+        MENGE LIKE MSEG-MENGE,
+      END OF T_M101.
+
+DATA: T_M201 LIKE T_M101 OCCURS 0 WITH HEADER LINE .
+
+DATA: BEGIN OF T_MCHB OCCURS 0,
+        MATNR LIKE MCHB-MATNR,
+        WERKS LIKE MCHB-WERKS,
+        LGORT LIKE MCHB-LGORT,
+        CHARG LIKE MCHB-CHARG,
+      END OF T_MCHB.
+
+DATA: BEGIN OF T_SAIDA OCCURS 0,
+        MATNR     LIKE MARA-MATNR,
+        MTART     LIKE MARA-MTART,
+        MTBEZ     LIKE T134T-MTBEZ,
+        MEINS     LIKE MARA-MEINS,
+        MATKL     LIKE MARA-MATKL,
+        BRGEW     LIKE MARA-BRGEW,
+        NTGEW     LIKE MARA-NTGEW,
+        VOLUM     LIKE MARA-VOLUM,
+        BRGEW2    LIKE MARA-BRGEW,
+        NTGEW2    LIKE MARA-NTGEW,
+        VOLUM2    LIKE MARA-VOLUM,
+        BISMT     LIKE MARA-BISMT,
+        MAKTX     LIKE MAKT-MAKTX,
+        WERKS     LIKE MARD-WERKS,
+        LGORT     LIKE MARD-LGORT,
+        LABST     LIKE MARD-LABST,
+        UMLME     LIKE MARD-UMLME,
+        INSME     LIKE MARD-INSME,
+        EINME     LIKE MARD-EINME,
+        SPEME     LIKE MARD-SPEME,
+        RETME     LIKE MARD-RETME,
+        BWESB     LIKE MARC-BWESB,
+        GLGMG     LIKE MARC-GLGMG,
+        TRAME     LIKE MARC-TRAME,
+        UMLMC     LIKE MARC-UMLMC,
+        STEUC     LIKE MARC-STEUC,
+        EISLO     LIKE MARC-EISLO,
+        MABST     LIKE MARC-MABST,
+        EISBE     LIKE MARC-EISBE,
+        MMSTD     LIKE MARC-MMSTD,
+        SALK3     LIKE MBEW-SALK3,
+        NAME1     LIKE T001W-NAME1,
+        WAERS     LIKE T001-WAERS,
+        WGBEZ60   LIKE T023T-WGBEZ60,
+        LGPBE     LIKE MARD-LGPBE,
+        RUA       TYPE C LENGTH 2,
+        BOX       TYPE C LENGTH 3,
+        ANDAR     TYPE C LENGTH 3,
+        POSIC     TYPE C LENGTH 2,
+        ULTCOM    TYPE C LENGTH 20,
+        DIAULTCOM TYPE C LENGTH 10,
+        ULTCON    TYPE C LENGTH 20,
+        DIAULTCON TYPE C LENGTH 10,
+        DM101     LIKE MSEG-DMBTR,
+        VL101     LIKE MSEG-DMBTR,
+        QT101     LIKE MSEG-MENGE,
+        QT201     LIKE MSEG-MENGE,
+*        dm201    LIKE mseg-dmbtr,
+        CHARG     LIKE MCHB-CHARG,
+        VAL1      LIKE MBEW-SALK3,
+        VAL2      LIKE MBEW-SALK3,
+        VAL3      LIKE MBEW-SALK3,
+        VAL4      LIKE MBEW-SALK3,
+        VAL5      LIKE MBEW-SALK3,
+        VAL6      LIKE MBEW-SALK3,
+        VAL7      LIKE MBEW-SALK3,
+        VAL8      LIKE MBEW-SALK3,
+        VAL9      LIKE MBEW-SALK3,
+        VALUN     LIKE MBEW-SALK3,
+        ESTOQUE   LIKE MSEG-MENGE,
+        MEDIA     TYPE MSEG-MENGE,    " Media de consumo
+        MATRES    TYPE RESB-BDMNG,    " Material reservado
+        MINBE     TYPE MARC-MINBE,    " Ponto de reabastencimento
+        WZEIT     TYPE MARC-WZEIT,    " Tempo total de reposição
+        OBS(50),                     " Observação
+      END OF T_SAIDA.
+
+DATA: WG_DIAS TYPE P.
+
+SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-S01.
+SELECT-OPTIONS: S_MATNR FOR MARA-MATNR,
+                S_WERKS FOR MARD-WERKS OBLIGATORY, "NO-EXTENSION NO INTERVALS,
+                S_LGORT FOR MARD-LGORT , "NO-EXTENSION NO INTERVALS,
+                S_CHARG FOR MCHB-CHARG,
+                S_MTART FOR MARA-MTART,
+                S_DATA  FOR SY-DATUM OBLIGATORY NO-EXTENSION.
+
+PARAMETERS:  P_INVENT AS CHECKBOX.
+SELECTION-SCREEN END OF BLOCK B1.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK B2 WITH FRAME TITLE TEXT-S02.
+PARAMETERS: P_VARIA LIKE DISVARIANT-VARIANT.
+SELECTION-SCREEN END OF BLOCK B2.
+*---------------------------------------------------------------------*
+* Event selection-screen on value-request for p_var
+*---------------------------------------------------------------------*
+*
+DATA: VG_REPID   LIKE SY-REPID,
+      VG_VARIANT TYPE DISVARIANT.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR P_VARIA.
+
+  VG_REPID          = SY-REPID.
+  VARIANTE-REPORT = VG_REPID.
+
+  IF ( NOT P_VARIA IS INITIAL ).
+    VG_VARIANT-VARIANT = P_VARIA.
+
+  ENDIF.
+  CALL FUNCTION 'REUSE_ALV_VARIANT_F4'
+    EXPORTING
+      IS_VARIANT    = VARIANTE
+      I_SAVE        = 'A'
+    IMPORTING
+      ES_VARIANT    = VARIANTE
+    EXCEPTIONS
+      NOT_FOUND     = 1
+      PROGRAM_ERROR = 2
+      OTHERS        = 3.
+
+  IF ( SY-SUBRC NE 0 ).
+    MESSAGE S000(Z01) WITH 'Não existe variante'.
+    STOP.
+  ELSE.
+    MOVE VARIANTE-VARIANT TO P_VARIA.
+  ENDIF.
+
+*---------------------------------------------------------------------*
+* Event selection-screen on value-request for p_var
+*---------------------------------------------------------------------*
+  .
+
+*  if sy-ucomm eq 'INV'.
+
+*  endif.
+
+START-OF-SELECTION.
+  IF P_INVENT IS INITIAL.
+    IF S_LGORT IS INITIAL.
+      MESSAGE S897(SD) DISPLAY LIKE 'E' WITH 'É obrigatorio o preenchimento'
+                                             'do campo Deposito'.
+      STOP.
+    ENDIF.
+  ELSE.
+
+  ENDIF.
+
+  PERFORM Z_SELECIONA_DADOS.
+
+  PERFORM Z_ORGANIZA_DADOS.
+
+  PERFORM Z_INICIA_ALV.
+*&---------------------------------------------------------------------*
+*&      Form  Z_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+FORM Z_SELECIONA_DADOS .
+
+  SELECT MARA~MATNR MARA~MTART MARA~MEINS MARA~MATKL MARA~BRGEW MARA~NTGEW
+         MARA~VOLUM MARA~BISMT
+
+         T134T~MTBEZ
+         MAKT~MAKTX
+
+         MARC~BWESB MARC~GLGMG MARC~TRAME MARC~UMLMC MARC~STEUC MARC~EISLO
+         MARC~MABST MARC~EISBE MARC~MMSTD
+
+         MARD~WERKS MARD~LGORT MARD~LABST MARD~UMLME MARD~INSME MARD~EINME
+         MARD~SPEME MARD~RETME MARD~LGPBE
+
+         T023T~WGBEZ60
+    FROM MARA INNER JOIN MAKT ON
+    ( MARA~MATNR EQ MAKT~MATNR )
+
+              INNER JOIN T134T ON
+    ( MARA~MTART EQ T134T~MTART )
+              INNER JOIN MARC ON
+    ( MARA~MATNR EQ MARC~MATNR )
+              INNER JOIN MARD ON
+    ( MARA~MATNR EQ MARD~MATNR AND
+      MARC~WERKS EQ MARD~WERKS     )
+              INNER JOIN T023T ON
+    ( MARA~MATKL EQ T023T~MATKL )
+    INTO TABLE T_MARA
+    WHERE MARA~MATNR  IN S_MATNR  AND
+          MARA~MTART  IN S_MTART  AND
+          T134T~SPRAS EQ SY-LANGU AND
+          MAKT~SPRAS  EQ SY-LANGU AND
+          MARC~WERKS  IN S_WERKS  AND
+          MARD~LGORT  IN S_LGORT  AND
+          T023T~SPRAS EQ SY-LANGU.
+
+  CHECK T_MARA[] IS NOT INITIAL.
+
+  SELECT MARA~MATNR MARA~MTART MARA~MEINS MARA~MATKL MARA~BRGEW MARA~NTGEW MARA~VOLUM
+         MARA~BISMT MAKT~MAKTX
+    FROM MARA INNER JOIN MAKT
+    ON ( MARA~MATNR EQ MAKT~MATNR )
+    INTO TABLE TG_MARA_2
+    FOR ALL ENTRIES IN T_MARA
+     WHERE MARA~MATNR EQ T_MARA-MATNR
+       AND MARA~MTART EQ T_MARA-MTART
+       AND MAKT~SPRAS EQ SY-LANGU.
+
+  IF SY-SUBRC IS INITIAL.
+    IF P_INVENT IS INITIAL.
+      SELECT MATNR WERKS BWESB GLGMG TRAME UMLMC STEUC
+           EISLO MABST EISBE MMSTD MINBE WZEIT
+      FROM MARC
+      INTO TABLE TG_MARC_2
+       FOR ALL ENTRIES IN TG_MARA_2
+        WHERE MATNR EQ TG_MARA_2-MATNR
+          AND WERKS IN S_WERKS.
+
+      SELECT MATNR BWKEY VERPR
+          FROM MBEW
+          INTO TABLE TG_MBEW_2
+           FOR ALL ENTRIES IN TG_MARC_2
+            WHERE MATNR EQ TG_MARC_2-MATNR
+              AND BWKEY EQ TG_MARC_2-WERKS.
+
+      IF SY-SUBRC IS INITIAL.
+        SELECT MKPF~MBLNR MKPF~MJAHR MKPF~BUDAT
+        INTO CORRESPONDING FIELDS OF TABLE TG_MKPF_2
+        FROM MKPF INNER JOIN MSEG
+        ON    MKPF~MANDT = MSEG~MANDT
+          AND MKPF~MBLNR = MSEG~MBLNR
+          AND MKPF~MJAHR = MSEG~MJAHR
+        FOR ALL ENTRIES IN TG_MARC_2
+        WHERE MATNR EQ TG_MARC_2-MATNR
+          AND MKPF~BUDAT IN S_DATA
+          AND MSEG~BWART IN ('101', '201')
+          AND MSEG~LGORT IN S_LGORT
+          AND MSEG~WERKS EQ TG_MARC_2-WERKS.
+
+        LOOP AT S_DATA.
+          IF S_DATA-HIGH IS NOT INITIAL.
+            DELETE TG_MKPF_2 WHERE MJAHR NE S_DATA-LOW(4)
+                              AND MJAHR NE S_DATA-HIGH(4).
+          ELSE.
+            DELETE TG_MKPF_2 WHERE MJAHR NE S_DATA-LOW(4).
+          ENDIF.
+        ENDLOOP.
+
+        IF TG_MKPF_2[] IS NOT INITIAL.
+          SELECT MBLNR MJAHR BWART MATNR WERKS
+                 LGORT MENGE LFBNR SMBLN SJAHR CHARG
+             FROM MSEG
+             INTO TABLE TG_MSEG_2
+             FOR ALL ENTRIES IN TG_MKPF_2
+              WHERE MBLNR EQ TG_MKPF_2-MBLNR
+                AND MJAHR EQ TG_MKPF_2-MJAHR.
+
+          IF SY-SUBRC IS INITIAL.
+            SELECT MBLNR MJAHR BWART MATNR WERKS
+                LGORT MENGE LFBNR SMBLN  SJAHR CHARG
+            FROM MSEG
+            INTO TABLE TG_MSEG_2_ESTORNO
+            FOR ALL ENTRIES IN TG_MSEG_2
+             WHERE SMBLN EQ TG_MSEG_2-MBLNR
+               AND SJAHR EQ TG_MSEG_2-MJAHR.
+
+          ENDIF.
+          SORT: TG_MSEG_2_ESTORNO BY SMBLN SJAHR.
+          LOOP AT TG_MSEG_2.
+            READ TABLE TG_MSEG_2_ESTORNO
+              WITH KEY SMBLN = TG_MSEG_2-MBLNR
+                       SJAHR = TG_MSEG_2-MJAHR
+                       BINARY SEARCH.
+            IF SY-SUBRC IS INITIAL.
+              CONTINUE.
+            ENDIF.
+            IF TG_MSEG_2-LFBNR IS NOT INITIAL
+            OR TG_MSEG_2-MBLNR EQ TG_MSEG_2-SMBLN
+            OR TG_MSEG_2-BWART EQ '102'
+            OR TG_MSEG_2-BWART EQ '202'.
+              DELETE TG_MSEG_2.
+              DELETE TG_MKPF_2 WHERE MBLNR EQ TG_MSEG_2-MBLNR
+                                 AND MJAHR EQ TG_MSEG_2-MJAHR.
+
+            ELSEIF TG_MSEG_2-LFBNR IS INITIAL
+            AND TG_MSEG_2-BWART EQ '101'.
+              APPEND TG_MSEG_2 TO TG_MSEG_2_101.
+
+            ELSEIF TG_MSEG_2-LFBNR IS INITIAL
+              AND TG_MSEG_2-BWART EQ '201'.
+              APPEND TG_MSEG_2 TO TG_MSEG_2_201.
+
+            ENDIF.
+
+          ENDLOOP.
+        ENDIF.
+
+      ENDIF.
+
+      SELECT MATNR WERKS BDTER BDMNG ENMNG
+        FROM RESB
+        INTO TABLE TG_RESB_2
+         FOR ALL ENTRIES IN TG_MARC_2
+          WHERE MATNR EQ TG_MARC_2-MATNR
+            AND WERKS EQ TG_MARC_2-WERKS
+            AND BDTER IN S_DATA
+            AND XLOEK EQ SPACE
+            AND KZEAR EQ SPACE.
+    ENDIF.
+  ENDIF.
+
+
+  IF T_MARA[] IS INITIAL.
+    STOP.
+
+  ENDIF.
+
+  "ALRS
+  IF T_MARA[] IS NOT INITIAL.
+    SELECT MATNR WERKS LGORT CHARG
+          FROM MCHB INTO TABLE T_MCHB
+      FOR ALL ENTRIES IN T_MARA
+      WHERE MATNR = T_MARA-MATNR AND
+            WERKS = T_MARA-WERKS AND
+            LGORT = T_MARA-LGORT.
+  ENDIF.
+
+  "Ajustes Inventario - Victor
+  IF P_INVENT IS NOT INITIAL AND TG_MARA_2[] IS NOT INITIAL.
+    SELECT MATNR WERKS BWESB GLGMG TRAME UMLMC STEUC
+           EISLO MABST EISBE MMSTD MINBE WZEIT
+      FROM MARC
+      INTO TABLE TG_MARC_2
+   FOR ALL ENTRIES IN TG_MARA_2
+     WHERE MATNR EQ TG_MARA_2-MATNR
+       AND WERKS IN S_WERKS.
+
+    IF SY-SUBRC IS INITIAL.
+      SELECT MATNR BWKEY VERPR
+        FROM MBEW
+        INTO TABLE TG_MBEW_2
+     FOR ALL ENTRIES IN TG_MARC_2
+       WHERE MATNR EQ TG_MARC_2-MATNR
+         AND BWKEY EQ TG_MARC_2-WERKS.
+    ENDIF.
+  ENDIF.
+
+  IF TG_MARC_2[] IS NOT INITIAL.
+    SELECT MATNR WERKS LGORT CLABS CHARG
+           CUMLM CINSM CEINM CSPEM CRETM
+      FROM MCHB
+      INTO TABLE TG_MCHB_2
+   FOR ALL ENTRIES IN TG_MARC_2
+     WHERE MATNR EQ TG_MARC_2-MATNR
+       AND WERKS EQ TG_MARC_2-WERKS
+       AND LGORT IN S_LGORT
+       AND CHARG IN S_CHARG.
+
+    IF SY-SUBRC IS INITIAL.
+      SELECT CHARG MATNR VFDAT
+        FROM MCH1
+        INTO TABLE TG_MCH1_2
+         FOR ALL ENTRIES IN TG_MCHB_2
+          WHERE CHARG EQ TG_MCHB_2-CHARG
+            AND MATNR EQ TG_MCHB_2-MATNR.
+
+    ENDIF.
+  ENDIF.
+
+
+  " Fim Ajustes Inventario - Victor
+
+  SELECT T001W~WERKS T001W~NAME1
+         T001~WAERS
+    FROM T001W
+                INNER JOIN T001K ON
+                T001W~WERKS EQ T001K~BWKEY
+                INNER JOIN T001 ON
+                T001K~BUKRS EQ T001~BUKRS
+    INTO TABLE T_T001W
+    WHERE T001W~WERKS IN S_WERKS.
+
+  SELECT MATNR BWKEY BWTAR LBKUM SALK3 STPRS
+    FROM MBEW INTO TABLE T_MBEW
+    FOR ALL ENTRIES IN T_MARA
+    WHERE MATNR = T_MARA-MATNR AND
+          BWKEY = T_MARA-WERKS.
+
+  SELECT * "MBLNR MJAHR ZEILE MATNR WERKS BWART DMBTR MENGE
+    FROM MSEG
+    INNER JOIN MKPF
+    ON  MKPF~MBLNR = MSEG~MBLNR
+    AND MKPF~MJAHR = MSEG~MJAHR
+    INTO CORRESPONDING FIELDS OF TABLE T_MSEG
+    FOR ALL ENTRIES IN T_MARA
+    WHERE MSEG~MATNR EQ T_MARA-MATNR AND
+          MSEG~WERKS EQ T_MARA-WERKS AND
+          MSEG~BWART IN ('101', '201') AND
+          MKPF~BUDAT IN S_DATA.
+
+
+  SORT T_MSEG BY MATNR WERKS MJAHR DESCENDING MBLNR DESCENDING.
+
+  T_MSEG_101[] = T_MSEG_201[] = T_MSEG[].
+  DELETE T_MSEG_101 WHERE BWART NE '101'.
+  DELETE T_MSEG_201 WHERE BWART NE '201'.
+
+  IF NOT T_MSEG_101[] IS INITIAL.
+    SELECT MBLNR MJAHR BUDAT CPUTM
+      FROM MKPF INTO TABLE T_MKPF_101
+      FOR ALL ENTRIES IN T_MSEG_101
+      WHERE MBLNR EQ T_MSEG_101-MBLNR AND
+            MJAHR EQ T_MSEG_101-MJAHR.
+
+    SORT T_MKPF_101 BY MBLNR MJAHR.
+
+    LOOP AT T_MSEG_101.
+      READ TABLE T_MKPF_101 WITH KEY MBLNR = T_MSEG_101-MBLNR
+                                     MJAHR = T_MSEG_101-MJAHR
+                                     BINARY SEARCH.
+      IF SY-SUBRC <> 0.
+        DELETE T_MSEG_101.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+
+  IF NOT T_MSEG_201[] IS INITIAL.
+    SELECT MBLNR MJAHR BUDAT CPUTM
+      FROM MKPF INTO TABLE T_MKPF_201
+      FOR ALL ENTRIES IN T_MSEG_201
+      WHERE MBLNR EQ T_MSEG_201-MBLNR AND
+            MJAHR EQ T_MSEG_201-MJAHR.
+
+    SORT T_MKPF_201 BY MBLNR MJAHR.
+*
+  ENDIF.
+
+ENDFORM.                    " Z_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*&      Form  Z_ORGANIZA_DADOS
+*&---------------------------------------------------------------------*
+FORM Z_ORGANIZA_DADOS .
+  DATA: WL_DIAS(3)  TYPE N,
+        WL_BDMNG    TYPE RESB-BDMNG,
+        WL_ENMNG    TYPE RESB-ENMNG,
+        WL_DATA_AUX TYPE SY-DATUM.
+  CLEAR WG_DIAS.
+  IF S_DATA-HIGH IS INITIAL.
+    S_DATA-HIGH = S_DATA-LOW.
+  ENDIF.
+  CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+    EXPORTING
+      DATE1            = S_DATA-LOW
+      DATE2            = S_DATA-HIGH
+    IMPORTING
+      DATEDIFF         = WG_DIAS
+    EXCEPTIONS
+      INVALID_DATETIME = 1
+      OTHERS           = 2.
+
+  ADD 1 TO WG_DIAS.
+
+  CLEAR: T_M101, T_M201.
+  REFRESH: T_M101, T_M201.
+
+  LOOP AT T_MSEG_101.
+    MOVE: T_MSEG_101-MATNR TO T_M101-MATNR,
+          T_MSEG_101-DMBTR TO T_M101-DMBTR,
+          T_MSEG_101-WERKS TO T_M101-WERKS,
+          T_MSEG_101-MENGE TO T_M101-MENGE.
+    COLLECT T_M101.
+    CLEAR T_M101.
+  ENDLOOP.
+
+  LOOP AT T_MSEG_201.
+    MOVE: T_MSEG_201-MATNR TO T_M201-MATNR,
+          T_MSEG_201-DMBTR TO T_M201-DMBTR,
+          T_MSEG_101-WERKS TO T_M101-WERKS,
+          T_MSEG_201-MENGE TO T_M101-MENGE.
+    APPEND T_M201.
+    CLEAR T_M201.
+  ENDLOOP.
+
+  SORT: T_MBEW  BY MATNR BWKEY,
+        T_T001W BY WERKS,
+        T_MCHB  BY MATNR WERKS LGORT,
+        T_M201  BY MATNR WERKS,
+        T_M101  BY MATNR WERKS,
+        TG_MSEG_2_101 BY MBLNR MJAHR MATNR WERKS CHARG,
+        TG_MSEG_2_201 BY MBLNR MJAHR MATNR WERKS CHARG,
+        TG_MARC_2 BY MATNR WERKS,
+        TG_MBEW_2 BY MATNR BWKEY,
+        TG_MKPF_2 BY BUDAT DESCENDING,
+        T_MARA    BY MATNR WERKS LGORT.
+
+  REFRESH T_SAIDA. CLEAR T_SAIDA.
+
+  LOOP AT T_MARA.
+    MOVE-CORRESPONDING T_MARA TO T_SAIDA.
+
+*** Verifica se tem lote
+    READ TABLE T_MCHB WITH KEY MATNR = T_SAIDA-MATNR
+                               WERKS = T_SAIDA-WERKS
+                               LGORT = T_SAIDA-LGORT
+                               BINARY SEARCH.
+    IF SY-SUBRC IS NOT INITIAL.
+      READ TABLE T_MBEW WITH KEY MATNR = T_SAIDA-MATNR
+                                 BWKEY = T_SAIDA-WERKS
+                                 BINARY SEARCH.
+      IF SY-SUBRC <> 0.
+        CLEAR T_MBEW.
+      ENDIF.
+
+
+      IF NOT T_SAIDA-LABST IS INITIAL.
+        T_SAIDA-SALK3 = ( T_MBEW-SALK3 / T_MBEW-LBKUM ) * T_SAIDA-LABST.
+      ENDIF.
+
+      T_SAIDA-RUA   = T_MARA-LGPBE+0(2).
+      T_SAIDA-BOX   = T_MARA-LGPBE+2(3).
+      T_SAIDA-ANDAR = T_MARA-LGPBE+5(3).
+      T_SAIDA-POSIC = T_MARA-LGPBE+8(2).
+
+      T_SAIDA-BRGEW2 = T_SAIDA-BRGEW * T_SAIDA-LABST.
+      T_SAIDA-NTGEW2 = T_SAIDA-NTGEW * T_SAIDA-LABST.
+      T_SAIDA-VOLUM2 = T_SAIDA-VOLUM * T_SAIDA-LABST.
+
+
+
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-UMLME CHANGING T_SAIDA-VAL1.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-INSME CHANGING T_SAIDA-VAL2.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-EINME CHANGING T_SAIDA-VAL3.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-SPEME CHANGING T_SAIDA-VAL4.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-RETME CHANGING T_SAIDA-VAL5.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-BWESB CHANGING T_SAIDA-VAL6.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-GLGMG CHANGING T_SAIDA-VAL7.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-TRAME CHANGING T_SAIDA-VAL8.
+      PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-UMLMC CHANGING T_SAIDA-VAL9.
+
+      READ TABLE T_T001W WITH KEY WERKS = T_SAIDA-WERKS
+                                  BINARY SEARCH.
+
+      MOVE: T_T001W-NAME1 TO T_SAIDA-NAME1,
+            T_T001W-WAERS TO T_SAIDA-WAERS.
+
+      READ TABLE T_MSEG_101 WITH KEY MATNR = T_SAIDA-MATNR
+                                     WERKS = T_SAIDA-WERKS
+                                     BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        READ TABLE T_MKPF_101 WITH KEY MBLNR = T_MSEG_101-MBLNR
+                                       MJAHR = T_MSEG_101-MJAHR
+                                       BINARY SEARCH.
+        IF SY-SUBRC = 0.
+          WRITE: T_MKPF_101-BUDAT TO T_SAIDA-ULTCOM(10).
+          WRITE: T_MKPF_101-CPUTM TO T_SAIDA-ULTCOM+11.
+          T_SAIDA-DIAULTCOM = SY-DATUM - T_MKPF_101-BUDAT.
+        ENDIF.
+      ENDIF.
+
+      READ TABLE T_MSEG_201 WITH KEY MATNR = T_SAIDA-MATNR
+                                     WERKS = T_SAIDA-WERKS
+                                     BINARY SEARCH.
+      IF SY-SUBRC = 0.
+
+*** Stefanini - IR231498 - 04/04/2025 - LAZAROSR - Início de Alteração
+*        READ TABLE T_MKPF_201 WITH KEY MBLNR = T_MSEG_101-MBLNR
+*                                       MJAHR = T_MSEG_101-MJAHR
+*                                       BINARY SEARCH.
+        READ TABLE T_MKPF_201 WITH KEY MBLNR = T_MSEG_201-MBLNR
+                                       MJAHR = T_MSEG_201-MJAHR
+                                       BINARY SEARCH.
+*** Stefanini - IR231498 - 04/04/2025 - LAZAROSR - Fim de Alteração
+        IF SY-SUBRC = 0.
+          WRITE: T_MKPF_201-BUDAT TO T_SAIDA-ULTCON(10).
+          WRITE: T_MKPF_201-CPUTM TO T_SAIDA-ULTCON+11.
+          T_SAIDA-DIAULTCON = SY-DATUM - T_MKPF_201-BUDAT.
+        ENDIF.
+      ENDIF.
+
+
+*** Verifica se tem lote
+      READ TABLE T_MCHB WITH KEY MATNR = T_SAIDA-MATNR
+                                 WERKS = T_SAIDA-WERKS
+                                 LGORT = T_SAIDA-LGORT
+                                 BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        MOVE T_MCHB-CHARG TO T_SAIDA-CHARG.
+      ENDIF.
+
+
+      READ TABLE T_M101 WITH KEY MATNR = T_SAIDA-MATNR
+                                 WERKS = T_SAIDA-WERKS
+                                 BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        MOVE: T_M101-DMBTR TO T_SAIDA-DM101,
+              T_M101-MENGE TO T_SAIDA-QT101.
+        T_SAIDA-VL101 = T_M101-DMBTR / T_M101-MENGE.
+      ENDIF.
+
+      READ TABLE T_M201 WITH KEY MATNR = T_SAIDA-MATNR
+                                 WERKS = T_SAIDA-WERKS
+                                 BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        MOVE T_M201-MENGE TO T_SAIDA-QT201.
+      ENDIF.
+
+      IF NOT T_SAIDA-LABST IS INITIAL.
+        T_SAIDA-VALUN = T_SAIDA-SALK3 / T_SAIDA-LABST.
+      ENDIF.
+
+      IF NOT T_SAIDA-LABST IS INITIAL AND
+         NOT T_SAIDA-QT201 IS INITIAL.
+        T_SAIDA-ESTOQUE = ( T_SAIDA-LABST / ( T_SAIDA-QT201 / WG_DIAS ) ).
+      ENDIF.
+
+      CLEAR: TG_MSEG_2_101, TG_MSEG_2_201.
+      LOOP AT TG_MKPF_2.
+        IF TG_MSEG_2_101 IS INITIAL.
+          READ TABLE TG_MSEG_2_101
+            WITH KEY MBLNR = TG_MKPF_2-MBLNR
+                     MJAHR = TG_MKPF_2-MJAHR
+                     MATNR = T_SAIDA-MATNR
+                     WERKS = T_SAIDA-WERKS
+                     CHARG = SPACE
+                     BINARY SEARCH.
+          IF SY-SUBRC IS INITIAL.
+            WRITE: TG_MKPF_2-BUDAT TO T_SAIDA-ULTCOM.
+
+            CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+              EXPORTING
+                DATE1            = TG_MKPF_2-BUDAT
+                DATE2            = S_DATA-HIGH
+              IMPORTING
+                DATEDIFF         = WG_DIAS
+              EXCEPTIONS
+                INVALID_DATETIME = 1
+                OTHERS           = 2.
+            T_SAIDA-DIAULTCOM = WG_DIAS.
+
+            CLEAR: T_SAIDA-QT101.
+            LOOP AT TG_MSEG_2_101
+               WHERE MATNR EQ T_SAIDA-MATNR
+                 AND WERKS EQ T_SAIDA-WERKS
+                 AND LGORT EQ T_SAIDA-LGORT
+                 AND CHARG EQ SPACE.
+
+              ADD TG_MSEG_2_101-MENGE TO T_SAIDA-QT101.
+
+            ENDLOOP.
+          ENDIF.
+        ENDIF.
+
+        IF TG_MSEG_2_201 IS INITIAL.
+          READ TABLE TG_MSEG_2_201
+            WITH KEY MBLNR = TG_MKPF_2-MBLNR
+                     MJAHR = TG_MKPF_2-MJAHR
+                     MATNR = T_SAIDA-MATNR
+                     WERKS = T_SAIDA-WERKS
+                     CHARG = SPACE
+                     BINARY SEARCH.
+          IF SY-SUBRC IS INITIAL.
+            WRITE: TG_MKPF_2-BUDAT TO T_SAIDA-ULTCON.
+          ENDIF.
+
+          CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+            EXPORTING
+              DATE1            = TG_MKPF_2-BUDAT
+              DATE2            = S_DATA-HIGH
+            IMPORTING
+              DATEDIFF         = WG_DIAS
+            EXCEPTIONS
+              INVALID_DATETIME = 1
+              OTHERS           = 2.
+          T_SAIDA-DIAULTCON = WG_DIAS.
+        ENDIF.
+      ENDLOOP.
+
+      CLEAR: T_SAIDA-QT201.
+      LOOP AT TG_MSEG_2_201
+        WHERE MATNR EQ T_SAIDA-MATNR
+          AND WERKS EQ T_SAIDA-WERKS
+          AND LGORT EQ T_SAIDA-LGORT
+          AND CHARG EQ SPACE.
+        ADD TG_MSEG_2_201-MENGE TO T_SAIDA-QT201.
+      ENDLOOP.
+
+      CLEAR: WL_DIAS, T_SAIDA-MEDIA.
+
+      CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+        EXPORTING
+          DATE1            = S_DATA-LOW
+          DATE2            = S_DATA-HIGH
+        IMPORTING
+          DATEDIFF         = WG_DIAS
+        EXCEPTIONS
+          INVALID_DATETIME = 1
+          OTHERS           = 2.
+
+      WL_DIAS = WG_DIAS.
+      TRY.
+          T_SAIDA-MEDIA = T_SAIDA-QT201 / WL_DIAS.
+        CATCH CX_SY_ZERODIVIDE.
+      ENDTRY.
+
+      CLEAR: TG_S032_2.
+      READ TABLE TG_S032_2
+        WITH KEY MATNR = T_SAIDA-MATNR
+                 WERKS = T_SAIDA-WERKS
+                 LGORT = T_SAIDA-LGORT
+                 BINARY SEARCH.
+
+      TRY.
+          T_SAIDA-ESTOQUE = T_SAIDA-LABST / T_SAIDA-MEDIA.
+        CATCH CX_SY_ZERODIVIDE.
+      ENDTRY.
+      CLEAR: WL_ENMNG, WL_BDMNG, T_SAIDA-MATRES.
+      LOOP AT TG_RESB_2
+        WHERE MATNR EQ T_SAIDA-MATNR
+          AND WERKS EQ T_SAIDA-WERKS.
+
+        ADD TG_RESB_2-ENMNG TO WL_ENMNG.
+        ADD TG_RESB_2-BDMNG TO WL_BDMNG.
+      ENDLOOP.
+      T_SAIDA-MATRES = WL_BDMNG - WL_ENMNG.
+      READ TABLE TG_MARC_2
+        WITH KEY MATNR = T_SAIDA-MATNR
+                 WERKS = T_SAIDA-WERKS
+                 BINARY SEARCH.
+      T_SAIDA-WZEIT  = TG_MARC_2-WZEIT.
+      T_SAIDA-MINBE  = TG_MARC_2-MINBE.
+      T_SAIDA-OBS    = '_______________________________________________________________________________________________________'.
+
+      CLEAR: TG_MBEW_2.
+      READ TABLE TG_MBEW_2
+        WITH KEY MATNR = T_SAIDA-MATNR
+                 BWKEY = T_SAIDA-WERKS
+                  BINARY SEARCH.
+      T_SAIDA-VALUN = TG_MBEW_2-VERPR.
+
+      IF P_INVENT IS NOT INITIAL.
+        CLEAR: T_SAIDA-ULTCOM,
+               T_SAIDA-DIAULTCOM,
+               T_SAIDA-ULTCON,
+               T_SAIDA-DIAULTCON,
+               T_SAIDA-ESTOQUE,
+               T_SAIDA-QT201,
+               T_SAIDA-QT101,
+               T_SAIDA-MEDIA,
+               T_SAIDA-MATRES.
+      ENDIF.
+
+      APPEND T_SAIDA.
+    ELSE.
+
+    ENDIF.
+    CLEAR T_SAIDA.
+  ENDLOOP.
+
+  CLEAR: T_SAIDA.
+  LOOP AT TG_MCHB_2.
+    READ TABLE T_MARA WITH KEY MATNR = TG_MCHB_2-MATNR
+                               WERKS = TG_MCHB_2-WERKS
+                               LGORT = TG_MCHB_2-LGORT BINARY SEARCH.
+    MOVE-CORRESPONDING T_MARA TO T_SAIDA.
+    READ TABLE TG_MCH1_2
+      WITH KEY MATNR = TG_MCHB_2-MATNR
+               CHARG = TG_MCHB_2-CHARG.
+
+    MOVE: TG_MCHB_2-CLABS TO T_SAIDA-LABST,
+          TG_MCHB_2-CUMLM TO T_SAIDA-UMLME,
+          TG_MCHB_2-CINSM TO T_SAIDA-INSME,
+          TG_MCHB_2-CEINM TO T_SAIDA-EINME,
+          TG_MCHB_2-CSPEM TO T_SAIDA-SPEME,
+          TG_MCHB_2-CRETM TO T_SAIDA-RETME,
+          TG_MCHB_2-CHARG TO T_SAIDA-CHARG,
+          TG_MCH1_2-VFDAT TO T_SAIDA-MMSTD.
+
+    READ TABLE T_MBEW WITH KEY MATNR = T_SAIDA-MATNR
+                               BWKEY = T_SAIDA-WERKS
+                               BINARY SEARCH.
+    IF SY-SUBRC <> 0.
+      CLEAR T_MBEW.
+    ENDIF.
+
+
+    IF NOT T_SAIDA-LABST IS INITIAL.
+*      MOVE t_mbew-salk3 TO t_saida-salk3.
+      T_SAIDA-SALK3 = ( T_MBEW-SALK3 / T_MBEW-LBKUM ) * T_SAIDA-LABST.
+    ENDIF.
+
+    T_SAIDA-RUA   = T_MARA-LGPBE+0(2).
+    T_SAIDA-BOX   = T_MARA-LGPBE+2(3).
+    T_SAIDA-ANDAR = T_MARA-LGPBE+5(3).
+    T_SAIDA-POSIC = T_MARA-LGPBE+8(2).
+
+    T_SAIDA-BRGEW2 = T_SAIDA-BRGEW * T_SAIDA-LABST.
+    T_SAIDA-NTGEW2 = T_SAIDA-NTGEW * T_SAIDA-LABST.
+    T_SAIDA-VOLUM2 = T_SAIDA-VOLUM * T_SAIDA-LABST.
+
+
+
+    PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-UMLME CHANGING T_SAIDA-VAL1.
+    PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-INSME CHANGING T_SAIDA-VAL2.
+    PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-EINME CHANGING T_SAIDA-VAL3.
+    PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-SPEME CHANGING T_SAIDA-VAL4.
+    PERFORM Z_VALIDA_QNT_VALOR USING T_SAIDA-RETME CHANGING T_SAIDA-VAL5.
+    READ TABLE T_T001W WITH KEY WERKS = T_SAIDA-WERKS
+                                BINARY SEARCH.
+
+    MOVE: T_T001W-NAME1 TO T_SAIDA-NAME1,
+          T_T001W-WAERS TO T_SAIDA-WAERS.
+
+
+    READ TABLE T_M101 WITH KEY MATNR = T_SAIDA-MATNR
+                               WERKS = T_SAIDA-WERKS
+                               BINARY SEARCH.
+    IF SY-SUBRC = 0.
+      MOVE: T_M101-DMBTR TO T_SAIDA-DM101,
+            T_M101-MENGE TO T_SAIDA-QT101.
+      T_SAIDA-VL101 = T_M101-DMBTR / T_M101-MENGE.
+    ENDIF.
+
+
+
+    IF NOT T_SAIDA-LABST IS INITIAL.
+      T_SAIDA-VALUN = T_SAIDA-SALK3 / T_SAIDA-LABST.
+    ENDIF.
+
+    CLEAR: TG_MSEG_2_101, TG_MSEG_2_201.
+    LOOP AT TG_MKPF_2.
+      IF TG_MSEG_2_101 IS INITIAL.
+        READ TABLE TG_MSEG_2_101
+          WITH KEY MBLNR = TG_MKPF_2-MBLNR
+                   MJAHR = TG_MKPF_2-MJAHR
+                   MATNR = TG_MCHB_2-MATNR
+                   WERKS = TG_MCHB_2-WERKS
+                   CHARG = TG_MCHB_2-CHARG
+                   BINARY SEARCH.
+        IF SY-SUBRC IS INITIAL.
+          WRITE: TG_MKPF_2-BUDAT TO T_SAIDA-ULTCOM.
+
+          CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+            EXPORTING
+              DATE1            = TG_MKPF_2-BUDAT
+              DATE2            = S_DATA-HIGH
+            IMPORTING
+              DATEDIFF         = WG_DIAS
+            EXCEPTIONS
+              INVALID_DATETIME = 1
+              OTHERS           = 2.
+
+          T_SAIDA-DIAULTCOM = WG_DIAS.
+
+          CLEAR: T_SAIDA-QT101.
+          LOOP AT TG_MSEG_2_101
+             WHERE MATNR EQ TG_MCHB_2-MATNR
+               AND WERKS EQ TG_MCHB_2-WERKS
+               AND LGORT EQ TG_MCHB_2-LGORT
+               AND CHARG EQ TG_MCHB_2-CHARG.
+
+            ADD TG_MSEG_2_101-MENGE TO T_SAIDA-QT101.
+
+          ENDLOOP.
+        ENDIF.
+      ENDIF.
+      IF TG_MSEG_2_201 IS INITIAL.
+        READ TABLE TG_MSEG_2_201
+          WITH KEY MBLNR = TG_MKPF_2-MBLNR
+                   MJAHR = TG_MKPF_2-MJAHR
+                   MATNR = TG_MCHB_2-MATNR
+                   WERKS = TG_MCHB_2-WERKS
+                   CHARG = TG_MCHB_2-CHARG
+                   BINARY SEARCH.
+        IF SY-SUBRC IS INITIAL.
+          WRITE: TG_MKPF_2-BUDAT TO T_SAIDA-ULTCON.
+        ENDIF.
+
+        CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+          EXPORTING
+            DATE1            = TG_MKPF_2-BUDAT
+            DATE2            = S_DATA-HIGH
+          IMPORTING
+            DATEDIFF         = WG_DIAS
+          EXCEPTIONS
+            INVALID_DATETIME = 1
+            OTHERS           = 2.
+
+        T_SAIDA-DIAULTCON = WG_DIAS.
+      ENDIF.
+    ENDLOOP.
+    CLEAR: T_SAIDA-QT201.
+    LOOP AT TG_MSEG_2_201
+      WHERE MATNR EQ TG_MCHB_2-MATNR
+        AND WERKS EQ TG_MCHB_2-WERKS
+        AND LGORT EQ TG_MCHB_2-LGORT
+        AND CHARG EQ TG_MCHB_2-CHARG.
+      ADD TG_MSEG_2_201-MENGE TO T_SAIDA-QT201.
+    ENDLOOP.
+
+    CLEAR: WL_DIAS, T_SAIDA-MEDIA.
+
+
+    CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+      EXPORTING
+        DATE1            = S_DATA-LOW
+        DATE2            = S_DATA-HIGH
+      IMPORTING
+        DATEDIFF         = WG_DIAS
+      EXCEPTIONS
+        INVALID_DATETIME = 1
+        OTHERS           = 2.
+
+    WL_DIAS = WG_DIAS.
+
+    TRY.
+        T_SAIDA-MEDIA = T_SAIDA-QT201 / WL_DIAS.
+      CATCH CX_SY_ZERODIVIDE.
+    ENDTRY.
+
+    CLEAR: TG_S032_2.
+    READ TABLE TG_S032_2
+      WITH KEY MATNR = TG_MCHB_2-MATNR
+               WERKS = TG_MCHB_2-WERKS
+               LGORT = TG_MCHB_2-LGORT
+               BINARY SEARCH.
+
+    TRY.
+        T_SAIDA-ESTOQUE = TG_MCHB_2-CLABS / T_SAIDA-MEDIA.
+      CATCH CX_SY_ZERODIVIDE.
+    ENDTRY.
+    CLEAR: WL_ENMNG, WL_BDMNG, T_SAIDA-MATRES.
+    LOOP AT TG_RESB_2
+      WHERE MATNR EQ TG_MCHB_2-MATNR
+        AND WERKS EQ TG_MCHB_2-WERKS.
+
+      ADD TG_RESB_2-ENMNG TO WL_ENMNG.
+      ADD TG_RESB_2-BDMNG TO WL_BDMNG.
+    ENDLOOP.
+    T_SAIDA-MATRES = WL_BDMNG - WL_ENMNG.
+    READ TABLE TG_MARC_2
+      WITH KEY MATNR = TG_MCHB_2-MATNR
+               WERKS = TG_MCHB_2-WERKS
+               BINARY SEARCH.
+    T_SAIDA-WZEIT  = TG_MARC_2-WZEIT.
+    T_SAIDA-MINBE  = TG_MARC_2-MINBE.
+    T_SAIDA-LABST  = TG_MCHB_2-CLABS.
+    T_SAIDA-OBS    = '_______________________________________________________________________________________________________'.
+
+    CLEAR: TG_MBEW_2.
+    READ TABLE TG_MBEW_2
+    WITH KEY MATNR = T_SAIDA-MATNR
+             BWKEY = T_SAIDA-WERKS
+              BINARY SEARCH.
+    T_SAIDA-VALUN = TG_MBEW_2-VERPR.
+
+    IF P_INVENT IS NOT INITIAL.
+      CLEAR: T_SAIDA-ULTCOM,
+             T_SAIDA-DIAULTCOM,
+             T_SAIDA-ULTCON,
+             T_SAIDA-DIAULTCON,
+             T_SAIDA-ESTOQUE,
+             T_SAIDA-QT201,
+             T_SAIDA-QT101,
+             T_SAIDA-MEDIA,
+             T_SAIDA-MATRES.
+    ENDIF.
+
+    APPEND T_SAIDA.
+
+  ENDLOOP.
+
+
+ENDFORM.                    " Z_ORGANIZA_DADOS
+*&---------------------------------------------------------------------*
+*&      Form  Z_INICIA_ALV
+*&---------------------------------------------------------------------*
+FORM Z_INICIA_ALV .
+
+  PERFORM F_CONSTRUIR_CABECALHO.
+  PERFORM Z_BUSCAR_VARIENTE_DEFAULT.
+
+  PERFORM Z_CARREGAR_EVENTOS USING: SLIS_EV_USER_COMMAND 'COMANDO',
+                                    SLIS_EV_TOP_OF_PAGE  'XTOP_OF_PAGE'.
+
+  PERFORM Z_MONTA_FIELDCAT.
+
+
+  PERFORM Z_ORGANIZA_AGRUPAMENTO.
+
+  W_TIT = 'Dados de Materiais e Estoque'.
+
+  LAYOUT-ZEBRA                  = 'X'.
+*  layout-colwidth_optimize      = 'X'.
+  PRINT-NO_PRINT_LISTINFOS      = 'X'.
+  VARIANTE-VARIANT              = P_VARIA.
+
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+    EXPORTING
+      I_CALLBACK_PROGRAM = REPID
+*     i_callback_pf_status_set = 'F_PF_STATUS'
+*     i_callback_user_command  = 'COMANDO'
+      IT_FIELDCAT        = FIELDCAT[]
+      IT_SORT            = SORT[]
+      IS_LAYOUT          = LAYOUT
+      I_GRID_TITLE       = W_TIT
+      I_DEFAULT          = 'X'
+      I_SAVE             = 'A'
+      IT_EVENTS          = EVENTS
+      IS_VARIANT         = VARIANTE
+      IS_PRINT           = PRINT
+    TABLES
+      T_OUTTAB           = T_SAIDA
+    EXCEPTIONS
+      PROGRAM_ERROR      = 1
+      OTHERS             = 2.
+  IF SY-SUBRC <> 0.
+    MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.
+
+
+ENDFORM.                    " Z_INICIA_ALV
+*&---------------------------------------------------------------------*
+*&      Form  Z_BUSCAR_VARIENTE_DEFAULT
+*&---------------------------------------------------------------------*
+FORM Z_BUSCAR_VARIENTE_DEFAULT .
+
+  CLEAR: VARIANTE.
+  REPID = SY-REPID.
+
+  VARIANTE-REPORT = REPID.
+
+  IF P_VARIA IS INITIAL.
+
+    CALL FUNCTION 'REUSE_ALV_VARIANT_DEFAULT_GET'
+      EXPORTING
+        I_SAVE     = 'A'
+      CHANGING
+        CS_VARIANT = VARIANTE
+      EXCEPTIONS
+        NOT_FOUND  = 2.
+    IF SY-SUBRC = 0.
+      P_VARIA = VARIANTE-VARIANT.
+    ENDIF.
+  ENDIF.
+
+
+ENDFORM.                    " Z_BUSCAR_VARIENTE_DEFAULT
+*&---------------------------------------------------------------------*
+*&      Form  z_carregar_eventos
+*&---------------------------------------------------------------------*
+FORM Z_CARREGAR_EVENTOS USING    NAME FORM.
+  CLEAR XS_EVENTS.
+  XS_EVENTS-NAME = NAME.
+  XS_EVENTS-FORM = FORM.
+  APPEND XS_EVENTS TO EVENTS.
+ENDFORM.                    " z_carregar_eventos
+*&---------------------------------------------------------------------*
+*&      Form  Z_MONTA_FIELDCAT
+*&---------------------------------------------------------------------*
+FORM Z_MONTA_FIELDCAT .
+
+  REFRESH: FIELDCAT.
+
+  PERFORM Z_DEFINE_FIELDCAT USING:
+        'MATNR'          'T_SAIDA' 'MARA'  'Material             ' ''  '' 'X' '' ''  '',
+        'BISMT'          'T_SAIDA' 'MARA'  'Nº material antigo   ' ''  '' 'X' '' ''  '',
+        'MAKTX'          'T_SAIDA' 'MAKT'  'Descrição            ' ''  '' ''  '' ''  '',
+        'WERKS'          'T_SAIDA' 'MARD'  'centro               ' ''  '' ''  '' ''  '',
+        'LGORT'          'T_SAIDA' 'MARD'  'Depósito             ' ''  '' ''  '' ''  '',
+        'MEINS'          'T_SAIDA' 'MARA'  'UM                   ' ''  '' ''  '' ''  '',
+
+        'BRGEW'          'T_SAIDA' 'MARA'  'Peso bruto unitário  ' ''  '' ''  '' ''  '',
+        'BRGEW2'         'T_SAIDA' 'MARA'  'Peso bruto total     ' ''  '' ''  '' ''  'BRGEW',
+        'NTGEW'          'T_SAIDA' 'MARA'  'Peso líquido unitário' ''  '' ''  '' ''  '',
+        'NTGEW2'         'T_SAIDA' 'MARA'  'Peso líquido total   ' ''  '' ''  '' ''  'NTGEW',
+        'VOLUM'          'T_SAIDA' 'MARA'  'Volume unitário      ' ''  '' ''  '' ''  '',
+        'VOLUM2'         'T_SAIDA' 'MARA'  'Volume total         ' ''  '' ''  '' ''  'VOLUM',
+
+        'LABST'          'T_SAIDA' 'MARD'  'Utilização livre     ' ''  '' ''  '' ''  '',
+        'WAERS'          'T_SAIDA' 'T001'  'Moeda                ' 'X' '' ''  '' ''  '', " campo moeda
+        'SALK3'          'T_SAIDA' 'MBEW'  'Val.utiliz.livre     ' 'X' '' ''  '' ''  'SALK3',
+        'VALUN'          'T_SAIDA' 'MBEW'  'Valor unitário (Custo médio)' '' '' ''  '' ''  'SALK3',
+        'NAME1'          'T_SAIDA' 'T001W' 'Descrição do centro  ' 'X' '' ''  '' ''  '',
+        'MTART'          'T_SAIDA' 'MARA'  'Tp.Mat               ' ''  '' ''  '' ''  '',
+        'MTBEZ'          'T_SAIDA' 'T134T' 'Denominação          ' ''  '' ''  '' ''  '',
+        'LGPBE'          'T_SAIDA' 'MARD'  'Posição no depósito  ' ''  '' ''  '' ''  '',
+        'RUA'            'T_SAIDA' 'MARD'  'Rua                  ' ''  '' ''  '' ''  'LGPBE',
+        'BOX'            'T_SAIDA' 'MARD'  'BOX                  ' ''  '' ''  '' ''  'LGPBE',
+        'ANDAR'          'T_SAIDA' 'MARD'  'Andar                ' ''  '' ''  '' ''  'LGPBE',
+        'POSIC'          'T_SAIDA' 'MARD'  'Posição              ' ''  '' ''  '' ''  'LGPBE',
+        'MATKL'          'T_SAIDA' 'MARA'  'Grupo Merc.          ' ''  '' ''  '' ''  '',
+        'WGBEZ60'        'T_SAIDA' 'T023T' 'Denominação          ' ''  '' ''  '' ''  '',
+        'CHARG'          'T_SAIDA' 'MCHB'  'Lote                 ' ''  '' ''  '' ''  '',
+        'EISLO'          'T_SAIDA' 'MARC'  'Estoque mínimo       ' ''  '' ''  '' ''  '',
+        'MABST'          'T_SAIDA' 'MARC'  'Estoque máximo       ' ''  '' ''  '' ''  '',
+        'EISBE'          'T_SAIDA' 'MARC'  'Estoque de segurança ' ''  '' ''  '' ''  '',
+        'MMSTD'          'T_SAIDA' 'MARC'  'Prazo de validade    ' ''  '' ''  '' ''  '',
+
+        'ULTCOM'         'T_SAIDA' '    '  'Última compra        ' '' '' ''  '' ''  '', "
+        'DIAULTCOM'      'T_SAIDA' '    '  'Qtde dias último compra' '' '' ''  '' ''  '', "
+
+        'ULTCON'         'T_SAIDA' '    '  'Último consumo      ' '' '' ''  '' ''  '', "
+        'DIAULTCON'      'T_SAIDA' '    '  'Qtde dia último consumo' '' '' ''  '' ''  '', "
+        'ESTOQUE'          'T_SAIDA' 'MARD'  'Estoque para quantos dias?' ''  '' ''  '' ''  'LABST', "
+
+        'QT201'          'T_SAIDA' 'MSEG'  'Qtde consumida no período selecionado' ''  '' ''  '' ''  'MENGE', "
+        'QT101'          'T_SAIDA' 'MSEG'  'Qtde comprada no período selecionado' ''  '' ''  '' ''  'MENGE',  "
+
+        'DM101'          'T_SAIDA' 'MSEG'  'Valor total          ' ''  '' ''  '' ''  'DMBTR',
+        'VL101'          'T_SAIDA' 'MSEG'  'Valor médio          ' ''  '' ''  '' ''  'DMBTR',
+
+        'UMLME'          'T_SAIDA' 'MARD'  'Trânsito e TE        ' 'X' '' ''  '' ''  'LABST',
+        'VAL1'           'T_SAIDA' 'MBEW'  'Val.em trâns.e Trf   ' 'X' '' ''  '' '' 'SALK3',
+        'INSME'          'T_SAIDA' 'MARD'  'Em contr.qualidade   ' 'X' '' ''  '' ''   'LABST',
+        'VAL2'           'T_SAIDA' 'MBEW'  'Valor verif.qual.    ' 'X' '' ''  '' '' 'SALK3',
+        'EINME'          'T_SAIDA' 'MARD'  'Restrito             ' 'X' '' ''  '' ''  'LABST',
+        'VAL3'           'T_SAIDA' 'MBEW'  'Val.util.restrita    ' 'X' '' ''  '' '' 'SALK3',
+        'SPEME'          'T_SAIDA' 'MARD'  'Bloqueado            ' 'X' '' ''  '' ''  'LABST',
+        'VAL4'           'T_SAIDA' 'MBEW'  'Val.estoque bloq.    ' 'X' '' ''  '' '' 'SALK3',
+        'RETME'          'T_SAIDA' 'MARD'  'Devoluções           ' 'X' '' ''  '' ''  'LABST',
+        'VAL5'           'T_SAIDA' 'MBEW'  'Val.bloq.retorno     ' 'X' '' ''  '' '' 'SALK3',
+        'BWESB'          'T_SAIDA' 'MARD'  'Estq.blq.aval.EM     ' 'X' '' ''  '' ''  'LABST',
+        'VAL6'           'T_SAIDA' 'MBEW'  'Valor estq.blq.EM    ' 'X' '' ''  '' '' 'SALK3',
+        'GLGMG'          'T_SAIDA' 'MARD'  'Vasilhame vinc.      ' 'X' '' ''  '' ''  'LABST',
+        'VAL7'           'T_SAIDA' 'MBEW'  'Valor EstqVasVinc.   ' 'X' '' ''  '' '' 'SALK3',
+        'TRAME'          'T_SAIDA' 'MARD'  'Estoque trânsito     ' 'X' '' ''  '' ''  'LABST',
+        'VAL8'           'T_SAIDA' 'MBEW'  'Valor em trânsito    ' 'X' '' ''  '' '' 'SALK3',
+        'UMLMC'          'T_SAIDA' 'MARD'  'Em transferênc.      ' 'X' '' ''  '' ''  'LABST',
+        'VAL9'           'T_SAIDA' 'MBEW'  'Val.transf.estoque   ' 'X' '' ''  '' '' 'SALK3',
+        'STEUC'          'T_SAIDA' 'MARC'  'NCN                  ' 'X' '' ''  '' ''  '',
+*        'VFDAT'          'T_SAIDA' 'MCH1'  'Dt. vecimento'         'X' '' ''  '' ''  'VFDAT',
+*        'DTUCOMP'        'T_SAIDA' 'MKPF'  'Dt. última compra'     'X' '' ''  '' ''  'BUDAT',
+*        'DIAUCOMP'       'T_SAIDA' ' '     'Dias última compra'    'X' '' ''  '' ''  '',
+*        'QTDCOMP'        'T_SAIDA' 'MSEG'  'Qtd. comprada'         'X' '' ''  '' ''  'MENGE',
+*        'QTDCONS'        'T_SAIDA' 'MSEG'  'Qtd. consumida'        'X' '' ''  '' ''  'MENGE',
+        'MEDIA'          'T_SAIDA' 'MSEG'  'Media de consumo'      'X' '' ''  '' ''  'MENGE',
+*        'ULCONS'         'T_SAIDA' 'S032'  'último consumo'        'X' '' ''  '' ''  'LETZTVER',
+*        'DIAUCONS'       'T_SAIDA' ' '     'Dias último consumo'   'X' '' ''  '' ''  '',
+*        'ESTOQDIA'       'T_SAIDA' ' '     'Estq. quantos dias'    'X' '' ''  '' ''  '',
+        'MATRES'         'T_SAIDA' 'RESB'  'Material reservado'    'X' '' ''  '' ''  'BDMNG',
+        'MINBE'          'T_SAIDA' 'MARC'  'Ponto de reabastencimento' 'X' '' ''  '' ''  'MINBE',
+        'WZEIT'          'T_SAIDA' 'MARC'  'Tempo total de reposição'  'X' '' ''  '' ''  'WZEIT',
+        'OBS'          'T_SAIDA' ' '  'Obs.'  'X' '' ''  '' '50'  ' '.
+
+
+
+ENDFORM.                    " Z_MONTA_FIELDCAT
+
+*----------------------------------------------------------------------*
+FORM Z_DEFINE_FIELDCAT USING
+   X_FIELD X_TAB X_REF X_TEXT X_SUM X_JUST X_KEY X_HOTSPOT X_OUTPUTLEN
+   X_REF2.
+*----------------------------------------------------------------------*
+*
+  DATA: WL_TAM TYPE I.
+
+  WL_TAM = STRLEN( X_TEXT ).
+  WL_TAM = WL_TAM + 1.
+  FIELDCAT-FIELDNAME     = X_FIELD.
+  FIELDCAT-TABNAME       = X_TAB.
+  FIELDCAT-REF_TABNAME   = X_REF.
+  FIELDCAT-DO_SUM        = X_SUM.
+  FIELDCAT-JUST          = X_JUST.
+  FIELDCAT-KEY           = X_KEY.
+  FIELDCAT-HOTSPOT       = X_HOTSPOT.
+  FIELDCAT-SELTEXT_L     =
+  FIELDCAT-SELTEXT_M     =
+  FIELDCAT-SELTEXT_S     =
+  FIELDCAT-REPTEXT_DDIC  = X_TEXT.
+
+  IF NOT X_REF2 IS INITIAL.
+    FIELDCAT-REF_FIELDNAME   = X_REF2.
+  ENDIF.
+  IF WL_TAM > X_OUTPUTLEN.
+    FIELDCAT-OUTPUTLEN     =   WL_TAM.
+  ELSE.
+* Início Alteração Ricardo Furst.
+    FIELDCAT-OUTPUTLEN     = X_OUTPUTLEN.
+  ENDIF.
+
+
+* Fim Alteração Ricardo Furst.
+
+  IF X_FIELD = 'ICON'.
+    FIELDCAT-OUTPUTLEN = '4'.
+    FIELDCAT-ICON = 'X'.
+  ENDIF.
+  IF X_FIELD = 'NRTC_DESC'.
+    FIELDCAT-LOWERCASE = 'X'.
+  ENDIF.
+
+  APPEND FIELDCAT.
+  CLEAR FIELDCAT.
+*
+ENDFORM.                               " z_define_FIELDCAT
+*&---------------------------------------------------------------------*
+*&      Form  Z_VALIDA_QNT_VALOR
+*&---------------------------------------------------------------------*
+
+FORM Z_VALIDA_QNT_VALOR  USING    P_QNT
+                         CHANGING P_VAL.
+
+  IF NOT P_QNT IS INITIAL.
+    P_VAL = T_MBEW-STPRS * P_QNT.
+  ENDIF.
+
+ENDFORM.                    " Z_VALIDA_QNT_VALOR
+*&---------------------------------------------------------------------*
+*&      Form  Z_ORGANIZA_AGRUPAMENTO
+*&---------------------------------------------------------------------*
+FORM Z_ORGANIZA_AGRUPAMENTO .
+
+  SORT-FIELDNAME = 'MATNR'.
+  SORT-SUBTOT = 'X'.
+  APPEND SORT.
+
+*  sort-fieldname = 'WERKS'.
+*  sort-subtot = ''.
+*  append sort.
+*
+*  sort-fieldname = 'LGORT'.
+*  sort-subtot = ''.
+
+  SORT-FIELDNAME = 'MAKTX'.
+  SORT-SUBTOT = ''.
+
+  SORT-FIELDNAME = 'BISMT'.
+  SORT-SUBTOT = ''.
+  APPEND SORT.
+ENDFORM.                    " Z_ORGANIZA_AGRUPAMENTO
+*---------------------------------------------------------------------*
+*       FORM x_top_of_page                                            *
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+FORM XTOP_OF_PAGE.                                          "#EC CALLED
+
+  CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
+    EXPORTING
+      IT_LIST_COMMENTARY = T_TOP.
+*            I_LOGO             = 'CLARO_50'.
+
+ENDFORM. "X_TOP_PAGE
+
+*endform.                    " INICIAR_VARIAVES
+*&---------------------------------------------------------------------*
+*&      Form  F_CONSTRUIR_CABECALHO
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_0510   text
+*      -->P_TEXT_002  text
+*----------------------------------------------------------------------*
+FORM F_CONSTRUIR_CABECALHO.
+
+  DATA: LS_LINE           TYPE SLIS_LISTHEADER,
+        WL_T001K          TYPE T001K,
+        WL_DATA_LOW(30),
+        WL_DATA_HIGHT(30),
+        WL_DAYS(5).
+
+  CALL FUNCTION '/SDF/CMO_DATETIME_DIFFERENCE'
+    EXPORTING
+      DATE1            = S_DATA-LOW
+      DATE2            = S_DATA-HIGH
+    IMPORTING
+      DATEDIFF         = WG_DIAS
+    EXCEPTIONS
+      INVALID_DATETIME = 1
+      OTHERS           = 2.
+
+  WL_DAYS = WG_DIAS.
+  LS_LINE-KEY = 'Período'.
+  CONCATENATE S_DATA-LOW+6(2) S_DATA-LOW+4(2) S_DATA-LOW(4) INTO WL_DATA_LOW SEPARATED BY '/'.
+  CONCATENATE S_DATA-HIGH+6(2) S_DATA-HIGH+4(2) S_DATA-HIGH(4) INTO WL_DATA_HIGHT SEPARATED BY '/'.
+  CONDENSE WL_DATA_LOW NO-GAPS.
+  CONDENSE WL_DATA_HIGHT NO-GAPS.
+  CONCATENATE 'Período:' WL_DATA_LOW 'á' WL_DATA_HIGHT '=' WL_DAYS 'dias'   INTO LS_LINE-INFO SEPARATED BY SPACE.
+*  ls_line-info =
+  LS_LINE-TYP = 'A'.
+  APPEND LS_LINE TO T_TOP.
+
+  CLEAR LS_LINE.
+  SELECT SINGLE *
+    FROM T001K
+    INTO WL_T001K
+     WHERE BWKEY IN S_WERKS.
+
+  IF SY-SUBRC IS INITIAL.
+    SELECT SINGLE BUTXT
+      FROM T001
+      INTO LS_LINE-INFO
+       WHERE BUKRS EQ WL_T001K-BUKRS.
+    LS_LINE-KEY = 'Empresa:'.
+    CONCATENATE 'Empresa: ' LS_LINE-INFO INTO LS_LINE-INFO SEPARATED BY SPACE.
+    LS_LINE-TYP = 'A'.
+    APPEND LS_LINE TO T_TOP.
+  ENDIF.
+
+  CLEAR LS_LINE.
+  SELECT SINGLE NAME1
+    FROM T001W
+    INTO LS_LINE-INFO
+     WHERE WERKS IN S_WERKS.
+
+  IF SY-SUBRC IS INITIAL.
+    LS_LINE-KEY = 'Filial:'.
+    CONCATENATE 'Filial: ' LS_LINE-INFO INTO LS_LINE-INFO SEPARATED BY SPACE.
+    LS_LINE-TYP  = 'A'.
+    APPEND LS_LINE TO T_TOP.
+  ENDIF.
+
+  CLEAR LS_LINE.
+  SELECT SINGLE LGOBE
+    FROM T001L
+    INTO LS_LINE-INFO
+     WHERE LGORT IN S_LGORT.
+  IF SY-SUBRC IS INITIAL.
+    LS_LINE-KEY = 'Depósito:'.
+    CONCATENATE 'Depósito: ' LS_LINE-INFO INTO LS_LINE-INFO SEPARATED BY SPACE.
+    LS_LINE-TYP  = 'A'.
+    APPEND LS_LINE TO T_TOP.
+  ENDIF.
+
+ENDFORM.                    " F_CONSTRUIR_CABECALHO

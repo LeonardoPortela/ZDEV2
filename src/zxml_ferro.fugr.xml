@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Importação de arquivo XML</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZXML_FERROF01</SOBJ_NAME>
+    <SOBJ_NAME>LZXML_FERROTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZXML_FERRO</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_LES_INBOUND_PROC_XML_FERRO</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>XML</PARAMETER>
+       <DBSTRUCT>ZEXML_FERRO</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>XML</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

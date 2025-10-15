@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Integração COUPA</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFGPM0001TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFGPM0001</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFMPM_INTEGRA_COUPA</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>AUFNR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AUFNR</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>AUFNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

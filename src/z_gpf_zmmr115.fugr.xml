@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo de Função ZMMR115</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZ_GPF_ZMMR115TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZ_GPF_ZMMR115</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_LANC_MASS_ZMMR115</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CNPJ</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LFA1-STCD1</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ANO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>GJAHR</TYP>
+      </RSIMP>
+     </IMPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>I_CHAVE</PARAMETER>
+       <TYP>ZLIST_CHAVENFE</TYP>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CNPJ</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ANO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CHAVE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,542 @@
+FUNCTION Z_IM_ESTRATEGIA_LISTA.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     VALUE(V_USUARIO) LIKE  SY-UNAME
+*"     VALUE(V_KOSTL) TYPE  KOSTL OPTIONAL
+*"     VALUE(V_LOTE) TYPE  ZIM01_SOL_AP_INV-LOTE OPTIONAL
+*"     VALUE(V_COD_GPO) TYPE  ZIM01_SOL_AP_INV-COD_GPO OPTIONAL
+*"     VALUE(V_FASE) TYPE  ZIM01_SOL_AP_INV-FASE OPTIONAL
+*"     VALUE(V_ANO) TYPE  ZIM01_SOL_AP_INV-ANO OPTIONAL
+*"     VALUE(V_BUZEI) TYPE  ZIM01_SOL_AP_INV-BUZEI OPTIONAL
+*"  EXPORTING
+*"     VALUE(MSG) TYPE  CHAR50
+*"  TABLES
+*"      T_LOTES STRUCTURE  ZFI_GRU_INV
+*"      T_ESTRA STRUCTURE  ZFI_ESTRATEGIA_ZIM OPTIONAL
+*"      T_DOCS STRUCTURE  ZIM01_SOL_AP_INV OPTIONAL
+*"----------------------------------------------------------------------
+
+*----------------------------------------------------------------------*
+* TYPE POOLS
+*----------------------------------------------------------------------*
+  TYPE-POOLS: ICON.
+
+  TYPES:
+    BEGIN OF TY_T001,
+      BUKRS TYPE T001-BUKRS,
+      BUTXT TYPE T001-BUTXT,
+      LAND1 TYPE T001-LAND1,
+    END OF TY_T001.
+
+*&--------------------------------------------------------------------&*
+*& Declaração de tabelas e Work Areas                                 &*
+*&--------------------------------------------------------------------&*
+  DATA: XTOTAL     TYPE ZIM01_SOL_AP_INV-VLR_TOTAL,
+        XTOTALF    TYPE ZIM01_SOL_AP_INV-VLR_TOTAL,
+        TABIX      TYPE SY-TABIX,
+        V_ANOP     TYPE ZIM01_SOL_AP_INV-ANO,
+        V_FLAG9(1),
+        VFLAG(1).
+
+  DATA: RA_FASE TYPE RANGE OF ZIM12_APROV-FASE,
+        WA_FASE LIKE LINE OF RA_FASE.
+
+  DATA: TG_LOTES TYPE TABLE OF ZFI_GRU_INV WITH HEADER LINE,
+        TG_DOCS  TYPE TABLE OF ZIM01_SOL_AP_INV,
+        IT_ESTRA TYPE TABLE OF ZFI_ESTRATEGIA_ZIM.
+
+** Criação de tabela dinamica
+  DATA:
+    WA_T001            TYPE TY_T001,
+    WA_ESTRA           TYPE ZFI_ESTRATEGIA_ZIM,
+    W_ESTRA            TYPE ZFI_ESTRATEGIA_ZIM,
+    WA_DOCS            TYPE ZIM01_SOL_AP_INV,
+    WA_AGRU            TYPE ZIM01_SOL_AP_INV,
+    WA_DETA            TYPE ZIM01_SOL_AP_INV,
+
+    WA_ZIM12_APROV     TYPE ZIM12_APROV,
+    WA_ZIM12_APROV_INV TYPE ZIM12_APROV_INV,
+
+    WA_ZIM12_AVAL      TYPE ZIM12_AVAL,
+    WA_ZIM12_AVAL_INV  TYPE ZIM12_AVAL_INV,
+
+    IT_T001            TYPE TABLE OF TY_T001,
+    IT_DETA            TYPE TABLE OF ZIM01_SOL_AP_INV,
+    IT_AGRU            TYPE TABLE OF ZIM01_SOL_AP_INV,
+
+    IT_ZIM12_APROV_INV TYPE TABLE OF ZIM12_APROV_INV,
+    IT_ZIM12_APROV     TYPE TABLE OF ZIM12_APROV,
+
+    IT_ZIM12_AVAL_INV  TYPE TABLE OF ZIM12_AVAL_INV,
+    IT_ZIM12_AVAL      TYPE TABLE OF ZIM12_AVAL.
+
+
+  DATA: VFLG_ICO(1),
+        VACHOU(1),
+        VACHOU_NADA(1).
+
+  V_ANOP = V_ANO.
+  IF V_ANOP IS INITIAL.
+    V_ANOP = '2019'.
+  ENDIF.
+  IF V_KOSTL IS NOT INITIAL OR V_BUZEI = 999.
+    IF V_LOTE IS NOT INITIAL.
+      IF V_BUZEI = 999. "aprovados
+        SELECT *
+        FROM ZIM01_SOL_AP_INV
+        INTO CORRESPONDING FIELDS OF TABLE IT_DETA
+        WHERE ANO   EQ V_ANOP
+        AND   LOTE  EQ V_LOTE
+        AND   KOSTL EQ V_KOSTL
+        AND   ANO   EQ V_ANO
+        AND   STATUS_APROV EQ  '1'.
+      ELSE.
+        SELECT *
+          FROM ZIM01_SOL_AP_INV
+          INTO CORRESPONDING FIELDS OF TABLE IT_DETA
+          WHERE ANO   EQ V_ANOP
+          AND   KOSTL EQ V_KOSTL
+          AND   LOTE  EQ V_LOTE.
+        SELECT *
+           FROM ZIM01_SOL_AP_INV
+           APPENDING CORRESPONDING FIELDS OF TABLE IT_DETA
+           WHERE ANO   EQ V_ANOP
+           AND   KOSTL EQ V_KOSTL
+           AND   LOTE3 EQ V_LOTE.
+      ENDIF.
+    ELSE.
+      SELECT * UP TO 1 ROWS
+        FROM ZIM01_SOL_AP_INV
+        INTO CORRESPONDING FIELDS OF TABLE IT_DETA
+        WHERE STATUS_CTA   EQ '2'
+*        AND   POSNR   EQ ''
+        AND   ANO     EQ V_ANOP
+        AND   KOSTL   EQ V_KOSTL
+        AND   BUZEI   EQ V_BUZEI
+        AND   COD_GPO EQ V_COD_GPO
+        AND   FASE    EQ V_FASE
+        AND   BUZEI   EQ V_BUZEI
+        AND   ( EXISTS ( SELECT *
+                    FROM ZIM12_APROV
+                    WHERE ZIM12_APROV~BUKRS = ZIM01_SOL_AP_INV~BUKRS
+                    AND   ZIM12_APROV~WERKS = ZIM01_SOL_AP_INV~GSBER
+                    AND   ZIM12_APROV~KOSTL = ZIM01_SOL_AP_INV~KOSTL ) ).
+    ENDIF.
+
+  ELSE.
+    SELECT *
+      FROM ZIM01_SOL_AP_INV
+      INTO CORRESPONDING FIELDS OF TABLE IT_DETA
+      WHERE ( STATUS_APROV EQ  ' ' OR  STATUS_APROV EQ  '9' )
+      AND   STATUS_CTA   EQ '2'
+      AND   POSNR EQ ''
+      AND   ANO   GE '2018'
+      AND   (  EXISTS ( SELECT *
+                  FROM ZIM12_APROV
+                  WHERE ZIM12_APROV~BUKRS = ZIM01_SOL_AP_INV~BUKRS
+                  AND   ZIM12_APROV~WERKS = ZIM01_SOL_AP_INV~GSBER
+                  AND   ZIM12_APROV~KOSTL = ZIM01_SOL_AP_INV~KOSTL
+                  AND   ZIM12_APROV~APROVADOR  = V_USUARIO ) OR
+               EXISTS ( SELECT *
+                  FROM ZIM12_AVAL
+                  WHERE ZIM12_AVAL~BUKRS      = ZIM01_SOL_AP_INV~BUKRS
+                  AND   ZIM12_AVAL~APROVADOR  = V_USUARIO ) ).
+
+  ENDIF.
+  CHECK IT_DETA[] IS NOT INITIAL.
+
+  SELECT *
+    FROM ZIM12_APROV_INV
+    INTO TABLE IT_ZIM12_APROV_INV
+    FOR ALL ENTRIES IN IT_DETA
+    WHERE BUKRS = IT_DETA-BUKRS
+    AND   WERKS = IT_DETA-GSBER
+    AND   KOSTL = IT_DETA-KOSTL.
+
+  SELECT *
+    FROM ZIM12_APROV
+    INTO TABLE IT_ZIM12_APROV
+    FOR ALL ENTRIES IN IT_DETA
+    WHERE BUKRS = IT_DETA-BUKRS
+    AND   WERKS = IT_DETA-GSBER
+    AND   KOSTL = IT_DETA-KOSTL.
+
+  SELECT *
+   FROM ZIM12_AVAL_INV
+   INTO TABLE IT_ZIM12_AVAL_INV
+   FOR ALL ENTRIES IN IT_DETA
+   WHERE BUKRS   EQ IT_DETA-BUKRS.
+
+  SELECT *
+    FROM ZIM12_AVAL
+    INTO TABLE IT_ZIM12_AVAL
+    FOR ALL ENTRIES IN IT_DETA
+    WHERE BUKRS   EQ IT_DETA-BUKRS
+    AND   GPO_CMP EQ 3.
+
+  SELECT BUKRS BUTXT LAND1
+    FROM T001
+    INTO TABLE IT_T001
+    FOR ALL ENTRIES IN IT_AGRU
+    WHERE  BUKRS EQ IT_AGRU-BUKRS.
+
+  SORT: IT_T001             BY BUKRS,
+        IT_ZIM12_APROV      BY BUKRS WERKS KOSTL NIVEL FASE,
+        IT_ZIM12_APROV_INV  BY BUKRS WERKS KOSTL NIVEL FASE LOTE ASCENDING DATA_APROV DESCENDING,
+
+        IT_ZIM12_AVAL       BY BUKRS NIVEL ,
+        IT_ZIM12_AVAL_INV   BY BUKRS NIVEL LOTE ASCENDING DATA_APROV DESCENDING.
+
+  REFRESH IT_ESTRA.
+
+  IT_AGRU[] = IT_DETA[].
+  SORT IT_AGRU BY BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE LOTE.
+  SORT IT_DETA BY BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE LOTE.
+  DELETE ADJACENT DUPLICATES FROM IT_AGRU COMPARING BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE LOTE.
+
+  LOOP AT IT_AGRU INTO WA_AGRU.
+    "
+    READ TABLE IT_T001 INTO WA_T001 WITH KEY BUKRS = WA_AGRU-BUKRS BINARY SEARCH.
+    CONCATENATE WA_AGRU-BUKRS '-' WA_T001-BUTXT INTO  TG_LOTES-EMPRESA.
+    TG_LOTES-WERKS     = WA_AGRU-GSBER.
+    TG_LOTES-ANO       = WA_AGRU-ANO.
+    TG_LOTES-SAFRA     = WA_AGRU-SAFRA.
+    TG_LOTES-SAFRA2    = WA_AGRU-SAFRA2.
+    TG_LOTES-KOSTL     = WA_AGRU-KOSTL.
+    TG_LOTES-BUZEI     = WA_AGRU-BUZEI.
+    TG_LOTES-FASE      = WA_AGRU-FASE.
+    TG_LOTES-LOTE      = WA_AGRU-LOTE.
+    TG_LOTES-LOTE_ANEX = WA_AGRU-LOTE_ANEX.
+    TG_LOTES-COD_GPO   = WA_AGRU-COD_GPO.
+    TG_LOTES-OBJETIVO	 = WA_AGRU-OBJETIVO.
+    TG_LOTES-DESCR_ITEM = WA_AGRU-DESCR_ITEM.
+
+    TRANSLATE TG_LOTES-OBJETIVO TO UPPER CASE.
+    TRANSLATE TG_LOTES-DESCR_ITEM TO UPPER CASE.
+
+
+    XTOTAL  = 0.
+    XTOTALF = 0.
+    "
+    LOOP AT IT_DETA INTO WA_DETA WHERE ANO    = WA_AGRU-ANO
+                                 AND   KOSTL  = WA_AGRU-KOSTL
+                                 AND   SAFRA  = WA_AGRU-SAFRA
+                                 AND   SAFRA2 = WA_AGRU-SAFRA2
+                                 AND   BUZEI  = WA_AGRU-BUZEI
+                                 AND   FASE   = WA_AGRU-FASE
+                                 AND   LOTE   = WA_AGRU-LOTE.
+      IF ( ( WA_DETA-STATUS_APROV EQ  ' '  AND WA_DETA-COD_GPO NE 3 )
+            OR WA_DETA-STATUS_APROV EQ '9' )
+            OR  ( V_KOSTL IS NOT INITIAL ).
+        ADD WA_DETA-VLR_TOTAL TO XTOTAL.
+        IF WA_DETA-MOEDA = 'BRL' AND WA_DETA-TX_USD GT 0.
+          XTOTALF = XTOTALF + ( WA_DETA-VLR_TOTAL / WA_DETA-TX_USD ).
+        ELSE.
+          ADD WA_DETA-VLR_TOTAL TO XTOTALF.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+    TG_LOTES-TOTAL     = XTOTAL.
+    TG_LOTES-TOTAL_USD = XTOTALF.
+
+    "Estrategia aprovadores
+    IF XTOTAL GT 0.
+      VFLG_ICO = 'N'.
+      "
+      VACHOU_NADA  = 'X'.
+      LOOP AT IT_ZIM12_APROV INTO WA_ZIM12_APROV WHERE BUKRS = WA_AGRU-BUKRS
+                                                 AND   WERKS = WA_AGRU-GSBER
+                                                 AND   KOSTL = WA_AGRU-KOSTL.
+        IF WA_ZIM12_APROV-FASE NE 99.
+          IF  WA_ZIM12_APROV-FASE NE WA_DETA-FASE.
+            CONTINUE.
+          ENDIF.
+        ENDIF.
+        WA_ESTRA-LOTE   = WA_AGRU-LOTE.
+        WA_ESTRA-BUKRS  = WA_AGRU-BUKRS.
+        WA_ESTRA-ANO    = WA_AGRU-ANO.
+        WA_ESTRA-WERKS  = WA_ZIM12_APROV-WERKS.
+        WA_ESTRA-SAFRA  = WA_AGRU-SAFRA.
+        WA_ESTRA-SAFRA2 = WA_AGRU-SAFRA2.
+        WA_ESTRA-KOSTL  = WA_ZIM12_APROV-KOSTL.
+        WA_ESTRA-BUZEI  = WA_AGRU-BUZEI.
+        WA_ESTRA-FASE   = WA_ZIM12_APROV-FASE.
+        WA_ESTRA-NIVEL  = WA_ZIM12_APROV-NIVEL.
+
+        CLEAR VACHOU.
+        CLEAR WA_ZIM12_APROV_INV.
+        LOOP AT IT_ZIM12_APROV_INV INTO WA_ZIM12_APROV_INV WHERE BUKRS = WA_ZIM12_APROV-BUKRS
+                                                           AND   WERKS = WA_ZIM12_APROV-WERKS
+                                                           AND   KOSTL = WA_ZIM12_APROV-KOSTL
+                                                           AND   NIVEL = WA_ZIM12_APROV-NIVEL
+                                                           AND   LOTE  = WA_AGRU-LOTE.
+          VACHOU = 'X'.
+          CLEAR VACHOU_NADA.
+        ENDLOOP.
+
+*        IF WA_AGRU-STATUS_APROV = '1'
+*           AND SY-TCODE = 'ZIM04'
+*           AND VACHOU IS INITIAL
+*           AND WA_AGRU-LOTE IS NOT INITIAL.
+*          VACHOU = 'X'.
+*          WA_ZIM12_APROV_INV-APROVADOR = WA_ZIM12_APROV-APROVADOR.
+*          SELECT *
+*            FROM ZIM12_APROV
+*            INTO TABLE @DATA(IT_ZIM12_APROVA)
+*             WHERE   KOSTL = @WA_ZIM12_APROV-KOSTL.
+*          LOOP AT IT_ZIM12_APROVA INTO DATA(W_ZIM12).
+*            READ TABLE IT_ESTRA  INTO DATA(WESTRA) WITH KEY LOTE  = WA_AGRU-LOTE
+*                                                            KOSTL = W_ZIM12-KOSTL
+*                                                            NIVEL = W_ZIM12-NIVEL.
+*            IF SY-SUBRC NE 0.
+*              READ TABLE IT_ESTRA INTO DATA(WLOG)
+*                      WITH KEY APROVADOR = W_ZIM12-APROVADOR.
+*              IF SY-SUBRC = 0.
+*                WA_ZIM12_APROV_INV-TOTAL        = WLOG-TOTAL.
+*                WA_ZIM12_APROV_INV-TOTAL_USD    = WLOG-TOTAL_USD.
+*                WA_ZIM12_APROV_INV-DATA_APROV   = WLOG-DATA_APROV.
+*                WA_ZIM12_APROV_INV-HORA_APROV   = WLOG-HORA_APROV.
+*              ENDIF.
+*            ENDIF.
+*          ENDLOOP.
+*        ENDIF.
+
+        IF VACHOU = 'X'.
+          WA_ESTRA-ESTADO       = ICON_CHECKED .
+          WA_ESTRA-OPCOES       = ICON_SYSTEM_UNDO .
+          VFLG_ICO = 'N'.
+          WA_ESTRA-APROVADOR  = WA_ZIM12_APROV_INV-APROVADOR.
+          WA_ESTRA-TOTAL      = WA_ZIM12_APROV_INV-TOTAL.
+          WA_ESTRA-TOTAL_USD  = WA_ZIM12_APROV_INV-TOTAL_USD.
+          WA_ESTRA-DATA_APROV = WA_ZIM12_APROV_INV-DATA_APROV.
+          WA_ESTRA-HORA_APROV = WA_ZIM12_APROV_INV-HORA_APROV.
+        ELSEIF VFLG_ICO = 'S'.
+          WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+          WA_ESTRA-OPCOES       = '' .
+          WA_ESTRA-APROVADOR    = WA_ZIM12_APROV-APROVADOR.
+        ELSE.
+          IF V_USUARIO NE WA_ZIM12_APROV-APROVADOR.
+            WA_ESTRA-ESTADO       =  ' '.
+            WA_ESTRA-OPCOES       = ICON_LED_YELLOW  .
+          ELSE.
+            WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+            WA_ESTRA-OPCOES       = ICON_SET_STATE  .
+          ENDIF.
+          VFLG_ICO = 'X'.
+          WA_ESTRA-APROVADOR    = WA_ZIM12_APROV-APROVADOR.         "modificação 03.01.2017
+        ENDIF.
+
+        IF VFLG_ICO = 'X'.
+          VFLG_ICO = 'S'.
+        ENDIF.
+
+        APPEND WA_ESTRA TO IT_ESTRA.
+        CLEAR WA_ESTRA.
+*
+      ENDLOOP.
+      IF WA_DETA-STATUS_APROV EQ  '2'.
+        READ TABLE IT_ESTRA INTO WA_ESTRA WITH KEY LOTE      = WA_AGRU-LOTE
+                                                   APROVADOR = WA_AGRU-USUARIO.
+        IF SY-SUBRC = 0.
+          LOOP AT IT_ESTRA INTO WA_ESTRA WHERE LOTE      = WA_AGRU-LOTE
+                                         AND   APROVADOR =  WA_AGRU-USUARIO.
+            IF WA_ESTRA-ESTADO NE ICON_CHECKED.
+              WA_ESTRA-ESTADO       = ICON_REJECT.
+              WA_ESTRA-OPCOES       = '' .
+              WA_ESTRA-DATA_APROV = WA_AGRU-DATA_APROV.
+              WA_ESTRA-HORA_APROV = WA_AGRU-HORA_APROV.
+              MODIFY IT_ESTRA FROM WA_ESTRA INDEX SY-TABIX.
+            ENDIF.
+          ENDLOOP.
+        ELSE.
+          WA_ESTRA-LOTE   = WA_AGRU-LOTE.
+          WA_ESTRA-BUKRS  = WA_AGRU-BUKRS.
+          WA_ESTRA-ANO    = WA_AGRU-ANO.
+          WA_ESTRA-WERKS  = WA_AGRU-GSBER.
+          WA_ESTRA-SAFRA  = WA_AGRU-SAFRA.
+          WA_ESTRA-SAFRA2 = WA_AGRU-SAFRA2.
+          WA_ESTRA-KOSTL  = WA_AGRU-KOSTL.
+          WA_ESTRA-BUZEI  = WA_AGRU-BUZEI.
+          WA_ESTRA-FASE   = WA_AGRU-FASE.
+          WA_ESTRA-NIVEL  = '01'.
+          WA_ESTRA-ESTADO = ICON_REJECT.
+          WA_ESTRA-OPCOES = '' .
+          WA_ESTRA-DATA_APROV = WA_AGRU-DATA_APROV.
+          WA_ESTRA-HORA_APROV = WA_AGRU-HORA_APROV.
+          APPEND WA_ESTRA TO IT_ESTRA.
+        ENDIF.
+      ENDIF.
+
+      APPEND TG_LOTES.
+      CLEAR TG_LOTES.
+    ENDIF.
+
+  ENDLOOP.
+*
+  "Avaliadores
+  IT_AGRU[] = IT_DETA[].
+  SORT IT_AGRU BY BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE.
+  SORT IT_DETA BY BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE.
+  DELETE ADJACENT DUPLICATES FROM IT_AGRU COMPARING BUKRS GSBER ANO SAFRA SAFRA2 KOSTL BUZEI FASE  LOTE3.
+
+  LOOP AT IT_AGRU INTO WA_AGRU.
+    "Estrategia avaliadores
+    XTOTAL  = 0.
+    XTOTALF = 0.
+    CLEAR V_FLAG9.
+    LOOP AT IT_DETA INTO WA_DETA WHERE ANO     = WA_AGRU-ANO
+                                  AND   KOSTL  = WA_AGRU-KOSTL
+                                  AND   SAFRA  = WA_AGRU-SAFRA
+                                  AND   SAFRA2 = WA_AGRU-SAFRA2
+                                  AND   BUZEI  = WA_AGRU-BUZEI
+                                  AND   FASE   = WA_AGRU-FASE
+                                  AND   LOTE3  = WA_AGRU-LOTE3.
+      IF ( WA_DETA-STATUS_APROV EQ  ' ' AND WA_DETA-COD_GPO EQ 3 ) OR WA_DETA-STATUS_APROV EQ '9'  OR ( V_KOSTL IS NOT INITIAL  AND WA_DETA-COD_GPO EQ 3  ).
+        ADD WA_DETA-VLR_TOTAL TO XTOTAL.
+        IF WA_DETA-MOEDA = 'BRL' AND WA_DETA-TX_USD GT 0.
+          XTOTALF = XTOTALF + ( WA_DETA-VLR_TOTAL / WA_DETA-TX_USD ).
+        ELSE.
+          ADD WA_DETA-VLR_TOTAL TO XTOTALF.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+
+    TG_LOTES-TOTAL     = XTOTAL.
+    TG_LOTES-TOTAL_USD = XTOTALF.
+    IF XTOTAL GT 0.
+      READ TABLE IT_T001 INTO WA_T001 WITH KEY BUKRS = WA_AGRU-BUKRS BINARY SEARCH.
+      CONCATENATE WA_AGRU-BUKRS '-' WA_T001-BUTXT INTO  TG_LOTES-EMPRESA.
+      CONCATENATE WA_AGRU-BUKRS '-' WA_T001-BUTXT INTO  TG_LOTES-EMPRESA.
+      TG_LOTES-LOTE      = WA_AGRU-LOTE3.
+      TG_LOTES-WERKS     = WA_AGRU-GSBER.
+      TG_LOTES-ANO       = WA_AGRU-ANO.
+      TG_LOTES-SAFRA     = WA_AGRU-SAFRA.
+      TG_LOTES-SAFRA2    = WA_AGRU-SAFRA2.
+      TG_LOTES-KOSTL     = WA_AGRU-KOSTL.
+      TG_LOTES-BUZEI     = WA_AGRU-BUZEI.
+      TG_LOTES-FASE      = WA_AGRU-FASE.
+      TG_LOTES-GPO_CMP   = 3.
+      TG_LOTES-COD_GPO   = WA_AGRU-COD_GPO.
+      TG_LOTES-OBJETIVO	 = WA_AGRU-OBJETIVO.
+      TG_LOTES-DESCR_ITEM = WA_AGRU-DESCR_ITEM.
+      TRANSLATE TG_LOTES-OBJETIVO TO UPPER CASE.
+      TRANSLATE TG_LOTES-DESCR_ITEM TO UPPER CASE.
+      VFLG_ICO = 'N'.
+      LOOP AT IT_ZIM12_AVAL INTO WA_ZIM12_AVAL WHERE BUKRS = WA_AGRU-BUKRS.
+        WA_ESTRA-ANO    = WA_AGRU-ANO.
+        WA_ESTRA-LOTE   = WA_AGRU-LOTE3.
+        WA_ESTRA-BUKRS  = WA_AGRU-BUKRS.
+        WA_ESTRA-WERKS  = WA_AGRU-GSBER.
+        WA_ESTRA-SAFRA  = WA_AGRU-SAFRA.
+        WA_ESTRA-SAFRA2 = WA_AGRU-SAFRA2.
+        WA_ESTRA-KOSTL  = WA_AGRU-KOSTL.
+        WA_ESTRA-BUZEI  = WA_AGRU-BUZEI.
+        WA_ESTRA-FASE   = WA_AGRU-FASE.
+        WA_ESTRA-NIVEL  = WA_ZIM12_AVAL-NIVEL.
+        WA_ESTRA-GPO_CMP   = 3.
+        CLEAR VACHOU.
+        CLEAR WA_ZIM12_AVAL_INV.
+        LOOP AT IT_ZIM12_AVAL_INV INTO WA_ZIM12_AVAL_INV WHERE BUKRS = WA_ZIM12_AVAL-BUKRS
+                                                          AND  NIVEL = WA_ZIM12_AVAL-NIVEL
+                                                          AND  LOTE  = WA_AGRU-LOTE3.
+          IF WA_ZIM12_AVAL_INV-TOTAL = TG_LOTES-TOTAL.
+            VACHOU = 'X'.
+          ENDIF.
+        ENDLOOP.
+
+        IF VACHOU = 'X'.
+          WA_ESTRA-ESTADO       = ICON_CHECKED .
+          WA_ESTRA-OPCOES       = ICON_SYSTEM_UNDO .
+          VFLG_ICO = 'N'.
+          WA_ESTRA-APROVADOR    = WA_ZIM12_AVAL_INV-APROVADOR.
+          WA_ESTRA-TOTAL        = WA_ZIM12_AVAL_INV-TOTAL.
+          WA_ESTRA-TOTAL_USD    = WA_ZIM12_AVAL_INV-TOTAL_USD.
+          WA_ESTRA-DATA_APROV   = WA_ZIM12_AVAL_INV-DATA_APROV.
+          WA_ESTRA-HORA_APROV   = WA_ZIM12_AVAL_INV-HORA_APROV.
+
+
+        ELSEIF VFLG_ICO = 'S'.
+          WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+          WA_ESTRA-OPCOES       = '' .
+          WA_ESTRA-APROVADOR    = WA_ZIM12_APROV-APROVADOR.
+        ELSE.
+          IF V_USUARIO NE WA_ZIM12_AVAL-APROVADOR.
+            WA_ESTRA-ESTADO       =  ' '.
+            WA_ESTRA-OPCOES       = ICON_LED_YELLOW  .
+          ELSE.
+            WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+            WA_ESTRA-OPCOES       = ICON_SET_STATE  .
+          ENDIF.
+          VFLG_ICO = 'X'.
+          WA_ESTRA-APROVADOR    = WA_ZIM12_AVAL-APROVADOR.         "modificação 03.01.2017
+        ENDIF.
+
+        IF VFLG_ICO = 'X'.
+          VFLG_ICO = 'S'.
+        ENDIF.
+
+        APPEND WA_ESTRA TO IT_ESTRA.
+
+      ENDLOOP.
+
+      APPEND TG_LOTES.
+      CLEAR TG_LOTES.
+    ENDIF.
+  ENDLOOP.
+
+
+
+  IF TG_LOTES[] IS NOT INITIAL.
+    SORT IT_ESTRA BY ANO KOSTL FASE APROVADOR.
+    LOOP AT TG_LOTES.
+      CLEAR VFLAG.
+      IF V_KOSTL IS NOT INITIAL.
+        VFLAG = 'X'.
+      ENDIF.
+      LOOP AT IT_ESTRA INTO WA_ESTRA WHERE LOTE  = TG_LOTES-LOTE
+                                     AND   WERKS = TG_LOTES-WERKS
+                                     AND   ANO   = TG_LOTES-ANO
+                                     AND   SAFRA = TG_LOTES-SAFRA
+                                     AND   SAFRA2 = TG_LOTES-SAFRA2
+                                     AND   KOSTL = TG_LOTES-KOSTL
+                                     AND   BUZEI = TG_LOTES-BUZEI
+                                     AND   ( FASE  = TG_LOTES-FASE OR FASE = 99 )
+                                     AND   GPO_CMP = TG_LOTES-GPO_CMP
+                                     AND   APROVADOR = V_USUARIO.
+        VFLAG = 'X'.
+        EXIT.
+      ENDLOOP.
+      IF VFLAG = 'X'.
+        LOOP AT IT_ESTRA INTO WA_ESTRA WHERE LOTE   = TG_LOTES-LOTE
+                                       AND   WERKS  = TG_LOTES-WERKS
+                                       AND   ANO   = TG_LOTES-ANO
+                                       AND   SAFRA = TG_LOTES-SAFRA
+                                       AND   SAFRA2 = TG_LOTES-SAFRA2
+                                       AND   KOSTL = TG_LOTES-KOSTL
+                                       AND   BUZEI = TG_LOTES-BUZEI
+                                       AND   ( FASE  = TG_LOTES-FASE OR FASE = 99 )
+                                       AND   GPO_CMP = TG_LOTES-GPO_CMP.
+          MOVE-CORRESPONDING WA_ESTRA TO T_ESTRA.
+          APPEND T_ESTRA.
+        ENDLOOP.
+
+
+        T_DOCS[] = IT_DETA[].
+        MOVE-CORRESPONDING TG_LOTES TO T_LOTES.
+        APPEND T_LOTES.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+
+  SORT  T_ESTRA BY GPO_CMP BUKRS WERKS KOSTL NIVEL .
+  SORT  T_LOTES  BY GPO_CMP FASE LOTE .
+  IF T_LOTES[] IS NOT INITIAL.
+    MSG = 'Sucesso'.
+  ELSE.
+    MSG = 'Não há lotes à aprovar.'.
+  ENDIF.
+
+
+
+ENDFUNCTION.

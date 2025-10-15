@@ -1,0 +1,24 @@
+
+SELECT SINGLE NAME1
+  FROM T001W
+  INTO WERKS_DESC
+  WHERE WERKS EQ HEADER-WERKS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

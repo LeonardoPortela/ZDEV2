@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZSPL_VIEW</OBJCT>
+    <FIEL1>ZSPL_VIEW</FIEL1>
+    <OCLSS>ZLES</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZSPL_VIEW</OBJECT>
+    <TTEXT>Permissão de Visualização de Informações SPL</TTEXT>
+   </TOBJT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

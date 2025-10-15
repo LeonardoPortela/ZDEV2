@@ -1,0 +1,7 @@
+PROCESS BEFORE OUTPUT.
+
+  MODULE zm_status_0500.
+  MODULE zm_pbo_0500.
+
+PROCESS AFTER INPUT.
+  MODULE zm_user_command_0500.

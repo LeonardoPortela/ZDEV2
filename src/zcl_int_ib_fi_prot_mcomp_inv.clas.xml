@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_INT_IB_FI_PROT_MCOMP_INV</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Due antecipada no SAP(ZMEMO00) com as informações vinda do S</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>E02</KEY>
+     <ENTRY>Erro ZCL_*PROT_MCOMP_INV!</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ID_DUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id_due</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ID_INTERFACE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id. de Integração de Inteface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_JOB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Create Job</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recupera informações</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FILIAL_MATRIZ</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Get Filial Matriz Exportador</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GIT_ORDENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parametro de Importação Sysphera</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RECOVERED_JOB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Recuperado job</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Processo Principal</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Set</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_INTEGRACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_JOB</CMPNAME>
+     <SCONAME>EV_RET</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_JOB</CMPNAME>
+     <SCONAME>IV_JOB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome de um job em background</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILIAL_MATRIZ</CMPNAME>
+     <SCONAME>IV_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RUN</CMPNAME>
+     <SCONAME>LT_MESSAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Message</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>IT_ORDENS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parametro de Importação Sysphera</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>I_ANO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exercício</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>I_AREA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Área de contabilidade de custos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>I_PERIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mês do exercício</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>I_PROT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Protocolo</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,80 @@
+FUNCTION ZFI_PIX_ITAU.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  TABLES
+*"      T_PIX TYPE  ZDE_PIX_ITAU_T OPTIONAL
+*"----------------------------------------------------------------------
+
+  DATA: LS_ITAU_BOLETO TYPE ZDE_IN_ITAU_BOLETO.
+  DATA: LV_DATA TYPE SYDATUM.
+  DATA: R_NOSSO_NUMERO TYPE RANGE OF CHAR15.
+  DATA: LV_NOSSO_NUMERO TYPE CHAR15.
+
+* "// Armazenamento de LOG de Entrada
+  INCLUDE ZAFL_MACROS.
+  /AFL/LOG_INIT.
+  /AFL/SAVE.
+
+  FREE R_NOSSO_NUMERO.
+
+  LOOP AT T_PIX INTO DATA(LS_PIX).
+
+    LS_ITAU_BOLETO =
+    VALUE #(
+             ID_BENEFICIARIO = '293800527831'
+             NOSSO_NUMERO = LS_PIX-TXID+16
+             CORRELATIONID = /AFL/LOG-GUID
+             CONTROLE = SY-XFORM
+           ).
+
+    IF LS_ITAU_BOLETO-NOSSO_NUMERO IS INITIAL.
+      CONTINUE.
+    ENDIF.
+
+    APPEND
+    VALUE #(
+              SIGN   = 'I'
+              OPTION = 'EQ'
+              LOW    = |{ LS_ITAU_BOLETO-NOSSO_NUMERO ALPHA = OUT }|
+              HIGH   = |{ LS_ITAU_BOLETO-NOSSO_NUMERO ALPHA = OUT }|
+           ) TO R_NOSSO_NUMERO.
+
+    CALL METHOD ZCL_FI_UTILS=>RUN_API_ITAU
+      EXPORTING
+        I_ITAU_BOLETO = LS_ITAU_BOLETO
+        IS_PIX        = ABAP_TRUE.
+
+    CLEAR LS_ITAU_BOLETO.
+
+  ENDLOOP.
+
+*"// Verifica se o Nosso Numero é da AMAGGION
+*"// caso não for é excluido para não seguir o fluxo
+  IF R_NOSSO_NUMERO IS NOT INITIAL.
+    SELECT *
+      FROM ZFIT0225
+        INTO TABLE @DATA(LT_ZFIT0225)
+      WHERE NOSSO_NUMERO IN @R_NOSSO_NUMERO.
+  ENDIF.
+
+  DATA(T_PIX_AUX) = T_PIX[].
+
+  LOOP AT T_PIX_AUX ASSIGNING FIELD-SYMBOL(<FS_PIX_AUX>).
+
+    LV_NOSSO_NUMERO = <FS_PIX_AUX>-TXID+16.
+    LV_NOSSO_NUMERO = |{ LV_NOSSO_NUMERO ALPHA = OUT }|.
+
+    READ TABLE LT_ZFIT0225 TRANSPORTING NO FIELDS WITH KEY NOSSO_NUMERO = LV_NOSSO_NUMERO.
+    IF SY-SUBRC IS NOT INITIAL.
+      CLEAR <FS_PIX_AUX>.
+    ENDIF.
+
+    CLEAR LV_NOSSO_NUMERO.
+
+  ENDLOOP.
+
+  DELETE T_PIX_AUX WHERE TXID IS INITIAL.
+
+  T_PIX[] = T_PIX_AUX[].
+
+ENDFUNCTION.

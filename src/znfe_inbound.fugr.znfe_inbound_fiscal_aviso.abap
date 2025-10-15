@@ -1,0 +1,97 @@
+FUNCTION ZNFE_INBOUND_FISCAL_AVISO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_NUMERO_NFE) TYPE  ZDE_NR_NFE
+*"     REFERENCE(I_SERIE_NFE) TYPE  J_1BSERIES
+*"     REFERENCE(I_EBELN) TYPE  EBELN
+*"     REFERENCE(I_EBELP) TYPE  EBELP
+*"     REFERENCE(I_EMISSOR) TYPE  LIFNR
+*"     REFERENCE(I_ARMAZEM) TYPE  ZDE_F_ARMAZEM OPTIONAL
+*"     REFERENCE(I_TRANSPORTE) TYPE  ZDE_F_TRANSPORTE
+*"     REFERENCE(I_PC_PARTINER) TYPE  LIFNR OPTIONAL
+*"     REFERENCE(I_LR_PARTINER) TYPE  KUNNR OPTIONAL
+*"     REFERENCE(I_MATNR) TYPE  MATNR
+*"     REFERENCE(I_MENGE) TYPE  J_1BNETQTY
+*"     REFERENCE(I_CHARG) TYPE  CHARG_D
+*"     REFERENCE(I_NR_FASE) TYPE  ZDE_NR_FASE OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_NFE_INBOUND) TYPE  ZIB_NFE_DIST_TER
+*"     REFERENCE(E_AVISO_RECEBIMENTO) TYPE  VBELN_VL
+*"  EXCEPTIONS
+*"      ERRO
+*"----------------------------------------------------------------------
+
+  DATA: ERRO_NFE   TYPE REF TO ZCX_NFE_INBOUND_EXCEPTION,
+        ERRO_CAD   TYPE REF TO ZCX_CADASTRO,
+        ERRO_PED   TYPE REF TO ZCX_PEDIDO_COMPRA_EXCEPTION,
+        ERRO_CHARG TYPE REF TO ZCX_CHARG_EXCEPTION.
+
+  TRY .
+
+      DATA(R_ACEITO) =
+      ZCL_NFE_INBOUND=>NFE_INBOUND_ACEITE_SEM_CHAVE( EXPORTING
+                                                      I_NUMERO_NFE        = I_NUMERO_NFE
+                                                      I_SERIE_NFE         = I_SERIE_NFE
+                                                      I_EBELN             = I_EBELN
+                                                      I_EBELP             = I_EBELP
+                                                      I_EMISSOR           = I_EMISSOR
+                                                      I_ARMAZEM           = I_ARMAZEM
+                                                      I_TRANSPORTE        = I_TRANSPORTE
+                                                      I_PC_PARTINER       = I_PC_PARTINER
+                                                      I_LR_PARTINER       = I_LR_PARTINER
+                                                      I_MATNR             = I_MATNR
+                                                      I_MENGE             = I_MENGE
+                                                      I_CHARG             = I_CHARG
+                                                      I_NR_FASE           = I_NR_FASE
+                                                    IMPORTING
+                                                      E_NFE_INBOUND       = E_NFE_INBOUND
+                                                      E_AVISO_RECEBIMENTO = E_AVISO_RECEBIMENTO ).
+
+    CATCH ZCX_NFE_INBOUND_EXCEPTION INTO ERRO_NFE.
+
+      SY-MSGV1 = CONV #( ERRO_NFE->IF_T100_MESSAGE~T100KEY-ATTR1 ).
+      SY-MSGV2 = CONV #( ERRO_NFE->IF_T100_MESSAGE~T100KEY-ATTR2 ).
+      SY-MSGV3 = CONV #( ERRO_NFE->IF_T100_MESSAGE~T100KEY-ATTR3 ).
+      SY-MSGV4 = CONV #( ERRO_NFE->IF_T100_MESSAGE~T100KEY-ATTR4 ).
+
+      MESSAGE ID ERRO_NFE->IF_T100_MESSAGE~T100KEY-MSGID TYPE ERRO_NFE->MSGTY
+       NUMBER ERRO_NFE->IF_T100_MESSAGE~T100KEY-MSGNO
+         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 RAISING ERRO.
+
+    CATCH ZCX_CADASTRO INTO ERRO_CAD.
+
+      SY-MSGV1 = CONV #( ERRO_CAD->IF_T100_MESSAGE~T100KEY-ATTR1 ).
+      SY-MSGV2 = CONV #( ERRO_CAD->IF_T100_MESSAGE~T100KEY-ATTR2 ).
+      SY-MSGV3 = CONV #( ERRO_CAD->IF_T100_MESSAGE~T100KEY-ATTR3 ).
+      SY-MSGV4 = CONV #( ERRO_CAD->IF_T100_MESSAGE~T100KEY-ATTR4 ).
+
+      MESSAGE ID ERRO_CAD->IF_T100_MESSAGE~T100KEY-MSGID TYPE ERRO_CAD->MSGTY
+       NUMBER ERRO_CAD->IF_T100_MESSAGE~T100KEY-MSGNO
+         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 RAISING ERRO.
+
+    CATCH ZCX_PEDIDO_COMPRA_EXCEPTION INTO ERRO_PED.
+
+      SY-MSGV1 = CONV #( ERRO_PED->IF_T100_MESSAGE~T100KEY-ATTR1 ).
+      SY-MSGV2 = CONV #( ERRO_PED->IF_T100_MESSAGE~T100KEY-ATTR2 ).
+      SY-MSGV3 = CONV #( ERRO_PED->IF_T100_MESSAGE~T100KEY-ATTR3 ).
+      SY-MSGV4 = CONV #( ERRO_PED->IF_T100_MESSAGE~T100KEY-ATTR4 ).
+
+      MESSAGE ID ERRO_PED->IF_T100_MESSAGE~T100KEY-MSGID TYPE ERRO_PED->MSGTY
+       NUMBER ERRO_PED->IF_T100_MESSAGE~T100KEY-MSGNO
+         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 RAISING ERRO.
+
+    CATCH ZCX_CHARG_EXCEPTION INTO ERRO_CHARG.
+
+      SY-MSGV1 = CONV #( ERRO_CHARG->IF_T100_MESSAGE~T100KEY-ATTR1 ).
+      SY-MSGV2 = CONV #( ERRO_CHARG->IF_T100_MESSAGE~T100KEY-ATTR2 ).
+      SY-MSGV3 = CONV #( ERRO_CHARG->IF_T100_MESSAGE~T100KEY-ATTR3 ).
+      SY-MSGV4 = CONV #( ERRO_CHARG->IF_T100_MESSAGE~T100KEY-ATTR4 ).
+
+      MESSAGE ID ERRO_CHARG->IF_T100_MESSAGE~T100KEY-MSGID TYPE ERRO_CHARG->MSGTY
+       NUMBER ERRO_CHARG->IF_T100_MESSAGE~T100KEY-MSGNO
+         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 RAISING ERRO.
+
+  ENDTRY.
+
+ENDFUNCTION.

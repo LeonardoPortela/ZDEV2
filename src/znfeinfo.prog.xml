@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZNFEINFO</NAME>
+    <SUBC>1</SUBC>
+    <RSTAT>K</RSTAT>
+    <RLOAD>P</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>Dados eletrônicos do documento SAP</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Tipo de Importação de Informações NFe</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_ARQ</KEY>
+     <ENTRY>Nome do Arquivo</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_CDV</KEY>
+     <ENTRY>Dígito chave de acesso NF-e</ENTRY>
+     <LENGTH>35</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_CODE</KEY>
+     <ENTRY>Código de status SEFAZ</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_DOCNUM</KEY>
+     <ENTRY>Nº documento SAP</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_DOCSTA</KEY>
+     <ENTRY>Status do documento SEFAZ</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_NFENUM</KEY>
+     <ENTRY>Nº NF-e de nove posições</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_OBJKEY</KEY>
+     <ENTRY>Planilha SIGAM</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_PTCH</KEY>
+     <ENTRY>Diretório no servidor</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_SCSSTA</KEY>
+     <ENTRY>Status comunicação sistema</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_TPEMIS</KEY>
+     <ENTRY>Forma de Emissão</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>R_ARQUIV</KEY>
+     <ENTRY>Importar de Arquivo</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>R_NORMAL</KEY>
+     <ENTRY>Usar Informações da Tela</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

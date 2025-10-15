@@ -1,0 +1,23 @@
+"Name: \PR:SAPLV01Z\FO:CHARGE_KLASSIFIZIEREN\SE:END\EI
+ENHANCEMENT 0 Z_PEDIDO_CLASSIII.
+*
+  FIELD-SYMBOLS: <QTDE> TYPE ANY.
+  FIELD-SYMBOLS: <LINE> TYPE ANY.
+  ASSIGN ('(SAPLMIGO)GOITEM-ERFMG')          TO <QTDE>.
+  ASSIGN ('(SAPLMIGO)GOITEM-GLOBAL_COUNTER') TO <LINE>.
+  CHECK SY-SUBRC IS INITIAL.
+
+  CALL FUNCTION 'Z_MM_INDEA_LOTE'
+    EXPORTING
+      I_EBELN       = X_BNCOM-ebeln
+      I_EBELP       = X_BNCOM-ebelp
+      i_line_id     = <LINE>
+*     I_MBLNR       =
+*     I_MJAHR       =
+      I_MATNR       = LOC_MCHA-MATNR
+      I_CHARG       = LOC_MCHA-CHARG
+      I_MENGE       = <QTDE>
+      I_tcode       = sy-tcode.
+
+
+ENDENHANCEMENT.

@@ -1,0 +1,2000 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<abapGit version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TDLINES>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>FOOTSTEP</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_GET_ADDRESS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BUKRS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_P_BOX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;0.0&apos; CM WIDTH &apos;6.5&apos; CM HEIGHT &apos;0.30&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;6.5&apos; CM WIDTH &apos;6.7&apos; CM HEIGHT &apos;0.30&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;13.2&apos; CM WIDTH &apos;5.8&apos; CM HEIGHT &apos;0.30&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.30&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;6.5&apos; CM HEIGHT &apos;1.6&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.30&apos; CM XPOS &apos;6.5&apos; CM WIDTH &apos;6.7&apos; CM HEIGHT &apos;1.6&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.30&apos; CM XPOS &apos;13.2&apos; CM WIDTH &apos;5.8&apos; CM HEIGHT &apos;1.6&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>---- Columns ----</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H2</TDFORMAT>
+     <TDLINE>,,LOCAL DE ENTREGA,,DADOS PARA FATURAMENTO,,COMPRADOR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H2</TDFORMAT>
+     <TDLINE>,,DELIVERY PLACE,,CONSIGNEE/BILL TO,,CONTACT NAME</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>---- Informations ----</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_NAME1&amp;,,&amp;F_NAME1&amp;,,&amp;T024-EKGRP&amp; - &amp;T024-EKNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,CNPJ: &amp;E_VAL_CNPJ(18)&amp; I.E.:&amp;E_VAL_IE&amp;,,CNPJ: &amp;F_VAL_CNPJ(18)&amp; I.E.:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;F_VAL_IE&amp;,,Tel: &amp;T024-EKTEL&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BUKRS&amp; &lt;&gt; &apos;0048&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_STRAS&amp;,,&amp;F_STRAS&amp;,,Fax: &amp;T024-TELFX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,ENDERECO:&amp;E_STRAS&amp;,,ENDERECO:&amp;F_STRAS&amp;,,Fax: &amp;T024-TELFX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BUKRS&amp; &lt;&gt; &apos;0048&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_ORT01&amp; - &amp;E_REGIO&amp; - CEP:&amp;E_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>,,&amp;F_ORT01&amp; - &amp;F_REGIO&amp; - CEP:&amp;F_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,CIDADE:&amp;E_ORT01&amp; - &amp;E_REGIO&amp; - CEP:&amp;E_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>,,CIDADE:&amp;F_ORT01&amp; - &amp;f_REGIO&amp; - CEP:&amp;F_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_ORT01&amp; - &amp;E_REGIO&amp; - ZIP:&amp;E_PSTLZ&amp; ,,&amp;F_ORT01&amp; - &amp;f_REGIO&amp; - ZIP:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;F_PSTLZ&amp; ,,&lt;MM&gt;&amp;t024-smtp_addr&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;C_P_BOX&amp; &lt;&gt; &apos;&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> Caixa Postal: &amp;C_P_BOX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>GRAPH1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BITMAP &apos;LOGO_AMAGGI&apos; OBJECT GRAPHICS ID BMAP TYPE BCOL DPI 600</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>GRAPH2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BITMAP &apos;LOGO_AMAGGI&apos; OBJECT GRAPHICS ID BMAP TYPE BCOL DPI 600</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_DADOS_SS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EKORG&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-BSART&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CONTATO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FONE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FAX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CPFCNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CEP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;RUA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CIDADE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;UF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;BATXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>primeira linha</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;3.4&apos; CM HEIGHT &apos;2.0&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;3.4&apos; CM WIDTH &apos;5.1&apos; CM HEIGHT &apos;2.0&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;8.5&apos; CM WIDTH &apos;8.3&apos; CM HEIGHT &apos;2.0&apos; CM FRAME 10   TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;16.8&apos; CM WIDTH &apos;2.2&apos; CM HEIGHT &apos;2.0&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,&lt;B1&gt;Pedido de Compras&lt;/&gt;,,,,Fornecedor:&lt;B&gt;&amp;EKKO-LIFNR&amp;&lt;/&gt;&lt;B&gt; - &amp;NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>,,&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,Tipo Doc:,,&lt;B&gt;&amp;EKKO-BSART&amp;&lt;/&gt;&lt;B&gt; - &amp;BATXT&amp;&lt;/&gt;,,CNPJ/CPF:,,&lt;B&gt;&amp;CPFCNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&lt;/&gt;,,Página</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,,,,,&amp;RUA&amp;,,,,&amp;PAGE(C)&amp;/&amp;SAPSCRIPT-FORMPAGES(C)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;NR.&lt;/&gt;,,&lt;B&gt;DT.EMISSÃO&lt;/&gt;,,CEP: &lt;B&gt;&amp;CEP&amp;&lt;/&gt; &amp;CIDADE&amp;-&amp;UF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;B1&gt;&amp;EKKO-EBELN&amp;&lt;/&gt;,,&lt;B&gt;&amp;EKKO-AEDAT&amp;&lt;/&gt;,,Vendedor: &lt;B&gt;&amp;EKKO-VERKF&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&lt;B&gt; - &amp;EKKO-TELF1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>,,&lt;B1&gt;Purchase Order&lt;/&gt;,,,,Supplier:&lt;B&gt;&amp;EKKO-LIFNR&amp;&lt;/&gt;&lt;B&gt; - &amp;NAME1&amp;,,&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,Type Doc:,,&lt;B&gt;&amp;EKKO-BSART&amp;&lt;/&gt;&lt;B&gt; - &amp;BATXT&amp;&lt;/&gt;,,CNPJ/CPF:,,&lt;B&gt;&amp;CPFCNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&lt;/&gt;,,Page</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,,,,,&amp;RUA&amp;,,,,&amp;PAGE(C)&amp;/&amp;SAPSCRIPT-FORMPAGES(C)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;NU.&lt;/&gt;,,&lt;B&gt;DT.ISSUED&lt;/&gt;,,ZIP: &lt;B&gt;&amp;CEP&amp;&lt;/&gt; &amp;CIDADE&amp;-&amp;UF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;B1&gt;&amp;EKKO-EBELN&amp;&lt;/&gt;,,&lt;B&gt;&amp;EKKO-AEDAT&amp;&lt;/&gt;,,Seller: &lt;B&gt;&amp;EKKO-VERKF&amp;&lt;/&gt;&lt;B&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>- &amp;EKKO-TELF1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_CONDICOES_SS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-ZTERM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FORMENTO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;PGMENTO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;7.0&apos; CM HEIGHT &apos;1.5&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>---- Get payment method ----</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_TEXTO_PAGTO IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-BSART&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>---- Set informations in header ----</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Tipo de Fornecimento: &lt;B&gt;&amp;FORMENTO(23)&amp;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Prazo de Pagamento  : &lt;B&gt;&amp;PGMENTO(23)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Forma de Pagamento  : &lt;B&gt;&amp;TEXTO1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Supply Type: &lt;B&gt;&amp;FORMENTO(23)&amp;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Term of Payment: &lt;B&gt;&amp;PGMENTO(23)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Payment Method: &lt;B&gt;&amp;TEXTO1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>HEADER_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_TEXTO_HEADER IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;12.0&apos; CM HEIGHT &apos;1.5&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;B&gt;Informações Adicionais&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;B&gt;Additional Informations&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&amp;TEXTO1&amp; &amp;TEXTO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&amp;TEXTO3&amp; &amp;TEXTO4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>LOGO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BUKRS&amp; = &apos;0039&apos; OR &amp;EKKO-BUKRS&amp; = &apos;0041&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BITMAP &apos;LOGO_UNITA&apos; OBJECT GRAPHICS ID BMAP TYPE BCOL DPI 600</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-BUKRS&amp; = &apos;0048&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BITMAP &apos;LOGO_TGG&apos; OBJECT GRAPHICS ID BMAP TYPE BCOL DPI 600</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BITMAP &apos;LOGO_AMAGGI&apos; OBJECT GRAPHICS ID BMAP TYPE BCOL DPI 600</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>MAIN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_F</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_MOEDA_ITEM IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-WAERS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;MOEDA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>POSITION WINDOW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;0.8&apos;  CM WIDTH &apos;7.4&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;8.2&apos;  CM WIDTH &apos;1.8&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;10.0&apos; CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;10.8&apos; CM WIDTH &apos;1.5&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;12.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;13.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;14.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;15.3&apos; CM WIDTH &apos;1.6&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;16.9&apos; CM WIDTH &apos;2.1&apos; CM HEIGHT &apos;0.40&apos; CM FRAME  10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H1</TDFORMAT>
+     <TDLINE>,,Item,,Especificação,,Qtd.,,Unid.,,Dt.Entrega,,%ICMS,,%IPI,,Moeda,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>Preço Unit,,Valor Total</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H1</TDFORMAT>
+     <TDLINE>,,Item,,Especification,,Qty.,,Unit.,,Delivery,,%ICMS,,%IPI,,Currency</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Unit Price Total Price</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Completa o box até o final da janela</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PAGE&amp; &gt; 1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;0.8&apos;  CM WIDTH &apos;7.4&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;8.2&apos;  CM WIDTH &apos;1.8&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;10.0&apos; CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;10.8&apos; CM WIDTH &apos;1.5&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;12.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;13.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;14.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;15.3&apos; CM WIDTH &apos;1.6&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;16.9&apos; CM WIDTH &apos;2.1&apos; CM HEIGHT &apos;19.00&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;0.8&apos;  CM WIDTH &apos;7.4&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;8.2&apos;  CM WIDTH &apos;1.8&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;10.0&apos; CM WIDTH &apos;0.8&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;10.8&apos; CM WIDTH &apos;1.5&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;12.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;13.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;14.3&apos; CM WIDTH &apos;1.0&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;15.3&apos; CM WIDTH &apos;1.6&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.40&apos; CM XPOS &apos;16.9&apos; CM WIDTH &apos;2.1&apos; CM HEIGHT &apos;06.30&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_IMPOSTO_ITEM IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BUKRS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-MWSBP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-NETWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-MENGE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-PEINH&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-J_1BNBM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;ICMS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALOR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VLITM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;IPI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;QTD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;DT_REM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;VALOR&amp; &gt; 0</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>D1</TDFORMAT>
+     <TDLINE>,,&amp;EKPO-EBELP&amp;,,&amp;EKPO-MATNR&amp; - &amp;EKPO-TXZ01(40)&amp;,,&amp;QTD&amp;,,&amp;EKPO-MEINS&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;DT_REM&amp;,,&amp;ICMS&amp;,,&amp;IPI&amp;,,&amp;moeda&amp;,,&amp;VLITM&amp;,,&amp;VALOR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;EKPO-MATNR(K)&amp; OBJECT MATERIAL ID BEST PARAGRAPH T4</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_TOTAL_PAGINA IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BRTWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-NETWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>TEXTOLEG</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.0&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;19&apos; CM HEIGHT &apos;13.2&apos; CM FRAME   10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BUKRS&amp; &lt;&gt; &apos;0048&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>1 - É obrigatório constar na Nota Fiscal o número deste Pedido de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Compras;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>2 - Após o faturamento, é obrigatório o envio do arquivo XML de nota</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Fiscal Eletrônica ao e-mail nfe.fiscal@amaggi.com.br e</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>cte.fiscal@amaggi.com.br;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>3 - As mercadorias/serviços entregues em desacordo com este Pedido,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>quanto a suas especificações, condições, marcas, quantidades, qualidade</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>e outros, poderão ser recusadas/devolvidas pela Compradora. Neste caso,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>a Compradora poderá exigir o cumprimento da obrigação ou exercer seu</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>direito de cancelar o presente Pedido, sem nenhuma incidência de multa</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ou qualquer outra penalidade, sendo que todos os custos da devolução das</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>mercadorias/serviços serão de responsabilidade integral do Fornecedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>4 - O pagamento será realizado através de transferência eletrônica de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>valores para conta bancária de titularidade do Fornecedor, servindo o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>simples comprovante de transferência como recibo de pagamento e</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>quitação, ficando,de regra, vedada a emissão de duplicatas ou boletos de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>cobrança.O Fornecedor somente poderá emitir boletos bancários ou</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>duplicatas mercantis se estas formas de pagamento estiverem</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> expressamente previstas no campo “Forma de Pagamento”, respondendo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>civil e criminalmente pelo descumprimento de tal previsão. Quando</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>permitida a emissão de boleto bancário o pagamento será realizado</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>através do mesmo;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>5 - O Fornecedor não poderá, em nenhuma hipótese, ceder ou transferir  o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>seu crédito oriundo do presente Pedido;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>6 - O Fornecedor declara em caráter irrevogável e irretratável,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> expressamente, que o cumprimento do objeto do presente Pedido não</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>importa, sob nenhum aspecto, em parceria, sociedade ou na constituição</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>de vínculo empregatício entre a Compradora e o Fornecedor, seus</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> empregados e prepostos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>7 - O Fornecedor se obriga a: (a) cumprir a legislação ambiental,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> trabalhista, previdenciária e fundiária, isentando a Compradora de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> quaisquer responsabilidades; (b) seguir rigorosamente às orientações</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> recebidas principalmente no que tange ao Manual Requisitos Básicos de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> Saúde e Segurança Ocupacional nos casos em que seja necessária a</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>entrada de representante do Fornecedor nas dependências da Compradora,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>e; (c)  responsabilizar-se por todo e qualquer dano ocorrido durante o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>transporte do produto/material/equipamento ora adquirido nos casos em</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>que tal transporte competir ao mesmo;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>8 - O Aceitante do presente Pedido declara, sob as penas da lei, que é</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>legítimo representante do Fornecedor e possui plenos poderes para</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>assumir as obrigações constantes deste Pedido, em nome do Fornecedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>9 - A PARTE que descumprir qualquer cláusula do presente Pedido,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>independentemente de qualquer formalidade judicial ou extrajudicial,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>obrigar-se-á ao pagamento de uma Cláusula Penal correspondente a 10%</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>(dez por cento) do valor total desse Pedido, respondendo ainda a parte</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>infratora pelas perdas e danos que causar a parte incocente;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>10 - Fica eleito os foros das Comarcas do local do Faturamento e/ou da</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Comarca de Cuiabá-MT, para dirimir quaisquer dúvida ou demandas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>judiciais que poderão surgir na interpretação/execução do presente</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Pedido, com expressa renúncia à qualquer outro, por mais privilegiado</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>que seja;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>11 - As partes signatárias declaram expressamente que: (a) não possuem</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>em sua cadeia produtiva a exploração de trabalho infantil, ou de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>trabalho em situação degradante, análoga a de trabalho escravo, tampouco</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>se beneficia ou coaduna com tais práticas; (b) em sua cadeia produtiva</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>atuam de modo a preservar o meio ambiente, buscando sempre o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>desenvolvimento sustentável, minimizando os efeitos nocivos ao meio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ambiente que por ventura venham a gerar em decorrência de sua produção;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>(c) cumprirão rigorosamente toda a legislação aplic]avel à prevenção e</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>combate de corrupção, atividades ilícitas, lavagem de dinheiro e demais</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>atos ilícitos análogos, nos termos da Lei 12.846 de 01 de agosto de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>2013(Lei Anticorrupção), bem como quaiquer outros dispositivos que</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>venham a viger na legislação brasileira atinente a matéria; e (d)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>autorizaram-se reciprocamente o tratamento dos dados pessoais coletados</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>em razão deste Pedido, e assim, obrigam-se em observar a legislação</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>aplicável acerca da privacidade, segurança e do tratamento dos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>referidosdados pessoais, adotando boas práticas para garantir que o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>tratamento dos dados pessoais aqui previsto sejam sempre limitados à sua</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>finalidade, nos termos da Lei nº 13.7092018 (Lei Geral de Proteção de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Dados Pessoais - LGPD);</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>12 - O fornecedor deverá manifestar o aceite quanto aos termos deste</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Pedido no prazo de 48 horas contadas de seu recebimento. O aceite poderá</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ser indicado via e-mail ou em documento apartado, com a indicação do</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>número do Pedido. Não havendo manifestação contrária neste prazo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>assinalado será considerado aceito o Pedido, o qual gerará seus efeitos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>legais.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>13 - Não será aceita a operação de VENDA COM ENTREGA FUTURA sem prévia</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>autorização do comprador.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>1 - É obrigatório constar na Nota Fiscal o número deste Pedido de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>compras</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>2 - Após o faturamento, é obrigatório o envio do arquivo XML de nota</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Fiscal Eletrônica ao e-mail compras@tgg.com.br;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>3 - As mercadorias/serviços entregues em desacordo com este Pedido,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>quanto a suas especificações, condições, marcas, quantidades, qualidade</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>e outros, poderão ser recusadas/devolvidas pela Compradora. Neste caso,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>a Compradora poderá exigir o cumprimento da obrigação ou exercer seu</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>direito de cancelar o presente Pedido, sem nenhuma incidência de multa</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ou qualquer outra penalidade, sendo que todos os custos da devolução das</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>mercadorias/serviços serão de responsabilidade integral do Fornecedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>4 - O pagamento será realizado por meio de transferência eletrônica ou</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>boleto em DDA do fornecedor, vedada a emissão de duplicatas / titulos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>negociados em nome de terceiro, que não sejam o CNPJ do pedido de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>compra. O pagamento fica condicionado ao cumprimento das obrigações do</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Fornecedor. Estando o pagamento suspenso, pelo motivo acima, estenão</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>sofrerá nehum reajuste ou acréscimo. O simples comprovante de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>transferência bancária e/ou pagamento do boleto, será considerado como</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>recibo de quitação e pagamento do valor nele constante, nada mais tendo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>o Fornecedor a reclamar, presente ou futuro, seja a que titulo for;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>5 - O Fornecedor não poderá, em nenhuma hipótese, ceder ou transferir  o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>seu crédito oriundo do presente Pedido;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>6 - O Fornecedor declara em caráter irrevogável e irretratável,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>expressamente, que o cumprimento do objeto do presente Pedido não</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>importa, sob nenhum aspecto, em parceria, sociedade ou na constituição</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>de vínculo empregatício entre a Compradora e o Fornecedor, seus</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>empregados e prepostos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>7 - O Fornecedor se obriga a: (a) cumprir a legislação ambiental,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>trabalhista, previdenciária e fundiária, isentando TGG de quaisquer</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>responsabilidades; (b) seguir rigorosamente às orientações recebidas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>principalemnte no que tange Regras de Fornecimento do TGG nos casos em</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>que seja necessária a entrada de representante do Fornecedor nas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>dependências da Compradora, e; (c) responsabilizar-se por todo e</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>qualquer dano ocorrido durante o transporte do</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>produto/material/equipamento ora adquirido nos casos em que tal</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>transporte competir ao mesmo;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>8 - O Aceitante do presente Pedido declara, sob as penas da lei, que é</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>legítimo representante do Fornecedor e possui plenos poderes para</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>assumir as obrigações constantes deste Pedido, em nome do Fornecedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>9 - O agendamento de veiculos é feito pelo fornecedor na entrada e saída</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>de materiais nas dependências do TGG, por meio so site www.tgg.com.br;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>10 - As partes signatárias declaram expressamente que: (a) não possuem</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>em sua cadeia produtiva a exploração de trabalho infantil, ou de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>trabalho em situação degradante, análoga a de trabalho escravo, tampouco</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>se beneficia ou coaduna com tais práticas; (b) em sua cadeia produtiva</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>atuam de modo a preservar o meio ambiente, buscando sempre o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>desenvolvimento sustentável, minimizando os efeitos nocivos ao meio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ambiente que por ventura venham a gerar em decorrência de sua produção;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>(c) cumprirão rigorosamente toda a legislação aplic]avel à prevenção e</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>combate de corrupção, atividades ilícitas, lavagem de dinheiro e demais</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>atos ilícitos análogos, nos termos da Lei 12.846 de 01 de agosto de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>2013(Lei Anticorrupção), bem como quaiquer outros dispositivos que</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>venham a viger na legislação brasileira atinente a matéria; e (d)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>autorizaram-se reciprocamente o tratamento dos dados pessoais coletados</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>em razão deste Pedido, e assim, obrigam-se em observar a legislação</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>aplicável acerca da privacidade, segurança e do tratamento dos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>referidosdados pessoais, adotando boas práticas para garantir que o</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>tratamento dos dados pessoais aqui previsto sejam sempre limitados à sua</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>finalidade, nos termos da Lei nº 13.709/2018 (Lei Geral de Proteção de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Dados Pessoais - LGPD);</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>11 - O fornecedor deverá manifestar o aceite quanto aos termos deste</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Pedido no prazo de 48 horas contadas de seu recebimento. O aceite poderá</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ser indicado via e-mail ou em documento apartado, com a indicaçãodo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>número do Pedido. Não havendo manifestação contrária neste prazo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>assinalado será considerado aceito o Pedido, o qual gerará seus efeitos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>legais;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>12 - A PARTE que descumprir qualquer cláusula do presente Pedido,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>independentemente de qualquer formalidade judicial ou extrajudicial,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>obrigar-se-á ao pagamento de uma Cláusula Penal correspondente a 10%</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>(dez por cento) do valor total desse Pedido, respondendo ainda a parte</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>infratora pelas perdas e danos que causar a parte inocente;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PT</TDFORMAT>
+     <TDLINE>&amp;SY-ULINE(179)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P5</TDFORMAT>
+     <TDLINE>13 - Fica eleito os foros das Comarcas do local do Faturamento e/ou da</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Comarca de Guarujá-SP, para dirimir quaisquer dúvidas ou demandas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>judiciais que poderão surgir na interpretação/execução do presente</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Pedido, com expressa renúncia à qualquer outro, por mais privilegiado</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>que seja;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;1&lt;/&gt; - It&apos;s mandatory to include the Purchase Order number in the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Invoice;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;2&lt;/&gt; - Prior to shipment, submit documentation (Invoice, Packing,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>List and B/L or AWB) for appr</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>oval;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;3&lt;/&gt; - Proforma Invoice and Invoice must contain (Net weight, gross</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>weight, manufacturer, Part Number, brand, country of origin, country of</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>acquisition, HS code and the commercial terms as agreed);</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;4&lt;/&gt; - In the case of the purchase to be (DAT, CIF, CPT), the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>shipment shall be authorized only if the B/L or AWB are according to</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Invoice and Packing List;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;5&lt;/&gt; - In the Invoice, use INCOTERMS 2010;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;6&lt;/&gt; - If none of the above requirements have been complied, and if</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>during the custom clearance occurs fines, the fines will be forwarded to</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>the supplier;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;7&lt;/&gt; - Price fixed and not adjustable;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;8&lt;/&gt; - The data of documents from Hermasa (Invoice, Packing List and</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>B/L or AWB) must conform our PO;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;9&lt;/&gt; - The Equipment manufactured by Seller shall be free and clear</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>from defects in material and workmanship if occurs, approved by Buyer</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>howevernot later than 18 months from delivery of the equipment EXW;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;10&lt;/&gt; - Delivery of Goods/Services: The goods do be delivered or</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>services to be provided (as the case may be) must be delivered/provided</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>by the Seller to the Purchaser in accordance with the terms, conditions</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and Specification stated on this ORDER.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;10.1.&lt;/&gt; If the goods or services (as the case may be) are delivered</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>in different terms and conditions of this ORDER, so the Purchaser, at</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>its option and own discretion, may reject total or part of the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>respective good or service. If the Purchaser exercisies its right to</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>reject the service/product, no payment, penalty, cost or other fee mus</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>be supportedd by the Purchaser. Additionally, any and all cost of</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>returning the goods/services will be for the Seller&apos;s responsability.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;11&lt;/&gt; - Payment: The payment must be made on the terms stated on this</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ORDER by electronic transfer of the respective price to a Seller&apos;s bank,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>as per the instructions stated ORDER.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;12&lt;/&gt; - Assignment and Transference of Rights: The Seller shall not,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>under any circumstances, assign or transfer its rights, credits nor any</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>obligation arising from this ORDER to any third party.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;13&lt;/&gt; - Liquidated Damages: If the Seller breaches any material</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>clause, condition or provision stated on this Order the Seller shall pay</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>to the Buyer the sum of 10% of the Purchase Price referred above.  The</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>payment shall occur within 15 (fifteen) days after the Buyer notifies</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>the Seller of the specified breach by means of a formal communication.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>The rights and remedies stated in this Section are cumulative and in</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>addition to all other remedies available under this Agreement, at law,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and in equity.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;14&lt;/&gt; - Compliance With Laws; Maintenance of Approvals: The Seller</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>will comply with any and all regulations, rules, laws, and orders</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>applicable to it, including, without limitation, any and all regulation,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>rules, laws and orders pertaining to labor, social security, retirement</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and pension matters, anti-terrorism, anti-corruption and environment</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>laws, rules and regulations; and it will obtain and maintainall</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>governmental approvals required for the performance of all obligations</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and transactions contemplated by this ORDER.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;15&lt;/&gt; - Social  Representations: The parties expressly represent and</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>warrants that doesnot maintain in its supply chain any labor in</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>degrading conditions, including (but not limited to) exploitation of</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>child labor and/or in degrationg conditions, conditions similar to slave</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>labor.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;16&lt;/&gt; - Governing Law; Submission to Juridiction; Waivers: This ORDER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>shall be governed by and construed in accordance with the laws of the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Stated of New York/USA. Any suit, action or proceeding arising out of or</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>with respect to this ORDER or any legal action or proceeding to execute</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>or otherwise enforce any judgment obtained for breach hereof or thereof</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>maybe brought in the courts of the Stated of New York located in the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>County of New York - United States of America, and a final judgment in</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>any such suit, action or proceeding shall be conclusive and may be</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>enforced in other jurisdictions by suit on the judgment or in any other</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>manner provided by the law.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;17&lt;/&gt; - Force Majeure: In case of a Force Majeure event (such as</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>earthquakes, fires, epidemics, wars, etc., only to make some examples)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>that may jeopardize the agreed delivery schedules, the Seller is obliged</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>to immediately give written communication to the Buyer specifying the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>resulting extent of the delay, estimated or real. The Seller must in any</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>case undertake all actions aimed at reducing the delay and making up for</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>lost time. Any new delivery date will have to beagreed between the Buyer</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and the Seller in relation to the hindrance of the Force Majeure cause.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>In case the Force Majeure cause leads to a delay in delivery of more</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>than 30 days (thirty) the Buyer - irrespective of its other rights -</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>reserves the right to terminate the purchase order at any time by</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>sending registered letter with return receipt, fax or email to the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>SELLER.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>B1</TDFORMAT>
+     <TDLINE>&lt;B&gt;18&lt;/&gt; - Confidentiality: The Seller agrees not to advertise using the</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>name of the BUYER without a written authorization provided by it. All</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>the information contained in the purchase order, its enclosures, if any,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>and any information supplied by BUYER during the period of supply, must</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>be considered as strictly private and confidential. The parties hereby</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>irrevocably and unconditionally waives any objection which it may now or</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>hereafter have to the laying of venue of any of the aforesaid actions or</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>proceedings arising out of or in connection with this ORDER brought in</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>the courts referred to in this clause. WAIVER OF JURY TRIAL: EACH PARTY</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>HERETI HEREBY WAIVES, TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ANY RIGHT IT MAY HAVE TO A TRIAL BY JURY IN RESPECT OF ANY LITIGATION</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>DIRECTLY OR INDIRECTLY ARISING OUT OF, UNDER OR IN CONNECTION WITH THIS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>ORDER.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>TOTAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;19&apos; CM HEIGHT &apos;1.20&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.6&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;19&apos; CM HEIGHT &apos;0.6&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_BUSCA_TOT_PAG IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZPIA&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;ZIM&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCEI&apos; AND &amp;EKKO-BSART&amp; &lt;&gt; &apos;PCSI&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PC</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;Valor total desta Página:&lt;/&gt;,,&amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P8</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;Valor total do Pedido:&lt;/&gt;,,&amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PC</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;Total Value of Page:&lt;/&gt;,,&amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P8</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;Total Value of P.O.:&lt;/&gt;,,&amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+   </TDLINES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

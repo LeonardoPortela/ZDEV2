@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCX_ABAPGIT_EXCEPTIONB</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Exception</DESCRIPT>
+    <CATEGORY>40</CATEGORY>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MI_LOG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MSGV1</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Variável mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MSGV2</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Variável mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MSGV3</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Variável mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MSGV4</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Variável mensagens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_CALLSTACK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Pilha de chamadas ABAP</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_T100_LONGTEXT_ITF</CMPNAME>
+     <SCONAME>RT_ITF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lista de SAPscript</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ITF_TO_STRING</CMPNAME>
+     <SCONAME>IT_ITF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lista de SAPscript</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REMOVE_EMPTY_SECTION</CMPNAME>
+     <SCONAME>CT_ITF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lista de SAPscript</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>REPLACE_SECTION_HEAD_WITH_TEXT</CMPNAME>
+     <SCONAME>CS_ITF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>SAPscript: linhas de textos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SPLIT_TEXT_TO_SYMSG</CMPNAME>
+     <SCONAME>RS_MSG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura das variáveis mens.</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

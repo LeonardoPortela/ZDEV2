@@ -1,0 +1,252 @@
+FUNCTION ZSDMF002_ATUALI_OV_SOLICITACAO.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_TIPO) TYPE  CHAR1 DEFAULT '1'
+*"  EXPORTING
+*"     VALUE(ERRO) TYPE  SY-SUBRC
+*"  TABLES
+*"      TI_ITENS_OV STRUCTURE  ZSDT0053 OPTIONAL
+*"      TI_FORM_LOTE STRUCTURE  ZSDT0066 OPTIONAL
+*"      TE_SAIDA_EXEC STRUCTURE  ZSDS010 OPTIONAL
+*"  EXCEPTIONS
+*"      OV_NAO_ENCONTRADA
+*"----------------------------------------------------------------------
+  DATA: BEGIN OF TL_ITENS OCCURS 0,
+          NRO_SOL_OV TYPE ZSDT0053-NRO_SOL_OV,
+          POSNR      TYPE ZSDT0053-POSNR,
+          VBELN      TYPE ZSDT0053-VBELN,
+          ZMENG      TYPE ZSDT0053-ZMENG,
+          VOLUM      TYPE ZSDT0066-VOLUM,
+          VALDT      TYPE ZSDT0053-VALDT,
+          VLRTOT     TYPE ZSDT0053-VLRTOT,
+        END OF TL_ITENS.
+
+  DATA: TL_VBAK            TYPE TABLE OF VBAK WITH HEADER LINE,
+        TL_VBAP            TYPE TABLE OF VBAP WITH HEADER LINE,
+        TL_VBEP            TYPE TABLE OF VBEP WITH HEADER LINE,
+        WL_ORDERHEADERIN   TYPE BAPISDH1,
+        WL_ORDERHEADERINX  TYPE BAPISDH1X,
+        TL_BAPISDITM       TYPE TABLE OF BAPISDITM WITH HEADER LINE,
+        TL_BAPISDITMX      TYPE TABLE OF BAPISDITMX WITH HEADER LINE,
+        TL_RETURN          TYPE TABLE OF BAPIRET2 WITH HEADER LINE,
+        WL_RETURN          TYPE BAPIRET2,
+        TL_SCHEDULE_LINES  TYPE TABLE OF BAPISCHDL WITH HEADER LINE,
+        TL_SCHEDULE_LINESX TYPE TABLE OF BAPISCHDLX WITH HEADER LINE,
+        TL_SAIDA_EXEC      TYPE TABLE OF TY_SAIDA_EXEC WITH HEADER LINE,
+        WL_TABIX           TYPE SY-TABIX.
+
+  REFRESH: TL_VBAK, TL_VBAP, TL_VBEP, TL_SAIDA_EXEC, TL_ITENS.
+
+  ERRO = 4.
+
+  IF TI_ITENS_OV[] IS INITIAL
+  AND TI_FORM_LOTE[] IS INITIAL.
+    RAISE OV_NAO_ENCONTRADA.
+  ENDIF.
+
+  LOOP AT TI_ITENS_OV.
+    CLEAR: TL_ITENS.
+    MOVE-CORRESPONDING: TI_ITENS_OV TO TL_ITENS.
+    APPEND TL_ITENS.
+  ENDLOOP.
+
+  LOOP AT TI_FORM_LOTE.
+    CLEAR: TL_ITENS.
+    MOVE-CORRESPONDING: TI_FORM_LOTE TO TL_ITENS.
+    APPEND TL_ITENS.
+  ENDLOOP.
+
+  IF TL_ITENS[] IS NOT INITIAL.
+    SELECT *
+      FROM VBAK
+      INTO TABLE TL_VBAK
+       FOR ALL ENTRIES IN TL_ITENS
+       WHERE VBELN EQ TL_ITENS-VBELN.
+  ENDIF.
+
+  IF TL_VBAK[] IS NOT INITIAL.
+    SELECT *
+      FROM VBAP
+      INTO TABLE TL_VBAP
+       FOR ALL ENTRIES IN TL_VBAK
+        WHERE VBELN EQ TL_VBAK-VBELN.
+
+
+    IF SY-SUBRC IS INITIAL.
+      SELECT *
+        FROM VBEP
+        INTO TABLE TL_VBEP
+         FOR ALL ENTRIES IN TL_VBAP
+          WHERE VBELN EQ TL_VBAP-VBELN
+            AND POSNR EQ TL_VBAP-POSNR.
+
+      WL_ORDERHEADERINX-UPDATEFLAG = 'U'.
+
+      LOOP AT TL_VBAP.
+        REFRESH: TL_BAPISDITM, TL_BAPISDITMX, TL_SCHEDULE_LINES, TL_SCHEDULE_LINESX.
+        CLEAR: TI_ITENS_OV, TL_BAPISDITM, TL_BAPISDITMX.
+        READ TABLE TL_ITENS
+          WITH KEY VBELN = TL_VBAP-VBELN.
+        IF SY-SUBRC IS INITIAL.
+          WL_TABIX = SY-TABIX.
+
+          MOVE: 'U'               TO TL_BAPISDITMX-UPDATEFLAG,
+                TL_VBAP-POSNR     TO TL_BAPISDITMX-ITM_NUMBER,
+                'X'               TO TL_BAPISDITMX-TARGET_QTY,
+                TL_VBAP-POSNR     TO TL_BAPISDITM-ITM_NUMBER,
+                TL_ITENS-ZMENG    TO TL_BAPISDITM-TARGET_QTY.
+
+          IF TL_ITENS-VALDT IS NOT INITIAL.
+            MOVE:   'X'          TO TL_BAPISDITMX-FIX_VAL_DY,
+                  TL_ITENS-VALDT TO TL_BAPISDITM-FIX_VAL_DY.
+          ENDIF.
+
+          IF TL_BAPISDITM-FIX_VAL_DY IS NOT INITIAL.
+            WL_ORDERHEADERIN-FIX_VAL_DY  = TL_BAPISDITM-FIX_VAL_DY.
+            WL_ORDERHEADERINX-FIX_VAL_DY = 'X'.
+          ENDIF.
+
+          APPEND TL_BAPISDITMX.
+          APPEND TL_BAPISDITM.
+          CLEAR: TL_BAPISDITM, TL_BAPISDITMX.
+
+*IF TL_ITENS-VOLUM IS INITIAL.
+
+          LOOP AT TL_VBEP
+              WHERE VBELN EQ TL_VBAP-VBELN
+                AND POSNR EQ TL_VBAP-POSNR.
+            MOVE: 'U'                TO TL_SCHEDULE_LINESX-UPDATEFLAG,
+                  TL_VBAP-POSNR      TO TL_SCHEDULE_LINESX-ITM_NUMBER,
+                  TL_VBEP-ETENR      TO TL_SCHEDULE_LINESX-SCHED_LINE,
+                  'X'                TO TL_SCHEDULE_LINESX-REQ_QTY,
+                  TL_VBAP-POSNR      TO TL_SCHEDULE_LINES-ITM_NUMBER,
+                  TL_VBEP-ETENR      TO TL_SCHEDULE_LINES-SCHED_LINE,
+                  TL_ITENS-ZMENG     TO TL_SCHEDULE_LINES-REQ_QTY.
+
+
+            APPEND TL_SCHEDULE_LINESX.
+            APPEND TL_SCHEDULE_LINES.
+            CLEAR: TL_SCHEDULE_LINES, TL_SCHEDULE_LINESX.
+          ENDLOOP.
+*          endif.
+          PERFORM ENVIA_QUANTIDADE_PNL USING TL_ITENS-NRO_SOL_OV
+                                             TL_ITENS-POSNR
+                                             TL_ITENS-VBELN
+                                             TL_ITENS-ZMENG.
+
+"*---> 28/06/2023 - Migração S4 - LO --> Material não está sendo utilizado
+          CALL FUNCTION 'BAPI_SALESORDER_CHANGE'"#EC CI_USAGE_OK[2438131]
+            EXPORTING
+              SALESDOCUMENT    = TL_VBAP-VBELN
+              ORDER_HEADER_IN  = WL_ORDERHEADERIN
+              ORDER_HEADER_INX = WL_ORDERHEADERINX
+            TABLES
+              ORDER_ITEM_IN    = TL_BAPISDITM
+              ORDER_ITEM_INX   = TL_BAPISDITMX
+              SCHEDULE_LINES   = TL_SCHEDULE_LINES
+              SCHEDULE_LINESX  = TL_SCHEDULE_LINESX
+              RETURN           = TL_RETURN.
+
+          CLEAR:WL_RETURN.
+          READ TABLE TL_RETURN INTO WL_RETURN WITH KEY TYPE = 'E'.
+
+          IF SY-SUBRC NE 0.
+            CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+              EXPORTING
+                WAIT = 'X'.
+
+            CLEAR ERRO.
+
+****      por algum motivo o sap esta fazendo um calculo estranho ao fazer a mudanca do volume e da qtd
+***       por esse motivo a vao ser atualizadas em diferentes momentos.
+            IF TL_ITENS-VOLUM IS NOT INITIAL.
+              REFRESH: TL_SCHEDULE_LINES, TL_SCHEDULE_LINESX, TL_BAPISDITMX, TL_BAPISDITM.
+              MOVE: 'U'         TO TL_BAPISDITMX-UPDATEFLAG,
+              TL_VBAP-POSNR     TO TL_BAPISDITMX-ITM_NUMBER,
+              TL_VBAP-POSNR     TO TL_BAPISDITM-ITM_NUMBER,
+              TL_ITENS-VOLUM    TO TL_BAPISDITM-VOLUME,
+              'X'               TO TL_BAPISDITMX-VOLUME .
+
+              APPEND TL_BAPISDITMX.
+              APPEND TL_BAPISDITM.
+              CLEAR: TL_BAPISDITM, TL_BAPISDITMX.
+
+"*---> 28/06/2023 - Migração S4 - LO --> Material não está sendo utilizado
+              CALL FUNCTION 'BAPI_SALESORDER_CHANGE'"#EC CI_USAGE_OK[2438131]
+                EXPORTING
+                  SALESDOCUMENT    = TL_VBAP-VBELN
+                  ORDER_HEADER_IN  = WL_ORDERHEADERIN
+                  ORDER_HEADER_INX = WL_ORDERHEADERINX
+                TABLES
+                  ORDER_ITEM_IN    = TL_BAPISDITM
+                  ORDER_ITEM_INX   = TL_BAPISDITMX
+                  SCHEDULE_LINES   = TL_SCHEDULE_LINES
+                  SCHEDULE_LINESX  = TL_SCHEDULE_LINESX
+                  RETURN           = TL_RETURN.
+
+              CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+                EXPORTING
+                  WAIT = 'X'.
+
+              CLEAR ERRO.
+            ENDIF.
+          ELSE.
+            READ TABLE TI_ITENS_OV
+              WITH KEY VBELN = TL_VBAP-VBELN.
+            IF SY-SUBRC IS INITIAL.
+              "DELETE TI_ITENS_OV FROM SY-TABIX. "WL_TABIX.
+              DELETE TI_ITENS_OV INDEX SY-TABIX. "WL_TABIX.
+            ELSE.
+              READ TABLE TI_FORM_LOTE
+                WITH KEY VBELN = TL_VBAP-VBELN.
+              IF SY-SUBRC IS INITIAL.
+                "DELETE TI_FORM_LOTE FROM SY-TABIX.
+                DELETE TI_FORM_LOTE INDEX SY-TABIX.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+          CLEAR: TL_SAIDA_EXEC.
+          MOVE: TL_ITENS-NRO_SOL_OV  TO TL_SAIDA_EXEC-NRO_SOL_OV,
+                TL_ITENS-POSNR       TO TL_SAIDA_EXEC-POSNR,
+                TL_ITENS-ZMENG       TO TL_SAIDA_EXEC-ZMENG,
+                TL_ITENS-VALDT       TO TL_SAIDA_EXEC-VALDT,
+                TL_ITENS-VLRTOT      TO TL_SAIDA_EXEC-VLRTOT,
+                TL_VBAP-VBELN        TO TL_SAIDA_EXEC-VBELN.
+
+          IF WL_RETURN IS INITIAL.
+            APPEND TL_SAIDA_EXEC.
+          ELSE.
+            LOOP AT TL_RETURN WHERE TYPE EQ 'E'.
+              MOVE: TL_RETURN-MESSAGE TO TL_SAIDA_EXEC-MSG.
+              APPEND TL_SAIDA_EXEC.
+            ENDLOOP.
+          ENDIF.
+        ENDIF.
+
+      ENDLOOP.
+    ENDIF.
+  ENDIF.
+
+
+  IF TL_SAIDA_EXEC[] IS NOT INITIAL.
+    IF I_TIPO EQ '1'.
+      PERFORM MONTAR_LAYOUT USING 'TL_SAIDA_EXEC'.
+      CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+        EXPORTING
+*         i_callback_program    = v_report
+*         I_CALLBACK_USER_COMMAND = 'XUSER_COMMAND'
+          IT_FIELDCAT           = ESTRUTURA[]
+*         IT_SORT               = T_SORT[]
+          I_SAVE                = 'A'
+          I_SCREEN_START_COLUMN = 3
+          I_SCREEN_START_LINE   = 3
+          I_SCREEN_END_COLUMN   = 100
+          I_SCREEN_END_LINE     = 13
+        TABLES
+          T_OUTTAB              = TL_SAIDA_EXEC.
+    ELSE.
+      TE_SAIDA_EXEC[] = TL_SAIDA_EXEC[].
+    ENDIF.
+  ENDIF.
+ENDFUNCTION.

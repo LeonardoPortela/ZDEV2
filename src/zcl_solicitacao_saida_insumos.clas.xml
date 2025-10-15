@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_SOLICITACAO_SAIDA_INSUMOS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Saída insumos</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>EV_ERRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código geral</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>IV_NAO_VALIDAR_BLOQUEIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código geral</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>IV_NRO_SOL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número solicitação de embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>IV_POPUP_TO_CONFIRM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Com popup de confirmação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>IV_POSNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Item do documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>IV_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CANCELAR</CMPNAME>
+     <SCONAME>RV_MESSAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Caractere 100</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>POPUP_TO_CONFIRM</CMPNAME>
+     <SCONAME>RV_RET</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código geral</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SHOW_MESSAGE</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STRING_TO_CHAR</CMPNAME>
+     <SCONAME>EV_MSG01</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STRING_TO_CHAR</CMPNAME>
+     <SCONAME>EV_MSG02</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STRING_TO_CHAR</CMPNAME>
+     <SCONAME>EV_MSG03</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>STRING_TO_CHAR</CMPNAME>
+     <SCONAME>EV_MSG04</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: variável da mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

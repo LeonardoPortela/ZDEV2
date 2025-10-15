@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CMOD" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <MODACT>
+    <MODACT>
+     <NAME>ZMMMIRO</NAME>
+    </MODACT>
+    <MODACT>
+     <NAME>ZMMMIRO</NAME>
+     <MEMBER>LFDCB001</MEMBER>
+    </MODACT>
+    <MODACT>
+     <NAME>ZMMMIRO</NAME>
+     <MEMBER>LMR1M002</MEMBER>
+    </MODACT>
+   </MODACT>
+   <MODTEXT>
+    <MODTEXT>
+     <SPRSL>P</SPRSL>
+     <NAME>ZMMMIRO</NAME>
+     <MODTEXT>Exit   Miro</MODTEXT>
+    </MODTEXT>
+   </MODTEXT>
+   <MODATTR>
+    <MODATTR>
+     <NAME>ZMMMIRO</NAME>
+    </MODATTR>
+   </MODATTR>
+  </asx:values>
+ </asx:abap>
+</abapGit>

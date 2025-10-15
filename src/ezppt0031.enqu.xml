@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENQU" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD25V>
+    <VIEWNAME>EZPPT0031</VIEWNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <AGGTYPE>E</AGGTYPE>
+    <ROOTTAB>ZPPT0031</ROOTTAB>
+    <DDTEXT>Bloqueio de processamento Algodao por Processo</DDTEXT>
+   </DD25V>
+   <DD26E_TABLE>
+    <DD26E>
+     <VIEWNAME>EZPPT0031</VIEWNAME>
+     <TABNAME>ZPPT0031</TABNAME>
+     <TABPOS>0001</TABPOS>
+     <FORTABNAME>ZPPT0031</FORTABNAME>
+     <ENQMODE>E</ENQMODE>
+    </DD26E>
+   </DD26E_TABLE>
+   <DD27P_TABLE>
+    <DD27P>
+     <VIEWNAME>EZPPT0031</VIEWNAME>
+     <OBJPOS>0001</OBJPOS>
+     <VIEWFIELD>MANDT</VIEWFIELD>
+     <TABNAME>ZPPT0031</TABNAME>
+     <FIELDNAME>MANDT</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>E</ENQMODE>
+    </DD27P>
+    <DD27P>
+     <VIEWNAME>EZPPT0031</VIEWNAME>
+     <OBJPOS>0002</OBJPOS>
+     <VIEWFIELD>CHAVE_QUEBRA</VIEWFIELD>
+     <TABNAME>ZPPT0031</TABNAME>
+     <FIELDNAME>CHAVE_QUEBRA</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ENQMODE>E</ENQMODE>
+     <LOWERCASE>X</LOWERCASE>
+    </DD27P>
+   </DD27P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

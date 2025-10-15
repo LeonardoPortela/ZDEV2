@@ -1,0 +1,221 @@
+*----------------------------------------------------------------------*
+***INCLUDE LZMEMORANDOF02 .
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Form  ADD_MEMORANDO_NF_PROF
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM ADD_MEMORANDO_NF_PROF  TABLES IT_MEMORANDO  STRUCTURE ZDOC_MEMORANDO
+                            USING  WA_NF_PROD    TYPE ZDOC_NF_PRODUTOR
+                                   WA_J_1BNFDOC2 TYPE J_1BNFDOC
+                                   WA_J_1BNFLIN2 TYPE J_1BNFLIN
+                                   VG_MEMORANDO  TYPE Z_MEMORANDO
+                                   WA_MEMORANDO  TYPE ZDOC_MEMORANDO
+                                   P_PAIS        TYPE LAND1
+                                   P_NOMEACAO    TYPE ZNOM_TRANSPORTE.
+
+  DATA:  WA_ZDOC_EXP   TYPE ZDOC_EXP,
+         AUX_STR       TYPE STRING,
+         WA_EXPORTACAO TYPE ZREG_EXPORTACAO,
+         WA_PART       TYPE LFA1,
+         WA_PART_NOTA  TYPE LFA1,
+         WA_ZDDE       TYPE ZDDE.
+
+  WA_MEMORANDO-DIRECAO         = '1'.
+  WA_MEMORANDO-NR_MEMORANDO    = VG_MEMORANDO.
+  WA_MEMORANDO-TP_FINALIDADE   = 'N'.
+  WA_MEMORANDO-DT_EMISSAO_MEMO = SY-DATUM.
+  WA_MEMORANDO-STATUS          = 'P'.
+  WA_MEMORANDO-QUANTIDADE_MEMO = WA_NF_PROD-MENGE.
+  WA_MEMORANDO-REMETENTE       = WA_J_1BNFDOC2-PARID.
+
+  IF ( WA_J_1BNFDOC2-LAND1 IS INITIAL ) OR ( WA_J_1BNFDOC2-REGIO IS INITIAL ).
+    CALL FUNCTION 'Z_PARCEIRO_INFO'
+      EXPORTING
+        P_PARCEIRO   = WA_J_1BNFDOC2-PARID
+        P_PARTYPE    = WA_J_1BNFDOC2-PARTYP
+      CHANGING
+        WA_INFO_PART = WA_PART_NOTA.
+
+    WA_J_1BNFDOC2-LAND1 = WA_PART_NOTA-LAND1.
+    WA_J_1BNFDOC2-REGIO = WA_PART_NOTA-REGIO.
+  ENDIF.
+
+  WA_MEMORANDO-PAIS_ORIGEM      = WA_J_1BNFDOC2-LAND1.
+  WA_MEMORANDO-UF_ORIGEM        = WA_J_1BNFDOC2-REGIO.
+  WA_MEMORANDO-ID_TRANSPORTE    = P_NOMEACAO-ID_TRANSPORTE.
+  WA_MEMORANDO-DS_NOME_TRANSPOR = P_NOMEACAO-DS_NOME_TRANSPOR.
+
+  "PERFORM responsavel_memorando USING wa_memorando-responsavel.
+
+  SELECT SINGLE * INTO WA_ZDOC_EXP
+    FROM ZDOC_EXP
+   WHERE VBELN EQ WA_NF_PROD-VBELN.
+
+  IF SY-SUBRC EQ 0.
+
+
+    "Informações de RE/DU-e
+    IF WA_ZDOC_EXP-NR_REGISTRO_EXPO IS NOT INITIAL.
+
+      AUX_STR = WA_ZDOC_EXP-NR_REGISTRO_EXPO.
+      REPLACE ALL OCCURRENCES OF REGEX '[^0-9]' IN AUX_STR WITH ''.
+      WA_MEMORANDO-NR_RE = AUX_STR.
+
+      SELECT SINGLE * INTO WA_EXPORTACAO
+        FROM ZREG_EXPORTACAO
+       WHERE ID_REGISTRO_EXPO EQ WA_ZDOC_EXP-ID_REGISTRO_EXPO.
+
+      IF NOT SY-SUBRC IS INITIAL.
+        MESSAGE E079 WITH WA_ZDOC_EXP-ID_REGISTRO_EXPO WA_ZDOC_EXP-NR_REGISTRO_EXPO RAISING DOCN_RE_NAO_ENCONTRADA.
+      ENDIF.
+
+      WA_MEMORANDO-DT_RE = WA_EXPORTACAO-DT_REGISTRO_EXPO.
+
+      IF P_PAIS IS INITIAL.
+        CALL FUNCTION 'Z_PARCEIRO_INFO'
+          EXPORTING
+            P_PARCEIRO   = WA_EXPORTACAO-ID_IMPORTADOR
+            P_PARTYPE    = 'V'
+          CHANGING
+            WA_INFO_PART = WA_PART.
+      ELSE.
+        WA_PART-LAND1 = P_PAIS.
+      ENDIF.
+
+      WA_MEMORANDO-PAIS_DESTINO = WA_PART-LAND1.
+
+      IF NOT WA_ZDOC_EXP-ID_DDE IS INITIAL.
+
+        SELECT SINGLE * INTO WA_ZDDE
+          FROM ZDDE
+         WHERE ID_DDE EQ WA_ZDOC_EXP-ID_DDE.
+
+        IF SY-SUBRC IS INITIAL.
+          WA_MEMORANDO-DT_DDE = WA_ZDDE-DT_DDE.
+          "Informações de DDE
+          AUX_STR = WA_ZDDE-NR_DDE.
+          REPLACE ALL OCCURRENCES OF REGEX '[^0-9]' IN AUX_STR WITH ''.
+          WA_MEMORANDO-NR_DDE = AUX_STR.
+        ELSE.
+          MESSAGE E080 WITH WA_ZDOC_EXP-ID_REGISTRO_EXPO  WA_ZDOC_EXP-NR_REGISTRO_EXPO RAISING DOCN_DDE_NAO_ENCONTRADA.
+        ENDIF.
+      ELSE.
+        "message e083 with wa_zdoc_exp-id_registro_expo wa_zdoc_exp-nr_registro_expo raising docn_dde_nao_encontrada2.
+      ENDIF.
+
+    ELSEIF WA_ZDOC_EXP-NUMERO_DUE IS NOT INITIAL.
+
+      WA_MEMORANDO-NR_RE = WA_ZDOC_EXP-NUMERO_DUE.
+
+      SELECT SINGLE *
+        FROM ZSDT0170 INTO @DATA(WL_0170)
+       WHERE NUMERO_DUE  EQ @WA_ZDOC_EXP-NUMERO_DUE
+         AND ID_DUE_REF  EQ 0.
+
+      IF SY-SUBRC IS NOT INITIAL.
+        MESSAGE E079 WITH WA_ZDOC_EXP-ID_DUE WA_ZDOC_EXP-NUMERO_DUE RAISING DOCN_RE_NAO_ENCONTRADA.
+      ENDIF.
+
+      SELECT SINGLE *
+        FROM ZSDT0174 INTO @DATA(_WL_0174)
+       WHERE ID_DUE EQ @WL_0170-ID_DUE.
+
+      WA_MEMORANDO-DT_RE = WL_0170-DT_ENVIO.
+
+      IF P_PAIS IS INITIAL.
+        WA_MEMORANDO-PAIS_DESTINO = _WL_0174-DESTINO_COUNTRY.
+      ELSE.
+        WA_MEMORANDO-PAIS_DESTINO = P_PAIS.
+      ENDIF.
+
+    ELSE.
+      MESSAGE E079 WITH 'Sem ID' 'Sem Numero' RAISING DOCN_RE_NAO_ENCONTRADA.
+    ENDIF.
+
+
+  ENDIF.
+
+  APPEND WA_MEMORANDO TO IT_MEMORANDO.
+
+  VG_MEMORANDO = VG_MEMORANDO + 1.
+
+ENDFORM.                    " ADD_MEMORANDO_NF_PROF
+
+*&---------------------------------------------------------------------*
+*&      Form  RESPONSAVEL_MEMORANDO
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM RESPONSAVEL_MEMORANDO  USING  VG_RESPONSAVEL TYPE CHAR50.
+
+  DATA: WA_SETLEAF  TYPE SETLEAF,
+        VG_KOKRS    TYPE KOKRS,
+        VG_KOSTL    TYPE KOSTL.
+
+  "Opter Área de contabilidade de custos
+  SELECT SINGLE * INTO WA_SETLEAF
+    FROM SETLEAF
+   WHERE SETNAME EQ 'ZMEMORANDO_KOKRS'.
+
+  VG_KOKRS = WA_SETLEAF-VALFROM.
+
+  "Opter Centro de custo
+  SELECT SINGLE * INTO WA_SETLEAF
+    FROM SETLEAF
+   WHERE SETNAME EQ 'ZMEMORANDO_KOSTL'.
+
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+    EXPORTING
+      INPUT  = WA_SETLEAF-VALFROM
+    IMPORTING
+      OUTPUT = VG_KOSTL.
+
+  "Informações de Centro de Custo
+  SELECT SINGLE VERAK INTO VG_RESPONSAVEL
+    FROM CSKS
+   WHERE KOKRS EQ VG_KOKRS
+     AND KOSTL EQ VG_KOSTL.
+
+ENDFORM.                    " RESPONSAVEL_MEMORANDO
+
+*&---------------------------------------------------------------------*
+*&      Form  ADD_NOTA_MEMORANDO
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM ADD_NOTA_MEMORANDO  TABLES  IT_NOTAS_MEMORANDO STRUCTURE ZDOC_MEMO_NOTA
+                         USING   WA_MEMORANDO TYPE ZDOC_MEMORANDO
+                                 WA_NF_PROD   TYPE ZDOC_NF_PRODUTOR
+                                 WA_J_1BNFDOC2 TYPE J_1BNFDOC
+                                 WA_J_1BNFLIN2 TYPE J_1BNFLIN.
+
+  DATA: WA_NOTA TYPE ZDOC_MEMO_NOTA.
+  DATA: WA_MAKT TYPE MAKT.
+
+  SELECT SINGLE * INTO WA_MAKT
+    FROM MAKT
+   WHERE MATNR EQ WA_J_1BNFLIN2-MATNR
+     AND SPRAS EQ SY-LANGU.
+
+  WA_NOTA-NR_MEMORANDO = WA_MEMORANDO-NR_MEMORANDO.
+  WA_NOTA-DOCNUM       = WA_J_1BNFLIN2-DOCNUM.
+  WA_NOTA-ITMNUM       = WA_J_1BNFLIN2-ITMNUM.
+  WA_NOTA-DOCDAT       = WA_J_1BNFDOC2-DOCDAT.
+  WA_NOTA-MODEL        = WA_J_1BNFDOC2-MODEL.
+  WA_NOTA-SERIES       = WA_J_1BNFDOC2-SERIES.
+  WA_NOTA-NFNUM        = WA_J_1BNFDOC2-NFNUM.
+  WA_NOTA-NFE          = WA_J_1BNFDOC2-NFE.
+  WA_NOTA-NFENUM       = WA_J_1BNFDOC2-NFENUM.
+  WA_NOTA-MATNR        = WA_J_1BNFLIN2-MATNR.
+  WA_NOTA-NBM          = WA_J_1BNFLIN2-NBM.
+  WA_NOTA-MENGE        = WA_NF_PROD-MENGE.
+  WA_NOTA-MEINS        = 'KG'.
+  WA_NOTA-MAKTX        = WA_MAKT-MAKTG.
+  WA_NOTA-BUKRS        = WA_J_1BNFDOC2-BUKRS.
+  WA_NOTA-BRANCH       = WA_J_1BNFDOC2-BRANCH.
+
+  APPEND WA_NOTA TO IT_NOTAS_MEMORANDO.
+
+ENDFORM.                    " ADD_NOTA_MEMORANDO

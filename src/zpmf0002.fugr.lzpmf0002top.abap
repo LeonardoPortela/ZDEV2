@@ -1,0 +1,3 @@
+FUNCTION-POOL ZPMF0002                  . "MESSAGE-ID ...
+
+* INCLUDE LZPMF0002D...                      " Local class definition

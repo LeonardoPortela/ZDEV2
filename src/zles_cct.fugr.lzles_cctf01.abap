@@ -1,0 +1,218 @@
+*----------------------------------------------------------------------*
+***INCLUDE LZLES_CCTF01.
+*----------------------------------------------------------------------*
+
+FORM F_COMPLETA_CAMPOS_0110.
+
+
+ENDFORM.
+
+FORM F_ATUALIZA_TEXTOS_0110.
+
+ENDFORM.
+
+
+FORM F_CONTROL_FIELDS_0110.
+
+  LOOP AT SCREEN.
+
+    IF ENTREGA_CONTROL-MODO EQ C_ENTREGA_VIEW.
+      SCREEN-INPUT = '0'.
+    ENDIF.
+
+    MODIFY SCREEN.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM F_REFRESH_OBJETOS .
+
+  CLEAR: GS_LAYOUT,
+         GS_VARIANT.
+
+  REFRESH: IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_CRIAR_CATALOG USING P_SCREEN.
+
+  DATA: C_EDIT      TYPE C,
+        C_EDIT_DUE  TYPE C.
+
+  FREE: WA_FCAT, IT_FCAT.
+
+  CLEAR: C_EDIT.
+  IF ( ENTREGA_CONTROL-MODO EQ C_ENTREGA_NOVO   ) OR
+     ( ENTREGA_CONTROL-MODO EQ C_ENTREGA_CHANGE ).
+    C_EDIT     = 'X'.
+    C_EDIT_DUE = 'X'.
+
+    IF ENTREGA_CONTROL-NO_EDIT_DOCUMENTOS EQ 'X'.
+      CLEAR: C_EDIT_DUE.
+    ENDIF.
+
+  ENDIF.
+
+  CASE P_SCREEN.
+    WHEN '0120'.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+          02  'ZSDT0180'      'NUMERO_DUE'                   'IT_SAIDA_0120'  'NUMERO_DUE'            'Número DU-e'                   '14'   C_EDIT_DUE  ''  ' ' ' ' ' ' ' ' '' ,
+          03  'ZSDT0180'      'DS_NOME_TRANSPOR'             'IT_SAIDA_0120'  'DS_NOME_TRANSPOR'      'Navio'                         '14'   C_EDIT_DUE  ''  ' ' ' ' ' ' ' ' '' ,
+          04  'ZSDT0180'      'CNPJ_DECLARANTE'              'IT_SAIDA_0120'  'CNPJ_DECLARANTE'       'CNPJ'                          '14'   C_EDIT_DUE  ''  ' ' ' ' ' ' ' ' '' .
+
+    WHEN '0122'.
+
+      PERFORM F_ESTRUTURA_ALV USING:
+
+          01  'ZSDT0181'      'NUMERO_DUE'                   'IT_SAIDA_0122'  'NUMERO_DUE'            'DU-e'                           '15'   ''        ''  ' ' ' ' ' ' ' ' '' ,
+          02  'ZSDT0181'      'TIPO_CARGA'                   'IT_SAIDA_0122'  'TIPO_CARGA'            'Tipo Carga'                     '10'   C_EDIT    ''  ' ' ' ' ' ' ' ' '' ,
+          03  'ZSDT0181'      'TIPO_GRANEL'                  'IT_SAIDA_0122'  'TIPO_GRANEL'           'Tipo Granel'                    '11'   C_EDIT    ''  ' ' ' ' ' ' ' ' '' ,
+          04  'ZSDT0181'      'UNID_MEDIDA'                  'IT_SAIDA_0122'  'UNID_MEDIDA'           'Un.Medida'                      '10'   ''        ''  ' ' ' ' ' ' ' ' '' ,
+          05  'ZSDT0181'      'PESO_BRUTO_TOTAL'             'IT_SAIDA_0122'  'PESO_BRUTO_TOTAL'      'Peso Total DU-e'                '16'   C_EDIT    ''  ' ' ' ' ' ' ' ' '' ,
+          06  'ZSDT0181'      'PESO_BRUTO_ENTREGUE'          'IT_SAIDA_0122'  'PESO_BRUTO_ENTREGUE'   'Peso Entregue DU-e'             '19'   C_EDIT    ''  ' ' ' ' ' ' ' ' '' .
+
+  ENDCASE.
+
+ENDFORM.
+
+FORM F_REFRESH_ALV USING P_ALV.
+
+  CASE P_ALV.
+    WHEN '0120'.
+      CALL METHOD OBJ_ALV_0120->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+    WHEN '0122'.
+      CALL METHOD OBJ_ALV_0122->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+  ENDCASE.
+
+ENDFORM.
+
+
+FORM F_ESTRUTURA_ALV USING VALUE(P_COL_POS)       TYPE I
+                           VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                           VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                           VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                           VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                           VALUE(P_SCRTEXT_L)     LIKE DD03P-SCRTEXT_L
+                           VALUE(P_OUTPUTLEN)
+                           VALUE(P_EDIT)
+                           VALUE(P_SUM)
+                           VALUE(P_EMPHASIZE)
+                           VALUE(P_JUST)
+                           VALUE(P_HOTSPOT)
+                           VALUE(P_F4)
+                           VALUE(P_CHECK).
+
+  CLEAR WA_FCAT.
+
+  WA_FCAT-FIELDNAME   = P_FIELD.
+  WA_FCAT-TABNAME     = P_TABNAME.
+  WA_FCAT-REF_TABLE   = P_REF_TABNAME.
+  WA_FCAT-REF_FIELD   = P_REF_FIELDNAME.
+  WA_FCAT-KEY         = ' '.
+  WA_FCAT-EDIT        = P_EDIT.
+  WA_FCAT-COL_POS     = P_COL_POS.
+  WA_FCAT-OUTPUTLEN   = P_OUTPUTLEN.
+  WA_FCAT-NO_OUT      = ' '.
+  WA_FCAT-DO_SUM      = P_SUM.
+  WA_FCAT-REPTEXT     = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_S   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_M   = P_SCRTEXT_L.
+  WA_FCAT-SCRTEXT_L   = P_SCRTEXT_L.
+  WA_FCAT-EMPHASIZE   = P_EMPHASIZE.
+  WA_FCAT-STYLE       =
+  WA_FCAT-JUST        = P_JUST.
+  WA_FCAT-HOTSPOT     = P_HOTSPOT.
+  WA_FCAT-F4AVAILABL  = P_F4.
+  WA_FCAT-CHECKBOX    = P_CHECK.
+
+  APPEND WA_FCAT TO IT_FCAT.
+
+ENDFORM.                    " ESTRUTURA_ALV
+
+FORM F_EXCLUDE_FCODE USING P_SCREEN.
+
+  "CHECK P_SCREEN <> '0120'.
+
+  APPEND CL_GUI_ALV_GRID=>MC_FC_REFRESH           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW    TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW      TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_CUT           TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO          TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE         TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW TO IT_EXCLUDE_FCODE.
+  APPEND CL_GUI_ALV_GRID=>MC_FC_CHECK             TO IT_EXCLUDE_FCODE.
+
+ENDFORM.
+
+FORM F_GRAVAR_ENTREGA.
+
+  DATA: WL_ZSDT0179 TYPE ZSDT0179,
+        WL_ZSDT0180 TYPE ZSDT0180,
+        WL_ZSDT0181 TYPE ZSDT0181.
+
+  DATA: ZCL_CCT_ENTREGA_CARGA TYPE REF TO ZCL_CCT_ENTREGA_CARGA.
+
+  CLEAR: WL_ZSDT0179.
+
+  MOVE-CORRESPONDING CAB_ENTREGA TO WL_ZSDT0179.
+
+  FREE ZCL_CCT_ENTREGA_CARGA.
+  CREATE OBJECT ZCL_CCT_ENTREGA_CARGA.
+
+  "Seta Cabeçalho Entrega
+  ZCL_CCT_ENTREGA_CARGA->SET_CABECALHO( I_ZSDT0179 = WL_ZSDT0179 ).
+  ZCL_CCT_ENTREGA_CARGA->SET_CNPJ_RESPONSAVEL( ).
+
+  "Seta Documentos
+  LOOP AT IT_SAIDA_0120 ASSIGNING FIELD-SYMBOL(<FS_SAIDA_0120>).
+    CLEAR: WL_ZSDT0180.
+    MOVE-CORRESPONDING <FS_SAIDA_0120> TO WL_ZSDT0180.
+    ZCL_CCT_ENTREGA_CARGA->ADD_DOCUMENTO( I_ZSDT0180 = WL_ZSDT0180 ).
+  ENDLOOP.
+
+  "Seta Documentos de Carga
+  LOOP AT IT_SAIDA_0122 ASSIGNING FIELD-SYMBOL(<FS_SAIDA_0122>).
+    CLEAR: WL_ZSDT0181.
+    MOVE-CORRESPONDING <FS_SAIDA_0122> TO WL_ZSDT0181.
+    ZCL_CCT_ENTREGA_CARGA->ADD_DOCUMENTO_CARGA( I_ZSDT0181 = WL_ZSDT0181 ).
+  ENDLOOP.
+
+  DATA(R_GRAVOU) = ZCL_CCT_ENTREGA_CARGA->GRAVAR_REGISTRO( ).
+
+  IF R_GRAVOU IS NOT INITIAL.
+    LEAVE TO SCREEN 0.
+  ENDIF.
+
+ENDFORM.
+
+
+FORM FREE_ALV USING P_SCREEN.
+
+  CASE P_SCREEN.
+    WHEN '0120'.
+      IF OBJ_ALV_0120 IS NOT INITIAL.
+        CALL METHOD OBJ_ALV_0120->FREE.
+        CALL METHOD CL_GUI_CFW=>FLUSH.
+        FREE OBJ_ALV_0120.
+      ENDIF.
+    WHEN '0122'.
+      IF OBJ_ALV_0122 IS NOT INITIAL.
+        CALL METHOD OBJ_ALV_0122->FREE.
+        CALL METHOD CL_GUI_CFW=>FLUSH.
+        FREE OBJ_ALV_0122.
+      ENDIF.
+    WHEN '0123'.
+
+  ENDCASE.
+
+ENDFORM.

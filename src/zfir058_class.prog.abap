@@ -1,0 +1,577 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZFIR058_CLASS
+*&---------------------------------------------------------------------*
+
+CLASS LCL_ALV_TOOLBAR_0100 IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   Create ALV toolbar manager instance
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+
+  ENDMETHOD.                    "on_toolbar
+
+  METHOD HANDLE_USER_COMMAND.
+
+  ENDMETHOD.                    "HANDLE_USER_COMMAND
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION
+
+
+CLASS LCL_ALV_TOOLBAR_0110 IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   Create ALV toolbar manager instance
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_INSERT_ROW.
+    TY_TOOLBAR-FUNCTION  = 'INSR_ROW'.
+    TY_TOOLBAR-TEXT      = ''.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_DELETE_ROW.
+    TY_TOOLBAR-FUNCTION  = 'DEL_ROW'.
+    TY_TOOLBAR-TEXT      = ''.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_SYSTEM_MARK.
+    TY_TOOLBAR-FUNCTION  = 'MARK'.
+    TY_TOOLBAR-TEXT      = 'Marcar Selecionados'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_DESELECT_ALL.
+    TY_TOOLBAR-FUNCTION  = 'DESMARK'.
+    TY_TOOLBAR-TEXT      = 'Desmarcar Selecionados'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+
+*    CALL METHOD C_ALV_TOOLBARMANAGER->REORGANIZE
+*      EXPORTING
+*        IO_ALV_TOOLBAR = E_OBJECT.
+
+  ENDMETHOD.                    "on_toolbar
+
+  METHOD HANDLE_USER_COMMAND.
+
+    CASE E_UCOMM.
+      WHEN 'INSR_ROW'.
+        CLEAR: WA_SAIDA_0110, GT_ESTILO[].
+        WA_SAIDA_0110-MANUAL = 'X'.
+        WA_SAIDA_0110-IC_MANUAL = ICON_CHECKED.
+        WA_SAIDA_0110-KURSF  = WA_SAIDA_0100-KURSF.
+        WA_SAIDA_0110-KOART  = WA_SAIDA_0100-KOART.
+        WA_SAIDA_0110-BUKRS  = WA_SAIDA_0100-BUKRS.
+        WA_SAIDA_0110-WAERS  = WA_SAIDA_0100-WAERS.
+
+        WL_ESTILO-FIELDNAME    = 'BUDAT'.
+        WL_ESTILO-STYLE        = CL_GUI_ALV_GRID=>MC_STYLE_DISABLED.
+        APPEND WL_ESTILO TO GT_ESTILO.
+
+        WL_ESTILO-FIELDNAME    = 'VLR_RSD'.
+        WL_ESTILO-STYLE        = CL_GUI_ALV_GRID=>MC_STYLE_DISABLED.
+        APPEND WL_ESTILO TO GT_ESTILO.
+
+       INSERT LINES OF GT_ESTILO INTO TABLE WA_SAIDA_0110-ESTILO.
+
+        APPEND WA_SAIDA_0110 TO IT_SAIDA_0110.
+        LEAVE TO SCREEN 0110.
+      WHEN 'DEL_ROW'.
+
+        CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+        CALL METHOD OBJ_ALV_0110->GET_SELECTED_ROWS
+          IMPORTING
+            ET_INDEX_ROWS = IT_SEL_ROWS.
+
+        CHECK IT_SEL_ROWS[] IS NOT INITIAL.
+        SORT IT_SEL_ROWS BY INDEX DESCENDING.
+
+        LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+          READ TABLE IT_SAIDA_0110 INTO WA_SAIDA_0110 INDEX WA_SEL_ROWS-INDEX.
+          IF SY-SUBRC NE 0 .
+            RETURN.
+          ENDIF.
+
+          IF WA_SAIDA_0110-MANUAL IS INITIAL.
+            MESSAGE 'Só é possivel deletar as partidas manuais!' TYPE 'S'.
+            RETURN.
+          ENDIF.
+        ENDLOOP.
+
+        LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+          DELETE IT_SAIDA_0110 INDEX WA_SEL_ROWS-INDEX.
+        ENDLOOP.
+
+        LEAVE TO SCREEN 0110.
+
+      WHEN 'DESMARK'.
+        PERFORM F_FLAG_DOCUMENTOS USING ''.
+      WHEN 'MARK'.
+        PERFORM F_FLAG_DOCUMENTOS USING 'X'.
+      WHEN 'REFRESH'.
+        PERFORM F_ATUALIZA_SALDO.
+        LEAVE TO SCREEN 0110.
+    ENDCASE.
+
+  ENDMETHOD.                    "HANDLE_USER_COMMAND
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION
+
+
+CLASS LCL_EVENT_HANDLER_0100 IMPLEMENTATION.
+  METHOD HANDLE_HOTSPOT_CLICK.
+    PERFORM F_HOTSPOT_CLICK USING '0100' E_ROW_ID E_COLUMN_ID ES_ROW_NO.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS LCL_EVENT_HANDLER_0110 IMPLEMENTATION.
+
+  METHOD ON_DATA_CHANGED_FINISHED.
+    CHECK ET_GOOD_CELLS[] IS NOT INITIAL.
+    PERFORM F_ATUALIZA_SALDO.
+    LEAVE TO SCREEN 0110.
+  ENDMETHOD.
+
+  METHOD HANDLE_HOTSPOT_CLICK.
+    PERFORM F_HOTSPOT_CLICK USING '0110' E_ROW_ID E_COLUMN_ID ES_ROW_NO.
+  ENDMETHOD.
+
+  METHOD ON_ONF4.
+
+*    TYPES: BEGIN OF TY_FIELD,
+*      TABNAME TYPE DD03L-TABNAME,
+*      FIELDNAME TYPE DD03L-FIELDNAME,
+*      S(1) TYPE C,
+*    END OF TY_FIELD,
+*
+*    BEGIN OF TY_VALUE,
+*      TABNAME     TYPE DD03L-TABNAME,
+*      FIELDNAME   TYPE DD03L-FIELDNAME,
+*      CHAR79(79)  TYPE C,
+*    END OF TY_VALUE,
+*
+*    BEGIN OF TY_ASMD,
+*      ASNUM TYPE ASMD-ASNUM,
+*      ASKTX TYPE ASMDT-ASKTX,
+*    END OF TY_ASMD,
+*
+*    BEGIN OF TY_CSKS,
+*      KOKRS  TYPE CSKS-KOKRS,
+*      KOSTL  TYPE CSKS-KOSTL,
+*      DATBI  TYPE CSKS-DATBI,
+*      DATAB  TYPE CSKS-DATAB,
+*      LTEXT  TYPE CSKT-LTEXT,
+*    END OF TY_CSKS.
+*
+*    DATA: BEGIN OF WL_VALUETAB,
+*      FIELD(50),
+*    END OF WL_VALUETAB.
+*
+*    "Tabelas internas
+*    DATA: GT_J_1BBRANCH TYPE TABLE OF J_1BBRANCH,
+*          GT_CSKS       TYPE TABLE OF TY_CSKS,
+*          GT_ASMD       TYPE TABLE OF TY_ASMD,
+*          GT_VALUETAB   LIKE TABLE OF WL_VALUETAB,
+*          GT_FIELD      TYPE TABLE OF TY_FIELD,
+*          GT_VALUE      TYPE TABLE OF TY_VALUE.
+*
+*    " Tabelas work-áreas
+*    DATA: WL_J_1BBRANCH TYPE J_1BBRANCH,
+*          WL_CSKS       TYPE TY_CSKS,
+*          WL_ASMD       TYPE TY_ASMD,
+*          WL_FIELD      TYPE TY_FIELD,
+*          WL_VALUE      TYPE TY_VALUE.
+*
+*    " Variáveis
+*    DATA: WL_CHAR(20),
+*          WL_FIELDNAME(30),
+*          WL_TABNAME(30),
+*          WL_INDEX      TYPE SY-TABIX,
+*          V_ANLN1       TYPE ANLN1,
+*          LV_ESTADO     TYPE ZAA001-COD_REGI.
+*
+*    DEFINE D_PREENCHE_VALUE.
+*      WL_VALUETAB = &1.
+*      APPEND WL_VALUETAB TO GT_VALUETAB.
+*    END-OF-DEFINITION.
+*
+*    CASE E_FIELDNAME.
+*      WHEN 'GSBER'.
+*
+*        READ TABLE IT_SAIDA_0110 INTO WA_SAIDA_0110 INDEX ES_ROW_NO-ROW_ID.
+*
+*        IF ( ZGLT080-BUKRS IS INITIAL ).
+*          MESSAGE S836(SD) WITH TEXT-E04 DISPLAY LIKE 'E'.
+*          RETURN.
+*        ENDIF.
+*
+*        SELECT DISTINCT BRANCH NAME
+*          FROM J_1BBRANCH
+*          INTO CORRESPONDING FIELDS OF TABLE GT_J_1BBRANCH
+*         WHERE BUKRS EQ ZGLT080-BUKRS.
+*
+*        WL_FIELDNAME = 'BRANCH'.
+*        WL_TABNAME   = 'J_1BBRANCH'.
+*
+*        LOOP AT GT_J_1BBRANCH INTO WL_J_1BBRANCH.
+*          D_PREENCHE_VALUE: WL_J_1BBRANCH-BRANCH,
+*                            WL_J_1BBRANCH-NAME.
+*        ENDLOOP.
+*
+*        WL_FIELD-TABNAME   = WL_TABNAME.
+*        WL_FIELD-FIELDNAME = 'BRANCH'.
+*        WL_FIELD-S         = 'X'.
+*        APPEND WL_FIELD TO GT_FIELD.
+*
+*        WL_FIELD-TABNAME   = WL_TABNAME.
+*        WL_FIELD-FIELDNAME = 'NAME'.
+*        WL_FIELD-S         = 'X'.
+*        APPEND WL_FIELD TO GT_FIELD.
+*
+*      WHEN 'KOSTL'.
+*
+*        READ TABLE IT_SAIDA_0110 INTO WA_SAIDA_0110 INDEX ES_ROW_NO-ROW_ID.
+*
+*        IF ( ZGLT080-BUKRS IS INITIAL ).
+*          MESSAGE S836(SD) WITH TEXT-E04 DISPLAY LIKE 'E'.
+*          RETURN.
+*        ENDIF.
+*
+*        IF ( WA_SAIDA_0110-GSBER IS INITIAL ).
+*          MESSAGE S836(SD) WITH TEXT-E05 DISPLAY LIKE 'E'.
+*          RETURN.
+*        ENDIF.
+*
+*        SELECT A~KOKRS A~KOSTL A~DATBI A~DATAB B~LTEXT
+*          INTO CORRESPONDING FIELDS OF TABLE GT_CSKS
+*          FROM CSKS AS A INNER JOIN CSKT AS B ON A~KOKRS = B~KOKRS
+*                                             AND A~KOSTL = B~KOSTL
+*                                             AND A~DATBI = B~DATBI
+*         WHERE A~BUKRS  = ZGLT080-BUKRS
+*           AND A~GSBER  = WA_SAIDA_0110-GSBER
+*           AND A~DATAB  LE SY-DATUM
+*           AND A~DATBI  GE SY-DATUM
+*           AND B~SPRAS  EQ SY-LANGU.
+*
+*        WL_FIELDNAME = 'KOSTL'.
+*        WL_TABNAME   = 'CSKS'.
+*
+*        LOOP AT GT_CSKS INTO WL_CSKS.
+*          MOVE WL_CSKS-KOSTL TO WL_VALUETAB-FIELD.
+*          APPEND WL_VALUETAB TO GT_VALUETAB.
+*
+*          MOVE WL_CSKS-LTEXT TO WL_VALUETAB-FIELD.
+*          APPEND WL_VALUETAB TO GT_VALUETAB.
+*        ENDLOOP.
+*
+*        WL_FIELD-TABNAME   = WL_TABNAME.
+*        WL_FIELD-FIELDNAME = 'KOSTL'.
+*        WL_FIELD-S         = 'X'.
+*        APPEND WL_FIELD TO GT_FIELD.
+*
+*        WL_FIELD-TABNAME   = 'CSKT'.
+*        WL_FIELD-FIELDNAME = 'LTEXT'.
+*        WL_FIELD-S         = 'X'.
+*        APPEND WL_FIELD TO GT_FIELD.
+*
+*      WHEN 'ASNUM'.
+*
+**        SELECT A~ASNUM B~ASKTX
+**          INTO CORRESPONDING FIELDS OF TABLE GT_ASMD
+**          FROM ASMD AS A INNER JOIN ASMDT AS B ON A~ASNUM = B~ASNUM.
+**
+**        SORT GT_ASMD BY ASNUM.
+**        LOOP AT GT_ASMD INTO WL_ASMD.
+**          MOVE WL_ASMD-ASNUM TO WL_VALUETAB-FIELD.
+**          APPEND WL_VALUETAB TO GT_VALUETAB.
+**
+**          MOVE WL_ASMD-ASKTX TO WL_VALUETAB-FIELD.
+**          APPEND WL_VALUETAB TO GT_VALUETAB.
+**        ENDLOOP.
+**
+**        WL_FIELD-TABNAME   = 'ASMD'.
+**        WL_FIELD-FIELDNAME = 'ASNUM'.
+**        WL_FIELD-S         = 'X'.
+**        APPEND WL_FIELD TO GT_FIELD.
+**
+**        WL_FIELD-TABNAME   = 'ASMDT'.
+**        WL_FIELD-FIELDNAME = 'ASKTX'.
+**        WL_FIELD-S         = 'X'.
+**        APPEND WL_FIELD TO GT_FIELD.
+*
+*    ENDCASE.
+*
+*    CALL FUNCTION 'HELP_VALUES_GET_WITH_TABLE_EXT'
+*      EXPORTING
+*        CUCOL                     = '10'
+*        CUROW                     = '5'
+*        FIELDNAME                 = WL_FIELDNAME
+*        TABNAME                   = WL_TABNAME
+*      IMPORTING
+*        INDEX                     = WL_INDEX
+*        SELECT_VALUE              = WL_CHAR
+*      TABLES
+*        FIELDS                    = GT_FIELD
+*        SELECT_VALUES             = GT_VALUE
+*        VALUETAB                  = GT_VALUETAB
+*      EXCEPTIONS
+*        FIELD_NOT_IN_DDIC         = 001
+*        MORE_THEN_ONE_SELECTFIELD = 002
+*        NO_SELECTFIELD            = 003.
+*
+*     CASE E_FIELDNAME.
+*       WHEN 'GSBER'.
+*         READ TABLE GT_VALUE INTO WL_VALUE WITH KEY FIELDNAME = 'BRANCH'.
+*         IF SY-SUBRC = 0.
+*           MOVE: WL_VALUE-CHAR79 TO WA_SAIDA_0110-GSBER.
+*           MODIFY IT_SAIDA_0110 FROM WA_SAIDA_0110 INDEX ES_ROW_NO-ROW_ID
+*             TRANSPORTING GSBER.
+*         ENDIF.
+*       WHEN 'KOSTL'.
+*         READ TABLE GT_VALUE INTO WL_VALUE WITH KEY FIELDNAME = 'KOSTL'.
+*         IF SY-SUBRC = 0.
+*           MOVE: WL_VALUE-CHAR79 TO WA_SAIDA_0110-KOSTL.
+*           MODIFY IT_SAIDA_0110 FROM WA_SAIDA_0110 INDEX ES_ROW_NO-ROW_ID
+*             TRANSPORTING KOSTL.
+*         ENDIF.
+*       WHEN 'ASNUM'.
+*         READ TABLE GT_VALUE INTO WL_VALUE WITH KEY FIELDNAME = 'ASNUM'.
+*         IF SY-SUBRC = 0.
+*           MOVE: WL_VALUE-CHAR79 TO WA_SAIDA_0110-ASNUM.
+*           MODIFY IT_SAIDA_0110 FROM WA_SAIDA_0110 INDEX ES_ROW_NO-ROW_ID
+*             TRANSPORTING ASNUM.
+*         ENDIF.
+*     ENDCASE.
+*
+*     CALL METHOD OBJ_ALV_0110->REFRESH_TABLE_DISPLAY
+*       EXPORTING
+*          IS_STABLE = WA_STABLE.
+
+  ENDMETHOD.                    "ON_ONF4
+
+
+ENDCLASS.                    "LCL_EVENT_HANDLER IMPLEMENTATION
+
+CLASS LCL_EVENT_HANDLER_0120 IMPLEMENTATION.
+  METHOD HANDLE_HOTSPOT_CLICK.
+    PERFORM F_HOTSPOT_CLICK USING '0120' E_ROW_ID E_COLUMN_ID ES_ROW_NO.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS LCL_ALV_TOOLBAR_0120 IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   Create ALV toolbar manager instance
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_ACTIVITY.
+    TY_TOOLBAR-FUNCTION  = 'PROC_MOV'.
+    TY_TOOLBAR-TEXT      = 'Processar Lançamentos'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_ACTION_FAULT.
+    TY_TOOLBAR-FUNCTION  = 'REPROC_LCTO_ERRO'.
+    TY_TOOLBAR-TEXT      = 'Reprocessar Lcto com Erro'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_REJECT.
+    TY_TOOLBAR-FUNCTION  = 'ANULAR_LCT'.
+    TY_TOOLBAR-TEXT      = 'Rejeitar Lcto c/ Erro'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_REFRESH.
+    TY_TOOLBAR-FUNCTION  = 'ATUALIZAR'.
+    TY_TOOLBAR-TEXT      = 'Atualizar'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+*    CALL METHOD C_ALV_TOOLBARMANAGER->REORGANIZE
+*      EXPORTING
+*        IO_ALV_TOOLBAR = E_OBJECT.
+
+  ENDMETHOD.                    "on_toolbar
+
+  METHOD HANDLE_USER_COMMAND.
+
+    DATA: IT_RSPARAMS TYPE TABLE OF RSPARAMS,
+          WA_RSPARAMS TYPE RSPARAMS.
+
+    CASE E_UCOMM.
+      WHEN 'ATUALIZAR'.
+        PERFORM F_SELECIONA_DADOS_0120.
+        LEAVE TO SCREEN 0120.
+      WHEN 'PROC_MOV'.
+
+        IF P_AUGDT-LOW IS INITIAL.
+          MESSAGE 'Informe a data de compensação na tela inicial' TYPE 'S'.
+          EXIT.
+        ENDIF.
+
+        CLEAR: IT_RSPARAMS[].
+
+        CLEAR: WA_RSPARAMS.
+        WA_RSPARAMS-KIND    = 'S'.
+        WA_RSPARAMS-SIGN    = 'I'.
+        WA_RSPARAMS-OPTION  = 'EQ'.
+
+        WA_RSPARAMS-SELNAME = 'P_BUDAT'.
+        WA_RSPARAMS-LOW     = P_AUGDT-LOW .
+        APPEND WA_RSPARAMS TO IT_RSPARAMS.
+
+        CALL FUNCTION 'POPUP_TO_CONFIRM'
+          EXPORTING
+            TITLEBAR              = 'Confirmação'
+            TEXT_QUESTION         = 'Confirma o processamento nessa data informada?'
+            TEXT_BUTTON_1         = 'Sim'
+            TEXT_BUTTON_2         = 'Não'
+            DEFAULT_BUTTON        = '1'
+            DISPLAY_CANCEL_BUTTON = ''
+          IMPORTING
+            ANSWER                = VAR_ANSWER
+          EXCEPTIONS
+            TEXT_NOT_FOUND        = 1
+            OTHERS                = 2.
+
+        CHECK VAR_ANSWER EQ '1'.
+
+        SUBMIT ZFIR062 WITH SELECTION-TABLE IT_RSPARAMS
+                        AND RETURN.
+
+        MESSAGE 'Processamento concluído!' TYPE 'S'.
+
+        PERFORM F_SELECIONA_DADOS_0120.
+        LEAVE TO SCREEN 0120.
+
+      WHEN 'REPROC_LCTO_ERRO'.
+
+        CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+        CALL METHOD OBJ_ALV_0120->GET_SELECTED_ROWS
+          IMPORTING
+            ET_INDEX_ROWS = IT_SEL_ROWS.
+
+        CHECK IT_SEL_ROWS[] IS NOT INITIAL.
+        SORT IT_SEL_ROWS BY INDEX DESCENDING.
+
+        DATA(_PROCESSADO) = ''.
+        LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+          READ TABLE IT_SAIDA_0120 INTO WA_SAIDA_0120 INDEX WA_SEL_ROWS-INDEX.
+          CHECK ( SY-SUBRC EQ 0 ) AND ( WA_SAIDA_0120-ST_PROC = '2' ) AND ( WA_SAIDA_0120-OBJ_KEY IS NOT INITIAL ).
+
+          UPDATE ZFIT0139  SET ST_PROC  = SPACE WHERE OBJ_KEY = WA_SAIDA_0120-OBJ_KEY.
+          COMMIT WORK.
+
+          _PROCESSADO = 'X'.
+
+          SELECT SINGLE *
+            FROM ZIB_CONTABIL INTO @DATA(_WL_ZIB)
+           WHERE OBJ_KEY       = @WA_SAIDA_0120-OBJ_KEY
+             AND RG_ATUALIZADO = 'N'.
+
+          CHECK SY-SUBRC NE 0.
+
+          SELECT SINGLE *
+            FROM ZIB_CONTABIL_ERR INTO @DATA(_WL_ZIB_ERR)
+           WHERE OBJ_KEY = @WA_SAIDA_0120-OBJ_KEY.
+
+          CHECK SY-SUBRC = 0.
+
+          SELECT SINGLE *
+            FROM ZIB_CONTABIL_CHV INTO @DATA(_WL_ZIB_CHV)
+           WHERE OBJ_KEY = @WA_SAIDA_0120-OBJ_KEY.
+
+          CHECK SY-SUBRC NE 0.
+
+          UPDATE ZIB_CONTABIL SET RG_ATUALIZADO = 'N'   WHERE OBJ_KEY = WA_SAIDA_0120-OBJ_KEY.
+
+          COMMIT WORK.
+        ENDLOOP.
+
+        IF _PROCESSADO IS NOT INITIAL.
+          MESSAGE 'Lançamentos processados com sucesso!' TYPE 'S'.
+        ENDIF.
+
+        PERFORM F_SELECIONA_DADOS_0120.
+        LEAVE TO SCREEN 0120.
+
+      WHEN 'ANULAR_LCT'.
+
+        CLEAR: IT_SEL_ROWS[], WA_SEL_ROWS.
+
+        CALL METHOD OBJ_ALV_0120->GET_SELECTED_ROWS
+          IMPORTING
+            ET_INDEX_ROWS = IT_SEL_ROWS.
+
+        IF IT_SEL_ROWS[] IS INITIAL.
+          MESSAGE 'Nenhuma linha selecionada!' TYPE 'S'.
+          EXIT.
+        ENDIF.
+
+        _PROCESSADO = ''.
+        LOOP AT IT_SEL_ROWS INTO WA_SEL_ROWS.
+          READ TABLE IT_SAIDA_0120 INTO WA_SAIDA_0120 INDEX WA_SEL_ROWS-INDEX.
+
+          CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0120-OBJ_KEY IS NOT INITIAL ).
+
+          SELECT SINGLE *
+            FROM ZIB_CONTABIL INTO _WL_ZIB
+           WHERE OBJ_KEY       = WA_SAIDA_0120-OBJ_KEY
+             AND RG_ATUALIZADO = 'N'.
+
+          CHECK SY-SUBRC NE 0.
+
+          SELECT *
+            FROM ZFIT0139 INTO TABLE @DATA(_TG_0139)
+           WHERE OBJ_KEY = @WA_SAIDA_0120-OBJ_KEY.
+
+          LOOP AT _TG_0139 INTO DATA(_WL_0139) WHERE OBJ_KEY     EQ WA_SAIDA_0120-OBJ_KEY
+                                                 AND BELNR_GER   IS INITIAL   "Não tem doc. contábil
+                                                 AND STBLG_GER   IS INITIAL   "Não foi estornado
+                                                 AND ANULADO     IS INITIAL   "Não foi anulado
+                                                 AND ST_PROC = '2'.       "Com Erro
+
+            _WL_0139-ANULADO = 'X'.
+            MODIFY ZFIT0139 FROM _WL_0139.
+
+            _PROCESSADO = 'X'.
+          ENDLOOP.
+        ENDLOOP.
+
+        IF _PROCESSADO IS NOT INITIAL.
+          MESSAGE 'Lançamento(s) com erro rejeitado(s) com sucesso!' TYPE 'S'.
+        ENDIF.
+
+        PERFORM F_SELECIONA_DADOS_0120.
+        LEAVE TO SCREEN 0120.
+
+    ENDCASE.
+
+  ENDMETHOD.                    "HANDLE_USER_COMMAND
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION

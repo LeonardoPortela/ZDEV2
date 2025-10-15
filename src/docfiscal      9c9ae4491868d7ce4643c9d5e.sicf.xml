@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SICF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <URL>/custom/docfiscal/</URL>
+   <ICFSERVICE>
+    <ICF_NAME>DOCFISCAL</ICF_NAME>
+    <HTTPCDE500>2</HTTPCDE500>
+    <HTTPCDE401>2</HTTPCDE401>
+    <FALLTHRU>X</FALLTHRU>
+    <HTTPCDELPAG>2</HTTPCDELPAG>
+    <HTTPCDENFPAG>2</HTTPCDENFPAG>
+    <ORIG_NAME>docfiscal</ORIG_NAME>
+   </ICFSERVICE>
+   <ICFDOCU>
+    <ICF_NAME>DOCFISCAL</ICF_NAME>
+    <ICF_LANGU>P</ICF_LANGU>
+    <ICF_DOCU>Retorna Documentos Fiscais</ICF_DOCU>
+   </ICFDOCU>
+   <ICFHANDLER_TABLE>
+    <ICFHANDLER>
+     <ICF_NAME>DOCFISCAL</ICF_NAME>
+     <ICFORDER>01</ICFORDER>
+     <ICFTYP>A</ICFTYP>
+     <ICFHANDLER>ZCL_FMCALL_DOC_FISCAL</ICFHANDLER>
+    </ICFHANDLER>
+   </ICFHANDLER_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

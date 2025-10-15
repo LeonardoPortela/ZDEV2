@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZID_NOM_TR</OBJECT>
+    <DOMLEN>NUMC10</DOMLEN>
+    <PERCENTAGE>0.1</PERCENTAGE>
+    <BUFFER>X</BUFFER>
+    <NOIVBUFFER>00000001</NOIVBUFFER>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZID_NOM_TR</OBJECT>
+    <TXT>ID Nomeação Transporte</TXT>
+    <TXTSHORT>ID Nomeação Transpo.</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

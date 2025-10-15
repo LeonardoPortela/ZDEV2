@@ -1,0 +1,9 @@
+PROCESS BEFORE OUTPUT.
+  MODULE STATUS_0200.
+*
+PROCESS AFTER INPUT.
+   MODULE USER_COMMAND_0200.
+
+process ON VALUE-REQUEST.
+   field gv_budat MODULE f4_date.
+   field gv_pernr MODULE f4_pnr.

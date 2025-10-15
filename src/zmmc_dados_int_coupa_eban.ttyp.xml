@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TTYP" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD40V>
+    <TYPENAME>ZMMC_DADOS_INT_COUPA_EBAN</TYPENAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <ROWTYPE>ZMMS_DADOS_INT_COUPA_EBAN</ROWTYPE>
+    <ROWKIND>S</ROWKIND>
+    <DATATYPE>STRU</DATATYPE>
+    <ACCESSMODE>T</ACCESSMODE>
+    <KEYDEF>D</KEYDEF>
+    <KEYKIND>N</KEYKIND>
+    <DDTEXT>Tabela EBAN e complementos para o COUPA Req.Compras</DDTEXT>
+   </DD40V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZORDEMXI</OBJECT>
+    <DOMLEN>ZSDD034</DOMLEN>
+    <PERCENTAGE>15.0</PERCENTAGE>
+    <BUFFER>X</BUFFER>
+    <NOIVBUFFER>00000015</NOIVBUFFER>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZORDEMXI</OBJECT>
+    <TXT>Sequencial Ordem XI</TXT>
+    <TXTSHORT>Sequencial Ordem XI</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,10 @@
+
+PROCESS BEFORE OUTPUT.
+MODULE STATUS_0200.
+
+  MODULE z_status_edicao.
+
+PROCESS AFTER INPUT.
+* MODULE USER_COMMAND_0200.
+
+  MODULE z_user_command_edicao.

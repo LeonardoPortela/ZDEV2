@@ -1,0 +1,5 @@
+"Name: \PR:SAPLMR1M\FO:BELEG_BUCHEN\SE:BEGIN\EI
+ENHANCEMENT 0 ZLMR1MFOR_BELEG_BUCHEN.
+* Atualiza Atribuição Pedido BBKO/Pathelle 08/06/2011
+  rbkpv-zuonr = rm08m-ebeln.
+ENDENHANCEMENT.

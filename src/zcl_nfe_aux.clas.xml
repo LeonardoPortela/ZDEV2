@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_NFE_AUX</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Validações auxiliares para NFe</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>VERIFICAR_CNPJ_TERCEIRO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica se CNPJ faz parte das configurações do SAP</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BUKRS_TERCEIRO</CMPNAME>
+     <SCONAME>RV_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ORGDATA_TERCEIRO</CMPNAME>
+     <SCONAME>IV_CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Code CGC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_WERKS_TERCEIRO</CMPNAME>
+     <SCONAME>RV_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_NFE_TERCEIRO</CMPNAME>
+     <SCONAME>RV_RESULT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Resultado da etapa do processo de eDocument</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_CNPJ_TERCEIRO</CMPNAME>
+     <SCONAME>IV_CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Code CGC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VERIFICAR_CNPJ_TERCEIRO</CMPNAME>
+     <SCONAME>RV_RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>variável booleana (X=true, space=false)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

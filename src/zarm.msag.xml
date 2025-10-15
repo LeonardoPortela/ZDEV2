@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZARM</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Programa de Remessa p/ Armazenagem</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Favor selecionar um pedido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Não existe romaneio para o pedido &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Favor selecionar um romaneio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Romaneio &amp;1 não encontrado em validação de utilização!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Romaneio &amp;1 já utilizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>O romaneio &amp;1 não possui documento de material!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>O Pedido ja foi marcado como remessa final e não pode ser transportado !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Romaneio de entrada não conferido no OPUS</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Romaneio cancelado no OPUS</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZARM</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Romaneio de saida não fechado no OPUS</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

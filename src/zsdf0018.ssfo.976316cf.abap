@@ -1,0 +1,25 @@
+IF V_TOTAL_GERAL_PESO_B IS NOT INITIAL.
+V_TOTAL_G_WEIGHT_CONV = V_TOTAL_GERAL_PESO_B.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

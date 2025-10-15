@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Importação da tabela do SAAF</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_PM_IMP_SAAFF01</SOBJ_NAME>
+    <SOBJ_NAME>LZGF_PM_IMP_SAAFTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_PM_IMP_SAAF</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZPM_IMPORTA_ABAST_DO_SAAF</FUNCNAME>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>EXPORTACAO_COMMIT_SAAF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTPM_EXP_COMMIT_SAAF_T</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>_ZTPM_IMP_DO_SAAF</PARAMETER>
+       <DBSTRUCT>ZTPM_IMP_DO_SAAF</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>EXPORTACAO_COMMIT_SAAF</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>_ZTPM_IMP_DO_SAAF</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

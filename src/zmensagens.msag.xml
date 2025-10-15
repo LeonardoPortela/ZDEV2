@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMENSAGENS</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>Ativo diferente do passivo</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Lançamento Intercompany necessita de sociedade !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Divisão não corresponde a Empresa !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Conta Débito não Válida !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Divisão tem que ser identica ao Centro !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Verificar Imobilizado já contem valor de aquisição !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Verificar Imobilizado já contem valor de aquisição !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Informar responsável</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Centro de Lucro obrigatorio para está classificação contabil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Valor do Ativo diferente do Passi</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Conta de Resultado e Resultado exercicio PL Diferentes</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>ALTERAR  CHAVE DE DEPRECIAÇÃO  (ANEL)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZMENSAGENS</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Data de contabilização diferente com a data do día.</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

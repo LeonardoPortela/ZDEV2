@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZHRST_STO_BAIXA_USUARIOS</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Regras para Interface com Portal RH</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>E01</KEY>
+     <ENTRY>Ocorreu um erro ao atualizar a tabela ZHRST_REQLEGWEB</ENTRY>
+     <LENGTH>106</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E02</KEY>
+     <ENTRY>Ocorreu um erro ao atualizar a tabela ZHRST_REQLEGWEB</ENTRY>
+     <LENGTH>106</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>E04</KEY>
+     <ENTRY>Ocorreu um erro ao atualizar o WebSempre</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>Dados lidos e gravados com sucesso</ENTRY>
+     <LENGTH>52</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Posição criada com sucesso</ENTRY>
+     <LENGTH>52</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S03</KEY>
+     <ENTRY>Posição enviada para o WebSempre com sucesso</ENTRY>
+     <LENGTH>88</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S04</KEY>
+     <ENTRY>Posição reaproveitada</ENTRY>
+     <LENGTH>42</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>COMMIT_WORK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Grava os dados nas tabelas Z</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_ERROR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Erro</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_SUCCESS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Sucesso</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILL_TABLE_REQUESTS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preenche tabela de Requisições com dados lidos da API</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_API_JSON_STRING</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna a String do JSON de retorno da API</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_REQUESTS_FROM_API</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Lê a APIs de Requisições</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TOKEN_API</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna o Token para Conexão</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>T_REQUESTS_API</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>WebSempre - Requisições Posições Abertas - Tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>V_DESTINATION</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Destination da SM59</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>COMMIT_WORK</CMPNAME>
+     <SCONAME>RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FILL_TABLE_REQUESTS</CMPNAME>
+     <SCONAME>RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_API_JSON_STRING</CMPNAME>
+     <SCONAME>E_JSON_STRING</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>String JSON de Retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_API_JSON_STRING</CMPNAME>
+     <SCONAME>I_URL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>URL da API</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_REQUESTS_FROM_API</CMPNAME>
+     <SCONAME>RETURN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetro de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

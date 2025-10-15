@@ -1,0 +1,22 @@
+QUANTIDADE_ENTREGUE = GW_ITEM_EPI-QTD_RETIRADA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

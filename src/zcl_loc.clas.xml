@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_LOC</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para listar local de instalação</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>Z_LIST_LOCAL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Selecionar locais de instalação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>Z_LIST_OBJECT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Selecionar objetos do local</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_LIST_LOCAL</CMPNAME>
+     <SCONAME>GT_LOCAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de dados local de instalação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_LIST_LOCAL</CMPNAME>
+     <SCONAME>I_SWERK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela centro para national contracts</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_LIST_LOCAL</CMPNAME>
+     <SCONAME>I_TPLNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de instalação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_LIST_OBJECT</CMPNAME>
+     <SCONAME>GT_LOCAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de dados do tipo tabela local de instalação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_LIST_OBJECT</CMPNAME>
+     <SCONAME>OBJNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº objeto</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

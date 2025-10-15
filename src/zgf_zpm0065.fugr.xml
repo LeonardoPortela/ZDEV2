@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo função transação ZPM0065</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_ZPM0065TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_ZPM0065</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFU_ZPM0065</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_FATURA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RE_BELNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CNPJ</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>STCD1</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_NU_REQ</PARAMETER>
+       <TYP>BANFN</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>IT_ZPMT0025</PARAMETER>
+       <DBSTRUCT>ZPMT0025</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_FATURA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CNPJ</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_NU_REQ</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ZPMT0025</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,485 @@
+FUNCTION ZSDMF006_BUSCA_DADOS_NR_SOL.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(P_GERA) TYPE  CHAR1 DEFAULT 'X'
+*"     REFERENCE(P_CONS) TYPE  CHAR1
+*"     REFERENCE(P_FORM) TYPE  CHAR1
+*"     REFERENCE(P_VENDA) TYPE  CHAR1 DEFAULT 'X'
+*"  TABLES
+*"      RG_VKORG STRUCTURE  ZBAPI_RANGESVKORG
+*"      RG_VTWEG STRUCTURE  ZBAPI_RANGESVTWEG
+*"      RG_SPART STRUCTURE  ZBAPI_RANGESSPART
+*"      RG_KUNNR STRUCTURE  ZBAPI_RANGESKUNNR
+*"      RG_TP_VENDA STRUCTURE  ZBAPI_RANGESTP_VENDA
+*"      ET_COCKPIT STRUCTURE  ZSDS009
+*"----------------------------------------------------------------------
+  INCLUDE <ICON>.
+  TYPES: BEGIN OF TY_SALDO,
+         NRO_SOL_OV TYPE ZSDT0053-NRO_SOL_OV,
+         VBELN TYPE VBFA-VBELN,
+         WERKS TYPE ZSDT0053-WERKS,
+         ZMENG TYPE ZSDT0053-ZMENG,
+         TOTAL TYPE ZSDT0053-ZMENG,
+         SALDO TYPE ZSDT0053-ZMENG,
+        END OF TY_SALDO,
+
+        BEGIN OF TY_BSAD,
+         BUKRS TYPE BSAD-BUKRS,
+         BELNR TYPE BSAD-BELNR,
+         AUDGT TYPE BSAD-AUGDT,
+         AUGBL TYPE BSAD-AUGBL,
+        END OF TY_BSAD,
+
+        BEGIN OF TY_OBJEK,
+         OBJEK TYPE ZSDT0045-OBJEK,
+        END OF TY_OBJEK.
+*----------------------------------------------------------------------*
+* TABELA INTERNAS
+*----------------------------------------------------------------------*
+  DATA: TG_0051        TYPE TABLE OF ZSDT0051,
+        TG_0053        TYPE TABLE OF ZSDT0053,
+        TG_0051_FORM   TYPE TABLE OF ZSDT0051,
+        TG_0054        TYPE TABLE OF ZSDT0054,
+        TG_0066        TYPE TABLE OF ZSDT0066,
+        TG_0045        TYPE TABLE OF ZSDT0045,
+        TG_BSAD        TYPE TABLE OF TY_BSAD,
+        TG_OBJEK        TYPE TABLE OF TY_OBJEK,
+        TG_MAKT        TYPE TABLE OF MAKT,
+        TG_T001W       TYPE TABLE OF T001W,
+        TG_KNA1        TYPE TABLE OF KNA1,
+        TG_SAIDA       TYPE TABLE OF ZSDS009,
+        TG_SALDO       TYPE TABLE OF TY_SALDO,
+        TG_BDC         TYPE TABLE OF BDCDATA.
+
+*----------------------------------------------------------------------*
+* WORK AREA
+*----------------------------------------------------------------------*
+  DATA: WG_0051        TYPE ZSDT0051,
+        WG_0053        TYPE ZSDT0053,
+        WG_0054        TYPE ZSDT0054,
+        WG_0066        TYPE ZSDT0066,
+        WG_0045        TYPE ZSDT0045,
+        WG_BSAD        TYPE TY_BSAD,
+        WG_OBJEK        TYPE TY_OBJEK,
+        WG_MAKT        TYPE MAKT,
+        WG_T001W       TYPE T001W,
+        WG_KNA1        TYPE KNA1,
+        WG_SAIDA       TYPE ZSDS009,
+        WG_SALDO       TYPE TY_SALDO,
+        WG_BDC         TYPE BDCDATA.
+
+  DATA: TL_0053 TYPE TABLE OF ZSDT0053,
+          TL_0051 TYPE TABLE OF ZSDT0051.
+  REFRESH: TG_0051  ,
+           TG_0053  ,
+           TL_0053  ,
+           TG_0054  ,
+           TG_0066  ,
+           TG_0045  ,
+           TG_MAKT  ,
+           TG_BSAD  ,
+           TG_OBJEK ,
+           TG_T001W ,
+           TG_KNA1  ,
+           TG_SAIDA ,
+           TG_BDC,
+           TG_SALDO ,
+           TG_0051_FORM.
+
+  CLEAR: WG_0051 ,
+         WG_0053 ,
+         WG_0054 ,
+         WG_0066 ,
+         WG_0045 ,
+         WG_BSAD,
+         WG_OBJEK,
+         WG_MAKT ,
+         WG_T001W,
+         WG_KNA1 ,
+         WG_SAIDA,
+         WG_BDC,
+         WG_SALDO.
+
+  SELECT *
+    FROM ZSDT0051
+    INTO TABLE TG_0051
+     WHERE VKORG IN RG_VKORG
+       AND VTWEG IN RG_VTWEG
+       AND SPART IN RG_SPART
+       AND KUNNR IN RG_KUNNR
+       AND TP_VENDA IN RG_TP_VENDA
+       AND STATUS NE 'D'.
+
+  IF P_GERA IS NOT INITIAL.
+    TG_0051_FORM[] = TG_0051[].
+    DELETE TG_0051 WHERE STATUS NE 'L'.
+  ELSE.
+    TG_0051_FORM[] = TG_0051[].
+  ENDIF.
+  IF P_VENDA IS NOT INITIAL.
+    IF TG_0051[] IS NOT INITIAL.
+      SELECT *
+        FROM ZSDT0053
+        INTO TABLE TG_0053
+         FOR ALL ENTRIES IN TG_0051
+          WHERE NRO_SOL_OV EQ TG_0051-NRO_SOL_OV.
+
+      IF P_GERA IS NOT INITIAL.
+        DELETE TG_0053 WHERE VBELN IS NOT INITIAL.
+      ELSE.
+        DELETE TG_0053 WHERE VBELN IS INITIAL.
+      ENDIF.
+
+      IF TG_0053[] IS NOT INITIAL.
+        SELECT *
+        FROM ZSDT0054
+        INTO TABLE TG_0054
+         FOR ALL ENTRIES IN TG_0053
+          WHERE NRO_SOL_OV EQ TG_0053-NRO_SOL_OV
+            AND POSNR      EQ TG_0053-POSNR.
+
+        IF SY-SUBRC IS INITIAL.
+          SELECT BUKRS BELNR AUGDT AUGBL
+            FROM BSAD
+            INTO TABLE TG_BSAD
+             FOR ALL ENTRIES IN TG_0054
+             WHERE BUKRS IN RG_VKORG
+               AND BELNR EQ TG_0054-ADIANT.
+
+        ENDIF.
+
+        SELECT *
+          FROM MAKT
+          INTO TABLE TG_MAKT
+           FOR ALL ENTRIES IN TG_0053
+           WHERE MATNR EQ TG_0053-MATNR.
+
+        SELECT *
+          FROM T001W
+          INTO TABLE TG_T001W
+           FOR ALL ENTRIES IN TG_0053
+            WHERE WERKS EQ TG_0053-WERKS.
+
+        SELECT *
+          FROM KNA1
+          INTO TABLE TG_KNA1
+           FOR ALL ENTRIES IN TG_0051
+            WHERE KUNNR EQ TG_0051-KUNNR.
+
+        TL_0053[] = TG_0053[].
+        DELETE TL_0053 WHERE KUNNR IS INITIAL.
+        IF TL_0053[] IS NOT INITIAL.
+          SELECT *
+            FROM KNA1
+            APPENDING TABLE TG_KNA1
+             FOR ALL ENTRIES IN TL_0053
+              WHERE KUNNR EQ TL_0053-KUNNR.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  ELSE.
+    LOOP AT TG_0051_FORM INTO WG_0051.
+      WG_OBJEK-OBJEK = WG_0051-NRO_SOL_OV.
+
+      APPEND WG_OBJEK TO TG_OBJEK.
+      CLEAR: WG_OBJEK.
+    ENDLOOP.
+
+    IF TG_OBJEK[] IS NOT INITIAL.
+      SELECT *
+        FROM ZSDT0045
+        INTO TABLE TG_0045
+         FOR ALL ENTRIES IN TG_OBJEK
+         WHERE OBJEK       EQ TG_OBJEK-OBJEK
+           AND OBJECTTABLE EQ 'ZSDT0051'.
+
+      SELECT *
+        FROM ZSDT0066
+        INTO TABLE TG_0066
+         FOR ALL ENTRIES IN TG_0051_FORM
+         WHERE NRO_SOL_OV EQ TG_0051_FORM-NRO_SOL_OV
+           AND STATUS     EQ 'L'.
+
+      IF P_GERA IS NOT INITIAL.
+        DELETE TG_0066 WHERE VBELN IS NOT INITIAL.
+      ELSE.
+        DELETE TG_0066 WHERE VBELN IS INITIAL.
+      ENDIF.
+      IF TG_0066[] IS NOT INITIAL.
+        SELECT *
+          FROM MAKT
+          APPENDING TABLE TG_MAKT
+           FOR ALL ENTRIES IN TG_0066
+           WHERE MATNR EQ TG_0066-MATNR.
+
+        SELECT *
+          FROM T001W
+          APPENDING TABLE TG_T001W
+           FOR ALL ENTRIES IN TG_0066
+            WHERE WERKS EQ TG_0066-WERKS.
+
+
+        SELECT *
+          FROM KNA1
+          APPENDING TABLE TG_KNA1
+           FOR ALL ENTRIES IN TG_0066
+            WHERE KUNNR EQ TG_0066-KUNNR.
+
+      ENDIF.
+    ENDIF.
+  ENDIF.
+
+
+
+  SORT: TG_0051  BY NRO_SOL_OV,
+          TG_MAKT  BY MATNR,
+          TG_T001W BY WERKS,
+          TG_KNA1  BY KUNNR,
+          TG_0054  BY NRO_SOL_OV POSNR,
+          TG_SALDO BY NRO_SOL_OV VBELN,.
+
+  PERFORM BUSCA_SALDO IN PROGRAM ZSDR0026 TABLES TG_0053.
+
+  LOOP AT TG_0053 INTO WG_0053.
+    READ TABLE TG_0051 INTO WG_0051
+      WITH KEY NRO_SOL_OV = WG_0053-NRO_SOL_OV
+                    BINARY SEARCH.
+
+    READ TABLE TG_MAKT INTO WG_MAKT
+       WITH KEY MATNR = WG_0053-MATNR
+                BINARY SEARCH.
+
+    READ TABLE TG_T001W INTO WG_T001W
+        WITH KEY WERKS = WG_0053-WERKS
+                 BINARY SEARCH.
+
+    IF WG_0053-KUNNR IS NOT INITIAL.
+      WG_0051-KUNNR = WG_0053-KUNNR.
+    ENDIF.
+
+    READ TABLE TG_KNA1 INTO WG_KNA1
+        WITH KEY KUNNR = WG_0051-KUNNR
+                 BINARY SEARCH.
+
+    CLEAR: WG_SALDO.
+    IF P_GERA IS INITIAL.
+      READ TABLE TG_SALDO INTO WG_SALDO
+            WITH KEY NRO_SOL_OV = WG_0053-NRO_SOL_OV
+                     VBELN      = WG_0053-VBELN
+                          BINARY SEARCH.
+    ENDIF.
+
+
+    MOVE-CORRESPONDING: WG_0051  TO WG_SAIDA,
+                        WG_0053  TO WG_SAIDA.
+*                        WG_MAKT  TO WG_SAIDA,
+*                        WG_T001W TO WG_SAIDA,
+*                        WG_KNA1 TO WG_SAIDA.
+
+    READ TABLE TG_0054 INTO WG_0054
+          WITH KEY NRO_SOL_OV = WG_0053-NRO_SOL_OV
+                        POSNR = WG_0053-POSNR
+                        BINARY SEARCH.
+
+    IF SY-SUBRC IS INITIAL.
+      LOOP AT TG_0054 INTO WG_0054
+         WHERE NRO_SOL_OV EQ WG_0053-NRO_SOL_OV
+           AND POSNR EQ WG_0053-POSNR
+           AND ADIANT IS INITIAL.
+
+      ENDLOOP.
+      IF SY-SUBRC IS INITIAL.
+        WG_SAIDA-ADIANT = ICON_WARNING.
+
+      ELSE.
+        WG_SAIDA-ADIANT = ICON_STATUS_BEST.
+      ENDIF.
+
+    ENDIF.
+
+    MOVE: WG_T001W-NAME1 TO WG_SAIDA-W_NAME1,
+          WG_0053-WERKS  TO WG_SAIDA-WERKS,
+          WG_KNA1-KUNNR  TO WG_SAIDA-KUNNR,
+          WG_KNA1-NAME1  TO WG_SAIDA-NAME1,
+          WG_MAKT-MAKTX  TO WG_SAIDA-MAKTX,
+          WG_SALDO-TOTAL TO WG_SAIDA-QTD_REMESSA,
+          WG_SALDO-SALDO TO WG_SAIDA-SALDO_OV.
+
+
+*    IF WG_0051-STATUS EQ 'L'
+*    AND WG_0053-VBELN IS INITIAL.
+*      WG_SAIDA-STATUS = ICON_MESSAGE_WARNING.
+*    ELSEIF WG_0051-STATUS EQ 'L'
+*     AND WG_0053-VBELN IS NOT INITIAL.
+*      WG_SAIDA-STATUS = ICON_CHECKED.
+**     ELSEIF TL_0053-STATUS EQ 'B'.
+**      TG_ITENS-STATUS = ICON_LOCKED.
+**
+**    ELSEIF TL_0053-STATUS EQ 'E'.
+**      TG_ITENS-STATUS = ICON_COMPLETE.
+*    ENDIF.
+
+    IF WG_0053-VBELN IS NOT INITIAL
+    AND ( WG_0053-STATUS IS INITIAL
+      OR WG_0053-STATUS EQ 'D' ).
+      WG_SAIDA-STATUS = ICON_CHECKED.
+*      WG_SAIDA-STATUS_EX = 'ICON_CHECKED'.
+
+    ELSEIF WG_0053-VBELN IS INITIAL
+      AND WG_0053-STATUS IS INITIAL.
+      WG_SAIDA-STATUS = ICON_MESSAGE_WARNING.
+*      WG_SAIDA-STATUS_EX = 'ICON_MESSAGE_WARNING'.
+
+    ELSEIF WG_0053-STATUS EQ 'B'.
+      READ TABLE TG_0054 TRANSPORTING NO FIELDS
+       WITH KEY NRO_SOL_OV = WG_0053-NRO_SOL_OV
+                POSNR      = WG_0053-POSNR.
+      IF SY-SUBRC IS INITIAL.
+        WG_SAIDA-STATUS = ICON_COST_COMPONENTS.
+*        WG_SAIDA-STATUS_EX = 'ICON_COST_COMPONENTS'.
+      ELSE.
+        WG_SAIDA-STATUS = ICON_LOCKED.
+*        WG_SAIDA-STATUS_EX = 'ICON_LOCKED'.
+      ENDIF.
+
+
+    ELSEIF WG_0053-STATUS EQ 'E'.
+      WG_SAIDA-STATUS = ICON_COMPLETE.
+*      WG_SAIDA-STATUS_EX = 'ICON_COMPLETE'.
+*    ELSEIF WG_0053-STATUS EQ 'D'.
+*      WG_SAIDA-STATUS = icon_checked.
+    ENDIF.
+
+    IF WG_0053-CONTRATO IS NOT INITIAL.
+      WG_SAIDA-CONTRATO = ICON_WRI.
+*      WG_SAIDA-CONTRATO_EX = 'ICON_WRI'.
+    ELSE.
+      CLEAR: WG_SAIDA-CONTRATO.
+    ENDIF.
+
+    APPEND WG_SAIDA TO TG_SAIDA.
+    CLEAR: WG_0051, WG_SAIDA, WG_0053, WG_0054, WG_MAKT, WG_T001W, WG_KNA1, WG_SALDO.
+  ENDLOOP.
+
+  SORT: TG_0051_FORM BY NRO_SOL_OV.
+  LOOP AT TG_0066 INTO WG_0066.
+    READ TABLE TG_0051_FORM INTO WG_0051
+      WITH KEY NRO_SOL_OV = WG_0066-NRO_SOL_OV
+                    BINARY SEARCH.
+
+    READ TABLE TG_MAKT INTO WG_MAKT
+       WITH KEY MATNR = WG_0066-MATNR
+                BINARY SEARCH.
+
+    READ TABLE TG_T001W INTO WG_T001W
+        WITH KEY WERKS = WG_0066-WERKS
+                 BINARY SEARCH.
+
+    IF WG_0066-KUNNR IS NOT INITIAL.
+      WG_0051-KUNNR = WG_0066-KUNNR.
+    ENDIF.
+
+    READ TABLE TG_KNA1 INTO WG_KNA1
+        WITH KEY KUNNR = WG_0051-KUNNR
+                 BINARY SEARCH.
+
+    CLEAR: WG_SALDO.
+    IF P_GERA IS INITIAL.
+      READ TABLE TG_SALDO INTO WG_SALDO
+            WITH KEY NRO_SOL_OV = WG_0066-NRO_SOL_OV
+                     VBELN      = WG_0066-VBELN
+                          BINARY SEARCH.
+    ENDIF.
+
+
+    MOVE-CORRESPONDING: WG_0051  TO WG_SAIDA,
+                        WG_0066  TO WG_SAIDA.
+*                        WG_MAKT  TO WG_SAIDA,
+*                        WG_T001W TO WG_SAIDA,
+*                        WG_KNA1 TO WG_SAIDA.
+
+    READ TABLE TG_0054 INTO WG_0054
+          WITH KEY NRO_SOL_OV = WG_0066-NRO_SOL_OV
+                        POSNR = WG_0066-POSNR
+                        BINARY SEARCH.
+
+    IF SY-SUBRC IS INITIAL.
+*      LOOP AT tg_0054 INTO wg_0054
+*         WHERE nro_sol_ov EQ wg_0066-nro_sol_ov
+*           AND posnr EQ wg_0053-posnr
+*           AND adiant IS INITIAL.
+*
+*      ENDLOOP.
+*      IF sy-subrc IS INITIAL.
+*        wg_saida-adiant = icon_warning.
+*
+*      ELSE.
+      WG_SAIDA-ADIANT = ICON_STATUS_BEST.
+*      ENDIF.
+
+    ENDIF.
+
+    MOVE: WG_T001W-NAME1 TO WG_SAIDA-W_NAME1,
+          WG_0066-WERKS  TO WG_SAIDA-WERKS,
+          WG_KNA1-KUNNR  TO WG_SAIDA-KUNNR,
+          WG_KNA1-NAME1  TO WG_SAIDA-NAME1,
+          WG_MAKT-MAKTX  TO WG_SAIDA-MAKTX.
+*          wg_saldo-total TO wg_saida-qtd_remessa,
+*          wg_saldo-saldo TO wg_saida-saldo_ov.
+
+
+    IF WG_0066-STATUS EQ 'L'
+    AND WG_0066-VBELN IS INITIAL.
+      WG_SAIDA-STATUS = ICON_MESSAGE_WARNING.
+*      WG_SAIDA-STATUS_EX = 'ICON_MESSAGE_WARNING'.
+    ELSEIF WG_0066-STATUS EQ 'L'
+     AND WG_0066-VBELN IS NOT INITIAL.
+      WG_SAIDA-STATUS = ICON_CHECKED.
+*      WG_SAIDA-STATUS_EX = 'ICON_CHECKED'.
+*     ELSEIF TL_0053-STATUS EQ 'B'.
+**      TG_ITENS-STATUS = ICON_LOCKED.
+**
+**    ELSEIF TL_0053-STATUS EQ 'E'.
+**      TG_ITENS-STATUS = ICON_COMPLETE.
+    ENDIF.
+
+*    IF wg_0066-vbeln IS NOT INITIAL
+*    AND ( wg_0066-status IS INITIAL
+*      OR  wg_0066-status EQ 'D' ).
+*      wg_saida-status = icon_checked.
+*
+*    ELSEIF wg_0066-vbeln IS INITIAL
+*      AND wg_0066-status IS INITIAL.
+*      wg_saida-status = icon_message_warning.
+*
+*    ELSEIF wg_0066-status EQ 'B'.
+*      READ TABLE tg_0054 TRANSPORTING NO FIELDS
+*       WITH KEY nro_sol_ov = wg_0053-nro_sol_ov
+*                posnr      = wg_0053-posnr.
+*      IF sy-subrc IS INITIAL.
+*        wg_saida-status = icon_cost_components.
+*      ELSE.
+*        wg_saida-status = icon_locked.
+*      ENDIF.
+*
+*
+*    ELSEIF wg_0053-status EQ 'E'.
+*      wg_saida-status = icon_complete.
+**    ELSEIF WG_0053-STATUS EQ 'D'.
+**      WG_SAIDA-STATUS = icon_checked.
+*    ENDIF.
+
+*    IF wg_0053-contrato IS NOT INITIAL.
+*      wg_saida-contrato = icon_wri.
+*    ELSE.
+    CLEAR: WG_SAIDA-CONTRATO.
+*    ENDIF.
+
+    APPEND WG_SAIDA TO TG_SAIDA.
+    CLEAR: WG_0051, WG_SAIDA, WG_0053, WG_0054, WG_MAKT, WG_T001W, WG_KNA1, WG_SALDO.
+  ENDLOOP.
+
+  ET_COCKPIT[] = TG_SAIDA[].
+
+ENDFUNCTION.

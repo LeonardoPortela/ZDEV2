@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZIMT003</TABNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <TABCLASS>TRANSP</TABCLASS>
+    <CLIDEP>X</CLIDEP>
+    <DDTEXT>Tabela para atualizar relatorio offline zim01</DDTEXT>
+    <MAINFLAG>X</MAINFLAG>
+    <CONTFLAG>A</CONTFLAG>
+    <EXCLASS>4</EXCLASS>
+   </DD02V>
+   <DD09L>
+    <TABNAME>ZIMT003</TABNAME>
+    <AS4LOCAL>A</AS4LOCAL>
+    <TABKAT>0</TABKAT>
+    <TABART>APPL0</TABART>
+    <BUFALLOW>N</BUFALLOW>
+   </DD09L>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>MAND</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ROLLNAME>MANDT</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <NOTNULL>X</NOTNULL>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>BUKRS</FIELDNAME>
+     <KEYFLAG>X</KEYFLAG>
+     <ROLLNAME>BUKRS</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <NOTNULL>X</NOTNULL>
+     <SHLPORIGIN>D</SHLPORIGIN>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>AEDAT</FIELDNAME>
+     <ROLLNAME>AEDAT</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <SHLPORIGIN>T</SHLPORIGIN>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>AENTIME</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>T</INTTYPE>
+     <INTLEN>000012</INTLEN>
+     <DATATYPE>TIMS</DATATYPE>
+     <LENG>000006</LENG>
+     <MASK>  TIMS</MASK>
+     <DDTEXT>Hora da última modificação</DDTEXT>
+     <SHLPORIGIN>T</SHLPORIGIN>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>AENUSER</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>C</INTTYPE>
+     <INTLEN>000024</INTLEN>
+     <DATATYPE>CHAR</DATATYPE>
+     <LENG>000012</LENG>
+     <MASK>  CHAR</MASK>
+     <DDTEXT>Último modificador</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

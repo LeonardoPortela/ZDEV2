@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_AQQU" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AQGQCAT>
+    <AQGQCAT>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <CLAS>Z_AA</CLAS>
+    </AQGQCAT>
+   </AQGQCAT>
+   <AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00001</TINDX>
+     <HEAD>X</HEAD>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Relatório para Verificação dos Dados  de Carga</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00002</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Depreciação</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00003</TINDX>
+     <MAXL>055</MAXL>
+     <TEXT>Depreciação</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00004</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Empresa</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00005</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>030</MAXL>
+     <TEXT>Nº principal do imobiliza</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00006</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Área de avaliação efetiva</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00007</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Divisão</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00008</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Classe do imobilizado</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00012</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Depreciação a lançar</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00013</TINDX>
+     <MAXL>055</MAXL>
+     <TEXT>Depreciação a lançar</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00040</TINDX>
+     <MODIF>0002</MODIF>
+     <MAXL>030</MAXL>
+     <TEXT>Valor de aquisição</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00041</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Vida Útil em Anos</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00042</TINDX>
+     <MAXL>055</MAXL>
+     <TEXT>Vida Útil</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00043</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Vida Útil em Meses</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00044</TINDX>
+     <MAXL>055</MAXL>
+     <TEXT>Vida Útil em Meses</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00045</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>V.Útil</TEXT>
+    </AQGTQ>
+    <AQGTQ>
+     <SPRSL>P</SPRSL>
+     <NUM>Z_AA</NUM>
+     <QNUM>Z_AA</QNUM>
+     <TINDX>00046</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>055</MAXL>
+     <TEXT>V.Útil</TEXT>
+    </AQGTQ>
+   </AQGTQ>
+  </asx:values>
+ </asx:abap>
+</abapGit>

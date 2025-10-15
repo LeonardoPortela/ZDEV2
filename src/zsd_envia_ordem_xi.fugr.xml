@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Envio de Ordem de Venda XI</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZSD_ENVIA_ORDEM_XIF01</SOBJ_NAME>
+    <SOBJ_NAME>LZSD_ENVIA_ORDEM_XITOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZSD_ENVIA_ORDEM_XI</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZSDMF_ENVIA_ORDEM_XI</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>ORDEM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZSDE0001</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>ORDEM</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,179 @@
+FUNCTION ZFI_CONV_MOEDA_FLX.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_BUKRS) TYPE  BUKRS
+*"     REFERENCE(I_WAERS_DOC) TYPE  WAERS
+*"     REFERENCE(I_DMBTR) TYPE  DMBTR
+*"     REFERENCE(I_DMBE2) TYPE  DMBE2
+*"     REFERENCE(I_DMBE3) TYPE  DMBE3 OPTIONAL
+*"     REFERENCE(I_WRBTR) TYPE  WRBTR OPTIONAL
+*"     REFERENCE(I_KURSF_FIX) TYPE  UKURS_CURR OPTIONAL
+*"     REFERENCE(I_TX_USD_BRL) TYPE  UKURS_CURR
+*"     REFERENCE(I_TX_USD_ARS) TYPE  UKURS_CURR
+*"     REFERENCE(I_TX_EUR_BRL) TYPE  UKURS_CURR
+*"     REFERENCE(I_TX_EUR_USD) TYPE  UKURS_CURR
+*"  EXPORTING
+*"     REFERENCE(E_MSG) TYPE  STRING
+*"  TABLES
+*"      T_CURR_INF STRUCTURE  ZFI_CURR_INF_FLX OPTIONAL
+*"  CHANGING
+*"     REFERENCE(C_DMBTR) TYPE  DMBTR
+*"     REFERENCE(C_DMBE2) TYPE  DMBE2
+*"     REFERENCE(C_DMBE3) TYPE  DMBE3 OPTIONAL
+*"  EXCEPTIONS
+*"      DATA_INCONPLETE
+*"----------------------------------------------------------------------
+
+  CONSTANTS: C_ARS VALUE 'ARS' TYPE C LENGTH 3,
+             C_BRL VALUE 'BRL' TYPE C LENGTH 3,
+             C_USD VALUE 'USD' TYPE C LENGTH 3,
+             C_EUR VALUE 'EUR' TYPE C LENGTH 3.
+
+  DATA: WL_CURR_INF TYPE ZFI_CURR_INF_FLX,
+        WL_X001     TYPE X001.
+
+  CLEAR: WL_CURR_INF, WL_X001, E_MSG.
+
+  IF I_BUKRS IS INITIAL.
+    E_MSG = 'Empresa não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  IF I_WAERS_DOC IS INITIAL.
+    E_MSG = 'Moeda Documento não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+*  IF I_DMBTR IS INITIAL.
+*    E_MSG = 'Valor Moeda Interna não informada(Conversão outras Moedas)!'.
+*    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+*    EXIT.
+*  ENDIF.
+*
+*  IF I_DMBE2 IS INITIAL.
+*    E_MSG = 'Valor 2ª Moeda Interna não informada(Conversão outras Moedas)!'.
+*    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+*    EXIT.
+*  ENDIF.
+
+  IF I_TX_USD_BRL IS INITIAL.
+    E_MSG = 'Taxa USD/BRL não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  IF I_TX_USD_ARS IS INITIAL.
+    E_MSG = 'Taxa USD/ARS não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  IF I_TX_EUR_BRL IS INITIAL.
+    E_MSG = 'Taxa EUR/BRL não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  IF I_TX_EUR_USD IS INITIAL.
+    E_MSG = 'Taxa EUR/USD não informada(Conversão outras Moedas)!'.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  DATA(_TX_USD_BRL_CONV) = I_TX_USD_BRL.
+  DATA(_TX_USD_ARS_CONV) = I_TX_USD_ARS.
+  DATA(_TX_EUR_BRL_CONV) = I_TX_EUR_BRL.
+  DATA(_TX_EUR_USD_CONV) = I_TX_EUR_USD.
+
+  IF I_KURSF_FIX IS NOT INITIAL.
+    _TX_USD_BRL_CONV = I_KURSF_FIX.
+    _TX_USD_ARS_CONV = I_KURSF_FIX.
+    _TX_EUR_BRL_CONV = I_KURSF_FIX.
+    _TX_EUR_USD_CONV = I_KURSF_FIX.
+  ENDIF.
+
+  IF T_CURR_INF[] IS NOT INITIAL.
+    READ TABLE T_CURR_INF INTO DATA(_WL_CURR_INF) WITH KEY BUKRS = I_BUKRS BINARY SEARCH.
+    MOVE-CORRESPONDING _WL_CURR_INF TO WL_CURR_INF.
+  ELSE.
+    SELECT SINGLE *
+      FROM T001 INTO @DATA(_WL_T001)
+     WHERE BUKRS = @I_BUKRS.
+
+    CALL FUNCTION 'FI_CURRENCY_INFORMATION'
+      EXPORTING
+        I_BUKRS = I_BUKRS
+      IMPORTING
+        E_X001  = WL_X001.
+
+    MOVE-CORRESPONDING WL_X001 TO WL_CURR_INF.
+    WL_CURR_INF-WAERS = _WL_T001-WAERS.
+  ENDIF.
+
+  IF ( WL_CURR_INF-BUKRS IS INITIAL ) OR
+     ( WL_CURR_INF-WAERS IS INITIAL ) OR
+     ( WL_CURR_INF-HWAE2 IS INITIAL ).
+    CONCATENATE 'Informações referente a moeda da empresa: ' I_BUKRS ', não encontrado ou incompleto!'
+           INTO E_MSG SEPARATED BY SPACE.
+    MESSAGE E_MSG TYPE 'S' RAISING DATA_INCONPLETE.
+    EXIT.
+  ENDIF.
+
+  IF ( WL_CURR_INF-WAERS = C_BRL ) AND ( WL_CURR_INF-HWAE2 = C_USD ). " 1ª BRL / 2ª USD
+    CASE I_WAERS_DOC.
+      WHEN C_BRL.
+        C_DMBTR  = I_DMBTR.
+        C_DMBE2  = I_DMBTR / _TX_USD_BRL_CONV.
+      WHEN C_USD.
+        C_DMBTR  = I_DMBE2 * _TX_USD_BRL_CONV.
+        C_DMBE2  = I_DMBE2.
+      WHEN C_EUR.
+        C_DMBTR  = I_WRBTR * _TX_EUR_BRL_CONV.
+        C_DMBE2  = I_WRBTR * _TX_EUR_USD_CONV .
+      WHEN OTHERS.
+        C_DMBTR  = I_DMBE2 * _TX_USD_BRL_CONV.
+        C_DMBE2  = I_DMBE2.
+    ENDCASE.
+  ELSEIF ( WL_CURR_INF-WAERS = C_ARS ) AND ( WL_CURR_INF-HWAE2 = C_USD ) . " 1ª ARS / 2ª USD
+    CASE I_WAERS_DOC.
+      WHEN C_ARS.
+        C_DMBTR  = I_DMBTR.
+        C_DMBE2  = I_DMBTR / _TX_USD_ARS_CONV.
+      WHEN C_USD.
+        C_DMBTR  = I_DMBE2 * _TX_USD_ARS_CONV.
+        C_DMBE2  = I_DMBE2.
+      WHEN OTHERS.
+        C_DMBTR  = I_DMBE2 * _TX_USD_ARS_CONV.
+        C_DMBE2  = I_DMBE2.
+    ENDCASE.
+  ELSEIF ( WL_CURR_INF-WAERS = C_EUR ) AND ( WL_CURR_INF-HWAE2 = C_BRL ) . " 1ª EUR / 2ª BRL "Não utilizado
+    CASE I_WAERS_DOC.
+      WHEN C_EUR.
+        C_DMBTR  = I_DMBTR.
+        C_DMBE2  = I_DMBTR / _TX_EUR_BRL_CONV.
+      WHEN C_BRL.
+        C_DMBTR  = I_DMBE2 * _TX_EUR_BRL_CONV.
+        C_DMBE2  = I_DMBE2.
+      WHEN OTHERS.
+        C_DMBTR  = I_DMBE2 * _TX_EUR_BRL_CONV.
+        C_DMBE2  = I_DMBE2.
+    ENDCASE.
+  ELSEIF ( WL_CURR_INF-WAERS = C_EUR ) AND ( WL_CURR_INF-HWAE2 = C_USD ) . " 1ª EUR / 2ª USD
+    CASE I_WAERS_DOC.
+      WHEN C_EUR.
+        C_DMBTR  = I_DMBTR.
+        C_DMBE2  = I_DMBTR * _TX_EUR_USD_CONV.
+      WHEN C_USD.
+        C_DMBTR  = I_DMBE2 / _TX_EUR_USD_CONV.
+        C_DMBE2  = I_DMBE2.
+      WHEN C_BRL.
+        C_DMBTR  = I_WRBTR * _TX_EUR_BRL_CONV.
+        C_DMBE2  = I_WRBTR * _TX_USD_BRL_CONV.
+    ENDCASE.
+  ENDIF.
+
+
+ENDFUNCTION.

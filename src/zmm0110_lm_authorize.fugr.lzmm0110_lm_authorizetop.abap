@@ -1,0 +1,3 @@
+FUNCTION-POOL ZMM0110_LM_AUTHORIZE.         "MESSAGE-ID ..
+
+* INCLUDE LZMM0110_LM_AUTHORIZED...          " Local class definition

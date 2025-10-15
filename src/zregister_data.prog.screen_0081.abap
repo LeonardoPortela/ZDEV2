@@ -1,0 +1,9 @@
+PROCESS BEFORE OUTPUT.
+
+  MODULE pbo_manter.
+*
+PROCESS AFTER INPUT.
+
+  MODULE pai_manter_exit AT EXIT-COMMAND.
+
+  MODULE pai_manter.

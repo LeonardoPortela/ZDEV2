@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>Z_MM</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de mensagens para MM</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Data &amp;1 sem período MM válido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Período de MM não encontrado p/ empresa &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Deve ser informado o volume do material &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Saldo disponível no depósito &amp;1 lote &amp;2 menor que a qtd. vinculada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Material &amp;1 Bloqueado, Aguardar um momento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Este tipo de Pedido somente pode ser criado via COUPA</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Cadastrar todos os nível para prosseguir, Nível atual: &amp; Próximo Nível: &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Local do negócios do pedido &amp; divergente com o da NFSE</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Pedido &amp; pendente de liberação/Aprovação</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>NCM do item &amp; &amp; inválido, ajuste para cscfiscal.cadastro@amaggi.com.br</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>IVA divergente para esse tipo de operação (NFSE apenas IVA S0 ou S1)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Documento de MIGO &amp; já foi integrado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Favor verificar condição de modificação na ME22N</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Não é permitido alterar o tipo de pedido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Agente de Frete &amp; não é ZFIC!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z_MM</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>É obrigatório informar o Agente de Frete!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

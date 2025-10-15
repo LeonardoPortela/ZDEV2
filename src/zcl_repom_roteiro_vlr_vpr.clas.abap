@@ -1,0 +1,459 @@
+class ZCL_REPOM_ROTEIRO_VLR_VPR definition
+  public
+  inheriting from ZCL_REPOM
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_REPOM .
+
+  aliases SET_BRANCH
+    for ZIF_REPOM~SET_BRANCH .
+  aliases SET_BUKRS
+    for ZIF_REPOM~SET_BUKRS .
+
+  data CK_SALVAR_XML_LOCAL type CHAR01 .
+
+  methods CONSTRUCTOR .
+  methods SET_ID_ROTA_REPOM
+    importing
+      !I_ID_ROTA_REPOM type ZDE_ID_ROTA_REPOM .
+  methods SET_ID_PERCURSO_REPOM
+    importing
+      !I_ID_PERCURSO_REPOM type ZDE_ID_PERCURSO_REPOM .
+  methods SET_ID_ROTA
+    importing
+      !I_ID_ROTA type ZDE_ID_ROTA_CLIENTE .
+  methods SET_VEICULO_EIXOS
+    importing
+      !I_VEICULO_EIXOS type ZQT_EIXO .
+  methods SET_QTD_EIXOS_SUSPENSOS_IDA
+    importing
+      !I_QTD_EIXOS_SUSPENSOS_IDA type ZQT_EIXO .
+  methods SET_QTD_EIXOS_SUSPENSOS_VOLTA
+    importing
+      !I_QTD_EIXOS_SUSPENSOS_VOLTA type ZQT_EIXO .
+  methods LIMPAR_ROTEIRO .
+  methods CONSULTAR_VALOR
+    exporting
+      !E_ERROS type ZDE_REPOM_ERROS_T
+    returning
+      value(I_RETORNOU) type CHAR01
+    exceptions
+      SERVICO_NAO_ENCONTRADO
+      HTTP_COMMUNICATION_FAILURE
+      HTTP_INVALID_STATE
+      HTTP_PROCESSING_FAILED
+      HTTP_INVALID_TIMEOUT
+      ERRO .
+  methods GET_VALOR_TOTAL_VPR
+    returning
+      value(R_VALOR_TOTAL_VPR) type ZDE_VLR_TOTAL_PEDAGIO .
+  methods GET_VALOR_VPR_IDA
+    returning
+      value(R_VALOR_VPR_IDA) type ZDE_VLR_TOTAL_PEDAGIO .
+  methods GET_VALOR_VPR_VOLTA
+    returning
+      value(R_VALOR_VPR_VOLTA) type ZDE_VLR_TOTAL_PEDAGIO .
+  methods GET_PERCURSO_DESCRICAO
+    returning
+      value(R_PERCURSO_DESCRICAO) type ZDE_DS_PERCURSO_REPOM .
+  PROTECTED SECTION.
+private section.
+
+  aliases BRANCH
+    for ZIF_REPOM~BRANCH .
+  aliases BUKRS
+    for ZIF_REPOM~BUKRS .
+
+  data ID_ROTA_REPOM type ZDE_ID_ROTA_REPOM .
+  data ID_PERCURSO_REPOM type ZDE_ID_PERCURSO_REPOM .
+  data ID_ROTA type ZDE_ID_ROTA_CLIENTE .
+  data VEICULO_EIXOS type ZQT_EIXO .
+  data QTD_EIXOS_SUSPENSOS_IDA type ZQT_EIXO .
+  data QTD_EIXOS_SUSPENSOS_VOLTA type ZQT_EIXO .
+  data VALOR_TOTAL_VPR type ZDE_VLR_TOTAL_PEDAGIO .
+  data VALOR_VPR_IDA type ZDE_VLR_TOTAL_PEDAGIO .
+  data VALOR_VPR_VOLTA type ZDE_VLR_TOTAL_PEDAGIO .
+  data PERCURSO_DESCRICAO type ZDE_DS_PERCURSO_REPOM .
+
+  methods SET_VALOR_TOTAL_VPR
+    importing
+      !I_VALOR_TOTAL_VPR type ZDE_VLR_TOTAL_PEDAGIO .
+  methods SET_VALOR_VPR_IDA
+    importing
+      !I_VALOR_VPR_IDA type ZDE_VLR_TOTAL_PEDAGIO .
+  methods SET_VALOR_VPR_VOLTA
+    importing
+      !I_VALOR_VPR_VOLTA type ZDE_VLR_TOTAL_PEDAGIO .
+  methods SET_PERCURSO_DESCRICAO
+    importing
+      !I_PERCURSO_DESCRICAO type ZDE_DS_PERCURSO_REPOM .
+ENDCLASS.
+
+
+
+CLASS ZCL_REPOM_ROTEIRO_VLR_VPR IMPLEMENTATION.
+
+
+  METHOD CONSTRUCTOR.
+    CALL METHOD SUPER->CONSTRUCTOR( ).
+
+    ME->LIMPAR_ROTEIRO( ).
+
+  ENDMETHOD.
+
+
+  METHOD CONSULTAR_VALOR.
+
+    DATA: LC_XML_AUTENTICA TYPE STRING,
+          I_NAME_FILE      TYPE STRING,
+          LC_EXCEPTION     TYPE REF TO ZCX_WEBSERVICE,
+          LC_MSG           TYPE STRING,
+          XML_INPUT        TYPE STRING,
+          XML_RETORNO      TYPE STRING,
+          VAR_HTTP         TYPE REF TO IF_HTTP_CLIENT,
+          LC_ERRO          TYPE ZDE_REPOM_ERROS,
+          LC_VALOR         TYPE C LENGTH 20.
+
+    DATA: LC_XML_RET           TYPE REF TO CL_XML_DOCUMENT,
+          LC_XML_RET_E         TYPE REF TO CL_XML_DOCUMENT,
+          LC_TAMANHO           TYPE I,
+          LC_XML_NODE          TYPE REF TO IF_IXML_NODE,
+          LC_ITERATOR          TYPE REF TO IF_IXML_NODE_ITERATOR,
+          LC_STRING            TYPE STRING,
+          I_VLR_TOTAL_PEDAGIO	 TYPE ZDE_VLR_TOTAL_PEDAGIO,
+          I_PERCURSO_DESCRICAO TYPE	ZDE_DS_PERCURSO_REPOM.
+
+    I_RETORNOU = ABAP_FALSE.
+
+    ME->GET_AUTENTICA( EXPORTING I_OBJETO = ME RECEIVING XML = LC_XML_AUTENTICA ).
+
+    CALL METHOD ME->LIMPAR.
+    ME->CTNA(   EXPORTING TEXTO = '<?xml version="1.0" encoding="utf-8"?>' ).
+    ME->CTNA(   EXPORTING TEXTO = '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' ).
+    ME->CTNA(   EXPORTING TEXTO = '<soap12:Body>' ).
+    ME->CTNAB(  EXPORTING TAG  = 'RoteiroValorTotalVPRs xmlns="http://www.repom.com.br/RepomIntegracaoWs/Integracao"' ).
+    ME->CTNA(   EXPORTING TEXTO = LC_XML_AUTENTICA ).
+    ME->CTNAB(  EXPORTING TAG   = 'strXmlIn' ).
+    ME->CTNAB(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'roteiro' ).
+    LC_VALOR = ME->ID_ROTA_REPOM.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT' EXPORTING INPUT = LC_VALOR IMPORTING OUTPUT = LC_VALOR.
+    ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'roteiro_codigo' VALOR = LC_VALOR ).
+    LC_VALOR = ME->ID_PERCURSO_REPOM.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT' EXPORTING INPUT = LC_VALOR IMPORTING OUTPUT = LC_VALOR.
+    ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'percurso_codigo' VALOR = LC_VALOR ).
+
+    IF ME->ID_ROTA IS INITIAL AND ME->ID_PERCURSO_REPOM IS NOT INITIAL AND ME->ID_ROTA_REPOM IS NOT INITIAL.
+      SELECT SINGLE * INTO @DATA(WA_ZLEST0122)
+        FROM ZLEST0122 AS R
+       WHERE ID_ROTA_REPOM     EQ @ME->ID_ROTA_REPOM
+         AND ID_PERCURSO_REPOM EQ @ME->ID_PERCURSO_REPOM.
+
+      ME->SET_ID_ROTA( I_ID_ROTA = WA_ZLEST0122-ID_ROTA ).
+    ENDIF.
+
+    IF ME->ID_ROTA(1) NE 'A'.
+      ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'roteiro_cliente_codigo' VALOR = ME->ID_ROTA ).
+    ELSE.
+      ME->CTNAFE( EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'roteiro_cliente_codigo' ).
+    ENDIF.
+    ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'numero_eixos'           VALOR = ME->VEICULO_EIXOS ).
+    ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'eixos_suspensos_ida'    VALOR = ME->QTD_EIXOS_SUSPENSOS_IDA ).
+    ME->CTNAV(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'eixos_suspensos_volta'  VALOR = ME->QTD_EIXOS_SUSPENSOS_VOLTA ).
+    ME->CTNFE(  EXPORTING ABRE  = '&lt;' FECHA = '&gt;' TAG = 'roteiro' ).
+    ME->CTNFE(  EXPORTING TAG   = 'strXmlIn' ).
+    ME->CTNAFE( EXPORTING TAG = 'strXmlOut' ).
+    ME->CTNAFE( EXPORTING TAG = 'strXmlErr' ).
+    ME->CTNFE(  EXPORTING TAG = 'RoteiroValorTotalVPRs' ).
+    ME->CTNA(   EXPORTING TEXTO = '</soap12:Body>' ).
+    ME->CTNA(   EXPORTING TEXTO = '</soap12:Envelope>' ).
+
+    IF ME->CK_SALVAR_XML_LOCAL EQ ABAP_TRUE.
+      I_NAME_FILE = 'C:\Maggi\REPOM\RoteiroValorTotalVPRs.xml'.
+      CALL METHOD ME->SALVA_XML
+        EXPORTING
+          I_NAME_FILE = I_NAME_FILE.
+    ENDIF.
+
+    TRY .
+        ME->SET_SERVICO( I_SERVICO = 'R1' ).
+      CATCH ZCX_WEBSERVICE INTO LC_EXCEPTION.
+        LC_MSG = LC_EXCEPTION->GET_TEXT( ).
+        MESSAGE E008 WITH 'R1 (RoteiroValorTotalVPRs ME->SET_SERVICO)' RAISING SERVICO_NAO_ENCONTRADO.
+    ENDTRY.
+
+    ME->SET_TIPO( I_TIPO = 'I' ).
+
+    TRY .
+        VAR_HTTP = ME->URL( ). "Recupear qual é a URL que é preciso atribuir ao HEADER do WebService.
+      CATCH ZCX_WEBSERVICE INTO LC_EXCEPTION.
+        LC_MSG = LC_EXCEPTION->GET_TEXT( ).
+        MESSAGE E008 WITH 'R1 (RoteiroValorTotalVPRs ME->URL)' RAISING SERVICO_NAO_ENCONTRADO.
+    ENDTRY.
+
+    ME->ZIF_WEBSERVICE~ABRIR_CONEXAO( I_HTTP = VAR_HTTP ).
+
+    CALL METHOD ME->GET_XML
+      IMPORTING
+        E_XML_TEXTO = XML_INPUT.
+
+    CALL METHOD ME->ZIF_WEBSERVICE~CONSULTAR
+      EXPORTING
+        I_HTTP                     = VAR_HTTP
+        I_XML                      = XML_INPUT
+      RECEIVING
+        E_RESULTADO                = XML_RETORNO
+      EXCEPTIONS
+        HTTP_COMMUNICATION_FAILURE = 1
+        HTTP_INVALID_STATE         = 2
+        HTTP_PROCESSING_FAILED     = 3
+        HTTP_INVALID_TIMEOUT       = 4
+        OTHERS                     = 5.
+
+    CASE SY-SUBRC.
+      WHEN 1.
+        MESSAGE E009 RAISING HTTP_COMMUNICATION_FAILURE.
+      WHEN 2.
+        MESSAGE E010 RAISING HTTP_INVALID_STATE.
+      WHEN 3.
+        MESSAGE E011 RAISING HTTP_PROCESSING_FAILED.
+      WHEN 4.
+        MESSAGE E012 RAISING HTTP_INVALID_TIMEOUT.
+      WHEN 5.
+        MESSAGE E013 RAISING ERRO.
+    ENDCASE.
+
+    IF ME->CK_SALVAR_XML_LOCAL EQ ABAP_TRUE.
+      I_NAME_FILE = 'C:\Maggi\REPOM\RoteiroValorTotalVPRsRet.xml'.
+      CALL METHOD ME->SALVA_XML
+        EXPORTING
+          I_NAME_FILE = I_NAME_FILE
+          I_XML       = XML_RETORNO.
+    ENDIF.
+
+    CREATE OBJECT LC_XML_RET.
+
+    CALL METHOD LC_XML_RET->PARSE_STRING
+      EXPORTING
+        STREAM  = XML_RETORNO
+      RECEIVING
+        RETCODE = LC_TAMANHO.
+
+    CALL METHOD LC_XML_RET->FIND_NODE
+      EXPORTING
+        NAME = 'RoteiroValorTotalVPRsResult'
+      RECEIVING
+        NODE = LC_XML_NODE.
+
+    IF ( SY-SUBRC EQ 0 ) AND ( NOT LC_XML_NODE IS INITIAL ).
+      LC_STRING = LC_XML_NODE->GET_VALUE( ).
+      TRANSLATE LC_STRING TO UPPER CASE.
+      IF LC_STRING EQ 'TRUE'.
+        I_RETORNOU = ABAP_TRUE.
+
+        CALL METHOD LC_XML_RET->FIND_NODE
+          EXPORTING
+            NAME = 'strXmlOut'
+          RECEIVING
+            NODE = LC_XML_NODE.
+
+        XML_RETORNO = LC_XML_NODE->GET_VALUE( ).
+
+        CREATE OBJECT LC_XML_RET_E.
+
+        CALL METHOD LC_XML_RET_E->PARSE_STRING
+          EXPORTING
+            STREAM  = XML_RETORNO
+          RECEIVING
+            RETCODE = LC_TAMANHO.
+
+        CALL METHOD LC_XML_RET_E->FIND_NODE
+          EXPORTING
+            NAME = 'valor_vpr'
+          RECEIVING
+            NODE = LC_XML_NODE.
+
+        IF ( SY-SUBRC EQ 0 ) AND ( NOT LC_XML_NODE IS INITIAL ).
+          LC_ITERATOR = LC_XML_NODE->CREATE_ITERATOR( ).
+          LC_XML_NODE = LC_ITERATOR->GET_NEXT( ).
+          WHILE NOT LC_XML_NODE IS INITIAL.
+            CASE LC_XML_NODE->GET_TYPE( ).
+              WHEN: IF_IXML_NODE=>CO_NODE_ELEMENT.
+                LC_STRING = LC_XML_NODE->GET_NAME( ).
+                LC_VALOR  = LC_XML_NODE->GET_VALUE( ).
+                CASE LC_STRING.
+                  WHEN 'valor_total_vpr'.
+*                    CONDENSE LC_VALOR NO-GAPS.
+*                    REPLACE ALL OCCURRENCES OF ',' IN LC_VALOR WITH ''.
+                    MOVE: LC_VALOR TO I_VLR_TOTAL_PEDAGIO.
+                    ME->SET_VALOR_TOTAL_VPR( EXPORTING I_VALOR_TOTAL_VPR = I_VLR_TOTAL_PEDAGIO ).
+                  WHEN 'valor_vpr_ida'.
+*                    CONDENSE LC_VALOR NO-GAPS.
+*                    REPLACE ALL OCCURRENCES OF ',' IN LC_VALOR WITH ''.
+                    MOVE: LC_VALOR TO I_VLR_TOTAL_PEDAGIO.
+                    ME->SET_VALOR_VPR_IDA( EXPORTING I_VALOR_VPR_IDA = I_VLR_TOTAL_PEDAGIO ).
+                  WHEN 'valor_vpr_volta'.
+*                    CONDENSE LC_VALOR NO-GAPS.
+*                    REPLACE ALL OCCURRENCES OF ',' IN LC_VALOR WITH ''.
+                    MOVE: LC_VALOR TO I_VLR_TOTAL_PEDAGIO.
+                    ME->SET_VALOR_VPR_VOLTA( EXPORTING I_VALOR_VPR_VOLTA = I_VLR_TOTAL_PEDAGIO ).
+                  WHEN 'percurso_descricao'.
+                    MOVE: LC_VALOR TO I_PERCURSO_DESCRICAO.
+                    ME->SET_PERCURSO_DESCRICAO( EXPORTING I_PERCURSO_DESCRICAO = I_PERCURSO_DESCRICAO ).
+                ENDCASE.
+            ENDCASE.
+            LC_XML_NODE = LC_ITERATOR->GET_NEXT( ).
+          ENDWHILE.
+        ENDIF.
+
+      ELSE.
+        CALL METHOD LC_XML_RET->FIND_NODE
+          EXPORTING
+            NAME = 'strXmlErr'
+          RECEIVING
+            NODE = LC_XML_NODE.
+
+        IF ( SY-SUBRC EQ 0 ) AND ( NOT LC_XML_NODE IS INITIAL ).
+
+          XML_RETORNO = LC_XML_NODE->GET_VALUE( ).
+
+          CREATE OBJECT LC_XML_RET_E.
+
+          CALL METHOD LC_XML_RET_E->PARSE_STRING
+            EXPORTING
+              STREAM  = XML_RETORNO
+            RECEIVING
+              RETCODE = LC_TAMANHO.
+
+          CALL METHOD LC_XML_RET_E->FIND_NODE
+            EXPORTING
+              NAME = 'erros'
+            RECEIVING
+              NODE = LC_XML_NODE.
+
+          IF ( SY-SUBRC EQ 0 ) AND ( NOT LC_XML_NODE IS INITIAL ).
+
+            LC_ITERATOR = LC_XML_NODE->CREATE_ITERATOR( ).
+            LC_XML_NODE = LC_ITERATOR->GET_NEXT( ).
+
+            WHILE NOT LC_XML_NODE IS INITIAL.
+              CASE LC_XML_NODE->GET_TYPE( ).
+                WHEN: IF_IXML_NODE=>CO_NODE_ELEMENT.
+                  LC_STRING = LC_XML_NODE->GET_NAME( ).
+                  IF LC_STRING EQ 'erro_codigo'.
+                    LC_STRING = LC_XML_NODE->GET_VALUE( ).
+                    LC_ERRO-ERRO_CODIGO = LC_STRING.
+                  ELSEIF LC_STRING EQ 'erro_descricao'.
+                    LC_STRING = LC_XML_NODE->GET_VALUE( ).
+                    LC_ERRO-ERRO_DESCRICAO = LC_STRING.
+                    APPEND LC_ERRO TO E_ERROS.
+                  ENDIF.
+              ENDCASE.
+              LC_XML_NODE = LC_ITERATOR->GET_NEXT( ).
+            ENDWHILE.
+          ENDIF.
+
+        ELSE.
+          MESSAGE E014 RAISING ERRO.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD GET_PERCURSO_DESCRICAO.
+    R_PERCURSO_DESCRICAO = ME->PERCURSO_DESCRICAO.
+  ENDMETHOD.
+
+
+  METHOD GET_VALOR_TOTAL_VPR.
+    R_VALOR_TOTAL_VPR = ME->VALOR_TOTAL_VPR.
+  ENDMETHOD.
+
+
+  METHOD GET_VALOR_VPR_IDA.
+    R_VALOR_VPR_IDA = ME->VALOR_VPR_IDA.
+  ENDMETHOD.
+
+
+  METHOD GET_VALOR_VPR_VOLTA.
+    R_VALOR_VPR_VOLTA = ME->VALOR_VPR_VOLTA.
+  ENDMETHOD.
+
+
+  METHOD LIMPAR_ROTEIRO.
+
+    CLEAR: ME->BUKRS,
+           ME->BRANCH,
+           ME->ID_ROTA_REPOM,
+           ME->ID_PERCURSO_REPOM,
+           ME->ID_ROTA,
+           ME->VEICULO_EIXOS,
+           ME->QTD_EIXOS_SUSPENSOS_IDA,
+           ME->QTD_EIXOS_SUSPENSOS_VOLTA.
+
+  ENDMETHOD.
+
+
+  METHOD SET_ID_PERCURSO_REPOM.
+    ME->ID_PERCURSO_REPOM = I_ID_PERCURSO_REPOM.
+  ENDMETHOD.
+
+
+  METHOD SET_ID_ROTA.
+    ME->ID_ROTA = I_ID_ROTA.
+  ENDMETHOD.
+
+
+  METHOD SET_ID_ROTA_REPOM.
+    ME->ID_ROTA_REPOM = I_ID_ROTA_REPOM.
+  ENDMETHOD.
+
+
+  METHOD SET_PERCURSO_DESCRICAO.
+    ME->PERCURSO_DESCRICAO = I_PERCURSO_DESCRICAO.
+  ENDMETHOD.
+
+
+  METHOD SET_QTD_EIXOS_SUSPENSOS_IDA.
+    ME->QTD_EIXOS_SUSPENSOS_IDA = I_QTD_EIXOS_SUSPENSOS_IDA.
+  ENDMETHOD.
+
+
+  METHOD SET_QTD_EIXOS_SUSPENSOS_VOLTA.
+    ME->QTD_EIXOS_SUSPENSOS_VOLTA = I_QTD_EIXOS_SUSPENSOS_VOLTA.
+  ENDMETHOD.
+
+
+  METHOD SET_VALOR_TOTAL_VPR.
+    ME->VALOR_TOTAL_VPR = I_VALOR_TOTAL_VPR.
+  ENDMETHOD.
+
+
+  METHOD SET_VALOR_VPR_IDA.
+    ME->VALOR_VPR_IDA = I_VALOR_VPR_IDA.
+  ENDMETHOD.
+
+
+  METHOD SET_VALOR_VPR_VOLTA.
+    ME->VALOR_VPR_VOLTA = I_VALOR_VPR_VOLTA.
+  ENDMETHOD.
+
+
+  METHOD SET_VEICULO_EIXOS.
+    ME->VEICULO_EIXOS = I_VEICULO_EIXOS.
+  ENDMETHOD.
+
+
+  METHOD ZIF_REPOM~SET_BRANCH.
+    ME->BRANCH = I_BRANCH.
+  ENDMETHOD.
+
+
+  METHOD ZIF_REPOM~SET_BUKRS.
+    ME->BUKRS = I_BUKRS.
+  ENDMETHOD.
+ENDCLASS.

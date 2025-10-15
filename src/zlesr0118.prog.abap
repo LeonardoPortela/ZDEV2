@@ -1,0 +1,1862 @@
+*&---------------------------------------------------------------------*
+*& Report  ZLESR0118
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZLESR0118.
+
+TYPES:
+
+  BEGIN OF TY_CADORDEM,
+    EMPRESA(30)  TYPE C,
+    ORDEM(20)    TYPE C,
+    ID_ORDEM(20) TYPE C,
+    USUARIO(20)  TYPE C,
+    TOTAL        TYPE ZLEST0155-VLR_FRETE_NEG,
+    DATA(10),
+  END OF TY_CADORDEM,
+
+  BEGIN OF TY_FIELDS,
+    CAMPO(30) TYPE C,
+    GROUP1(5) TYPE C,
+    VALUE     TYPE SY-TABIX,
+    INVISIBLE TYPE SY-TABIX,
+  END   OF TY_FIELDS,
+
+  BEGIN OF TY_EDITOR,
+    LINE(72),
+  END   OF TY_EDITOR,
+
+  BEGIN OF TY_ESTRA ,
+    BUKRS     TYPE ZLEST0157-BUKRS,
+    ORDEM     TYPE ZLEST0157-ORDEM,
+    ID_ORDEM  TYPE ZLEST0157-ID_ORDEM,
+    VALOR_DE  TYPE ZLEST0156-VALOR_DE,
+    VALOR_ATE TYPE ZLEST0156-VALOR_ATE,
+    APROVADOR TYPE ZLEST0156-APROVADOR,
+    NIVEL     TYPE ZLEST0156-NIVEL,
+    WAERS(3),
+    ESTADO(4),
+    OPCOES(4),
+  END OF TY_ESTRA,
+
+  BEGIN OF TY_DOCS ,
+    ORDEM          TYPE ZLEST0155-NR_ORDEM,
+    ID_ORDEM       TYPE ZLEST0155-ID_ORDEM,
+    BUKRS          TYPE ZLEST0155-ID_BUKRS,
+    EMPRESA(30)    TYPE C,
+    PESO           TYPE ZLEST0155-NR_PESO_ALVO,
+    PRODUTO(30)    TYPE C,
+    VALOR          TYPE ZLEST0155-KBETR,
+    VALOR_NEG      TYPE ZLEST0155-VLR_FRETE_NEG,
+    OV             TYPE ZLEST0155-VBELN,
+    KUNNR          TYPE VBPA-KUNNR,
+    CLIENTE_OV(40) TYPE C,
+    MOTIVO(250)    TYPE C,
+  END OF TY_DOCS,
+
+  BEGIN OF TY_ZLEST0155,
+    NR_ORDEM         TYPE ZLEST0155-NR_ORDEM,
+    ID_ORDEM         TYPE ZLEST0155-ID_ORDEM,
+    ID_BUKRS         TYPE ZLEST0155-ID_BUKRS,
+    ID_BRANCH        TYPE ZLEST0155-ID_BRANCH,
+    ID_BUKRS_AG      TYPE ZLEST0155-ID_BUKRS_AG,
+    ID_LOCAL_COLETA  TYPE ZLEST0155-ID_LOCAL_COLETA,
+    ID_LOCAL_DESTINO TYPE ZLEST0155-ID_LOCAL_DESTINO,
+    ID_PRODUTO       TYPE ZLEST0155-ID_PRODUTO,
+    ID_MOTORISTA     TYPE ZLEST0155-ID_MOTORISTA,
+    DS_PLACA_TRATOR  TYPE ZLEST0155-DS_PLACA_TRATOR,
+    NR_PESO_ALVO     TYPE ZLEST0155-NR_PESO_ALVO,
+    KBETR            TYPE ZLEST0155-KBETR,
+    VLR_FRETE_NEG    TYPE ZLEST0155-VLR_FRETE_NEG,
+    MOTIVO           TYPE ZLEST0155-MOTIVO,
+    BNAME            TYPE ZLEST0155-BNAME,
+    DT_MOD           TYPE ZLEST0155-DT_MOD,
+    HR_MOD           TYPE ZLEST0155-HR_MOD,
+    STATUS_APROV     TYPE ZLEST0155-STATUS_APROV,
+  END OF TY_ZLEST0155,
+
+  BEGIN OF TY_ZLEST0156,
+    BUKRS        TYPE ZLEST0156-BUKRS,
+    BUKRS_ATE    TYPE ZLEST0156-BUKRS_ATE,
+    NIVEL        TYPE ZLEST0156-NIVEL,
+    APROVADOR    TYPE ZLEST0156-APROVADOR,
+    DT_VAL_DE    TYPE ZLEST0156-DT_VAL_DE,
+    HR_VAL_DE    TYPE ZLEST0156-HR_VAL_DE,
+    DT_VAL_ATE   TYPE ZLEST0156-DT_VAL_ATE,
+    HR_VAL_ATE   TYPE ZLEST0156-HR_VAL_ATE,
+    VALOR_DE     TYPE ZLEST0156-VALOR_DE,
+    VALOR_ATE    TYPE ZLEST0156-VALOR_ATE,
+    DATA_ATUAL   TYPE ZLEST0156-DATA_ATUAL,
+    HORA_ATUAL   TYPE ZLEST0156-HORA_ATUAL,
+    USUARIO      TYPE ZLEST0156-USUARIO,
+    MOTIVO       TYPE ZLEST0156-MOTIVO,
+    TRANSF_APROV TYPE ZLEST0156-TRANSF_APROV,
+  END OF TY_ZLEST0156,
+
+  BEGIN OF TY_ZLEST0157,
+    BUKRS      TYPE ZLEST0157-BUKRS,
+    ORDEM      TYPE ZLEST0157-ORDEM,
+    ID_ORDEM   TYPE ZLEST0157-ID_ORDEM,
+    NIVEL      TYPE ZLEST0157-NIVEL,
+    APROVADOR  TYPE ZLEST0157-APROVADOR,
+    VALOR_DE   TYPE ZLEST0157-VALOR_DE,
+    VALOR_ATE  TYPE ZLEST0157-VALOR_ATE,
+    DATA_ATUAL TYPE ZLEST0157-DATA_ATUAL,
+    HORA_ATUAL TYPE ZLEST0157-HORA_ATUAL,
+    USUARIO    TYPE ZLEST0157-USUARIO,
+  END OF TY_ZLEST0157.
+
+
+DATA: OK-CODE         TYPE SY-UCOMM,
+      TG_SELECTEDCELL TYPE LVC_T_CELL,
+      WG_SELECTEDCELL TYPE LVC_S_CELL,
+*      BTN_REJ(30)     VALUE '@8Y@ Rejeitar',
+      BTN_REJ(30),
+
+      BEGIN OF TG_ORDENS OCCURS 0,
+        STATUS(4),
+        EMPRESA(30) TYPE C,
+        ORDEM       TYPE ZLEST0155-NR_ORDEM,
+        ID_ORDEM    TYPE ZLEST0155-ID_ORDEM,
+        KBETR       TYPE ZLEST0155-KBETR,
+        TOTAL       TYPE ZLEST0155-VLR_FRETE_NEG,
+        COLOR(4),
+        USNAME(15)  TYPE C,
+        FILIAL(30)  TYPE C,
+        SMTP_ADDR   TYPE ADR6-SMTP_ADDR,
+        DT_MOD      TYPE DATS,
+      END OF TG_ORDENS.
+
+DATA   DYFIELDS LIKE DYNPREAD OCCURS 1 WITH HEADER LINE.
+
+** Criação de tabela dinamica
+DATA: T_FIELDCATALOG   TYPE LVC_T_FCAT,
+      W_FIELDCATALOG   TYPE LVC_S_FCAT,
+      WA_LAYOUT        TYPE LVC_S_LAYO,
+      WA_STABLE        TYPE LVC_S_STBL,
+      WG_EDITOR        TYPE TY_EDITOR,
+      WA_CADORDEM      TYPE TY_CADORDEM,
+      WG_CADORDEM      TYPE TY_CADORDEM,
+
+      WA_ZLEST0155     TYPE TY_ZLEST0155,
+      WA_ZLEST0155COPY TYPE TY_ZLEST0155,
+      WA_ZLEST0156     TYPE TY_ZLEST0156,
+      WA_ZLEST0157     TYPE TY_ZLEST0157,
+      WA_ESTRA         TYPE TY_ESTRA,
+      WA_DOCS          TYPE TY_DOCS,
+      W_DOCS           TYPE TY_DOCS,
+
+      TG_FIELDS        TYPE TABLE OF TY_FIELDS   WITH HEADER LINE,
+
+      TG_EDITOR        TYPE TABLE OF TY_EDITOR,
+      TG_ESTRA         TYPE TABLE OF TY_ESTRA,
+      TG_DOCS          TYPE TABLE OF TY_DOCS,
+
+      IT_ZLEST0155     TYPE TABLE OF TY_ZLEST0155,
+      IT_ZLEST0155COPY TYPE TABLE OF TY_ZLEST0155,
+      IT_ZLEST0156     TYPE TABLE OF TY_ZLEST0156,
+      IT_ZLEST0157     TYPE TABLE OF TY_ZLEST0157,
+      IT_ESTRA         TYPE TABLE OF TY_ESTRA,
+      IT_DOCS          TYPE TABLE OF TY_DOCS,
+
+      TG_MSG_RET       TYPE TABLE OF ZFIWRS0002 WITH HEADER LINE.
+
+*&SPWIZARD: FUNCTION CODES FOR TABSTRIP 'TAB_STRIP_NF'
+CONSTANTS: BEGIN OF C_TAB_STRIP_IMP,
+             TAB1 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC1',
+             TAB2 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC2',
+             TAB3 LIKE SY-UCOMM VALUE 'TAB_STRIP_IMP_FC3',
+           END OF C_TAB_STRIP_IMP.
+*&SPWIZARD: DATA FOR TABSTRIP 'TAB_STRIP_NF'
+CONTROLS:  TAB_STRIP_IMP TYPE TABSTRIP.
+DATA:      BEGIN OF G_TAB_STRIP_IMP,
+             SUBSCREEN   LIKE SY-DYNNR,
+             PROG        LIKE SY-REPID VALUE 'ZLESR0118',
+             PRESSED_TAB LIKE SY-UCOMM VALUE C_TAB_STRIP_IMP-TAB1,
+           END OF G_TAB_STRIP_IMP.
+
+DATA:      OK_CODE          LIKE SY-UCOMM,
+           WG_MENSAGEM(30),
+           WG_ACAO(30),
+           VDT_APURACAO(1),
+           VMES_APURACAO(1),
+           VKOKRS           TYPE TKA02-KOKRS,
+           XCLASSE(1),
+           XMODIF(1),
+           VVALOR_ATE       TYPE ZLEST0157-VALOR_ATE.
+DATA  TXTEMP(10).
+DATA  TXTORD(15).
+DATA  TXTUSU(15).
+DATA  TXTVAL(15).
+
+CLASS:      LCL_ALV_TOOLBAR   DEFINITION DEFERRED.
+*            lcl_alv_toolbar2  definition deferred.
+*            LCL_ALV_TOOLBAR3  DEFINITION DEFERRED.
+*&--------------------------------------------------------------------&*
+*& Declaração de Objetos/Classes                                      &*
+*&--------------------------------------------------------------------&*
+DATA: G_CONTAINER          TYPE SCRFNAME VALUE 'CC_ORDENS',
+      G_CUSTOM_CONTAINER   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      CONTAINER_1          TYPE REF TO CL_GUI_CONTAINER,       "splitter conteiner 1
+      CONTAINER_2          TYPE REF TO CL_GUI_CONTAINER,       "splitter conteiner 2
+      SPLITTER             TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+      GRID1                TYPE REF TO CL_GUI_ALV_GRID,
+      GRID2                TYPE REF TO CL_GUI_ALV_GRID,
+      GRID3                TYPE REF TO CL_GUI_ALV_GRID,
+      OBG_TOOLBAR          TYPE REF TO LCL_ALV_TOOLBAR,
+      C_ALV_TOOLBARMANAGER TYPE REF TO CL_ALV_GRID_TOOLBAR_MANAGER,
+      G_CUSTOM_CONT_DESC   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      OBG_DESCBOX          TYPE REF TO CL_GUI_TEXTEDIT,
+      OBG_DOCKING          TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+
+      OBG_CONTEINER_ESTRA  TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      OBG_CONTEINER_DOCS   TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      G_CC_ESTRA           TYPE SCRFNAME VALUE 'CC_ESTRA',
+      G_CC_DOCS            TYPE SCRFNAME VALUE 'CC_DOCS',
+      WA_STYLE             TYPE LVC_S_STYL,
+      STYLE                TYPE LVC_T_STYL  WITH HEADER LINE,
+      STYLE2               TYPE LVC_T_STYL WITH HEADER LINE.
+
+* alrs
+*Declaration for toolbar buttons
+DATA : TY_TOOLBAR TYPE STB_BUTTON.
+*** TREE DE MENSAGENS.
+DATA NODE_ITAB LIKE NODE_STR OCCURS 0.
+DATA NODE LIKE NODE_STR.
+
+DATA CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+DATA SPLITTER_MSG TYPE REF TO CL_GUI_EASY_SPLITTER_CONTAINER.
+DATA RIGHT TYPE REF TO CL_GUI_CONTAINER.
+DATA LEFT  TYPE REF TO CL_GUI_CONTAINER.
+
+DATA EDITOR TYPE REF TO CL_GUI_TEXTEDIT.
+DATA TREE TYPE REF TO CL_GUI_SIMPLE_TREE.
+
+DATA BEHAVIOUR_LEFT TYPE REF TO CL_DRAGDROP.
+DATA BEHAVIOUR_RIGHT TYPE REF TO CL_DRAGDROP.
+
+DATA HANDLE_TREE TYPE I.
+DATA NUM_ROW TYPE I VALUE 0.
+
+*&--------------------------------------------------------------------&*
+*& Constantes                                                         &*
+*&--------------------------------------------------------------------&*
+CONSTANTS: C_0               TYPE C VALUE '0',
+           C_1               TYPE C VALUE '1',
+           C_2               TYPE C VALUE '2',
+           C_B               TYPE C VALUE 'B',
+           C_S               TYPE C VALUE 'S',
+           C_L               TYPE C VALUE 'L',
+           C_X               TYPE C VALUE 'X',
+           C_D               TYPE C VALUE 'D',
+           C_K               TYPE C VALUE 'K',
+           C_W               TYPE C VALUE 'W',
+           C_F               TYPE C VALUE 'F',
+           C_T               TYPE C VALUE 'T',
+           C_I               TYPE C VALUE 'I',
+           C_N               TYPE C VALUE 'N',
+           C_H               TYPE C VALUE 'H',
+           C_AG(2)           TYPE C VALUE 'AG',
+           C_NE(2)           TYPE C VALUE 'NE',
+           C_01(2)           TYPE C VALUE '01',
+           C_30(2)           TYPE C VALUE '30',
+           C_40(2)           TYPE C VALUE '40',
+           C_50(4)           TYPE C VALUE '0050',
+           C_76(2)           TYPE C VALUE '76',
+           C_71(2)           TYPE C VALUE '71',
+           C_72(2)           TYPE C VALUE '72',
+           C_BR(2)           TYPE C VALUE 'BR',
+           C_LF(2)           TYPE C VALUE 'LF',
+           C_LR(2)           TYPE C VALUE 'LR',
+           C_Z1(2)           TYPE C VALUE 'Z1',
+           C_ADD(3)          TYPE C VALUE 'ADD',
+           C_DEL(3)          TYPE C VALUE 'DEL',
+           C_DG1(3)          TYPE C VALUE 'DG1',
+           C_DG2(3)          TYPE C VALUE 'DG2',
+           C_DUMMY_HEADER(3) TYPE C VALUE '099',
+           C_DUMMY_ITENS(3)  TYPE C VALUE '098',
+           C_EXIT(4)         TYPE C VALUE 'EXIT',
+           C_ROOT(4)         TYPE C VALUE 'ROOT',
+           C_MINIMIZAR(4)    TYPE C VALUE '@K2@',
+           C_MAXIMIZAR(4)    TYPE C VALUE '@K1@',
+           C_BACK(4)         TYPE C VALUE 'BACK',
+           C_SAVE(4)         TYPE C VALUE 'SAVE',
+           C_DESAT(5)        TYPE C VALUE 'DESAT',
+           C_DMBTR(5)        TYPE C VALUE 'DMBTR',
+           C_REFRESH(7)      TYPE C VALUE 'REFRESH',
+           C_MODIF(5)        TYPE C VALUE 'MODIF',
+           C_CANCEL(6)       TYPE C VALUE 'CANCEL',
+           C_DELDOC(6)       TYPE C VALUE 'DELDOC',
+           C_DISPLA(6)       TYPE C VALUE 'DISPLA',
+           C_DCLICK(6)       TYPE C VALUE 'DCLICK',
+           C_SEARCH(6)       TYPE C VALUE 'SEARCH',
+           C_ATUALI(6)       TYPE C VALUE 'ATUALI',
+           C_ADD_MSG(7)      TYPE C VALUE 'ADD_MSG',
+           C_DEL_MSG(7)      TYPE C VALUE 'DEL_MSG',
+           C_CLOS_MSG(8)     TYPE C VALUE 'CLOS_MSG',
+           C_SAVE_MSG(8)     TYPE C VALUE 'SAVE_MSG',
+           C_SHOW_MSGRE(10)  TYPE C VALUE 'SHOW_MSGRE'.
+
+*ALRS
+*-----------------------------------------------------------------------
+* Classe
+*-----------------------------------------------------------------------
+CLASS LCL_EVENT_HANDLER DEFINITION.
+
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      ON_DOUBLE_CLICK FOR EVENT DOUBLE_CLICK OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW E_COLUMN.
+
+    CLASS-METHODS:
+      ON_CLICK2 FOR EVENT HOTSPOT_CLICK  OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID E_COLUMN_ID ES_ROW_NO.
+
+    CLASS-METHODS:
+      ON_CLICK FOR EVENT HOTSPOT_CLICK  OF CL_GUI_ALV_GRID
+        IMPORTING E_ROW_ID E_COLUMN_ID ES_ROW_NO.
+
+    CLASS-METHODS:
+      ON_DATA_CHANGED FOR EVENT DATA_CHANGED OF CL_GUI_ALV_GRID
+        IMPORTING ER_DATA_CHANGED E_ONF4 E_ONF4_BEFORE E_ONF4_AFTER E_UCOMM .
+
+    CLASS-METHODS:
+      ON_DATA_CHANGED_FINISHED FOR EVENT DATA_CHANGED_FINISHED OF CL_GUI_ALV_GRID
+        IMPORTING E_MODIFIED ET_GOOD_CELLS.
+
+
+ENDCLASS.                    "LCL_EVENT_HANDLER DEFINITION
+
+*---------------------------------------------------------------------*
+*       CLASS lcl_treeobject DEFINITION
+*---------------------------------------------------------------------*
+*       Definition of Data Container                                  *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAG_OBJECT DEFINITION.
+  PUBLIC SECTION.
+    DATA TEXT TYPE MTREESNODE-TEXT.
+ENDCLASS.                    "lcl_drag_object DEFINITION
+*---------------------------------------------------------------------*
+*       CLASS dragdrop_receiver DEFINITION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAGDROP_RECEIVER DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      NODE_DOUBLE_CLICK FOR EVENT NODE_DOUBLE_CLICK OF CL_GUI_SIMPLE_TREE
+        IMPORTING NODE_KEY.
+
+ENDCLASS.                    "lcl_dragdrop_receiver DEFINITION
+*---------------------------------------------------------------------*
+*       CLASS lcl_alv_toolbar DEFINITION
+*---------------------------------------------------------------------*
+*       ALV event handler
+*---------------------------------------------------------------------*
+CLASS LCL_ALV_TOOLBAR DEFINITION.
+  PUBLIC SECTION.
+*Constructor
+    METHODS: CONSTRUCTOR
+      IMPORTING IO_ALV_GRID TYPE REF TO CL_GUI_ALV_GRID,
+*Event for toolbar
+      ON_TOOLBAR FOR EVENT TOOLBAR OF CL_GUI_ALV_GRID
+        IMPORTING E_OBJECT,
+
+      HANDLE_USER_COMMAND FOR EVENT USER_COMMAND OF CL_GUI_ALV_GRID
+        IMPORTING E_UCOMM.
+ENDCLASS.                    "lcl_alv_toolbar DEFINITION
+
+*---------------------------------------------------------------------*
+*       CLASS lcl_alv_toolbar IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ALV event handler
+*---------------------------------------------------------------------*
+CLASS LCL_ALV_TOOLBAR IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   Create ALV toolbar manager instance
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+    DATA: WL_DESACTIVE.
+
+    IF WG_ACAO NE C_MODIF.
+      WL_DESACTIVE = 1.
+    ENDIF.
+
+    TY_TOOLBAR-ICON      =  ICON_INSERT_ROW.
+    TY_TOOLBAR-FUNCTION  =  C_ADD.
+    TY_TOOLBAR-DISABLED  = WL_DESACTIVE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+
+    TY_TOOLBAR-ICON      =  ICON_DELETE_ROW.
+    TY_TOOLBAR-FUNCTION  =  C_DEL.
+    TY_TOOLBAR-DISABLED  = WL_DESACTIVE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+    TY_TOOLBAR-BUTN_TYPE = 3.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+*   variable for Toolbar Button
+    TY_TOOLBAR-ICON      =  ICON_VIEW_CLOSE.
+    TY_TOOLBAR-FUNCTION  =  C_CLOS_MSG.
+    TY_TOOLBAR-DISABLED  = SPACE.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+**   Call reorganize method of toolbar manager to
+**   display the toolbar
+    CALL METHOD C_ALV_TOOLBARMANAGER->REORGANIZE
+      EXPORTING
+        IO_ALV_TOOLBAR = E_OBJECT.
+  ENDMETHOD.                    "on_toolbar
+  METHOD HANDLE_USER_COMMAND.
+
+
+  ENDMETHOD.                    "zm_handle_user_command
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS lcl_alv_toolbar IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ALV event handler
+*---------------------------------------------------------------------*
+
+"lcl_alv_toolbar IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS lcl_event_handler IMPLEMENTATION
+*---------------------------------------------------------------------*
+CLASS LCL_EVENT_HANDLER IMPLEMENTATION.
+* Método de  execução para Duplo-click
+  METHOD ON_DOUBLE_CLICK.
+    DATA: WL_ORDENS   LIKE LINE OF TG_ORDENS,
+          VFLG_ICO(1).
+
+    VVALOR_ATE = 0.
+    IF E_ROW GT 0.
+      CLEAR: WG_CADORDEM.
+      REFRESH TG_ESTRA.
+      REFRESH TG_DOCS.
+      READ TABLE TG_ORDENS INTO WL_ORDENS INDEX E_ROW.
+      IF WL_ORDENS-STATUS = ICON_ALERT.
+        MESSAGE TEXT-I01 TYPE 'I'.
+        CALL FUNCTION 'SAPGUI_SET_FUNCTIONCODE'
+          EXPORTING
+            FUNCTIONCODE           = '=ENT'
+          EXCEPTIONS
+            FUNCTION_NOT_SUPPORTED = 1
+            OTHERS                 = 2.
+        EXIT.
+        CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+          EXPORTING
+            IS_STABLE = WA_STABLE.
+        CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+          EXPORTING
+            IS_STABLE = WA_STABLE.
+      ENDIF.
+
+*      APPEND LINES OF IT_ZLEST0155 TO IT_ZLEST0155COPY.
+*      SORT IT_ZLEST0155COPY BY NR_ORDEM.
+*      READ TABLE TG_ORDENS[] INTO WL_ORDENS WITH KEY ORDEM = WL_ORDENS-ORDEM BINARY SEARCH.
+
+      WG_CADORDEM-EMPRESA   = WL_ORDENS-EMPRESA.
+      WG_CADORDEM-ORDEM     = WL_ORDENS-ORDEM.
+      WG_CADORDEM-ID_ORDEM  = WL_ORDENS-ID_ORDEM.
+      WG_CADORDEM-USUARIO   = WL_ORDENS-USNAME.
+      WG_CADORDEM-TOTAL     = WL_ORDENS-TOTAL.
+
+      CALL FUNCTION 'SAPGUI_SET_FUNCTIONCODE'
+        EXPORTING
+          FUNCTIONCODE           = '=ENT'
+        EXCEPTIONS
+          FUNCTION_NOT_SUPPORTED = 1
+          OTHERS                 = 2.
+
+      REFRESH TG_ESTRA.
+      LOOP AT IT_ESTRA INTO WA_ESTRA WHERE ORDEM = WL_ORDENS-ORDEM.
+        APPEND WA_ESTRA TO TG_ESTRA.
+      ENDLOOP.
+      REFRESH TG_DOCS.
+      LOOP AT IT_DOCS INTO WA_DOCS WHERE ORDEM = WL_ORDENS-ORDEM..
+        APPEND WA_DOCS TO TG_DOCS.
+      ENDLOOP.
+
+    ENDIF.
+    SORT TG_ESTRA BY NIVEL.
+    CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+    CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDMETHOD.                    "ON_DOUBLE_CLICK
+
+  METHOD ON_CLICK2.
+    DATA: WL_DOCS  LIKE LINE OF TG_DOCS,
+          VG_ORDEM TYPE ZLEST0155-VBELN.
+    IF E_ROW_ID GT 0.
+      IF E_COLUMN_ID = 'OV'.
+        CLEAR VG_ORDEM.
+        READ TABLE TG_DOCS INTO WL_DOCS INDEX E_ROW_ID.
+        VG_ORDEM = WL_DOCS-OV.
+        SET PARAMETER ID 'AUN' FIELD  VG_ORDEM.
+        CALL TRANSACTION 'VA03' AND SKIP FIRST SCREEN.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "ON_DOUBLE_CLICK2
+
+  METHOD ON_CLICK.
+    DATA:  V_MSG     TYPE CHAR50,
+           T_ORDENS  TYPE TABLE OF ZFRE_ORDENS_APROV,
+           W_ORDENS  TYPE          ZFRE_ORDENS_APROV,
+           WL_ESTRA  LIKE LINE OF TG_ESTRA,
+           T_ESTRA   TYPE TABLE OF ZFRE_ESTRATEGIA_ZGL,
+           W_ESTRA   TYPE          ZFRE_ESTRATEGIA_ZGL,
+           T_DOCS    TYPE TABLE OF ZFRE_DOCS_DETALHES,
+           W_DOCS    TYPE          ZFRE_DOCS_DETALHES,
+           WL_ORDENS LIKE LINE OF TG_ORDENS.
+
+
+    IF E_ROW_ID GT 0.
+      READ TABLE TG_ESTRA INTO WL_ESTRA INDEX E_ROW_ID.
+
+      READ TABLE TG_ORDENS INTO WL_ORDENS WITH KEY ORDEM = WL_ESTRA-ORDEM ID_ORDEM = WL_ESTRA-ID_ORDEM BINARY SEARCH.
+      MOVE-CORRESPONDING WL_ORDENS TO W_ORDENS.
+      APPEND W_ORDENS  TO T_ORDENS.
+
+      DELETE IT_ESTRA WHERE ORDEM = WL_ESTRA-ORDEM AND ID_ORDEM = WL_ESTRA-ID_ORDEM.
+      APPEND WL_ESTRA TO IT_ESTRA.
+      LOOP AT IT_ESTRA INTO WL_ESTRA WHERE ORDEM = WL_ORDENS-ORDEM AND ID_ORDEM = WL_ORDENS-ID_ORDEM.
+        MOVE-CORRESPONDING WL_ESTRA TO W_ESTRA.
+        APPEND W_ESTRA TO T_ESTRA.
+      ENDLOOP.
+
+      CALL FUNCTION 'Z_FRETE_ESTRATEGIA_EXECUTAR'
+        EXPORTING
+          V_USUARIO = SY-UNAME
+        IMPORTING
+          MSG       = V_MSG
+        TABLES
+          T_ORDENS  = T_ORDENS
+          T_ESTRA   = T_ESTRA.
+
+      LOOP AT T_ESTRA INTO W_ESTRA
+        WHERE APROVADOR EQ SY-UNAME.
+        MOVE: W_ESTRA-OPCOES TO WL_ESTRA-OPCOES,
+              W_ESTRA-ESTADO TO WL_ESTRA-ESTADO.
+        MODIFY TG_ESTRA FROM WL_ESTRA INDEX SY-TABIX TRANSPORTING OPCOES ESTADO.
+        "        ENDIF.
+      ENDLOOP.
+
+      CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+        EXPORTING
+          IS_STABLE = WA_STABLE.
+
+      MESSAGE S836(SD) DISPLAY LIKE 'S' WITH V_MSG.
+      PERFORM F_REFRESH.
+
+    ENDIF.
+  ENDMETHOD.                    "ON_CLICK
+
+  METHOD ON_DATA_CHANGED.
+
+  ENDMETHOD.                    "ON_DATA_CHANGED
+
+  METHOD ON_DATA_CHANGED_FINISHED.
+
+  ENDMETHOD.                    "on_data_changed_finisheD
+
+  "on_data_changed_finisheD
+ENDCLASS.                    "LCL_EVENT_HANDLER IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       CLASS DRAGDROP_RECEIVER IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS LCL_DRAGDROP_RECEIVER IMPLEMENTATION.
+  METHOD NODE_DOUBLE_CLICK.
+
+  ENDMETHOD.                    "drop_complete
+ENDCLASS.                    "lcl_dragdrop_receiver IMPLEMENTATION
+
+*ALRS fim
+*&---------------------------------------------------------------------*
+*&      Module  TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE TRATA_FIELDS OUTPUT.
+
+  LOOP AT TG_FIELDS.
+    LOOP AT SCREEN.
+      IF SCREEN-NAME EQ TG_FIELDS-CAMPO
+      OR SCREEN-GROUP1 EQ TG_FIELDS-GROUP1.
+        SCREEN-INPUT     = TG_FIELDS-VALUE.
+        SCREEN-INVISIBLE = TG_FIELDS-INVISIBLE.
+        MODIFY SCREEN.
+*        EXIT.
+      ENDIF.
+    ENDLOOP.
+  ENDLOOP.
+ENDMODULE.                 " TRATA_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0100 OUTPUT.
+  DATA: FCODE TYPE TABLE OF SY-UCOMM.
+
+  REFRESH: FCODE.
+  APPEND C_SAVE TO FCODE.
+  SET PF-STATUS 'Z001' EXCLUDING FCODE.
+  CALL METHOD CL_GUI_CFW=>DISPATCH.
+  SET TITLEBAR '0100'.
+
+ENDMODULE.                 " STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Module  CRIA_OBJETOS  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CRIA_OBJETOS OUTPUT.
+  DATA: EVENT       TYPE CNTL_SIMPLE_EVENT,
+        EVENTS      TYPE CNTL_SIMPLE_EVENTS,
+        TL_FILTER   TYPE LVC_T_FILT,
+        WL_FILTER   TYPE LVC_S_FILT,
+        TL_FUNCTION TYPE UI_FUNCTIONS,
+        WL_FUNCTION LIKE TL_FUNCTION WITH HEADER LINE.
+  DATA: WAREF      TYPE REF TO DATA.
+  IF G_CUSTOM_CONTAINER IS INITIAL.
+    TXTEMP = TEXT-L01.
+    TXTORD = TEXT-L02.
+    TXTUSU = TEXT-L03.
+    TXTVAL = TEXT-L04.
+    BTN_REJ = TEXT-B01.
+
+
+*    WA_LAYOUT-CWIDTH_OPT = C_X.
+    WA_LAYOUT-ZEBRA      = C_X.
+*    WA_LAYOUT-NO_TOOLBAR = C_X.
+*    WA_LAYOUT-SGL_CLK_HD = C_X.
+    WA_LAYOUT-NO_ROWMARK = C_X.
+*    WA_LAYOUT-COL_OPT    = C_X.
+    WA_STABLE-ROW        = C_X.
+    WA_LAYOUT-INFO_FNAME = 'COLOR'.
+
+    WA_LAYOUT-NO_TOOLBAR = C_X.
+    WA_LAYOUT-STYLEFNAME = 'STYLE2'.
+    WA_LAYOUT-GRID_TITLE = TEXT-T01 .
+
+    CREATE OBJECT G_CUSTOM_CONTAINER
+      EXPORTING
+        CONTAINER_NAME = G_CONTAINER.
+
+    CREATE OBJECT SPLITTER
+      EXPORTING
+        PARENT  = G_CUSTOM_CONTAINER
+        ROWS    = 2
+        COLUMNS = 1.
+
+    CALL METHOD SPLITTER->GET_CONTAINER
+      EXPORTING
+        ROW       = 1
+        COLUMN    = 1
+      RECEIVING
+        CONTAINER = CONTAINER_1.
+
+    CREATE OBJECT GRID1
+      EXPORTING
+        I_PARENT = CONTAINER_1.
+
+
+    PERFORM MONTAR_LAYOUT.
+
+*    CREATE OBJECT OBG_TOOLBAR
+*      EXPORTING
+*        IO_ALV_GRID = GRID1.
+*
+**      * Register event handler
+*    SET HANDLER OBG_TOOLBAR->ON_TOOLBAR FOR GRID1.
+*    SET HANDLER OBG_TOOLBAR->HANDLE_USER_COMMAND FOR GRID1.
+    REFRESH TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_CHECK.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_REFRESH.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+    CALL METHOD GRID1->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+        IS_LAYOUT            = WA_LAYOUT
+      CHANGING
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = TG_ORDENS[].
+
+    CALL METHOD GRID1->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD GRID1->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    SET HANDLER:
+              LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK FOR GRID1,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED_FINISHED FOR GRID1,
+              LCL_EVENT_HANDLER=>ON_DATA_CHANGED FOR GRID1.
+
+*    posiciona spliter na altura x
+    CALL METHOD SPLITTER->SET_ROW_HEIGHT
+      EXPORTING
+        ID     = 1
+        HEIGHT = 100.
+  ELSE.
+*    CALL METHOD GRID1->GET_FRONTEND_FIELDCATALOG
+*      IMPORTING
+*        ET_FIELDCATALOG = T_FIELDCATALOG[].
+*
+*    LOOP AT T_FIELDCATALOG INTO W_FIELDCATALOG.
+*
+*    ENDLOOP.
+*
+*    CALL METHOD GRID1->SET_FRONTEND_FIELDCATALOG
+*      EXPORTING
+*        IT_FIELDCATALOG = T_FIELDCATALOG[].
+    CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  "GRID2
+  IF OBG_CONTEINER_ESTRA IS INITIAL.
+    CREATE OBJECT OBG_CONTEINER_ESTRA
+      EXPORTING
+        CONTAINER_NAME = G_CC_ESTRA.
+
+
+    CREATE OBJECT GRID2
+      EXPORTING
+        I_PARENT = OBG_CONTEINER_ESTRA.
+
+
+    PERFORM MONTAR_LAYOUT_ESTRA.
+
+    REFRESH: TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+*    wa_layout-cwidth_opt = c_x.
+    WA_LAYOUT-NO_TOOLBAR = SPACE.
+*     WA_LAYOUT-COL_OPT    = C_X.
+    WA_LAYOUT-STYLEFNAME = 'STYLE2'.
+    WA_LAYOUT-GRID_TITLE = TEXT-T02 .
+    WA_LAYOUT-NO_TOOLBAR = C_X.
+    PERFORM MONTAR_LAYOUT_ESTRA.
+
+    CALL METHOD GRID2->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = WA_LAYOUT
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+      CHANGING
+        IT_FILTER            = TL_FILTER
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = TG_ESTRA[].
+
+    CALL METHOD GRID2->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    SET HANDLER:
+     LCL_EVENT_HANDLER=>ON_CLICK FOR GRID2.
+    "LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK2 FOR GRID2.
+  ELSE.
+    CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  "GRID3
+  IF OBG_CONTEINER_DOCS IS INITIAL.
+    CREATE OBJECT OBG_CONTEINER_DOCS
+      EXPORTING
+        CONTAINER_NAME = G_CC_DOCS.
+
+
+    CREATE OBJECT GRID3
+      EXPORTING
+        I_PARENT = OBG_CONTEINER_DOCS.
+
+
+    PERFORM MONTAR_LAYOUT_DOCS.
+
+    REFRESH: TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_DELETE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_INSERT_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_MOVE_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_PASTE_NEW_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_UNDO.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_APPEND_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_COPY_ROW.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+    WL_FUNCTION = CL_GUI_ALV_GRID=>MC_FC_LOC_CUT.
+    APPEND WL_FUNCTION TO TL_FUNCTION.
+
+*    wa_layout-cwidth_opt = c_x.
+    WA_LAYOUT-NO_TOOLBAR = SPACE.
+*     WA_LAYOUT-COL_OPT    = C_X.
+    WA_LAYOUT-STYLEFNAME = 'STYLE2'.
+    WA_LAYOUT-GRID_TITLE = TEXT-T03 .
+    WA_LAYOUT-NO_TOOLBAR = C_X.
+    PERFORM MONTAR_LAYOUT_DOCS.
+
+    CALL METHOD GRID3->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = WA_LAYOUT
+        IT_TOOLBAR_EXCLUDING = TL_FUNCTION
+      CHANGING
+        IT_FILTER            = TL_FILTER
+        IT_FIELDCATALOG      = T_FIELDCATALOG[]
+        IT_OUTTAB            = TG_DOCS[].
+
+    CALL METHOD GRID3->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+    SET HANDLER:
+                  LCL_EVENT_HANDLER=>ON_CLICK2 FOR GRID3.
+
+  ELSE.
+    PERFORM MONTAR_LAYOUT_DOCS.
+
+    CALL METHOD GRID3->SET_FRONTEND_FIELDCATALOG
+      EXPORTING
+        IT_FIELDCATALOG = T_FIELDCATALOG[].
+
+    CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+ENDMODULE.                 " CRIA_OBJETOS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Form  MONTAR_LAYOUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT .
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 'ZLEST0155'            'DT_MOD'           'TG_ORDENS' 'DT_MOD'           TEXT-A00        '11' 'C' ' ' ' ' ' ',
+        2 'ZLEST0155'            'NR_ORDEM'         'TG_ORDENS' 'ORDEM'            TEXT-A02        '15' 'C' ' ' ' ' ' ',
+        3 'ZLEST0155'            'KBETR'            'TG_ORDENS' 'KBETR'            TEXT-A19        '11' 'C' ' ' ' ' ' ',
+        4 'ZLEST0155'            'VLR_FRETE_NEG'    'TG_ORDENS' 'TOTAL'            TEXT-A20        '15' 'C' ' ' ' ' ' ',
+        5     ''                 ''                 'TG_ORDENS' 'USNAME'           TEXT-A06        '12' 'C' ' ' ' ' ' ',
+        6     ''                 ''                 'TG_ORDENS' 'FILIAL'           TEXT-A05        '35' 'C' ' ' ' ' ' '.
+
+ENDFORM.                    " MONTAR_LAYOUT
+*&---------------------------------------------------------------------*
+*&      Form  MONTAR_ESTRUTURA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM MONTAR_ESTRUTURA USING VALUE(P_COL_POS)       TYPE I
+                            VALUE(P_REF_TABNAME)   LIKE DD02D-TABNAME
+                            VALUE(P_REF_FIELDNAME) LIKE DD03D-FIELDNAME
+                            VALUE(P_TABNAME)       LIKE DD02D-TABNAME
+                            VALUE(P_FIELD)         LIKE DD03D-FIELDNAME
+                            P_SCRTEXT_L
+                            VALUE(P_OUTPUTLEN)
+                            VALUE(P_JUST)
+                            VALUE(P_EDIT)
+                            VALUE(P_SUM)
+                            VALUE(P_EMPHASIZE).
+
+  CLEAR W_FIELDCATALOG.
+  W_FIELDCATALOG-FIELDNAME     = P_FIELD.
+  W_FIELDCATALOG-TABNAME       = P_TABNAME.
+  W_FIELDCATALOG-REF_TABLE     = P_REF_TABNAME.
+  W_FIELDCATALOG-REF_FIELD     = P_REF_FIELDNAME.
+  W_FIELDCATALOG-KEY           = ' '.
+  W_FIELDCATALOG-EDIT          = P_EDIT.
+  W_FIELDCATALOG-JUST          = P_JUST.
+  W_FIELDCATALOG-DO_SUM        = P_SUM.
+
+  W_FIELDCATALOG-COL_POS         = P_COL_POS.
+  IF P_OUTPUTLEN IS NOT INITIAL.
+    W_FIELDCATALOG-OUTPUTLEN      = P_OUTPUTLEN.
+  ENDIF.
+  W_FIELDCATALOG-NO_OUT        = ' '.
+  W_FIELDCATALOG-REPTEXT       = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_S     = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_M     = P_SCRTEXT_L.
+  W_FIELDCATALOG-SCRTEXT_L     = P_SCRTEXT_L.
+  W_FIELDCATALOG-EMPHASIZE     = P_EMPHASIZE.
+
+  IF P_FIELD EQ 'OPCOES' OR P_FIELD EQ 'OV'. """"""""""""""""""""""""""""""""""""""""""""""HOTSPOT AQUI
+    W_FIELDCATALOG-HOTSPOT = C_X.
+  ENDIF.
+
+  APPEND W_FIELDCATALOG TO T_FIELDCATALOG.
+
+ENDFORM.                    " montar_estrutura
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_0100 INPUT.
+  DATA:   VFLG_ICO(1).
+
+  CASE OK-CODE.
+    WHEN C_REFRESH.
+      PERFORM F_REFRESH.
+    WHEN 'REJ'.
+      READ TABLE TG_ESTRA INTO WA_ESTRA WITH KEY  APROVADOR = SY-UNAME.
+      IF SY-SUBRC = 0.
+        BTN_REJ = TEXT-B01.
+        IF  WA_ESTRA-OPCOES = ICON_REJECT.
+          WA_ESTRA-OPCOES = ICON_SET_STATE.
+        ELSEIF  WA_ESTRA-OPCOES = ICON_SET_STATE.
+          WA_ESTRA-OPCOES = ICON_REJECT.
+        ENDIF.
+        MODIFY TG_ESTRA FROM WA_ESTRA INDEX SY-TABIX TRANSPORTING OPCOES.
+      ENDIF.
+  ENDCASE.
+
+  CASE SY-UCOMM.
+    WHEN C_REFRESH.
+      PERFORM F_REFRESH.
+    WHEN 'REJ'.
+      READ TABLE TG_ESTRA INTO WA_ESTRA WITH KEY  APROVADOR = SY-UNAME.
+      IF SY-SUBRC = 0.
+        BTN_REJ = TEXT-B01.
+        IF  WA_ESTRA-OPCOES = ICON_REJECT.
+          WA_ESTRA-OPCOES = ICON_SET_STATE.
+        ELSEIF  WA_ESTRA-OPCOES = ICON_SET_STATE.
+          WA_ESTRA-OPCOES = ICON_REJECT.
+        ENDIF.
+        MODIFY TG_ESTRA FROM WA_ESTRA INDEX SY-TABIX TRANSPORTING OPCOES.
+      ENDIF.
+  ENDCASE.
+ENDMODULE.                 " USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_EXIT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE USER_COMMAND_EXIT INPUT.
+  CASE OK-CODE.
+    WHEN C_CANCEL.
+      SET SCREEN 0.
+
+    WHEN C_EXIT.
+      LEAVE PROGRAM.
+  ENDCASE.
+
+  CASE SY-UCOMM.
+    WHEN 'CANCEL'.
+      SET SCREEN 0.
+    WHEN 'BACK' OR 'EXIT'.
+      LEAVE PROGRAM.
+  ENDCASE.
+
+ENDMODULE.                 " USER_COMMAND_EXIT  INPUT
+
+*&---------------------------------------------------------------------*
+*&      Form  F_ESTRA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+FORM F_ESTRA USING P_BUKRS P_ORDEM P_ID_ORDEM P_DEP_RESP P_TOTAL.
+*  DATA VHBKID TYPE ZGLT036-HBKID.
+*  DATA VZLSCH TYPE ZGLT036-ZLSCH.
+  REFRESH TG_ESTRA.
+  "Estratégia salva
+  REFRESH IT_ZLEST0157.
+  SELECT BUKRS ORDEM ID_ORDEM NIVEL APROVADOR VALOR_DE VALOR_ATE
+    FROM ZLEST0157
+    INTO TABLE IT_ZLEST0157
+    WHERE ORDEM  = P_ORDEM
+      AND ID_ORDEM = P_ID_ORDEM.
+
+*  CLEAR VHBKID.
+*  SELECT SINGLE ZGLT036~HBKID
+*    FROM ZGLT035
+*    INNER JOIN ZGLT036
+*    ON  ZGLT036~DOC_LCTO = ZGLT035~DOC_LCTO
+*    AND ZGLT036~HBKID NE SPACE
+*    INTO VHBKID
+*    WHERE ZGLT035~ORDEM EQ P_ORDEM.
+*
+*  CLEAR VZLSCH.
+*  SELECT SINGLE ZGLT036~ZLSCH
+*    FROM ZGLT035
+*    INNER JOIN ZGLT036
+*    ON  ZGLT036~DOC_LCTO = ZGLT035~DOC_LCTO
+*    AND ZGLT036~ZLSCH NE SPACE
+*    INTO VZLSCH
+*    WHERE ZGLT035~ORDEM EQ P_ORDEM.
+*
+*  CLEAR WA_ZLEST0155-PGT_FORN.
+*  IF VHBKID IS NOT INITIAL OR VZLSCH IS NOT INITIAL.
+*    WA_ZLEST0155-PGT_FORN = 'X'.
+*  ENDIF.
+
+  SORT IT_ZLEST0157 BY NIVEL APROVADOR.
+
+  SELECT  BUKRS BUKRS_ATE NIVEL APROVADOR VALOR_DE VALOR_ATE
+    FROM ZLEST0156
+    INTO CORRESPONDING FIELDS OF TABLE IT_ZLEST0156
+    WHERE BUKRS     LE P_BUKRS
+    AND   BUKRS_ATE GE P_BUKRS.
+
+  SORT IT_ZLEST0156 BY BUKRS BUKRS_ATE NIVEL.
+  VFLG_ICO = 'N'.
+  "CLEAR: VDEP_RESP, VPGT_FORN.
+  VVALOR_ATE = 0.
+  LOOP AT IT_ZLEST0156 INTO WA_ZLEST0156.
+    IF  WA_ZLEST0156-BUKRS_ATE IS INITIAL.
+      IF  WA_ZLEST0156-BUKRS NE P_BUKRS.
+        CONTINUE.
+      ENDIF.
+    ELSEIF WA_ZLEST0156-BUKRS     GT P_BUKRS OR
+           WA_ZLEST0156-BUKRS_ATE LT P_BUKRS.
+      CONTINUE.
+    ENDIF.
+*    IF P_DEP_RESP+0(2) = WA_ZLEST0156-DEP_RESP.
+*      IF P_TOTAL > VVALOR_ATE.
+*        VVALOR_ATE = WA_ZLEST0156-VALOR_ATE.
+*        VDEP_RESP = WA_ZLEST0156-DEP_RESP.
+*        VPGT_FORN = WA_ZLEST0156-PGT_FORN.
+*      ENDIF.
+*    ENDIF.
+  ENDLOOP.
+*  IF VDEP_RESP IS INITIAL.
+*   LOOP AT IT_ZLEST0156 INTO WA_ZLEST0156 WHERE PGT_FORN = WA_ZLEST0155-PGT_FORN.
+*      IF  WA_ZLEST0156-BUKRS_ATE IS INITIAL.
+*        IF  WA_ZLEST0156-BUKRS NE P_BUKRS.
+*          CONTINUE.
+*        ENDIF.
+*      ELSEIF WA_ZLEST0156-BUKRS     GT P_BUKRS OR
+*             WA_ZLEST0156-BUKRS_ATE LT P_BUKRS.
+*        CONTINUE.
+*      ENDIF.
+*      IF WA_ZLEST0156-DEP_RESP IS INITIAL.
+*        IF P_TOTAL > VVALOR_ATE.
+*          VVALOR_ATE = WA_ZLEST0156-VALOR_ATE.
+*          VDEP_RESP = WA_ZLEST0156-DEP_RESP.
+*          VPGT_FORN = WA_ZLEST0156-PGT_FORN.
+*        ENDIF.
+*      ENDIF.
+*    ENDLOOP.
+*  ENDIF.
+
+  LOOP AT IT_ZLEST0156 INTO WA_ZLEST0156.
+    IF  WA_ZLEST0156-BUKRS_ATE IS INITIAL.
+      IF  WA_ZLEST0156-BUKRS NE P_BUKRS.
+        CONTINUE.
+      ENDIF.
+    ELSEIF WA_ZLEST0156-BUKRS     GT P_BUKRS OR
+           WA_ZLEST0156-BUKRS_ATE LT P_BUKRS.
+      CONTINUE.
+    ENDIF.
+    IF WA_ZLEST0156-VALOR_ATE <= VVALOR_ATE.
+      WA_ESTRA-BUKRS        = P_BUKRS.
+      WA_ESTRA-ORDEM        = P_ORDEM.
+      WA_ESTRA-ID_ORDEM     = P_ID_ORDEM.
+      WA_ESTRA-VALOR_DE     = WA_ZLEST0156-VALOR_DE.
+      WA_ESTRA-VALOR_ATE    = WA_ZLEST0156-VALOR_ATE.
+      WA_ESTRA-APROVADOR    = WA_ZLEST0156-APROVADOR.
+      WA_ESTRA-NIVEL        = WA_ZLEST0156-NIVEL.
+
+      READ TABLE IT_ZLEST0157 INTO WA_ZLEST0157 WITH KEY NIVEL     = WA_ZLEST0156-NIVEL
+                                                     APROVADOR = WA_ZLEST0156-APROVADOR BINARY SEARCH.
+      IF SY-SUBRC = 0.
+        WA_ESTRA-ESTADO       = ICON_CHECKED .
+        WA_ESTRA-OPCOES       = ICON_SYSTEM_UNDO .
+        VFLG_ICO = 'N'.
+      ELSEIF VFLG_ICO = 'S'.
+        WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+        WA_ESTRA-OPCOES       = '' .
+      ELSE.
+        IF SY-UNAME NE WA_ZLEST0156-APROVADOR.
+          WA_ESTRA-ESTADO       =  ' '.
+          WA_ESTRA-OPCOES       = ICON_LED_YELLOW  .
+        ELSE.
+          WA_ESTRA-ESTADO       = ICON_LED_YELLOW .
+          WA_ESTRA-OPCOES       = ICON_SET_STATE  .
+        ENDIF.
+        VFLG_ICO = 'X'.
+      ENDIF.
+
+      APPEND WA_ESTRA TO TG_ESTRA.
+    ENDIF.
+  ENDLOOP.
+
+ENDFORM.                    "F_ESTRA
+*&---------------------------------------------------------------------*
+*&      Form  MONTAR_LAYOUT_ESTRA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT_ESTRA .
+  REFRESH T_FIELDCATALOG.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 'ZLEST0156'           'VALOR_DE'        'TG_ESTRA' 'VALOR_DE'         TEXT-A07      '15' 'C'  ' ' ' ' ' ',
+        1 'ZLEST0156'           'VALOR_ATE'       'TG_ESTRA' 'VALOR_ATE'        TEXT-A08      '15' 'C'  ' ' ' ' ' ',
+        1 'ZLEST0156'           'WAERS'           'TG_ESTRA' 'WAERS'            TEXT-A09      '05' 'C'  ' ' ' ' ' ',
+        1 'ZLEST0156'           'APROVADOR'       'TG_ESTRA' 'APROVADOR'        TEXT-A10      '13' 'C'  ' ' ' ' ' ',
+        1 ' '                        ' '          'TG_ESTRA' 'ESTADO'           TEXT-A11      '05' 'C'  ' ' ' ' ' ',
+        1 ' '                        ' '          'TG_ESTRA' 'OPCOES'           TEXT-A12      '08' 'C'  ' ' ' ' ' '.
+
+ENDFORM.                    " MONTAR_LAYOUT_ESTRA
+*&---------------------------------------------------------------------*
+*&      Form  MONTAR_LAYOUT_DOCS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM MONTAR_LAYOUT_DOCS .
+  REFRESH T_FIELDCATALOG.
+  CLEAR W_DOCS.
+  IF TG_DOCS[] IS NOT INITIAL.
+    READ TABLE TG_DOCS INTO W_DOCS INDEX 1.
+  ENDIF.
+  PERFORM MONTAR_ESTRUTURA USING:
+        1 'ZLEST0155'           'NR_ORDEM'        'TG_DOCS'   'ORDEM'           TEXT-A13         '12' 'C' ' ' ' ' ' ',
+        2 ''                    ''                'TG_DOCS'   'EMPRESA'         TEXT-A14         '32' 'C' ' ' ' ' ' ',
+        3 ''                    ''                'TG_DOCS'   'OV'              TEXT-A15         '11' 'C' ' ' ' ' ' ',
+        4 ''                    ''                'TG_DOCS'   'CLIENTE_OV'      TEXT-A16         '32' 'C' ' ' ' ' ' ',
+        5 ''                    ''                'TG_DOCS'   'PESO'            TEXT-A17         '09' 'C' ' ' ' ' ' ',
+        6 'ZLEST0155'           'ID_PRODUTO'      'TG_DOCS'   'PRODUTO'         TEXT-A18         '25' 'C' ' ' ' ' ' ',
+        7 'ZLEST0155'           'KBETR'           'TG_DOCS'   'VALOR'           TEXT-A19         '11' 'C' ' ' ' ' ' ',
+        8 'ZLEST0155'           'VLR_FRETE_NEG'   'TG_DOCS'   'VALOR_NEG'       TEXT-A20         '14' 'C' ' ' ' ' ' ',
+        9 'ZLEST0155'           'MOTIVO'          'TG_DOCS'   'MOTIVO'          TEXT-A21         '20' 'C' ' ' ' ' ' '.
+
+*  IF W_DOCS-BUKRS = '0201'.
+*    PERFORM MONTAR_ESTRUTURA USING:
+*      3 'ZGLT036'           'VLR_MOEDA_DOC'   'TG_DOCS'  'VLR_MOEDA_DOC'       TEXT-A18         '15' ' ' 'X' ' ',
+*      3 'ZGLT036'           'VLR_MOEDA_FORTE' 'TG_DOCS'  'VLR_MOEDA_FORTE'     TEXT-A15         '15' ' ' 'X' ' ',
+*      3 'ZGLT036'           'VLR_MOEDA_INT'   'TG_DOCS'  'VLR_MOEDA_INT'       TEXT-A14         '15' ' ' 'X' ' ',
+*      3 ' '                 ' '               'TG_DOCS'  'BELNR'               TEXT-A17         '15' ' ' ' ' ' '.
+*  ELSE.
+*    PERFORM MONTAR_ESTRUTURA USING:
+*        3 'ZGLT036'           'VLR_MOEDA_DOC'   'TG_DOCS'  'VLR_MOEDA_DOC'       TEXT-A18         '15' ' ' 'X' ' ',
+*        3 'ZGLT036'           'VLR_MOEDA_INT'   'TG_DOCS'  'VLR_MOEDA_INT'       TEXT-A14         '15' ' ' 'X' ' ',
+*        3 'ZGLT036'           'VLR_MOEDA_FORTE' 'TG_DOCS'  'VLR_MOEDA_FORTE'     TEXT-A15         '15' ' ' 'X' ' ',
+*        3 ' '                 ' '               'TG_DOCS'  'BELNR'               TEXT-A17         '15' ' ' ' ' ' '.
+*  ENDIF.
+
+ENDFORM.                    " MONTAR_LAYOUT_DOCS
+*&---------------------------------------------------------------------*
+*&      Module  CARREGA_ORDENS  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CARREGA_ORDENS OUTPUT.
+  DATA: XTOTAL  TYPE ZGLT036-VLR_MOEDA_INT,
+        XTOTALD TYPE ZGLT036-VLR_MOEDA_DOC.
+
+  IF G_CUSTOM_CONTAINER IS INITIAL.
+    PERFORM ATUALIZA_ORDENS.
+  ENDIF.
+
+
+ENDMODULE.                 " CARREGA_ORDENS  OUTPUT
+*&---------------------------------------------------------------------*
+*&      Form  dynp_values_update
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->US_REPID   text
+*      -->US_DYNNR   text
+*      -->US_FIELD   text
+*      -->US_VALUE   text
+*      -->CH_SUBRC   text
+*----------------------------------------------------------------------*
+FORM DYNP_VALUES_UPDATE USING US_REPID
+                              US_DYNNR
+                              US_FIELD
+                              US_VALUE
+                     CHANGING CH_SUBRC.
+
+  DATA: DA_DYNPFIELD_TAB LIKE DYNPREAD OCCURS 0 WITH HEADER LINE,
+        DA_STEPL         LIKE SY-STEPL,
+        DA_REPID         LIKE D020S-PROG,
+        DA_DYNNR         LIKE D020S-DNUM.
+
+  CH_SUBRC = 4.
+  REFRESH DA_DYNPFIELD_TAB.
+
+  MOVE US_REPID TO DA_REPID.
+  MOVE US_DYNNR TO DA_DYNNR.
+
+  GET CURSOR LINE DA_STEPL.
+
+  MOVE DA_STEPL TO DA_DYNPFIELD_TAB-STEPL.
+  MOVE US_FIELD TO DA_DYNPFIELD_TAB-FIELDNAME.
+  MOVE US_VALUE TO DA_DYNPFIELD_TAB-FIELDVALUE.
+  APPEND DA_DYNPFIELD_TAB.
+
+  CALL FUNCTION 'DYNP_VALUES_UPDATE'
+    EXPORTING
+      DYNAME               = DA_REPID
+      DYNUMB               = DA_DYNNR
+    TABLES
+      DYNPFIELDS           = DA_DYNPFIELD_TAB
+    EXCEPTIONS
+      INVALID_ABAPWORKAREA = 1
+      INVALID_DYNPROFIELD  = 2
+      INVALID_DYNPRONAME   = 3
+      INVALID_DYNPRONUMMER = 4
+      INVALID_REQUEST      = 5
+      NO_FIELDDESCRIPTION  = 6
+      UNDEFIND_ERROR       = 7
+      OTHERS               = 8.
+
+  IF SY-SUBRC EQ 0.
+    CH_SUBRC = 0.
+  ENDIF.
+
+ENDFORM.                    " DYNP_VALUES_UPDATE
+*&---------------------------------------------------------------------*
+*&      Form  Atualiza_ORDENS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM ATUALIZA_ORDENS .
+  DATA: V_MSG     TYPE CHAR50,
+        T_ORDENS  TYPE TABLE OF ZFRE_ORDENS_APROV,
+        W_ORDENS  TYPE          ZFRE_ORDENS_APROV,
+        T_ESTRA   TYPE TABLE OF ZFRE_ESTRATEGIA_ZGL,
+        W_ESTRA   TYPE          ZFRE_ESTRATEGIA_ZGL,
+        T_DOCS    TYPE TABLE OF ZFRE_DOCS_DETALHES,
+        W_DOCS    TYPE          ZFRE_DOCS_DETALHES,
+        VDATA(10),
+        TABIX     TYPE SY-TABIX.
+
+  CALL FUNCTION 'Z_FRETE_ESTRATEGIA_LISTA'
+    EXPORTING
+      V_USUARIO = SY-UNAME
+    IMPORTING
+      MSG       = V_MSG
+    TABLES
+      T_ORDENS  = T_ORDENS
+      T_ESTRA   = T_ESTRA
+      T_DOCS    = T_DOCS.
+  REFRESH: TG_ORDENS, IT_ESTRA, IT_DOCS.
+
+  LOOP AT T_ORDENS INTO W_ORDENS.
+    MOVE-CORRESPONDING W_ORDENS TO TG_ORDENS.
+    APPEND TG_ORDENS.
+  ENDLOOP.
+
+  LOOP AT T_ESTRA INTO W_ESTRA.
+    MOVE-CORRESPONDING W_ESTRA TO WA_ESTRA.
+    APPEND WA_ESTRA TO IT_ESTRA.
+  ENDLOOP.
+  SORT IT_ESTRA BY ORDEM NIVEL.
+
+  LOOP AT T_DOCS INTO W_DOCS.
+    MOVE-CORRESPONDING W_DOCS TO WA_DOCS.
+
+    APPEND WA_DOCS TO IT_DOCS.
+  ENDLOOP.
+  SORT IT_DOCS BY ORDEM .
+
+  IF G_CUSTOM_CONTAINER IS NOT  INITIAL.
+    CALL METHOD GRID1->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  IF OBG_CONTEINER_ESTRA IS NOT INITIAL.
+    CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  IF OBG_CONTEINER_DOCS IS NOT INITIAL.
+    CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+      EXPORTING
+        IS_STABLE = WA_STABLE.
+  ENDIF.
+
+
+ENDFORM.                    " Atualiza_ORDENS
+*&---------------------------------------------------------------------*
+*&      Form  GRAVA_ZIB
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+*FORM GRAVA_ZIB USING P_ORDEM.
+*  DATA: WL_SETLEAF TYPE SETLEAF,
+*        I_HEAD     TYPE TBTCJOB.
+*
+*  DATA:   WL_JOB_ID   LIKE TBTCJOB-JOBCOUNT.
+*  DATA:   WL_JOBN(32).
+*
+*  DATA: BEGIN OF I_STEPLIST OCCURS 10.
+*          INCLUDE STRUCTURE TBTCSTEP.
+*  DATA: END OF I_STEPLIST.
+*  DATA : C_NO(1) TYPE C . "value 'N', " Criação do job
+*
+*  DATA: WL_TBTCJOB  TYPE  TBTCJOB,
+*        WL_TBTCSTRT TYPE  TBTCSTRT.
+*
+*  DATA: LV_REPNAME LIKE  RSVAR-REPORT.           " for variant handling
+*  DATA: IV_VARNAME LIKE  RALDB-VARIANT VALUE 'SAP_UPGRADE'.
+*  DATA: IV_VARIANTTEXT  LIKE  VARIT-VTEXT VALUE 'Upgrade variant'.
+*  DATA: WL_SUBRC TYPE SY-SUBRC.
+*  DATA: TT_REPORTPARAM TYPE TABLE OF  RSPARAMS WITH HEADER LINE.
+*
+*  SELECT SINGLE *
+*   FROM SETLEAF
+*   INTO WL_SETLEAF
+*    WHERE SETNAME EQ 'MAGGI_JOB_USER'.
+*
+*  IF SY-SUBRC NE 0.
+*    MESSAGE TEXT-E01 TYPE 'E'.
+*    EXIT.
+*  ENDIF.
+*  CONCATENATE 'Z_GRAVA_ZIB_ZGL' SY-TCODE  INTO WL_JOBN SEPARATED BY '|'.
+*
+*  I_HEAD-JOBNAME = WL_JOBN. " Nome do JOBi_head-sdlstrtdt = sy-datum. " Dia
+*  I_HEAD-SDLSTRTTM = SY-UZEIT + 20. " Hora de inícioPassa para o Job o nome da Classe de Jobs da Tabela
+*  I_HEAD-STEPCOUNT = 1.
+*
+*  TT_REPORTPARAM-SELNAME = 'P_ORDEM'.
+*  TT_REPORTPARAM-KIND =  'P'.
+*  TT_REPORTPARAM-SIGN = 'I'.
+*  TT_REPORTPARAM-OPTION = 'EQ'.
+*  TT_REPORTPARAM-LOW = P_ORDEM.
+*  APPEND TT_REPORTPARAM.
+*  CLEAR TT_REPORTPARAM.
+*
+*  LV_REPNAME = 'Z_GRAVA_ZIB_ZGL'.
+**    Write the variant first (Insert or Update)
+*  CALL FUNCTION 'SUBST_WRITE_UPGRADE_VARIANT'
+*    EXPORTING
+*      IV_REPORTNAME         = LV_REPNAME
+*      IV_VARIANTNAME        = IV_VARNAME
+*      IV_VARIANTTEXT        = IV_VARIANTTEXT
+*    IMPORTING
+*      EV_FUNCRC             = WL_SUBRC
+*    TABLES
+*      TT_REPORTPARAM        = TT_REPORTPARAM
+*    EXCEPTIONS
+*      EXIST_CHECK_FAILED    = 1
+*      UPDATE_FAILED         = 2
+*      UPDATE_NOT_AUTHORIZED = 3
+*      UPDATE_NO_REPORT      = 4
+*      UPDATE_NO_VARIANT     = 5
+*      UPDATE_VARIANT_LOCKED = 6
+*      INSERT_FAILED         = 7
+*      INSERT_NOT_AUTHORIZED = 8
+*      INSERT_NO_REPORT      = 9
+*      INSERT_VARIANT_EXISTS = 10
+*      INSERT_VARIANT_LOCKED = 11
+*      OTHERS                = 12.
+*
+*  I_STEPLIST-PARAMETER = IV_VARNAME. " Nome da variante
+*  I_STEPLIST-PROGRAM = 'Z_GRAVA_ZIB_ZGL'. " Nome do programa de INBOUNDPassa para o Job o nome da Classe de Jobs da Tabela ZTUP_SERVIDOR
+*  I_STEPLIST-TYP = 'A'. " Tipo de Job
+*  I_STEPLIST-AUTHCKNAM = WL_SETLEAF-VALFROM.
+*  I_STEPLIST-LANGUAGE = SY-LANGU.
+*  I_STEPLIST-ARCUSER = WL_SETLEAF-VALFROM.
+*
+*  APPEND I_STEPLIST.
+*
+*
+*  C_NO = 'N'.
+*  CALL FUNCTION 'BP_JOB_CREATE'
+*    EXPORTING
+*      JOB_CR_DIALOG       = C_NO " Coloque 'Y' se quiser ver
+*      JOB_CR_HEAD_INP     = I_HEAD " os valores atribuidos
+*    IMPORTING
+*      JOB_CR_HEAD_OUT     = WL_TBTCJOB
+*      JOB_CR_STDT_OUT     = WL_TBTCSTRT
+*    TABLES
+*      JOB_CR_STEPLIST     = I_STEPLIST
+*    EXCEPTIONS
+*      CANT_CREATE_JOB     = 1
+*      INVALID_DIALOG_TYPE = 2
+*      INVALID_JOB_DATA    = 3
+*      JOB_CREATE_CANCELED = 4
+*      OTHERS              = 5.
+*
+*  CALL FUNCTION 'JOB_CLOSE'
+*    EXPORTING
+*      JOBNAME   = WL_JOBN
+*      JOBCOUNT  = WL_TBTCJOB-JOBCOUNT
+*      STRTIMMED = 'X'.
+*
+*ENDFORM.                    " GRAVA_ZIB
+**&---------------------------------------------------------------------*
+**&      Form  ENvia_email_Fim
+**&---------------------------------------------------------------------*
+**       text
+**----------------------------------------------------------------------*
+*FORM ENVIA_EMAIL_FIM.
+*
+*  FIELD-SYMBOLS: <FS_SOLIX> TYPE SOLIX.
+*
+** Objetos para enviar email
+*  DATA: OBJPACK     LIKE SOPCKLSTI1 OCCURS  2 WITH HEADER LINE.
+*  DATA: OBJHEAD     LIKE SOLISTI1   OCCURS  1 WITH HEADER LINE.
+*  DATA: OBJBIN_ORD  LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: OBJBIN_LOG  LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: OBJBIN_ANN  TYPE SOLISTI1.
+*  DATA: OBJBIN    LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE,
+*        OBJBIN1   TYPE SOLI_TAB, "   OCCURS 10 WITH HEADER LINE.
+*        WA_OBJBIN LIKE LINE OF OBJBIN.
+*  DATA: CONTENT_HEX TYPE STANDARD TABLE OF SOLIX WITH HEADER LINE.
+*  DATA: OBJTXT      LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: RECLIST     LIKE SOMLRECI1  OCCURS  5 WITH HEADER LINE.
+*  DATA: DOC_CHNG    LIKE SODOCCHGI1.
+*  DATA: TAB_LINES   LIKE SY-TABIX.
+*  DATA: L_ANEX      TYPE STRING.
+*  DATA: L_LENG      TYPE I.
+*  DATA: L_ARQ       TYPE STRING.
+*  DATA: L_TAM       TYPE I.
+*  DATA: L_TAM_ORD   TYPE I.
+*  DATA: L_TAM_LOG   TYPE I.
+*  DATA: L_EMAIL(300) TYPE C.
+*  DATA: VLINHA      TYPE I.
+*  DATA: VUSER         TYPE SY-UNAME,
+*        VFLAG_MAIL(1).
+*
+*  DATA:      CTOTAL(20),
+*             VDATA(10),
+*             VBUKRS TYPE ZLEST0155-ID_BUKRS.
+*
+*  DATA: IT_SHORTCUT_PARAM LIKE ZST_SHORTCUT_PAR OCCURS 0 WITH HEADER LINE.
+*  DATA: CONTENT TYPE STRING.
+*
+**  ** Pass the required parameters and create the shortcut
+*  CLEAR IT_SHORTCUT_PARAM.
+*  REFRESH IT_SHORTCUT_PARAM.
+*
+*  "VBUKRS = WG_CADORDEM-EMPRESA+0(4).
+*
+*
+*  READ TABLE IT_ZLEST0155 INTO WA_ZLEST0155 WITH KEY NR_ORDEM = WA_ESTRA-ORDEM BINARY SEARCH.
+***
+**** Criação do documento de Email
+***  DOC_CHNG-OBJ_NAME = 'LOG_REL'.
+***
+**** Assunto do Email
+***  CONCATENATE TEXT-M01  WG_CADORDEM-EMPRESA INTO DOC_CHNG-OBJ_DESCR SEPARATED BY SPACE .
+***
+**** Texto
+***  OBJTXT-LINE = TEXT-M02.
+***  APPEND OBJTXT.
+***  CLEAR OBJTXT.
+***  APPEND OBJTXT.
+***
+***  OBJTXT-LINE = TEXT-M03.
+***  APPEND OBJTXT.
+***  CLEAR OBJTXT.
+***
+***  OBJTXT-LINE = '--------------------------------------------------------------------------------------------------------------' .
+***  APPEND OBJTXT.
+***  CLEAR OBJTXT.
+***
+***  WRITE WG_CADORDEM-TOTAL TO CTOTAL CURRENCY 'USD'.
+***
+***  CONDENSE CTOTAL NO-GAPS.
+***  CONCATENATE TEXT-A01  WG_CADORDEM-EMPRESA '' TEXT-A02 WG_CADORDEM-ORDEM ' R$' CTOTAL  INTO OBJTXT SEPARATED BY SPACE.
+***  APPEND OBJTXT.
+***  CLEAR OBJTXT.
+***
+**** Setar tamanho da mensagem
+***  DESCRIBE TABLE OBJTXT LINES TAB_LINES.
+***  READ TABLE OBJTXT INDEX TAB_LINES.
+***  DOC_CHNG-DOC_SIZE = ( TAB_LINES - 1 ) * 255 + STRLEN( OBJTXT ).
+*
+** Criar entrada de documento comprimido
+*  CLEAR OBJPACK-TRANSF_BIN.
+*  "OBJPACK-TRANSF_BIN = 'X'.
+*  OBJPACK-HEAD_START = 1.
+*  OBJPACK-HEAD_NUM   = 0.
+*  OBJPACK-BODY_START = 1.
+*  OBJPACK-BODY_NUM   = TAB_LINES.
+*  OBJPACK-DOC_TYPE   = 'RAW'.
+*  APPEND OBJPACK.
+*
+*  IT_SHORTCUT_PARAM-FIELDNAME = 'P_BUKRS'.
+*  IT_SHORTCUT_PARAM-FIELDVALUE = WG_CADORDEM-EMPRESA+0(4).
+*  APPEND IT_SHORTCUT_PARAM.
+*
+*  IT_SHORTCUT_PARAM-FIELDNAME = 'P_ORDEM-LOW'.
+*  IT_SHORTCUT_PARAM-FIELDVALUE = WG_CADORDEM-ORDEM+0(10).
+*  APPEND IT_SHORTCUT_PARAM.
+*
+*  CALL FUNCTION 'ZFM_CREATE_SHORTCUT'
+*    EXPORTING
+*      RECIPIENT_USER_ID = IT_MAIL-USUARIO
+*      TRANSACTION       = 'ZGL017'
+*    IMPORTING
+*      CONTENT           = CONTENT
+*    TABLES
+*      SHORTCUT_PARAM    = IT_SHORTCUT_PARAM.
+*
+*  CLEAR : TAB_LINES, OBJBIN.
+*  CONCATENATE CONTENT WA_OBJBIN-LINE INTO WA_OBJBIN-LINE.
+*  APPEND  WA_OBJBIN TO OBJBIN.
+*
+*  DESCRIBE TABLE OBJBIN LINES TAB_LINES.
+*  OBJHEAD = 'GUIAS.SAP'.
+*  APPEND OBJHEAD.
+*
+*** Creation of the entry for the compressed attachment
+*  OBJPACK-TRANSF_BIN = 'X'.
+*  OBJPACK-HEAD_START = 1.
+*  OBJPACK-HEAD_NUM   = 1.
+*  OBJPACK-BODY_START = 1.
+*  OBJPACK-BODY_NUM   = TAB_LINES.
+*  OBJPACK-DOC_TYPE   = 'EXT'." SAP
+*  OBJPACK-OBJ_NAME   = 'SAPSHORTCUTMAIL'.
+*  OBJPACK-OBJ_DESCR  = 'GUIAS.SAP'.
+*  OBJPACK-DOC_SIZE   = TAB_LINES * 255.
+*  APPEND OBJPACK.
+*
+*
+*ENDFORM.                    "ENvia_email_Fim
+*&---------------------------------------------------------------------*
+*&      Form  ENVIA_EMAIL
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+*FORM ENVIA_EMAIL TABLES TG_ESTRA USING VALUE(WG_CADORDEM) TYPE TY_CADORDEM PLINHA  .
+*
+*  FIELD-SYMBOLS: <FS_SOLIX> TYPE SOLIX.
+*
+** Objetos para enviar email
+*  DATA: OBJPACK     LIKE SOPCKLSTI1 OCCURS  2 WITH HEADER LINE.
+*  DATA: OBJHEAD     LIKE SOLISTI1   OCCURS  1 WITH HEADER LINE.
+*  DATA: OBJBIN_ORD  LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: OBJBIN_LOG  LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: OBJBIN_ANN  TYPE SOLISTI1.
+*  DATA: OBJBIN    LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE,
+*        OBJBIN1   TYPE SOLI_TAB, "   OCCURS 10 WITH HEADER LINE.
+*        WA_OBJBIN LIKE LINE OF OBJBIN.
+*  DATA: CONTENT_HEX TYPE STANDARD TABLE OF SOLIX WITH HEADER LINE.
+*  DATA: OBJTXT      LIKE SOLISTI1   OCCURS 10 WITH HEADER LINE.
+*  DATA: RECLIST     LIKE SOMLRECI1  OCCURS  5 WITH HEADER LINE.
+*  DATA: DOC_CHNG    LIKE SODOCCHGI1.
+*  DATA: TAB_LINES   LIKE SY-TABIX.
+*  DATA: L_ANEX      TYPE STRING.
+*  DATA: L_LENG      TYPE I.
+*  DATA: L_ARQ       TYPE STRING.
+*  DATA: L_TAM       TYPE I.
+*  DATA: L_TAM_ORD   TYPE I.
+*  DATA: L_TAM_LOG   TYPE I.
+*  DATA: L_EMAIL(300) TYPE C.
+*  DATA: VLINHA      TYPE I.
+*  DATA: VUSER       TYPE SY-UNAME.
+*  DATA: IT_SHORTCUT_PARAM LIKE ZST_SHORTCUT_PAR OCCURS 0 WITH HEADER LINE.
+*  DATA: CONTENT TYPE STRING.
+*
+**  ** Pass the required parameters and create the shortcut
+*  CLEAR IT_SHORTCUT_PARAM.
+*  REFRESH IT_SHORTCUT_PARAM.
+*
+*  VLINHA = PLINHA.
+*  ADD 1 TO VLINHA.
+*
+*  READ TABLE TG_ESTRA INTO WA_ESTRA INDEX VLINHA .
+*
+*  DATA: BSMTP_ADDR TYPE ADR6-SMTP_ADDR.
+*
+*  SELECT SINGLE ADR6~SMTP_ADDR INTO BSMTP_ADDR
+*    FROM USR21
+*      INNER JOIN ADR6
+*         ON  USR21~ADDRNUMBER = ADR6~ADDRNUMBER
+*        AND USR21~PERSNUMBER = ADR6~PERSNUMBER
+*            WHERE USR21~BNAME = WA_ESTRA-APROVADOR.
+*
+** Criação do documento de Email
+*  DOC_CHNG-OBJ_NAME = 'LOG_ESTRA'.
+*
+** Assunto do Email
+*  DOC_CHNG-OBJ_DESCR = TEXT-M08 .
+*
+** Texto
+*  OBJTXT-LINE = TEXT-M05 .
+*  APPEND OBJTXT.
+*  CLEAR OBJTXT.
+*  APPEND OBJTXT.
+*
+*  OBJTXT-LINE = TEXT-M06 .
+*  APPEND OBJTXT.
+*  CLEAR OBJTXT.
+*
+*  OBJTXT-LINE = '-------------------------------------------------------------------------------------------------------' .
+*  APPEND OBJTXT.
+*  CLEAR OBJTXT.
+*
+*  DATA: CTOTAL(20),
+*        CTOTALF(20),
+*        VDATA(10),
+*        VWAERS      TYPE T005-WAERS,
+*        VL_FORTE    TYPE ZGLT036-VLR_MOEDA_FORTE.
+*
+*  READ TABLE IT_ZLEST0155 INTO WA_ZLEST0155 WITH KEY ORDEM = WA_ESTRA-ORDEM BINARY SEARCH.
+*
+**  "Valor em Interno
+**  SELECT SUM( ZGLT036~VLR_MOEDA_INT )
+**    INTO WG_CADORDEM-TOTAL
+**    FROM ZGLT035
+**    INNER JOIN ZGLT036
+**    ON ZGLT035~DOC_LCTO = ZGLT036~DOC_LCTO
+**    WHERE ZGLT035~ORDEM = WA_ESTRA-ORDEM.
+*
+**  WG_CADORDEM-TOTAL = WG_CADORDEM-TOTAL / 2.
+*
+*  WRITE WG_CADORDEM-TOTAL TO CTOTAL CURRENCY 'USD'.
+*
+*  SELECT SINGLE T005~WAERS
+*    INTO VWAERS
+*    FROM T001
+*    INNER JOIN T005
+*    ON T005~LAND1 = T001~LAND1
+*    WHERE T001~BUKRS = WG_CADORDEM-EMPRESA+0(4).
+*
+*  CONDENSE CTOTAL NO-GAPS.
+*  CONCATENATE TEXT-A01  WG_CADORDEM-EMPRESA TEXT-A02 WG_CADORDEM-ORDEM VWAERS CTOTAL TEXT-M07  VDATA INTO OBJTXT SEPARATED BY SPACE.
+*  APPEND OBJTXT.
+*  CLEAR OBJTXT.
+*
+**  IF VWAERS NE 'USD'.
+**    "Valor em dolar
+**    SELECT SUM( ZGLT036~VLR_MOEDA_FORTE )
+**      INTO VL_FORTE
+**      FROM ZGLT035
+**      INNER JOIN ZGLT036
+**      ON ZGLT035~DOC_LCTO = ZGLT036~DOC_LCTO
+**      WHERE ZGLT035~ORDEM = WA_ESTRA-ORDEM.
+**
+**    VL_FORTE = VL_FORTE / 2.
+**    WRITE VL_FORTE TO CTOTALF CURRENCY 'USD'.
+**    CONDENSE CTOTALF NO-GAPS.
+**    CONCATENATE TEXT-A01  WG_CADORDEM-EMPRESA TEXT-A02 WG_CADORDEM-ORDEM 'USD' CTOTALF TEXT-M07  VDATA INTO OBJTXT SEPARATED BY SPACE.
+**    APPEND OBJTXT.
+**    CLEAR OBJTXT.
+**  ENDIF.
+*
+** Setar tamanho da mensagem
+*  DESCRIBE TABLE OBJTXT LINES TAB_LINES.
+*  READ TABLE OBJTXT INDEX TAB_LINES.
+*  DOC_CHNG-DOC_SIZE = ( TAB_LINES - 1 ) * 255 + STRLEN( OBJTXT ).
+*
+** Criar entrada de documento comprimido
+*  CLEAR OBJPACK-TRANSF_BIN.
+*  "OBJPACK-TRANSF_BIN = 'X'.
+*  OBJPACK-HEAD_START = 1.
+*  OBJPACK-HEAD_NUM   = 0.
+*  OBJPACK-BODY_START = 1.
+*  OBJPACK-BODY_NUM   = TAB_LINES.
+*  OBJPACK-DOC_TYPE   = 'RAW'.
+*  APPEND OBJPACK.
+*
+*  CALL FUNCTION 'ZFM_CREATE_SHORTCUT'
+*    EXPORTING
+*      RECIPIENT_USER_ID = WA_ESTRA-APROVADOR
+*      TRANSACTION       = 'ZGL019'
+*    IMPORTING
+*      CONTENT           = CONTENT
+*    TABLES
+*      SHORTCUT_PARAM    = IT_SHORTCUT_PARAM.
+*
+*  CLEAR : TAB_LINES, OBJBIN.
+*  CONCATENATE CONTENT WA_OBJBIN-LINE INTO WA_OBJBIN-LINE.
+*  APPEND  WA_OBJBIN TO OBJBIN.
+*
+*  DESCRIBE TABLE OBJBIN LINES TAB_LINES.
+*  OBJHEAD = 'ESTRATEGIA.SAP'.
+*  APPEND OBJHEAD.
+*
+*** Creation of the entry for the compressed attachment
+*  OBJPACK-TRANSF_BIN = 'X'.
+*  OBJPACK-HEAD_START = 1.
+*  OBJPACK-HEAD_NUM   = 1.
+*  OBJPACK-BODY_START = 1.
+*  OBJPACK-BODY_NUM   = TAB_LINES.
+*  OBJPACK-DOC_TYPE   = 'EXT'." SAP
+*  OBJPACK-OBJ_NAME   = 'SAPSHORTCUTMAIL'.
+*  OBJPACK-OBJ_DESCR  = 'ESTRATEGIA.SAP'.
+*  OBJPACK-DOC_SIZE   = TAB_LINES * 255.
+*  APPEND OBJPACK.
+*
+** Alimentar destinatários do email
+*  IF BSMTP_ADDR IS INITIAL.
+*    MESSAGE TEXT-I02 TYPE 'I'.
+*    EXIT.
+*  ENDIF.
+*
+*  RECLIST-RECEIVER = BSMTP_ADDR.
+*  RECLIST-REC_TYPE = 'U'.                    "Define email externo
+*  APPEND RECLIST.
+*
+** Enviar email
+*  VUSER = SY-UNAME.
+*  SY-UNAME = 'R3JOB'.
+*  CALL FUNCTION 'SO_NEW_DOCUMENT_ATT_SEND_API1'
+*    EXPORTING
+*      DOCUMENT_DATA              = DOC_CHNG
+*      PUT_IN_OUTBOX              = 'X'
+*      COMMIT_WORK                = 'X'
+*    TABLES
+*      PACKING_LIST               = OBJPACK
+*      OBJECT_HEADER              = OBJHEAD
+*      CONTENTS_BIN               = OBJBIN
+*      CONTENTS_TXT               = OBJTXT      "CONTENTS_HEX = CONTENT_HEX
+*      RECEIVERS                  = RECLIST
+*    EXCEPTIONS
+*      TOO_MANY_RECEIVERS         = 1
+*      DOCUMENT_NOT_SENT          = 2
+*      OPERATION_NO_AUTHORIZATION = 4
+*      OTHERS                     = 99.
+*
+*  SY-UNAME = VUSER.
+**  CASE sy-subrc.
+**    WHEN 0.
+**      WRITE: / 'Result of the send process:'.
+**
+**      LOOP AT reclist.
+**        WRITE: / reclist-receiver(48), ':'.
+**
+**        IF reclist-retrn_code = 0.
+**          WRITE 'The document was sent'.
+**        ELSE.
+**          WRITE 'The document could not be sent'.
+**        ENDIF.
+**
+**      ENDLOOP.
+**
+**    WHEN 1.
+**      WRITE: / 'No authorization for sending to the specified number',
+**               'of recipients'.
+**
+**    WHEN 2.
+**      WRITE: / 'Document could not be sent to any recipient'.
+**
+**    WHEN 4.
+**      WRITE: / 'No send authorization'.
+**
+**    WHEN OTHERS.
+**      WRITE: / 'Error occurred while sending'.
+**
+**  ENDCASE.
+*
+*
+**ENDFORM.                    " ENVIA_EMAIL
+*&---------------------------------------------------------------------*
+*&      Form  F_REFRESH
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_REFRESH .
+
+  PERFORM ATUALIZA_ORDENS.
+  REFRESH TG_ESTRA.
+  LOOP AT IT_ESTRA INTO WA_ESTRA WHERE ORDEM = WG_CADORDEM-ORDEM+0(10) AND ID_ORDEM = WG_CADORDEM-ID_ORDEM+0(10).
+    APPEND WA_ESTRA TO TG_ESTRA.
+  ENDLOOP.
+
+  REFRESH TG_DOCS.
+  LOOP AT IT_DOCS INTO WA_DOCS WHERE ORDEM = WG_CADORDEM-ORDEM+0(10)  AND ID_ORDEM = WG_CADORDEM-ID_ORDEM+0(10).
+    APPEND WA_DOCS TO TG_DOCS.
+  ENDLOOP.
+
+  SORT TG_ESTRA BY NIVEL.
+
+  CALL METHOD GRID2->REFRESH_TABLE_DISPLAY
+    EXPORTING
+      IS_STABLE = WA_STABLE.
+
+  CALL METHOD GRID3->REFRESH_TABLE_DISPLAY
+    EXPORTING
+      IS_STABLE = WA_STABLE.
+ENDFORM.                    " F_REFRESH

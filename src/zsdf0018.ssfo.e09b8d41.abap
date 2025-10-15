@@ -1,0 +1,26 @@
+IF WA_LOTE_CREDITO-VALOR_CAD IS NOT INITIAL.
+V_VALOR_CAD_CREDITO = WA_LOTE_CREDITO-VALOR_CAD.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,406 @@
+FUNCTION Z_FI_GL_PARTIDAS.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_CONTAS) TYPE  ZCT_EMP_CONTAS OPTIONAL
+*"  TABLES
+*"      IT_BKPF STRUCTURE  BKPF
+*"      IT_PARTIDAS STRUCTURE  ZDE_FI_GL_PARTIDAS_CLI_FOR
+*"----------------------------------------------------------------------
+
+  DATA: IT_BSIK     TYPE TABLE OF BSIK WITH HEADER LINE, "Partidas em Aberto de Forncedor
+        IT_BSAK     TYPE TABLE OF BSAK WITH HEADER LINE, "Partidas Fechadas de Forncedor
+        IT_BSID     TYPE TABLE OF BSID WITH HEADER LINE, "Partidas em Aberto de Cliente
+        IT_BSAD     TYPE TABLE OF BSAD WITH HEADER LINE, "Partidas em Aberto de Cliente
+        IT_BSIS     TYPE TABLE OF BSIS WITH HEADER LINE, "Partidas em Aberto de Cliente
+        IT_BSAS     TYPE TABLE OF BSAS WITH HEADER LINE, "Partidas em Aberto de Cliente
+        WA_PARTIDAS TYPE ZDE_FI_GL_PARTIDAS_CLI_FOR.
+
+  CLEAR IT_PARTIDAS.
+
+  CHECK IT_BKPF[] IS NOT INITIAL.
+
+  IF I_CONTAS IS INITIAL.
+    "Partidas em Aberto de Forncedor """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    SELECT BUKRS LIFNR UMSKS UMSKZ AUGDT AUGBL ZUONR
+           GJAHR BELNR BUZEI BUDAT BLDAT CPUDT WAERS
+           XBLNR BLART MONAT BSCHL ZUMSK SHKZG GSBER
+           MWSKZ DMBTR WRBTR MWSTS WMWST SAKNR HKONT
+           ZFBDT ZTERM ZLSCH ZLSPR VBUND DMBE2 DMBE3
+           KIDNO BUPLA AUGGJ
+      INTO CORRESPONDING FIELDS OF TABLE IT_BSIK
+      FROM BSIK
+       FOR ALL ENTRIES IN IT_BKPF
+     WHERE BUKRS EQ IT_BKPF-BUKRS
+       AND BELNR EQ IT_BKPF-BELNR
+       AND GJAHR EQ IT_BKPF-GJAHR.
+    "Partidas em Aberto de Forncedor """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT IT_BSIK.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSIK-BUKRS.
+      WA_PARTIDAS-PARTYP = 'V'.
+      WA_PARTIDAS-PARID  = IT_BSIK-LIFNR.
+      WA_PARTIDAS-UMSKS  = IT_BSIK-UMSKS.
+      WA_PARTIDAS-UMSKZ  = IT_BSIK-UMSKZ.
+      WA_PARTIDAS-AUGDT  = IT_BSIK-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSIK-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSIK-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSIK-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSIK-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSIK-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSIK-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSIK-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSIK-CPUDT.
+      WA_PARTIDAS-WAERS  = IT_BSIK-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSIK-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSIK-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSIK-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSIK-BSCHL.
+      WA_PARTIDAS-ZUMSK  = IT_BSIK-ZUMSK.
+      WA_PARTIDAS-SHKZG  = IT_BSIK-SHKZG.
+      WA_PARTIDAS-GSBER  = IT_BSIK-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSIK-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSIK-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSIK-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSIK-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSIK-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSIK-SAKNR.
+      WA_PARTIDAS-HKONT  = IT_BSIK-HKONT.
+      WA_PARTIDAS-ZTERM  = IT_BSIK-ZTERM.
+      WA_PARTIDAS-ZLSCH  = IT_BSIK-ZLSCH.
+      WA_PARTIDAS-ZLSPR  = IT_BSIK-ZLSPR.
+      WA_PARTIDAS-VBUND  = IT_BSIK-VBUND.
+      WA_PARTIDAS-DMBE2  = IT_BSIK-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSIK-DMBE3.
+      WA_PARTIDAS-KIDNO  = IT_BSIK-KIDNO.
+      WA_PARTIDAS-BUPLA  = IT_BSIK-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSIK-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDLOOP.
+
+    "Partidas Fechadas de Forncedor """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    SELECT BUKRS LIFNR UMSKS UMSKZ AUGDT AUGBL ZUONR
+           GJAHR BELNR BUZEI BUDAT BLDAT CPUDT WAERS
+           XBLNR BLART MONAT BSCHL ZUMSK SHKZG GSBER
+           MWSKZ DMBTR WRBTR MWSTS WMWST SAKNR HKONT
+           ZFBDT ZTERM ZLSCH ZLSPR VBUND DMBE2 DMBE3
+           KIDNO BUPLA AUGGJ
+      INTO CORRESPONDING FIELDS OF TABLE IT_BSAK
+      FROM BSAK
+       FOR ALL ENTRIES IN IT_BKPF
+     WHERE BUKRS EQ IT_BKPF-BUKRS
+       AND BELNR EQ IT_BKPF-BELNR
+       AND GJAHR EQ IT_BKPF-GJAHR.
+    "Partidas Fechadas de Forncedor """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT IT_BSAK.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSAK-BUKRS.
+      WA_PARTIDAS-PARTYP = 'V'.
+      WA_PARTIDAS-PARID  = IT_BSAK-LIFNR.
+      WA_PARTIDAS-UMSKS  = IT_BSAK-UMSKS.
+      WA_PARTIDAS-UMSKZ  = IT_BSAK-UMSKZ.
+      WA_PARTIDAS-AUGDT  = IT_BSAK-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSAK-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSAK-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSAK-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSAK-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSAK-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSAK-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSAK-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSAK-CPUDT.
+      WA_PARTIDAS-WAERS  = IT_BSAK-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSAK-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSAK-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSAK-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSAK-BSCHL.
+      WA_PARTIDAS-ZUMSK  = IT_BSAK-ZUMSK.
+      WA_PARTIDAS-SHKZG  = IT_BSAK-SHKZG.
+      WA_PARTIDAS-GSBER  = IT_BSAK-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSAK-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSAK-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSAK-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSAK-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSAK-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSAK-SAKNR.
+      WA_PARTIDAS-HKONT  = IT_BSAK-HKONT.
+      WA_PARTIDAS-ZTERM  = IT_BSAK-ZTERM.
+      WA_PARTIDAS-ZLSCH  = IT_BSAK-ZLSCH.
+      WA_PARTIDAS-ZLSPR  = IT_BSAK-ZLSPR.
+      WA_PARTIDAS-VBUND  = IT_BSAK-VBUND.
+      WA_PARTIDAS-DMBE2  = IT_BSAK-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSAK-DMBE3.
+      WA_PARTIDAS-KIDNO  = IT_BSAK-KIDNO.
+      WA_PARTIDAS-BUPLA  = IT_BSAK-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSAK-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDLOOP.
+
+    "Partidas em Aberto de Cliente """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    SELECT BUKRS KUNNR UMSKS UMSKZ AUGDT AUGBL ZUONR
+           GJAHR BELNR BUZEI BUDAT BLDAT CPUDT WAERS
+           XBLNR BLART MONAT BSCHL ZUMSK SHKZG GSBER
+           MWSKZ DMBTR WRBTR MWSTS WMWST SAKNR HKONT
+           ZFBDT ZTERM ZLSCH ZLSPR VBUND VBELN DMBE2
+           DMBE3 VBEL2 POSN2 KIDNO BUPLA AUGGJ
+      INTO CORRESPONDING FIELDS OF TABLE IT_BSID
+      FROM BSID
+       FOR ALL ENTRIES IN IT_BKPF
+     WHERE BUKRS EQ IT_BKPF-BUKRS
+       AND BELNR EQ IT_BKPF-BELNR
+       AND GJAHR EQ IT_BKPF-GJAHR.
+    "Partidas em Aberto de Cliente """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT IT_BSID.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSID-BUKRS.
+      WA_PARTIDAS-PARTYP = 'C'.
+      WA_PARTIDAS-PARID  = IT_BSID-KUNNR.
+      WA_PARTIDAS-UMSKS  = IT_BSID-UMSKS.
+      WA_PARTIDAS-UMSKZ  = IT_BSID-UMSKZ.
+      WA_PARTIDAS-AUGDT  = IT_BSID-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSID-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSID-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSID-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSID-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSID-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSID-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSID-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSID-CPUDT.
+      WA_PARTIDAS-WAERS  = IT_BSID-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSID-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSID-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSID-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSID-BSCHL.
+      WA_PARTIDAS-ZUMSK  = IT_BSID-ZUMSK.
+      WA_PARTIDAS-SHKZG  = IT_BSID-SHKZG.
+      WA_PARTIDAS-GSBER  = IT_BSID-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSID-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSID-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSID-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSID-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSID-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSID-SAKNR.
+      WA_PARTIDAS-HKONT  = IT_BSID-HKONT.
+      WA_PARTIDAS-ZTERM  = IT_BSID-ZTERM.
+      WA_PARTIDAS-ZLSCH  = IT_BSID-ZLSCH.
+      WA_PARTIDAS-ZLSPR  = IT_BSID-ZLSPR.
+      WA_PARTIDAS-VBUND  = IT_BSID-VBUND.
+      WA_PARTIDAS-VBELN  = IT_BSID-VBELN.
+      WA_PARTIDAS-DMBE2  = IT_BSID-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSID-DMBE3.
+      WA_PARTIDAS-VBEL2  = IT_BSID-VBEL2.
+      WA_PARTIDAS-POSN2  = IT_BSID-POSN2.
+      WA_PARTIDAS-KIDNO  = IT_BSID-KIDNO.
+      WA_PARTIDAS-BUPLA  = IT_BSID-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSID-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDLOOP.
+
+    "Partidas Fechadas de Cliente """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    SELECT BUKRS KUNNR UMSKS UMSKZ AUGDT AUGBL ZUONR
+           GJAHR BELNR BUZEI BUDAT BLDAT CPUDT WAERS
+           XBLNR BLART MONAT BSCHL ZUMSK SHKZG GSBER
+           MWSKZ DMBTR WRBTR MWSTS WMWST SAKNR HKONT
+           ZFBDT ZTERM ZLSCH ZLSPR VBUND VBELN DMBE2
+           DMBE3 VBEL2 POSN2 KIDNO BUPLA AUGGJ
+      INTO CORRESPONDING FIELDS OF TABLE IT_BSAD
+      FROM BSAD
+       FOR ALL ENTRIES IN IT_BKPF
+     WHERE BUKRS EQ IT_BKPF-BUKRS
+       AND BELNR EQ IT_BKPF-BELNR
+       AND GJAHR EQ IT_BKPF-GJAHR.
+    "Partidas Fechadas de Cliente """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT IT_BSAD.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSAD-BUKRS.
+      WA_PARTIDAS-PARTYP = 'C'.
+      WA_PARTIDAS-PARID  = IT_BSAD-KUNNR.
+      WA_PARTIDAS-UMSKS  = IT_BSAD-UMSKS.
+      WA_PARTIDAS-UMSKZ  = IT_BSAD-UMSKZ.
+      WA_PARTIDAS-AUGDT  = IT_BSAD-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSAD-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSAD-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSAD-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSAD-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSAD-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSAD-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSAD-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSAD-CPUDT.
+      WA_PARTIDAS-WAERS  = IT_BSAD-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSAD-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSAD-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSAD-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSAD-BSCHL.
+      WA_PARTIDAS-ZUMSK  = IT_BSAD-ZUMSK.
+      WA_PARTIDAS-SHKZG  = IT_BSAD-SHKZG.
+      WA_PARTIDAS-GSBER  = IT_BSAD-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSAD-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSAD-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSAD-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSAD-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSAD-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSAD-SAKNR.
+      WA_PARTIDAS-HKONT  = IT_BSAD-HKONT.
+      WA_PARTIDAS-ZTERM  = IT_BSAD-ZTERM.
+      WA_PARTIDAS-ZLSCH  = IT_BSAD-ZLSCH.
+      WA_PARTIDAS-ZLSPR  = IT_BSAD-ZLSPR.
+      WA_PARTIDAS-VBUND  = IT_BSAD-VBUND.
+      WA_PARTIDAS-VBELN  = IT_BSAD-VBELN.
+      WA_PARTIDAS-DMBE2  = IT_BSAD-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSAD-DMBE3.
+      WA_PARTIDAS-VBEL2  = IT_BSAD-VBEL2.
+      WA_PARTIDAS-POSN2  = IT_BSAD-POSN2.
+      WA_PARTIDAS-KIDNO  = IT_BSAD-KIDNO.
+      WA_PARTIDAS-BUPLA  = IT_BSAD-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSAD-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDLOOP.
+
+  ENDIF.
+
+  RANGES: RG_CONTAS   FOR SKB1-SAKNR.
+
+  LOOP AT I_CONTAS INTO DATA(WA_CONTA).
+    IF WA_CONTA-SAKNR NE '*' AND NOT WA_CONTA-SAKNR CS '*'.
+      RG_CONTAS-SIGN   = 'I'.
+      RG_CONTAS-OPTION = 'EQ'.
+      RG_CONTAS-LOW    = WA_CONTA-SAKNR.
+      RG_CONTAS-HIGH   = WA_CONTA-SAKNR.
+      APPEND RG_CONTAS.
+    ELSEIF WA_CONTA-SAKNR CS '*'.
+      RG_CONTAS-SIGN   = 'I'.
+      RG_CONTAS-OPTION = 'CP'.
+      RG_CONTAS-LOW    = WA_CONTA-SAKNR.
+      CLEAR: RG_CONTAS-HIGH.
+      APPEND RG_CONTAS.
+    ENDIF.
+  ENDLOOP.
+
+  "Partidas em Aberto de Conta Razão """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  SELECT BUKRS HKONT AUGDT AUGBL ZUONR
+         GJAHR BELNR BUZEI BUDAT BLDAT VALUT WAERS
+         XBLNR BLART MONAT BSCHL SHKZG GSBER
+         MWSKZ DMBTR WRBTR MWSTS WMWST
+         ZFBDT VBUND DMBE2
+         DMBE3 BUPLA AUGGJ
+    INTO CORRESPONDING FIELDS OF TABLE IT_BSIS
+    FROM BSIS
+     FOR ALL ENTRIES IN IT_BKPF
+   WHERE BUKRS EQ IT_BKPF-BUKRS
+     AND BELNR EQ IT_BKPF-BELNR
+     AND GJAHR EQ IT_BKPF-GJAHR
+     AND HKONT IN RG_CONTAS.
+  "Partidas em Aberto de Conta Razão """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+  LOOP AT IT_BSIS.
+    READ TABLE IT_PARTIDAS WITH KEY GJAHR = IT_BSIS-GJAHR
+                                    BELNR = IT_BSIS-BELNR
+                                    BUZEI = IT_BSIS-BUZEI.
+    IF SY-SUBRC IS NOT INITIAL.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSIS-BUKRS.
+      WA_PARTIDAS-PARTYP = 'B'.
+      WA_PARTIDAS-PARID  = IT_BSIS-HKONT.
+      WA_PARTIDAS-AUGDT  = IT_BSIS-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSIS-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSIS-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSIS-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSIS-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSIS-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSIS-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSIS-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSIS-VALUT.
+      WA_PARTIDAS-WAERS  = IT_BSIS-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSIS-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSIS-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSIS-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSIS-BSCHL.
+      WA_PARTIDAS-GSBER  = IT_BSIS-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSIS-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSIS-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSIS-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSIS-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSIS-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSIS-HKONT.
+      WA_PARTIDAS-HKONT  = IT_BSIS-HKONT.
+      WA_PARTIDAS-VBUND  = IT_BSIS-VBUND.
+      WA_PARTIDAS-DMBE2  = IT_BSIS-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSIS-DMBE3.
+      WA_PARTIDAS-BUPLA  = IT_BSIS-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSIS-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDIF.
+  ENDLOOP.
+
+  "Partidas Fechadas de Conta Razão """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  SELECT BUKRS HKONT AUGDT AUGBL ZUONR
+         GJAHR BELNR BUZEI BUDAT BLDAT VALUT WAERS
+         XBLNR BLART MONAT BSCHL SHKZG GSBER
+         MWSKZ DMBTR WRBTR MWSTS WMWST
+         ZFBDT VBUND DMBE2
+         DMBE3 BUPLA AUGGJ
+    INTO CORRESPONDING FIELDS OF TABLE IT_BSAS
+    FROM BSAS
+     FOR ALL ENTRIES IN IT_BKPF
+   WHERE BUKRS EQ IT_BKPF-BUKRS
+     AND BELNR EQ IT_BKPF-BELNR
+     AND GJAHR EQ IT_BKPF-GJAHR
+     AND HKONT IN RG_CONTAS.
+  "Partidas Fechadas de Conta Razão """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+  LOOP AT IT_BSAS.
+    READ TABLE IT_PARTIDAS WITH KEY GJAHR = IT_BSAS-GJAHR
+                                    BELNR = IT_BSAS-BELNR
+                                    BUZEI = IT_BSAS-BUZEI.
+    IF SY-SUBRC IS NOT INITIAL.
+      WA_PARTIDAS-MANDT  = SY-MANDT.
+      WA_PARTIDAS-BUKRS  = IT_BSAS-BUKRS.
+      WA_PARTIDAS-PARTYP = 'B'.
+      WA_PARTIDAS-PARID  = IT_BSAS-HKONT.
+      WA_PARTIDAS-AUGDT  = IT_BSAS-AUGDT.
+      WA_PARTIDAS-AUGBL  = IT_BSAS-AUGBL.
+      WA_PARTIDAS-ZUONR  = IT_BSAS-ZUONR.
+      WA_PARTIDAS-GJAHR  = IT_BSAS-GJAHR.
+      WA_PARTIDAS-BELNR  = IT_BSAS-BELNR.
+      WA_PARTIDAS-BUZEI  = IT_BSAS-BUZEI.
+      WA_PARTIDAS-BUDAT  = IT_BSAS-BUDAT.
+      WA_PARTIDAS-BLDAT  = IT_BSAS-BLDAT.
+      WA_PARTIDAS-CPUDT  = IT_BSAS-VALUT.
+      WA_PARTIDAS-WAERS  = IT_BSAS-WAERS.
+      WA_PARTIDAS-XBLNR  = IT_BSAS-XBLNR.
+      WA_PARTIDAS-BLART  = IT_BSAS-BLART.
+      WA_PARTIDAS-MONAT  = IT_BSAS-MONAT.
+      WA_PARTIDAS-BSCHL  = IT_BSAS-BSCHL.
+      WA_PARTIDAS-GSBER  = IT_BSAS-GSBER.
+      WA_PARTIDAS-MWSKZ  = IT_BSAS-MWSKZ.
+      WA_PARTIDAS-DMBTR  = IT_BSAS-DMBTR.
+      WA_PARTIDAS-WRBTR  = IT_BSAS-WRBTR.
+      WA_PARTIDAS-MWSTS  = IT_BSAS-MWSTS.
+      WA_PARTIDAS-WMWST  = IT_BSAS-WMWST.
+      WA_PARTIDAS-SAKNR  = IT_BSAS-HKONT.
+      WA_PARTIDAS-HKONT  = IT_BSAS-HKONT.
+      WA_PARTIDAS-VBUND  = IT_BSAS-VBUND.
+      WA_PARTIDAS-DMBE2  = IT_BSAS-DMBE2.
+      WA_PARTIDAS-DMBE3  = IT_BSAS-DMBE3.
+      WA_PARTIDAS-BUPLA  = IT_BSAS-BUPLA.
+      WA_PARTIDAS-AUGGJ  = IT_BSAS-AUGGJ.
+      APPEND WA_PARTIDAS TO IT_PARTIDAS.
+    ENDIF.
+  ENDLOOP.
+
+ENDFUNCTION.

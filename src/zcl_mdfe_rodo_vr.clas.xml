@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MDFE_RODO_VR</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Veic. Reboque - Modal Rodoviário - MDFE</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CAPKG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Capacidade em KG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CAPM3</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Capacidade em M3</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CINT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código interno do veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CNPJ</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do CNPJ (prop)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CPF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do CPF (prop)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Inscrição Estadual</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PLACA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RENAVAM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>RENAVAM do veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_RNTRC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Reg. Nacional dos Transportadores Rodoviários Carga (prop)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TARA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tara em KG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TPCAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Carroceria</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TPPROP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo Proprietário (prop)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_UF</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>UF em que veículo está licenciado</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_UF_PROP</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>UF (prop)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_XNOME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Razão Social ou Nome do proprietário</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CAPKG</CMPNAME>
+     <SCONAME>CAPKG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo numérico de comprimento 6</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CAPM3</CMPNAME>
+     <SCONAME>CAPM3</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contador</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CINT</CMPNAME>
+     <SCONAME>CINT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres do comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CNPJ</CMPNAME>
+     <SCONAME>CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ID fiscal 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CPF</CMPNAME>
+     <SCONAME>CPF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ID fiscal 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IE</CMPNAME>
+     <SCONAME>IE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto (comprimento 14)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PLACA</CMPNAME>
+     <SCONAME>PLACA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto com comprimento 7</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RENAVAM</CMPNAME>
+     <SCONAME>RENAVAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Caractere comprimento 11</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RNTRC</CMPNAME>
+     <SCONAME>RNTRC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo numérico (8 caracteres)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TARA</CMPNAME>
+     <SCONAME>TARA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo numérico de comprimento 6</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TPCAR</CMPNAME>
+     <SCONAME>TPCAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ABAP Dictionary: campo numérico de duas posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TPPROP</CMPNAME>
+     <SCONAME>TPPROP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numérico com 1 posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_UF</CMPNAME>
+     <SCONAME>UF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_UF_PROP</CMPNAME>
+     <SCONAME>UF_PROP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_XNOME</CMPNAME>
+     <SCONAME>XNOME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Field of  length 60</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CAPKG</CMPNAME>
+     <SCONAME>CAPKG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº seqüencial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CAPM3</CMPNAME>
+     <SCONAME>CAPM3</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Contador</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CINT</CMPNAME>
+     <SCONAME>CINT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres do comprimento 10</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CNPJ</CMPNAME>
+     <SCONAME>CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ID fiscal 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CPF</CMPNAME>
+     <SCONAME>CPF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº ID fiscal 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_IE</CMPNAME>
+     <SCONAME>IE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PLACA</CMPNAME>
+     <SCONAME>PLACA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto com comprimento 7</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_RENAVAM</CMPNAME>
+     <SCONAME>RENAVAM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Caractere comprimento 11</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_RNTRC</CMPNAME>
+     <SCONAME>RNTRC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo numérico (8 caracteres)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TARA</CMPNAME>
+     <SCONAME>TARA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo numérico de comprimento 6</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TPCAR</CMPNAME>
+     <SCONAME>TPCAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ABAP Dictionary: campo numérico de duas posições</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TPPROP</CMPNAME>
+     <SCONAME>TPPROP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numérico com 1 posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_UF</CMPNAME>
+     <SCONAME>UF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_UF_PROP</CMPNAME>
+     <SCONAME>UF_PROP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>IS-H: campo geral de comprimento 2 para módulos de função</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_XNOME</CMPNAME>
+     <SCONAME>XNOME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Field of  length 60</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZAVSEGURO</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Averbação de Seguro de Frete</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Registro Salvo com Sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Registro Excluído com Sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Registro de Averbação não pode ser Excluído!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Deve ser Informado a CT-e!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>CT-e já utilizada na Averbação &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Documento deve ser um CT-e Próprio Autorizado o Uso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Documento CT-e Informado não possui valor de Seguro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Não encontrado registro de Seguradora p/ esta CT-e!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Registro de Seguro não possui uma Seguradora (Código Fornecedor)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Token utilizado não pode ser removido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Deve ser Informado e Empresa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Deve ser Informado o Local de Negócio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Deve ser Informado o Nr. do TOKEN!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Deve ser Informado a Data de Validade!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Nenhum Registro Selecionado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Não Cadastro Diretórios na Transação ZLES0148!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Sem Diretório de Rede (UNIX) cadastrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Sem Diretório de Rede (WIN) cadastrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Sem Diretório Local (WIN) cadastrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Averbação do Seguro da CT-e &amp;1 não foi Autorizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Não Existe Token Cadastrado p/ Local Negócio &amp;1/&amp;2 Valido em: &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Não Cadastro WebService p/ Seguradora &amp;1 na Transação ZLES0148!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Sem Acesso para Averbar Seguro! Objeto ZACSEGURO Campo ZAC_SEGURO=1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Sem Acesso para Token! Objeto ZACSEGURO Campo ZAC_SEGURO=2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Sem Acesso para WebService! Objeto ZACSEGURO Campo ZAC_SEGURO=3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Sem Acesso para Diretório! Objeto ZACSEGURO Campo ZAC_SEGURO=4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Grupo de Mercadoria &amp;1 sem Apólice de Seguro p/ Empresa &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Não Existe Apólice Vigente para o Dia &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Sem Acesso para Can.Averbar Seguro! Objeto ZACSEGURO Campo ZAC_SEGURO=5</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Buscando XML do documento &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Retornado de XML de documento &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Não retornado de XML de documento &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZAVSEGURO</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>É necessário Parametrizar Un.Organiz.de Transporte para o Centro &amp;1</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

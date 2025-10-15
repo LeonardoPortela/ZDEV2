@@ -1,0 +1,24 @@
+
+
+NR_WAREHOUSE = |{ HEADER-NR_WAREHOUSE ALPHA = OUT  }|.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

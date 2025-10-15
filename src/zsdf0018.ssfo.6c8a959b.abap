@@ -1,0 +1,27 @@
+IF WA_ITENS-NET_WEGHT IS NOT INITIAL.
+V_NET_WEIGHT = WA_ITENS-NET_WEGHT.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

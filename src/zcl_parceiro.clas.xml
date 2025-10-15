@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_PARCEIRO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe p/ parceiros</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PARCEIRO_LOCAL_NEGOCIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna Local de Negócio pelo parceiro</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PARCEIRO_LOCAL_NEGOCIO</CMPNAME>
+     <SCONAME>E_J_1BBRANCH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PARCEIRO_LOCAL_NEGOCIO</CMPNAME>
+     <SCONAME>I_PARTINER</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PARCEIRO_LOCAL_NEGOCIO</CMPNAME>
+     <SCONAME>R_LOCAL_NEGOCIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

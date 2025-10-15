@@ -1,0 +1,84 @@
+FUNCTION ZCCT_GET_UTRIB.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_REGION) TYPE  REGIO OPTIONAL
+*"     REFERENCE(I_CFOP) TYPE  J_1BCFOP
+*"     REFERENCE(I_NCM) TYPE  STEUC
+*"     REFERENCE(I_MENGE) TYPE  MENGE_D OPTIONAL
+*"     REFERENCE(I_MATNR) TYPE  MATNR OPTIONAL
+*"     REFERENCE(I_MEINS) TYPE  MEINS OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_UTRIB) TYPE  MEINS
+*"     REFERENCE(E_QTRIB) TYPE  MENGE_D
+*"----------------------------------------------------------------------
+
+  DATA: V_QTRIB_EXP       TYPE MENGE_D,
+        V_NCM_EXP         TYPE MARC-STEUC,
+        WL_SET_UF_UTRIB   TYPE SETLEAF,
+        WL_SET_CFOP_UTRIB TYPE SETLEAF,
+        WL_SET_NCM_UTRIB  TYPE SETLEAF.
+
+  CLEAR: E_UTRIB, E_QTRIB, V_QTRIB_EXP, V_NCM_EXP , WL_SET_UF_UTRIB, WL_SET_CFOP_UTRIB, WL_SET_NCM_UTRIB.
+
+  IF I_REGION IS NOT INITIAL.
+
+    SELECT SINGLE *
+      FROM SETLEAF INTO WL_SET_UF_UTRIB
+     WHERE SETNAME = 'MAGGI_UF_UTRIB_EXP'
+       AND VALFROM = I_REGION.
+
+  ENDIF.
+
+  SELECT SINGLE *
+    FROM SETLEAF INTO WL_SET_CFOP_UTRIB
+   WHERE SETNAME = 'MAGGI_CFOP_UTRIB_EXP'
+     AND VALFROM = I_CFOP(4).
+
+  V_NCM_EXP = I_NCM.
+  REPLACE ALL OCCURRENCES OF '.' IN V_NCM_EXP WITH '' IGNORING CASE.
+
+  SELECT SINGLE *
+    FROM SETLEAF INTO WL_SET_NCM_UTRIB
+   WHERE SETNAME = 'MAGGI_NCM_UTRIB_EXP'
+     AND VALFROM = V_NCM_EXP.
+
+  IF ( WL_SET_CFOP_UTRIB IS NOT INITIAL ) AND
+     ( WL_SET_NCM_UTRIB  IS NOT INITIAL ) AND
+     ( WL_SET_UF_UTRIB   IS INITIAL     ). "UF de Exceção
+
+    E_UTRIB     = 'TON'.
+    V_QTRIB_EXP = I_MENGE.
+
+    IF ( I_MATNR IS NOT INITIAL ) AND
+       ( I_MEINS IS NOT INITIAL ) AND
+       ( V_QTRIB_EXP > 0        ).
+
+      CALL FUNCTION 'MD_CONVERT_MATERIAL_UNIT'
+        EXPORTING
+          I_MATNR              = I_MATNR
+          I_IN_ME              = I_MEINS
+          I_OUT_ME             = 'TO'
+          I_MENGE              = V_QTRIB_EXP
+        IMPORTING
+          E_MENGE              = V_QTRIB_EXP
+        EXCEPTIONS
+          ERROR_IN_APPLICATION = 1
+          ERROR                = 2
+          OTHERS               = 3.
+
+      IF SY-SUBRC = 0.
+        E_QTRIB = V_QTRIB_EXP.
+      ENDIF.
+    ENDIF.
+
+  ELSE.
+    E_UTRIB = I_MEINS.
+    E_QTRIB = I_MENGE.
+  ENDIF.
+
+
+
+
+
+ENDFUNCTION.

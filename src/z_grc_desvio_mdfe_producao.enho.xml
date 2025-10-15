@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>MDF-e não tem ambiente de Contingência</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>J_1B_NFE</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>J_1B_NFE</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLJ_1B_NFE</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLJ_1B_NFE</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\FU:J_1B_NFE_CHECK_ACTIVE_SERVER\SE:BEGIN\EI</FULL_NAME>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLJ_1B_NFE</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\FU:J_1B_NFE_GET_ACTIVE_SERVER\SE:BEGIN\EI</FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <FILES>
+    <item>
+     <NAME>\FU:J_1B_NFE_CHECK_ACTIVE_SERVER\SE:BEGIN\EI</NAME>
+     <FILE>5222d04f</FILE>
+    </item>
+    <item>
+     <NAME>\FU:J_1B_NFE_GET_ACTIVE_SERVER\SE:BEGIN\EI</NAME>
+     <FILE>42449426</FILE>
+    </item>
+   </FILES>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>5DA87FDF51794CB5E1000000AC0C0C27</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>5DA87FDF51794CB5E1000000AC0C0C27</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>057</LENGTH>
+       <TEXT>MDF-e não tem ambiente de Contingência</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>Z_GRC_DESVIO_MDFE_PRODUCAO</OBJ_NAME>
+     <CONCEPT>5DA87FDF51794CB5E1000000AC0C0C27</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

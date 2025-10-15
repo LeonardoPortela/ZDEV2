@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ROTA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe da Rota do Pedágio.</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BRANCH</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CAT_VEICULO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria do Veiculo.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DESCR_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Descrição da Rota.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DISTANCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Distância do Percurso.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DT_VIGENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Vigencia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ID_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação da Rota</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MUNIC_DESTINO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Municipio Destino</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MUNIC_ORIGEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Municipio Origem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_VLR_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Novo Valor de Vigencia.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BRANCH</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Filial.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Empresa.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CAT_VEICULO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Categoria do Veiculo.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DESCR_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Descrição do Pedágio.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DISTANCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Distancia do percurso.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DT_VIGENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar a Data Vigencia.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ID_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar o ID da Rota.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MUNIC_DESTINO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar o Código do Muncipio Destino.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MUNIC_ORIGEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar o Código do Municipio Origem.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VLR_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Capturar o Valor do Pedagio.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BRANCH</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Filial.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Empresa.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CAT_VEICULO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Categoria do Veiculo.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DESCR_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Descrição da rota.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DISTANCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Distancia.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DT_VIGENCIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir a Data de Vigencia.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ID_ROTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir o ID da Rota.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MUNIC_DESTINO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir o Código do Destino.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MUNIC_ORIGEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir o Código de Orgem.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_VLR_PEDAGIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para Atribuir o valor do Pedágio.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BRANCH</CMPNAME>
+     <SCONAME>R_BRANCH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_BUKRS</CMPNAME>
+     <SCONAME>R_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CAT_VEICULO</CMPNAME>
+     <SCONAME>E_CAT_VEICULO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria do Veiculo.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DESCR_ROTA</CMPNAME>
+     <SCONAME>E_DESCR_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Descrição da Rota.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DISTANCIA</CMPNAME>
+     <SCONAME>E_DISTANCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Distância</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DT_VIGENCIA</CMPNAME>
+     <SCONAME>E_DT_VIGENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data da Vigencia.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ID_ROTA</CMPNAME>
+     <SCONAME>E_ID_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID da Rota.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MUNIC_DESTINO</CMPNAME>
+     <SCONAME>E_MUNIC_DESTINO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cód. Município do IBGE Destino.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MUNIC_ORIGEM</CMPNAME>
+     <SCONAME>E_MUNIC_ORIGEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cód. Município do IBGE Origem.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VLR_PEDAGIO</CMPNAME>
+     <SCONAME>E_VLR_PEDAGIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do Pedágio.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BRANCH</CMPNAME>
+     <SCONAME>I_BRANCH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_BUKRS</CMPNAME>
+     <SCONAME>I_BUKRS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Empresa</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CAT_VEICULO</CMPNAME>
+     <SCONAME>I_CAT_VEICULO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria do Veiculo.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DESCR_ROTA</CMPNAME>
+     <SCONAME>I_DESCR_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Descrição da Rota.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DISTANCIA</CMPNAME>
+     <SCONAME>I_DISTANCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Distância</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DT_VIGENCIA</CMPNAME>
+     <SCONAME>I_DT_VIGENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de Vigencia.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ID_ROTA</CMPNAME>
+     <SCONAME>I_ID_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID da Rota.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MUNIC_DESTINO</CMPNAME>
+     <SCONAME>I_MUNIC_DESTINO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cód. Município do IBGE Destino.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MUNIC_ORIGEM</CMPNAME>
+     <SCONAME>I_MUNIC_ORIGEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cód. Município do IBGE Origem.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_VLR_PEDAGIO</CMPNAME>
+     <SCONAME>I_VLR_PEDAGIO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do Pedágio.</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

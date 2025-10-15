@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Entrada nota transferencia exportação</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>ENHO</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>Z_NFW_CFOP_E</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>ENHO</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>Z_NFW_CFOP_E</ORG_MAIN_NAME>
+    <PROGRAMNAME>Z_NFW_CFOP_E</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>5E379B6B91000679E1000000AC0C0C27</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>5E379B6B91000679E1000000AC0C0C27</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>056</LENGTH>
+       <TEXT>Entrada nota transferencia exportação</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>Z_PEDIDO_ZUB_ENTRA</OBJ_NAME>
+     <CONCEPT>5E379B6B91000679E1000000AC0C0C27</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,15 @@
+TYPES: TY_SAIDA_T TYPE TABLE OF  ZFIR0001.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

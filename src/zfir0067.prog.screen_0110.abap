@@ -1,0 +1,11 @@
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_0110.
+
+  CALL SUBSCREEN sub_list_vrs INCLUDING 'ZFIR0067' '0109'.
+
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN sub_list_vrs.
+
+  MODULE user_command_0110.

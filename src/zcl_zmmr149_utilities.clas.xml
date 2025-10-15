@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ZMMR149_UTILITIES</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Compras de Insumos - Utilidades</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>A filial não foi informada e devido a isso não é possível Determinar a empresa para emissão do Contrato</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>O Fornecedor não foi informado</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>A Cultura não foi informada</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>O Nº do pedido do Fornecedor não foi informado</ENTRY>
+     <LENGTH>92</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Os dados bancários do Vendedor não foi informado</ENTRY>
+     <LENGTH>96</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Não foram localizados os lançamentos das Parcelas do pagamento Fracionado</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>O Frete é &amp; , logo o Local de Entregar é Obrigatório</ENTRY>
+     <LENGTH>104</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>O Frete é FOB, logo o Roteiro do Ponto de Coleta para o Item &amp; é Obrigatório</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>009</KEY>
+     <ENTRY>o foi informada a condição de Pagamento!</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>010</KEY>
+     <ENTRY>Não foram localizados os lançamentos da Programação de Entrega</ENTRY>
+     <LENGTH>124</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>011</KEY>
+     <ENTRY>Não foi localizado nenhum item na Solicitação do Pedido de Compra</ENTRY>
+     <LENGTH>130</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>012</KEY>
+     <ENTRY>Não foram informado Preço Bruto do item &amp;</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>013</KEY>
+     <ENTRY>Não foi calculado o Valor Final do item &amp;</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>014</KEY>
+     <ENTRY>Não foi localizado no Cadastro do Material &amp;1 do item &amp;2 a informação da Unidade de Medida utilizada em Documentos</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>015</KEY>
+     <ENTRY>Não foram localizados informações da Aba &quot;Dados para Contrato&quot;</ENTRY>
+     <LENGTH>124</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>016</KEY>
+     <ENTRY>Não foi informada a data Final de Pagamento</ENTRY>
+     <LENGTH>86</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>017</KEY>
+     <ENTRY>Não foi informado os dias para o prazo de reclamação da qualidade do produto</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>018</KEY>
+     <ENTRY>Não foi informado o Fiador</ENTRY>
+     <LENGTH>52</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>019</KEY>
+     <ENTRY>Não foi informado % da Multa para a parte Compradora</ENTRY>
+     <LENGTH>104</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>020</KEY>
+     <ENTRY>Não foi informado % da Multa para a parte Vendedora</ENTRY>
+     <LENGTH>102</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>021</KEY>
+     <ENTRY>A alocação dos Royalties está para a Compradora, mas os dados para pagamentos não foram localizados</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>022</KEY>
+     <ENTRY>Não foram localizados dados de Testemunha do Vendedor</ENTRY>
+     <LENGTH>106</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>023</KEY>
+     <ENTRY>A Extração de dados para contrato não será gerada</ENTRY>
+     <LENGTH>98</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>024</KEY>
+     <ENTRY>Há criticas na validação dos dados de extração. Ver TI de mensagens.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>025</KEY>
+     <ENTRY>Já existe extração realizada e esta se encontra em Status &amp;. Verificar pela Transação ZSDT0203.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>026</KEY>
+     <ENTRY>Não há código de moeda cadastrado. Cadastrar! (Transação GS02 - SET ZMMT0149_CODIGO_MOEDA)</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>027</KEY>
+     <ENTRY>Código de Moeda &amp; não permitido</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>028</KEY>
+     <ENTRY>astros do roteiro imcompleto. Atualizar na transação ZSDT0113.</ENTRY>
+     <LENGTH>124</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cálculo do imposto do item</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXECUTA_EXTRACAO_DADOS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Extrair dados para Contrato - Extrai Dados para Salvar</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXIBE_MSGS_VALIDA_DADOS_EXT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exibe Mensagem da Validação de Dados para extração</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Extrair dados para Contrato - Processa Dados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Extrair dados para Contrato - Seleciona Dados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Extrair dados para Contrato - Valida Dados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO_MSG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Extrair dados para Contrato - Monta Mensagem de Valida Dados</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALOR_ITEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cálculo Valor Item com impostos</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALOR_TOTAL_ITENS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cálculo Valor Total de todos os Itens com impostos</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>E_VLR_IMP_IT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do Imposto do Item</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>E_VLR_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do Item com Imposto</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_BPRME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Unidade do preço do pedido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_EBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do documento de compras</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_EBELP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº item do documento de compra</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_LIFNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº conta do fornecedor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_MATNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº do material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_MENGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Quantidade do pedido</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_MWSKZ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do IVA</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_NETPR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preço líquido no documento de compra na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_NETPR_DESC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preço líquido no documento de compra na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_NETPR_SUPL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Preço líquido no documento de compra na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_PEINH</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Unidade preço</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_WERKS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALCULO_IMPOSTO_ITEM</CMPNAME>
+     <SCONAME>I_WERKS_0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTA_EXTRACAO_DADOS</CMPNAME>
+     <SCONAME>ET_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela com informações das validações</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTA_EXTRACAO_DADOS</CMPNAME>
+     <SCONAME>E_MSG_RTN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTA_EXTRACAO_DADOS</CMPNAME>
+     <SCONAME>I_NRO_SOL_CP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.sol.Orde</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTA_EXTRACAO_DADOS</CMPNAME>
+     <SCONAME>I_SHOW_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Exibir = X Não Exibir = &apos;  &apos;. Mensagens de Validação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXIBE_MSGS_VALIDA_DADOS_EXT</CMPNAME>
+     <SCONAME>IT_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela com informações das validações</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>E_MSG_RTN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem de retorno</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IE_ZMMT0010</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados Gerais Contrato</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IE_ZMMT0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos - Cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0011</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados de Royalties</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0012</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Testemunhas parte Vendedora</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0036</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – COND_PGTO</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0037</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – MATERIAIS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESSA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0038</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Logistica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>EE_ZMMT0010</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados Gerais Contrato</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>EE_ZMMT0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos - Cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_ZMMT0011</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados de Royalties</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_ZMMT0012</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Testemunhas parte Vendedora</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_ZMMT0036</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – COND_PGTO</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_ZMMT0037</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – MATERIAIS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_ZMMT0038</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Logistica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>E_MSG_ERRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem de erro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SELECIONA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>I_NRO_SOL_CP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nro.sol.Orde</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>ET_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela com informações das validações</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IE_ZMMT0010</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados Gerais Contrato</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IE_ZMMT0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos - Cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0011</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Dados de Royalties</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0012</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Testemunhas parte Vendedora</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0036</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – COND_PGTO</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0037</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – MATERIAIS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO</CMPNAME>
+     <SCONAME>IT_ZMMT0038</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – Logistica</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO_MSG</CMPNAME>
+     <SCONAME>ET_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela com informações das validações</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO_MSG</CMPNAME>
+     <SCONAME>IT_MSG_VALIDA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela com informações das validações</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALIDA_DADOS_EXTRACAO_MSG</CMPNAME>
+     <SCONAME>I_MESSAGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Menssagem de erro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_ITEM</CMPNAME>
+     <SCONAME>IE_ZMMT0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos - Cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_ITEM</CMPNAME>
+     <SCONAME>IE_ZMMT0037</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – MATERIAIS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_ITEM</CMPNAME>
+     <SCONAME>R_VLR_ITEM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor do Item com impostos</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_TOTAL_ITENS</CMPNAME>
+     <SCONAME>IE_ZMMT0035</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos - Cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_TOTAL_ITENS</CMPNAME>
+     <SCONAME>IT_ZMMT0037</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicitação Compras de Insumos – MATERIAIS</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VALOR_TOTAL_ITENS</CMPNAME>
+     <SCONAME>R_VLR_TOT_ITMS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor Total dos Itens com impostos</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

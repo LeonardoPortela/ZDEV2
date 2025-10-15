@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_SQL_API_PYTHON</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface para API Python</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SQL_API_PYTHON</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ZWAT0003</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Parâmetros para Acesso a Banco de Dados (API)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SCRIPT</CMPNAME>
+     <SCONAME>R_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SCRIPT</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SCRIPT</CMPNAME>
+     <SCONAME>ZCX_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SQL</CMPNAME>
+     <SCONAME>R_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SQL</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXEC_SQL</CMPNAME>
+     <SCONAME>ZCX_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GETXMLCTE</CMPNAME>
+     <SCONAME>R_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GETXMLNFE</CMPNAME>
+     <SCONAME>R_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>R_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_HTTP</CMPNAME>
+     <SCONAME>R_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface para API Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_HTTP</CMPNAME>
+     <SCONAME>ZCX_ERROR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_HTTP</CMPNAME>
+     <SCONAME>ZCX_SQL_API_PYTHON</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de API SQL Python</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

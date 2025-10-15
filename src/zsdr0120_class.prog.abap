@@ -1,0 +1,65 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZSDR0112_CLASS
+*&---------------------------------------------------------------------*
+
+
+
+CLASS LCL_ALV_TOOLBAR_0100 IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+*   Create ALV toolbar manager instance
+    CREATE OBJECT C_ALV_TOOLBARMANAGER
+      EXPORTING
+        IO_ALV_GRID = IO_ALV_GRID.
+  ENDMETHOD.                    "constructor
+
+  METHOD ON_TOOLBAR.
+
+    TY_TOOLBAR-ICON      = ICON_TRANSFER.
+    TY_TOOLBAR-FUNCTION  = C_ENVIAR_INUT_GRC.
+    TY_TOOLBAR-TEXT      = 'Enviar Inutilização GRC'.
+    TY_TOOLBAR-BUTN_TYPE = 0.
+    APPEND TY_TOOLBAR TO E_OBJECT->MT_TOOLBAR.
+    CLEAR TY_TOOLBAR.
+
+  ENDMETHOD.                    "on_toolbar
+
+  METHOD HANDLE_USER_COMMAND.
+
+    DATA(_REFRESH_DADOS) = ABAP_FALSE.
+
+    CASE E_UCOMM.
+      WHEN C_ENVIAR_INUT_GRC.
+        PERFORM F_ENVIAR_INUT_GRC.
+        _REFRESH_DADOS = ABAP_TRUE.
+    ENDCASE.
+
+    IF ( _REFRESH_DADOS EQ ABAP_TRUE ).
+      PERFORM: F_SELECIONAR_DADOS,
+               F_PROCESSA_DADOS,
+               F_REFRESH_ALV USING '0100'..
+    ENDIF.
+
+  ENDMETHOD.                    "HANDLE_USER_COMMAND
+
+ENDCLASS.                    "lcl_alv_toolbar IMPLEMENTATION
+
+
+CLASS LCL_EVENT_HANDLER_0100 IMPLEMENTATION.
+
+  METHOD CATCH_HOTSPOT.
+
+    CASE E_COLUMN_ID.
+      WHEN 'DOCNUM'.
+
+        READ TABLE IT_SAIDA_0100 INTO WA_SAIDA_0100 INDEX E_ROW_ID-INDEX.
+
+        CHECK ( SY-SUBRC = 0 ) AND ( WA_SAIDA_0100-DOCNUM IS NOT INITIAL ).
+
+        SET PARAMETER ID 'JEF'  FIELD WA_SAIDA_0100-DOCNUM.
+        CALL TRANSACTION 'J1B3N' AND SKIP FIRST SCREEN.
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+ENDCLASS.

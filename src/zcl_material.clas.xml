@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MATERIAL</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Dados de material</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GO_INSTANCE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de material</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GT_ZSDT0371</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela de Unidade de Medida da ZSDT0062</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>RO_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de material</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MATERIAL_TEXT_BY_TABLE</CMPNAME>
+     <SCONAME>R_MAKT_TAB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tabela MAKT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0371_BY_MATNR</CMPNAME>
+     <SCONAME>ES_ZSDT0371</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cadastro Grupo Merc x Unidade Medida</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ZSDT0371_TABLE_BY_MATNR</CMPNAME>
+     <SCONAME>ET_ZSDT0371</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cadastro Grupo Merc x Unidade Medida</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,25 @@
+IF WA_CONTRATO-NET_WEGHT IS NOT INITIAL.
+V_TOTAL_NET_WEIGHT = WA_CONTRATO-NET_WEGHT.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

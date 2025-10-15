@@ -1,0 +1,355 @@
+class ZCL_MONTA_XML definition
+  public
+  inheriting from ZCL_WEBSERVICE
+  create public .
+
+public section.
+
+  methods CONSTRUCTOR .
+  class-methods CLEAR_STRANGE_CHARS
+    importing
+      !I_STRING type STRING
+    returning
+      value(R_STRING) type STRING .
+protected section.
+
+  methods LIMPAR .
+  methods GET_XML
+    exporting
+      !E_XML_TEXTO type STRING .
+  methods CTNA
+    importing
+      !TEXTO type CLIKE .
+  methods CTNA_SEPARADOR
+    importing
+      !TEXTO type CLIKE
+      !SEPARADOR type CHAR01 default ' ' .
+  methods CTNAB
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE .
+  methods CTNFE
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE .
+  methods CTNNAONULO
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !TAM type POSNR
+      !VALOR type CLIKE .
+  methods CTNAV
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !VALOR type CLIKE .
+  methods CTNAVN
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !VALOR type NUMERIC
+      !PRECISAO type INTEGER .
+  methods CTNAFV
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type STRING
+      !VALOR type NUMERIC
+      !PRECISAO type INTEGER .
+  methods CTNAF
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !VALOR type CLIKE .
+  methods CTNDTF
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !VALOR type CLIKE
+      !SEPARADOR type CLIKE default '/' .
+  methods CTNDTN
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !VALOR type CLIKE .
+  methods CTNDHN
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE
+      !DATA type CLIKE
+      !HORA type CLIKE .
+  methods CTNAFE
+    importing
+      !ABRE type CLIKE default '<'
+      !FECHA type CLIKE default '>'
+      !TAG type CLIKE .
+  methods SALVA_XML
+    importing
+      !I_NAME_FILE type STRING
+      !I_XML type STRING optional .
+  PRIVATE SECTION.
+
+    DATA XML_TEXTO TYPE STRING .
+ENDCLASS.
+
+
+
+CLASS ZCL_MONTA_XML IMPLEMENTATION.
+
+
+  METHOD CLEAR_STRANGE_CHARS.
+
+    CALL FUNCTION 'SCP_REPLACE_STRANGE_CHARS'
+      EXPORTING
+        INTEXT            = I_STRING
+*       INTEXT_LG         = 0
+*       INTER_CP          = '0000'
+*       INTER_BASE_CP     = '0000'
+*       IN_CP             = '0000'
+*       REPLACEMENT       = 46
+      IMPORTING
+        OUTTEXT           = R_STRING
+*       OUTUSED           =
+*       OUTOVERFLOW       =
+      EXCEPTIONS
+        INVALID_CODEPAGE  = 1
+        CODEPAGE_MISMATCH = 2
+        INTERNAL_ERROR    = 3
+        CANNOT_CONVERT    = 4
+        FIELDS_NOT_TYPE_C = 5
+        OTHERS            = 6.
+
+    IF SY-SUBRC IS NOT INITIAL.
+      R_STRING = I_STRING.
+    ENDIF.
+
+
+  ENDMETHOD.
+
+
+  METHOD CONSTRUCTOR.
+
+    CALL METHOD SUPER->CONSTRUCTOR.
+
+    ME->LIMPAR( ).
+
+  ENDMETHOD.
+
+
+  METHOD CTNA.
+    CONCATENATE XML_TEXTO TEXTO INTO XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD CTNAB.
+    CONCATENATE XML_TEXTO ABRE TAG FECHA INTO XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD CTNAF.
+
+    IF VALOR IS NOT INITIAL.
+      CONCATENATE XML_TEXTO ABRE TAG FECHA VALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD CTNAFE.
+    CONCATENATE XML_TEXTO ABRE TAG ' /' FECHA INTO XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD CTNAFV.
+
+    DATA: XVALOR TYPE STRING.
+    IF VALOR IS NOT INITIAL.
+      XVALOR = VALOR.
+      CONCATENATE XML_TEXTO ABRE TAG FECHA XVALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD CTNAV.
+    CONCATENATE XML_TEXTO ABRE TAG FECHA VALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD CTNAVN.
+
+    DATA: XVALOR         TYPE STRING,
+          XVALOR_DECIMAL TYPE STRING,
+          TM_STRING      TYPE I.
+    DATA: RESULT_TAB TYPE MATCH_RESULT_TAB.
+
+    FIELD-SYMBOLS <MATCH> LIKE LINE OF RESULT_TAB.
+
+    IF VALOR IS NOT INITIAL.
+      XVALOR = VALOR.
+      FIND FIRST OCCURRENCE OF '.' IN XVALOR RESULTS RESULT_TAB.
+      READ TABLE RESULT_TAB INDEX 1 ASSIGNING <MATCH>.
+      <MATCH>-OFFSET = <MATCH>-OFFSET + 1.
+
+      TM_STRING      = STRLEN( XVALOR ).
+      TM_STRING      = TM_STRING - <MATCH>-OFFSET - 1.
+      XVALOR_DECIMAL = XVALOR+<MATCH>-OFFSET(TM_STRING).
+      TM_STRING      = <MATCH>-OFFSET - 1.
+      XVALOR         = XVALOR(TM_STRING).
+
+      TM_STRING = PRECISAO - STRLEN( XVALOR_DECIMAL ).
+
+      DO TM_STRING TIMES.
+        CONCATENATE XVALOR_DECIMAL '0' INTO XVALOR_DECIMAL.
+      ENDDO.
+
+      CONCATENATE XVALOR XVALOR_DECIMAL INTO XVALOR.
+
+      CONCATENATE XML_TEXTO ABRE TAG FECHA XVALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ELSE.
+      CONCATENATE XML_TEXTO ABRE TAG FECHA '0' ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD CTNA_SEPARADOR.
+    CONCATENATE XML_TEXTO TEXTO INTO XML_TEXTO SEPARATED BY SEPARADOR.
+  ENDMETHOD.
+
+
+  METHOD CTNDHN.
+
+    DATA: DTVALOR TYPE STRING,
+          HRVALOR TYPE STRING.
+
+    CONCATENATE DATA+6(2) DATA+4(2) DATA(4) INTO DTVALOR.
+    CONCATENATE HORA(2) HORA+2(2) HORA+4(2) INTO HRVALOR.
+    CONCATENATE XML_TEXTO ABRE TAG FECHA DTVALOR HRVALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+
+  ENDMETHOD.
+
+
+  METHOD CTNDTF.
+
+    DATA: DTVALOR TYPE STRING.
+    CONCATENATE VALOR+6(2) SEPARADOR VALOR+4(2) SEPARADOR VALOR(4) INTO DTVALOR.
+    CONCATENATE XML_TEXTO ABRE TAG FECHA DTVALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+
+  ENDMETHOD.
+
+
+  METHOD CTNDTN.
+
+    DATA: DTVALOR TYPE STRING.
+    CONCATENATE VALOR+6(2) VALOR+4(2) VALOR(4) INTO DTVALOR.
+    CONCATENATE XML_TEXTO ABRE TAG FECHA DTVALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+
+  ENDMETHOD.
+
+
+  METHOD CTNFE.
+    CONCATENATE XML_TEXTO ABRE '/' TAG FECHA INTO XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD CTNNAONULO.
+
+    DATA: TEXT_ TYPE C LENGTH 100.
+
+    IF VALOR IS NOT INITIAL.
+      CONCATENATE XML_TEXTO ABRE TAG FECHA VALOR ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ELSE.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+        EXPORTING
+          INPUT  = '0'
+        IMPORTING
+          OUTPUT = TEXT_.
+      CONCATENATE XML_TEXTO ABRE TAG FECHA TEXT_(TAM) ABRE '/' TAG FECHA INTO XML_TEXTO.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD GET_XML.
+
+    "REPLACE ALL OCCURRENCES OF REGEX '[áàãâ]' IN ME->XML_TEXTO WITH 'a' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '[éê]'   IN ME->XML_TEXTO WITH 'e' IGNORING CASE.
+    "EPLACE ALL OCCURRENCES OF        'í'     IN ME->XML_TEXTO WITH 'i' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '[óô]'   IN ME->XML_TEXTO WITH 'o' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '[üú]'   IN ME->XML_TEXTO WITH 'u' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '[ç]'    IN ME->XML_TEXTO WITH 'c' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '&'      IN ME->XML_TEXTO WITH 'E' IGNORING CASE.
+    "REPLACE ALL OCCURRENCES OF REGEX '§'      IN ME->XML_TEXTO WITH '' IGNORING CASE.
+    E_XML_TEXTO = ME->XML_TEXTO.
+
+  ENDMETHOD.
+
+
+  METHOD LIMPAR.
+    CLEAR: ME->XML_TEXTO.
+  ENDMETHOD.
+
+
+  METHOD SALVA_XML.
+
+    TYPES: BEGIN OF TY_XML_VIAGEM.
+    TYPES:   XML TYPE STRING.
+    TYPES: END OF TY_XML_VIAGEM.
+
+    DATA: WA_XML TYPE TY_XML_VIAGEM,
+          IT_XML TYPE STANDARD TABLE OF TY_XML_VIAGEM.
+
+
+    CLEAR: IT_XML.
+    IF I_XML IS INITIAL.
+      WA_XML-XML = ME->XML_TEXTO.
+    ELSE.
+      WA_XML-XML = I_XML.
+    ENDIF.
+    APPEND WA_XML TO IT_XML.
+
+    CALL FUNCTION 'GUI_DOWNLOAD'
+      EXPORTING
+        FILENAME                = I_NAME_FILE
+      TABLES
+        DATA_TAB                = IT_XML
+      EXCEPTIONS
+        FILE_WRITE_ERROR        = 1
+        NO_BATCH                = 2
+        GUI_REFUSE_FILETRANSFER = 3
+        INVALID_TYPE            = 4
+        NO_AUTHORITY            = 5
+        UNKNOWN_ERROR           = 6
+        HEADER_NOT_ALLOWED      = 7
+        SEPARATOR_NOT_ALLOWED   = 8
+        FILESIZE_NOT_ALLOWED    = 9
+        HEADER_TOO_LONG         = 10
+        DP_ERROR_CREATE         = 11
+        DP_ERROR_SEND           = 12
+        DP_ERROR_WRITE          = 13
+        UNKNOWN_DP_ERROR        = 14
+        ACCESS_DENIED           = 15
+        DP_OUT_OF_MEMORY        = 16
+        DISK_FULL               = 17
+        DP_TIMEOUT              = 18
+        FILE_NOT_FOUND          = 19
+        DATAPROVIDER_EXCEPTION  = 20
+        CONTROL_FLUSH_ERROR     = 21
+        OTHERS                  = 22.
+
+    IF SY-SUBRC <> 0.
+      MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.

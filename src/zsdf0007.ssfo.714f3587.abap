@@ -1,0 +1,24 @@
+SHIFT WA_VBAP-MATNR LEFT DELETING LEADING '0'.
+CONDENSE WA_VBAP-MATNR NO-GAPS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

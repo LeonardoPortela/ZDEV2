@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ORDEM_CAR</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Dados Transp. Ordem Carregamento</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MENSAGEM_RET</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Mensagem Retorno WS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_MOTORISTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PLACA1</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PLACA2</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PLACA3</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_PLACA_CAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ZSDT0001OD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ordens de Carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MENSAGEM_RET</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar a Mensagem Retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MOTORISTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar o Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PLACA1</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar a Placa 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PLACA2</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar a Placa 2</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PLACA3</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar a Placa 3</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PLACA_CAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para recuperar a Placa Cavalo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MENSAGEM_RET</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar a Mensagem Retorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MOTORISTA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar o Motorista</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PLACA1</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar a Placa 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PLACA2</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar a Placa 2</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PLACA3</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar a Placa 3</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PLACA_CAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar a Placa Cavalo</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MOTORISTA</CMPNAME>
+     <SCONAME>E_MOTORISTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Motorista</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PLACA1</CMPNAME>
+     <SCONAME>E_PLACA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PLACA2</CMPNAME>
+     <SCONAME>E_PLACA2</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PLACA3</CMPNAME>
+     <SCONAME>E_PLACA3</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PLACA_CAV</CMPNAME>
+     <SCONAME>E_PLACA_CAV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MOTORISTA</CMPNAME>
+     <SCONAME>I_MOTORISTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Motorista</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PLACA1</CMPNAME>
+     <SCONAME>I_PLACA1</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PLACA2</CMPNAME>
+     <SCONAME>I_PLACA2</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PLACA3</CMPNAME>
+     <SCONAME>I_PLACA3</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PLACA_CAV</CMPNAME>
+     <SCONAME>I_PLACA_CAV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Placa do Veículo</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

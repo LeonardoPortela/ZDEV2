@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>Z_EKORG</OBJCT>
+    <FIEL1>EKORG</FIEL1>
+    <OCLSS>ZMM</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>Z_EKORG</OBJECT>
+    <TTEXT>Objeto de autorização usado na transação ZMM0235</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>Z_EKORG</OBJCT>
+    <FLAG3>N</FLAG3>
+    <FLAG4>A</FLAG4>
+    <FLAG5>A</FLAG5>
+   </TOBJVORFLG>
+  </asx:values>
+ </asx:abap>
+</abapGit>

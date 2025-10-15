@@ -1,0 +1,164 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZFIAA02_PBO_0200
+*&---------------------------------------------------------------------*
+
+*&---------------------------------------------------------------------*
+*&      Module  PBO_0200  OUTPUT
+*&---------------------------------------------------------------------*
+MODULE STATUS_0200 OUTPUT.
+  SET PF-STATUS '0200' EXCLUDING GT_CODE.
+  SET TITLEBAR  '0200'.
+ENDMODULE.                 " STATUS_0200  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  TRATAR_FIELDS  OUTPUT
+*&---------------------------------------------------------------------*
+MODULE TRATAR_FIELDS OUTPUT.
+  LOOP AT GT_FIELDS INTO WL_FIELDS.
+    LOOP AT SCREEN.
+
+      CHECK SCREEN-GROUP1 = WL_FIELDS-GROUP1.
+
+      SCREEN-INPUT        = WL_FIELDS-VALUE.
+      SCREEN-INVISIBLE    = WL_FIELDS-INVISIBLE.
+      MODIFY SCREEN.
+    ENDLOOP.
+  ENDLOOP.
+ENDMODULE.                 " TRATAR_FIELDS  OUTPUT
+
+*&---------------------------------------------------------------------*
+*&      Module  HELP_COD_REGI  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE HELP_COD_REGI INPUT.
+
+  CONSTANTS:
+  C_LICENCIAMENTO     TYPE CHAR20 VALUE 'LICENCIAMENTO',
+  C_IPVA              TYPE CHAR20 VALUE 'IPVA',
+  C_DPVAT             TYPE CHAR20 VALUE 'DPVAT'.
+
+  DATA: GT_RETURN_TAB TYPE TABLE OF DDSHRETVAL WITH HEADER LINE,
+        GT_DSELC      TYPE TABLE OF DSELC      WITH HEADER LINE,
+        AT_CONT       TYPE N,
+
+  BEGIN OF GT_COD_REGIO OCCURS 0,
+    SPRAS TYPE T005U-SPRAS,
+    LAND1 TYPE T005U-LAND1,
+    BLAND TYPE T005U-BLAND,
+    BEZEI TYPE T005U-BEZEI,
+  END OF GT_COD_REGIO.
+
+  REFRESH GT_COD_REGIO.
+  CLEAR GT_COD_REGIO.
+
+  SELECT *
+    FROM T005U
+    INTO CORRESPONDING FIELDS OF TABLE GT_COD_REGIO
+   WHERE LAND1 = WL_ZAA001-COD_PAIS.
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      RETFIELD        = 'BLAND'
+      DYNPPROG        = SY-REPID                            "'ZFINR018'
+      DYNPNR          = SY-DYNNR
+      DYNPROFIELD     = 'WL_ZAA001-COD_REGI'
+      VALUE_ORG       = 'S'
+    TABLES
+      VALUE_TAB       = GT_COD_REGIO
+      RETURN_TAB      = GT_RETURN_TAB
+      DYNPFLD_MAPPING = GT_DSELC.
+
+  IF WL_SAIDA_0110-KFZKZ IS NOT INITIAL.
+    AT_CONT = ( STRLEN( WL_SAIDA_0110-KFZKZ ) - 1 ).
+  ENDIF.
+
+  WL_ZAA001-COD_REGI = GT_RETURN_TAB-FIELDVAL.
+
+* PEGAR VENCIMENTO IPVA
+  SELECT SINGLE *
+    FROM ZAA002
+    INTO WL_ZAA002
+   WHERE LAND1       = WL_ZAA001-COD_PAIS
+     AND RG_PLACA    = GT_RETURN_TAB-FIELDVAL
+     AND FINAL_PLACA = WL_SAIDA_0110-KFZKZ+AT_CONT(1)
+     AND TP_OBRIG    = '1'.
+
+  MOVE:
+  WL_ZAA002-MES_VCTO TO WL_ZAA001-MES_IPVA.
+  CLEAR WL_ZAA002.
+
+* PEGAR VENCIMENTO DPVAT
+  SELECT SINGLE *
+    FROM ZAA002
+    INTO WL_ZAA002
+   WHERE LAND1       = WL_ZAA001-COD_PAIS
+     AND RG_PLACA    = GT_RETURN_TAB-FIELDVAL
+     AND FINAL_PLACA = WL_SAIDA_0110-KFZKZ+AT_CONT(1)
+     AND TP_OBRIG    = '2'.
+
+  MOVE:
+  WL_ZAA002-MES_VCTO TO WL_ZAA001-MES_DPVAT.
+  CLEAR WL_ZAA002.
+
+* PEGAR VENCIMENTO LICENCIAMENTO
+  SELECT SINGLE *
+    FROM ZAA002
+    INTO WL_ZAA002
+   WHERE LAND1       = WL_ZAA001-COD_PAIS
+     AND RG_PLACA    = GT_RETURN_TAB-FIELDVAL
+     AND FINAL_PLACA = WL_SAIDA_0110-KFZKZ+AT_CONT(1)
+     AND TP_OBRIG    = '3'.
+
+  MOVE:
+  WL_ZAA002-MES_VCTO TO WL_ZAA001-MES_LICENC.
+  CLEAR WL_ZAA002.
+
+  LEAVE TO SCREEN 0200.
+ENDMODULE.                 " HELP_COD_REGI  INPUT
+
+*----------------------------------------------------------------------*
+*  MODULE PBO_0200 OUTPUT
+*----------------------------------------------------------------------*
+MODULE PBO_0200 OUTPUT.
+*  DATA R_UTILS TYPE REF TO ZUTILS.
+*  CREATE OBJECT R_UTILS.
+
+*  BREAK-POINT.
+
+  IF OBJ_CUSTOM_TXT IS INITIAL.
+
+    CREATE OBJECT OBJ_CUSTOM_TXT
+      EXPORTING
+        CONTAINER_NAME = 'CUSTOM_OBSERVACAO'.
+
+    CREATE OBJECT OBJ_CUSTOM_EDITOR
+      EXPORTING
+        PARENT            = OBJ_CUSTOM_TXT
+        WORDWRAP_MODE     = CL_GUI_TEXTEDIT=>WORDWRAP_AT_FIXED_POSITION
+        WORDWRAP_POSITION = 76
+        MAX_NUMBER_CHARS  = 200.
+
+*  R_UTILS->TRATAR_CAMPOS( GROUP1    = 'GR1'
+*                          GROUP2    = SPACE
+*                          VALUE     = '0'
+*                          INVISIBLE = '0').
+
+    CALL METHOD OBJ_CUSTOM_EDITOR->SET_TOOLBAR_MODE
+      EXPORTING
+        TOOLBAR_MODE = CL_GUI_TEXTEDIT=>FALSE.
+
+    CALL METHOD OBJ_CUSTOM_EDITOR->SET_STATUSBAR_MODE
+      EXPORTING
+        STATUSBAR_MODE = CL_GUI_TEXTEDIT=>FALSE.
+  ENDIF.
+
+  CALL METHOD OBJ_CUSTOM_EDITOR->SET_TEXT_AS_R3TABLE
+    EXPORTING
+      TABLE = GT_EDITOR.
+
+  CALL METHOD OBJ_CUSTOM_EDITOR->SET_READONLY_MODE
+    EXPORTING
+      READONLY_MODE = RETURN_STATUS.
+
+ENDMODULE.                 " PBO_0200  OUTPUT

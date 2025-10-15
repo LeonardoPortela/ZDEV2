@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_INT_OB_CONS_FARDO_TRACE_CT</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Retorno Beneficiamento Trace Cotton</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DADOS_ENVIO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura Consulta Fardinhos Trace Cotton</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_DADOS_RETORNO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura Consulta Fardinhos Trace Cotton</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_ID_INTERFACE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Id. de Integração de Inteface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>I_SERVICO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Serviço WebService</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_INTEGRACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Integração</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FARDOS_RETORNADOS</CMPNAME>
+     <SCONAME>E_FARDOS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Fardinhos Trace Cotton</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FARDOS_RETORNADOS</CMPNAME>
+     <SCONAME>R_IF_INTEGRACAO_OUTBOUND</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Interface de Integrações Outbound</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

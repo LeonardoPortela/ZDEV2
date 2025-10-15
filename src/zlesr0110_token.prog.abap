@@ -1,0 +1,37 @@
+*&---------------------------------------------------------------------*
+*& Report  ZLESR0110_TOKEN
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZLESR0110_TOKEN MESSAGE-ID ZAVSEGURO.
+
+TABLES: ZLEST0145.
+
+DATA: I_FILTRO  TYPE ZDE_ZLEST0145_FILTRO.
+
+SELECTION-SCREEN: BEGIN OF BLOCK BA WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: P0001 FOR ZLEST0145-BUKRS,
+                P0002 FOR ZLEST0145-BRANCH,
+                P0003 FOR ZLEST0145-CD_TOKEN,
+                P0004 FOR ZLEST0145-NR_TOKEN,
+                P0005 FOR ZLEST0145-DT_VALIDADE,
+                P0006 FOR ZLEST0145-DT_CADASTRO DEFAULT SY-DATUM,
+                P0007 FOR ZLEST0145-US_CADASTRO DEFAULT SY-UNAME.
+SELECTION-SCREEN: END OF BLOCK BA.
+
+
+START-OF-SELECTION.
+
+  MOVE: P0001[] TO I_FILTRO-BUKRS,
+        P0002[] TO I_FILTRO-BRANCH,
+        P0003[] TO I_FILTRO-CD_TOKEN,
+        P0004[] TO I_FILTRO-NR_TOKEN,
+        P0005[] TO I_FILTRO-DT_VALIDADE,
+        P0006[] TO I_FILTRO-DT_CADASTRO,
+        P0007[] TO I_FILTRO-US_CADASTRO.
+
+  CALL FUNCTION 'ZLES_CADASTRO_AVSEG_TOKEN'
+    EXPORTING
+      I_FILTRO = I_FILTRO.

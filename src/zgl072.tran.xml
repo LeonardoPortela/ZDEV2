@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZGL072</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZGL072</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZGL072</TCODE>
+    <TTEXT>Cadastro Data / Usuário Limite FBCJ</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZGL072</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZGLT097;P_STCNAM=ZGLT097_OUT;P_SCMANT=0124;P_TITLE=Cadastro Data Limite FBCJ;P_DB_01=ZGLT098;P_STC_01=ZGLT098_OUT;P_SC_01=0125;P_TI_01=Cadastro Usuario Limite FBCJ;P_ACT_01=Replicar Registros Proximo Periodo;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

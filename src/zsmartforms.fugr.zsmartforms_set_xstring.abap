@@ -1,0 +1,19 @@
+FUNCTION ZSMARTFORMS_SET_XSTRING.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_CD_AUTENTICACAO) TYPE  ZDE_ID_AUTENTICACAO
+*"     REFERENCE(I_XSTRING) TYPE  ZDE_SMARTFORMS_XSTRING
+*"----------------------------------------------------------------------
+
+  SELECT SINGLE * INTO @DATA(WA_ZSMT0001)
+    FROM ZSMT0001
+   WHERE CD_AUTENTICACAO EQ @I_CD_AUTENTICACAO.
+
+  CHECK SY-SUBRC IS INITIAL.
+
+  WA_ZSMT0001-RW_SMARTFORMS = I_XSTRING.
+  MODIFY ZSMT0001 FROM WA_ZSMT0001.
+  COMMIT WORK.
+
+ENDFUNCTION.

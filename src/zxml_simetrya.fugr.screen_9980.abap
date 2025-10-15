@@ -1,0 +1,10 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_9980.
+*
+PROCESS AFTER INPUT.
+
+  MODULE nfe_exportacao AT EXIT-COMMAND.
+
+  MODULE user_command_9980.

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_FMCALL_NEW_ROMANEIO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Abap to JSON</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_COTTON_DOUCLE_CHECK</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Double Check</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_ESTORNO_COTTON</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_INBOUND_ORD_CANCELA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Serviço de InBound Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_INBOUND_ORD_CARREGA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Serviço de InBound Veículo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_NFE_WRITER_GRC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Cria e Autoriza Nota Fiscal Writer pelo GRC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_NFE_WRITER_GRC_CAN</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicita Cancel</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_NFE_WRITER_GRC_EST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Solicita Estorno</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_PDF_XML_NFE_CTE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna PDF ou XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_PROCESSA_COTTON</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Geral</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_SERVICO_VALIDA_XML_NFE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Serviço de Validação de XML NF-e</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

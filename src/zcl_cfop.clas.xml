@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CFOP</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe de CFOPS</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CK_CFOP_RETORNO_AMAZEM</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica CFOP de Retorno de Armazenagem</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_CFOP_RETORNO_AMAZEM</CMPNAME>
+     <SCONAME>I_CFOP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Categoria de dados 4 caracteres</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CK_CFOP_RETORNO_AMAZEM</CMPNAME>
+     <SCONAME>R_RETORNO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,230 @@
+*&---------------------------------------------------------------------*
+*& Report  ZMMR113
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZMMR113.
+TABLES MCHB.
+
+*&---------------------------------------------------------------------*
+*& START OF SELECTION
+*&---------------------------------------------------------------------*
+
+INCLUDE ZMMR113_TOP.
+INCLUDE ZMMR113_O01.
+INCLUDE ZMMR113_I01.
+INCLUDE ZMMR113_F01.
+
+SELECTION-SCREEN: BEGIN OF BLOCK BLOCO_01 WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS:
+            P_WERKS FOR MCHB-WERKS          NO INTERVALS NO-EXTENSION OBLIGATORY,
+            P_CHARG FOR MCHB-CHARG          NO INTERVALS,
+            P_LGORT FOR MCHB-LGORT          NO INTERVALS.
+
+SELECTION-SCREEN: END OF BLOCK BLOCO_01.
+
+*PARAMETERS:
+*  R_OP1 RADIOBUTTON GROUP RAD1 USER-COMMAND ACT,
+*  R_OP2 RADIOBUTTON GROUP RAD1 DEFAULT 'X'.
+
+AT SELECTION-SCREEN OUTPUT.
+  IF SY-CALLD IS INITIAL.
+    IF P_CHARG IS INITIAL AND P_LGORT IS INITIAL.
+      MESSAGE 'Informe Lote e/ou Bloco' TYPE 'I'.
+      SET CURSOR FIELD 'P_CHARG' .
+    ENDIF.
+  ENDIF.
+
+START-OF-SELECTION.
+  IF P_CHARG IS INITIAL AND P_LGORT IS INITIAL.
+  ELSE.
+    PERFORM:
+            F_SELECIONA_DADOS, " Form seleciona dados
+            F_SAIDA, " Form de saida
+            F_IMPRIME_DADOS.
+  ENDIF.
+
+END-OF-SELECTION.
+*&---------------------------------------------------------------------*
+*&      Form  F_SELECIONA_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SELECIONA_DADOS .
+  DATA: VCUOBJ(18).
+
+  V_WERKS = P_WERKS-LOW.
+  SELECT MATNR CHARG LGORT
+    FROM MCHB
+    INTO TABLE IT_MCHB
+    WHERE WERKS IN P_WERKS
+    AND   CHARG IN P_CHARG
+    AND   LGORT IN P_LGORT.
+
+  CHECK IT_MCHB[] IS NOT INITIAL.
+
+  LOOP AT IT_MCHB  INTO WA_MCHB.
+    CONCATENATE WA_MCHB-MATNR WA_MCHB-CHARG INTO V_OBJEK.
+    MOVE: V_OBJEK       TO WA_INOB2-OBJEK.
+
+    APPEND WA_INOB2 TO IT_INOB2.
+  ENDLOOP.
+
+  CHECK IT_INOB2[] IS NOT INITIAL.
+
+  SELECT CUOBJ OBJEK FROM INOB
+    INTO CORRESPONDING FIELDS OF TABLE IT_INOB
+    FOR ALL ENTRIES IN IT_INOB2
+  WHERE OBJEK EQ IT_INOB2-OBJEK
+    AND KLART EQ C_023
+  AND OBTAB EQ C_MCH1.
+
+  CHECK IT_INOB[] IS NOT INITIAL.
+
+  LOOP AT IT_INOB INTO WA_INOB.
+    MOVE-CORRESPONDING WA_INOB TO  WA_INOB_AUX.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        INPUT  = WA_INOB-CUOBJ
+      IMPORTING
+        OUTPUT = VCUOBJ.
+    MOVE: VCUOBJ         TO WA_INOB_AUX-OBJECTID.
+    CONCATENATE WA_INOB_AUX-OBJECTID 'O' INTO WA_INOB_AUX-OBJECTID.
+
+    APPEND WA_INOB_AUX TO IT_INOB_AUX.
+  ENDLOOP.
+
+  REFRESH: IT_INOB.
+  IT_INOB = IT_INOB_AUX.
+
+  SELECT OBJECTID CHANGENR USERNAME UDATE UTIME
+    FROM CDHDR
+    INTO TABLE IT_CDHDR
+    FOR ALL ENTRIES IN IT_INOB
+    WHERE OBJECTCLAS EQ 'CLASSIFY'
+  AND   OBJECTID   EQ IT_INOB-OBJECTID.
+
+
+  CHECK IT_CDHDR[] IS NOT INITIAL.
+
+  SELECT OBJECTID CHANGENR TABKEY VALUE_NEW VALUE_OLD
+     FROM CDPOS
+     INTO TABLE IT_CDPOS
+     FOR ALL ENTRIES IN IT_CDHDR
+     WHERE OBJECTCLAS EQ 'CLASSIFY'
+     AND   FNAME      EQ 'ATWRT'
+     AND   OBJECTID   EQ IT_CDHDR-OBJECTID
+     AND   CHANGENR   EQ IT_CDHDR-CHANGENR.
+
+  CHECK IT_CDPOS[] IS NOT INITIAL.
+
+  LOOP AT IT_CDPOS INTO WA_CDPOS.
+    WA_CDPOS-ATINN = WA_CDPOS-TABKEY+18(10).
+    MODIFY IT_CDPOS FROM WA_CDPOS INDEX SY-TABIX TRANSPORTING ATINN.
+  ENDLOOP.
+
+  SELECT *
+    FROM CABN
+    INTO TABLE IT_CABN
+    FOR ALL ENTRIES IN IT_CDPOS
+  WHERE ATINN EQ IT_CDPOS-ATINN.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  F_SAIDA
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_SAIDA .
+  SORT: IT_MCHB BY MATNR CHARG,
+        IT_INOB BY OBJEK,
+        IT_CDHDR BY OBJECTID CHANGENR,
+        IT_CDPOS BY OBJECTID CHANGENR,
+        IT_CABN  BY ATINN.
+*
+*  IF R_OP1 = 'X'.
+*    LOOP AT IT_MCHB INTO WA_MCHB.
+*      CONCATENATE WA_MCHB-MATNR WA_MCHB-CHARG INTO V_OBJEK.
+*      READ TABLE IT_INOB INTO WA_INOB WITH KEY OBJEK = V_OBJEK BINARY SEARCH.
+*      LOOP AT IT_CDHDR INTO WA_CDHDR WHERE OBJECTID = WA_INOB-OBJECTID.
+*
+*        LOOP AT IT_CDPOS INTO WA_CDPOS WHERE OBJECTID = WA_CDHDR-OBJECTID
+*                                       AND   CHANGENR = WA_CDHDR-CHANGENR.
+*
+*          READ TABLE IT_CABN INTO WA_CABN WITH KEY ATINN = WA_CDPOS-ATINN BINARY SEARCH.
+*
+*          WA_SAIDA-MATNR     = WA_MCHB-MATNR.
+*          WA_SAIDA-CHARG     = WA_MCHB-CHARG.
+*          WA_SAIDA-LGORT     = WA_MCHB-LGORT.
+*          WA_SAIDA-OBJECTID  = WA_CDHDR-OBJECTID.
+*          WA_SAIDA-CHANGENR  = WA_CDHDR-CHANGENR.
+*          WA_SAIDA-USERNAME  = WA_CDHDR-USERNAME.
+*          WA_SAIDA-UDATE     = WA_CDHDR-UDATE.
+*          WA_SAIDA-UTIME     = WA_CDHDR-UTIME.
+*          WA_SAIDA-ATINN     = WA_CABN-ATINN.
+*          WA_SAIDA-ATNAM     = WA_CABN-ATNAM.
+*          WA_SAIDA-VALUE_NEW = WA_CDPOS-VALUE_NEW.
+*          WA_SAIDA-VALUE_OLD = WA_CDPOS-VALUE_OLD.
+*          APPEND WA_SAIDA TO IT_SAIDA.
+*        ENDLOOP.
+*
+*      ENDLOOP.
+*
+*    ENDLOOP.
+*  ELSE.
+  SORT IT_INOB BY OBJECTID.
+  DATA: VMATNR TYPE MCHB-MATNR,
+        VCHARG TYPE MCHB-CHARG.
+
+  LOOP AT IT_CDPOS INTO WA_CDPOS.
+
+    READ TABLE IT_CDHDR INTO WA_CDHDR WITH KEY OBJECTID = WA_CDPOS-OBJECTID
+                                               CHANGENR = WA_CDPOS-CHANGENR    BINARY SEARCH.
+
+    READ TABLE IT_INOB INTO WA_INOB WITH KEY OBJECTID = WA_CDHDR-OBJECTID BINARY SEARCH.
+    VMATNR = WA_INOB-OBJEK+0(18).
+    VCHARG = WA_INOB-OBJEK+18(10).
+    READ TABLE IT_MCHB INTO WA_MCHB WITH KEY MATNR = VMATNR
+                                             CHARG = VCHARG BINARY SEARCH.
+
+    READ TABLE IT_CABN INTO WA_CABN WITH KEY ATINN = WA_CDPOS-ATINN BINARY SEARCH.
+
+    WA_SAIDA-MATNR     = WA_MCHB-MATNR.
+    WA_SAIDA-CHARG     = WA_MCHB-CHARG.
+    WA_SAIDA-LGORT     = WA_MCHB-LGORT.
+    WA_SAIDA-OBJECTID  = WA_CDHDR-OBJECTID.
+    WA_SAIDA-CHANGENR  = WA_CDHDR-CHANGENR.
+    WA_SAIDA-USERNAME  = WA_CDHDR-USERNAME.
+    WA_SAIDA-UDATE     = WA_CDHDR-UDATE.
+    WA_SAIDA-UTIME     = WA_CDHDR-UTIME.
+    WA_SAIDA-ATINN     = WA_CABN-ATINN.
+    WA_SAIDA-ATNAM     = WA_CABN-ATNAM.
+    WA_SAIDA-VALUE_NEW = WA_CDPOS-VALUE_NEW.
+    WA_SAIDA-VALUE_OLD = WA_CDPOS-VALUE_OLD.
+    APPEND WA_SAIDA TO IT_SAIDA.
+
+  ENDLOOP.
+
+  SORT IT_SAIDA BY MATNR CHARG LGORT OBJECTID CHANGENR.
+*  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Form  F_IMPRIME_DADOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM F_IMPRIME_DADOS .
+  CALL SCREEN 0100.
+ENDFORM.

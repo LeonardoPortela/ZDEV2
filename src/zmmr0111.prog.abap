@@ -1,0 +1,672 @@
+*/===========================================================================\*
+*      db      `7MMM.     ,MMF'      db       .g8"""bgd    .g8"""bgd `7MMF' *
+*|     ;MM:       MMMb    dPMM       ;MM:    .dP'     `M  .dP'     `M   MM   |*
+*|    ,V^MM.      M YM   ,M MM      ,V^MM.   dM'       `  dM'       `   MM   |*
+*|   ,M  `MM      M  Mb  M' MM     ,M  `MM   MM           MM            MM   |*
+*|   AbmmmqMA     M  YM.P'  MM     AbmmmqMA  MM.    `7MMF'MM.    `7MMF' MM   |*
+*|  A'     VML    M  `YM'   MM    A'     VML `Mb.     MM  `Mb.     MM   MM   |*
+*| AMA.   .AMMA..JML. `'  .JMML..AMA.   .AMMA. `"bmmmdPY    `"bmmmdPY .JMML. |*
+*/===========================================================================\*
+
+*/===========================================================================\*
+*|  Desenvolvedor:                                                           |*
+*|    + Welgem Barbosa ( welgem.barbosa@amaggi.com.br )                      |*
+*|                                                                           |*
+*|  Tester:                                                                  |*
+*|    + Adelson Arruda ( adelson.arruda@amaggi.com.br )                      |*
+*|  Changelog:                                                               |*
+*|                                                                           |*
+*/===========================================================================\*
+
+*/===========================================================================\*
+*| Descrição:                                                                |*
+*| Consulta de Clientes e Fornecedores Inativos                              |*
+*/===========================================================================\*
+
+REPORT ZMMR0111.
+
+
+TABLES: KNC1, VBAK.
+
+TYPES: BEGIN OF TY_SAIDA,
+         SEQ   TYPE SY-TABIX,
+         KUNNR TYPE KNC1-KUNNR,
+         NAME1 TYPE KNA1-NAME1,
+         BUKRS TYPE KNC1-BUKRS,
+         GJAHR TYPE KNC1-GJAHR,
+         ERDAT TYPE KNC1-ERDAT,
+         USNAM TYPE KNC1-USNAM,
+         UMSAV TYPE KNC1-UMSAV,
+       END OF TY_SAIDA,
+
+       BEGIN OF TY_JUNCAO,
+         KUNNR TYPE KNC1-KUNNR,
+         BUKRS TYPE KNC1-BUKRS,
+         SOMA  TYPE SALDV,
+       END OF TY_JUNCAO.
+
+SELECTION-SCREEN:  BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(79) TEXT-002.
+SELECTION-SCREEN END OF LINE.
+
+SELECT-OPTIONS: P_KUNNR  FOR KNC1-KUNNR,
+                P_BUKRS  FOR KNC1-BUKRS OBLIGATORY,
+                P_MES    FOR VBAK-SPART NO INTERVALS NO-EXTENSION OBLIGATORY,
+                P_GJAHR  FOR KNC1-GJAHR NO INTERVALS NO-EXTENSION OBLIGATORY.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(10) TEXT-002.
+SELECTION-SCREEN END OF LINE.
+
+PARAMETERS: R_CLI RADIOBUTTON GROUP GP2 DEFAULT 'X', "Cliente
+            R_FOR RADIOBUTTON GROUP GP2.             "Fornecedor
+
+SELECTION-SCREEN: END OF BLOCK B1.
+
+DATA: T_KNC1 TYPE TABLE OF KNC1 WITH HEADER LINE,
+      C_KNC1 TYPE TABLE OF KNC1 WITH HEADER LINE,
+      A_KNC1 TYPE TABLE OF KNC1 WITH HEADER LINE.
+DATA: T_KNC3 TYPE TABLE OF KNC3 WITH HEADER LINE,
+      C_KNC3 TYPE TABLE OF KNC3 WITH HEADER LINE,
+      A_KNC3 TYPE TABLE OF KNC3 WITH HEADER LINE.
+DATA: T_LFC1 TYPE TABLE OF LFC1 WITH HEADER LINE,
+      C_LFC1 TYPE TABLE OF LFC1 WITH HEADER LINE.
+DATA: T_LFC3 TYPE TABLE OF LFC3 WITH HEADER LINE,
+      C_LFC3 TYPE TABLE OF LFC3 WITH HEADER LINE.
+
+DATA: T_SAIDA  TYPE TABLE OF TY_SAIDA WITH HEADER LINE,
+      T_JUNCAO TYPE TABLE OF TY_JUNCAO WITH HEADER LINE.
+
+
+DATA: T_WHERE      TYPE TABLE OF STRING WITH HEADER LINE,
+      D_WHERE      TYPE TABLE OF STRING WITH HEADER LINE,
+      V_WHERE      TYPE TABLE OF STRING WITH HEADER LINE,
+      CONT         TYPE N LENGTH 2,
+      WA_ALV       TYPE REF TO CL_GUI_ALV_GRID,
+      WA_CONT      TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+      PARAMETRO(5),
+      STR          TYPE REF TO DATA.
+
+* Cria a ALV de Saida
+ASSIGN 'TY_SAIDA' TO FIELD-SYMBOL(<FS_STR>).
+CREATE DATA STR TYPE (<FS_STR>).
+
+DATA(R_TABLE) =
+CORRESPONDING LVC_T_FCAT(
+CL_SALV_DATA_DESCR=>READ_STRUCTDESCR( CAST CL_ABAP_STRUCTDESCR(
+CL_ABAP_STRUCTDESCR=>DESCRIBE_BY_DATA_REF( STR ) ) ) ).
+
+LOOP AT R_TABLE ASSIGNING FIELD-SYMBOL(<CAMPOS>).
+
+  IF SY-TABIX > 4 .
+    <CAMPOS>-FIELDNAME = ''.
+  ENDIF.
+
+  CASE <CAMPOS>-FIELDNAME.
+    WHEN 'KUNNR'.
+      <CAMPOS>-REPTEXT = 'Cod'.
+      <CAMPOS>-SCRTEXT_L = <CAMPOS>-REPTEXT.
+      <CAMPOS>-SCRTEXT_M = <CAMPOS>-REPTEXT.
+      <CAMPOS>-SCRTEXT_S = <CAMPOS>-REPTEXT.
+    WHEN 'NAME1'. <CAMPOS>-REPTEXT = 'Nome'.
+  ENDCASE.
+
+ENDLOOP.
+
+DELETE R_TABLE WHERE FIELDNAME EQ ''.
+
+* Cria os parametros de Seleção
+DATA(DT_INI) = |{ P_GJAHR-LOW }{ P_MES-LOW }01|.
+
+CASE ABAP_TRUE.
+  WHEN R_CLI. PARAMETRO = 'KUNNR'.
+  WHEN R_FOR. PARAMETRO = 'LIFNR'.
+ENDCASE.
+
+IF NOT P_BUKRS-LOW IS INITIAL AND P_BUKRS-HIGH IS INITIAL.
+  T_WHERE = | BUKRS EQ '{ P_BUKRS-LOW }'|.
+ELSEIF NOT P_BUKRS-LOW IS INITIAL AND NOT P_BUKRS-HIGH IS INITIAL.
+  T_WHERE = | BUKRS BETWEEN '{ P_BUKRS-LOW }' AND '{ P_BUKRS-HIGH }'|.
+ENDIF.
+
+IF NOT P_KUNNR-LOW IS INITIAL AND P_KUNNR-HIGH IS INITIAL.
+  T_WHERE = |{ T_WHERE } AND { PARAMETRO } EQ '{ P_KUNNR-LOW }'|.
+ELSEIF NOT P_KUNNR-LOW IS INITIAL AND NOT P_KUNNR-HIGH IS INITIAL.
+  T_WHERE = |{ T_WHERE } AND { PARAMETRO } BETWEEN '{ P_KUNNR-LOW }' AND '{ P_KUNNR-HIGH }'|.
+ENDIF.
+
+APPEND T_WHERE.
+CLEAR T_WHERE.
+
+V_WHERE[] = T_WHERE[].
+
+IF NOT P_GJAHR-LOW IS INITIAL.
+  V_WHERE  = |{ V_WHERE  } AND GJAHR EQ '{ P_GJAHR-LOW }'|.
+
+  DATA(ANO) = P_GJAHR-LOW + 1.
+  IF ANO <= SY-DATUM(4).
+    T_WHERE = |{ T_WHERE } AND GJAHR BETWEEN '{ ANO }' AND '{ SY-DATUM(4) }'|.
+  ENDIF.
+
+ENDIF.
+
+APPEND T_WHERE.
+CLEAR T_WHERE.
+
+APPEND V_WHERE.
+CLEAR V_WHERE.
+
+V_WHERE = |{ V_WHERE } and UMSAV eq 0 |.
+
+CONT = 0.
+DO.
+  IF CONT EQ 13.
+    EXIT.
+  ENDIF.
+
+  ADD 1 TO CONT.
+
+  IF CONT >= P_MES-LOW.
+    V_WHERE = |{ V_WHERE } and UM{ CONT }U eq 0 |.
+    V_WHERE = |{ V_WHERE } and UM{ CONT }S eq 0 |.
+    V_WHERE = |{ V_WHERE } and UM{ CONT }H eq 0 |.
+  ENDIF.
+
+  CASE CONT.
+    WHEN 03 OR 06 OR 09 OR 12.
+      APPEND V_WHERE.
+      CLEAR V_WHERE.
+  ENDCASE.
+
+ENDDO.
+
+CASE ABAP_TRUE.
+  WHEN R_CLI.
+    PERFORM KNC.
+  WHEN R_FOR.
+    PERFORM LFC.
+ENDCASE.
+
+CALL SCREEN 0100.
+
+MODULE PBO_0100 OUTPUT.
+  SET PF-STATUS 'PF0100'.
+  SET TITLEBAR 'TI0100'.
+
+  IF WA_CONT IS INITIAL.
+
+    CREATE OBJECT WA_CONT
+      EXPORTING
+        CONTAINER_NAME = 'CC_01'.
+
+    CREATE OBJECT WA_ALV
+      EXPORTING
+        I_SHELLSTYLE    = 0
+        I_PARENT        = WA_CONT
+        I_APPL_EVENTS   = SPACE
+        I_FCAT_COMPLETE = SPACE.
+
+    CALL METHOD WA_ALV->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        I_SAVE          = 'X'
+      CHANGING
+        IT_OUTTAB       = T_SAIDA[]
+        IT_FIELDCATALOG = R_TABLE[].
+  ENDIF.
+
+ENDMODULE.
+
+MODULE PAI_0100 INPUT.
+  CASE SY-UCOMM.
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+ENDMODULE.
+
+FORM KNC .
+
+  FREE: T_KNC1, T_KNC3, T_SAIDA, C_KNC1, C_KNC3, T_JUNCAO.
+  CLEAR: T_KNC1, T_KNC3, T_SAIDA, C_KNC1, C_KNC3, T_JUNCAO.
+
+  SELECT *
+    FROM KNC1
+    INTO TABLE T_KNC1
+    WHERE (V_WHERE).
+
+  PERFORM DELETA_MES_KNC1.
+
+  CHECK NOT T_KNC1[] IS INITIAL.
+
+  SELECT *
+      FROM KNC1
+      APPENDING TABLE T_KNC1
+      FOR ALL ENTRIES IN T_KNC1
+      WHERE KUNNR EQ  T_KNC1-KUNNR
+       AND (T_WHERE).
+
+* Ordena Tabela
+  SORT T_KNC1 BY KUNNR BUKRS.
+
+  C_KNC1[] = T_KNC1[].
+
+*  Verifica se Existe informação
+  CHECK NOT T_KNC1[] IS INITIAL.
+
+* Seleciona se há adiantameto nos itens da knc1
+  SELECT * FROM KNC3
+  INTO TABLE T_KNC3
+  FOR ALL ENTRIES IN T_KNC1
+  WHERE KUNNR EQ T_KNC1-KUNNR
+  AND   BUKRS EQ T_KNC1-BUKRS
+  AND   GJAHR EQ T_KNC1-GJAHR.
+
+* Ordeno Tabela
+  SORT T_KNC3 BY KUNNR BUKRS.
+  C_KNC3[] = T_KNC3[].
+
+  PERFORM CALCULA_COLUNAS.
+
+* Ordeno
+  SORT C_KNC1 BY BUKRS KUNNR.
+  SORT C_KNC3 BY BUKRS KUNNR.
+
+* Deleto Duplicidade
+  DELETE ADJACENT DUPLICATES FROM C_KNC1 COMPARING BUKRS KUNNR.
+  DELETE ADJACENT DUPLICATES FROM C_KNC3 COMPARING BUKRS KUNNR.
+
+* Selet da descrição do Cliente
+  SELECT * FROM KNA1
+    INTO TABLE @DATA(KNA1)
+  FOR ALL ENTRIES IN @T_JUNCAO
+  WHERE KUNNR EQ @T_JUNCAO-KUNNR
+    AND LAND1 EQ 'BR'.
+
+* Select da Tabela de Exceção
+  SELECT * FROM ZMMT0070
+    INTO TABLE @DATA(IT_0070)
+    FOR  ALL ENTRIES IN @T_JUNCAO
+    WHERE KUNNR EQ @T_JUNCAO-KUNNR.
+
+* Verifico se os Clientes estão na Tabela de Exceção e no de Adantamento
+* se caso positivo é limpo o codigo do Cliente para ser deletado posteriormente
+  LOOP AT T_JUNCAO ASSIGNING FIELD-SYMBOL(<KNC>).
+
+    IF LINE_EXISTS( IT_0070[ KUNNR = <KNC>-KUNNR ] ).
+      <KNC>-KUNNR = ''.
+    ENDIF.
+
+  ENDLOOP.
+
+* Deleta os Cliente com codigo em Branco
+  DELETE T_JUNCAO WHERE KUNNR IS INITIAL.
+
+* Agrupa a Tabela para a Saida
+  LOOP AT T_JUNCAO.
+    MOVE-CORRESPONDING T_JUNCAO TO T_SAIDA.
+    T_SAIDA-SEQ = SY-TABIX.
+
+    TRY .
+        T_SAIDA-NAME1 = KNA1[ KUNNR = T_JUNCAO-KUNNR ]-NAME1.
+      CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+        T_SAIDA-NAME1 = ''.
+    ENDTRY.
+
+    APPEND T_SAIDA.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM LFC .
+
+  FREE: T_LFC1, T_LFC3, T_SAIDA, C_LFC1, C_LFC3, T_JUNCAO.
+  CLEAR: T_LFC1, T_LFC3, T_SAIDA, C_LFC1, C_LFC3, T_JUNCAO.
+
+* Select Principal
+  SELECT *
+    FROM LFC1
+    INTO TABLE T_LFC1
+    WHERE (V_WHERE).
+
+  PERFORM DELETA_MES_LFC1.
+
+  CHECK NOT T_LFC1[] IS INITIAL.
+
+  SELECT *
+    FROM LFC1
+    APPENDING TABLE T_LFC1
+    FOR ALL ENTRIES IN T_LFC1
+    WHERE LIFNR EQ  T_LFC1-LIFNR
+      AND (T_WHERE).
+
+* Ordena Tabela
+  SORT T_LFC1 BY LIFNR BUKRS.
+
+  C_LFC1[] = T_LFC1[].
+
+* Deleta os Valores Diferente de 0 (ZERO)
+*  DELETE C_LFC1 WHERE (D_WHERE).
+
+*  Verifica se Existe informação
+  CHECK NOT T_LFC1[] IS INITIAL.
+
+* Seleciona se há adiantameto nos itens da lfc1
+  SELECT * FROM LFC3
+  INTO TABLE T_LFC3
+  FOR ALL ENTRIES IN T_LFC1
+  WHERE LIFNR EQ T_LFC1-LIFNR
+  AND   BUKRS EQ T_LFC1-BUKRS
+  AND   GJAHR EQ T_LFC1-GJAHR.
+
+* Ordeno Tabela
+  SORT T_LFC3 BY LIFNR BUKRS.
+
+  C_LFC3[] = T_LFC3[].
+
+  PERFORM CALCULA_COLUNAS1.
+
+* Ordeno
+  SORT C_LFC1 BY BUKRS LIFNR.
+  SORT C_LFC3 BY BUKRS LIFNR.
+
+* Deleto Duplicidade
+  DELETE ADJACENT DUPLICATES FROM C_LFC1 COMPARING BUKRS LIFNR.
+  DELETE ADJACENT DUPLICATES FROM C_LFC3 COMPARING BUKRS LIFNR.
+
+* Selet da descrição do Cliente
+  SELECT * FROM LFA1
+    INTO TABLE @DATA(LFA1)
+  FOR ALL ENTRIES IN @T_JUNCAO
+  WHERE LIFNR EQ @T_JUNCAO-KUNNR
+    AND KTOKK NE 'ZMOT'
+    AND LAND1 EQ 'BR'.
+
+* Select da Tabela de Exceção
+  SELECT * FROM ZMMT0070
+    INTO TABLE @DATA(IT_0070)
+    FOR  ALL ENTRIES IN @T_JUNCAO
+    WHERE LIFNR EQ @T_JUNCAO-KUNNR.
+
+* Verifico se os Fornecedores estão na Tabela de Exceção e no de Adantamento
+* se caso positivo é limpo o codigo do Cliente para ser deletado posteriormente
+  LOOP AT T_JUNCAO ASSIGNING FIELD-SYMBOL(<LFC>).
+
+    IF LINE_EXISTS( IT_0070[ LIFNR = <LFC>-KUNNR ] ).
+      <LFC>-KUNNR = ''.
+    ENDIF.
+
+    IF LINE_EXISTS( LFA1[ LIFNR = <LFC>-KUNNR KTOKK = 'ZMOT' ] ).
+      <LFC>-KUNNR = ''.
+    ENDIF.
+
+  ENDLOOP.
+
+* Deleta os Fornecedores com codigo em Branco
+  DELETE T_JUNCAO WHERE KUNNR IS INITIAL.
+
+* Agrupa a Tabela para a Saida
+  LOOP AT T_JUNCAO.
+    MOVE-CORRESPONDING T_JUNCAO TO T_SAIDA.
+    T_SAIDA-SEQ = SY-TABIX.
+    T_SAIDA-KUNNR = T_JUNCAO-KUNNR.
+
+    TRY .
+        T_SAIDA-NAME1 = LFA1[ LIFNR = T_JUNCAO-KUNNR ]-NAME1.
+      CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+        T_SAIDA-NAME1 = ''.
+    ENDTRY.
+
+    APPEND T_SAIDA.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM CALCULA_COLUNAS.
+
+  DATA: CONT  TYPE N LENGTH 2,
+        CAMPO TYPE CHAR20.
+
+  FIELD-SYMBOLS:
+  <FS_CAMPO> TYPE ANY.
+
+  LOOP AT C_KNC1 ASSIGNING FIELD-SYMBOL(<KNC1>).
+
+    T_JUNCAO-KUNNR = <KNC1>-KUNNR.
+    T_JUNCAO-BUKRS = <KNC1>-BUKRS.
+
+    CONT = 1.
+
+    DO.
+
+      IF CONT EQ 13.
+        EXIT.
+      ENDIF.
+
+      CAMPO = |UMSAV|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }S|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }H|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }U|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      ADD 1 TO CONT.
+
+    ENDDO.
+
+    APPEND T_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  LOOP AT C_KNC3.
+
+    T_JUNCAO-KUNNR = C_KNC3-KUNNR.
+    T_JUNCAO-BUKRS = C_KNC3-BUKRS.
+
+    C_KNC3-SALDV = ABS( C_KNC3-SALDV ).
+    C_KNC3-SOLLL = ABS( C_KNC3-SOLLL ).
+    C_KNC3-HABNL = ABS( C_KNC3-HABNL ).
+
+    ADD  C_KNC3-SALDV TO T_JUNCAO-SOMA.
+    ADD  C_KNC3-SOLLL TO T_JUNCAO-SOMA.
+    ADD  C_KNC3-HABNL TO T_JUNCAO-SOMA.
+
+    APPEND T_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  DATA: C_JUNCAO TYPE TABLE OF TY_JUNCAO WITH HEADER LINE.
+
+  LOOP AT T_JUNCAO.
+
+    C_JUNCAO-KUNNR = T_JUNCAO-KUNNR.
+    C_JUNCAO-BUKRS = T_JUNCAO-BUKRS.
+    C_JUNCAO-SOMA = T_JUNCAO-SOMA.
+
+    COLLECT C_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  T_JUNCAO[] = C_JUNCAO[].
+
+  DELETE T_JUNCAO WHERE NOT SOMA IS INITIAL.
+
+ENDFORM.
+
+FORM CALCULA_COLUNAS1.
+
+  DATA: CONT  TYPE N LENGTH 2,
+        CAMPO TYPE CHAR20.
+
+  FIELD-SYMBOLS:
+  <FS_CAMPO> TYPE ANY.
+
+  LOOP AT C_LFC1 ASSIGNING FIELD-SYMBOL(<LFC1>).
+
+    T_JUNCAO-KUNNR = <LFC1>-LIFNR.
+    T_JUNCAO-BUKRS = <LFC1>-BUKRS.
+
+    CONT = 1.
+
+    DO.
+
+      IF CONT EQ 13.
+        EXIT.
+      ENDIF.
+
+      CAMPO = |UMSAV|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }S|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }H|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      CAMPO = |UM{ CONT }U|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = ABS( <FS_CAMPO> ).
+      ADD <FS_CAMPO> TO T_JUNCAO-SOMA.
+
+      ADD 1 TO CONT.
+
+    ENDDO.
+
+
+    APPEND T_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  LOOP AT  C_LFC3.
+
+    T_JUNCAO-KUNNR = C_LFC3-LIFNR.
+    T_JUNCAO-BUKRS = C_LFC3-BUKRS.
+
+    C_LFC3-SALDV = ABS( C_LFC3-SALDV ).
+    C_LFC3-SOLLL = ABS( C_LFC3-SOLLL ).
+    C_LFC3-HABNL = ABS( C_LFC3-HABNL ).
+
+    ADD  C_LFC3-SALDV TO T_JUNCAO-SOMA.
+    ADD  C_LFC3-SOLLL TO T_JUNCAO-SOMA.
+    ADD  C_LFC3-HABNL TO T_JUNCAO-SOMA.
+
+    APPEND T_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  DATA: C_JUNCAO TYPE TABLE OF TY_JUNCAO WITH HEADER LINE.
+
+  LOOP AT T_JUNCAO.
+
+    C_JUNCAO-KUNNR = T_JUNCAO-KUNNR.
+    C_JUNCAO-BUKRS = T_JUNCAO-BUKRS.
+    C_JUNCAO-SOMA = T_JUNCAO-SOMA.
+
+    COLLECT C_JUNCAO.
+    CLEAR T_JUNCAO.
+
+  ENDLOOP.
+
+  T_JUNCAO[] = C_JUNCAO[].
+
+  DELETE T_JUNCAO WHERE NOT SOMA IS INITIAL.
+
+ENDFORM.
+
+FORM DELETA_MES_KNC1.
+
+  DATA: CONT  TYPE N LENGTH 2,
+        CAMPO TYPE CHAR20.
+
+  FIELD-SYMBOLS:
+  <FS_CAMPO> TYPE ANY.
+
+  LOOP AT T_KNC1 ASSIGNING FIELD-SYMBOL(<KNC1>).
+
+    CONT = 1.
+
+    DO.
+
+      IF CONT >= P_MES-LOW.
+        EXIT.
+      ENDIF.
+
+      CAMPO = |UM{ CONT }S|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      CAMPO = |UM{ CONT }H|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      CAMPO = |UM{ CONT }U|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <KNC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      ADD 1 TO CONT.
+
+    ENDDO.
+  ENDLOOP.
+
+ENDFORM.
+
+FORM DELETA_MES_LFC1.
+
+  DATA: CONT  TYPE N LENGTH 2,
+        CAMPO TYPE CHAR20.
+
+  FIELD-SYMBOLS:
+  <FS_CAMPO> TYPE ANY.
+
+  LOOP AT T_LFC1 ASSIGNING FIELD-SYMBOL(<LFC1>).
+
+    CONT = 1.
+
+    DO.
+
+      IF CONT >= P_MES-LOW.
+        EXIT.
+      ENDIF.
+
+      CAMPO = |UM{ CONT }S|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      CAMPO = |UM{ CONT }H|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      CAMPO = |UM{ CONT }U|.
+      ASSIGN COMPONENT CAMPO OF STRUCTURE <LFC1> TO <FS_CAMPO>.
+      <FS_CAMPO> = 0.
+
+      ADD 1 TO CONT.
+
+    ENDDO.
+  ENDLOOP.
+
+ENDFORM.

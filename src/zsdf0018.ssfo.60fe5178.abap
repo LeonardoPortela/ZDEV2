@@ -1,0 +1,27 @@
+
+IF WA_ITENS-VOLUM IS NOT INITIAL.
+V_VOLUM = WA_ITENS-VOLUM.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

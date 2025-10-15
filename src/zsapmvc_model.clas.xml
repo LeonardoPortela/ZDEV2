@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZSAPMVC_MODEL</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>SAPmvc - Model</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS_CLASS>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAPmvc - Model</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_CLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CHANGE_NOTIFICATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8R\QDon&apos;t Change it@Change  Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLASS_ABSOLUTE_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@&apos;\CLASS=&apos;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QDon&apos;t Change it@CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QDon&apos;t Change it@Create Model Instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>END_TIMER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@End of Timer for Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROGRAM_ABSOLUTE_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@&apos;&apos;\PROGRAM=&apos;&apos;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPEAT_TIMER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Repeat Timer</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RUN_TIMER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Run Timer on Finished</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>START_TIMER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Start Timer for Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TIMER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@SAP Timer Control</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRIGGER_CHANGE_NOTIFICATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Change  Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TYPE_TABLE_FIELDNAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Field Name Table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VIEW_NOTIFICATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@Set View Notification</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CHANGE_NOTIFICATION</CMPNAME>
+     <SCONAME>FIELD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field Name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <SCONAME>MODEL_INSTANCE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAPmvc - Model</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <SCONAME>MODEL_REFERENCE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Model Reference</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <SCONAME>REPID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP Program</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <SCONAME>ZCX_SAPMVC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAPmvc - MVC Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>START_TIMER</CMPNAME>
+     <SCONAME>REPEAT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Repeat Timer</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>START_TIMER</CMPNAME>
+     <SCONAME>TIMEOUT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Timeout</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>VIEW_NOTIFICATION</CMPNAME>
+     <SCONAME>NOTIFY_VIEW</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>View Notification Indicator</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,24 @@
+FUNCTION Z_REPOM_INFORMA_CARTAO_PED.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  EXPORTING
+*"     REFERENCE(CK_VALIDADO) TYPE  CHAR01
+*"  CHANGING
+*"     VALUE(I_CARTAO) TYPE  ZDE_REPOM_CARTAO
+*"----------------------------------------------------------------------
+
+  CLEAR: ZDE_REPOM_CARTAO.
+
+  CK_INFORMADO = ABAP_FALSE.
+
+  MOVE-CORRESPONDING I_CARTAO TO ZDE_REPOM_CARTAO.
+
+  CALL SCREEN 0101 STARTING AT 40 05.
+
+  IF CK_INFORMADO = ABAP_TRUE.
+    I_CARTAO-NR_CARTAO = ZDE_REPOM_CARTAO-NR_CARTAO.
+  ENDIF.
+
+  CK_VALIDADO = CK_INFORMADO.
+
+ENDFUNCTION.

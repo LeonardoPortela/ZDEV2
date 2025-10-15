@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE zm_status_2000.
+*
+PROCESS AFTER INPUT.
+  MODULE zm_user_command_2000_exit AT EXIT-COMMAND.
+  MODULE zm_user_command_2000.

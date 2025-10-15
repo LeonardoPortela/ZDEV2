@@ -1,0 +1,271 @@
+class ZCL_MEMORY_VARIAVEIS definition
+  public
+  final
+  create public
+  shared memory enabled .
+
+public section.
+
+  interfaces IF_SHM_BUILD_INSTANCE .
+
+  methods SET_TEXTO_XSTRING
+    importing
+      !I_XSTRING type XSTRING
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods SET_TEXTO_OTF
+    importing
+      !I_OTF type TT_ITCOO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods SET_TEXTO_STRING
+    importing
+      !I_STRING type STRING
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_TEXTO_XSTRING
+    exporting
+      !E_XSTRING type XSTRING
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_TEXTO_OTF
+    exporting
+      !E_OTF type TT_ITCOO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_TEXTO_STRING
+    exporting
+      !E_STRING type STRING
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods ADD_TEXTOS_TIPO
+    importing
+      !I_NM_TIPO type STRING
+      !I_XSTRING type XSTRING
+      !I_OTF type TT_ITCOO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_TEXTOS_TIPO
+    importing
+      !I_NM_TIPO type CHAR060
+    exporting
+      !E_TEXTO_TIPO type ZDE_TEXTO_TIPO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_TEXTOS_TPOS
+    exporting
+      !E_TEXTO_TIPO type ZDE_TEXTO_TIPO_T
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods SET_AUTENTICACAO
+    importing
+      !I_DS_AUTENTICACAO type DBCON_PWD
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_AUTENTICACAO
+    exporting
+      value(E_DS_AUTENTICACAO) type DBCON_PWD
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods SET_ID_AUTENTICACAO
+    importing
+      !I_CD_AUTENTICACAO type ZDE_ID_AUTENTICACAO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+  methods GET_ID_AUTENTICACAO
+    exporting
+      !E_CD_AUTENTICACAO type ZDE_ID_AUTENTICACAO
+    returning
+      value(R_INSTANCIA) type ref to ZCL_MEMORY_VARIAVEIS .
+protected section.
+private section.
+
+  data TEXTO_X type XSTRING .
+  data TEXTO type STRING .
+  data TEXTOS_TABLE type ZDE_TEXTO_TIPO_T .
+  data TEXTO_OTF type TT_ITCOO .
+  data DS_AUTENTICACAO type DBCON_PWD .
+  data CD_AUTENTICACAO type ZDE_ID_AUTENTICACAO .
+ENDCLASS.
+
+
+
+CLASS ZCL_MEMORY_VARIAVEIS IMPLEMENTATION.
+
+
+  METHOD ADD_TEXTOS_TIPO.
+
+    DATA: WA_ADD TYPE ZDE_TEXTO_TIPO.
+
+    DATA: TAMANHO TYPE I,
+          LT_PDF  TYPE TABLE OF CHAR80.
+
+    TEXTO_X     = I_XSTRING.
+    TEXTO_OTF   = I_OTF.
+
+    R_INSTANCIA = ME.
+
+    CALL FUNCTION 'SCMS_XSTRING_TO_BINARY'
+      EXPORTING
+        BUFFER        = TEXTO_X
+      IMPORTING
+        OUTPUT_LENGTH = TAMANHO
+      TABLES
+        BINARY_TAB    = LT_PDF.
+
+    CALL FUNCTION 'SCMS_BINARY_TO_STRING'
+      EXPORTING
+        INPUT_LENGTH = TAMANHO
+      IMPORTING
+        TEXT_BUFFER  = TEXTO
+      TABLES
+        BINARY_TAB   = LT_PDF
+      EXCEPTIONS
+        FAILED       = 1
+        OTHERS       = 2.
+
+
+    DELETE ME->TEXTOS_TABLE WHERE NM_TIPO = I_NM_TIPO.
+    WA_ADD-NM_TIPO   = I_NM_TIPO.
+    WA_ADD-BINARY    = LT_PDF.
+    WA_ADD-TEXTO     =  TEXTO.
+    WA_ADD-OTF       = I_OTF.
+    APPEND WA_ADD TO ME->TEXTOS_TABLE.
+
+  ENDMETHOD.
+
+
+  METHOD GET_AUTENTICACAO.
+    E_DS_AUTENTICACAO = ME->DS_AUTENTICACAO.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD GET_ID_AUTENTICACAO.
+    E_CD_AUTENTICACAO = ME->CD_AUTENTICACAO.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD GET_TEXTOS_TIPO.
+
+    R_INSTANCIA = ME.
+
+    READ TABLE ME->TEXTOS_TABLE WITH KEY NM_TIPO = I_NM_TIPO INTO E_TEXTO_TIPO.
+
+  ENDMETHOD.
+
+
+  METHOD GET_TEXTOS_TPOS.
+
+    R_INSTANCIA = ME.
+
+    E_TEXTO_TIPO = ME->TEXTOS_TABLE.
+
+  ENDMETHOD.
+
+
+  METHOD GET_TEXTO_OTF.
+    E_OTF = TEXTO_OTF.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD GET_TEXTO_STRING.
+    E_STRING = TEXTO.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD GET_TEXTO_XSTRING.
+    E_XSTRING = TEXTO_X.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD IF_SHM_BUILD_INSTANCE~BUILD.
+
+*    DATA:
+*      L_HANDLE TYPE REF TO ZCL_SINGLETON_VARIAVEIS_AREA,
+*      L_DATA   TYPE REF TO ZCL_SINGLETON_VARIAVEIS_AREA,
+*      L_EXCEPT TYPE REF TO CX_ROOT.
+*
+*    TRY.
+*        HANDLE = ZCL_SINGLETON_VARIAVEIS_AREA=>ATTACH_FOR_WRITE( INST_NAME ).
+*
+*        CREATE OBJECT LV_INSTANCIA AREA HANDLE HANDLE.
+*        HANDLE->SET_ROOT( LV_INSTANCIA ).
+*        CREATE OBJECT LV_INSTANCIA->LV_INSTANCIA AREA HANDLE HANDLE TYPE ZCL_SINGLETON_VARIAVEIS.
+*
+*      CATCH CX_SHM_ERROR INTO L_EXCEPT.
+*        BREAK-POINT.
+**        RAISE EXCEPTION TYPE CX_SHM_BUILD_FAILED
+**          EXPORTING
+**            PREVIOUS = L_EXCEPT.
+*    ENDTRY.
+*
+*    TRY.
+*        HANDLE->DETACH_COMMIT( ).
+*      CATCH CX_SHM_ERROR INTO L_EXCEPT.
+*        BREAK-POINT.
+**        RAISE EXCEPTION TYPE CX_SHM_BUILD_FAILED
+**          EXPORTING
+**            PREVIOUS = L_EXCEPT.
+*    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD SET_AUTENTICACAO.
+    ME->DS_AUTENTICACAO = I_DS_AUTENTICACAO.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD SET_ID_AUTENTICACAO.
+    ME->CD_AUTENTICACAO = I_CD_AUTENTICACAO.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  METHOD SET_TEXTO_OTF.
+    TEXTO_OTF = I_OTF.
+    R_INSTANCIA = ME.
+  ENDMETHOD.
+
+
+  method SET_TEXTO_STRING.
+    TEXTO = I_STRING.
+    R_INSTANCIA = ME.
+  endmethod.
+
+
+  METHOD SET_TEXTO_XSTRING.
+
+    DATA: TAMANHO TYPE I,
+          LT_PDF  TYPE TABLE OF CHAR80.
+
+    TEXTO_X = I_XSTRING.
+    R_INSTANCIA = ME.
+
+    CALL FUNCTION 'SCMS_XSTRING_TO_BINARY'
+      EXPORTING
+        BUFFER        = TEXTO_X
+      IMPORTING
+        OUTPUT_LENGTH = TAMANHO
+      TABLES
+        BINARY_TAB    = LT_PDF.
+
+    CALL FUNCTION 'SCMS_BINARY_TO_STRING'
+      EXPORTING
+        INPUT_LENGTH = TAMANHO
+      IMPORTING
+        TEXT_BUFFER  = TEXTO
+      TABLES
+        BINARY_TAB   = LT_PDF
+      EXCEPTIONS
+        FAILED       = 1
+        OTHERS       = 2.
+
+  ENDMETHOD.
+ENDCLASS.

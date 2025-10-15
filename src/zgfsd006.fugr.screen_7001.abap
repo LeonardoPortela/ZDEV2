@@ -1,0 +1,7 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_7001.
+  MODULE alv_init_7001.
+  MODULE text_init_7001.
+
+PROCESS AFTER INPUT.
+  MODULE user_command_7001.

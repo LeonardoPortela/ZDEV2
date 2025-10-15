@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_AVERBACAO_SEGURO_URI</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe para URI de Averbação de Seguro</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <MSG_ID>ZAVSEGURO</MSG_ID>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_URI</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Retorna URI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CD_SEGURADORA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Seguradora</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CONTENT_TYPE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Nr. Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_URI</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Seta Branch</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>URI</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>WebServices de Averbação de Seguro</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_URI</CMPNAME>
+     <SCONAME>R_ZLEST0144</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>WebServices de Averbação de Seguro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONTENT_TYPE</CMPNAME>
+     <SCONAME>I_CONTENT_TYPE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número do Token</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_URI</CMPNAME>
+     <SCONAME>I_URI</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Local de negócios</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

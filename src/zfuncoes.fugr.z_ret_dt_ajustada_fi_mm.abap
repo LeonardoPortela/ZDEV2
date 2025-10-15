@@ -1,0 +1,73 @@
+FUNCTION Z_RET_DT_AJUSTADA_FI_MM.
+*"--------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(P_DATA_ENT) TYPE  DATUM
+*"     REFERENCE(P_BUKRS) TYPE  BUKRS
+*"     REFERENCE(P_VAL_FI) TYPE  CHAR1 DEFAULT 'X'
+*"     REFERENCE(P_VAL_MM) TYPE  CHAR1 DEFAULT 'X'
+*"  EXPORTING
+*"     REFERENCE(P_DATA_VAL) TYPE  DATUM
+*"  EXCEPTIONS
+*"      DATA_FI_MM_NAO
+*"--------------------------------------------------------------------
+
+  DATA: P_DATA_VAL_MM TYPE  DATUM,
+        P_MSG         TYPE STRING.
+
+  IF NOT P_VAL_MM IS INITIAL.
+
+    CALL FUNCTION 'Z_RET_DATA_MES_ABERTO_MM'
+      EXPORTING
+        P_DATA_ENT             = P_DATA_ENT
+        P_BUKRS                = P_BUKRS
+      IMPORTING
+        P_DATA_VAL             = P_DATA_VAL_MM
+      EXCEPTIONS
+        PERIODO_NAO_ENCONTRADO = 1
+        SEM_PERIODO            = 2
+        OTHERS                 = 3.
+
+    IF SY-SUBRC <> 0.
+      MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4
+       RAISING DATA_FI_MM_NAO.
+    ENDIF.
+
+    IF P_VAL_FI IS INITIAL.
+      P_DATA_VAL = P_DATA_VAL_MM.
+    ENDIF.
+
+  ENDIF.
+
+  IF NOT P_VAL_FI IS INITIAL.
+
+    IF P_VAL_MM IS INITIAL.
+      P_DATA_VAL_MM = P_DATA_ENT.
+    ENDIF.
+
+    CALL FUNCTION 'Z_RET_DATA_MES_ABERTO'
+      EXPORTING
+        P_DATA_ENT  = P_DATA_VAL_MM
+        P_BUKRS     = P_BUKRS
+      IMPORTING
+        P_DATA_VAL  = P_DATA_VAL
+      EXCEPTIONS
+        SEM_PERIODO = 1
+        OTHERS      = 2.
+
+    IF NOT SY-SUBRC IS INITIAL.
+      MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4
+       RAISING DATA_FI_MM_NAO.
+    ENDIF.
+
+    IF ( P_DATA_VAL_MM NE P_DATA_VAL ) AND ( NOT P_VAL_MM IS INITIAL ).
+      IF SY-TCODE NE 'ZGL016'.
+        CONCATENATE 'Período' P_DATA_VAL_MM+4(2) 'MM Aberto!' 'Perído' P_DATA_VAL_MM+4(2) 'FI Fechado!'
+                     INTO P_MSG SEPARATED BY SPACE.
+        MESSAGE E000(Z_FI) RAISING DATA_FI_MM_NAO WITH P_MSG.
+      ENDIF.
+    ENDIF.
+
+  ENDIF.
+
+ENDFUNCTION.

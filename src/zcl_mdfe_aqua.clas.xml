@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MDFE_AQUA</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Modal Aquavário - MDFE</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CEMBCOMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da embarcação do comboio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CNPJAGENAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CNPJ da Agência de Navegação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CPRTDEST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Porto de Destino</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CPRTEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Porto de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Terminal de Descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_IDUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação da unividade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_NVIAG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Viagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TPEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do tipo de Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_TPUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo da unidade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_XEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_XTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_XTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CEMBCOMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código da embarcação do comboio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CNPJAGENAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar CNPJ da Agência de Navegação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CPRTDEST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código do Porto de Destino</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CPRTEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código do Porto de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código do Terminal de Descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_IDUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capt. Identificação da unividade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_NVIAG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Número da Viagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TPEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Código do tipo de Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_TPUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Tipo da unidade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_XEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Nome da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_XTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Nome do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_XTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para capturar Nome do terminal de descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MONTA_XML</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Médodo para Montagem XML</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar  Código da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CEMBCOMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Código da embarcação do comboio</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CNPJAGENAV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar CNPJ da Agência de Navegação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CPRTDEST</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Código do Porto de Destino</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CPRTEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Código do Porto de Embarque</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Código do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Código do Terminal de Descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_IDUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para conf. Identificação da unividade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_NVIAG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Número da Viagem</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TPEMB</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar  Código do tipo de Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TPUNIDCARGAVAZIA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Tipo da unidade de carga vazia</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_XEMBAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Nome da Embarcação</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_XTERMCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Nome do terminal de carregamento</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_XTERMDESCARREG</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método para configurar Nome do terminal de descarregamento</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CEMBAR</CMPNAME>
+     <SCONAME>CEMBAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CEMBCOMB</CMPNAME>
+     <SCONAME>CEMBCOMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da embarcação do comboio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CNPJAGENAV</CMPNAME>
+     <SCONAME>CNPJAGENAV</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CNPJ da Agência de Navegação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CPRTDEST</CMPNAME>
+     <SCONAME>CPRTDEST</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Porto de Destino</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CPRTEMB</CMPNAME>
+     <SCONAME>CPRTEMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT> Código do Porto de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CTERMCARREG</CMPNAME>
+     <SCONAME>CTERMCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CHAR08</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CTERMDESCARREG</CMPNAME>
+     <SCONAME>CTERMDESCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ódigo do Terminal de Descarregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_IDUNIDCARGAVAZIA</CMPNAME>
+     <SCONAME>IDUNIDCARGAVAZIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação da unividade de carga vazia</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_NVIAG</CMPNAME>
+     <SCONAME>NVIAG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Viagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TPEMB</CMPNAME>
+     <SCONAME>TPEMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do tipo de Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_TPUNIDCARGAVAZIA</CMPNAME>
+     <SCONAME>TPUNIDCARGAVAZIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo da unidade de carga vazia</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_XEMBAR</CMPNAME>
+     <SCONAME>XEMBAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome da Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_XTERMCARREG</CMPNAME>
+     <SCONAME>XTERMCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de carregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_XTERMDESCARREG</CMPNAME>
+     <SCONAME>XTERMDESCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de descarregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MONTA_XML</CMPNAME>
+     <SCONAME>I_OBJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Manifesto de Doc. Eletronico</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CEMBAR</CMPNAME>
+     <SCONAME>CEMBAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CEMBCOMB</CMPNAME>
+     <SCONAME>CEMBCOMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código da embarcação do comboio</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CNPJAGENAV</CMPNAME>
+     <SCONAME>CNPJ</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CNPJ da Agência de Navegação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CPRTDEST</CMPNAME>
+     <SCONAME>CPRTDEST</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Porto de Destino</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CPRTEMB</CMPNAME>
+     <SCONAME>CPRTEMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Porto de Embarque</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CTERMCARREG</CMPNAME>
+     <SCONAME>CTERMCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do terminal de carregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CTERMDESCARREG</CMPNAME>
+     <SCONAME>CTERMDESCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do Terminal de Descarregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_IDUNIDCARGAVAZIA</CMPNAME>
+     <SCONAME>IDUNIDCARGAVAZIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Identificação da unividade de carga vazia</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_NVIAG</CMPNAME>
+     <SCONAME>NVIAG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Número da Viagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TPEMB</CMPNAME>
+     <SCONAME>TPEMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código do tipo de Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TPUNIDCARGAVAZIA</CMPNAME>
+     <SCONAME>TPUNIDCARGAVAZIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo da unidade de carga vazia</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_XEMBAR</CMPNAME>
+     <SCONAME>XEMBAR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome da Embarcação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_XTERMCARREG</CMPNAME>
+     <SCONAME>XTERMCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de carregamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_XTERMDESCARREG</CMPNAME>
+     <SCONAME>XTERMDESCARREG</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do terminal de descarregamento</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

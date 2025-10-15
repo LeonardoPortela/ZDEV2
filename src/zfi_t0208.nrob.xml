@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZFI_T0208</OBJECT>
+    <DOMLEN>CHAR9</DOMLEN>
+    <PERCENTAGE>10.0</PERCENTAGE>
+    <NOIVBUFFER>00000010</NOIVBUFFER>
+    <UNAME>NSEGATIN</UNAME>
+    <UDATE>2025-09-08</UDATE>
+    <UTIME>17:05:52</UTIME>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZFI_T0208</OBJECT>
+    <TXT>Númerador Chave da tabela ZFIT0208</TXT>
+    <TXTSHORT>Chave Numera T02008</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

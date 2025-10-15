@@ -1,0 +1,38 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="COMPANY_NODE" type="ddic:ZFIS_VIP_COUNTERPARTIES_BANK"/>
+  <tt:template>
+    <companyBank>
+      <seq tt:value-ref=".COMPANY_NODE.SEQ"/>
+      <externalRef tt:value-ref=".COMPANY_NODE.EXTERNALREF"/>
+      <beneficiaryBankCompanyNo tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKCOMPANYNO"/>
+      <beneficiaryBankCountryCode tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKCOUNTRYCODE"/>
+      <beneficiaryBankName tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKNAME"/>
+      <beneficiaryBankBranch tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKBRANCH"/>
+      <beneficiaryBankAddress1 tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKADDRESS1"/>
+      <beneficiaryBankAddress2 tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKADDRESS2"/>
+      <beneficiaryBankSwiftCode tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKSWIFTCODE"/>
+      <beneficiaryBankFullName tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKFULLNAME"/>
+      <beneficiaryBankAct tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKACT"/>
+      <beneficiaryBankAbaNo tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKABANO"/>
+      <beneficiaryBankIban tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKIBAN"/>
+      <beneficiaryBankExtRef tt:value-ref=".COMPANY_NODE.BENEFICIARYBANKEXTREF"/>
+      <beneficiaryAddress1 tt:value-ref=".COMPANY_NODE.BENEFICIARYADDRESS1"/>
+      <beneficiaryAddress2 tt:value-ref=".COMPANY_NODE.BENEFICIARYADDRESS2"/>
+      <beneficiaryAddress3 tt:value-ref=".COMPANY_NODE.BENEFICIARYADDRESS3"/>
+      <beneficiaryAddress4 tt:value-ref=".COMPANY_NODE.BENEFICIARYADDRESS4"/>
+      <beneficiaryCountryCode tt:value-ref=".COMPANY_NODE.BENEFICIARYCOUNTRYCODE"/>
+      <beneficiaryRemittanceInstructions tt:value-ref=".COMPANY_NODE.BENEFICIARYREMITTANCEINSTRUCTI"/>
+      <correspondentBankCompanyNo tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKCOMPANYNO"/>
+      <correspondentBankCountryCode tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKCOUNTRYCODE"/>
+      <correspondentBankName tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKNAME"/>
+      <correspondentBankBranch tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKBRANCH"/>
+      <correspondentBankAddress1 tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKADDRESS1"/>
+      <correspondentBankAddress2 tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKADDRESS2"/>
+      <correspondentBankSwiftCode tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKSWIFTCODE"/>
+      <correspondentBankFullName tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKFULLNAME"/>
+      <correspondentBankAct tt:value-ref=".COMPANY_NODE.CORRESPONDENTBANKACT"/>
+    </companyBank>
+  </tt:template>
+</tt:transform>

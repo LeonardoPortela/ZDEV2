@@ -1,0 +1,979 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZCCT</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagem para Controle de Carga e Transito(CCT)</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1&amp;2&amp;3&amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Recepção de Carga gravada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>CNPJ Responsável não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Cód. Unid. Receita Federal Despacho não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Cód. do Recinto Alfandegado não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Informar CNPJ ou CPF do Transportador!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Peso Aferido não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Empresa não foi definida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Filial não definida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Nenhuma NF atribuída a Recepção de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Tipo de Recepção não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Objeto Numeração de Recepção de Carga(&amp;1) não configurado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>NF: &amp;1 já recepcionada na Carga com Id. &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Houve um erro ao gravar a Recepção da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Houve um erro ao gravar a(s) NF(s) vinculada a Recepção da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Recepção de Carga não encontrada para cancelamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Recepção de Carga cancelada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Houve um erro ao cancelar a Recepção de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Autenticação não realizada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Serviço de Recepção Carga para &amp;1, não parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Não foi possível montar o XML de Recepção de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Erro desconhecido(Siscomex)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>&amp;1 - (Siscomex)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>SSL Id. não parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Falha de Comunicação com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Status de comunicação com &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Falha de processamento com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>TimeOut com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Deve ser efetuada uma nova autenticação para a Empresa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>NF &amp;1 não encontrada para Recepção!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Carga já recepcionada no portal Siscomex!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Nota já recepcionada no portal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Houve um erro ao gravar a nota recepcionada: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Houve um erro ao atualizar o romaneio da nota recepcionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Carga já recepcionada no Portal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Romaneio da NF-e não encontrado ou foi cancelado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Envio parcial da NF-e não foi aprovado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Romaneio da NF não encontrado! Chv: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Parâmetros CCT para Empresa/Filial não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Parâmetro de Autenticação Portal Unico Siscomex não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Tipo de Entrega não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>CNPJ/CPF Recebedor ou Nome Estrangeiro não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Via Transporte não foi informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Transbordo ou Baldeação não foi informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>Nenhum Documento atribuído a Entrega de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Registro DU-e &amp;1 não encontrado para Entrega!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Id. DU-e não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Tipo de Carga não foi informado! DU-e &amp;1 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>Tipo de Granel não foi informado! DU-e &amp;1 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Unidade de Medida não foi informado! DU-e &amp;1 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>Peso Bruto Total não foi informado! DU-e &amp;1 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>Peso Bruto Entregue não foi informado! DU-e &amp;1 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Objeto Numeração de Entrega de Carga(&amp;1) não configurado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>Houve um erro ao gravar a Entrega da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>Houve um erro ao gravar o(s) Documento(s) vinculado a Entrega da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>Entrega de Carga gravada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>Entrega já registrada no Portal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>Serviço de Entrega Carga para &amp;1, não parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>Não foi possível montar o XML de Entrega de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>059</MSGNR>
+     <TEXT>Nenhum Documento de Carga atribuído a DU-e &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>060</MSGNR>
+     <TEXT>DU-e &amp;1 não foi registrada no Portal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>061</MSGNR>
+     <TEXT>Houve um erro ao gravar o(s) Documento(s) de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Não foi possível deletar os Documentos de Carga Irrelevantes!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>Existem Cargas(Tipo Carga/Tipo Granel) duplicados! DU-e &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>064</MSGNR>
+     <TEXT>Informe CNPJ/CPF Recebedor ou Nome Estrangeiro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>065</MSGNR>
+     <TEXT>Entrega já registrada no Portal! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>Chave NF-e Documento Fiscal: &amp;1 está incompleta!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>067</MSGNR>
+     <TEXT>CNPJ Parceiro Nota Fiscal: &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>068</MSGNR>
+     <TEXT>UF Parceiro Nota Fiscal: &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>069</MSGNR>
+     <TEXT>Série Nota Fiscal: &amp;1 deve ter 3 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>Não foi possível definir o número da Nota Fiscal: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>Modelo Documento Fiscal: &amp;1 não está previsto!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>Documento Fiscal: &amp;1 não foi encontrado ou está cancelado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>Não foi possível definir a Chave do Documento Fiscal: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>Tipo Emissor Inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>075</MSGNR>
+     <TEXT>Documento Fiscal para Chave de NF-e: &amp;1 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>Romaneio saída Chave de NF-e: &amp;1 / Documento: &amp;2 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>O Rom.Entrada de vinculo ao Rom.Saída Documento: &amp;1 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>Reg.Entrada(Interface) do Rom.Entrada. Chv: &amp;1 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>Peso aferido Documento Fiscal: &amp;1 não foi definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>Chave NF-f Nota Fiscal: &amp;1 dever possuir 35 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>XML para Chave de NF-e: &amp;1 não foi Recebido/Distribuído!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>Não foi encontrado doc. do registro fiscal ou contra nota para NF-e: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>Documento Fiscal NF: &amp;1 CNPJ Emissor: &amp;2 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>Documento Fiscal NF: &amp;1 CPF Emissor: &amp;2 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>Modelo Documento é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>Os modelos de documento previstos na importação são: 55,01,04!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>CNPJ Responsável é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>Local Código URF é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>Local Código RA é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>090</MSGNR>
+     <TEXT>Latitude é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>091</MSGNR>
+     <TEXT>Longitude é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>092</MSGNR>
+     <TEXT>Data Emissão é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>093</MSGNR>
+     <TEXT>Transportador CNPJ/CPF é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>094</MSGNR>
+     <TEXT>Sigla UF Emissor é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>095</MSGNR>
+     <TEXT>Peso Aferido é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>096</MSGNR>
+     <TEXT>Data Recepção é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>097</MSGNR>
+     <TEXT>CNPJ/CPF Emissor é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>098</MSGNR>
+     <TEXT>Chave NF-e é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>099</MSGNR>
+     <TEXT>Tamanho da Chave NF-e é diferente de 44 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>100</MSGNR>
+     <TEXT>Cadastro Fornecedor com CNPJ/CPF &amp;1 não foi encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>101</MSGNR>
+     <TEXT>Já existe um Recepção para a NF-e: &amp;1! Id.Recepção: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>102</MSGNR>
+     <TEXT>Já existe um Recepção para a NF-f: &amp;1! Id.Recepção: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>103</MSGNR>
+     <TEXT>Houve um erro ao gravar a(s) NF-e(s) Reteadas a Recepção da Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>104</MSGNR>
+     <TEXT>Recepção Carga Importada com Sucesso: Id.: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>105</MSGNR>
+     <TEXT>Recepção Carga Processada com Sucesso: Id.: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>106</MSGNR>
+     <TEXT>Não foi informado o documento para montagem da chave!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>107</MSGNR>
+     <TEXT>Registro Fiscal do Documento &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>108</MSGNR>
+     <TEXT>Entrega de Carga não encontrada para cancelamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>109</MSGNR>
+     <TEXT>Houve um erro ao cancelar a Entrega de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>110</MSGNR>
+     <TEXT>Entrega de Carga cancelada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>111</MSGNR>
+     <TEXT>Peso Aferido: &amp;1 diferente do informado nos Documentos de Carga: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>112</MSGNR>
+     <TEXT>Docnum: &amp;1 vinculado total a um retorno de Industrialização Docnum: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>113</MSGNR>
+     <TEXT>Não existe De-Para para o Recinto: &amp;1 ! Acionar Depto Execução(ZSDT0137)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>114</MSGNR>
+     <TEXT>Encontrado mais de uma Entrada Própria p/ a NF: &amp;1 CNPJ Emissor: &amp;2 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>115</MSGNR>
+     <TEXT>Encontrado mais de uma Entrada Própria p/ a NF: &amp;1 CPF Emissor: &amp;2 !</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>116</MSGNR>
+     <TEXT>Número Documento é um campo obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>117</MSGNR>
+     <TEXT>NF disponibilizada p/ o CCT com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>118</MSGNR>
+     <TEXT>Deve ser atribuído chave NF-e ou chave NF-f!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>119</MSGNR>
+     <TEXT>NF já possui uma Recepção de Carga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>120</MSGNR>
+     <TEXT>Houve um erro ao disponbilizar a NF para o CCT!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>121</MSGNR>
+     <TEXT>Não foi possível determinar a Unidade Estatistica da NF: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>122</MSGNR>
+     <TEXT>Material não determinado para a NF: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>123</MSGNR>
+     <TEXT>CFOP não determinado para a NF: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>124</MSGNR>
+     <TEXT>Houve um erro no processamento dos registros(Atualização St. CCT NF)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>125</MSGNR>
+     <TEXT>Webservice de &amp;1 não parametrizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>126</MSGNR>
+     <TEXT>Requisição mal formatada!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>127</MSGNR>
+     <TEXT>Requisição requer autenticação!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>128</MSGNR>
+     <TEXT>Requisição não autorizada!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>129</MSGNR>
+     <TEXT>Registro não encontrado!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>130</MSGNR>
+     <TEXT>Erro de negócio!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>131</MSGNR>
+     <TEXT>Erro interno do servidor!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>132</MSGNR>
+     <TEXT>Serviço indisponível!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>133</MSGNR>
+     <TEXT>Retorno Desconhecido!(Siscomex)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>134</MSGNR>
+     <TEXT>&amp;1&amp;2&amp;3&amp;4 - (Siscomex)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>135</MSGNR>
+     <TEXT>Erro desconhecido(Siscomex)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>136</MSGNR>
+     <TEXT>Não encontrada Recepção de Carga no Portal para Chave de NF-e &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>137</MSGNR>
+     <TEXT>NF-e &amp;1 recepcionada na URF &amp;2! URF Importação &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>138</MSGNR>
+     <TEXT>NF-e &amp;1 recepcionada na Recinto &amp;2! Recinto Importação &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>139</MSGNR>
+     <TEXT>Não foi atribuido nenhuma nota fiscal complementada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>140</MSGNR>
+     <TEXT>Informado nota fiscal complementada para uma nota que não é complemento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>141</MSGNR>
+     <TEXT>Houve um erro ao gravar a nota Fiscal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>142</MSGNR>
+     <TEXT>Houve um erro ao gravar a(s) nota(s) fiscal(is) complementada(s)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>143</MSGNR>
+     <TEXT>Houve um erro ao remover as notas complementadas da NF: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>144</MSGNR>
+     <TEXT>Recepção NF Complemento! Motivo da não pesagem não foi informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>145</MSGNR>
+     <TEXT>Recepção NF Complemento! Peso aferido não pode ser informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>146</MSGNR>
+     <TEXT>NF removida do CCT com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>147</MSGNR>
+     <TEXT>Nota Fiscal Complementada &amp; não possui recepção de Carga no CCT!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>148</MSGNR>
+     <TEXT>Chave NF-e ou chave NF-f complementada não foi informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>149</MSGNR>
+     <TEXT>Existem notas complementares e não complementares na recepção!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>150</MSGNR>
+     <TEXT>Documento já vinculado ao Doc. Retorno &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>151</MSGNR>
+     <TEXT>NF de Remessa para Industrialização! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>152</MSGNR>
+     <TEXT>CNPJ Recebedor deve ter 14 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>153</MSGNR>
+     <TEXT>CPF Recebedor deve ter 11 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>154</MSGNR>
+     <TEXT>CNPJ Responsavel deve ter 14 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>155</MSGNR>
+     <TEXT>CNPJ Transportador deve ter 14 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>156</MSGNR>
+     <TEXT>CPF Transportador deve ter 11 caracteres!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>157</MSGNR>
+     <TEXT>Dados do Documento incorreto na Du-e</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>158</MSGNR>
+     <TEXT>Dados do Documento incompleto na Du-e</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>159</MSGNR>
+     <TEXT>NF-e &amp;1 peso aferido divergente peso da API &amp;2! peso importado &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZCCT</ARBGB>
+     <MSGNR>160</MSGNR>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

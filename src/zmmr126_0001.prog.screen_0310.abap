@@ -1,0 +1,12 @@
+PROCESS BEFORE OUTPUT.
+* MODULE STATUS_0310.
+*
+  CALL SUBSCREEN: sub0302 INCLUDING sy-cprog vg_tl_0302,
+                  sub0305 INCLUDING sy-cprog vg_tl_0305.
+
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN: sub0302,
+                  sub0305.
+
+* MODULE USER_COMMAND_0310.

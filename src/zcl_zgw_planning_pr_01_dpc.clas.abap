@@ -1,0 +1,1159 @@
+CLASS ZCL_ZGW_PLANNING_PR_01_DPC DEFINITION
+  PUBLIC
+  INHERITING FROM /IWBEP/CL_MGW_PUSH_ABS_DATA
+  ABSTRACT
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES /IWBEP/IF_SB_DPC_COMM_SERVICES .
+    INTERFACES /IWBEP/IF_SB_GEN_DPC_INJECTION .
+
+    METHODS /IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_ENTITY
+         REDEFINITION .
+    METHODS /IWBEP/IF_MGW_APPL_SRV_RUNTIME~DELETE_ENTITY
+         REDEFINITION .
+    METHODS /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITY
+         REDEFINITION .
+    METHODS /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITYSET
+         REDEFINITION .
+    METHODS /IWBEP/IF_MGW_APPL_SRV_RUNTIME~UPDATE_ENTITY
+         REDEFINITION .
+  PROTECTED SECTION.
+
+    DATA MO_INJECTION TYPE REF TO /IWBEP/IF_SB_GEN_DPC_INJECTION .
+    DATA INPUT_REQUEST TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_INPUT_REQUEST .
+    DATA FUNCTION_IMPORT TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_FUNCTION_IMPORT .
+    DATA MO_SERVICE TYPE REF TO ZCL_PP_SERVICES .
+    DATA SERVICE_CX TYPE REF TO ZCX_PP_SERVICES .
+    DATA CONTAINER_MESSAGE TYPE REF TO /IWBEP/IF_MESSAGE_CONTAINER .
+
+    METHODS PROCESSORDER_CREATE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_C OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IO_DATA_PROVIDER        TYPE REF TO /IWBEP/IF_MGW_ENTRY_PROVIDER OPTIONAL
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS PROCESSORDER_DELETE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_D OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS PROCESSORDER_GET_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_REQUEST_OBJECT       TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY OPTIONAL
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER
+        !ES_RESPONSE_CONTEXT     TYPE /IWBEP/IF_MGW_APPL_SRV_RUNTIME=>TY_S_MGW_RESPONSE_ENTITY_CNTXT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS PROCESSORDER_GET_ENTITYSET
+      IMPORTING
+        !IV_ENTITY_NAME           TYPE STRING
+        !IV_ENTITY_SET_NAME       TYPE STRING
+        !IV_SOURCE_NAME           TYPE STRING
+        !IT_FILTER_SELECT_OPTIONS TYPE /IWBEP/T_MGW_SELECT_OPTION
+        !IS_PAGING                TYPE /IWBEP/S_MGW_PAGING
+        !IT_KEY_TAB               TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IT_NAVIGATION_PATH       TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IT_ORDER                 TYPE /IWBEP/T_MGW_SORTING_ORDER
+        !IV_FILTER_STRING         TYPE STRING
+        !IV_SEARCH_STRING         TYPE STRING
+        !IO_TECH_REQUEST_CONTEXT  TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITYSET OPTIONAL
+      EXPORTING
+        !ET_ENTITYSET             TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYPROCESSORDER
+        !ES_RESPONSE_CONTEXT      TYPE /IWBEP/IF_MGW_APPL_SRV_RUNTIME=>TY_S_MGW_RESPONSE_CONTEXT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS PROCESSORDER_UPDATE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_U OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IO_DATA_PROVIDER        TYPE REF TO /IWBEP/IF_MGW_ENTRY_PROVIDER OPTIONAL
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS SHIPMENTSTRANSIT_CREATE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_C OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IO_DATA_PROVIDER        TYPE REF TO /IWBEP/IF_MGW_ENTRY_PROVIDER OPTIONAL
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS SHIPMENTSTRANSIT_DELETE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_D OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS SHIPMENTSTRANSIT_GET_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_REQUEST_OBJECT       TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY OPTIONAL
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT
+        !ES_RESPONSE_CONTEXT     TYPE /IWBEP/IF_MGW_APPL_SRV_RUNTIME=>TY_S_MGW_RESPONSE_ENTITY_CNTXT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS SHIPMENTSTRANSIT_GET_ENTITYSET
+      IMPORTING
+        !IV_ENTITY_NAME           TYPE STRING
+        !IV_ENTITY_SET_NAME       TYPE STRING
+        !IV_SOURCE_NAME           TYPE STRING
+        !IT_FILTER_SELECT_OPTIONS TYPE /IWBEP/T_MGW_SELECT_OPTION
+        !IS_PAGING                TYPE /IWBEP/S_MGW_PAGING
+        !IT_KEY_TAB               TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IT_NAVIGATION_PATH       TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IT_ORDER                 TYPE /IWBEP/T_MGW_SORTING_ORDER
+        !IV_FILTER_STRING         TYPE STRING
+        !IV_SEARCH_STRING         TYPE STRING
+        !IO_TECH_REQUEST_CONTEXT  TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITYSET OPTIONAL
+      EXPORTING
+        !ET_ENTITYSET             TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYSHIPMENTSTRANSIT
+        !ES_RESPONSE_CONTEXT      TYPE /IWBEP/IF_MGW_APPL_SRV_RUNTIME=>TY_S_MGW_RESPONSE_CONTEXT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS SHIPMENTSTRANSIT_UPDATE_ENTITY
+      IMPORTING
+        !IV_ENTITY_NAME          TYPE STRING
+        !IV_ENTITY_SET_NAME      TYPE STRING
+        !IV_SOURCE_NAME          TYPE STRING
+        !IT_KEY_TAB              TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IO_TECH_REQUEST_CONTEXT TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITY_U OPTIONAL
+        !IT_NAVIGATION_PATH      TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IO_DATA_PROVIDER        TYPE REF TO /IWBEP/IF_MGW_ENTRY_PROVIDER OPTIONAL
+      EXPORTING
+        !ER_ENTITY               TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+    METHODS RECIPE_MATERIAL_GET_ENTITYSET
+      IMPORTING
+        !IV_ENTITY_NAME           TYPE STRING
+        !IV_ENTITY_SET_NAME       TYPE STRING
+        !IV_SOURCE_NAME           TYPE STRING
+        !IT_FILTER_SELECT_OPTIONS TYPE /IWBEP/T_MGW_SELECT_OPTION
+        !IS_PAGING                TYPE /IWBEP/S_MGW_PAGING
+        !IT_KEY_TAB               TYPE /IWBEP/T_MGW_NAME_VALUE_PAIR
+        !IT_NAVIGATION_PATH       TYPE /IWBEP/T_MGW_NAVIGATION_PATH
+        !IT_ORDER                 TYPE /IWBEP/T_MGW_SORTING_ORDER
+        !IV_FILTER_STRING         TYPE STRING
+        !IV_SEARCH_STRING         TYPE STRING
+        !IO_TECH_REQUEST_CONTEXT  TYPE REF TO /IWBEP/IF_MGW_REQ_ENTITYSET OPTIONAL
+      EXPORTING
+        !ET_ENTITYSET             TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYRECIPESMATERIAL
+        !ES_RESPONSE_CONTEXT      TYPE /IWBEP/IF_MGW_APPL_SRV_RUNTIME=>TY_S_MGW_RESPONSE_CONTEXT
+      RAISING
+        /IWBEP/CX_MGW_BUSI_EXCEPTION
+        /IWBEP/CX_MGW_TECH_EXCEPTION .
+
+    METHODS CHECK_SUBSCRIPTION_AUTHORITY
+         REDEFINITION .
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS ZCL_ZGW_PLANNING_PR_01_DPC IMPLEMENTATION.
+
+
+  METHOD /IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_ENTITY.
+*&----------------------------------------------------------------------------------------------*
+*&  Include           /IWBEP/DPC_TEMP_CRT_ENTITY_BASE
+*&* This class has been generated on 17.10.2016 09:35:35 in client 050
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the DPC implementation, use the
+*&*   generated methods inside the DPC provider subclass - ZCL_ZGW_PLANNING_PR_01_DPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+
+    DATA PROCESSORDER_CREATE_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER.
+    DATA SHIPMENTSTRANSIT_CREATE_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT.
+    DATA LV_ENTITYSET_NAME TYPE STRING.
+
+    LV_ENTITYSET_NAME = IO_TECH_REQUEST_CONTEXT->GET_ENTITY_SET_NAME( ).
+
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+    ME->CONTAINER_MESSAGE = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    CASE LV_ENTITYSET_NAME.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ProcessOrder
+*-------------------------------------------------------------------------*
+      WHEN 'ProcessOrder'.
+*     Call the entity set generated method
+        PROCESSORDER_CREATE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+           	 IMPORTING ER_ENTITY          = PROCESSORDER_CREATE_ENTITY
+        ).
+*     Send specific entity data to the caller interfaces
+        COPY_DATA_TO_REF(
+          EXPORTING
+            IS_DATA = PROCESSORDER_CREATE_ENTITY
+          CHANGING
+            CR_DATA = ER_ENTITY
+       ).
+
+*-------------------------------------------------------------------------*
+*             EntitySet -  ShipmentsTransit
+*-------------------------------------------------------------------------*
+      WHEN 'ShipmentsTransit'.
+*     Call the entity set generated method
+        SHIPMENTSTRANSIT_CREATE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+           	 IMPORTING ER_ENTITY          = SHIPMENTSTRANSIT_CREATE_ENTITY
+        ).
+*     Send specific entity data to the caller interfaces
+        COPY_DATA_TO_REF(
+          EXPORTING
+            IS_DATA = SHIPMENTSTRANSIT_CREATE_ENTITY
+          CHANGING
+            CR_DATA = ER_ENTITY
+       ).
+
+      WHEN OTHERS.
+        SUPER->/IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_ENTITY(
+           EXPORTING
+             IV_ENTITY_NAME = IV_ENTITY_NAME
+             IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+             IV_SOURCE_NAME = IV_SOURCE_NAME
+             IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+             IT_KEY_TAB = IT_KEY_TAB
+             IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+          IMPORTING
+            ER_ENTITY = ER_ENTITY
+      ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_MGW_APPL_SRV_RUNTIME~DELETE_ENTITY.
+*&----------------------------------------------------------------------------------------------*
+*&  Include           /IWBEP/DPC_TEMP_DEL_ENTITY_BASE
+*&* This class has been generated on 17.10.2016 09:35:35 in client 050
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the DPC implementation, use the
+*&*   generated methods inside the DPC provider subclass - ZCL_ZGW_PLANNING_PR_01_DPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+
+    DATA LV_ENTITYSET_NAME TYPE STRING.
+
+    LV_ENTITYSET_NAME = IO_TECH_REQUEST_CONTEXT->GET_ENTITY_SET_NAME( ).
+
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+    ME->CONTAINER_MESSAGE = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    CASE LV_ENTITYSET_NAME.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ProcessOrder
+*-------------------------------------------------------------------------*
+      WHEN 'ProcessOrder'.
+*     Call the entity set generated method
+        PROCESSORDER_DELETE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+        ).
+
+*-------------------------------------------------------------------------*
+*             EntitySet -  ShipmentsTransit
+*-------------------------------------------------------------------------*
+      WHEN 'ShipmentsTransit'.
+*     Call the entity set generated method
+        SHIPMENTSTRANSIT_DELETE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+        ).
+
+      WHEN OTHERS.
+        SUPER->/IWBEP/IF_MGW_APPL_SRV_RUNTIME~DELETE_ENTITY(
+           EXPORTING
+             IV_ENTITY_NAME = IV_ENTITY_NAME
+             IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+             IV_SOURCE_NAME = IV_SOURCE_NAME
+             IT_KEY_TAB = IT_KEY_TAB
+             IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+    ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITY.
+*&-----------------------------------------------------------------------------------------------*
+*&  Include           /IWBEP/DPC_TEMP_GETENTITY_BASE
+*&* This class has been generated  on 17.10.2016 09:35:35 in client 050
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the DPC implementation, use the
+*&*   generated methods inside the DPC provider subclass - ZCL_ZGW_PLANNING_PR_01_DPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+
+    DATA PROCESSORDER_GET_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER.
+    DATA SHIPMENTSTRANSIT_GET_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT.
+    DATA LV_ENTITYSET_NAME TYPE STRING.
+    DATA LR_ENTITY TYPE REF TO DATA.                        "#EC NEEDED
+
+    LV_ENTITYSET_NAME = IO_TECH_REQUEST_CONTEXT->GET_ENTITY_SET_NAME( ).
+
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+    ME->CONTAINER_MESSAGE = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    CASE LV_ENTITYSET_NAME.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ProcessOrder
+*-------------------------------------------------------------------------*
+      WHEN 'ProcessOrder'.
+*     Call the entity set generated method
+        PROCESSORDER_GET_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+             IMPORTING ER_ENTITY          = PROCESSORDER_GET_ENTITY
+                       ES_RESPONSE_CONTEXT = ES_RESPONSE_CONTEXT
+        ).
+
+        IF PROCESSORDER_GET_ENTITY IS NOT INITIAL.
+*     Send specific entity data to the caller interface
+          COPY_DATA_TO_REF(
+            EXPORTING
+              IS_DATA = PROCESSORDER_GET_ENTITY
+            CHANGING
+              CR_DATA = ER_ENTITY
+          ).
+        ELSE.
+*         In case of initial values - unbind the entity reference
+          ER_ENTITY = LR_ENTITY.
+        ENDIF.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ShipmentsTransit
+*-------------------------------------------------------------------------*
+      WHEN 'ShipmentsTransit'.
+*     Call the entity set generated method
+        SHIPMENTSTRANSIT_GET_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+             IMPORTING ER_ENTITY          = SHIPMENTSTRANSIT_GET_ENTITY
+                       ES_RESPONSE_CONTEXT = ES_RESPONSE_CONTEXT
+        ).
+
+        IF SHIPMENTSTRANSIT_GET_ENTITY IS NOT INITIAL.
+*     Send specific entity data to the caller interface
+          COPY_DATA_TO_REF(
+            EXPORTING
+              IS_DATA = SHIPMENTSTRANSIT_GET_ENTITY
+            CHANGING
+              CR_DATA = ER_ENTITY
+          ).
+        ELSE.
+*         In case of initial values - unbind the entity reference
+          ER_ENTITY = LR_ENTITY.
+        ENDIF.
+
+      WHEN OTHERS.
+        SUPER->/IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITY(
+           EXPORTING
+             IV_ENTITY_NAME = IV_ENTITY_NAME
+             IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+             IV_SOURCE_NAME = IV_SOURCE_NAME
+             IT_KEY_TAB = IT_KEY_TAB
+             IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+          IMPORTING
+            ER_ENTITY = ER_ENTITY
+    ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITYSET.
+*&----------------------------------------------------------------------------------------------*
+*&  Include           /IWBEP/DPC_TMP_ENTITYSET_BASE
+*&* This class has been generated on 17.10.2016 09:35:35 in client 050
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the DPC implementation, use the
+*&*   generated methods inside the DPC provider subclass - ZCL_ZGW_PLANNING_PR_01_DPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+    DATA RECIPES_MATERIAL TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYRECIPESMATERIAL.
+    DATA PROCESS_ORDERS   TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYPROCESSORDER.
+    DATA SHIPMENTSTRANSIT_GET_ENTITYSET TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TT_ENTITYSHIPMENTSTRANSIT.
+    DATA LV_ENTITYSET_NAME TYPE STRING.
+
+    LV_ENTITYSET_NAME = IO_TECH_REQUEST_CONTEXT->GET_ENTITY_SET_NAME( ).
+
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+    ME->CONTAINER_MESSAGE = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    CASE LV_ENTITYSET_NAME.
+      WHEN 'RecipeProcessOrder'.
+*     Call the entity set generated method
+        RECIPE_MATERIAL_GET_ENTITYSET(
+          EXPORTING
+           IV_ENTITY_NAME = IV_ENTITY_NAME
+           IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+           IV_SOURCE_NAME = IV_SOURCE_NAME
+           IT_FILTER_SELECT_OPTIONS = IT_FILTER_SELECT_OPTIONS
+           IT_ORDER = IT_ORDER
+           IS_PAGING = IS_PAGING
+           IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+           IT_KEY_TAB = IT_KEY_TAB
+           IV_FILTER_STRING = IV_FILTER_STRING
+           IV_SEARCH_STRING = IV_SEARCH_STRING
+           IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+         IMPORTING
+           ET_ENTITYSET = RECIPES_MATERIAL
+           ES_RESPONSE_CONTEXT = ES_RESPONSE_CONTEXT
+         ).
+
+*     Send specific entity data to the caller interface
+        COPY_DATA_TO_REF(
+          EXPORTING
+            IS_DATA = RECIPES_MATERIAL
+          CHANGING
+            CR_DATA = ER_ENTITYSET
+        ).
+
+*-------------------------------------------------------------------------*
+*             EntitySet -  ProcessOrder
+*-------------------------------------------------------------------------*
+      WHEN 'ProcessOrder'.
+*     Call the entity set generated method
+        PROCESSORDER_GET_ENTITYSET(
+          EXPORTING
+           IV_ENTITY_NAME = IV_ENTITY_NAME
+           IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+           IV_SOURCE_NAME = IV_SOURCE_NAME
+           IT_FILTER_SELECT_OPTIONS = IT_FILTER_SELECT_OPTIONS
+           IT_ORDER = IT_ORDER
+           IS_PAGING = IS_PAGING
+           IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+           IT_KEY_TAB = IT_KEY_TAB
+           IV_FILTER_STRING = IV_FILTER_STRING
+           IV_SEARCH_STRING = IV_SEARCH_STRING
+           IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+         IMPORTING
+           ET_ENTITYSET = PROCESS_ORDERS
+           ES_RESPONSE_CONTEXT = ES_RESPONSE_CONTEXT
+         ).
+*     Send specific entity data to the caller interface
+        COPY_DATA_TO_REF(
+          EXPORTING
+            IS_DATA = PROCESS_ORDERS
+          CHANGING
+            CR_DATA = ER_ENTITYSET
+        ).
+
+*-------------------------------------------------------------------------*
+*             EntitySet -  ShipmentsTransit
+*-------------------------------------------------------------------------*
+      WHEN 'ShipmentsTransit'.
+*     Call the entity set generated method
+        SHIPMENTSTRANSIT_GET_ENTITYSET(
+          EXPORTING
+           IV_ENTITY_NAME = IV_ENTITY_NAME
+           IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+           IV_SOURCE_NAME = IV_SOURCE_NAME
+           IT_FILTER_SELECT_OPTIONS = IT_FILTER_SELECT_OPTIONS
+           IT_ORDER = IT_ORDER
+           IS_PAGING = IS_PAGING
+           IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+           IT_KEY_TAB = IT_KEY_TAB
+           IV_FILTER_STRING = IV_FILTER_STRING
+           IV_SEARCH_STRING = IV_SEARCH_STRING
+           IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+         IMPORTING
+           ET_ENTITYSET = SHIPMENTSTRANSIT_GET_ENTITYSET
+           ES_RESPONSE_CONTEXT = ES_RESPONSE_CONTEXT
+         ).
+
+*     Send specific entity data to the caller interface
+        COPY_DATA_TO_REF(
+          EXPORTING
+            IS_DATA = SHIPMENTSTRANSIT_GET_ENTITYSET
+          CHANGING
+            CR_DATA = ER_ENTITYSET
+        ).
+
+      WHEN OTHERS.
+        SUPER->/IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_ENTITYSET(
+          EXPORTING
+            IV_ENTITY_NAME = IV_ENTITY_NAME
+            IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+            IV_SOURCE_NAME = IV_SOURCE_NAME
+            IT_FILTER_SELECT_OPTIONS = IT_FILTER_SELECT_OPTIONS
+            IT_ORDER = IT_ORDER
+            IS_PAGING = IS_PAGING
+            IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+            IT_KEY_TAB = IT_KEY_TAB
+            IV_FILTER_STRING = IV_FILTER_STRING
+            IV_SEARCH_STRING = IV_SEARCH_STRING
+            IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+         IMPORTING
+           ER_ENTITYSET = ER_ENTITYSET ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_MGW_APPL_SRV_RUNTIME~UPDATE_ENTITY.
+*&----------------------------------------------------------------------------------------------*
+*&  Include           /IWBEP/DPC_TEMP_UPD_ENTITY_BASE
+*&* This class has been generated on 17.10.2016 09:35:35 in client 050
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the DPC implementation, use the
+*&*   generated methods inside the DPC provider subclass - ZCL_ZGW_PLANNING_PR_01_DPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+
+    DATA PROCESSORDER_UPDATE_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER.
+    DATA SHIPMENTSTRANSIT_UPDATE_ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYSHIPMENTSTRANSIT.
+    DATA LV_ENTITYSET_NAME TYPE STRING.
+    DATA LR_ENTITY TYPE REF TO DATA.                        "#EC NEEDED
+
+    LV_ENTITYSET_NAME = IO_TECH_REQUEST_CONTEXT->GET_ENTITY_SET_NAME( ).
+
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+    ME->CONTAINER_MESSAGE = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    CASE LV_ENTITYSET_NAME.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ProcessOrder
+*-------------------------------------------------------------------------*
+      WHEN 'ProcessOrder'.
+*     Call the entity set generated method
+        PROCESSORDER_UPDATE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+             IMPORTING ER_ENTITY          = PROCESSORDER_UPDATE_ENTITY
+        ).
+        IF PROCESSORDER_UPDATE_ENTITY IS NOT INITIAL.
+*     Send specific entity data to the caller interface
+          COPY_DATA_TO_REF(
+            EXPORTING
+              IS_DATA = PROCESSORDER_UPDATE_ENTITY
+            CHANGING
+              CR_DATA = ER_ENTITY
+          ).
+        ELSE.
+*         In case of initial values - unbind the entity reference
+          ER_ENTITY = LR_ENTITY.
+        ENDIF.
+*-------------------------------------------------------------------------*
+*             EntitySet -  ShipmentsTransit
+*-------------------------------------------------------------------------*
+      WHEN 'ShipmentsTransit'.
+*     Call the entity set generated method
+        SHIPMENTSTRANSIT_UPDATE_ENTITY(
+             EXPORTING IV_ENTITY_NAME     = IV_ENTITY_NAME
+                       IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+                       IV_SOURCE_NAME     = IV_SOURCE_NAME
+                       IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+                       IT_KEY_TAB         = IT_KEY_TAB
+                       IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+                       IO_TECH_REQUEST_CONTEXT = IO_TECH_REQUEST_CONTEXT
+             IMPORTING ER_ENTITY          = SHIPMENTSTRANSIT_UPDATE_ENTITY
+        ).
+        IF SHIPMENTSTRANSIT_UPDATE_ENTITY IS NOT INITIAL.
+*     Send specific entity data to the caller interface
+          COPY_DATA_TO_REF(
+            EXPORTING
+              IS_DATA = SHIPMENTSTRANSIT_UPDATE_ENTITY
+            CHANGING
+              CR_DATA = ER_ENTITY
+          ).
+        ELSE.
+*         In case of initial values - unbind the entity reference
+          ER_ENTITY = LR_ENTITY.
+        ENDIF.
+      WHEN OTHERS.
+        SUPER->/IWBEP/IF_MGW_APPL_SRV_RUNTIME~UPDATE_ENTITY(
+           EXPORTING
+             IV_ENTITY_NAME = IV_ENTITY_NAME
+             IV_ENTITY_SET_NAME = IV_ENTITY_SET_NAME
+             IV_SOURCE_NAME = IV_SOURCE_NAME
+             IO_DATA_PROVIDER   = IO_DATA_PROVIDER
+             IT_KEY_TAB = IT_KEY_TAB
+             IT_NAVIGATION_PATH = IT_NAVIGATION_PATH
+          IMPORTING
+            ER_ENTITY = ER_ENTITY
+    ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~COMMIT_WORK.
+* Call RFC commit work functionality
+    DATA LT_MESSAGE      TYPE BAPIRET2.                     "#EC NEEDED
+    DATA LV_MESSAGE_TEXT TYPE BAPI_MSG.
+    DATA LO_LOGGER       TYPE REF TO /IWBEP/CL_COS_LOGGER.
+    DATA LV_SUBRC        TYPE SYST-SUBRC.
+
+    LO_LOGGER = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_LOGGER( ).
+
+    IF IV_RFC_DEST IS INITIAL OR IV_RFC_DEST EQ 'NONE'.
+      CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+        EXPORTING
+          WAIT   = ABAP_TRUE
+        IMPORTING
+          RETURN = LT_MESSAGE.
+    ELSE.
+      CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+        DESTINATION IV_RFC_DEST
+        EXPORTING
+          WAIT                  = ABAP_TRUE
+        IMPORTING
+          RETURN                = LT_MESSAGE
+        EXCEPTIONS
+          COMMUNICATION_FAILURE = 1000 MESSAGE LV_MESSAGE_TEXT
+          SYSTEM_FAILURE        = 1001 MESSAGE LV_MESSAGE_TEXT
+          OTHERS                = 1002.
+
+      IF SY-SUBRC <> 0.
+        LV_SUBRC = SY-SUBRC.
+        /IWBEP/CL_SB_GEN_DPC_RT_UTIL=>RFC_EXCEPTION_HANDLING(
+            EXPORTING
+              IV_SUBRC            = LV_SUBRC
+              IV_EXP_MESSAGE_TEXT = LV_MESSAGE_TEXT
+              IO_LOGGER           = LO_LOGGER ).
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~GET_GENERATION_STRATEGY.
+* Get generation strategy
+    RV_GENERATION_STRATEGY = '1'.
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~LOG_MESSAGE.
+* Log message in the application log
+    DATA LO_LOGGER TYPE REF TO /IWBEP/CL_COS_LOGGER.
+    DATA LV_TEXT TYPE /IWBEP/SUP_MSG_LONGTEXT.
+
+    MESSAGE ID IV_MSG_ID TYPE IV_MSG_TYPE NUMBER IV_MSG_NUMBER
+      WITH IV_MSG_V1 IV_MSG_V2 IV_MSG_V3 IV_MSG_V4 INTO LV_TEXT.
+
+    LO_LOGGER = MO_CONTEXT->GET_LOGGER( ).
+    LO_LOGGER->LOG_MESSAGE(
+      EXPORTING
+       IV_MSG_TYPE   = IV_MSG_TYPE
+       IV_MSG_ID     = IV_MSG_ID
+       IV_MSG_NUMBER = IV_MSG_NUMBER
+       IV_MSG_TEXT   = LV_TEXT
+       IV_MSG_V1     = IV_MSG_V1
+       IV_MSG_V2     = IV_MSG_V2
+       IV_MSG_V3     = IV_MSG_V3
+       IV_MSG_V4     = IV_MSG_V4
+       IV_AGENT      = 'DPC' ).
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~RFC_EXCEPTION_HANDLING.
+* RFC call exception handling
+    DATA LO_LOGGER  TYPE REF TO /IWBEP/CL_COS_LOGGER.
+
+    LO_LOGGER = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_LOGGER( ).
+
+    /IWBEP/CL_SB_GEN_DPC_RT_UTIL=>RFC_EXCEPTION_HANDLING(
+      EXPORTING
+        IV_SUBRC            = IV_SUBRC
+        IV_EXP_MESSAGE_TEXT = IV_EXP_MESSAGE_TEXT
+        IO_LOGGER           = LO_LOGGER ).
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~RFC_SAVE_LOG.
+    DATA LO_LOGGER  TYPE REF TO /IWBEP/CL_COS_LOGGER.
+    DATA LO_MESSAGE_CONTAINER TYPE REF TO /IWBEP/IF_MESSAGE_CONTAINER.
+
+    LO_LOGGER = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_LOGGER( ).
+    LO_MESSAGE_CONTAINER = /IWBEP/IF_MGW_CONV_SRV_RUNTIME~GET_MESSAGE_CONTAINER( ).
+
+    " Save the RFC call log in the application log
+    /IWBEP/CL_SB_GEN_DPC_RT_UTIL=>RFC_SAVE_LOG(
+      EXPORTING
+        IS_RETURN            = IS_RETURN
+        IV_ENTITY_TYPE       = IV_ENTITY_TYPE
+        IT_RETURN            = IT_RETURN
+        IT_KEY_TAB           = IT_KEY_TAB
+        IO_LOGGER            = LO_LOGGER
+        IO_MESSAGE_CONTAINER = LO_MESSAGE_CONTAINER ).
+  ENDMETHOD.
+
+
+  METHOD /IWBEP/IF_SB_DPC_COMM_SERVICES~SET_INJECTION.
+* Unit test injection
+    IF IO_UNIT IS BOUND.
+      MO_INJECTION = IO_UNIT.
+    ELSE.
+      MO_INJECTION = ME.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD CHECK_SUBSCRIPTION_AUTHORITY.
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_NOT_IMPL_EXC
+      EXPORTING
+        TEXTID = /IWBEP/CX_MGW_NOT_IMPL_EXC=>METHOD_NOT_IMPLEMENTED
+        METHOD = 'CHECK_SUBSCRIPTION_AUTHORITY'.
+  ENDMETHOD.
+
+
+  METHOD PROCESSORDER_CREATE_ENTITY.
+    IO_DATA_PROVIDER->READ_ENTRY_DATA(
+      IMPORTING ES_DATA = ME->INPUT_REQUEST ).
+
+    REPLACE ALL OCCURRENCES OF '/' IN ME->INPUT_REQUEST-DATA WITH SPACE.
+
+    CALL FUNCTION 'CONVERT_DATE_TO_INTERNAL'
+      EXPORTING
+        DATE_EXTERNAL = ME->INPUT_REQUEST-DATA
+      IMPORTING
+        DATE_INTERNAL = ME->INPUT_REQUEST-DATA.
+
+    TRY.
+        CALL METHOD ME->MO_SERVICE->UPDATE_SHIPMENT
+          EXPORTING
+            ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+            ORDEM_VENDA        = ME->INPUT_REQUEST-ORDEM_VENDA
+            ITEM               = ME->INPUT_REQUEST-ITEM.
+
+        CALL METHOD ME->MO_SERVICE->SELECT_PLANNING
+          EXPORTING
+            VBELN = ME->INPUT_REQUEST-ORDEM_VENDA
+            POSNR = ME->INPUT_REQUEST-ITEM
+            EDATU = CONV #( ME->INPUT_REQUEST-DATA ).
+
+        CALL METHOD ME->MO_SERVICE->SELECT_SHIPMENT
+          EXPORTING
+            ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+            DATE               = SY-DATUM
+          EXCEPTIONS
+            SHIPMENT_NOT_FOUND = 4.
+
+        CALL METHOD ME->MO_SERVICE->CREATE_PROCESS_ORDER
+          EXPORTING
+            QUANTIDADE         = ME->INPUT_REQUEST-QUANTIDADE
+            MATRICULA          = ME->INPUT_REQUEST-MATRICULA
+            ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+            PLACA              = ME->INPUT_REQUEST-PLACA
+          IMPORTING
+            ORDER_NUMBER       = ME->INPUT_REQUEST-ORDEM_PRODUCAO
+            ORDER_WEIGHT       = ME->INPUT_REQUEST-PESO.
+
+      CATCH ZCX_PP_SERVICES INTO ME->SERVICE_CX.
+        CALL METHOD ME->MO_SERVICE->SET_MESSAGE
+          EXPORTING
+            TYPE   = ME->CONTAINER_MESSAGE->GCS_MESSAGE_TYPE-ERROR
+            ID     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGID
+            NUMBER = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGNO
+            V1     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR1
+            V2     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR2
+            V3     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR3
+            V4     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR4.
+    ENDTRY.
+
+    IF ( ME->MO_SERVICE->HAS_MESSAGES( ) EQ ABAP_FALSE ).
+      ER_ENTITY =
+        VALUE #( ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+                 PLACA              = ME->INPUT_REQUEST-PLACA
+                 MATRICULA          = ME->INPUT_REQUEST-MATRICULA
+                 ORDEM_VENDA        = ME->INPUT_REQUEST-ORDEM_VENDA
+                 ORDEM_PRODUCAO     = ME->INPUT_REQUEST-ORDEM_PRODUCAO
+                 ITEM               = ME->INPUT_REQUEST-ITEM
+                 QUANTIDADE         = ME->INPUT_REQUEST-QUANTIDADE
+                 PESO               = ME->INPUT_REQUEST-PESO
+               ).
+    ELSE.
+      CALL METHOD ME->CONTAINER_MESSAGE->ADD_MESSAGES_FROM_BAPI
+        EXPORTING
+          IT_BAPI_MESSAGES          = ME->MO_SERVICE->GET_MESSAGES( )
+          IV_DETERMINE_LEADING_MSG  = /IWBEP/IF_MESSAGE_CONTAINER=>GCS_LEADING_MSG_SEARCH_OPTION-FIRST
+          IV_ADD_TO_RESPONSE_HEADER = ABAP_TRUE.
+
+      RAISE EXCEPTION TYPE /IWBEP/CX_MGW_BUSI_EXCEPTION
+        EXPORTING
+          TEXTID            = /IWBEP/CX_MGW_BUSI_EXCEPTION=>BUSINESS_ERROR
+          MESSAGE_CONTAINER = ME->CONTAINER_MESSAGE.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD PROCESSORDER_DELETE_ENTITY.
+    DATA : _ORDEM TYPE TABLE OF STRING.
+
+    ME->INPUT_REQUEST-ORDEM_CARREGAMENTO =
+      IT_KEY_TAB[ NAME = 'OrdemCarregamento' ]-VALUE.
+
+    SPLIT ME->INPUT_REQUEST-ORDEM_CARREGAMENTO AT '*' INTO TABLE _ORDEM.
+
+    CALL METHOD ME->MO_SERVICE->SELECT_SHIPMENT
+      EXPORTING
+        ORDEM_CARREGAMENTO = CONV #( _ORDEM[ 1 ] )
+      EXCEPTIONS
+        SHIPMENT_NOT_FOUND = 4.
+
+    TRY.
+        DATA(FLAG) = _ORDEM[ 2 ].
+      CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+        CLEAR FLAG.
+    ENDTRY.
+
+    TRY.
+        ME->MO_SERVICE->PROCESS_ORDER_IS_LOCKED(
+           ME->MO_SERVICE->GET_SHIPMENT( )-AUFNR ).
+
+        ME->MO_SERVICE->STORNO_PROCESS_ORDER(
+           ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+           PSVA = CONV #( FLAG )
+        ).
+
+      CATCH ZCX_PP_SERVICES INTO ME->SERVICE_CX.
+        CALL METHOD ME->MO_SERVICE->SET_MESSAGE
+          EXPORTING
+            TYPE   = ME->CONTAINER_MESSAGE->GCS_MESSAGE_TYPE-ERROR
+            ID     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGID
+            NUMBER = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGNO
+            V1     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR1
+            V2     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR2
+            V3     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR3
+            V4     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR4.
+    ENDTRY.
+
+    CHECK ( ME->MO_SERVICE->HAS_MESSAGES( ) = ABAP_TRUE ).
+    CALL METHOD ME->CONTAINER_MESSAGE->ADD_MESSAGES_FROM_BAPI
+      EXPORTING
+        IT_BAPI_MESSAGES          = ME->MO_SERVICE->GET_MESSAGES( )
+        IV_DETERMINE_LEADING_MSG  = /IWBEP/IF_MESSAGE_CONTAINER=>GCS_LEADING_MSG_SEARCH_OPTION-FIRST
+        IV_ADD_TO_RESPONSE_HEADER = ABAP_TRUE.
+
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_BUSI_EXCEPTION
+      EXPORTING
+        TEXTID            = /IWBEP/CX_MGW_BUSI_EXCEPTION=>BUSINESS_ERROR
+        MESSAGE_CONTAINER = ME->CONTAINER_MESSAGE.
+  ENDMETHOD.
+
+
+  METHOD PROCESSORDER_GET_ENTITY.
+    ME->INPUT_REQUEST-ORDEM_CARREGAMENTO =
+      IT_KEY_TAB[ NAME = 'OrdemCarregamento' ]-VALUE.
+
+    CALL METHOD ME->MO_SERVICE->SELECT_SHIPMENT
+      EXPORTING
+        ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+      EXCEPTIONS
+        SHIPMENT_NOT_FOUND = 4.
+
+    IF ( SY-SUBRC IS INITIAL ).
+      DATA(_SHIPMENT)      = ME->MO_SERVICE->GET_SHIPMENT( ).
+
+      ER_ENTITY =
+        VALUE #( ORDEM_PRODUCAO     = _SHIPMENT-AUFNR
+                 PLACA              = _SHIPMENT-PLACA
+                 ORDEM_CARREGAMENTO = _SHIPMENT-ORDEMCARREG
+                 ORDEM_VENDA        = _SHIPMENT-KDAUF
+                 ITEM               = _SHIPMENT-KDPOS
+                 DATA               = _SHIPMENT-ERDAT
+                 QUANTIDADE         = COND #( WHEN _SHIPMENT-TXT04 = ZCL_PP_SERVICES=>PO_STATUS-CONCLUIDO
+                                              THEN _SHIPMENT-WEMNG ELSE _SHIPMENT-PSMNG )
+               ).
+
+    ELSE.
+      CALL METHOD ME->MO_SERVICE->SET_MESSAGE
+        EXPORTING
+          TYPE   = ME->CONTAINER_MESSAGE->GCS_MESSAGE_TYPE-ERROR
+          ID     = ZCX_PP_SERVICES=>PROCESS_ORDER_NOT_EXIST-MSGID
+          NUMBER = ZCX_PP_SERVICES=>PROCESS_ORDER_NOT_EXIST-MSGNO
+          V1     = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO.
+    ENDIF.
+
+    CHECK ME->MO_SERVICE->HAS_MESSAGES( ) = ABAP_TRUE.
+    CALL METHOD ME->CONTAINER_MESSAGE->ADD_MESSAGES_FROM_BAPI
+      EXPORTING
+        IT_BAPI_MESSAGES          = ME->MO_SERVICE->GET_MESSAGES( )
+        IV_DETERMINE_LEADING_MSG  = /IWBEP/IF_MESSAGE_CONTAINER=>GCS_LEADING_MSG_SEARCH_OPTION-FIRST
+        IV_ADD_TO_RESPONSE_HEADER = ABAP_TRUE.
+
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_BUSI_EXCEPTION
+      EXPORTING
+        TEXTID            = /IWBEP/CX_MGW_BUSI_EXCEPTION=>BUSINESS_ERROR
+        MESSAGE_CONTAINER = ME->CONTAINER_MESSAGE.
+  ENDMETHOD.
+
+
+  METHOD PROCESSORDER_GET_ENTITYSET.
+    DATA ENTITY TYPE ZCL_ZGW_PLANNING_PR_01_MPC=>TS_ENTITYPROCESSORDER.
+
+    DATA(_AUTH_ORDERS) = ME->MO_SERVICE->SELECT_AUTHORIZED_ORDERS( ).
+
+    LOOP AT _AUTH_ORDERS INTO DATA(_ORDER).
+      ENTITY-ORDEM_VENDA        = _ORDER-KDAUF.
+      ENTITY-ITEM               = _ORDER-KDPOS.
+      ENTITY-ORDEM_PRODUCAO     = _ORDER-AUFNR.
+      ENTITY-ORDEM_CARREGAMENTO = _ORDER-ORDEMCARREG.
+      ENTITY-MATRICULA          = _ORDER-MATRICULA.
+      ENTITY-PLACA              = _ORDER-PLACA.
+      APPEND ENTITY TO ET_ENTITYSET.
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD PROCESSORDER_UPDATE_ENTITY.
+    DATA PROCESS_ORDER TYPE AUFK-AUFNR.
+
+    PROCESS_ORDER =
+      IT_KEY_TAB[ NAME = 'OrdemProducao' ]-VALUE.
+
+    IO_DATA_PROVIDER->READ_ENTRY_DATA(
+      IMPORTING ES_DATA = ME->INPUT_REQUEST ).
+
+    ME->MO_SERVICE->UPDATE_PROCESS_ORDER(
+      EXPORTING
+      ORDEM_PRODUCAO     = PROCESS_ORDER
+      ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+      MATRICULA          = ME->INPUT_REQUEST-MATRICULA
+      PLACA              = ME->INPUT_REQUEST-PLACA
+      EXCEPTIONS
+      PROCESS_ORDER_NOT_CHANGED = 4
+    ).
+
+    IF ( SY-SUBRC IS NOT INITIAL ).
+      RAISE EXCEPTION TYPE /IWBEP/CX_MGW_BUSI_EXCEPTION
+        EXPORTING
+          TEXTID  = /IWBEP/CX_MGW_BUSI_EXCEPTION=>BUSINESS_ERROR
+          MESSAGE = 'Falha ao modificar ordem de processo.'.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD RECIPE_MATERIAL_GET_ENTITYSET.
+    ET_ENTITYSET = ME->MO_SERVICE->GET_RECIPES( ).
+  ENDMETHOD.
+
+
+  METHOD SHIPMENTSTRANSIT_CREATE_ENTITY.
+    DATA DATE_EXTERNAL TYPE STRING.
+
+    IO_DATA_PROVIDER->READ_ENTRY_DATA(
+      IMPORTING ES_DATA = ME->INPUT_REQUEST ).
+
+    REPLACE ALL OCCURRENCES OF '/' IN ME->INPUT_REQUEST-DATA WITH SPACE.
+
+    CALL FUNCTION 'CONVERT_DATE_TO_INTERNAL'
+      EXPORTING
+        DATE_EXTERNAL = ME->INPUT_REQUEST-DATA
+      IMPORTING
+        DATE_INTERNAL = ME->INPUT_REQUEST-DATA.
+
+    ME->INPUT_REQUEST-ORDEM_VENDA = |{ ME->INPUT_REQUEST-ORDEM_VENDA ALPHA = IN }|.
+    ME->INPUT_REQUEST-ITEM = |{ ME->INPUT_REQUEST-ITEM ALPHA = IN }|.
+
+    TRY.
+        ME->MO_SERVICE->SELECT_SHIPMENT_TRANSIT(
+            ORDEM_VENDA        = ME->INPUT_REQUEST-ORDEM_VENDA
+            ITEM               = ME->INPUT_REQUEST-ITEM
+            ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+        ).
+
+*        ME->MO_SERVICE->SELECT_PLANNING(
+*          EXPORTING
+*            VBELN = ME->INPUT_REQUEST-ORDEM_VENDA
+*            POSNR = ME->INPUT_REQUEST-ITEM
+*            EDATU = CONV #( ME->INPUT_REQUEST-DATA )
+*        ).
+
+*        ME->MO_SERVICE->SELECT_SHIPMENTS(
+*          EXPORTING
+*            EDATU          = CONV #( ME->INPUT_REQUEST-DATA )
+*            VBELN          = ME->INPUT_REQUEST-ORDEM_VENDA
+*            POSNR          = ME->INPUT_REQUEST-ITEM
+*          IMPORTING
+*            DATA           = DATA(_SHIPMENTS)
+*          EXCEPTIONS
+*            DATA_NOT_FOUND = 4
+*        ).
+*
+*        ME->MO_SERVICE->SELECT_SHIPMENTS_TRANSIT(
+*          EXPORTING
+*            DATE           = CONV #( ME->INPUT_REQUEST-DATA )
+*            VBELN          = ME->INPUT_REQUEST-ORDEM_VENDA
+*            POSNR          = ME->INPUT_REQUEST-ITEM
+*          IMPORTING
+*            DATA           = DATA(_SHIPMENTS_TRANSIT)
+*          EXCEPTIONS
+*            DATA_NOT_FOUND = 4
+*        ).
+*
+*        DATA(_TOTAL_SHIPMENTS) = REDUCE WMENG( INIT X = 0 FOR _SHIPMENT IN _SHIPMENTS
+*                                               NEXT X = X + COND #( LET Y = _SHIPMENT-WEMNG IN
+*                                                                   WHEN Y IS NOT INITIAL THEN Y
+*                                                                   ELSE _SHIPMENT-PSMNG ) ).
+*
+*        DATA(_TOTAL_TRANSITS)  = REDUCE WMENG( INIT Z = 0 FOR _TRANSIT IN _SHIPMENTS_TRANSIT
+*                                               NEXT Z = Z + _TRANSIT-QUANTIDADE ).
+*
+*        IF ( ( _TOTAL_TRANSITS + _TOTAL_SHIPMENTS + ME->INPUT_REQUEST-QUANTIDADE ) > ME->MO_SERVICE->GET_PLANNING( )-WMENG ).
+*          TRY.
+*              CL_ABAP_DATFM=>CONV_DATE_INT_TO_EXT(
+*                  EXPORTING IM_DATINT = CONV #( ME->INPUT_REQUEST-DATA )
+*                  IMPORTING EX_DATEXT = DATE_EXTERNAL ).
+*            CATCH CX_ABAP_DATFM_FORMAT_UNKNOWN.
+*          ENDTRY.
+*
+*          RAISE EXCEPTION TYPE ZCX_PP_SERVICES
+*            EXPORTING
+*              TEXTID = VALUE #( MSGID = ZCX_PP_SERVICES=>PLANNING_QUANTITY_UNAVAILABLE-MSGID
+*                                MSGNO = ZCX_PP_SERVICES=>PLANNING_QUANTITY_UNAVAILABLE-MSGNO
+*                                ATTR1 = ME->INPUT_REQUEST-ORDEM_VENDA
+*                                ATTR2 = ME->INPUT_REQUEST-ITEM
+*                                ATTR3 = DATE_EXTERNAL
+*                                ATTR4 = ME->MO_SERVICE->GET_PLANNING( )-WMENG - ( _TOTAL_TRANSITS + _TOTAL_SHIPMENTS )
+*                               ).
+*        ENDIF.
+
+        ME->MO_SERVICE->INSERT_SHIPMENT_TRANSIT(
+            ORDEM_VENDA        = ME->INPUT_REQUEST-ORDEM_VENDA
+            ITEM               = ME->INPUT_REQUEST-ITEM
+            ORDEM_CARREGAMENTO = ME->INPUT_REQUEST-ORDEM_CARREGAMENTO
+            DATA               = CONV #( ME->INPUT_REQUEST-DATA )
+            QUANTIDADE         = ME->INPUT_REQUEST-QUANTIDADE
+            PLACA              = ME->INPUT_REQUEST-PLACA
+        ).
+
+      CATCH ZCX_PP_SERVICES INTO ME->SERVICE_CX.
+        CALL METHOD ME->MO_SERVICE->SET_MESSAGE
+          EXPORTING
+            TYPE   = ME->CONTAINER_MESSAGE->GCS_MESSAGE_TYPE-ERROR
+            ID     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGID
+            NUMBER = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-MSGNO
+            V1     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR1
+            V2     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR2
+            V3     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR3
+            V4     = ME->SERVICE_CX->IF_T100_MESSAGE~T100KEY-ATTR4.
+    ENDTRY.
+
+    CHECK ME->MO_SERVICE->HAS_MESSAGES( ) = ABAP_TRUE.
+    CALL METHOD ME->CONTAINER_MESSAGE->ADD_MESSAGES_FROM_BAPI
+      EXPORTING
+        IT_BAPI_MESSAGES          = ME->MO_SERVICE->GET_MESSAGES( )
+        IV_DETERMINE_LEADING_MSG  = /IWBEP/IF_MESSAGE_CONTAINER=>GCS_LEADING_MSG_SEARCH_OPTION-FIRST
+        IV_ADD_TO_RESPONSE_HEADER = ABAP_TRUE.
+
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_BUSI_EXCEPTION
+      EXPORTING
+        TEXTID            = /IWBEP/CX_MGW_BUSI_EXCEPTION=>BUSINESS_ERROR
+        MESSAGE_CONTAINER = ME->CONTAINER_MESSAGE.
+  ENDMETHOD.
+
+
+  METHOD SHIPMENTSTRANSIT_DELETE_ENTITY.
+    ME->MO_SERVICE = NEW ZCL_PP_SERVICES( ).
+
+    ME->MO_SERVICE->DELETE_SHIPMENT_TRANSIT(
+        CONV #( IT_KEY_TAB[ NAME = 'OrdemCarregamento' ]-VALUE )
+    ).
+  ENDMETHOD.
+
+
+  METHOD SHIPMENTSTRANSIT_GET_ENTITY.
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_NOT_IMPL_EXC
+      EXPORTING
+        TEXTID = /IWBEP/CX_MGW_NOT_IMPL_EXC=>METHOD_NOT_IMPLEMENTED
+        METHOD = 'SHIPMENTSTRANSIT_GET_ENTITY'.
+  ENDMETHOD.
+
+
+  METHOD SHIPMENTSTRANSIT_GET_ENTITYSET.
+    RAISE EXCEPTION TYPE /IWBEP/CX_MGW_NOT_IMPL_EXC
+      EXPORTING
+        TEXTID = /IWBEP/CX_MGW_NOT_IMPL_EXC=>METHOD_NOT_IMPLEMENTED
+        METHOD = 'SHIPMENTSTRANSIT_GET_ENTITYSET'.
+  ENDMETHOD.
+
+
+  METHOD SHIPMENTSTRANSIT_UPDATE_ENTITY.
+    IO_DATA_PROVIDER->READ_ENTRY_DATA( IMPORTING ES_DATA = ER_ENTITY ).
+
+    UPDATE ZPPT0008 SET WDISP = ER_ENTITY-QUANTIDADE WHERE VBELN = ER_ENTITY-ORDEM_VENDA AND POSNR = ER_ENTITY-ITEM AND EDATU = ER_ENTITY-DATA.
+    COMMIT WORK.
+  ENDMETHOD.
+ENDCLASS.

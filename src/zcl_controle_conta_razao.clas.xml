@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CONTROLE_CONTA_RAZAO</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe Retorno de COnta Razão</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_CONTROLE_CONTA_RAZAO</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe Retorno de COnta Razão</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>E_IT_ZLEST0021</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Controle de desterminação conta razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>E_ZLEST0021</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Controle de desterminação conta razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_DT_REFERENCIA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data de lançamento no documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_FATURA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Emissor da fatura - Fretes</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_OPERFRETE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Operação de lançamento no razão - Frete</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_OPERFRETE_RANGE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ranges Operação de lançamento no razão - Frete</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_SHTYP</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de transporte</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_TCODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de transação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_TP_EMISSOR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de emissor</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>I_TP_VEICULO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Tipo de Proprietário de Veículo para Contabilização</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>R_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe Retorno de COnta Razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTA_RAZAO</CMPNAME>
+     <SCONAME>ZCX_CONTROLE_CONTA_RAZAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe de Erro de Conta Razão</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>R_INSTANCE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe Retorno de COnta Razão</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

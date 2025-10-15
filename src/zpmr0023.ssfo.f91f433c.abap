@@ -1,0 +1,20 @@
+CLEAR VLR_MES.
+WRITE WA_SAIDA-PAR01 TO VLR_MES.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

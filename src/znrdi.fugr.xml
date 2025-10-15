@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Conversão de DI</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZNRDITOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZNRDI</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>CONVERSION_EXIT_ZNRDI_INPUT</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>INPUT</PARAMETER>
+       <TYP>CLIKE</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>OUTPUT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CLIKE</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>INPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>OUTPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>CONVERSION_EXIT_ZNRDI_OUTPUT</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>INPUT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CLIKE</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>OUTPUT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CLIKE</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>INPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>OUTPUT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

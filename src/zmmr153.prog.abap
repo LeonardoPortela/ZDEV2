@@ -1,0 +1,44 @@
+*&---------------------------------------------------------------------*
+*& Report  ZMMR153
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT ZMMR153 MESSAGE-ID ZCARGA.
+
+"Seleção Padrão
+PARAMETERS: PTIPCA   TYPE ZDE_TP_CARGA      NO-DISPLAY,
+            PSAFRA   TYPE ZDE_NR_SAFRA      NO-DISPLAY,
+            PEMPRE   TYPE ZDE_BUKRS_RECEB   NO-DISPLAY,
+            PFILIA   TYPE ZDE_BRANCH_RECEB  NO-DISPLAY,
+            PMANUT   TYPE CHAR01            NO-DISPLAY,
+            PCK_CAD  TYPE CHAR01            NO-DISPLAY,
+            PIDCARGA TYPE ZDE_ID_CARGA      NO-DISPLAY,
+            PIDSOLIC TYPE ZDE_ID_SOL_AJUSTE NO-DISPLAY.
+
+INCLUDE ZMMR126_TREE_VIEW.
+
+INCLUDE ZMMR153_0001.
+
+INCLUDE ZMMR153_USER_0101.
+
+INCLUDE ZMMR153_USER_8001.
+
+INCLUDE ZMMR153_USER_9006.
+
+INCLUDE ZMMR153_USER_9002.
+
+INCLUDE ZMMR153_USER_8002.
+
+INCLUDE ZMMR153_USER_8003.
+
+INCLUDE ZMMR153_USER_9007.
+
+INCLUDE ZMMR153_USER_9008.
+
+INCLUDE ZMMR153_USER_8004.
+
+INCLUDE ZMMR153_USER_8005.
+
+INCLUDE ZMMR153_USER_9003.

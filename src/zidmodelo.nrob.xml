@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZIDMODELO</OBJECT>
+    <DOMLEN>NUMC4</DOMLEN>
+    <PERCENTAGE>90.0</PERCENTAGE>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZIDMODELO</OBJECT>
+    <TXT>Id do modelo</TXT>
+    <TXTSHORT>Id do modelo</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

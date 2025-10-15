@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZPMMSG</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Operação invalida, verificar operação para ordem</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Codigo do intervalo invalido</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Código do empregado invalido</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Informar a operação</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Preecher todos os campos obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Centro de trabalho não cadastrado para o centro</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Não foi possível encerrar ordem</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Total de horas apontada &amp;1 utrapassa o tmp total utilizado &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Existem lançamento no periodo informado para o empregado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Inserir a ordem.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Unidade &amp; Invalida, informar tipo de unidade H ou Min</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>É obrigatório preenchimento da lista e numerador.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Inserir a ordem ou nota.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>A ordem informada não existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Você não possui permissão para o centro da ordem informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Ordem não possui orçamento inicial aprovado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>O tipo da Ordem não está na tabela de Parâmetros.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>A Ordem precisa estar &quot;Liberada&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>É necessário informar uma descrição!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Solicitação enviada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Já existe uma solicitação em andamento p/ essa ordem.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Alteração permitida apenas para ordens rejeitadas</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZPMMSG</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Valor alterado com sucesso</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

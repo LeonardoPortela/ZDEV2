@@ -1,0 +1,22 @@
+WG_DEBITOS = WG_DEBITOS + ( WG_SAIDA-DEBITOS * 100 ).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

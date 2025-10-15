@@ -1,0 +1,25 @@
+v_texto_geral_dinamico = lines( TA_TEXTO_GERAL_DINAMICO ).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

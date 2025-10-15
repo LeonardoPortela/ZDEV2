@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_SCREEN</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>ZIF_SCREEN</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PEGA_IMAGEM_URL</CMPNAME>
+     <SCONAME>I_NOME_LOGO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PEGA_IMAGEM_URL</CMPNAME>
+     <SCONAME>R_URL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Char255</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_TELA_PADRAO_REPORT</CMPNAME>
+     <SCONAME>I_FILTROS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valores de Linha</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CRIAR_TELA_PADRAO_REPORT</CMPNAME>
+     <SCONAME>R_CRIOU</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

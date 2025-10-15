@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZSDT0212</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZSDT0212</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>P</SPRSL>
+    <TCODE>ZSDT0212</TCODE>
+    <TTEXT>Cadastro de UPF</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZSDT0212</TCODE>
+    <PARAM>/*ZREGISTER_DATA P_DB_TAB=ZSDT0343_T1;P_STCNAM=ZSDT0343_T1_OUT;P_SCMANT=0236;P_SCPESQ=0235;P_STPESQ=ZSDT0343_T1;P_ACT_01=Cancelar;P_MAXDEL=124;P_TITLE=Cadastro de UPF;</PARAM>
+   </TSTCP>
+  </asx:values>
+ </asx:abap>
+</abapGit>

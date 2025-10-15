@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZDOC_MUTU</OBJECT>
+    <DOMLEN>NUM10</DOMLEN>
+    <PERCENTAGE>80.0</PERCENTAGE>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZDOC_MUTU</OBJECT>
+    <TXT>Contrato de Mutuos</TXT>
+    <TXTSHORT>Contrato de Mutuos</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

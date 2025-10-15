@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo Função - Classificação de lote</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGFMM0002TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGFMM0002</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_DADOSCLASSIFICACAOLOTE</FUNCNAME>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>T_MATNR</PARAMETER>
+       <DBSTRUCT>ZMME_CL</DBSTRUCT>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>T_ZMMT0027</PARAMETER>
+       <DBSTRUCT>ZMMT0027</DBSTRUCT>
+       <OPTIONAL>X</OPTIONAL>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>T_RETURN</PARAMETER>
+       <DBSTRUCT>ZMME_CL</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>ERRO4</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>T_MATNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_ZMMT0027</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_RETURN</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ERRO4</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

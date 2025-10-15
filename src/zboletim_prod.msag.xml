@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZBOLETIM_PROD</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe Boletim Produção</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Objeto Numeração ZBOL_PROD não configurado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Houve um erro na gravação dos dados do boletim! (Tabela &amp;1)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Dados &amp;1 estão incompletos!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Produto &amp;1 do Boletim de Produção não parametrizado na ZSDT0169!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Boletim de Produção &amp;1 salvo com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Boletim de Produção excluído com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Nenhum Boletim foi selecionado para exclusão!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>&amp;1 não foi informado(a)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Documento &amp;1 já vinculado ao Boletim de Produção Id: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Documento &amp;1 não possui saldo p/ vinculação! Total: &amp;2 / Vinculado: &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Boletim não possui saldo para vinculação! Total: &amp;1 / Vinculado: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Tabela de Controle de Saldo Documento &amp;1 não encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Documento &amp;MSGV1&amp; não vinculado ao Boletim de Produção Id: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Boletim &amp;1 já possui documentos gerados! &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>&amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Houve um erro ao gerar o documento de &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Documento de &amp;1 já foi gerado! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Documento de &amp;1 não foi gerado/concluído! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Lote do Documento &amp;1 divergente do Boletim de Produção!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Filial Destino do Documento &amp;1 divergente do Boletim de Produção!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Boletim possui Centros V./Depositos divergentes na Filial &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Boletim possui saldo para vinculação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Total vinculado não corresponde a 100%!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Houve um erro no Rateio! Motivo: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Sem saldo para gerar o documento &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Boletim &amp;1 já possui documentos vinculados! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Filial não prevista!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Sem autorização para filial &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Filial Boletim não pode ser alterada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Boletim de Produção sem Documento fiscal! Operação não permitida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Erro Preço de Pauta! Motivo: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Boletim aprovado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Boletim já foi aprovado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Boletim não foi aprovado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Quantidade Soja Ind.(&amp;1) deve ser menor que quantidade da Produção(&amp;2)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Cancelar documento &amp;1 subsequente ao documento &amp;2 - Boletim Produção &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Falta Estoque Produto &amp;1 Centro &amp;2 Deposito &amp;3 Lote &amp;4!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Material &amp;1 Centro &amp;2 bloqueado pelo usuario &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Material &amp;1 Lote &amp;2 bloqueado pelo usuario &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Produto - &amp;1 possui quantidade do mercado interno superior ao rendimento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZBOLETIM_PROD</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Boletim desaprovado com sucesso!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

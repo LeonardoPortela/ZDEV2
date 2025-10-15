@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_SAPMVC_CONTROLLER</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>SAPmvc - Controller</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAPmvc - Controller</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AT_EXIT_COMMAND</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@AT EXIT-COMMAND</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@Call Screen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONTROLLER_ERROR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QUse it in Inherited Class@SAPmvc - MVC Exceptions</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_MODEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@Create Model Instances</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DYNPRO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QUse it in Inherited Class@Dynpro Number</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PF_STATUS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@PF-STATUS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESS_AFTER_INPUT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@PAI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESS_BEFORE_OUTPUT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@PBO</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESS_ON_HELP_REQUEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@POH</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESS_ON_VALUE_REQUEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@POV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROGRAM</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QUse it in Inherited Class@Program Name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DYNPRO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8N\QInternal Use@Set DYNPRO</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TABSTRIP_ACTIVE_TAB_GET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@Set Tabstrip TAB in PAI</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TABSTRIP_ACTIVE_TAB_SET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@Get Tabstrip TAB in PBO</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TITLEBAR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@TITLEBAR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>USER_COMMAND</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>@8P\QImplement it in Inherited Class@USER COMMAND</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <SCONAME>DYNPRO</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Number of the following screen</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <SCONAME>ENDING_COLUMN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Ending Column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <SCONAME>ENDING_LINE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Ending Line</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <SCONAME>STARTING_COLUMN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Starting Column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_SCREEN</CMPNAME>
+     <SCONAME>STARTING_LINE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Starting Line</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DYNPRO</CMPNAME>
+     <SCONAME>DYNNR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Screen Number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DYNPRO</CMPNAME>
+     <SCONAME>REPID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Program Name</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

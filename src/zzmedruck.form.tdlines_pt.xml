@@ -1,0 +1,1016 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<abapGit version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TDLINES>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>FOOTSTEP</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_GET_ADDRESS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BUKRS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;E_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;F_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_VAL_CNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;C_VAL_IE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;6.6&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;6.6&apos; CM WIDTH &apos;6.8&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;13.4&apos; CM WIDTH &apos;6.6&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;20&apos; CM WIDTH &apos;4.99&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_NAME1&amp;,,&amp;F_NAME1&amp;,,&amp;C_NAME1&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,CNPJ: &amp;E_VAL_CNPJ(18)&amp;,,CNPJ: &amp;F_VAL_CNPJ(18)&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>CNPJ: &amp;C_VAL_CNPJ(18)&amp; ,,&amp;T024-EKGRP&amp; - &amp;T024-EKNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,InsC.: &amp;E_VAL_IE(17)&amp;,,InsC.: &amp;F_VAL_IE(17)&amp;,,InsC.: &amp;C_VAL_IE(17)&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;&apos;Tel: &apos;T024-EKTEL&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_STRAS&amp;,,&amp;F_STRAS&amp;,,&amp;C_STRAS&amp;,,&amp;&apos;Fax: &apos;T024-TELFX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_ORT01&amp; - &amp;E_REGIO&amp; - CEP:&amp;E_PSTLZ&amp; ,,&amp;F_ORT01&amp; - &amp;f_REGIO&amp; - CEP:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;F_PSTLZ&amp; ,,&amp;C_ORT01&amp; - &amp;C_REGIO&amp; - CEP:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;C_PSTLZ&amp;,,&lt;mm&gt;&amp;t024-smtp_addr&amp; &lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_NAME1&amp;,,&amp;F_NAME1&amp;,,&amp;C_NAME1&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,CUIT: &amp;E_VAL_CNPJ(18)&amp;,,CUIT: &amp;F_VAL_CNPJ(18)&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>CUIT: &amp;C_VAL_CNPJ(18)&amp; ,,&amp;T024-EKGRP&amp; - &amp;T024-EKNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,InsC.: &amp;E_VAL_IE(17)&amp;,,InsC.: &amp;F_VAL_IE(17)&amp;,,InsC.: &amp;C_VAL_IE(17)&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;&apos;Tel: &apos;T024-EKTEL&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_STRAS&amp;,,&amp;F_STRAS&amp;,,&amp;C_STRAS&amp;,,&amp;&apos;Fax: &apos;T024-TELFX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+     <TDLINE>,,&amp;E_ORT01&amp; - &amp;E_REGIO&amp; - CP:&amp;E_PSTLZ&amp; ,,&amp;F_ORT01&amp; - &amp;f_REGIO&amp; - CP:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;F_PSTLZ&amp; ,,&amp;C_ORT01&amp; - &amp;C_REGIO&amp; - CP:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;C_PSTLZ&amp;,,&lt;mm&gt;&amp;t024-smtp_addr&amp; &lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>PA</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;2.4&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;25&apos; CM HEIGHT &apos;1.3&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&quot;Declaramos que em nossa  cadeia  produtiva não  utilizamos  mão-de-obra</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>em situação  degradante ou análoga ao trabalho escravo, tampouco</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>mão-de-obra infantil. E que atuamos em nossa cadeia produtiva de modo a</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>preservar o meio ambiente, buscando sempre o desenvolvimento</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>sustentável&quot;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&quot;Declaramos que en nuestra cadena productiva no utilizamos mano-de-obra</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>en situación degradante o análoga al trabajo esclavo, tampoco</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>mano-de-obra infantil. En nuestra cadena productiva actuamos de modo de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>preservar el medio ambiente, buscando siempre el desenvolvimiento</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>sustentable.&quot;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_DADOS_SS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EKORG&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-BSART&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CONTATO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FONE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FAX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CPFCNPJ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CEP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;RUA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;CIDADE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;UF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;BATXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>primeira linha</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;4.7&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;4.7&apos; CM WIDTH &apos;6.6&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;11.3&apos; CM WIDTH &apos;11.2&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;22.5&apos; CM WIDTH &apos;2.5&apos; CM HEIGHT &apos;2.4&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>segunda linha -- FOI TRANSFORMADA EM DUAS JANELAS ! HEADER 1 e HEADER 2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;2.4&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;11.3&apos; CM HEIGHT &apos;2.8&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;2.4&apos; CM XPOS &apos;11.3&apos; CM WIDTH &apos;13.6&apos; CM HEIGHT &apos;2.8&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T024E-TXKOP&amp; OBJECT TEXT ID ADRS LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,&lt;b&gt;Pedido de Compras&lt;/&gt;,,,,Fornecedor:,,&lt;b&gt;&amp;EKKO-LIFNR&amp; - &amp;NAME1&amp;&lt;b&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,,,,,CNPJ/CPF:,,&lt;b&gt;&amp;CPFCNPJ&amp;&lt;/&gt;,,&lt;F1&gt;Folha&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,Tipo Doc:,,&lt;b&gt;&amp;EKKO-BSART&amp; - &amp;BATXT&amp; &lt;/&gt;,,&amp;RUA&amp;,,&lt;b&gt;&amp;UF&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P2</TDFORMAT>
+     <TDLINE>,,CEP: &lt;b&gt;&amp;CEP&amp;&lt;/&gt;,,,,,,,,&lt;F1&gt; &amp;PAGE(C)&amp;/&amp;SAPSCRIPT-FORMPAGES(C)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;b&gt;NR.&lt;/&gt;,,&lt;b&gt;DT.EMISSÃO&lt;/&gt;,,Vendedor,,&lt;b&gt;&amp;EKKO-VERKF&amp; &amp;EKKO-TELF1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;b1&gt;&amp;EKKO-EBELN&amp;&lt;/&gt;,,&lt;b&gt;&amp;EKKO-AEDAT&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,Condições de Fornecimento : &lt;b&gt;&lt;m1&gt;FCA FABRICA TELEMACO BORRA&lt;/&gt;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,Condições de Pagamento : &lt;b&gt;&lt;m1&gt; Fora Quinz - 15 dias; Fora Quinz - 15</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>dias&lt;/&gt;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,&lt;b&gt;Pedido de Compras&lt;/&gt;,,,,Proveedor:,,&lt;b&gt;&amp;EKKO-LIFNR&amp; - &amp;NAME1&amp;&lt;b&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,,,,,CUIT:,,&lt;b&gt;&amp;CPFCNPJ&amp;&lt;/&gt;,,&lt;F1&gt;Página&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P1</TDFORMAT>
+     <TDLINE>,,Tipo Doc:,,&lt;b&gt;&amp;EKKO-BSART&amp; - &amp;BATXT&amp; &lt;/&gt;,,&amp;RUA&amp;,,&lt;b&gt;&amp;UF&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P2</TDFORMAT>
+     <TDLINE>,,CP: &lt;b&gt;&amp;CEP&amp;&lt;/&gt;,,,,,,,,&lt;F1&gt; &amp;PAGE(C)&amp;/&amp;SAPSCRIPT-FORMPAGES(C)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;b&gt;NR.&lt;/&gt;,,&lt;b&gt;Fc.Emisión&lt;/&gt;,,Vendedor,,&lt;b&gt;&amp;EKKO-VERKF&amp; &amp;EKKO-TELF1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P3</TDFORMAT>
+     <TDLINE>,,&lt;b1&gt;&amp;EKKO-EBELN&amp;&lt;/&gt;,,&lt;b&gt;&amp;EKKO-AEDAT&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_CONDICOES_SS IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-ZTERM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;FORMENTO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;PGMENTO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;11.3&apos; CM HEIGHT &apos;2.8&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;11.3&apos; CM WIDTH &apos;13.6&apos; CM HEIGHT &apos;2.8&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Condições de Fornecimento : &lt;b&gt;&lt;m1&gt;&amp;FORMENTO&amp;&lt;/&gt;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Condições de Pagamento : &lt;b&gt;&lt;m1&gt;&amp;PGMENTO&amp;&lt;/&gt;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Condiciones de Entrega/Contratación : &lt;b&gt;&lt;m1&gt;&amp;FORMENTO&amp;&lt;/&gt;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P4</TDFORMAT>
+     <TDLINE>,,Condiciones de Pago : &lt;b&gt;&lt;m1&gt;&amp;PGMENTO&amp;&lt;/&gt;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;13.7&apos; CM HEIGHT &apos;2.8&apos; CM FRAME 10    TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>* importante: Mencionar, no item da Nota Fiscal, o número do Pedido de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Compras e nosso Código de Material.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>* Este pedido de compras está sujeito às condições de compras, descritas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>em nosso anexo, as quais são de seu conhecimento e somente poderão ser</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>alteradas mediante nossa autorização por escrito.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>* As mercadorias em desacordo serão devolvidas sem despesas de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>transporte do local de entrega até nossa fábrica (remessa e retorno) por</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>sua conta. Reservamo-nos o direito de cancelamento, vencido o prazo de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>entrega, e não aceitaremos antecipações sem nossa prévia autorização.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>* O pagamento do fornecimento será efetuado mediante depósito bancário,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>através de DOC, em conta corrente a ser indicada pelo fornecedor.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; É obrigatório constar na nota fiscal o número do Pedido de Compra</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>e o nosso Código de Material;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; As mercadorias em desacordo com este Pedido de Compra serão</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>devolvidas com todos os custos de transporte por conta do fornecedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; Reservamo-nos o direito de cancelamento da compra vencidos os</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>prazos de entrega acordados em nosso pedido de compra;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; Após o faturamento, é obrigatório o envio do arquivo XML de sua</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>nota fiscal eletrônica ao e-mail nfe.fiscal@grupomaggi.com.br</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; Es obligatorio indicar en la factura el número de Pedido de Compra</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>y nuestro Código de Material;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; Las mercaderias con diferencias a este Pedido de Compra serán</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>devueltas con todos los costos de transporte a cargo del proveedor;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T1</TDFORMAT>
+     <TDLINE>&lt;706&gt; Nos reservamos el derecho de cancelar la compra vencido el plazo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>de entrega acordado en nuestro pedido de compra;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>LOGO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE ZHEX-MACRO-LOGO_MAGGI OBJECT TEXT ID ST LANGUAGE PT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>MAIN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>HEADER_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM ZF_BUSCA_TEXTO_HEADER IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;TEXTO4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_F</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_MOEDA_ITEM IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-WAERS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;MOEDA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T2</TDFORMAT>
+     <TDLINE>&amp;TEXTO1&amp; &amp;TEXTO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>T3</TDFORMAT>
+     <TDLINE>&amp;TEXTO3&amp; &amp;TEXTO4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>POSITION WINDOW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.00&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;25&apos;  CM HEIGHT &apos;0.60&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;1.1&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;1.1&apos;  CM WIDTH &apos;8.0&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;9.1&apos;  CM WIDTH &apos;2.4&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;11.5&apos; CM WIDTH &apos;1.4&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;12.9&apos; CM WIDTH &apos;2.1&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;15.0&apos; CM WIDTH &apos;1.1&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;16.1&apos; CM WIDTH &apos;1.2&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;17.3&apos; CM WIDTH &apos;3.3&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.60&apos; CM XPOS &apos;20.6&apos; CM WIDTH &apos;4.4&apos; CM HEIGHT &apos;0.55&apos; CM FRAME 10 TW intensity 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H1</TDFORMAT>
+     <TDLINE>,,Item,,Especificação,,Quantidade,,Unid.,,Dt.Entrega,,%ICMS,,%IPI,,Preço</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>Unit.(&amp;moeda&amp;),,Valor Total (&amp;moeda&amp;)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H1</TDFORMAT>
+     <TDLINE>,,Item,,Especificación,,Cantidad,,Unid.,,Fc.Entrega,,%IVA,,%IIBB,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>Precio Un.(&amp;moeda&amp;),,Valor Total (&amp;moeda&amp;)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Completa o box até o final da janela</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;0.0&apos;  CM WIDTH &apos;1.1&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;1.1&apos;  CM WIDTH &apos;8.0&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;9.1&apos;  CM WIDTH &apos;2.4&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;11.5&apos; CM WIDTH &apos;1.4&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;12.9&apos; CM WIDTH &apos;2.1&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;15.0&apos; CM WIDTH &apos;1.1&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;16.1&apos; CM WIDTH &apos;1.2&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;17.3&apos; CM WIDTH &apos;3.3&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;1.15&apos; CM XPOS &apos;20.6&apos; CM WIDTH &apos;4.4&apos; CM HEIGHT &apos;8.35&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_IMPOSTO_ITEM IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BUKRS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-MWSBP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-NETWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-MENGE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-PEINH&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-J_1BNBM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;ICMS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALOR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VLITM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;IPI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>D1</TDFORMAT>
+     <TDLINE>,,&amp;EKPO-EBELP&amp;,,&lt;ti&gt;&amp;EKPO-MATNR&amp; - &amp;EKPO-TXZ01&amp;&lt;/&gt;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;EKPO-MENGE(12)&amp;,,&amp;EKPO-MEINS&amp; ,,&amp;EKET-EINDT&amp;,,&amp;ICMS&amp;,,&amp;IPI&amp;,,&amp;VLITM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>,,&amp;VALOR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,,,&amp;EKPO-TXZ01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;EKPO-MATNR(K)&amp; OBJECT MATERIAL ID BEST PARAGRAPH T4</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_TOTAL_PAGINA IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKPO-BRTWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;KOMP-NETWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;EKPO-BRTWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>TOTAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;25&apos; CM HEIGHT &apos;1.05&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0&apos; CM XPOS &apos;0&apos; CM WIDTH &apos;25&apos; CM HEIGHT &apos;0.70&apos; CM FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.7&apos; CM XPOS &apos;00.0&apos; CM WIDTH &apos;6.6&apos; CM HEIGHT &apos;0.35&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.7&apos; CM XPOS &apos;06.6&apos; CM WIDTH &apos;6.8&apos; CM HEIGHT &apos;0.35&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.7&apos; CM XPOS &apos;13.4&apos; CM WIDTH &apos;6.6&apos; CM HEIGHT &apos;0.35&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>BOX YPOS &apos;0.7&apos; CM XPOS &apos;20.0&apos; CM WIDTH &apos;4.99&apos; CM HEIGHT &apos;0.35&apos; CM FRAME 10 TW INTENSITY 10</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PERFORM F_BUSCA_TOT_PAG IN PROGRAM ZMMR001</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>USING &amp;EKKO-EBELN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CHANGING &amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPERFORM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,Valor Total da Merc./Serv:,,&amp;VALTOTM&amp;,,Valor total do Pedido:,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-SPRAS&amp; EQ &apos;PT&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P8</TDFORMAT>
+     <TDLINE>,,Valor Total da Merc./Serv:,,    &amp;VALTOTM&amp; ,,Valor total do Pedido:,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>    &amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H2</TDFORMAT>
+     <TDLINE>,,LOCAL DE ENTREGA,,LOCAL DE FATURAMENTO,,LOCAL DE COBRANÇA,,COMPRADOR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSEIF &amp;EKKO-SPRAS&amp; EQ &apos;ES&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>P8</TDFORMAT>
+     <TDLINE>,,Valor Total de Merc./Serv:,,    &amp;VALTOTM&amp; ,,Valor total del Pedido:,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>    &amp;VALTOTP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>H2</TDFORMAT>
+     <TDLINE>,,Lugar de Entrega,,Lugar de Facturación,,Lugar de Cobranza,,Comprador</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+   </TDLINES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Envio de Email Lista Técnica</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGFPP_EMAIL_LISTA_TECNICATOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGFPP_EMAIL_LISTA_TECNICA</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFPP_EMAIL_LISTA_TECNICA</FUNCNAME>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SOFOLENTI1-OBJECT_ID</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>TL_LISTA</PARAMETER>
+       <DBSTRUCT>ZPPT0025</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TL_LISTA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

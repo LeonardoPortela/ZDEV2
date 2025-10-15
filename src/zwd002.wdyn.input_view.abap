@@ -1,0 +1,306 @@
+METHOD ONACTIONACTION_FIND .
+*
+*
+********  Radio button ******
+*  DATA : V_ELEMENT TYPE REF TO IF_WD_CONTEXT_ELEMENT,
+*         ITEMS_NODE TYPE REF TO IF_WD_CONTEXT_NODE,
+*         V_INDEX TYPE I,
+*         V_TEXT TYPE STRING,
+*         ITEMLIST TYPE STANDARD TABLE OF IF_INPUT_VIEW=>ELEMENT_RB_G1,
+*         ITEMLIST2 TYPE STANDARD TABLE OF IF_INPUT_VIEW=>ELEMENT_RB_G2,
+*         W_LIST LIKE LINE OF ITEMLIST,
+*         W_LIST2 LIKE LINE OF ITEMLIST2.
+************  end radio button
+*
+*
+*  DATA: NODE_NODE_SOL           TYPE REF TO IF_WD_CONTEXT_NODE,
+*    ELEM_NODE_SOL                      TYPE REF TO IF_WD_CONTEXT_ELEMENT,
+*    STRU_NODE_SOL                        TYPE IF_INPUT_VIEW=>ELEMENT_NODE_SOL .
+*
+** navigate from <CONTEXT> to <NODE_VBAK> via lead selection
+*  NODE_NODE_SOL = WD_CONTEXT->GET_CHILD_NODE( NAME = IF_INPUT_VIEW=>WDCTX_NODE_SOL ).
+*
+** get element via lead selection
+*  ELEM_NODE_SOL = NODE_NODE_SOL->GET_ELEMENT(  ).
+*
+** get all declared attributes
+*  ELEM_NODE_SOL->GET_STATIC_ATTRIBUTES(
+*    IMPORTING
+*      STATIC_ATTRIBUTES = STRU_NODE_SOL ).
+*
+*
+*  DATA: LS_WHERE(72) TYPE C,
+*        LT_WHERE LIKE TABLE OF LS_WHERE,
+*        WL_COCKPIT TYPE ZSDS009,
+*        TL_COCKPIT TYPE STANDARD TABLE OF ZSDS009.
+*
+*
+*  DATA: RG_VKORG TYPE TABLE OF BAPI_RANGESVKORG ,
+*        WA_VKORG LIKE LINE OF RG_VKORG,
+*        RG_VTWEG TYPE TABLE OF BAPI_RANGESVTWEG ,
+*        WA_VTWEG LIKE LINE OF RG_VTWEG,
+*        RG_SPART TYPE TABLE OF BAPI_RANGESSPART ,
+*        WA_SPART LIKE LINE OF RG_SPART,
+*        RG_KUNNR TYPE TABLE OF BAPI_RANGESKUNNR ,
+*        WA_KUNNR LIKE LINE OF RG_KUNNR,
+*        RG_TP_VENDA TYPE TABLE OF ZBAPI_RANGESTP_VENDA,
+*        WA_TP_VENDA LIKE LINE OF RG_TP_VENDA,
+*        WL_GERA,
+*        WL_CONS,
+*        WL_FORM,
+*        WL_VENDA.
+*
+*
+** create where condition
+**  IF NOT stru_node_sol-vkorg EQ ''.
+**    CONCATENATE 'VKORG = ''' stru_node_SOL-VKORG '''' INTO ls_where.
+**    APPEND ls_where TO lt_where.
+**  ENDIF.
+**  IF NOT stru_node_vbak-erdat EQ '00000000'.
+**    CONCATENATE 'ERDAT = ''' stru_node_vbak-erdat '''' INTO ls_where.
+**    IF stru_node_vbak-vbeln NE ''.
+**      CONCATENATE 'AND' ls_where INTO ls_where SEPARATED BY space.
+**    ENDIF.
+**    APPEND ls_where TO lt_where.
+**  ENDIF.
+*
+*  IF STRU_NODE_SOL-VKORG IS NOT INITIAL.
+*    WA_VKORG-SIGN = 'I'.
+*    WA_VKORG-OPTION = 'EQ'.
+*    WA_VKORG-LOW = STRU_NODE_SOL-VKORG.
+*    APPEND WA_VKORG TO RG_VKORG.
+*    CLEAR: WA_VKORG.
+*  ENDIF.
+*  BREAK-POINT.
+*  BREAK ABAP.
+*
+*  IF STRU_NODE_SOL-VTWEG IS NOT INITIAL.
+*    WA_VTWEG-SIGN = 'I'.
+*    WA_VTWEG-OPTION = 'EQ'.
+*    WA_VTWEG-LOW = STRU_NODE_SOL-VTWEG.
+*    APPEND WA_VTWEG TO RG_VTWEG.
+*    CLEAR: WA_VTWEG.
+*  ENDIF.
+*
+*  IF STRU_NODE_SOL-SPART IS NOT INITIAL.
+*    WA_SPART-SIGN = 'I'.
+*    WA_SPART-OPTION = 'EQ'.
+*    WA_SPART-LOW = STRU_NODE_SOL-SPART.
+*    APPEND WA_SPART TO RG_SPART.
+*    CLEAR: WA_SPART.
+*  ENDIF.
+*
+*  IF STRU_NODE_SOL-KUNNR IS NOT INITIAL.
+*    WA_KUNNR-SIGN = 'I'.
+*    WA_KUNNR-OPTION = 'EQ'.
+*    WA_KUNNR-LOW = STRU_NODE_SOL-KUNNR.
+*    APPEND WA_KUNNR TO RG_KUNNR.
+*    CLEAR: WA_KUNNR.
+*  ENDIF.
+*
+*  IF STRU_NODE_SOL-TP_VENDA IS NOT INITIAL.
+*    WA_TP_VENDA-SIGN = 'I'.
+*    WA_TP_VENDA-OPTION = 'EQ'.
+*    WA_TP_VENDA-LOW = STRU_NODE_SOL-TP_VENDA.
+*    APPEND WA_TP_VENDA TO RG_TP_VENDA.
+*    CLEAR: WA_TP_VENDA.
+*  ENDIF.
+*
+**  SELECT VBELN ERDAT ERZET ERNAM ANGDT BNDDT AUDAT VBTYP TRVOG AUART
+**         AUGRU GWLDT SUBMI LIFSK FAKSK NETWR WAERK VKORG VTWEG SPART
+**         VKGRP VKBUR GSBER GSKST GUEBG GUEEN KNUMV
+**  FROM VBAK INTO TABLE LT_VBAK WHERE (LT_WHERE).
+*
+*  ITEMS_NODE = WD_CONTEXT->GET_CHILD_NODE( NAME = `RB_G1` ).
+*  ITEMS_NODE->GET_STATIC_ATTRIBUTES_TABLE( IMPORTING TABLE = ITEMLIST ).
+*  V_INDEX = ITEMS_NODE->GET_LEAD_SELECTION_INDEX( ).
+*  CLEAR: W_LIST, WL_GERA, WL_CONS.
+*  READ TABLE ITEMLIST INTO W_LIST INDEX V_INDEX.
+*  IF W_LIST-RB_TP_EXEC EQ 'Gera OV'.
+*    WL_GERA = 'X'.
+*
+*
+*  ELSEIF W_LIST-RB_TP_EXEC = 'Consultar OV Geradas'.
+*    WL_CONS = 'X'.
+*  ENDIF.
+**  WD_THIS->FIRE_OUT_RB_1_PLG(
+**       RB_G1 = W_LIST-RB_TP_EXEC
+**  ).
+*
+*  ITEMS_NODE = WD_CONTEXT->GET_CHILD_NODE( NAME = `RB_G2` ).
+*  ITEMS_NODE->GET_STATIC_ATTRIBUTES_TABLE( IMPORTING TABLE = ITEMLIST2 ).
+*  V_INDEX = ITEMS_NODE->GET_LEAD_SELECTION_INDEX( ).
+*  CLEAR: W_LIST2, WL_FORM, WL_VENDA.
+*  READ TABLE ITEMLIST2 INTO W_LIST2 INDEX V_INDEX.
+*  IF W_LIST2-RB_TP_SOL EQ 'Formação de Lote'.
+*    WL_FORM = 'X'.
+*  ELSEIF W_LIST2-RB_TP_SOL = 'Venda Normal'.
+*    WL_VENDA = 'X'.
+*  ENDIF.
+**  WD_THIS->FIRE_OUT_RB_2_PLG(
+**         RB_G2 = W_LIST-RB_TP_EXEC
+**    ).
+*
+**      WD_THIS->FIRE_IN_RB_PLG(
+**      RB_G1 =     W_LIST-RB_TP_EXEC                        " char20
+**      RB_G2 =     W_LIST2-RB_TP_SOL                        " char20
+**    ).
+*
+*  CALL FUNCTION 'ZSDMF006_BUSCA_DADOS_NR_SOL'
+*    EXPORTING
+*      P_GERA      = WL_GERA
+*      P_CONS      = WL_CONS
+*      P_FORM      = WL_FORM
+*      P_VENDA     = WL_VENDA
+*    TABLES
+*      RG_VKORG    = RG_VKORG
+*      RG_VTWEG    = RG_VTWEG
+*      RG_SPART    = RG_SPART
+*      RG_KUNNR    = RG_KUNNR
+*      RG_TP_VENDA = RG_TP_VENDA
+*      ET_COCKPIT  = TL_COCKPIT.
+*
+*
+*
+*
+**  LOOP AT TL_COCKPIT INTO WL_COCKPIT.
+**    IF SY-TABIX EQ 1.
+**      WL_COCKPIT-STATUS = 'ICON_RED_LIGHT'.
+**    ELSE.
+**
+**      WL_COCKPIT-STATUS = 'ICON_YELLOW_LIGHT'.
+**    ENDIF.
+**    MODIFY TL_COCKPIT FROM WL_COCKPIT.
+**  ENDLOOP.
+*  DATA:
+*    NODE_NODE_ALV                       TYPE REF TO IF_WD_CONTEXT_NODE,
+*    STRU_NODE_ALV                       TYPE IF_INPUT_VIEW=>ELEMENT_NODE_ALV .
+*
+** navigate from <CONTEXT> to <NODE_ALV> via lead selection
+*  NODE_NODE_ALV = WD_CONTEXT->GET_CHILD_NODE( NAME = IF_INPUT_VIEW=>WDCTX_NODE_ALV ).
+*
+*
+** get all declared attributes
+*  NODE_NODE_ALV->BIND_TABLE( TL_COCKPIT ).
+
+  WD_COMP_CONTROLLER->ONFIND( ).
+ENDMETHOD.
+
+method WDDOAFTERACTION .
+endmethod.
+
+method WDDOBEFOREACTION .
+*  data lo_api_controller type ref to if_wd_view_controller.
+*  data lo_action         type ref to if_wd_action.
+
+*  lo_api_controller = wd_this->wd_get_api( ).
+*  lo_action = lo_api_controller->get_current_action( ).
+
+*  if lo_action is bound.
+*    case lo_action->name.
+*      when '...'.
+
+*    endcase.
+*  endif.
+endmethod.
+
+method WDDOEXIT .
+endmethod.
+
+METHOD WDDOINIT .
+*  DATA LO_CMP_USAGE TYPE REF TO IF_WD_COMPONENT_USAGE.
+*
+*  LO_CMP_USAGE =   WD_THIS->WD_CPUSE_ALV_SOLICITACAO( ).
+*  IF LO_CMP_USAGE->HAS_ACTIVE_COMPONENT( ) IS INITIAL.
+*    LO_CMP_USAGE->CREATE_COMPONENT( ).
+*  ENDIF.
+*
+** Get config model
+*
+*  DATA: L_REF_INTERFACECONTROLLER TYPE REF TO IWCI_SALV_WD_TABLE .
+*
+*  L_REF_INTERFACECONTROLLER = WD_THIS->WD_CPIFC_ALV_SOLICITACAO( ).
+*
+*  DATA: L_VALUE TYPE REF TO CL_SALV_WD_CONFIG_TABLE.
+*
+*  L_VALUE = L_REF_INTERFACECONTROLLER->GET_MODEL( ).
+*
+*  L_VALUE->IF_SALV_WD_TABLE_SETTINGS~SET_VISIBLE_ROW_COUNT( '10' ).
+*
+** Sort rows by seatsocc descending
+*
+*** data: lr_field type ref to cl_salv_wd_field.
+***
+*** lr_field = l_value->if_salv_wd_field_settings~get_field( 'SEATSOCC' ).
+***
+*** lr_field->if_salv_wd_sort~create_sort_rule( sort_order =
+***
+*** if_salv_wd_c_sort=>sort_order_descending ).
+*
+** Display icon in column seatsocc
+*
+*  DATA: LR_COLUMN TYPE REF TO CL_SALV_WD_COLUMN,
+*
+*  LR_IMAGE TYPE REF TO CL_SALV_WD_UIE_IMAGE,
+*
+*  LV_ICON TYPE STRING.
+*
+*  LR_COLUMN = L_VALUE->IF_SALV_WD_COLUMN_SETTINGS~GET_COLUMN( 'STATUS_EX' ).
+*
+*  CREATE OBJECT LR_IMAGE.
+*  BREAK-POINT.
+*  LR_IMAGE->SET_SOURCE_FIELDNAME( 'STATUS' ).
+*
+*  LR_COLUMN->SET_CELL_EDITOR( LR_IMAGE ). "Display traffic light images in column 'SEATSOCCC'
+** delete column STATUS
+*
+*  L_VALUE->IF_SALV_WD_COLUMN_SETTINGS~DELETE_COLUMN( 'STATUS' ).
+
+***************** Radio button *****************
+  DATA : V_ELEMENT TYPE REF TO IF_WD_CONTEXT_ELEMENT,
+          ITEMS_NODE TYPE REF TO IF_WD_CONTEXT_NODE,
+          V_INDEX TYPE I,
+          V_TEXT TYPE STRING,
+          ITEMLIST TYPE STANDARD TABLE OF IF_input_view=>ELEMENT_RB_G1,
+          ITEMLIST2 TYPE STANDARD TABLE OF IF_input_view=>ELEMENT_RB_G2,
+          W_LIST  LIKE LINE OF ITEMLIST,
+          W_LIST2 LIKE LINE OF ITEMLIST2.
+* Appending elements to "itemList"
+  W_LIST-RB_TP_EXEC = 'Gera OV'.
+  APPEND W_LIST TO ITEMLIST.
+
+  W_LIST-RB_TP_EXEC = 'Consultar OV Geradas'.
+  APPEND W_LIST TO ITEMLIST.
+
+
+  ITEMS_NODE = WD_CONTEXT->GET_CHILD_NODE( NAME = `RB_G1` ).
+  ITEMS_NODE->BIND_TABLE( ITEMLIST ).
+  ITEMS_NODE->SET_LEAD_SELECTION_INDEX( 2 ).
+  V_INDEX = ITEMS_NODE->GET_LEAD_SELECTION_INDEX( ).
+  CLEAR W_LIST.
+
+* Appending elements to "itemList"
+  W_LIST2-RB_tp_sol = 'Formação de Lote'.
+  APPEND W_LIST2 TO ITEMLIST2.
+
+  W_LIST2-RB_tp_sol = 'Venda Normal'.
+  APPEND W_LIST2 TO ITEMLIST2.
+
+
+  ITEMS_NODE = WD_CONTEXT->GET_CHILD_NODE( NAME = `RB_G2` ).
+  ITEMS_NODE->BIND_TABLE( ITEMLIST2 ).
+  ITEMS_NODE->SET_LEAD_SELECTION_INDEX( 2 ).
+  V_INDEX = ITEMS_NODE->GET_LEAD_SELECTION_INDEX( ).
+  CLEAR W_LIST2.
+*  READ TABLE ITEMLIST INTO W_LIST INDEX V_INDEX.
+*  V_TEXT = W_LIST-EBELN.
+*  WD_CONTEXT->SET_ATTRIBUTE( EXPORTING VALUE = V_TEXT  NAME = 'VIEWTEXT'  ).
+ENDMETHOD.
+
+method WDDOMODIFYVIEW .
+
+endmethod.
+
+method WDDOONCONTEXTMENU .
+endmethod.
+

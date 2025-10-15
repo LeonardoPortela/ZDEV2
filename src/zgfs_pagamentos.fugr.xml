@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Pagamntos F110 e estornos</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGFS_PAGAMENTOSTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGFS_PAGAMENTOS</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFIMF_ESTORNA_PAGAMENTO</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_ZBUKR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>DZBUKR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_LAUFD</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>LAUFD</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_LAUFI</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>LAUFI</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_VBLNR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>VBLNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ZALDT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>DZALDT_ZHL</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_ZBUKR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_LAUFD</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_LAUFI</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_VBLNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ZALDT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

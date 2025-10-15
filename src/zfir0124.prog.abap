@@ -1,0 +1,6 @@
+
+REPORT  zfir0124.
+INCLUDE zfir0124_top.
+INCLUDE zfir0124_class100.
+INCLUDE zfir0124_class200.
+INCLUDE zfir0124_form.

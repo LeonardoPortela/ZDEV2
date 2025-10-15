@@ -1,0 +1,238 @@
+class ZCL_SOFT_EXPERT_WS_INJECT definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_SOFT_EXPERT_WS_INJECT .
+
+  data ENTITYS_VALUES type ZDE_ZSEXPT00004_VALUES_T .
+  data ENTITYS_INDEX type ZDE_ZSEXPT00004_INDEX_T .
+  data ATTACHMENTS type ZDE_ZSEXPT00007_T .
+
+  methods ADD_ENTITY_VALUE
+    importing
+      !I_ENTITY_VALUE type ZDE_ZSEXPT00004_VALUES
+    returning
+      value(R_INSTANCE) type ref to ZCL_SOFT_EXPERT_WS_INJECT .
+  methods ADD_ATTACHMENTS
+    importing
+      !I_ATTACHMENT type ZDE_ZSEXPT00007
+    returning
+      value(R_INSTANCE) type ref to ZCL_SOFT_EXPERT_WS_INJECT .
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL_SOFT_EXPERT_WS_INJECT IMPLEMENTATION.
+
+
+  METHOD ADD_ATTACHMENTS.
+    R_INSTANCE = ME.
+    APPEND I_ATTACHMENT TO ME->ATTACHMENTS.
+  ENDMETHOD.
+
+
+  METHOD add_entity_value.
+    r_instance = me.
+    APPEND i_entity_value TO me->entitys_values.
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~CLEAR.
+
+     R_INSTANCE = ME.
+
+     CLEAR: ME->ATTACHMENTS,
+            ME->ENTITYS_INDEX,
+            ME->ENTITYS_VALUES.
+
+  ENDMETHOD.
+
+
+  METHOD zif_soft_expert_ws_inject~get_attributes_values.
+
+    r_instance = me.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~GET_ENTITYS_CHILD_VALUES.
+
+    DATA: DS_VALOR TYPE STRING.
+
+    R_INSTANCE = ME.
+
+    CLEAR: E_XML_ENTITY_CHILD.
+
+    "READ TABLE ME->ENTITYS_INDEX INTO DATA(WA_ENTITYS_INDEX) INDEX I_INDEX.
+
+    LOOP AT ME->ENTITYS_VALUES INTO DATA(WA_ENTITYS_VALUES)
+      WHERE ENTITYID EQ I_ENTITYID.
+
+      DS_VALOR =  WA_ENTITYS_VALUES-VALUE.
+
+      "Informações da Carga
+      I_WORKFLOW->EDIT_ENTITY_NEWCHILD_VALUE_XML(
+        EXPORTING
+          I_ENTITYID = CONV #( WA_ENTITYS_VALUES-ENTITYID )
+          I_TABELA   = CONV #( WA_ENTITYS_VALUES-TABNAME )
+          I_CAMPO    = CONV #( WA_ENTITYS_VALUES-FIELDNAME )
+          I_VALOR    = DS_VALOR
+        CHANGING
+          E_XML      = E_XML_ENTITY_CHILD ).
+
+*      "Informações da Carga
+*      I_WORKFLOW->EDIT_ENTITY_VALUE_XML(
+*        EXPORTING
+*          I_ENTITYID               = CONV #( WA_ENTITYS_VALUES-ENTITYID )
+*          I_TABELA                 = CONV #( WA_ENTITYS_VALUES-TABNAME )
+*          I_CAMPO                  = CONV #( WA_ENTITYS_VALUES-FIELDNAME )
+*          I_VALOR                  = DS_VALOR
+*          I_ATTRIBUTEID            = CONV #( WA_ENTITYS_VALUES-ATTRIBUTEID )
+*          I_TYPE                   = WA_ENTITYS_VALUES-TYPE
+*        CHANGING
+*          E_XML                    = E_XML_ENTITY  ).
+
+    ENDLOOP.
+
+
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~GET_ENTITYS_VALUES.
+
+    DATA: DS_VALOR TYPE STRING.
+
+    R_INSTANCE = ME.
+
+    READ TABLE ME->ENTITYS_INDEX INTO DATA(WA_ENTITYS_INDEX) INDEX I_INDEX.
+
+    LOOP AT ME->ENTITYS_VALUES INTO DATA(WA_ENTITYS_VALUES)
+      WHERE ENTITYID EQ I_ENTITYID AND KEY EQ WA_ENTITYS_INDEX-KEY
+        AND RELATIONSHIP EQ ABAP_FALSE.
+
+      DS_VALOR =  WA_ENTITYS_VALUES-VALUE.
+
+      "Informações da Carga
+      I_WORKFLOW->EDIT_ENTITY_VALUE_XML(
+        EXPORTING
+          I_ENTITYID               = CONV #( WA_ENTITYS_VALUES-ENTITYID )
+          I_TABELA                 = CONV #( WA_ENTITYS_VALUES-TABNAME )
+          I_CAMPO                  = CONV #( WA_ENTITYS_VALUES-FIELDNAME )
+          I_VALOR                  = DS_VALOR
+          I_ATTRIBUTEID            = CONV #( WA_ENTITYS_VALUES-ATTRIBUTEID )
+          I_TYPE                   = WA_ENTITYS_VALUES-TYPE
+        CHANGING
+          E_XML                    = E_XML_ENTITY  ).
+
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~GET_INSTANCE.
+
+    DATA: E_ZSEXPT00006 TYPE ZSEXPT00006.
+
+    IF ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT IS NOT BOUND.
+      CREATE OBJECT ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT TYPE ZCL_SOFT_EXPERT_WS_INJECT.
+      ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT->I_ID_PROCESSID =
+      ZCL_SOFT_EXPERT_WORKFLOW=>ZIF_SOFT_EXPERT_WORKFLOW~GET_PROCESSID_SE(
+        EXPORTING
+          I_PROCESSID_SAP = I_WORKFLOW_SAP   " Identificador de Processo SAP
+        IMPORTING
+          E_ZSEXPT00006   = E_ZSEXPT00006 ).
+
+      ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT->I_USUARIO = E_ZSEXPT00006-USUARIO.
+      ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT->I_SENHA   = E_ZSEXPT00006-SENHA.
+    ENDIF.
+
+    R_INSTANCE = ZIF_SOFT_EXPERT_WS_INJECT~AT_INJECT.
+
+  ENDMETHOD.
+
+
+  METHOD zif_soft_expert_ws_inject~get_many_editentitys_records.
+
+    DATA: wa_entity_index TYPE zde_zsexpt00004_index.
+    r_instance = me.
+
+    DATA(entitys) = me->entitys_values[].
+    DELETE entitys WHERE entityid NE i_entityid.
+    SORT entitys BY key.
+    DELETE ADJACENT DUPLICATES FROM entitys COMPARING key.
+    DESCRIBE TABLE entitys LINES e_many.
+
+    LOOP AT entitys INTO DATA(wa_entity).
+      wa_entity_index-index    = sy-index.
+      wa_entity_index-entityid = wa_entity-entityid.
+      wa_entity_index-key      = wa_entity-key.
+      APPEND wa_entity_index TO me->entitys_index.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~GET_RELATIONSHIPS_VALUES.
+
+    DATA: DS_VALOR TYPE STRING.
+
+    R_INSTANCE = ME.
+
+    READ TABLE ME->ENTITYS_INDEX INTO DATA(WA_ENTITYS_INDEX) INDEX I_INDEX.
+
+    DATA(RELACOES) = ME->ENTITYS_VALUES[].
+    DELETE RELACOES WHERE RELATIONSHIP EQ ABAP_FALSE OR KEY NE WA_ENTITYS_INDEX-KEY.
+    SORT RELACOES BY RELATIONSHIPID.
+    DELETE ADJACENT DUPLICATES FROM RELACOES COMPARING RELATIONSHIPID.
+
+    LOOP AT RELACOES INTO DATA(WA_RELACAO).
+
+      CONCATENATE E_RELATIONSHIP '<urn:Relationship>' INTO E_RELATIONSHIP.
+      CONCATENATE E_RELATIONSHIP '<urn:RelationshipID>' WA_RELACAO-RELATIONSHIPID '</urn:RelationshipID>' INTO E_RELATIONSHIP.
+
+      LOOP AT ME->ENTITYS_VALUES INTO DATA(WA_ENTITYS_VALUES)
+        WHERE ENTITYID EQ I_ENTITYID
+          AND RELATIONSHIPID EQ WA_RELACAO-RELATIONSHIPID.
+
+        DS_VALOR = WA_ENTITYS_VALUES-VALUE.
+
+        "Informações da Carga
+        I_WORKFLOW->EDIT_ENTITY_CHILD_VALUE_XML(
+          EXPORTING
+            I_ENTITYID               = CONV #( WA_ENTITYS_VALUES-ENTITYID )
+            I_TABELA                 = CONV #( WA_ENTITYS_VALUES-TABNAME )
+            I_CAMPO                  = CONV #( WA_ENTITYS_VALUES-FIELDNAME )
+            I_VALOR                  = DS_VALOR
+          CHANGING
+            E_XML                    = E_RELATIONSHIP
+        ).
+
+      ENDLOOP.
+
+      CONCATENATE E_RELATIONSHIP '</urn:Relationship>' INTO E_RELATIONSHIP.
+
+    ENDLOOP.
+
+
+  ENDMETHOD.
+
+
+  METHOD ZIF_SOFT_EXPERT_WS_INJECT~GET_WORKFLOW_TITLE.
+
+    DATA: LC_DATA TYPE C LENGTH 10,
+          LC_TIME TYPE C LENGTH 08.
+
+    WRITE SY-DATUM TO LC_DATA.
+    WRITE SY-UZEIT TO LC_TIME.
+    CONCATENATE LC_DATA '-' LC_TIME '-' SY-UNAME INTO E_WORKFLOW_TITLE.
+
+    R_INSTANCE = ME.
+
+  ENDMETHOD.
+ENDCLASS.

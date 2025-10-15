@@ -1,0 +1,9 @@
+
+PROCESS BEFORE OUTPUT.
+  MODULE PBO_0100.
+  MODULE CRIAR_OBJETO.
+  "MODULE selecionar_dados.
+  "module criar_objeto.
+
+PROCESS AFTER INPUT.
+  MODULE PAI_0100.

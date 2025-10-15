@@ -1,0 +1,25 @@
+IF WA_CONTRATO-TARE IS NOT INITIAL.
+V_TOTAL_TARE = WA_CONTRATO-TARE.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,212 @@
+FUNCTION-POOL ZBSPL.                         "MESSAGE-ID ..
+
+TABLES: T011,
+        T011T,
+        SKAT.
+TABLES: BHDGD.
+
+*...... type pool's
+TYPE-POOLS: ICON.
+TYPE-POOLS: SLIS.
+*...... field types
+TYPES:  TF_PLUMI TYPE C.
+
+*...... structure types
+TYPES:  BEGIN OF TS_NODE_ERGSL,
+          VERSN LIKE T011-VERSN,
+          ERGSL LIKE RF011P-ERGSL,
+        END   OF TS_NODE_ERGSL.
+
+TYPES:  BEGIN OF TS_NODE_SAKNR,
+          KTOPL LIKE T004-KTOPL,
+          SAKNR LIKE SKA1-SAKNR,
+          PLUMI TYPE TF_PLUMI,         " <<< not used here
+        END   OF TS_NODE_SAKNR.
+
+TYPES:  BEGIN OF TS_SAKNR_PARENT,
+          KTOPL  LIKE T004-KTOPL,
+          SAKNR  LIKE SKA1-SAKNR,
+          PLUMI  TYPE TF_PLUMI,
+          ID     LIKE STREENODE-ID,
+          PARENT LIKE STREENODE-PARENT,
+          VERSN  LIKE T011-VERSN,
+          ERGSL  LIKE RF011P-ERGSL,
+        END   OF TS_SAKNR_PARENT.
+
+TYPES:  BEGIN OF TS_FKBER_PARENT,
+          FKBER  LIKE TFKB-FKBER,
+          ID     LIKE STREENODE-ID,
+          PARENT LIKE STREENODE-PARENT,
+          VERSN  LIKE T011-VERSN,
+          ERGSL  LIKE RF011P-ERGSL,
+        END   OF TS_FKBER_PARENT.
+*......
+TYPES:  BEGIN OF TS_CHNGID,
+          ID    LIKE STREENODE-ID,
+          ERGSL LIKE RF011P-ERGSL,
+          KTOPL LIKE T004-KTOPL,
+          SAKNR LIKE SKA1-SAKNR,
+          PLUMI TYPE TF_PLUMI,
+          XVERD LIKE RF011Z-XVERD,
+        END   OF TS_CHNGID.
+
+TYPES:  BEGIN OF  TS_GRID_TOTALS,
+          ID       LIKE RSTHIE-ID,
+          TYPE     LIKE RSTHIE-TYPE,
+          ERGSL    LIKE RF011P-ERGSL,
+          TLEVEL   LIKE RSTHIE-TLEVEL,
+          CURTP    LIKE ZBSPL_TREE_FIELDCAT-CURTP,
+          WAERS    LIKE ZBSPL_TREE_FIELDCAT-WAERS,
+          REPVAL   LIKE ZBSPL_TREE_FIELDCAT-REPVAL,
+          COMPVAL  LIKE ZBSPL_TREE_FIELDCAT-COMPVAL,
+          WAER2    LIKE ZBSPL_TREE_FIELDCAT-WAER2,
+          REPVAL2  LIKE ZBSPL_TREE_FIELDCAT-REPVAL,
+          COMPVAL2 LIKE ZBSPL_TREE_FIELDCAT-COMPVAL,
+          REPVALV  LIKE ZBSPL_TREE_FIELDCAT-REPVALV,
+          REPVAL2V LIKE ZBSPL_TREE_FIELDCAT-REPVAL2V,
+          PER01    TYPE RR_UMPER,
+          PER02    TYPE RR_UMPER,
+          PER03    TYPE RR_UMPER,
+          PER04    TYPE RR_UMPER,
+          PER05    TYPE RR_UMPER,
+          PER06    TYPE RR_UMPER,
+          PER07    TYPE RR_UMPER,
+          PER08    TYPE RR_UMPER,
+          PER09    TYPE RR_UMPER,
+          PER10    TYPE RR_UMPER,
+          PER11    TYPE RR_UMPER,
+          PER12    TYPE RR_UMPER,
+          PER13    TYPE RR_UMPER,
+          PER14    TYPE RR_UMPER,
+          PER15    TYPE RR_UMPER,
+          PER16    TYPE RR_UMPER,
+        END   OF  TS_GRID_TOTALS.
+
+TYPES:  BEGIN OF TS_GRID_PREDECESSOR,
+          TLEVEL LIKE RSTHIE-TLEVEL,
+          ID     LIKE RSTHIE-ID,
+          ERGSL  LIKE RF011P-ERGSL,
+        END   OF TS_GRID_PREDECESSOR.
+
+TYPES:  BEGIN OF TS_EDIT_SETTINGS,
+          ERGSL LIKE RF011P-ERGSL,
+          TOTAL LIKE RF011P-SUMME,
+          GRADT LIKE RF011P-SUMME,
+          RSIGN LIKE RF011P-SIGN,
+        END   OF TS_EDIT_SETTINGS.
+
+TYPES:  TT_CHANG_ID         TYPE TS_CHNGID           OCCURS 0.
+TYPES:  TT_SAKNR_ID         TYPE TS_SAKNR_PARENT     OCCURS 0.
+TYPES:  TT_FKBER_ID         TYPE TS_FKBER_PARENT     OCCURS 0.
+TYPES:  TT_RSTHIE           LIKE RSTHIE              OCCURS 0.
+TYPES:  TT_RFBILA_ALV_DATA  LIKE ZRFBILA_ALV_DATA     OCCURS 0.
+TYPES:  TT_BSPL_DATA        LIKE ZBSPL_TREE_FIELDCAT  OCCURS 0.
+TYPES:  TT_GRID_TOTALS      TYPE TS_GRID_TOTALS      OCCURS 0.
+TYPES:  TT_GRID_OUTTAB      TYPE ZBSPL_GRID_FIELDCAT  OCCURS 0.
+TYPES:  TT_GRID_PREDECESSOR TYPE TS_GRID_PREDECESSOR OCCURS 0.
+TYPES:  TT_ERGSL_TEXT       LIKE RF011Q              OCCURS 0.
+TYPES:  TT_NOT_ASS          TYPE TS_NODE_SAKNR       OCCURS 0.
+TYPES:  TT_EDIT_SETTINGS    TYPE TS_EDIT_SETTINGS    OCCURS 0.
+*...... ID´s which belong to balance sheet
+RANGES: GR_BLNCE_SHEET_ID FOR STREENODE-ID.
+*...... ID´s which belong to rofit & loss
+RANGES: GR_PROF_LOSS_ID   FOR STREENODE-ID.
+*...... ID´s which belong to bs notes
+RANGES: GR_BS_NOTES_ID    FOR STREENODE-ID.
+
+*.... global table declarations
+DATA: GT_ERGSL_TEXT        TYPE TT_ERGSL_TEXT      WITH HEADER LINE.
+DATA: GT_BSPLDATA          TYPE TT_BSPL_DATA       WITH HEADER LINE.
+DATA: GT_GRIDTOTALS        TYPE TT_GRID_TOTALS     WITH HEADER LINE.
+DATA: GT_GRIDOUTTAB        TYPE TT_GRID_OUTTAB     WITH HEADER LINE.
+DATA: GT_RESULT            TYPE TT_RFBILA_ALV_DATA WITH HEADER LINE.
+DATA: GT_CHANGE_POS_DATA   TYPE TT_RFBILA_ALV_DATA WITH HEADER LINE.
+DATA: GT_SAKNR_ID          TYPE TT_SAKNR_ID        WITH HEADER LINE.
+DATA: GT_FKBER_ID          TYPE TT_FKBER_ID        WITH HEADER LINE.
+DATA: GT_CHANGE_ID         TYPE TT_CHANG_ID        WITH HEADER LINE.
+DATA: GT_RSTHIE            TYPE TT_RSTHIE          WITH HEADER LINE.
+DATA: WA_RSTHIE            LIKE RSTHIE.
+DATA: GT_EDIT_SETTINGS     TYPE TT_EDIT_SETTINGS   WITH HEADER LINE.
+*.... global structure declarations
+DATA: GS_NODE_NOT_ASSIGNED LIKE RSTHIE.
+DATA: GS_SETTINGS          LIKE RFBILA_ALV_SETTINGS.
+*.... global fields
+DATA: G_LIST_STATE(4)      TYPE C VALUE 'ACCT'.
+DATA: X_BUKRS_UNIQUE TYPE C VALUE 'X',
+      X_RBUSA_UNIQUE TYPE C VALUE 'X'.
+* field symbols
+FIELD-SYMBOLS: <KTOPL>,
+               <RACCT>,
+               <BUKRS>.
+FIELD-SYMBOLS: <BILADATA> LIKE  ZRFBILA_ALV_DATA,
+               <BSPLDATA> LIKE  ZBSPL_TREE_FIELDCAT,
+               <RSTHIE>   LIKE  RSTHIE,
+               <FIELDCAT> TYPE  SLIS_FIELDCAT_ALV,
+               <OUTTAB>   TYPE  ZBSPL_GRID_FIELDCAT.
+* help fields
+CONSTANTS: CON_A(1)       TYPE C VALUE 'A',
+           CON_E(1)       TYPE C VALUE 'E',
+           CON_K(1)       TYPE C VALUE 'K',
+           CON_S(1)       TYPE C VALUE 'S',
+           CON_X(1)       TYPE C VALUE 'X',
+           CON_0(1)       TYPE C VALUE '0',
+           CON_9(1)       TYPE C VALUE '9',
+           CON_999999(6)  TYPE C VALUE '999999',
+           CON_PLUS(1)    TYPE C VALUE '+',
+           CON_MINUS(1)   TYPE C VALUE '-',
+           CON_01(2)      TYPE C VALUE '01',
+           CON_02(2)      TYPE C VALUE '02',
+           CON_03(2)      TYPE C VALUE '03',
+           CON_TOP(4)     TYPE C VALUE 'TOP ',
+           CON_BPOS(4)    TYPE C VALUE 'BPOS',
+           CON_ACCT(4)    TYPE C VALUE 'ACCT',
+           CON_CCOD(4)    TYPE C VALUE 'CCOD',
+           CON_BUSA(4)    TYPE C VALUE 'BUSA',
+           CON_FBER(4)    TYPE C VALUE 'FBER',
+           CON_LEAF(4)    TYPE C VALUE 'LEAF',
+           CON_GRID(4)    TYPE C VALUE 'GRID',
+           CON_LIST(4)    TYPE C VALUE 'LIST',
+           CON_TREE(4)    TYPE C VALUE 'TREE',
+           CON_RESULT(10) TYPE C VALUE '*ERGEBNIS*',
+           CON_STARS(30)  TYPE C VALUE
+                          '******************************',
+           CON_STAR(1)    TYPE C VALUE '*'.
+CONSTANTS: CON_RFBILA10   LIKE SY-REPID VALUE 'RFBILA10'.
+
+*.... declarations used for ALV grid control
+*.... Reference variables to handle control instance:
+"DATA: control_container TYPE REF TO cl_gui_docking_container.
+DATA: G_CUSTOM_CONTAINER2 TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+DATA: ALV_TREE_CONTROL  TYPE REF TO CL_GUI_ALV_TREE.
+*.... ALV Tree needs a pointer to the internal table that shall
+*.... hold the output data:
+DATA: TABLE_POINTER     TYPE  TT_BSPL_DATA.
+*.... The fieldcatalog is a table
+*.... to aquaint the table structure to ALV.
+DATA: FIELDCATALOG      TYPE LVC_T_FCAT.
+*.... A Structure to define the heading of the hierarchy area:
+DATA: HIERARCHY_HEADER  TYPE TREEV_HHDR.
+DATA: GS_DISVARIANT     LIKE DISVARIANT.
+
+
+DATA: OK_CODE LIKE SY-UCOMM.
+DATA: SAVE_OK  LIKE SY-UCOMM,
+      MOEDA_01 TYPE WAERS,
+      MOEDA_02 TYPE WAERS,
+      WA_T001  TYPE T001,
+      E_X001   TYPE X001.
+
+*---------------------------------------------------------------------*
+*       CLASS LCL_TREE_EVENT_RECEIVER DEFINITION
+*---------------------------------------------------------------------*
+CLASS LCL_TREE_EVENT_RECEIVER DEFINITION.
+
+  PUBLIC SECTION.
+    METHODS HANDLE_TOP_OF_PAGE
+         FOR EVENT TOP_OF_PAGE OF CL_ALV_TREE_BASE.
+
+    METHODS HANDLE_AFTER_USER_COMMAND                       "n1616718
+                  FOR EVENT AFTER_USER_COMMAND OF CL_ALV_TREE_BASE "n1616718
+      IMPORTING UCOMM.                                      "n1616718
+
+ENDCLASS.                    "LCL_TREE_EVENT_RECEIVER DEFINITION

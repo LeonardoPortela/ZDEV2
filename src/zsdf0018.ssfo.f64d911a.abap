@@ -1,0 +1,26 @@
+IF WA_ITENS-TARE IS NOT INITIAL.
+V_TARE = WA_ITENS-TARE.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

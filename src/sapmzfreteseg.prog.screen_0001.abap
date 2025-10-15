@@ -1,0 +1,14 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_0001.
+
+  CALL SUBSCREEN: sub0002 INCLUDING sy-cprog vg_dynnr_0002.
+
+PROCESS AFTER INPUT.
+
+  MODULE exit_aplicativo AT EXIT-COMMAND.
+
+  CALL SUBSCREEN: sub0002.
+
+  MODULE user_command_0001.

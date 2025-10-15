@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+  MODULE zm_status_0300.
+
+PROCESS AFTER INPUT.
+  MODULE zm_user_command_0100_exit AT EXIT-COMMAND.
+  MODULE zm_user_command_0100.

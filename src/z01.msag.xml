@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>Z01</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de mensagens geral</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Chaves de lançamto dos itens do documto ñ foram encontradas!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Documento já cadastrado na empresa &amp;1 no. &amp;2 e exercício de &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>O Documento &amp;1 foi gerado para a empresa &amp;2 no exercício de &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Erro na abertura do arquivo &amp;1! Acess: &amp;2 Mode: &amp;3.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Erro na leitura da linha &amp;1 do arquivo &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Erro na gravação da linha &amp;1 do arquivo &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Erro no fechamento do arquivo &amp;1! Acess: &amp;2 Mode: &amp;3.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Chave de lançamento &amp;1 informada para estorno não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Nota fiscal &amp;1 já cadastrada pelo documento &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Centro de Custo &amp;1 não cadastrado na tabela CSKS.(Verificar Entrada).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Nenhum material encontrado para a seleção.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Informe um dos parâmetros de &quot;Materiais&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Material &amp; deve ter valor negativo.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Material &amp; deve ter valor positivo.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>&amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>656 - Rejeicao: Consumo indevido pelo aplicativo da empresa (Simetrya)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Utilizar nova operação, limite de itens p/ mesma operação é de 100 itens</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Material &amp; não possui NCM no centro &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Material &amp; não possui Categoria de CFOP no centro &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Organização de vendas origem difere da destino</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Centro &amp; não cadastrado como centro vendedor</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Tipo de material &amp; não cadastrado em parâmetros gerais</TEXT>
+    </T100>
+   </T100>
+   <I18N_LANGS>
+    <LANGU>E</LANGU>
+    <LANGU>S</LANGU>
+   </I18N_LANGS>
+   <T100T>
+    <T100T>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <STEXT>Classe de mensagens geral</STEXT>
+    </T100T>
+    <T100T>
+     <SPRSL>S</SPRSL>
+     <ARBGB>Z01</ARBGB>
+     <STEXT>Classe de mensagens geral</STEXT>
+    </T100T>
+   </T100T>
+   <T100_TEXTS>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp; &amp; &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>001</MSGNR>
+     <TEXT>Keys to the items of the document not were found!</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>002</MSGNR>
+     <TEXT>Document already registered in the company &amp;1 no. &amp;2 Exercise &amp;3!</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>003</MSGNR>
+     <TEXT>Document &amp;1 was generated for company &amp;2 in the exercise &amp;3 !</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>004</MSGNR>
+     <TEXT>Error opening file &amp;1! Access: &amp;2 Mode: &amp;3.</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>005</MSGNR>
+     <TEXT>Error reading line &amp;1 from file &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>006</MSGNR>
+     <TEXT>Error writing file &amp;2 line &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>008</MSGNR>
+     <TEXT>Launch key &amp;1 reported for reversal does not exist.</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>009</MSGNR>
+     <TEXT>Invoice &amp;1 already registered by document &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>010</MSGNR>
+     <TEXT>Cost Center &amp;1 not entered in the CSKS table. (Check In)</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>012</MSGNR>
+     <TEXT>No material found for selection</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>013</MSGNR>
+     <TEXT>Enter one of the parameters of &quot;Materials&quot;</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>014</MSGNR>
+     <TEXT>Material &amp; must have negative value</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>015</MSGNR>
+     <TEXT>Material &amp; must have positive value</TEXT>
+    </item>
+    <item>
+     <SPRSL>S</SPRSL>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp; &amp; &amp;</TEXT>
+    </item>
+   </T100_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

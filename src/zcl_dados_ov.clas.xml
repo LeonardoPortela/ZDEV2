@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_DADOS_OV</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Dados ordem de venda</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>I_VENC_REF_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Verifica vencimento OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>I_VLR_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Importa o saldo da da OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>I_VLR_REFERENCIA_OV</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Importa o saldo da referencia da OV</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>I_VLR_SALDO_FINANC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Importa saldo financeiro da OV.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VENC_REF_OV</CMPNAME>
+     <SCONAME>DT_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VENC_REF_OV</CMPNAME>
+     <SCONAME>DT_INIT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VENC_REF_OV</CMPNAME>
+     <SCONAME>TL_VBRK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura tipo tabela VBAK</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VENC_REF_OV</CMPNAME>
+     <SCONAME>T_VBAK</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas: dados de cabeçalho</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_OV</CMPNAME>
+     <SCONAME>E_LIFSP_12</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_OV</CMPNAME>
+     <SCONAME>E_VLR_PARCIAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_OV</CMPNAME>
+     <SCONAME>E_VLR_TOTAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_OV</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas e distribuição precedente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_REFERENCIA_OV</CMPNAME>
+     <SCONAME>E_VLR_PARCIAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_REFERENCIA_OV</CMPNAME>
+     <SCONAME>E_VLR_TOTAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_REFERENCIA_OV</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de vendas e distribuição precedente</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_REFERENCIA_OV</CMPNAME>
+     <SCONAME>I_VBELNN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de faturamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_SALDO_FINANC</CMPNAME>
+     <SCONAME>E_VLR_TOTAL</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Valor líquido na moeda do documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_VLR_SALDO_FINANC</CMPNAME>
+     <SCONAME>I_VBELN</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Documento de faturamento</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition - Aprov. Pagto Invoice'
+define service ZUI_APP_APROV_PAGTO_INV {
+  expose ZC_APROV_PAGTO_INV as PagtoInvoice;
+  expose ZC_APROV_PAGTO_INV_IT as PagtoInvoiceIT;
+  expose ZC_APROV_PAGTO_INV_EST as PagtoInvoiceEst;
+}

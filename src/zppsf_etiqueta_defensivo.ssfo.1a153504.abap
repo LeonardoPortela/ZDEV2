@@ -1,0 +1,27 @@
+SELECT SINGLE MAKTX
+  FROM MAKT
+  INTO MATNR_TEXT
+  WHERE MATNR = lote-MATNR.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

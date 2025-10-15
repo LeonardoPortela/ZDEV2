@@ -1,0 +1,2680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>Z_J_1BLB01</NAME>
+    <DBAPL>F</DBAPL>
+    <DBNA>J5</DBNA>
+    <TYPE>500</TYPE>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <RLOAD>D</RLOAD>
+    <FIXPT>X</FIXPT>
+    <LDBNAME>J5F</LDBNAME>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>100</KEY>
+     <ENTRY>Controle de saída</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>101</KEY>
+     <ENTRY>Cancelado</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>102</KEY>
+     <ENTRY>Ativo Fixo</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>103</KEY>
+     <ENTRY>Devolução da NF</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>104</KEY>
+     <ENTRY>NF Complementar a NF</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>105</KEY>
+     <ENTRY>NF Simp.Faturamento</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>107</KEY>
+     <ENTRY>Simples Faturamento de merc. consign. NF</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>108</KEY>
+     <ENTRY>NF Rem.em Consignaç.</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>109</KEY>
+     <ENTRY>Ref.a NF Simples Rem.</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>110</KEY>
+     <ENTRY>Rem p/Industrial.</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>111</KEY>
+     <ENTRY>Ret.de Industrializ.</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>113</KEY>
+     <ENTRY>Ref.a NF Simples Fat.</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>114</KEY>
+     <ENTRY>Consumo</ENTRY>
+     <LENGTH>7</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>115</KEY>
+     <ENTRY>Ref a NF Simples Rem &amp;1 / Ref a NF Simples Fat</ENTRY>
+     <LENGTH>46</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>120</KEY>
+     <ENTRY>Períodos para a formação de subtotais</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>130</KEY>
+     <ENTRY>Seleção de prestação serviços</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>151</KEY>
+     <ENTRY>TOTAL</ENTRY>
+     <LENGTH>5</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>152</KEY>
+     <ENTRY>ICMS</ENTRY>
+     <LENGTH>4</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>153</KEY>
+     <ENTRY>IPI</ENTRY>
+     <LENGTH>3</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>154</KEY>
+     <ENTRY>ST</ENTRY>
+     <LENGTH>2</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>200</KEY>
+     <ENTRY>LIVRO REGISTRO DE ENTRADAS - RE - MODELO P1/A</ENTRY>
+     <LENGTH>96</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>201</KEY>
+     <ENTRY>|    (a) Código de Valores Fiscais</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>202</KEY>
+     <ENTRY>Firma      :</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>203</KEY>
+     <ENTRY>|1 - Operações com Crédito de Imposto</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>204</KEY>
+     <ENTRY>Inscr. Est.:</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>205</KEY>
+     <ENTRY>CNPJ              :</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>206</KEY>
+     <ENTRY>|2 - Operações sem Crédito de Imposto -</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>207</KEY>
+     <ENTRY>|    Isentas ou não Tributadas</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>208</KEY>
+     <ENTRY>Folha      :</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>209</KEY>
+     <ENTRY>Mês ou Período/Ano:</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>210</KEY>
+     <ENTRY>|3 - Operações sem Crédito de Imposto -</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>211</KEY>
+     <ENTRY>|    Outras</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>221</KEY>
+     <ENTRY>        |          Documentos Fiscais            |                   |</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>222</KEY>
+     <ENTRY>        |----------------------------------------|                   |</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>223</KEY>
+     <ENTRY>        |Es |Série|      |Data do |          |UF |      Valor        |</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>224</KEY>
+     <ENTRY>Data de |pé |Sub- |Número|Docu-   |Código    |Ori|      Contábil     |</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>225</KEY>
+     <ENTRY>Entrada |cie|Série|      |mento   |Emitente  |gem|                   |</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>231</KEY>
+     <ENTRY>Codificação|                   Valores Fiscais                  |</ENTRY>
+     <LENGTH>65</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>232</KEY>
+     <ENTRY>-----------|----|-----------------------------------------------|</ENTRY>
+     <LENGTH>65</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>233</KEY>
+     <ENTRY>Con|       |ICMS|C|                  |      |                   |</ENTRY>
+     <LENGTH>65</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>234</KEY>
+     <ENTRY>tá |Fiscal |IPI |O|Base de Cálculo   |Alíq. |Imposto            |Observações</ENTRY>
+     <LENGTH>81</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>235</KEY>
+     <ENTRY>bil|       |ST  |D|Valor da Operação |      |Creditado          |</ENTRY>
+     <LENGTH>65</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>250</KEY>
+     <ENTRY>Lista de Códigos de Emitentes (Modelo P10)</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>251</KEY>
+     <ENTRY>Código do                 |                                  |Unidade da  |                     |Inscrição</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>252</KEY>
+     <ENTRY>Emitente                  |Emitente do Documento Fiscal      |Federação   |Inscrição no CGC/CPF |Estadual</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>270</KEY>
+     <ENTRY>Sem movimento</ENTRY>
+     <LENGTH>13</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>271</KEY>
+     <ENTRY>Diferencial de alíquota</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>272</KEY>
+     <ENTRY>Dif. Aliq.:</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>273</KEY>
+     <ENTRY>Sub. Trib.:</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>300</KEY>
+     <ENTRY>Estatística do Registro de Entradas</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>301</KEY>
+     <ENTRY>Número de livros impressos</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>302</KEY>
+     <ENTRY>Número total de páginas (todos os livros)</ENTRY>
+     <LENGTH>41</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>350</KEY>
+     <ENTRY>Registro de Entradas (Modelo 1) - lista de erros</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>360</KEY>
+     <ENTRY>Demonstrativo por Estado de Origem da Mercadoria ou de Início da Prestação do Serviço - ICMS</ENTRY>
+     <LENGTH>92</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>370</KEY>
+     <ENTRY>Operações realizadas com contribuintes</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>371</KEY>
+     <ENTRY>Operações realizadas com não contribuintes</ENTRY>
+     <LENGTH>42</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>372</KEY>
+     <ENTRY>EN</ENTRY>
+     <LENGTH>2</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>373</KEY>
+     <ENTRY>Valor Contábil</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>374</KEY>
+     <ENTRY>Base de Cálculo</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>375</KEY>
+     <ENTRY>Imposto creditado por Sub. Trib.</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>380</KEY>
+     <ENTRY>decêndio</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>381</KEY>
+     <ENTRY>quinzena</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>382</KEY>
+     <ENTRY>mês</ENTRY>
+     <LENGTH>8</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>385</KEY>
+     <ENTRY>Total geral</ENTRY>
+     <LENGTH>11</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>390</KEY>
+     <ENTRY>Lst.erros</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>391</KEY>
+     <ENTRY>Valor ICMS Sub. trib. frete</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>392</KEY>
+     <ENTRY>Base de cálculo ICMS Sub. trib. frete</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>394</KEY>
+     <ENTRY>Valor IPI Pauta</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>395</KEY>
+     <ENTRY>Resumo Mensal de Operações e Prestações por Código Fiscal ICMS</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>396</KEY>
+     <ENTRY>1.00 Entradas e/ou Aquisições de Serviços do Estado</ENTRY>
+     <LENGTH>51</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>397</KEY>
+     <ENTRY>2.00 Entradas e/ou Aquisições de Serviços de Outros Estados</ENTRY>
+     <LENGTH>59</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>398</KEY>
+     <ENTRY>3.00 Entradas e/ou Aquisições de Serviços do Exterior</ENTRY>
+     <LENGTH>53</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>399</KEY>
+     <ENTRY>Subtotal ICMS:</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>400</KEY>
+     <ENTRY>Totais ICMS:</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Registro de Entradas (Mod.1) + Lista de Códigos de Emitentes (Mod.10)</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>BOOKSIZE</KEY>
+     <ENTRY>Páginas por livro</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>DECENDIO</KEY>
+     <ENTRY>Cada 10 dias</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>FIRSTPAG</KEY>
+     <ENTRY>Nº 1ª página</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>INCL_SRV</KEY>
+     <ENTRY>Serviços com código CFOP</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MES</KEY>
+     <ENTRY>Mensalmente</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MOD_1</KEY>
+     <ENTRY>Modelo 1</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MOD_10</KEY>
+     <ENTRY>Modelo 10</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>QUINZENA</KEY>
+     <ENTRY>Quinzenal</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Compra para Uso e Consumo</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Compra de Serviços</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Compra para industrialização / Insumos</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Compra de Ativo Imobilizado</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Compra para entrega Futura</ENTRY>
+       <LENGTH>26</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Ausgabesteuerung</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>101</KEY>
+       <ENTRY>Cancelado</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Ativo Fixo</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>Devolução da NF</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>NF Complementar a NF</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>105</KEY>
+       <ENTRY>NF Simpl Faturamento</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>107</KEY>
+       <ENTRY>Simples Faturamento de merc. consign. NF</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>108</KEY>
+       <ENTRY>NF Rem em Consignaç.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>109</KEY>
+       <ENTRY>Ref a NF Simples Rem</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Rem p/Industrial.</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>Ret de Industrializ.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Ref a NF Simples Fat</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Consumo</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Ref a NF Simples Rem &amp;1 / Ref a NF Simples Fat</ENTRY>
+       <LENGTH>46</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Perioden zur Untersummenbildung</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Selektion von Dienstleistungen</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>151</KEY>
+       <ENTRY>TOTAL</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>152</KEY>
+       <ENTRY>ICMS</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>153</KEY>
+       <ENTRY>IPI</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>154</KEY>
+       <ENTRY>ST</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>LIVRO REGISTRO DE ENTRADAS - RE - MODELO P1/A</ENTRY>
+       <LENGTH>96</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>201</KEY>
+       <ENTRY>|    (a) Código de Valores Fiscais</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>202</KEY>
+       <ENTRY>Firma      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>203</KEY>
+       <ENTRY>|1 - Operações com Crédito de Imposto</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>204</KEY>
+       <ENTRY>Inscr. Est.:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>205</KEY>
+       <ENTRY>CNPJ              :</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>206</KEY>
+       <ENTRY>|2 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>207</KEY>
+       <ENTRY>|    Isentas ou não Tributadas</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>208</KEY>
+       <ENTRY>Folha      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>209</KEY>
+       <ENTRY>Mes ou Período/Ano:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>210</KEY>
+       <ENTRY>|3 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>211</KEY>
+       <ENTRY>|    Outras</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>221</KEY>
+       <ENTRY>        |          Documentos Fiscais            |                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>222</KEY>
+       <ENTRY>        |----------------------------------------|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>223</KEY>
+       <ENTRY>        |Es |Série|      |Data do |          |UF |      Valor        |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>224</KEY>
+       <ENTRY>Data de |pé |Sub- |Número|Docu-   |Código    |Ori|      Contábil     |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>225</KEY>
+       <ENTRY>Entrada |cie|Série|      |mento   |Emitente  |gem|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>231</KEY>
+       <ENTRY>Codificação|                   Valores Fiscais                  |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>232</KEY>
+       <ENTRY>-----------|----|-----------------------------------------------|</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>233</KEY>
+       <ENTRY>Con|       |ICMS|C|                  |      |                   |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>234</KEY>
+       <ENTRY>tá |Fiscal |IPI |O|Base de Cálculo   |Alíq. |Imposto            |Observações</ENTRY>
+       <LENGTH>81</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>235</KEY>
+       <ENTRY>bil|       |ST  |D|Valor da Operação |      |Creditado          |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>250</KEY>
+       <ENTRY>Lista de Códigos de Emitentes (Modelo P10)</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>251</KEY>
+       <ENTRY>Código do                 |                                  |Unidade da  |                     |Inscrição</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>252</KEY>
+       <ENTRY>Emitente                  |Emitente do Documento Fiscal      |Federação   |Inscrição no CNPJ/CPF|Estadual</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>270</KEY>
+       <ENTRY>Sem movimento</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>271</KEY>
+       <ENTRY>Diferencial de alíquota</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>272</KEY>
+       <ENTRY>Dif. Aliq.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>273</KEY>
+       <ENTRY>Sub. Trib.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>300</KEY>
+       <ENTRY>Statistiken für &quot;Registro de Entradas&quot;</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>301</KEY>
+       <ENTRY>Anzahl gedruckte Bücher</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>302</KEY>
+       <ENTRY>Gesamtseitenzahl (alle Bücher)</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>350</KEY>
+       <ENTRY>Registro de Entradas (Modelo 1) - Fehlerliste</ENTRY>
+       <LENGTH>45</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>360</KEY>
+       <ENTRY>Demonstrativo por Estado de Origem da Mercadoria ou de Início da Prestação do Serviço - ICMS</ENTRY>
+       <LENGTH>92</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>370</KEY>
+       <ENTRY>Operações realizadas com contribuintes</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>371</KEY>
+       <ENTRY>Operações realizadas com não contribuintes</ENTRY>
+       <LENGTH>42</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>372</KEY>
+       <ENTRY>UF</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>373</KEY>
+       <ENTRY>Valor Contábil</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>374</KEY>
+       <ENTRY>Base de Cálculo</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>375</KEY>
+       <ENTRY>Imposto creditado por Sub. Trib.</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>380</KEY>
+       <ENTRY>decêndio</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>381</KEY>
+       <ENTRY>quinzena</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>382</KEY>
+       <ENTRY>mês</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>385</KEY>
+       <ENTRY>Total geral</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>390</KEY>
+       <ENTRY>FehlListe</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>391</KEY>
+       <ENTRY>Valor ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>392</KEY>
+       <ENTRY>Base de cálculo ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>394</KEY>
+       <ENTRY>Valor IPI Pauta</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>395</KEY>
+       <ENTRY>Resumo Mensal de Operações e Prestações por Código Fiscal ICMS</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>396</KEY>
+       <ENTRY>1.00 Entradas e/ou Aquisições de Serviços do Estado</ENTRY>
+       <LENGTH>51</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>397</KEY>
+       <ENTRY>2.00 Entradas e/ou Aquisições de Serviços de Outros Estados</ENTRY>
+       <LENGTH>59</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>398</KEY>
+       <ENTRY>3.00 Entradas e/ou Aquisições de Serviços do Exterior</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>399</KEY>
+       <ENTRY>Zwischensumme ICMS:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>400</KEY>
+       <ENTRY>Totais ICMS:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Registro de Entradas (Mod.1) + Lista de Códigos de Emitentes (Mod.10)</ENTRY>
+       <LENGTH>69</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BOOKSIZE</KEY>
+       <ENTRY>Seiten pro Buch</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DECENDIO</KEY>
+       <ENTRY>Zehntägig</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>FIRSTPAG</KEY>
+       <ENTRY>Erste Seitenzahl</ENTRY>
+       <LENGTH>24</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>INCL_SRV</KEY>
+       <ENTRY>Services mit CFOP code</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MES</KEY>
+       <ENTRY>Monatlich</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_1</KEY>
+       <ENTRY>Modelo 1</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_10</KEY>
+       <ENTRY>Modelo 10</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>QUINZENA</KEY>
+       <ENTRY>Halbmonatlich</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Output Control</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>101</KEY>
+       <ENTRY>Cancelado</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Ativo Fixo</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>Devolução da NF</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>NF Complementar a NF</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>105</KEY>
+       <ENTRY>NF Simpl Faturamento</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>107</KEY>
+       <ENTRY>Simples Faturamento de merc. consign. NF</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>108</KEY>
+       <ENTRY>NF Rem em Consignaç.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>109</KEY>
+       <ENTRY>Ref a NF Simples Rem</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Rem p/Industrializaç</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>Ret de Industrializ.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Ref a NF Simples Fat</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Consumo</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Ref a NF Simples Rem &amp;1 / Ref a NF Simples Fat</ENTRY>
+       <LENGTH>46</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Create Tax Subtotals for Each</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Services</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>151</KEY>
+       <ENTRY>TOTAL</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>152</KEY>
+       <ENTRY>ICMS</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>153</KEY>
+       <ENTRY>IPI</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>154</KEY>
+       <ENTRY>ST</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>LIVRO REGISTRO DE ENTRADAS - RE - MODELO P1/A</ENTRY>
+       <LENGTH>96</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>201</KEY>
+       <ENTRY>|    (a) Código de Valores Fiscais</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>202</KEY>
+       <ENTRY>Firma      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>203</KEY>
+       <ENTRY>|1 - Operações com Crédito de Imposto</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>204</KEY>
+       <ENTRY>Inscr. Est.:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>205</KEY>
+       <ENTRY>CNPJ              :</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>206</KEY>
+       <ENTRY>|2 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>207</KEY>
+       <ENTRY>|    Isentas ou não Tributadas</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>208</KEY>
+       <ENTRY>Folha      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>209</KEY>
+       <ENTRY>Mes ou Período/Ano:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>210</KEY>
+       <ENTRY>|3 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>211</KEY>
+       <ENTRY>|    Outras</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>221</KEY>
+       <ENTRY>        |          Documentos Fiscais            |                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>222</KEY>
+       <ENTRY>        |----------------------------------------|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>223</KEY>
+       <ENTRY>        |Es |Série|      |Data do |          |UF |      Valor        |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>224</KEY>
+       <ENTRY>Data de |pé |Sub- |Número|Docu-   |Código    |Ori|      Contábil     |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>225</KEY>
+       <ENTRY>Entrada |cie|Série|      |mento   |Emitente  |gem|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>231</KEY>
+       <ENTRY>Codificação|                   Valores Fiscais                  |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>232</KEY>
+       <ENTRY>-----------|----|-----------------------------------------------|</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>233</KEY>
+       <ENTRY>Con|       |ICMS|C|                  |      |                   |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>234</KEY>
+       <ENTRY>tá |Fiscal |IPI |O|Base de Cálculo   |Alíq. |Imposto            |Observações</ENTRY>
+       <LENGTH>81</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>235</KEY>
+       <ENTRY>bil|       |ST  |D|Valor da Operação |      |Creditado          |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>250</KEY>
+       <ENTRY>Lista de Códigos de Emitentes (Modelo P10)</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>251</KEY>
+       <ENTRY>Código do                 |                                  |Unidade da  |                     |Inscrição</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>252</KEY>
+       <ENTRY>Emitente                  |Emitente do Documento Fiscal      |Federação   |Inscrição no CNPJ/CPF|Estadual</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>270</KEY>
+       <ENTRY>Sem movimento</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>271</KEY>
+       <ENTRY>Diferencial de aliquota</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>272</KEY>
+       <ENTRY>Dif. Aliq.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>273</KEY>
+       <ENTRY>Sub. Trib.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>300</KEY>
+       <ENTRY>Statistics for Registro de Entradas</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>301</KEY>
+       <ENTRY>Number of books printed</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>302</KEY>
+       <ENTRY>Total number of pages (all books)</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>350</KEY>
+       <ENTRY>Registro de Entradas (Modelo 1) - Error list</ENTRY>
+       <LENGTH>45</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>360</KEY>
+       <ENTRY>Demonstrativo por Estado de Origem da Mercadoria ou de Início da Prestação do Serviço - ICMS</ENTRY>
+       <LENGTH>92</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>370</KEY>
+       <ENTRY>Operações realizadas com contribuintes</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>371</KEY>
+       <ENTRY>Operações realizadas com não contribuintes</ENTRY>
+       <LENGTH>42</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>372</KEY>
+       <ENTRY>UF</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>373</KEY>
+       <ENTRY>Valor Contábil</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>374</KEY>
+       <ENTRY>Base de Cálculo</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>375</KEY>
+       <ENTRY>Imposto creditado por Sub. Trib.</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>380</KEY>
+       <ENTRY>decêndio</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>381</KEY>
+       <ENTRY>quinzena</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>382</KEY>
+       <ENTRY>mes</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>385</KEY>
+       <ENTRY>Total geral</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>390</KEY>
+       <ENTRY>Errorlist</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>391</KEY>
+       <ENTRY>Valor ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>392</KEY>
+       <ENTRY>Base de cálculo ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>394</KEY>
+       <ENTRY>Valor IPI Pauta</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>395</KEY>
+       <ENTRY>Resumo Mensal de Operações e Prestações por Código Fiscal ICMS</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>396</KEY>
+       <ENTRY>1.00 Entradas e/ou Aquisições de Serviços do Estado</ENTRY>
+       <LENGTH>51</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>397</KEY>
+       <ENTRY>2.00 Entradas e/ou Aquisições de Serviços de Outros Estados</ENTRY>
+       <LENGTH>59</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>398</KEY>
+       <ENTRY>3.00 Entradas e/ou Aquisições de Serviços do Exterior</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>399</KEY>
+       <ENTRY>Subtotal ICMS:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>400</KEY>
+       <ENTRY>Totais ICMS:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>List of Incoming Documents and Vendor List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BOOKSIZE</KEY>
+       <ENTRY>Pages Per Book</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DECENDIO</KEY>
+       <ENTRY>Ten Days</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>FIRSTPAG</KEY>
+       <ENTRY>First Page Number</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>INCL_SRV</KEY>
+       <ENTRY>Services with CFOP Code</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MES</KEY>
+       <ENTRY>Month</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_1</KEY>
+       <ENTRY>Modelo 1</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_10</KEY>
+       <ENTRY>Modelo 10</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>QUINZENA</KEY>
+       <ENTRY>Fifteen Days</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>S</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>100</KEY>
+       <ENTRY>Output Control</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>101</KEY>
+       <ENTRY>Cancelado</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <ENTRY>Ativo Fixo</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>103</KEY>
+       <ENTRY>Devolução da NF</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>NF Complementar a NF</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>105</KEY>
+       <ENTRY>NF Simpl Faturamento</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>107</KEY>
+       <ENTRY>Simples Faturamento de merc. consign. NF</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>108</KEY>
+       <ENTRY>NF Rem em Consignaç.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>109</KEY>
+       <ENTRY>Ref a NF Simples Rem</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Rem p/Industrializaç</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>Ret de Industrializ.</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Ref a NF Simples Fat</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Consumo</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>115</KEY>
+       <ENTRY>Ref a NF Simples Rem &amp;1 / Ref a NF Simples Fat</ENTRY>
+       <LENGTH>46</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Create Tax Subtotals for Each</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Services</ENTRY>
+       <LENGTH>30</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>151</KEY>
+       <ENTRY>TOTAL</ENTRY>
+       <LENGTH>5</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>152</KEY>
+       <ENTRY>ICMS</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>153</KEY>
+       <ENTRY>IPI</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>154</KEY>
+       <ENTRY>ST</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>LIVRO REGISTRO DE ENTRADAS - RE - MODELO P1/A</ENTRY>
+       <LENGTH>96</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>201</KEY>
+       <ENTRY>|    (a) Código de Valores Fiscais</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>202</KEY>
+       <ENTRY>Firma      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>203</KEY>
+       <ENTRY>|1 - Operações com Crédito de Imposto</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>204</KEY>
+       <ENTRY>Inscr. Est.:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>205</KEY>
+       <ENTRY>CNPJ              :</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>206</KEY>
+       <ENTRY>|2 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>207</KEY>
+       <ENTRY>|    Isentas ou não Tributadas</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>208</KEY>
+       <ENTRY>Folha      :</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>209</KEY>
+       <ENTRY>Mes ou Período/Ano:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>210</KEY>
+       <ENTRY>|3 - Operações sem Crédito de Imposto -</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>211</KEY>
+       <ENTRY>|    Outras</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>221</KEY>
+       <ENTRY>        |          Documentos Fiscais            |                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>222</KEY>
+       <ENTRY>        |----------------------------------------|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>223</KEY>
+       <ENTRY>        |Es |Série|      |Data do |          |UF |      Valor        |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>224</KEY>
+       <ENTRY>Data de |pé |Sub- |Número|Docu-   |Código    |Ori|      Contábil     |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>225</KEY>
+       <ENTRY>Entrada |cie|Série|      |mento   |Emitente  |gem|                   |</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>231</KEY>
+       <ENTRY>Codificação|                   Valores Fiscais                  |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>232</KEY>
+       <ENTRY>-----------|----|-----------------------------------------------|</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>233</KEY>
+       <ENTRY>Con|       |ICMS|C|                  |      |                   |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>234</KEY>
+       <ENTRY>tá |Fiscal |IPI |O|Base de Cálculo   |Alíq. |Imposto            |Observações</ENTRY>
+       <LENGTH>81</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>235</KEY>
+       <ENTRY>bil|       |ST  |D|Valor da Operação |      |Creditado          |</ENTRY>
+       <LENGTH>65</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>250</KEY>
+       <ENTRY>Lista de Códigos de Emitentes (Modelo P10)</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>251</KEY>
+       <ENTRY>Código do                 |                                  |Unidade da  |                     |Inscrição</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>252</KEY>
+       <ENTRY>Emitente                  |Emitente do Documento Fiscal      |Federação   |Inscrição no CNPJ/CPF|Estadual</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>270</KEY>
+       <ENTRY>Sem movimento</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>271</KEY>
+       <ENTRY>Diferencial de aliquota</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>272</KEY>
+       <ENTRY>Dif. Aliq.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>273</KEY>
+       <ENTRY>Sub. Trib.:</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>300</KEY>
+       <ENTRY>Statistics for Registro de Entradas</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>301</KEY>
+       <ENTRY>Number of books printed</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>302</KEY>
+       <ENTRY>Total number of pages (all books)</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>350</KEY>
+       <ENTRY>Registro de Entradas (Modelo 1) - Error list</ENTRY>
+       <LENGTH>45</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>360</KEY>
+       <ENTRY>Demonstrativo por Estado de Origem da Mercadoria ou de Início da Prestação do Serviço - ICMS</ENTRY>
+       <LENGTH>92</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>370</KEY>
+       <ENTRY>Operações realizadas com contribuintes</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>371</KEY>
+       <ENTRY>Operações realizadas com não contribuintes</ENTRY>
+       <LENGTH>42</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>372</KEY>
+       <ENTRY>UF</ENTRY>
+       <LENGTH>2</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>373</KEY>
+       <ENTRY>Valor Contábil</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>374</KEY>
+       <ENTRY>Base de Cálculo</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>375</KEY>
+       <ENTRY>Imposto creditado por Sub. Trib.</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>380</KEY>
+       <ENTRY>decêndio</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>381</KEY>
+       <ENTRY>quinzena</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>382</KEY>
+       <ENTRY>mes</ENTRY>
+       <LENGTH>8</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>385</KEY>
+       <ENTRY>Total geral</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>390</KEY>
+       <ENTRY>Errorlist</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>391</KEY>
+       <ENTRY>Valor ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>392</KEY>
+       <ENTRY>Base de cálculo ICMS Sub. trib. frete</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>394</KEY>
+       <ENTRY>Valor IPI Pauta</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>395</KEY>
+       <ENTRY>Resumo Mensal de Operações e Prestações por Código Fiscal ICMS</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>396</KEY>
+       <ENTRY>1.00 Entradas e/ou Aquisições de Serviços do Estado</ENTRY>
+       <LENGTH>51</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>397</KEY>
+       <ENTRY>2.00 Entradas e/ou Aquisições de Serviços de Outros Estados</ENTRY>
+       <LENGTH>59</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>398</KEY>
+       <ENTRY>3.00 Entradas e/ou Aquisições de Serviços do Exterior</ENTRY>
+       <LENGTH>53</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>399</KEY>
+       <ENTRY>Subtotal ICMS:</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>400</KEY>
+       <ENTRY>Totais ICMS:</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>List of Incoming Documents and Vendor List</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BOOKSIZE</KEY>
+       <ENTRY>Pages Per Book</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DECENDIO</KEY>
+       <ENTRY>Ten Days</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>FIRSTPAG</KEY>
+       <ENTRY>First Page Number</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>INCL_SRV</KEY>
+       <ENTRY>Services with CFOP Code</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MES</KEY>
+       <ENTRY>Month</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_1</KEY>
+       <ENTRY>Modelo 1</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MOD_10</KEY>
+       <ENTRY>Modelo 10</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>QUINZENA</KEY>
+       <ENTRY>Fifteen Days</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>Z_J_1BLB01</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0007</VERSION>
+      <TXTLINES>00049</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>Z_J_1BLB01</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00007</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Mit diesem Report werden die brasilianischen Bücher des</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>steuerrechtlichen Meldewesen &apos;Registro de Entradas&apos; (Modelo 1) und</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Lista de Códigos de Emitentes&apos; (Modelo 10) angelegt. Damit werden die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Daten der &lt;DS:GLOS.80E4B3EF8290D511BCC30800060D9C68&gt;Notas Fiscais&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>und &lt;DS:GLOS.C8EB8CED0545774A9129835A5BF29EFD&gt;Conhecimentos&lt;/&gt; gelesen,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>die im ausgewählten Zeitraum aus der Nota-Fiscal-Datenbank gebucht</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wurden. Anschließend werden sie, brasilianischer Gesetzgebung</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entsprechend, gesammelt, sortiert und angezeigt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Muss-Selektionskriterien:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Nota-Fiscal-Selektionskriterien:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Buchungskreis      ... der Gesellschaft, die &apos;Registro&apos; ausstellt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Geschäftsort        ... der Geschäftsort, der &apos;Registro&apos; ausstellt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Buchungsdatum      ... Anfangs- und Enddatum des Zeitraums, für den</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gebuchte Belege in&apos;Registro&apos; eingetragen werden sollen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Ausgabesteuerung:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Erste Seitenzahl  ... Zahl der ersten Seite des aktuellen &apos;Registro&apos; -</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>muss kleiner sein als unter &apos;Seiten pro Buch&apos; eingegebene Zahl und</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>größer als 1, denn die Seite mit der Seitenzahl 1 ist für &apos;Termos de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Abertura&apos; vorgesehen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Seiten pro Buch   ... maximale Seitenzahl eines Buches (in Brasilien</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>normalerweise 500 Seiten) - wird diese Zahl erreicht, beendet das</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Registro&apos; zuerst die Ausgabe der Daten des Tages, der in Bearbeitung</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ist (inkl. Tagessummen).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>HT</TDFORMAT>
+       <TDLINE>Es ist darauf zu achten, dass die Seitennummerierung nur im Druckmodus</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>möglich ist - wird der Report nur durch das Symbol &apos;Ausführen&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>aufgerufen, erstellt das System nur eine (endlose) Ausgabeseite auf dem</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Bild. Damit eine Liste mit korrekter Seitennummerierung angelegt werden</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>kann, sollte der Report auf dem Selektionsbild über die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Drucker-Tastenkombination (Crtl+P) aufgerufen werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Kann-Selektionskriterien:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Zusätzliche Selektionskriterien:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Reihe              ... Nummer der Nota-Fiscal-/ &apos;Conhecimento&apos;-Reihe</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Nota-Fiscal-Nummer ... externe, nicht eindeutige Nota-Fiscal- oder</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Conhecimento-Nummer</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Die Ausgabe kann aus vier Teilen bestehen:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>dem &apos;Registro de Entradas&apos;, besteht möglicherweise aus mehreren Büchern</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(entsprechend der Selektionen unter &apos;Ausgabesteuerung&apos;)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>einem Kurzüberblick für den Anwender (gesetzlich nicht vorgeschrieben,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gehört nicht zu steuerrechtlichen Büchern) über Anzahl der bereits</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gedruckten Seiten und Bücher.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>der &apos;Lista de Códigos de Emitentes&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/</TDFORMAT>
+       <TDLINE>Bei einmaligen Partnern zeigt die Liste in den letzten zwei Feldern</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchungsdatum und Nota-Fiscal-Nummer des entsprechenden Belegs an, um</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>eine genaue Identifikation zu ermöglichen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>einer Liste der Fehler, die während der Bearbeitung aufgrund von</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Inkonsistenzen in der Datenbank aufgetreten sind (z.B. nicht gepflegte</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Steuerarten usw.). Bei Erscheinen dieser Fehlerliste sollte der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Systemverwalter informiert werden, und der Report sollte ein zweites</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Mal mit den korrigierten Daten durchgeführt werden.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>Z_J_1BLB01</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0007</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00047</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>Z_J_1BLB01</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00007</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>This report creates the Brazilian Legal Books &apos;Registro de Entradas&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(Modelo 1) and &apos;Lista de Códigos de Emitentes&apos;(Modelo 10). It reads the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>data of the &lt;DS:GLOS.80E4B3EF8290D511BCC30800060D9C68&gt;notas fiscais&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>and &lt;DS:GLOS.C8EB8CED0545774A9129835A5BF29EFD&gt;conhecimentos&lt;/&gt; that</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>have been posted during the selected period out of the Nota Fiscal</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>database and accumulates, sorts and displays them according to</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Brazilian laws.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Mandatory selection criteria:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Nota Fiscal selection criteria:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Company code       ... of the company that issues the Registro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Business place     ... of the company&apos;s business place that issues the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Registro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Posting date       ... first and last date of the period for which</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>posted documents shall be reported in the Registro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Output control:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>First page number  ... number of the first page of the current Registro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE> - has to be smaller than the number entered for &apos;Pages per book&apos; and</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>  has to be greater than 1, since the page numbered with 1 is reserved</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>for the &apos;Termos de Abertura&apos;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Pages per book     ... maximum number of pages within one book (usually</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>500 pages in Brazil) - if this number was reached, the Registro will</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>first finish the output of the  data for the day that is currently</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>being processed (incl. daily totals)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>HT</TDFORMAT>
+       <TDLINE>Note that page numbering is only possible in print mode - if the report</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>is simply started via the &apos;Execute&apos; button, then the system will create</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>only one (endless) page of output on the screen. So, in order to create</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>a list with the correct page numbering, start the report from the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selection screen using the printer button (Ctrl+P).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Optional selection criteria:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Additional selection criteria:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Series             ... the Nota Fiscal / Conhecimento Series number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Nota Fiscal number ... the external, not unique number of the Nota</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Fiscal or Conhecimento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The Output may consist of four parts:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>The Registro de Entradas, possibly consisting of several books</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(according tp the selections for &apos;Output control&apos;)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>A short overview for the user (no legal requirement, does not belong to</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the Legal Books) about the number of pages and books that were actually</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>printed</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>The &apos;Lista de Códigos de Emitentes&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/</TDFORMAT>
+       <TDLINE>In the case of one time partners, the list shows in the last two fields</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the posting date and the Nota Fiscal number of the respective document</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>in order to enable the correct identification.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>A list of errors that occurred during processing due to inconsistencies</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>in the database, such as tax types not maintained, etc. - If this error</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>list appears, then the system administrator should be informed and the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>report should be run a second time using the correct data.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>Z_J_1BLB01</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0007</VERSION>
+      <TXTLINES>00047</TXTLINES>
+      <DOKSTATE>A</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>Z_J_1BLB01</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00007</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Este report serve para criar os livros brasileiros do reporting fiscal</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Registro de Entradas&apos; (modelo 1) e &apos;Lista de Códigos de Emitentes&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(modelo 10), que servem para ler os dados das notas fiscais e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;conhecimentos&apos;, lançados a partir do banco de dados da nota fiscal no</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>período selecionado. Em seguida e de acordo com a legislação</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>brasileira, eles são reunidos, ordenados e exibidos.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Critérios de seleção obrigatórios:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Critérios de seleção da nota fiscal:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Empresa            ... sociedade que emite o &apos;Registro&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Local de negócio   ... local de negócio que emite o &apos;Registro&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Data de lançamento ... Data início e final de um período, no qual devem</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ser entrados documentos lançados no &apos;Registro&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Controle de saída:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Primeiro nº página... o nº da primeira página do atual &apos;Registro&apos; -</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>deve ser inferior ao número entrado sob &apos;Número de páginas do livro&apos; e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>superior a 1, dado que a página com o nº de página 1 está prevista para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Termos de Abertura&apos;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Páginas por livro   ... número de páginas máximo de um livro</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(normalmente 500 páginas no Brasil) - caso seja atingido este número, o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&apos;Registro&apos; termina, primeiramente, a saída de dados do dia, o qual se</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>encontra em processamento (incl. totais do dia).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>HT</TDFORMAT>
+       <TDLINE>As páginas só podem ser numeradas no modo de impressão - caso o report</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>seja solicitado somente mediante o símbolo &apos;Executar&apos;, o sistema</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>somente cria uma página de saída (infinita) na tela. Para criar uma</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>lista com numeração de páginas correta, o report deverá ser solicitado</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mediante a combinação de teclas de impressão (Crtl+P) na tela de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>seleção.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Critérios de seleção opcionais:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Critérios de seleção adicionais:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Série              ... número da série da nota fiscal/&apos;Conhecimento&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N2</TDFORMAT>
+       <TDLINE>Número nota fiscal ... externa, número não unívoco da nota fiscal ou de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>conhecimento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>A saída pode consistir em quatro partes:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>do &apos;Registro de Entradas&apos;, o qual, provavelmente, consiste em vários</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>livros (correspondendo às seleções sob &apos;Controle de saída&apos;)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>de uma síntese breve para o usuário (não determinado por lei, não</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>pertence aos livros fiscais) sobre o número de páginas e livros já</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>impressos.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>da &apos;Lista de Códigos de Emitentes&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/</TDFORMAT>
+       <TDLINE>No caso de parceiros únicos, a lista exibe a data de lançamento e o nº</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>da nota fiscal nos últimos dois campos do respetivo documento, para</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>possibilitar uma identificação exata.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>de uma lista dos erros, os quais ocorreram durante o processamento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>devido a inconsistências no banco de dados (p.ex. tipos de imposto não</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>atualizados etc.). Caso apareça esta lista de erros, deverá ser</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>informado o responsável pelo sistema, e o report deverá ser executado</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>uma segunda vez com os dados corrigidos.</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

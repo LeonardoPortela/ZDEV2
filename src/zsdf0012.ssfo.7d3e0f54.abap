@@ -1,0 +1,50 @@
+DATA: _LEN   TYPE I,
+      _I     TYPE I,
+      PR     TYPE N LENGTH 2,
+      LIMITE TYPE C,
+      CAMPO  TYPE CHAR20.
+
+FIELD-SYMBOLS: <FS_CAMPO>  TYPE ANY.
+
+PR = '01'.
+
+_LEN = STRLEN( PARAGRAFO ).
+
+DO.
+
+  IF _I = _LEN.
+    EXIT.
+  ENDIF.
+
+  IF PARAGRAFO+_I(1) CO CL_ABAP_CHAR_UTILITIES=>CR_LF(1).
+    ADD 1 TO _I.
+
+    IF LIMITE IS INITIAL.
+      LIMITE = ABAP_TRUE.
+    ELSE.
+      ADD 1 TO PR.
+      CAMPO = |WA_PARAGRAFO-P{ PR }|.
+      ASSIGN (CAMPO) TO <FS_CAMPO>.
+    ENDIF.
+
+  ELSE.
+
+    IF LIMITE IS NOT INITIAL.
+      LIMITE = ABAP_FALSE.
+      ADD 1 TO PR.
+    ENDIF.
+
+    CAMPO = |WA_PARAGRAFO-P{ PR }|.
+    ASSIGN (CAMPO) TO <FS_CAMPO>.
+
+    IF <FS_CAMPO> IS INITIAL.
+      <FS_CAMPO> = PARAGRAFO+_I(1).
+    ELSE.
+      <FS_CAMPO> = |{ <FS_CAMPO> }{ PARAGRAFO+_I(1) }|.
+    ENDIF.
+
+  ENDIF.
+
+  ADD 1 TO _I.
+
+ENDDO.

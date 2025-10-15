@@ -1,0 +1,24 @@
+
+WG_TOTAL_CREDITOS = WG_TOTAL_CREDITOS * 100.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

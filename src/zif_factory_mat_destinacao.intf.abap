@@ -1,0 +1,23 @@
+interface ZIF_FACTORY_MAT_DESTINACAO
+  public .
+
+
+  class-data IF_FACTORY_MAT_DESTINACAO type ref to ZIF_FACTORY_MAT_DESTINACAO .
+  data IA_NAME_CLASS type STRING .
+  constants AT_OBJETO_ARMAZEM type STRING value 'ZCL_MATERIAL_DESTINACAO_ARMZ' ##NO_TEXT.
+  constants AT_OBJETO_DEVOLUCAO type STRING value 'ZCL_MATERIAL_DESTINACAO_DEVO' ##NO_TEXT.
+  constants AT_OBJETO_RETORNO type STRING value 'ZCL_MATERIAL_DESTINACAO_RETO' ##NO_TEXT.
+
+  class-methods GET_INSTANCE
+    returning
+      value(R_FACTORY_MAT_DESTINACAO) type ref to ZIF_FACTORY_MAT_DESTINACAO .
+  methods SET_FACTORY_OBJETO
+    importing
+      !I_ID_DESTINACAO type ZDE_DESTINACAO optional
+      !I_TP_DESTINACAO type ZDE_TP_DESTINACAO optional
+    returning
+      value(R_FACTORY_MAT_DESTINACAO) type ref to ZIF_FACTORY_MAT_DESTINACAO .
+  methods GET_FACTORY_OBJETO
+    returning
+      value(R_IF_MATERIAL_DESTINACAO) type ref to ZIF_MATERIAL_DESTINACAO .
+endinterface.

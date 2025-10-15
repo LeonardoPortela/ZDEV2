@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZORDEMCA</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Ordem de Carregamento</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Não encontrado Ordem de Carregamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Ordem de Carregamento &amp;1 não está Aberta!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Ordem de Carregamento &amp;1 não está Fechada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Ordem de Carregamento &amp;1 não possui Viagem Carguero!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Ord.Carregamento &amp;1 não foi autorizada (CARGUERO)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZORDEMCA</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Ord.Carregamento &amp;1 se encontra com veículo carregado (CARGUERO)!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

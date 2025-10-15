@@ -1,0 +1,68 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="LOOKUP_VALUE" type="ddic:ZCOUPA_SUPPLIER"/>
+  <tt:template>
+    <supplier>
+      <id tt:value-ref=".LOOKUP_VALUE.ID"/>
+      <name tt:value-ref=".LOOKUP_VALUE.NAME"/>
+      <display-name tt:value-ref=".LOOKUP_VALUE.DISPLAY_NAME"/>
+      <number tt:value-ref=".LOOKUP_VALUE.NUMBER"/>
+      <status tt:value-ref=".LOOKUP_VALUE.STATUS"/>
+      <po-method tt:value-ref=".LOOKUP_VALUE.PO_METHOD"/>
+      <po-email tt:value-ref=".LOOKUP_VALUE.PO_EMAIL"/>
+      <tax-id tt:value-ref=".LOOKUP_VALUE.TAX_ID"/>
+      <on-hold tt:value-ref=".LOOKUP_VALUE.ON_HOLD"/>
+      <primary-contact>
+        <email tt:value-ref=".LOOKUP_VALUE.PRIMARY_CONTACT.EMAIL"/>
+        <name-give tt:value-ref=".LOOKUP_VALUE.PRIMARY_CONTACT.NAME_GIVEN"/>
+        <name-family tt:value-ref=".LOOKUP_VALUE.PRIMARY_CONTACT.NAME_FAMILY"/>
+      </primary-contact>
+      <primary-address>
+        <street1 tt:value-ref=".LOOKUP_VALUE.PRIMARY_ADDRESS.STREET1"/>
+        <street2 tt:value-ref=".LOOKUP_VALUE.PRIMARY_ADDRESS.STREET2"/>
+        <city tt:value-ref=".LOOKUP_VALUE.PRIMARY_ADDRESS.CITY"/>
+        <state tt:value-ref=".LOOKUP_VALUE.PRIMARY_ADDRESS.STATE"/>
+        <postal-code tt:value-ref=".LOOKUP_VALUE.PRIMARY_ADDRESS.POSTAL_CODE"/>
+      </primary-address>
+      <shipping-term>
+        <code tt:value-ref=".LOOKUP_VALUE.SHIPPING_TERM.CODE"/>
+      </shipping-term>
+      <commodity>
+        <name tt:value-ref=".LOOKUP_VALUE.COMMODITY.NAME"/>
+      </commodity>
+      <supplier-addresses>
+        <tt:loop ref=".LOOKUP_VALUE.SUPPLIER_ADDRESSES">
+          <supplier-address>
+            <street1 tt:value-ref="STREET1"/>
+            <street2 tt:value-ref="STREET2"/>
+            <city tt:value-ref="CITY"/>
+            <state tt:value-ref="STATE"/>
+            <postal-code tt:value-ref="POSTAL_CODE"/>
+          </supplier-address>
+        </tt:loop>
+      </supplier-addresses>
+      <custom-fields>
+        <tipo-de-fornecedor>
+          <external-ref-code tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.TIPO_DE_FORNECEDOR.EXTERNAL_REF_CODE"/>
+        </tipo-de-fornecedor>
+        <status-homologacao>
+          <external-ref-code tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.STATUS_HOMOLOGACAO.EXTERNAL_REF_CODE"/>
+          <homologado tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.STATUS_HOMOLOGACAO.HOMOLOGADO"/>
+        </status-homologacao>
+        <empresas tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.EMPRESAS"/>
+        <inscricao-estadual tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.INSCRICAO_ESTADUAL"/>
+        <data-de-nascimento tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.DATA_DE_NASCIMENTO"/>
+        <email-nota-fiscal tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.EMAIL_NOTA_FISCAL"/>
+        <rg tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.RG"/>
+        <orgao-expedidor tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.ORGAO_EXPEDIDOR"/>
+        <pis-nit tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.PIS_NIT"/>
+        <matrcula-funcionrio tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.MATRCULA_FUNCIONRIO"/>
+        <no-possui-ie-ou-isento tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.NO_POSSUI_IE_OU_ISENTO"/>
+        <forma-de-tratamento tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.FORMA_DE_TRATAMENTO"/>
+        <organizao-de-compras tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.ORGANIZAO_DE_COMPRAS"/>
+        <cpf tt:value-ref=".LOOKUP_VALUE.CUSTOM_FIELDS.CPF"/>
+      </custom-fields>
+    </supplier>
+  </tt:template>
+</tt:transform>

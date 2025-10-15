@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Inclusão de Dados de Documento Fiscal</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>J1BB</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>J1BB</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLJ1BB</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLJ1BB</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:SAPLJ1BB\FO:GENERATE_NF_DATA_BAPI\SE:END\EI</FULL_NAME>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLJ1BB</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\FU:J_1B_NF_OBJECT_ADD\SE:END\EI</FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <FILES>
+    <item>
+     <NAME>\PR:SAPLJ1BB\FO:GENERATE_NF_DATA_BAPI\SE:END\EI</NAME>
+     <FILE>bb1e46bd</FILE>
+    </item>
+    <item>
+     <NAME>\FU:J_1B_NF_OBJECT_ADD\SE:END\EI</NAME>
+     <FILE>430ff1f8</FILE>
+    </item>
+   </FILES>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>5D33E70352FE008AE1000000AC0C0C27</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>5D33E70352FE008AE1000000AC0C0C27</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>056</LENGTH>
+       <TEXT>Inclusão de Dados de Documento Fiscal</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>Z_ADD_INFO_DOC_FISCAL</OBJ_NAME>
+     <CONCEPT>5D33E70352FE008AE1000000AC0C0C27</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

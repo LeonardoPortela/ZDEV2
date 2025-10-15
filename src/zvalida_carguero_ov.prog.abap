@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZVALIDA_CARGUERO_OV
+*&---------------------------------------------------------------------*
+
+*FIELD-SYMBOLS <FS_BUKRS> TYPE VBAK-VKORG.
+*FIELD-SYMBOLS <FS_KVGR4> TYPE VBAK-KVGR4.
+*
+*UNASSIGN : <FS_BUKRS>, <FS_KVGR4>.
+*
+*ASSIGN: ('(SAPMV45A)VBAK-VKORG')  TO <FS_BUKRS>,
+*        ('(SAPMV45A)VBAK-KVGR4')  TO <FS_KVGR4>.
+*
+*IF <FS_KVGR4> IS ASSIGNED AND <FS_BUKRS> IS ASSIGNED.
+*
+*  IF <FS_KVGR4> IS NOT INITIAL AND <FS_BUKRS> IS NOT INITIAL.
+*
+*    SELECT SINGLE * INTO @DATA(WA_ZLEST0184)
+*      FROM ZLEST0184
+*     WHERE KVGR4 EQ @<FS_KVGR4>
+*       AND BUKRS EQ @<FS_BUKRS>.
+*
+*    IF SY-SUBRC IS NOT INITIAL.
+*      MESSAGE E011(ZINTEGRA) WITH <FS_BUKRS> <FS_KVGR4>.
+*    ELSEIF WA_ZLEST0184-BUKRS NE <FS_BUKRS>.
+*      MESSAGE E030(ZINTEGRA) WITH <FS_KVGR4> <FS_BUKRS>.
+*    ENDIF.
+*
+*  ENDIF.
+*
+*ENDIF.

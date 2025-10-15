@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_INT_SAPPM_AUTOTRAC</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Integração SAP PM x Autotrac</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Vilhena</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>E_LOCALIZACAO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de dados consumo da localização SAP x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>I_CODE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data Initial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>I_DATEF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Data Fim</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>I_HORA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Hora Initial</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_LOCAL</CMPNAME>
+     <SCONAME>I_HORAF</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Hora Fim</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DADOS_P_MIRIAN</CMPNAME>
+     <SCONAME>T_COMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de dados combustivél Posto Mirian</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_CADASTRO_VEIC</CMPNAME>
+     <SCONAME>T_CADASTRO_VEIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de abastecimento de combustivel</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>I_CENTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>I_EQUNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº equipamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>I_PERIDO_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>I_PERIDO_INIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>I_PLACA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero da frota</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMBUST</CMPNAME>
+     <SCONAME>T_COMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de log de processamento integração SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>I_CENTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>I_EQUNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº equipamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>I_PERIDO_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>I_PERIDO_INIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>I_PLACA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero da frota</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_COMB_SINT</CMPNAME>
+     <SCONAME>T_COMB</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de log de processamento integração SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>I_DATA_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>I_HR_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: hora atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>I_HR_INIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: hora atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>I_ID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de caracteres de comprimento 6</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>T_DADOS_ABAST_VEIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de dados consumo de combustivel SAP x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_DADOS_ABAST</CMPNAME>
+     <SCONAME>T_DADOS_VEIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de abastecimento de combustivel</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_CENTRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Centro</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_EQUNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº equipamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_FROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Numero da frota</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_PERIDO_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_PERIDO_INIC</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>I_STATUS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo de texto do comprimento 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>I_CONS_LOGS</CMPNAME>
+     <SCONAME>T_LOGS</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dados de log de processamento integração SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_PONT_MED</CMPNAME>
+     <SCONAME>E_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Doc.medição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_PONT_MED</CMPNAME>
+     <SCONAME>E_VALUE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Unidade de medida ao entrar documento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_PONT_MED</CMPNAME>
+     <SCONAME>I_DATE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_PONT_MED</CMPNAME>
+     <SCONAME>I_POINT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Ponto de medição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CHECK_PONT_MED</CMPNAME>
+     <SCONAME>I_TIME</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: hora atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_CLEAR_ID_ITEM</CMPNAME>
+     <SCONAME>W_ZPME0060</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de retorno dados int SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_ESTORNO_DOC_MED</CMPNAME>
+     <SCONAME>E_DOC_MED</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Doc.medição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_ESTORNO_DOC_MED</CMPNAME>
+     <SCONAME>E_MSGTY</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema: tipo de mensagem</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_GET_DT_HR_PROC</CMPNAME>
+     <SCONAME>I_DATA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_GET_DT_HR_PROC</CMPNAME>
+     <SCONAME>I_DATA_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: data atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_GET_DT_HR_PROC</CMPNAME>
+     <SCONAME>I_HORA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: contador de loops</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_GET_DT_HR_PROC</CMPNAME>
+     <SCONAME>I_HR_FIM</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Campo do sistema ABAP: hora atual do servidor de aplicação</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_GET_DT_HR_PROC</CMPNAME>
+     <SCONAME>I_ID</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REGIST_JUSTIF</CMPNAME>
+     <SCONAME>I_LINE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Texto descritivo - linha de 72 caracteres</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REGIST_JUSTIF</CMPNAME>
+     <SCONAME>I_ODOMETRO</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Posição do contador</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REGIST_JUSTIF</CMPNAME>
+     <SCONAME>W_ZPME0060</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de retorno dados int SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REPROC_INFORM</CMPNAME>
+     <SCONAME>I_EQUNR</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nº equipamento</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REPROC_INFORM</CMPNAME>
+     <SCONAME>P_SUB_CONT</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de uma posição</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>M_REPROC_INFORM</CMPNAME>
+     <SCONAME>W_ZPME0060</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Estrutura de retorno dados int SAP PM x Autotrac</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

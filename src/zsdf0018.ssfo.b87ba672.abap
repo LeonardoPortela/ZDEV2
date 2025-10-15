@@ -1,0 +1,25 @@
+IF V_TOTAL_GERAL_TARE IS NOT INITIAL.
+V_TOTAL_TARE_CONV = V_TOTAL_GERAL_TARE.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

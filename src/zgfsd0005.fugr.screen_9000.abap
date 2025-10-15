@@ -1,0 +1,12 @@
+PROCESS BEFORE OUTPUT.
+
+  CALL SUBSCREEN subscr_4050x INCLUDING sy-repid gv_subscr_4050x.
+
+  MODULE status_9000.
+  MODULE alv_9000_init.
+
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN subscr_4050x.
+
+  MODULE user_command_9000.

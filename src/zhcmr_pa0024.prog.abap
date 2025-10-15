@@ -1,0 +1,531 @@
+*&---------------------------------------------------------------------*
+*& Transação: ZHCM_PA0019                                              *
+*& Autor....: Enio Jesus                                               *
+*& Descrição: Carregar fotos colaboradores                             *
+*&---------------------------------------------------------------------*
+REPORT ZHCMR_PA0024.
+
+TYPE-POOLS: TRUXS.
+*DATA RADIO.
+*DATA VIEW_PHOTOS.
+
+TYPES:
+  BEGIN OF TY_PHOTOS,
+    TDNAME  TYPE  STXH-TDNAME,
+    TDFUSER TYPE STXH-TDFUSER,
+    TDFDATE TYPE STXH-TDFDATE,
+  END OF TY_PHOTOS.
+
+DATA CUSTOM_ITEMS TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+DATA CUSTOM_PHOTO TYPE REF TO CL_GUI_CUSTOM_CONTAINER.
+DATA PICTURE      TYPE REF TO CL_GUI_PICTURE.
+DATA ALV_TABLE    TYPE REF TO CL_GUI_ALV_GRID.
+
+SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME TITLE TEXT-001.
+PARAMETERS P_IND TYPE C RADIOBUTTON GROUP GR1 USER-COMMAND RADIO.
+PARAMETERS P_GRP TYPE C RADIOBUTTON GROUP GR1 DEFAULT 'X'.
+SELECTION-SCREEN END OF BLOCK B1.
+
+SELECTION-SCREEN BEGIN OF BLOCK B2 WITH FRAME TITLE TEXT-006.
+PARAMETERS P_RH  TYPE C RADIOBUTTON GROUP GR2 USER-COMMAND TIPO_FOTO DEFAULT 'X'.
+PARAMETERS P_OTH TYPE C RADIOBUTTON GROUP GR2.
+SELECTION-SCREEN END OF BLOCK B2.
+
+SELECTION-SCREEN: BEGIN OF BLOCK B4 WITH FRAME TITLE TEXT-007,
+PUSHBUTTON 1(17) TEXT-008 USER-COMMAND VIEW_PHOTOS.
+SELECTION-SCREEN END OF BLOCK B4.
+
+SELECTION-SCREEN BEGIN OF BLOCK B3 WITH FRAME.
+PARAMETERS:
+  P_MATRI TYPE PA0465-PERNR,
+  P_DESCR TYPE TDOBNAME,
+  P_FILE  TYPE STRING.
+SELECTION-SCREEN END OF BLOCK B3.
+
+SELECTION-SCREEN: BEGIN OF BLOCK B5 WITH FRAME TITLE TEXT-009.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(79) TEXT-010.
+SELECTION-SCREEN END OF LINE.
+
+PARAMETERS CB_IMP TYPE C AS CHECKBOX.
+SELECTION-SCREEN END OF BLOCK B5.
+
+CLASS CL_MAIN DEFINITION.
+  PUBLIC SECTION.
+
+    CLASS-METHODS INIT
+      EXCEPTIONS
+        DIRECTORY_ERROR.
+
+    CLASS-METHODS DIRECTORY_BROWSE.
+
+    CLASS-METHODS DISABLE_FIELD
+      IMPORTING FIELD TYPE SCREEN-NAME.
+
+    CLASS-METHODS GRAPHIC_CHECKBOX_IMPORT
+      IMPORTING
+        ACTIVE TYPE I.
+
+    CLASS-METHODS ENABLE_FIELD
+      IMPORTING FIELD TYPE SCREEN-NAME.
+
+    CLASS-METHODS SET_TIPO_CARGA.
+    CLASS-METHODS VIEW_PHOTOS.
+    CLASS-METHODS DISPLAY_PHOTOS.
+
+    CLASS-METHODS HANDLE_DOUBLE_CLICK
+          FOR EVENT DOUBLE_CLICK OF CL_GUI_ALV_GRID
+      IMPORTING
+          ES_ROW_NO.
+
+    CLASS-METHODS MESSAGE_INDICATOR
+      IMPORTING
+        MESSAGE TYPE T100-TEXT.
+
+    CLASS-METHODS GET_TIPO_CARGA
+      RETURNING VALUE(VALUE) TYPE CHAR1.
+
+    CLASS-DATA:
+      BEGIN OF CARGA,
+        AGRUPADA   TYPE C VALUE 'A',
+        INDIVIDUAL TYPE C VALUE 'I',
+      END OF CARGA.
+
+    CLASS-DATA IMAGE_HELPER     TYPE REF TO ZCL_IMAGE_HELPER.
+    CLASS-DATA                  PHOTOS TYPE TABLE OF TY_PHOTOS.
+    CLASS-DATA ALV              TYPE REF TO CL_SALV_TABLE.
+    CLASS-DATA TIPO_CARGA       TYPE C.
+    CLASS-DATA BIN_IMAGE        TYPE CPT_X255.
+ENDCLASS.
+
+CLASS CL_MAIN IMPLEMENTATION.
+  METHOD INIT.
+    DATA USER_REGISTER TYPE PA0001.
+    DATA FILE_ERRORS   TYPE TABLE OF STRING.
+    DATA BITMAP_IMAGE  TYPE W3MIMETABTYPE.
+
+    DATA(_IMAGE_HELPER) = NEW ZCL_IMAGE_HELPER( ).
+
+    IF ( GET_TIPO_CARGA( ) = CARGA-AGRUPADA ).
+
+      DATA FILES TYPE STANDARD TABLE OF FILE_INFO.
+      DATA COUNT TYPE I.
+
+      CHECK ( P_FILE IS NOT INITIAL ).
+      CALL METHOD CL_GUI_FRONTEND_SERVICES=>DIRECTORY_LIST_FILES
+        EXPORTING
+          DIRECTORY                   = P_FILE
+          FILTER                      = '*.jpg*'
+        CHANGING
+          FILE_TABLE                  = FILES
+          COUNT                       = COUNT
+        EXCEPTIONS
+          CNTL_ERROR                  = 1
+          DIRECTORY_LIST_FILES_FAILED = 2
+          WRONG_PARAMETER             = 3
+          ERROR_NO_GUI                = 4
+          NOT_SUPPORTED_BY_GUI        = 5
+          OTHERS                      = 6.
+
+      IF SY-SUBRC <> 0.
+        MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+
+        RAISE DIRECTORY_ERROR.
+      ENDIF.
+
+      IF COUNT IS INITIAL.
+        MESSAGE TEXT-005 TYPE 'S' DISPLAY LIKE 'W'.
+        RAISE DIRECTORY_ERROR.
+      ENDIF.
+
+      LOOP AT FILES INTO DATA(_FILE).
+        CL_MAIN=>MESSAGE_INDICATOR( |Carregando foto(s) { SY-TABIX } de { LINES( FILES ) }.| ).
+
+        DATA(_REGISTRATION) = _FILE-FILENAME. REPLACE '.jpg' IN _REGISTRATION WITH SPACE.
+        DATA(_MATRICULA)    = CONV PERSNO( _REGISTRATION ).
+
+        SELECT SINGLE *
+          FROM PA0001
+          INTO @DATA(_USER_REGISTER)
+         WHERE PERNR = @_MATRICULA.
+
+        IF SY-SUBRC IS INITIAL.
+          CL_GUI_FRONTEND_SERVICES=>GUI_UPLOAD(
+            EXPORTING
+              FILENAME                  = P_FILE && '\' && _FILE-FILENAME
+              FILETYPE                  = 'BIN'
+            CHANGING
+              DATA_TAB                  = BIN_IMAGE
+          ).
+
+          "//Call JPEG->BMP transformation
+          BITMAP_IMAGE = _IMAGE_HELPER->CONVERT_JPEG_TO_BMP( image_bin_TABLE = BIN_IMAGE ).
+
+          "//Save photo into repository
+          CALL METHOD _IMAGE_HELPER->SAVE_PHOTO
+            EXPORTING
+              NAME  = CONV #( _REGISTRATION )
+              ID    = ZCL_IMAGE_HELPER=>ID_REPOSITORY-HR_PHOTO
+              IMAGE = BIN_IMAGE.
+
+          "//Save bitmat into standard repository (SE78)
+          CALL METHOD _IMAGE_HELPER->SAVE_BITMAP_BDS
+            EXPORTING
+              NAME  = |IMG_{ _MATRICULA }|
+            CHANGING
+              IMAGE = BITMAP_IMAGE.
+
+        ELSE.
+          FILE_ERRORS = VALUE #( ( |Possíveis causas:| )
+                                 ( |-> Descrição da foto não é o mesmo número da matrícula| )
+                                 ( |*| )
+                               ).
+
+          APPEND P_FILE && '\' && _FILE-FILENAME TO FILE_ERRORS.
+        ENDIF.
+      ENDLOOP.
+
+      IF FILE_ERRORS IS INITIAL.
+        MESSAGE TEXT-002 TYPE 'S'.
+      ELSE.
+        DATA CHOICE TYPE C.
+
+        CALL FUNCTION 'POPUP_WITH_TABLE'
+          EXPORTING
+            ENDPOS_COL   = 80
+            ENDPOS_ROW   = 30
+            STARTPOS_COL = 20
+            STARTPOS_ROW = 1
+            TITLETEXT    = 'Falha ao carregar as seguintes fotos:'
+          IMPORTING
+            CHOICE       = CHOICE
+          TABLES
+            VALUETAB     = FILE_ERRORS
+          EXCEPTIONS
+            BREAK_OFF    = 1
+            OTHERS       = 2.
+
+        IF SY-SUBRC <> 0.
+* Implement suitable error handling here
+        ENDIF.
+      ENDIF.
+
+    ELSE.
+
+      CL_MAIN=>MESSAGE_INDICATOR( 'Carregando foto...' ).
+
+      CALL METHOD CL_GUI_FRONTEND_SERVICES=>GUI_UPLOAD
+        EXPORTING
+          FILENAME = P_FILE
+          FILETYPE = 'BIN'
+        CHANGING
+          DATA_TAB = BIN_IMAGE.
+
+      "//Call JPEG->BMP transformation
+      BITMAP_IMAGE = _IMAGE_HELPER->CONVERT_JPEG_TO_BMP( IMAGE_BIN_TABLE = BIN_IMAGE ).
+
+      IF ( P_RH = ABAP_TRUE ).
+        SELECT SINGLE *
+          FROM PA0001
+          INTO USER_REGISTER
+         WHERE PERNR = P_MATRI.
+
+        IF ( SY-SUBRC IS INITIAL ).
+
+          "//Save photo into the repository
+          CALL METHOD _IMAGE_HELPER->SAVE_PHOTO
+            EXPORTING
+              NAME  = CONV #( P_MATRI )
+              ID    = ZCL_IMAGE_HELPER=>ID_REPOSITORY-HR_PHOTO
+              IMAGE = BIN_IMAGE.
+
+          "//Save bitmat into standard repository (SE78)
+          IF CB_IMP = ABAP_TRUE.
+            _IMAGE_HELPER->SAVE_BITMAP_BDS(
+              EXPORTING
+                NAME   = |IMG_{ P_MATRI }|
+              CHANGING
+                IMAGE  = BITMAP_IMAGE
+            ).
+          ENDIF.
+
+        ELSE.
+          MESSAGE TEXT-004 TYPE 'S' DISPLAY LIKE 'E'.
+        ENDIF.
+
+      ELSE.
+
+        "//Save photo into the repository
+        CALL METHOD _IMAGE_HELPER->SAVE_PHOTO
+          EXPORTING
+            NAME  = P_DESCR
+            IMAGE = BIN_IMAGE.
+
+        IF ( CB_IMP = ABAP_TRUE ).
+          "//Save bitmat into standard repository (SE78)
+          _IMAGE_HELPER->SAVE_BITMAP_BDS(
+            EXPORTING
+              NAME   = |IMG_{ P_DESCR }|
+            CHANGING
+              IMAGE  = BITMAP_IMAGE ).
+        ENDIF.
+
+      ENDIF.
+
+      MESSAGE TEXT-002 TYPE 'S'.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD SET_TIPO_CARGA.
+    CL_MAIN=>GRAPHIC_CHECKBOX_IMPORT( 0 ).
+
+    IF P_IND = ABAP_TRUE AND P_RH = ABAP_TRUE.
+      CL_MAIN=>ENABLE_FIELD( 'P_MATRI' ).
+      CL_MAIN=>DISABLE_FIELD( 'P_DESCR' ).
+
+      TIPO_CARGA = CARGA-INDIVIDUAL.
+
+    ELSEIF P_OTH = ABAP_TRUE AND P_IND = ABAP_TRUE.
+      CL_MAIN=>ENABLE_FIELD( 'P_DESCR' ).
+      CL_MAIN=>DISABLE_FIELD( 'P_MATRI' ).
+      GRAPHIC_CHECKBOX_IMPORT( 1 ).
+
+    ELSE.
+      CL_MAIN=>DISABLE_FIELD( 'P_MATRI' ).
+      CL_MAIN=>DISABLE_FIELD( 'P_DESCR' ).
+      CL_MAIN=>DISABLE_FIELD( 'P_OTH'   ).
+
+      CLEAR P_OTH.
+      TIPO_CARGA = CARGA-AGRUPADA.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD VIEW_PHOTOS.
+    IF P_RH = ABAP_TRUE.
+      SELECT *
+        FROM STXH
+        INTO CORRESPONDING FIELDS OF TABLE PHOTOS
+       WHERE TDOBJECT = ZCL_IMAGE_HELPER=>OBJECT_REPOSITORY
+         AND TDID     = ZCL_IMAGE_HELPER=>ID_REPOSITORY-HR_PHOTO.
+    ELSE.
+      SELECT *
+        FROM STXH
+        INTO CORRESPONDING FIELDS OF TABLE PHOTOS
+       WHERE TDOBJECT = ZCL_IMAGE_HELPER=>OBJECT_REPOSITORY
+         AND TDID     = ZCL_IMAGE_HELPER=>ID_REPOSITORY-GENERAL.
+    ENDIF.
+
+    IF PHOTOS IS NOT INITIAL.
+      CALL SCREEN 0001 STARTING AT 2 10.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD DISPLAY_PHOTOS.
+    IF ( CUSTOM_ITEMS IS NOT BOUND ).
+      CREATE OBJECT CUSTOM_ITEMS
+        EXPORTING
+          CONTAINER_NAME = 'CUSTOM_ITEMS'.
+    ENDIF.
+
+    DATA STR TYPE REF TO DATA.
+
+    ASSIGN 'TY_PHOTOS' TO FIELD-SYMBOL(<FS_STR>).
+    CREATE DATA STR TYPE (<FS_STR>).
+
+    IF ( ALV_TABLE IS NOT BOUND ).
+
+      DATA(_FIELDCAT) =
+        CORRESPONDING LVC_T_FCAT( CL_SALV_DATA_DESCR=>READ_STRUCTDESCR(
+                                   CAST CL_ABAP_STRUCTDESCR( CL_ABAP_STRUCTDESCR=>DESCRIBE_BY_DATA_REF( STR ) ) ) ).
+      "//Create Alv Object
+      CREATE OBJECT ALV_TABLE
+        EXPORTING
+          I_PARENT = CUSTOM_ITEMS.
+
+      SET HANDLER HANDLE_DOUBLE_CLICK FOR ALV_TABLE.
+
+      "//Display Datas
+      CALL METHOD ALV_TABLE->SET_TABLE_FOR_FIRST_DISPLAY
+        EXPORTING
+          I_SAVE          = ABAP_ON
+        CHANGING
+          IT_OUTTAB       = PHOTOS
+          IT_FIELDCATALOG = _FIELDCAT.
+
+    ELSE.
+      ALV_TABLE->REFRESH_TABLE_DISPLAY( ).
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD HANDLE_DOUBLE_CLICK.
+    IMAGE_HELPER = NEW ZCL_IMAGE_HELPER( ).
+
+    TRY.
+        DATA(_ITEM) = PHOTOS[ ES_ROW_NO-ROW_ID ].
+
+        IMAGE_HELPER->GET_PHOTO_URL(
+          EXPORTING
+            ID     = SWITCH #( P_RH WHEN ABAP_TRUE THEN ZCL_IMAGE_HELPER=>ID_REPOSITORY-HR_PHOTO ELSE ZCL_IMAGE_HELPER=>ID_REPOSITORY-GENERAL )
+            NAME   = _ITEM-TDNAME
+          RECEIVING
+            RESULT = DATA(_URL) ).
+
+        IMAGE_HELPER->DISPLAY(
+          EXPORTING
+            CUSTOM_NAME      = 'CUSTOM_PHOTO'
+            URL              = _URL
+          CHANGING
+            CUSTOM_INSTANCE  = CUSTOM_PHOTO
+            PICTURE_INSTANCE = PICTURE
+        ).
+
+      CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD MESSAGE_INDICATOR.
+    CALL FUNCTION 'SAPGUI_PROGRESS_INDICATOR'
+      EXPORTING
+        PERCENTAGE = SY-TABIX
+        TEXT       = MESSAGE.
+  ENDMETHOD.
+
+  METHOD GET_TIPO_CARGA.
+    MOVE TIPO_CARGA TO VALUE.
+  ENDMETHOD.
+
+  METHOD DIRECTORY_BROWSE.
+    IF ( GET_TIPO_CARGA( ) = CARGA-AGRUPADA ).
+
+      CALL METHOD CL_GUI_FRONTEND_SERVICES=>DIRECTORY_BROWSE
+        EXPORTING
+          WINDOW_TITLE         = 'Selecione o caminho das fotos'
+        CHANGING
+          SELECTED_FOLDER      = P_FILE
+        EXCEPTIONS
+          CNTL_ERROR           = 1
+          ERROR_NO_GUI         = 2
+          NOT_SUPPORTED_BY_GUI = 3
+          OTHERS               = 4.
+
+    ELSE.
+      DATA FILE TYPE FILETABLE.
+      DATA RC   TYPE I.
+
+      CALL METHOD CL_GUI_FRONTEND_SERVICES=>FILE_OPEN_DIALOG
+        EXPORTING
+          WINDOW_TITLE            = 'Escolha a foto a ser carregada'
+*         DEFAULT_EXTENSION       =
+*         DEFAULT_FILENAME        =
+          FILE_FILTER             = '*.jpg*'
+*         WITH_ENCODING           =
+*         INITIAL_DIRECTORY       =
+*         MULTISELECTION          = ABAP_TRUE
+        CHANGING
+          FILE_TABLE              = FILE
+          RC                      = RC
+*         USER_ACTION             =
+*         FILE_ENCODING           =
+        EXCEPTIONS
+          FILE_OPEN_DIALOG_FAILED = 1
+          CNTL_ERROR              = 2
+          ERROR_NO_GUI            = 3
+          NOT_SUPPORTED_BY_GUI    = 4
+          OTHERS                  = 5.
+      IF SY-SUBRC <> 0.
+*       MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*                  WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      ENDIF.
+
+      TRY.
+          P_FILE = FILE[ 1 ]-FILENAME.
+        CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+      ENDTRY.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD DISABLE_FIELD.
+    LOOP AT SCREEN.
+*      IF SCREEN-NAME = 'P_MATRI' OR SCREEN-NAME = '%_P_MATRI_%_APP_%-TEXT'.
+      IF SCREEN-NAME CS FIELD.
+        SCREEN-INVISIBLE = 1.
+        SCREEN-ACTIVE = 0.
+        MODIFY SCREEN.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD GRAPHIC_CHECKBOX_IMPORT.
+    LOOP AT SCREEN.
+*      IF SCREEN-NAME = 'P_MATRI' OR SCREEN-NAME = '%_P_MATRI_%_APP_%-TEXT'.
+      IF SCREEN-NAME CS 'CB_IMP'.
+        SCREEN-INPUT = ACTIVE.
+*        SCREEN-ACTIVE = 0.
+        MODIFY SCREEN.
+      ENDIF.
+    ENDLOOP.
+
+    IF ACTIVE = 0.
+      CB_IMP = ABAP_TRUE.
+    ELSE.
+      CB_IMP = ABAP_FALSE.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD ENABLE_FIELD.
+    LOOP AT SCREEN.
+*      IF SCREEN-NAME = 'P_MATRI' OR SCREEN-NAME = '%_P_MATRI_%_APP_%-TEXT'.
+      IF SCREEN-NAME CS FIELD.
+        SCREEN-INVISIBLE = 0.
+        SCREEN-ACTIVE = 1.
+        MODIFY SCREEN.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+ENDCLASS.
+
+AT SELECTION-SCREEN.
+  IF SY-UCOMM = 'VIEW_PHOTOS'.
+    CL_MAIN=>VIEW_PHOTOS( ).
+  ENDIF.
+
+AT SELECTION-SCREEN OUTPUT.
+  CL_MAIN=>SET_TIPO_CARGA( ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR P_FILE.
+  CL_MAIN=>DIRECTORY_BROWSE( ).
+
+START-OF-SELECTION.
+  CL_MAIN=>INIT(
+    EXCEPTIONS DIRECTORY_ERROR = 4 ).
+
+*  IF SY-SUBRC IS INITIAL.
+*    Another routines
+*  ENDIF.
+*&---------------------------------------------------------------------*
+*&      Module  OUTPUT  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE OUTPUT OUTPUT.
+  SET PF-STATUS 'MAIN'.
+  CL_MAIN=>DISPLAY_PHOTOS( ).
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  INPUT  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE INPUT INPUT.
+  CASE SY-UCOMM.
+    WHEN 'EXIT'.
+      IF PICTURE IS  NOT INITIAL.
+        PICTURE->CLEAR_PICTURE( ).
+      ENDIF.
+
+      LEAVE TO SCREEN 0.
+    WHEN OTHERS.
+  ENDCASE.
+ENDMODULE.

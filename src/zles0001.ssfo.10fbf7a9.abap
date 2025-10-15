@@ -1,0 +1,19 @@
+W_NFENUM = WA_CABEC-NFENUM.
+W_AGRP   = WA_CABEC-AGRP.
+V_TOTAL_NF = 0.
+V_TOTAL_PESO = 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

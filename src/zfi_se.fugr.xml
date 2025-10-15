@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Processo de modulo FI com sistema SE</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFI_SETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFI_SE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFI_CONSULT_ADIANT_ABERTO</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_LIFNR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LIFNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_BURKS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>BUKRS</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>TG_ZFIE0206</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZFIE0206_T</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_LIFNR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_BURKS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TG_ZFIE0206</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

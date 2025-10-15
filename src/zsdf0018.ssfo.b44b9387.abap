@@ -1,0 +1,25 @@
+IF V_TOTAL_GERAL IS NOT INITIAL.
+V_TOTAL_USS_CONV = V_TOTAL_GERAL.
+ENDIF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

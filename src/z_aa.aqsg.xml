@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_AQSG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AQGDBBS>
+    <AQGDBBS>
+     <CLAS>Z_AA</CLAS>
+     <NUM>Z_AA</NUM>
+    </AQGDBBS>
+   </AQGDBBS>
+   <AQGSCAT>
+    <AQGSCAT>
+     <CLAS>Z_AA</CLAS>
+     <LOGDB>ADA</LOGDB>
+    </AQGSCAT>
+   </AQGSCAT>
+   <AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00001</TINDX>
+     <HEAD>X</HEAD>
+     <MAXL>063</MAXL>
+     <TEXT>Relatório para Carga de AA</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00014</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Período do cálculo da depreciação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00015</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Período contábil de depr.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00016</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Nº principal do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00017</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Nº imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00018</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Data de relatório de um report</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00019</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Data de relatório</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00020</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Primeira área de avaliação (reporting)</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00021</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Área de avaliação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00022</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Segunda área de avaliação (reporting)</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00023</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>2ª Área de avaliação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00024</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Terceira área de avaliação (reporting)</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00025</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>3ª Área de avaliação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00026</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Período do cálculo da depreciação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00027</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Período depr.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00028</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Empresa</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00029</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Empresa</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00030</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Identificação de uma lista de trabalho da contab.imob.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00031</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Lista de trabalho</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00032</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Exercício</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00033</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Exercício</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00034</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Ano de aprovação do programa de investimento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00035</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>até ano da aprovação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00036</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>PA_PGSEL</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00037</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Seletivo p/aloc./elem.PEP/sol.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00038</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Identificação de um item de programa de investimento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00039</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>do item</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00040</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Elemento do plano da estrutura do projeto (elemento PEP)</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00041</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>A partir do elemento PEP</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00042</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Programas de investimento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00043</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Programa de investimentos</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00044</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Esquema de seleção de status (medidas/solicitações)</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00045</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Esquema de seleção de status</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00046</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Versão</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00047</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Versão de planejamento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00048</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Cód. &quot;selecionar imobilizados&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00049</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Selecionar anexos</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00050</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Cód. &quot;selecionar ordens&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00051</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Selecionar ordens</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00052</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Cód. &quot;valores orçamento como base para simulação de depr.&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00053</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Simul.depr.com base orçamento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00054</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Valores do imobilizado no início do exercício</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00055</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Valores imobilizado exercício</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00056</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Código &quot;Selecionar itens do programa de investimento&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00057</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Selecionar itens ProgInvestim.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00058</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Cód. &quot;selecionar solicitações de investimento&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00059</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Selecionar solicitações</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00060</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Código: &quot;selecionar elementos PEP&quot;</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00061</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Selecionar elementos PEP</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00062</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Investimentos planejados reduzidos pelas ativações</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00063</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Investimentos planej.reduzidos</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00064</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Não trasferir saída de listagem somente tabelas</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00065</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Não trasferir saída de listagem somente tabelas</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00066</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Classe do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00067</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Classe do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00068</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Número de agrupamento de imobilizados</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00069</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Nº agrpmto.imobs.</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00070</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Ordem de investimento</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00071</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Ordem</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00072</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Exercício</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00073</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Exercício de aprovação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00074</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Divisão</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00075</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Divisão</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00076</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Solicitação de investimento - representação externa</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00077</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Solicitação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00078</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Centro de custo</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00079</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Centro de custo</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00080</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Nº sequencial do projeto correspondente</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00081</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Projetos</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00082</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Localização do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00083</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Localização</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00084</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Centro</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00085</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Centro</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00086</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Variante de ordenação para reporting</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00087</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Variante ordenação</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00088</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Código: relatório de totais</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00089</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>... ou somente totais grupos</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00090</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Método de conversão</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00091</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Método de conversão</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00092</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Subnº do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00093</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Subnº</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00094</TINDX>
+     <MAXL>060</MAXL>
+     <TEXT>Lista individual do imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00095</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Listar imobilizados</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00097</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>... ou somente nºs principais</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00098</TINDX>
+     <MAXL>080</MAXL>
+     <TEXT>Imobilizado</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>P</SPRSL>
+     <CLAS>Z_AA</CLAS>
+     <TINDX>00117</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Valor de aquisição</TEXT>
+    </AQGTS>
+   </AQGTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

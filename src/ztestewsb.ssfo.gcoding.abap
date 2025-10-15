@@ -1,0 +1,30 @@
+
+TRY .
+    WA_COM = IT_COM[ 1 ].
+  CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+    CLEAR WA_COM.
+ENDTRY.
+
+CLEAR TOTAL.
+
+LOOP AT IT_PRO INTO DATA(W_PRO).
+  ADD W_PRO-QTD_VINC TO TOTAL.
+ENDLOOP.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

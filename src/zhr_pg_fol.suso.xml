@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZHR_PG_FOL</OBJCT>
+    <FIEL1>BUKRS</FIEL1>
+    <FIEL2>WERKS</FIEL2>
+    <OCLSS>ZHR</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZHR_PG_FOL</OBJECT>
+    <TTEXT>Visualizar comprovante de pagamento da folha de pgto</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZHR_PG_FOL</OBJCT>
+   </TOBJVORFLG>
+  </asx:values>
+ </asx:abap>
+</abapGit>

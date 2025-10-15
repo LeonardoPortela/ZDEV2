@@ -1,0 +1,456 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZGL034_PBO
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0100 OUTPUT.
+  SET PF-STATUS 'PF0100'.
+  IF OBJ_CONTAINER_0100 IS INITIAL.
+    SET TITLEBAR 'T0100'.
+  ENDIF.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  CRIAR_OBJETOS_0100  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE CRIAR_OBJETOS_0100 OUTPUT.
+
+  IF OBJ_CONTAINER_0100 IS INITIAL.
+
+    PERFORM F_REFRESH_OBJETOS.
+    PERFORM F_CRIAR_CATALOG USING '0100'.
+
+    CREATE OBJECT OBJ_CONTAINER_0100
+      EXPORTING
+        CONTAINER_NAME = 'CC_ALV_0100'.
+
+    CREATE OBJECT OBJ_ALV_0100
+      EXPORTING
+        I_PARENT = OBJ_CONTAINER_0100.
+
+    CREATE OBJECT OBJ_TOOLBAR_0100
+      EXPORTING
+        IO_ALV_GRID = OBJ_ALV_0100.
+
+    GS_LAYOUT-SEL_MODE   = 'A'.
+    GS_VARIANT-REPORT  = SY-REPID.
+    WA_STABLE-ROW         = 'X'.
+    WA_STABLE-COL         = 'X'.
+
+    SET HANDLER: OBJ_TOOLBAR_0100->ON_TOOLBAR          FOR OBJ_ALV_0100,
+                 OBJ_TOOLBAR_0100->HANDLE_USER_COMMAND FOR OBJ_ALV_0100,
+                 LCL_EVENT_HANDLER_0100=>HANDLE_HOTSPOT_CLICK FOR OBJ_ALV_0100.
+
+    PERFORM F_EXCLUDE_FCODE USING '0100'.
+
+    CALL METHOD OBJ_ALV_0100->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        I_SAVE               = 'A'
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        IS_VARIANT           = GS_VARIANT
+      CHANGING
+        IT_FIELDCATALOG      = IT_FCAT
+        IT_OUTTAB            = IT_SAIDA_0100.
+
+
+    CALL METHOD OBJ_ALV_0100->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_MODIFIED.
+
+    CALL METHOD OBJ_ALV_0100->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+  ELSE.
+    CALL METHOD OBJ_ALV_0100->REFRESH_TABLE_DISPLAY
+       EXPORTING
+         IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  IF ( LINES( IT_SEL_ROWS ) = 1 ) AND ( WL_0100_SEL IS NOT INITIAL ).
+
+    "IF WG_ACAO EQ C_VIEW_DOC.
+    "  IP_MODE = 'D'.
+    "ELSE.
+      IP_MODE = 'E'.
+    "ENDIF.
+
+    CLEAR OBJ.
+    OBJ-OBJTYPE = OBJTYPE.
+
+    OBJ-OBJKEY = WL_0100_SEL-SEQ_LCTO.
+
+    CREATE OBJECT MANAGER
+      EXPORTING
+        IS_OBJECT        = OBJ
+        IP_NO_COMMIT     = 'R'
+        IP_MODE          = IP_MODE
+      EXCEPTIONS
+        OBJECT_INVALID   = 1
+        CALLBACK_INVALID = 2
+        OTHERS           = 3.
+
+    IF SY-SUBRC <> 0.
+      MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    ENDIF.
+
+    SET TITLEBAR 'T0100_2' WITH WL_0100_SEL-SEQ_LCTO.
+
+  ENDIF.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  STATUS_0101  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE STATUS_0110 OUTPUT.
+  SET PF-STATUS 'PF0110'.
+  SET TITLEBAR 'T0110'.
+ENDMODULE.
+
+MODULE CRIAR_OBJETOS_0110 OUTPUT.
+
+  IF OBJ_ALV_0110 IS INITIAL.
+
+    PERFORM F_REFRESH_OBJETOS.
+    PERFORM F_CRIAR_CATALOG USING '0110'.
+
+    IF OBJ_CONTAINER_0110 IS INITIAL.
+      CREATE OBJECT OBJ_CONTAINER_0110
+        EXPORTING
+          CONTAINER_NAME = 'CC_ALV_0110'.
+    ENDIF.
+
+    CREATE OBJECT OBJ_ALV_0110
+      EXPORTING
+        I_PARENT = OBJ_CONTAINER_0110.
+
+    CREATE OBJECT OBJ_TOOLBAR_0110
+      EXPORTING
+        IO_ALV_GRID = OBJ_ALV_0110.
+
+    PERFORM F_REGISTER_F4_FOR_FIELDS USING '0110'.
+
+    GS_LAYOUT-ZEBRA       = 'X'.
+    GS_LAYOUT-SEL_MODE    = 'A'.
+    GS_LAYOUT-STYLEFNAME  = 'ESTILO'.
+    GS_VARIANT-REPORT     = SY-REPID.
+
+    SET HANDLER: OBJ_TOOLBAR_0110->ON_TOOLBAR                     FOR OBJ_ALV_0110,
+                 OBJ_TOOLBAR_0110->HANDLE_USER_COMMAND            FOR OBJ_ALV_0110,
+                 LCL_EVENT_HANDLER_0110=>ON_ONF4                  FOR OBJ_ALV_0110,
+                 LCL_EVENT_HANDLER_0110=>CATCH_HOTSPOT            FOR OBJ_ALV_0110,
+                 LCL_EVENT_HANDLER_0110=>ON_DATA_CHANGED_FINISHED FOR OBJ_ALV_0110.
+
+    PERFORM F_EXCLUDE_FCODE USING '0110'.
+
+    CALL METHOD OBJ_ALV_0110->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        I_SAVE               = 'A'
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        IS_VARIANT           = GS_VARIANT
+      CHANGING
+        IT_FIELDCATALOG      = IT_FCAT
+        IT_OUTTAB            = IT_SAIDA_0110.
+
+    CALL METHOD OBJ_ALV_0110->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+  ELSE.
+    CALL METHOD OBJ_ALV_0110->REFRESH_TABLE_DISPLAY
+       EXPORTING
+         IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  IF VG_OPR_LCTO NE C_DISPLAY.
+    CALL METHOD OBJ_ALV_0110->SET_READY_FOR_INPUT
+      EXPORTING
+        I_READY_FOR_INPUT = 1.
+  ELSE.
+    CALL METHOD OBJ_ALV_0110->SET_READY_FOR_INPUT
+      EXPORTING
+        I_READY_FOR_INPUT = 0.
+  ENDIF.
+
+ENDMODULE.
+
+MODULE MODIFY_SCREEN OUTPUT.
+
+  LOOP AT SCREEN.
+    CASE SCREEN-GROUP1.
+      WHEN 'GR1'. "Fields
+
+        CASE VG_OPR_LCTO.
+          WHEN C_DISPLAY.
+            SCREEN-INPUT  = '0'.
+          WHEN C_EDIT.
+            CASE SCREEN-NAME.
+              WHEN 'ZGLT080-LOTE'.
+                SCREEN-INPUT  = '0'.
+              WHEN OTHERS.
+                SCREEN-INPUT  = '1'.
+            ENDCASE.
+          WHEN C_NEW.
+            IF ( SCREEN-NAME = 'ZGLT080-LOTE' ) AND
+               ( VG_SEL_LOTE IS NOT INITIAL ).
+              SCREEN-INPUT  = '0'.
+            ELSE.
+              SCREEN-INPUT  = '1'.
+            ENDIF.
+        ENDCASE.
+
+        MODIFY SCREEN.
+      WHEN 'GR2'. "Buttons
+
+        CASE VG_OPR_LCTO.
+          WHEN C_DISPLAY.
+            SCREEN-INVISIBLE  = '1'.
+          WHEN C_EDIT.
+            SCREEN-INVISIBLE  = '1'.
+
+            IF ( SCREEN-NAME = 'BTN_INF_BAR_CODE' ) AND
+               ( ( ZGLT080-ZLSCH = 'E'  ) OR ( ZGLT080-ZLSCH = 'D' ) ).
+              SCREEN-INVISIBLE  = '0'.
+            ENDIF.
+
+            IF ( ( SCREEN-NAME = 'BTN_REPL_NF' ) OR
+                 ( SCREEN-NAME = 'BTN_INF_IRF' ) ).
+              SCREEN-INVISIBLE  = '0'.
+            ENDIF.
+
+          WHEN C_NEW.
+            IF ( SCREEN-NAME = 'BTN_NEW_LOTE' ) AND
+               ( VG_SEL_LOTE IS NOT INITIAL   ).
+              SCREEN-INVISIBLE  = '1'.
+            ELSE.
+              SCREEN-INVISIBLE  = '0'.
+            ENDIF.
+
+            IF ( SCREEN-NAME = 'BTN_INF_BAR_CODE' ).
+              IF ( ( ZGLT080-ZLSCH = 'E'  ) OR ( ZGLT080-ZLSCH = 'D' ) ).
+                SCREEN-INVISIBLE  = '0'.
+              ELSE.
+                SCREEN-INVISIBLE  = '1'.
+              ENDIF.
+            ENDIF.
+
+        ENDCASE.
+
+        MODIFY SCREEN.
+
+    ENDCASE.
+  ENDLOOP.
+
+ENDMODULE.
+
+MODULE COMPLETA_DADOS OUTPUT.
+
+  DATA: WL_034   TYPE ZGLT034,
+        WL_LFA1  TYPE LFA1,
+        WL_T012T TYPE T012T.
+
+  IF ( ZGLT080-LOTE IS NOT INITIAL ) AND
+     ( VG_SEL_LOTE IS INITIAL ).
+
+    SELECT SINGLE *
+      FROM ZGLT034 INTO WL_034
+     WHERE LOTE = ZGLT080-LOTE.
+
+     IF ( SY-SUBRC EQ 0 ).
+       ZGLT080-BUKRS = WL_034-BUKRS.
+       VG_SEL_LOTE = 'X'.
+     ENDIF.
+
+  ENDIF.
+
+  PERFORM F_ATRIB_FORMA_PAGTO.
+
+  CLEAR: TG_DESC_CAB.
+
+  IF ZGLT080-LIFNR IS NOT INITIAL.
+    SELECT SINGLE *
+      FROM LFA1 INTO WL_LFA1
+     WHERE LIFNR = ZGLT080-LIFNR.
+
+    IF SY-SUBRC = 0.
+      TG_DESC_CAB-NAME1 = WL_LFA1-NAME1.
+    ENDIF.
+  ENDIF.
+
+  IF ZGLT080-HBKID IS NOT INITIAL.
+    SELECT SINGLE *
+      FROM T012T INTO WL_T012T
+     WHERE HBKID = ZGLT080-HBKID.
+
+    IF SY-SUBRC = 0.
+      TG_DESC_CAB-DS_HBKID = WL_T012T-TEXT1.
+    ENDIF.
+  ENDIF.
+
+
+ENDMODULE.
+
+MODULE STATUS_0111 OUTPUT.
+  SET PF-STATUS 'PF0111'.
+*  SET TITLEBAR 'xxx'.
+ENDMODULE.
+
+MODULE STATUS_0112 OUTPUT.
+  SET PF-STATUS 'PF0112'.
+  SET TITLEBAR 'T0112'.
+ENDMODULE.
+
+MODULE CRIAR_OBJETOS_0112 OUTPUT.
+
+  IF OBJ_ALV_0112 IS INITIAL.
+
+    PERFORM F_REFRESH_OBJETOS.
+    PERFORM F_CRIAR_CATALOG USING '0112'.
+
+    IF OBJ_CONTAINER_0112 IS INITIAL.
+      CREATE OBJECT OBJ_CONTAINER_0112
+        EXPORTING
+          CONTAINER_NAME = 'CC_ALV_0112'.
+    ENDIF.
+
+    CREATE OBJECT OBJ_ALV_0112
+      EXPORTING
+        I_PARENT = OBJ_CONTAINER_0112.
+
+    GS_LAYOUT-ZEBRA       = 'X'.
+    GS_LAYOUT-SEL_MODE    = 'A'.
+    GS_LAYOUT-STYLEFNAME  = 'ESTILO'.
+    GS_VARIANT-REPORT     = SY-REPID.
+
+    PERFORM F_EXCLUDE_FCODE USING '0112'.
+
+    CALL METHOD OBJ_ALV_0112->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        I_SAVE               = 'A'
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        IS_VARIANT           = GS_VARIANT
+      CHANGING
+        IT_FIELDCATALOG      = IT_FCAT
+        IT_OUTTAB            = IT_SAIDA_0112.
+
+    CALL METHOD OBJ_ALV_0112->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+  ELSE.
+    CALL METHOD OBJ_ALV_0112->REFRESH_TABLE_DISPLAY
+       EXPORTING
+         IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  CALL METHOD OBJ_ALV_0112->SET_READY_FOR_INPUT
+    EXPORTING
+      I_READY_FOR_INPUT = 1.
+
+ENDMODULE.
+
+MODULE DEFINE_FRM_PGTO OUTPUT.
+
+  CHECK OBJ_CONTAINER_0110 IS INITIAL.
+
+  DATA: VALUES  TYPE VRM_VALUES WITH HEADER LINE.
+
+  REFRESH: VALUES.
+  CLEAR: VALUES.
+
+  VALUES-TEXT = 'Transferência'.
+  VALUES-KEY  = 'U'.
+  APPEND VALUES.
+
+  VALUES-TEXT = 'Convênio Bradesco'.
+  VALUES-KEY  = 'D'.
+  APPEND VALUES.
+
+  VALUES-TEXT = 'Boleto'.
+  VALUES-KEY  = 'E'.
+  APPEND VALUES.
+
+  VALUES-TEXT = 'TED'.
+  VALUES-KEY  = 'S'.
+  APPEND VALUES.
+
+  CALL FUNCTION 'VRM_SET_VALUES'
+    EXPORTING
+      ID              = 'ZGLT080-ZLSCH'
+      VALUES          = VALUES[]
+    EXCEPTIONS
+      ID_ILLEGAL_NAME = 1
+      OTHERS          = 2.
+
+
+
+ENDMODULE.
+
+MODULE STATUS_0113 OUTPUT.
+  SET PF-STATUS 'PF0113'.
+  SET TITLEBAR 'T0113'.
+ENDMODULE.
+
+MODULE CRIAR_OBJETOS_0113 OUTPUT.
+
+  IF OBJ_ALV_0113 IS INITIAL.
+
+    PERFORM F_REFRESH_OBJETOS.
+    PERFORM F_CRIAR_CATALOG USING '0113'.
+
+    IF OBJ_CONTAINER_0113 IS INITIAL.
+      CREATE OBJECT OBJ_CONTAINER_0113
+        EXPORTING
+          CONTAINER_NAME = 'CC_ALV_0113'.
+    ENDIF.
+
+    CREATE OBJECT OBJ_ALV_0113
+      EXPORTING
+        I_PARENT = OBJ_CONTAINER_0113.
+
+    GS_LAYOUT-ZEBRA       = 'X'.
+    GS_LAYOUT-SEL_MODE    = 'A'.
+    GS_LAYOUT-STYLEFNAME  = 'ESTILO'.
+    GS_VARIANT-REPORT     = SY-REPID.
+
+    PERFORM F_EXCLUDE_FCODE USING '0113'.
+
+    CALL METHOD OBJ_ALV_0113->SET_TABLE_FOR_FIRST_DISPLAY
+      EXPORTING
+        IS_LAYOUT            = GS_LAYOUT
+        I_SAVE               = 'A'
+        IT_TOOLBAR_EXCLUDING = IT_EXCLUDE_FCODE
+        IS_VARIANT           = GS_VARIANT
+      CHANGING
+        IT_FIELDCATALOG      = IT_FCAT
+        IT_OUTTAB            = IT_SAIDA_0113.
+
+    CALL METHOD OBJ_ALV_0113->REGISTER_EDIT_EVENT
+      EXPORTING
+        I_EVENT_ID = CL_GUI_ALV_GRID=>MC_EVT_ENTER.
+
+  ELSE.
+    CALL METHOD OBJ_ALV_0113->REFRESH_TABLE_DISPLAY
+       EXPORTING
+         IS_STABLE = WA_STABLE.
+  ENDIF.
+
+  CALL METHOD OBJ_ALV_0113->SET_READY_FOR_INPUT
+    EXPORTING
+      I_READY_FOR_INPUT = 1.
+
+ENDMODULE.
+
+MODULE STATUS_0114 OUTPUT.
+  SET PF-STATUS 'PF0114'.
+*  SET TITLEBAR 'xxx'.
+ENDMODULE.

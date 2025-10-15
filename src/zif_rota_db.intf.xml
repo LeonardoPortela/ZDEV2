@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_ROTA_DB</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Interface do DataBase Rotas</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ATUALIZAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsavel por atualizar no banco de dados.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETAR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsavel por deletar do banco de dados.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERIR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Método responsavel por inserir no banco de dados.</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ATUALIZAR</CMPNAME>
+     <SCONAME>OBJ_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe da Rota do Pedágio.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETAR</CMPNAME>
+     <SCONAME>OBJ_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe da Rota do Pedágio.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR</CMPNAME>
+     <SCONAME>OBJ_ROTA</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Classe da Rota do Pedágio.</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERIR</CMPNAME>
+     <SCONAME>ZCX_WEBSERVICE</SCONAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>WebService - Exception</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

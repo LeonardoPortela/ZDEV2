@@ -1,0 +1,17 @@
+unmanaged implementation in class zclpm_bp_aprov_orc_ordem_pm unique;
+//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZC_APROV_ORC_ORDEM_PM //alias <alias_name>
+//late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  //  create;
+  //  update;
+  //  delete;
+  action aprovar;
+  action rejeitar parameter ZI_POPUP_REJEITA;
+  action ( features : instance ) mudavalor parameter ZI_POPUP_MUDAVALOR;
+  static action solicita parameter ZI_POPUP_SUPLEMENTA;
+}
