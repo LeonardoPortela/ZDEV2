@@ -1,0 +1,75 @@
+﻿RELATORIO DE REFATORACAO AUTOMATICA
+Data: 16/10/2025 21:35:27
+Branch: ZDEV_REFATORADO
+
+ESTATISTICAS:
+- Arquivos ABAP analisados: 127
+- Referencias Z encontradas: 298
+- Arquivos de dicionario mantidos: 308
+- Total original de arquivos: 37052
+- Arquivos mantidos: 484
+- Arquivos excluidos: 35769
+- Erros: 0
+
+OBJETOS PRINCIPAIS MANTIDOS:
+  zcl_doc_eletronico : 2 arquivos
+  zif_doc_eletronico : 2 arquivos
+  zcl_webservice : 12 arquivos
+  zif_webservice : 2 arquivos
+  zbrnfe_danfe : 22 arquivos
+  zgrc : 134 arquivos
+  zbr_gpf_nfe_danfe : 8 arquivos
+
+
+TOP 50 REFERENCIAS MAIS UTILIZADAS:
+  ZCX_DOC_ELETRONICO : 49 referencias
+  ZCX_WEBSERVICE : 23 referencias
+  ZLEST0084 : 18 referencias
+  ZLEST0101 : 16 referencias
+  ZIB_NFE_FORN : 15 referencias
+  ZIB_NFE : 15 referencias
+  ZSDT0102 : 12 referencias
+  ZCX_ERRO_ARQUIVO : 12 referencias
+  ZLEST0135 : 10 referencias
+  ZAUTH_WEBSERVICE : 8 referencias
+  ZDE_ELEMENT_ARRAY_T : 8 referencias
+  ZLEST0102 : 8 referencias
+  ZIB_NFE_DIST_TER : 8 referencias
+  ZDE_QTD_CICLOS : 7 referencias
+  ZLEST0002 : 7 referencias
+  ZCIOT_WEBSERVICE : 7 referencias
+  ZCTE_CIOT : 7 referencias
+  ZLEST0160 : 7 referencias
+  ZXNFE_IF_MDFE_RODO_INF_CONT_T : 6 referencias
+  ZDE_CHAVE_NFE : 6 referencias
+  ZDE_CHAVE_DOC_E : 6 referencias
+  ZXNFE_DHEMI_UTC : 6 referencias
+  ZPFE_LOTE_ITEM : 6 referencias
+  ZDE_QTD_SEGUNDOS_CICLO : 6 referencias
+  ZSDT0230 : 6 referencias
+  ZIB_AUTORIT_GRC : 5 referencias
+  ZBRNFE_DANFE_ITEM_DESC : 5 referencias
+  ZCTE_IDENTIFICA : 5 referencias
+  ZMMT008 : 5 referencias
+  ZCARTA_CORRECAO : 5 referencias
+  ZDE_DS_GRUPO_EMPRESA : 5 referencias
+  ZIB_CTE_DIST_TER : 5 referencias
+  ZNFE_XML_SEFAZ_AUTH : 4 referencias
+  ZPFE_NR_LOTE_ADM : 4 referencias
+  ZEVENT_TMP : 4 referencias
+  ZLEST0091 : 4 referencias
+  ZSDT0232 : 4 referencias
+  ZSDT0231 : 4 referencias
+  ZBRNFE_DANFE_ITEM : 4 referencias
+  ZTIPOWEBSERV : 4 referencias
+  ZXNFE_EV_NSEQEVENTO : 4 referencias
+  ZSDT0239 : 4 referencias
+  ZIB_NFE_DIST_AVB : 4 referencias
+  ZSDT0234 : 4 referencias
+  ZXNFE_RESEND : 4 referencias
+  ZLEST0101_T : 4 referencias
+  ZLEST0102_T : 4 referencias
+  ZSDT0237 : 4 referencias
+  ZTIPOWEBADM : 4 referencias
+  ZPC_VEICULO : 3 referencias
+

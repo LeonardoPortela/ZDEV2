@@ -1,5 +1,0 @@
-CLASS zclmm_bp_aprov_pedidos DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zc_aprov_pedidos.
-ENDCLASS.
-
-CLASS zclmm_bp_aprov_pedidos IMPLEMENTATION.
-ENDCLASS.

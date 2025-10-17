@@ -1,2 +1,0 @@
-FUNCTION-POOL ZSAPMZSETUP_AUX.              "MESSAGE-ID ..
-

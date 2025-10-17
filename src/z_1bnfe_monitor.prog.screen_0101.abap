@@ -1,9 +1,0 @@
-
-PROCESS BEFORE OUTPUT.
-
-  MODULE status_0101.
-
-
-PROCESS AFTER INPUT.
-
-  MODULE user_command_0101.

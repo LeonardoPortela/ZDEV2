@@ -1,5 +1,0 @@
-PROCESS BEFORE OUTPUT.
-
-  MODULE monta_dados_bordero.
-
-PROCESS AFTER INPUT.

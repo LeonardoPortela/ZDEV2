@@ -1,4 +1,0 @@
-@EndUserText.label: 'Service Defition - Liberação de Lote de Pagamento Impostos'
-define service ZUI_APP_LIB_PAGTO_IMPOSTO {
-  expose ZC_LIB_PAGTO_IMPOSTO as Liberacao_Pagto_Impostos;
-}

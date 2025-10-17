@@ -1,2 +1,0 @@
-FUNCTION-POOL ZFUNCOES_XML.                 "MESSAGE-ID ..
-

@@ -1,7 +1,0 @@
-"Name: \PR:SAPMM07R\FO:FUSSZEILE_RS_NEU\SE:BEGIN\EI
-ENHANCEMENT 0 Z_BLOQUEIA_RESER.
-*
-  IF sy-tcode = 'MB21' and RM07M-RSNUM is not INITIAL.
-    MESSAGE 'Copia de reserva não permitida' type 'E'.
-  ENDIF.
-ENDENHANCEMENT.

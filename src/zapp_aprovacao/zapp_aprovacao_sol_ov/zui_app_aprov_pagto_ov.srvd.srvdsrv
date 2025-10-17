@@ -1,6 +1,0 @@
-@EndUserText.label: 'Service Defition - Lib. Solic. Ord.Venda'
-define service ZUI_APP_APROV_PAGTO_OV {
-  expose ZC_APROV_PAGTO_OV as Lib_Solic_OV;
-  expose ZC_APROV_PAGTO_OV_IT as Lib_Solic_OV_IT;
-  expose ZC_APROV_PAGTO_OV_EST as Lib_Solic_OV_EST;
-}

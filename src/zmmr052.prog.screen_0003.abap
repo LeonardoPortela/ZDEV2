@@ -1,4 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE classification_output.
-*
-PROCESS AFTER INPUT.

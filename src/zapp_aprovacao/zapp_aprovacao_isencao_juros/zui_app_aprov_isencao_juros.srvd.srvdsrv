@@ -1,5 +1,0 @@
-@EndUserText.label: 'Service Def - Aprovação Isenção de Juros'
-define service ZUI_APP_APROV_ISENCAO_JUROS {
-  expose ZC_APROV_ISENCAO_JUROS;
-  expose ZC_APROV_ISENCAO_JUROS_IT;
-}

@@ -1,2 +1,0 @@
-sap.ui.define(["sap/suite/ui/generic/template/lib/AppComponent"],function(e){return e.extend("br.com.amaggi.apppagtosal.Component",{metadata:{manifest:"json"}})});                                                                                            
-//# sourceMappingURL=Component.js.map                                                                                                                                                                                                                          

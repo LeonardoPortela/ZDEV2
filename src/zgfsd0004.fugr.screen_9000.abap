@@ -1,6 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_9000.
-  MODULE alv_9000_init.
-
-PROCESS AFTER INPUT.
-  MODULE user_command_9000.

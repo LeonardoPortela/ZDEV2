@@ -1,7 +1,0 @@
-"Name: \PR:SAPMILO0\FO:TXXNR_TPLKZ_1\SE:BEGIN\EI
-ENHANCEMENT 0 ZPM_VERIFICATION_LOC_INSTALL.
-IF RILO0-TPLKZ = 'X'. "//Cód.Estrutura
-MESSAGE 'A transação IL01 foi descontinuada. Você foi direcionado para a nova transação.' TYPE 'S' DISPLAY LIKE 'I'.
-LEAVE TO TRANSACTION 'ZPM0029'.
-ENDIF.
-ENDENHANCEMENT.

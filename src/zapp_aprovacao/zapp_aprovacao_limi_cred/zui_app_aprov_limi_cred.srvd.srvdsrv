@@ -1,6 +1,0 @@
-@EndUserText.label: 'Service Definition - Aprov. Limi.Crédito'
-define service ZUI_APP_APROV_LIMI_CRED {
-  expose ZC_APROV_LIMI_CRED as LimiteCredito;
-  expose ZC_APROV_LIMI_CRED_IT as LimiteCreditoIT;
-  expose ZC_APROV_LIMI_CRED_EST as LimiteCreditoEst;
-}

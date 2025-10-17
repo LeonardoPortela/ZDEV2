@@ -1,6 +1,0 @@
-"Name: \PR:SAPLJ1BB\FO:FILL_AUTOMATIC_NF_TEXTS\SE:BEGIN\EI
-ENHANCEMENT 0 ZSDENH_TXT_IMP_NF_IDIOMA.
-*** Stefanini - IR238394 - 29/05/2025 - LAZAROSR - Início de Alteração
-  INCLUDE zsdi_txt_imp_nf_idioma  .
-*** Stefanini - IR238394 - 29/05/2025 - LAZAROSR - Fim de Alteração
-ENDENHANCEMENT.

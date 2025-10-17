@@ -1,9 +1,0 @@
-PROCESS BEFORE OUTPUT.
-
-  MODULE m_status_9000.
-*
-PROCESS AFTER INPUT.
-
-  MODULE m_exit_command_9000 AT EXIT-COMMAND.
-*
-  MODULE m_user_command.
