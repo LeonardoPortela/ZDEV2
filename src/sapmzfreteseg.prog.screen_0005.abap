@@ -1,8 +1,0 @@
-
-PROCESS BEFORE OUTPUT.
-
-  MODULE status_0005.
-*
-PROCESS AFTER INPUT.
-
-  MODULE user_command_0005.
