@@ -1,4 +1,4 @@
-FUNCTION-POOL zgrc MESSAGE-ID zgrc.
+﻿FUNCTION-POOL zgrc MESSAGE-ID zgrc.
 
 TYPES: BEGIN OF ty_editor,
          line(72),
@@ -290,7 +290,7 @@ DATA: BEGIN OF g_tc_prod_det,
 * variaveis visao NFE
 *************************************************************************************
 TYPES: BEGIN OF ty_prod.
-         INCLUDE TYPE zprod.
+         INCLUDE TYPE ZESAP_PROD.
 TYPES:   det_nitem TYPE char4,
          icone     TYPE char6,
          color     TYPE char4.
