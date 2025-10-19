@@ -80,14 +80,7 @@
      <COMPTYPE>E</COMPTYPE>
     </DD03P>
    </DD03P_TABLE>
-   <DD12V>
-    <DD12V>
-     <SQLTAB>ZLEST0104</SQLTAB>
-     <INDEXNAME>Z01</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Empresa Filial Local Descarga</DDTEXT>
-    </DD12V>
+   
    </DD12V>
    <DD17V>
     <DD17V>

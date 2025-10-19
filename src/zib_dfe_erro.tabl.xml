@@ -95,14 +95,7 @@
      <COMPTYPE>E</COMPTYPE>
     </DD03P>
    </DD03P_TABLE>
-   <DD12V>
-    <DD12V>
-     <SQLTAB>ZIB_DFE_ERRO</SQLTAB>
-     <INDEXNAME>Z01</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>CNPJ CPF Emi. / Numero / Serie / Modelo / Dt. Emi. / Filial</DDTEXT>
-    </DD12V>
+   
    </DD12V>
    <DD17V>
     <DD17V>

@@ -423,31 +423,9 @@
      <CARDLEFT>1</CARDLEFT>
     </DD08V>
    </DD08V_TABLE>
-   <DD12V>
-    <DD12V>
-     <SQLTAB>ZPFE_LOTE_ITEM</SQLTAB>
-     <INDEXNAME>Z01</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DBSTATE>D</DBSTATE>
-     <DBINCLEXCL>E</DBINCLEXCL>
-     <DBSYSSEL1>HDB</DBSYSSEL1>
-     <DDTEXT>índice para busca de chave duplicadas</DDTEXT>
-    </DD12V>
-    <DD12V>
-     <SQLTAB>ZPFE_LOTE_ITEM</SQLTAB>
-     <INDEXNAME>Z02</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Indice ZPFE_LOTE_ITEM por OBJ_KEY</DDTEXT>
-    </DD12V>
-    <DD12V>
-     <SQLTAB>ZPFE_LOTE_ITEM</SQLTAB>
-     <INDEXNAME>Z04</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Nº documento / Chave de Identificação / Status de Lote Admin</DDTEXT>
-    </DD12V>
+   
+    
+    
    </DD12V>
    <DD17V>
     <DD17V>

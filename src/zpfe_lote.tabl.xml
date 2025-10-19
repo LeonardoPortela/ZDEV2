@@ -402,14 +402,7 @@
      <CARDLEFT>1</CARDLEFT>
     </DD08V>
    </DD08V_TABLE>
-   <DD12V>
-    <DD12V>
-     <SQLTAB>ZPFE_LOTE</SQLTAB>
-     <INDEXNAME>Z01</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Data posicao e TP Lote</DDTEXT>
-    </DD12V>
+   
    </DD12V>
    <DD17V>
     <DD17V>

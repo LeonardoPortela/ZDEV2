@@ -243,21 +243,8 @@
      <COMPTYPE>E</COMPTYPE>
     </DD03P>
    </DD03P_TABLE>
-   <DD12V>
-    <DD12V>
-     <SQLTAB>ZCARTA_CORRECAO</SQLTAB>
-     <INDEXNAME>Z01</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Indice Transferencia Automatica</DDTEXT>
-    </DD12V>
-    <DD12V>
-     <SQLTAB>ZCARTA_CORRECAO</SQLTAB>
-     <INDEXNAME>Z2</INDEXNAME>
-     <AS4LOCAL>A</AS4LOCAL>
-     <DDLANGUAGE>P</DDLANGUAGE>
-     <DDTEXT>Indice para o projeto go-flux</DDTEXT>
-    </DD12V>
+   
+    
    </DD12V>
    <DD17V>
     <DD17V>
