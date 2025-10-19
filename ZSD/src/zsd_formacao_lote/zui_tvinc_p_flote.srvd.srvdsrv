@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Def - Vinculação Formação de Lote'
+define service ZUI_TVINC_P_FLOTE {
+  expose ZI_SDTVINC_P_FLOTE as Vinculo_Formacao_Lote;
+}

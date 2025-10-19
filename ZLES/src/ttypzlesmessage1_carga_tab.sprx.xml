@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SPRX" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROXY_HEADER>
+    <item>
+     <OBJECT>TTYP</OBJECT>
+     <OBJ_NAME>ZLESMESSAGE1_CARGA_TAB</OBJ_NAME>
+     <OBJECT_M>TABL</OBJECT_M>
+     <OBJ_NAME_M>ZLESMESSAGE1</OBJ_NAME_M>
+     <HASH_ID>6EBEFF062333CF54244C2BFC9CC35B7620C4C3AB</HASH_ID>
+     <ID>TableOf&lt;type&gt; Carga &lt;element&gt; {SDPTup.xsd}Carga &lt;type&gt; Atracacao &lt;element&gt; {SDPTup.xsd}Atracacao &lt;type&gt; Message1 &lt;message&gt; Message1 SDPTup.xsd SDPTup.xsd</ID>
+     <IFR_TYPE>TableOftype</IFR_TYPE>
+     <IFR_NAME>Carga</IFR_NAME>
+     <IFR_NSPCE>SDPTup.xsd</IFR_NSPCE>
+     <IFR_GNSPCE>SDPTup.xsd</IFR_GNSPCE>
+     <GEN_VERS>0005</GEN_VERS>
+     <PREFIX>ZLES</PREFIX>
+     <CATEGORY>ifmtypedef</CATEGORY>
+     <GEN_APPL>WEBSERVICES</GEN_APPL>
+    </item>
+   </PROXY_HEADER>
+   <PROXY_DATA>
+    <item>
+     <OBJECT>TTYP</OBJECT>
+     <OBJ_NAME>ZLESMESSAGE1_CARGA_TAB</OBJ_NAME>
+     <OBJECT1>TTYP</OBJECT1>
+     <OBJ_NAME1>ZLESMESSAGE1_CARGA_TAB</OBJ_NAME1>
+     <OBJECT2>TTYP</OBJECT2>
+     <OBJ_NAME2>ZLESMESSAGE1_CARGA_TAB</OBJ_NAME2>
+     <OBJECT_R>TABL</OBJECT_R>
+     <OBJ_NAME_R>ZLESMESSAGE1_CARGA</OBJ_NAME_R>
+     <ID>TableOf&lt;type&gt; Carga &lt;element&gt; {SDPTup.xsd}Carga &lt;type&gt; Atracacao &lt;element&gt; {SDPTup.xsd}Atracacao &lt;type&gt; Message1 &lt;message&gt; Message1 SDPTup.xsd SDPTup.xsd</ID>
+     <IFR_TYPE>TableOftype</IFR_TYPE>
+     <IFR_NAME>Carga</IFR_NAME>
+     <IFR_SCALE>-2</IFR_SCALE>
+     <R3_TYPE>TTYP</R3_TYPE>
+     <R3_NAME>ZLESMESSAGE1_CARGA_TAB</R3_NAME>
+     <R3_TEXT>Proxy Table Type (generated)</R3_TEXT>
+     <CATEGORY>ifmtypedef</CATEGORY>
+    </item>
+   </PROXY_DATA>
+  </asx:values>
+ </asx:abap>
+</abapGit>

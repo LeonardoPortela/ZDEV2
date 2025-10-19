@@ -1,0 +1,388 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Solicitação Entrega Insumos',
+                typeNamePlural: 'Solicitações de Entrega de Insumos',
+                title: { type: #STANDARD, label: 'Solicitação Entrega', value: 'solic_nro' } } }
+
+
+annotate entity ZC_SD_SOL_ENT_INS_ANALITICO with
+{
+
+  @UI.facet: [{
+  id: 'Tela1',
+  position:10 ,
+  label: 'Solicitações Entrega',
+  type: #IDENTIFICATION_REFERENCE }]
+
+
+  @UI: {  lineItem:       [ { position: 10  } ],
+       identification: [ { position: 10 } ],
+       selectionField: [ { position: 10 }] }
+  solic_nro;
+
+  @UI.hidden: true
+  solic_seq;
+
+  @UI: {  lineItem:       [ { position: 20 } ],
+         identification: [ { position: 20 } ],
+         selectionField: [ { position: 20 }] }
+  solic_ordem;
+
+  @UI: {  lineItem:       [ { position: 30 } ],
+       identification: [ { position: 30 } ]}
+  solic_ordem_item;
+
+  @UI: {  lineItem:       [ { position: 40 } ],
+       identification: [ { position: 40 } ] }
+  solic_nro_sol_origem;
+
+
+  @UI: {  lineItem:       [ { position: 50 } ],
+        identification: [ { position: 50 } ]}
+  solic_organizacao_venda;
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+      identification: [ { position: 60 } ],
+      selectionField: [ { position: 60 }] }
+  solic_setor_atividade;
+
+  @UI: {  lineItem:       [ { position: 70 } ],
+      identification: [ { position: 70 } ],
+      selectionField: [ { position: 70 }] }
+  solic_escritorio_venda;
+
+  @UI: {  lineItem:       [ { position: 80 } ],
+      identification: [ { position: 80 } ],
+      selectionField: [ { position: 80 }] }
+  solic_centro_faturamento;
+
+  @UI: {  lineItem:       [ { position: 90 } ],
+      identification: [ { position: 90 } ],
+      selectionField: [ { position: 90 }] }
+  solic_tipo_ov;
+
+  @UI: {  lineItem:       [ { position: 91 } ],
+      identification: [ { position: 91 } ],
+      selectionField: [ { position: 91 }] }
+  solic_ordem_cliente;
+
+  @UI: {  lineItem:       [ { position: 92 } ],
+  identification: [ { position: 92 } ],
+  selectionField: [ { position: 92 }] }
+  solic_nr_roteiro_entrega;
+
+  @UI: {  lineItem:       [ { position: 93 } ],
+  identification: [ { position: 93 } ]}
+  solic_ds_roteiro_entrega;
+
+  @UI: {  lineItem:       [ { position: 94 } ],
+  identification: [ { position: 94 } ],
+  selectionField: [ { position: 94 }]}
+  material;
+
+  @UI: {  lineItem:       [ { position: 95 } ],
+  identification: [ { position: 95 } ],
+  selectionField: [ { position: 95 }] }
+  material_cutivar;
+
+  @UI: {  lineItem:       [ { position: 100 } ],
+      identification: [ { position: 100 } ]}
+  solic_quantidade;
+
+  @UI: {  lineItem:       [ { position: 101 } ],
+      identification: [ { position: 101 } ]}
+  solic_qtde_distrib;
+
+  @UI: {  lineItem:       [ { position: 102 } ],
+      identification: [ { position: 102 } ]}
+  solic_saldo_distribuir;
+
+  @UI: {  lineItem:       [ { position: 110 } ],
+      identification: [ { position: 110 } ]}
+  solic_unidade;
+
+  @UI: {  lineItem:       [ { position: 120 } ],
+      identification: [ { position: 120 } ],
+      selectionField: [ { position: 120 }] }
+  solic_data;
+
+  @UI: {  lineItem:       [ { position: 130 } ],
+      identification: [ { position: 130 } ]}
+  solic_data_sol_raiz;
+
+  @UI: {  lineItem:       [ { position: 140 } ],
+      identification: [ { position: 140 } ],
+      selectionField: [ { position: 140 }] }
+  solic_nro_sol_raiz;
+
+  @UI: {  lineItem:       [ { position: 150 } ],
+      identification: [ { position: 150 } ],
+      selectionField: [ { position: 150 }] }
+  solic_usuario_criacao;
+
+  @UI: {  lineItem:       [ { position: 160 } ],
+      identification: [ { position: 160 } ],
+      selectionField: [ { position: 160 }] }
+  solic_status;
+
+  @UI.hidden: true
+  solic_ds_status;
+
+  @UI: {  lineItem:       [ { position: 180 } ],
+  identification: [ { position: 180 } ]}
+  solic_data_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 190 } ],
+    identification: [ { position: 190 } ]}
+  solic_usuario_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 200 } ],
+  identification: [ { position: 200 } ],
+  selectionField: [ { position: 200 }] }
+  solic_data_entrega;
+
+  @UI: {  lineItem:       [ { position: 210 } ],
+  identification: [ { position: 210 } ]}
+  solic_tipo_operacao;
+
+  @UI: {  lineItem:       [ { position: 220 } ],
+  identification: [ { position: 220 } ]}
+  solic_origem_estoque;
+
+
+  @UI: {  lineItem:       [ { position: 230 } ],
+  identification: [ { position: 230 } ],
+  selectionField: [ { position: 230 }] }
+  solic_pedido;
+
+
+  @UI: {  lineItem:       [ { position: 240 } ],
+  identification: [ { position: 240 } ]}
+  solic_pedido_item;
+
+
+  @UI: {  lineItem:       [ { position: 250 } ],
+  identification: [ { position: 250 } ]}
+  solic_fornecedor_arm;
+
+
+  @UI: {  lineItem:       [ { position: 260 } ],
+  identification: [ { position: 260 } ],
+  selectionField: [ { position: 260 }] }
+  solic_lote;
+
+  @UI: {  lineItem:       [ { position: 270 } ],
+  identification: [ { position: 270 } ],
+  selectionField: [ { position: 270 }] }
+  solic_marca;
+
+  @UI: {  lineItem:       [ { position: 280 } ],
+  identification: [ { position: 280 } ]}
+  solic_carga_automatica;
+
+  @UI: {  lineItem:       [ { position: 290 } ],
+  identification: [ { position: 290 } ]}
+  solic_flexibilidade;
+
+  @UI: {  lineItem:       [ { position: 300 } ],
+  identification: [ { position: 300 } ]}
+  solic_prioridade;
+
+  @UI: {  lineItem:       [ { position: 310 } ],
+  identification: [ { position: 310 } ]}
+  solic_transf_no_fornecedor;
+
+  @UI: {  lineItem:       [ { position: 320 } ],
+  identification: [ { position: 320 } ]}
+  distrib_seq;
+
+  @UI: {  lineItem:       [ { position: 330 } ],
+  identification: [ { position: 330 } ]}
+  distrib_quantidade;
+
+  @UI: {  lineItem:       [ { position: 331 } ],
+  identification: [ { position: 331 } ]}
+  distrib_qtde_em_carga;
+
+  @UI: {  lineItem:       [ { position: 332 } ],
+  identification: [ { position: 332 } ]}
+  distrib_saldo_formar_carga;
+
+  @UI: {  lineItem:       [ { position: 333 } ],
+  identification: [ { position: 333 } ] ,
+  selectionField: [ { position: 333 }] }
+  distrib_nr_roteiro_coleta;
+
+  @UI: {  lineItem:       [ { position: 334 } ],
+  identification: [ { position: 334 } ]}
+  distrib_ds_roteiro_coleta;
+
+  @UI: {  lineItem:       [ { position: 340 } ],
+  identification: [ { position: 340 } ]}
+  distrib_data;
+
+  @UI: {  lineItem:       [ { position: 350 } ],
+  identification: [ { position: 350 } ],
+  selectionField: [ { position: 350 }] }
+  distrib_usuario;
+
+  @UI: {  lineItem:       [ { position: 360 } ],
+  identification: [ { position: 360 } ],
+  selectionField: [ { position: 360 }]}
+  distrib_status;
+
+  @UI.hidden: true
+  distrib_ds_status;
+
+  @UI: {  lineItem:       [ { position: 380 } ],
+  identification: [ { position: 380 } ] }
+  distrib_data_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 390 } ],
+  identification: [ { position: 390 } ]}
+  distrib_usuario_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 400 } ],
+  identification: [ { position: 400 } ],
+  selectionField: [ { position: 400 }] }
+  carga_nro;
+
+  @UI: {  lineItem:       [ { position: 410 } ],
+  identification: [ { position: 410 } ]}
+  carga_quantidade;
+
+  @UI: {  lineItem:       [ { position: 411 } ],
+  identification: [ { position: 411 } ]}
+  carga_id_safra_control;
+
+  @UI: {  lineItem:       [ { position: 412 } ],
+  identification: [ { position: 412 } ]}
+  carga_id_viagem_carguero;
+
+  @UI: {  lineItem:       [ { position: 413 } ],
+  identification: [ { position: 413 } ]}
+  carga_incoterms;
+
+  @UI: {  lineItem:       [ { position: 420 } ],
+  identification: [ { position: 420 } ]}
+  carga_data_criacao;
+
+  @UI: {  lineItem:       [ { position: 430 } ],
+  identification: [ { position: 430 } ]}
+  carga_usuario_criacao;
+
+  @UI: {  lineItem:       [ { position: 440 } ],
+  identification: [ { position: 440 } ]}
+  carga_data_envio_cotacao;
+
+  @UI: {  lineItem:       [ { position: 450 } ],
+  identification: [ { position: 450 } ]}
+  carga_data_frete_contratado;
+
+  @UI: {  lineItem:       [ { position: 460 } ],
+  identification: [ { position: 460 } ]}
+  carga_data_aut_embarque;
+
+  @UI: {  lineItem:       [ { position: 470 } ],
+  identification: [ { position: 470 } ]}
+  carga_data_carregamento;
+
+  @UI: {  lineItem:       [ { position: 480 } ],
+  identification: [ { position: 480 } ]}
+  carga_data_conferencia;
+  @UI: {  lineItem:       [ { position: 490 } ],
+  identification: [ { position: 490 } ]}
+  carga_data_finaliza_fatura;
+
+  @UI: {  lineItem:       [ { position: 500 } ],
+  identification: [ { position: 500 } ]}
+  carga_data_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 510 } ],
+  identification: [ { position: 510 } ]}
+  carga_hora_cancelamento;
+  @UI: {  lineItem:       [ { position: 520 } ],
+  identification: [ { position: 520 } ]}
+  carga_usuario_cancelamento;
+
+  @UI: {  lineItem:       [ { position: 530 } ],
+  identification: [ { position: 530 } ],
+  selectionField: [ { position: 530 }]}
+  carga_status;
+
+  @UI.hidden: true
+  carga_ds_status;
+
+  @UI: {  lineItem:       [ { position: 550 } ],
+  identification: [ { position: 550 } ]}
+  carga_status_entrega;
+
+  @UI: {  lineItem:       [ { position: 560 } ],
+  identification: [ { position: 560 }    ]}
+  dias_distribuicao;
+
+  @UI: {  lineItem:    [ { position: 570, importance: #HIGH, criticality: 'situacao_distrib_crit' } ] ,
+       identification: [ { position: 575, criticality: 'situacao_distrib_crit' }]}
+  situacao_distrib;
+
+  @UI: {  lineItem:       [ { position: 580 } ],
+  identification: [ { position: 580 } ]}
+  dias_criacao_carga;
+
+  @UI: {  lineItem:    [ { position: 590, importance: #HIGH, criticality: 'situacao_criacao_carga_crit' } ] ,
+       identification: [ { position: 595, criticality: 'situacao_criacao_carga_crit' }]}
+  situacao_criacao_carga;
+
+  @UI: {  lineItem:       [ { position: 600 } ],
+  identification: [ { position: 600 } ]}
+  dias_envio_cotacao_carga;
+
+  @UI: {  lineItem:    [ { position: 610, importance: #HIGH, criticality: 'situacao_envio_cotacao_crit' } ] ,
+      identification: [ { position: 615, criticality: 'situacao_envio_cotacao_crit' }]}
+  situacao_envio_cotacao;
+
+  @UI: {  lineItem:       [ { position: 620 } ],
+  identification: [ { position: 620 } ]}
+  dias_contratacao_frete_carga;
+
+  @UI: {  lineItem:    [ { position: 630, importance: #HIGH, criticality: 'situacao_contrat_frete_crit' } ] ,
+    identification: [ { position: 635, criticality: 'situacao_contrat_frete_crit' }]}
+  situacao_contratacao_frete;
+
+  @UI: {  lineItem:       [ { position: 640 } ],
+  identification: [ { position: 640 } ]}
+  dias_autorizacao_emb_carga;
+
+  @UI: {  lineItem:    [ { position: 650, importance: #HIGH, criticality: 'situacao_aut_embarque_crit' } ] ,
+    identification: [ { position: 655, criticality: 'situacao_aut_embarque_crit' }]}
+  situacao_autorizacao_embarque;
+
+  @UI: {  lineItem:       [ { position: 660 } ],
+  identification: [ { position: 660 } ]}
+  dias_carregamento_carga;
+
+  @UI: {  lineItem:    [ { position: 670, importance: #HIGH, criticality: 'situacao_carregamento_crit' } ] ,
+    identification: [ { position: 675, criticality: 'situacao_carregamento_crit' }]}
+  situacao_carregamento;
+
+
+  @UI: {  lineItem:       [ { position: 680 } ],
+  identification: [ { position: 680 } ]}
+  dias_conferencia_carga;
+
+  @UI: {  lineItem:    [ { position: 690, importance: #HIGH, criticality: 'situacao_conferencia_crit' } ] ,
+    identification: [ { position: 695, criticality: 'situacao_conferencia_crit' }]}
+  situacao_conferencia;
+
+
+  @UI: {  lineItem:       [ { position: 700 } ],
+  identification: [ { position: 700 } ]}
+  dias_faturamento_carga;
+
+  @UI: {  lineItem:    [ { position: 710, importance: #HIGH, criticality: 'situacao_faturamento_crit' } ] ,
+    identification: [ { position: 715, criticality: 'situacao_faturamento_crit' }]}
+  situacao_faturamento;
+
+
+}

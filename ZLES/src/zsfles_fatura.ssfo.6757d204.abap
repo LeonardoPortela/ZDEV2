@@ -1,0 +1,23 @@
+TOTAL_RECEBER = W_TOTAL-ZVLR_LIQ_RECEBER.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

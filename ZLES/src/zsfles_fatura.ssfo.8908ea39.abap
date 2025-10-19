@@ -1,0 +1,24 @@
+V_P_CHEGADA = W_ITEM-QT_DESCARGA_CTE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

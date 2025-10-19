@@ -1,0 +1,7 @@
+PROCESS BEFORE OUTPUT.
+  MODULE status_5522.
+*
+PROCESS AFTER INPUT.
+
+  MODULE user_command_5522_exit AT EXIT-COMMAND.
+  MODULE user_command_5522.

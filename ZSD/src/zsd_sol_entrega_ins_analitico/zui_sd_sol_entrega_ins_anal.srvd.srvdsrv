@@ -1,0 +1,4 @@
+@EndUserText.label: 'Solicitações Entrega Insumos - Analitico'
+define service ZUI_SD_SOL_ENTREGA_INS_ANAL {
+  expose ZC_SD_SOL_ENT_INS_ANALITICO as Solicitacoes;
+}

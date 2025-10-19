@@ -1,0 +1,24 @@
+V_P_SAIDA = W_ITEM-QT_CARGA_CTE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

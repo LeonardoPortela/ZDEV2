@@ -1,0 +1,35 @@
+unmanaged implementation in class zclsd_bp_rel_sol unique;
+strict ( 2 );
+
+define behavior for ZI_SD_REL_SOLICITACAO alias Sol
+//late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+
+  association _Cargas { create; }
+  association _SolFilha { create; }
+}
+
+define behavior for ZI_SD_REL_CARGAS alias Cargas
+//late numbering
+lock dependent by Sol
+authorization dependent by Sol
+//etag master <field_name>
+{
+
+  field ( readonly ) NroSol;
+  association Sol;
+}
+
+define behavior for ZI_SD_REL_SOLICITACAO_FILHAS alias SolFilhas
+//late numbering
+lock dependent by Sol
+authorization dependent by Sol
+//etag master <field_name>
+{
+
+  field ( readonly ) NroSol;
+  association Sol;
+}

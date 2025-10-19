@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_UENO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DM02L>
+    <DM02L>
+     <ENTID>ZLEST0039</ENTID>
+     <AS4LOCAL>A</AS4LOCAL>
+    </DM02L>
+   </DM02L>
+   <DM26L>
+    <DM26L>
+     <ENTID>ZLEST0039</ENTID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <TABNAME>J_1BNFDOC</TABNAME>
+    </DM26L>
+    <DM26L>
+     <ENTID>ZLEST0039</ENTID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <TABNAME>KNA1</TABNAME>
+    </DM26L>
+    <DM26L>
+     <ENTID>ZLEST0039</ENTID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <TABNAME>LFA1</TABNAME>
+    </DM26L>
+    <DM26L>
+     <ENTID>ZLEST0039</ENTID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <TABNAME>ZLEST0039</TABNAME>
+     <FLG_ATTAB>X</FLG_ATTAB>
+    </DM26L>
+   </DM26L>
+   <DM42S>
+    <DM42S>
+     <ENTIDTO>ZLEST0039</ENTIDTO>
+     <AS4LOCAL>A</AS4LOCAL>
+     <ENTIDFROM>12014</ENTIDFROM>
+     <EBROLNR>1</EBROLNR>
+     <EBTYP>R</EBTYP>
+     <CARD1>1</CARD1>
+     <CARD2>CN</CARD2>
+    </DM42S>
+    <DM42S>
+     <ENTIDTO>ZLEST0039</ENTIDTO>
+     <AS4LOCAL>A</AS4LOCAL>
+     <ENTIDFROM>12016</ENTIDFROM>
+     <EBROLNR>1</EBROLNR>
+     <EBTYP>R</EBTYP>
+     <CARD1>1</CARD1>
+     <CARD2>CN</CARD2>
+    </DM42S>
+   </DM42S>
+  </asx:values>
+ </asx:abap>
+</abapGit>

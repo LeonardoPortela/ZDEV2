@@ -1,0 +1,59 @@
+FUNCTION Z_LES_AJUSTA_DATA_HORA.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_ERNAM) TYPE  ERNAM
+*"  CHANGING
+*"     REFERENCE(I_DATA) TYPE  DATS
+*"     REFERENCE(I_HORA) TYPE  TIMS
+*"----------------------------------------------------------------------
+
+  DATA: LC_TIMEZONE_1 TYPE  TIMEZONE.
+  DATA: LC_TIMEZONE_2 TYPE  TIMEZONE.
+
+  CHECK I_DATA IS NOT INITIAL.
+  CHECK I_HORA IS NOT INITIAL.
+
+  CHECK I_ERNAM NE SY-UNAME.
+
+  CALL FUNCTION 'TZON_GET_USER_TIMEZONE'
+    EXPORTING
+      IF_USERNAME             = I_ERNAM
+    IMPORTING
+      EF_TIMEZONE             = LC_TIMEZONE_1
+    EXCEPTIONS
+      NO_TIMEZONE_CUSTOMIZING = 1
+      NO_VALID_USER           = 2
+      OTHERS                  = 3.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    EXIT.
+  ENDIF.
+
+  CALL FUNCTION 'TZON_GET_USER_TIMEZONE'
+    EXPORTING
+      IF_USERNAME             = SY-UNAME
+    IMPORTING
+      EF_TIMEZONE             = LC_TIMEZONE_2
+    EXCEPTIONS
+      NO_TIMEZONE_CUSTOMIZING = 1
+      NO_VALID_USER           = 2
+      OTHERS                  = 3.
+
+  IF SY-SUBRC IS NOT INITIAL.
+    EXIT.
+  ENDIF.
+
+  CHECK LC_TIMEZONE_1 NE LC_TIMEZONE_2.
+
+  CALL FUNCTION 'ZCONVERT_TIME_DATE_FOR_TIMEZON'
+    EXPORTING
+      I_DATE          = I_DATA
+      I_TIME          = I_HORA
+      I_TIMEZONE_FROM = LC_TIMEZONE_2
+      I_TIMEZONE_TO   = LC_TIMEZONE_1
+    IMPORTING
+      E_TIME          = I_HORA
+      E_DATE          = I_DATA.
+
+ENDFUNCTION.

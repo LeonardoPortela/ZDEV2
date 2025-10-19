@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_SD_REL_SOLICITACAO alias Sol
+{
+
+  use association _Cargas { create; }
+  use association _SolFilha { create; }
+}
+
+define behavior for ZC_SD_REL_CARGAS alias Cargas
+{
+
+  use association Sol;
+}
+
+define behavior for ZC_SD_REL_SOLICITACAO_FILHAS alias SolFilhas
+{
+
+  use association Sol;
+}

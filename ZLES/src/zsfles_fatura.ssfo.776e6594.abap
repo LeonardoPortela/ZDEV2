@@ -1,0 +1,21 @@
+V_PERDA = W_ITEM-ZVLR_PERDA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

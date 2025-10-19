@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZID_FAT</OBJECT>
+    <DOMLEN>ZDO_NR_FATURA</DOMLEN>
+    <PERCENTAGE>90.0</PERCENTAGE>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>P</LANGU>
+    <OBJECT>ZID_FAT</OBJECT>
+    <TXT>Número da Fatura transação ZSDT0168</TXT>
+    <TXTSHORT>Nr. Fatura</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

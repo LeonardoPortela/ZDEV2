@@ -1,0 +1,1073 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZLES</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de mensagem para desenvolvimentos do LES</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Não existe caminho local cadastrado para o arquivo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Não existem dados para busca de arquivo de balança para o transportador.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Não existe caminho unix cadastrado para o arquivo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Não existe caminho local cadastrado para o arquivo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Campo &quot;&amp;&quot; de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>CNPJ não cadastrado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Informar o proprietário do veículo no Guia Parceiros (PV).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Não há veículo cadastrado e/ ou bloqueado para o proprietário informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Impressão de carta frete obrigatória.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Informar o motorista do veículo no Guia Parceiros (MT).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Grupo de contas do proprietário do veículo invalido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Grupo de contas do transportador invalido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Código do motorista invalido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Informar o código do agente de frete (Transportador - SP).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Informar o Ponto de Coleta no Guia Parceiros  (PC).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Informar o Local de entrega no Guia Parceiros (LR).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Informar o tipo de contrato ( Frete Peso ou Lotação).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Informar o número do conhecimento de embarque.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Informar o número da carta frete.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Não há faturamento gerado para a remessa &amp; .</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Não há nota fiscal em conformidade para a remessa &amp; .</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Valor do adiantamento superior a margem definida de  &amp; %.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Valor do pedágio obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Impossivel transferir Adto e pedagio, documento de custo &amp; ja calculado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Impossivel calcular o custo de frete, acionar a logística.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Diretório do arquivo “&amp;1” não cadastrado, use a transação &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Não há registro de margem de adto para o material &amp;. Condição (ZMRG/TK11)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Não ha placa de cavalo informada pelo Opus</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Código do proprietário de veículo invalido no dado mestre do fornecedor</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Grupo de conta do motorista invalido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Não ha margem de adiantamento definida para empresa &amp; filial &amp;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Para prosseguir deve salvar o documento de transporte</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Parceiro &amp; não determinado, Salve o documento e/ou informe os mesmos.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Informar o agente de seguro no Guia Parceiros  (SG).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Informar o agente de pedágio no Guia Parceiros (SG).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Remessa atribuida a mais de um doc. de transporte.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Chave de Identificação &quot;&amp;&quot; não cadastrada</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Chave de Identificação &quot;&amp;&quot; bloqueada</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Saldo &quot;&amp;&quot; de histórico(s) não permite lançamento, ajustar valores.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Carta frete &amp;1 e/ou conhecimento &amp;2 não cadastrado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Conta Razão não cadastrada para ChvId &amp;1 e tipo transporte &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Documento de custo de frete para o transporte não foi criado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Para prosseguir com o fluxo do  transporte salve o documento.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>Obrigatório criar o documento de custo de frete para prosseguir.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Número da carta frete obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Conta Razão para ChvId &amp;1 sem centro de custo cadastrado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Não é permitido no modal rodoviário a atribuição de mais de uma remessa</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>A data de fechamento é um campo obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Todos os itens devem ser marcados para contabilização</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>Valor conferido do lote &amp;1 conhecimento &amp;2 já lançado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>Valor quebra do lote &amp;1 conhecimento &amp;2 já lançado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Valor perda do lote &amp;1 conhecimento &amp;2 já lançado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>Valor sobra do lote &amp;1 conhecimento &amp;2 já lançado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>Lote &amp;1 não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>Não encontrado e-mail para posto &amp;1 trabnsportadora &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>E-mail enviado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>Não informado banco parceiro para Doc. transporte &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>Doc. de Transporte não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>059</MSGNR>
+     <TEXT>Miro não localizada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>060</MSGNR>
+     <TEXT>Nota Fiscal não localizada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>061</MSGNR>
+     <TEXT>Pedido de Compra não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Preço mercadoria não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>Não encontrado set ZDIASVENCIMENTO_POSTOS p/ dias de vencimento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>064</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>065</MSGNR>
+     <TEXT>Nro,Conhec. não pode ser alterado autorizado SEFAZ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>Carta Frete não autorizada para modificação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>067</MSGNR>
+     <TEXT>Carta Frete já Cadastrada Anteriormente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>068</MSGNR>
+     <TEXT>Número da carta frete obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>069</MSGNR>
+     <TEXT>Deve ser informado as Placas do Transporte!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>Deve ser informado o Valor do Pedágio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>Fornecedor: &amp;1 Empresa: &amp;2 sem parâmetros de impostos Retidos!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>Fornecedor: &amp;1 Empresa: &amp;2 sem imp. retidos localizado Brasil!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>Placa &amp;1 não encontrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>&amp; não determinado! Será determinado se informado Placa Cavalo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>075</MSGNR>
+     <TEXT>CT-e Nr.: &amp;1 Série: &amp;2 CNPJ: &amp;3 não recebido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>O Veículo &amp;1 informado como &quot;Cavalo&quot; deve ser ajustado o Cadastro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>O Veículo &amp;1 informado como &quot;Carreta&quot; deve ser ajustado o Cadastro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>Parceiro Seguradora não cadastrado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>Valor do pedágio não deve exceder o limite.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>Selecione uma forma de pagamento de pedágio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>Cartão Informado não cadastrada para a Placa do Cavalo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>Deve ser informado o Cartão de Pedágio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>Rota de &amp;1 para &amp;2 e Tipo Percurso &amp;3 existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>Cadastrada Rota de &amp;1 para &amp;2 e Tipo Percurso &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>Nenhuma seleção foi efetuada</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>Rota não pode ser excluida, possui Rota Administradora!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>Rota não pode ser solicitada, possui Rota Administradora!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>Rota com Identificador &amp;1 não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>Rota &amp;1 Criada na Administradora como Id: &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>090</MSGNR>
+     <TEXT>Rota &amp;1 definida como prioritária!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>091</MSGNR>
+     <TEXT>Rota não possui Rota Administradora Determinada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>092</MSGNR>
+     <TEXT>Itinerário sem determinação p/ pedágio Sim/Não (ZLES0027)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>093</MSGNR>
+     <TEXT>Rotas sem Praças!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>094</MSGNR>
+     <TEXT>Veículo &amp;1 não é de tração!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>095</MSGNR>
+     <TEXT>Margem Informada já está cadastrada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>096</MSGNR>
+     <TEXT>Não encontrado categoria de veículo! Qtd. Eixos: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>097</MSGNR>
+     <TEXT>Veículo &amp;1 não possui cartão de pedágio cadastrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>098</MSGNR>
+     <TEXT>Não Encontrado Rota (De &amp;1 para &amp;2, Categoria &amp;3)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>099</MSGNR>
+     <TEXT>Data de Vigência menor que a do transporte.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>100</MSGNR>
+     <TEXT>Deve ser informado uma Observação de Crédito de Pedágio Eletrônico!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>101</MSGNR>
+     <TEXT>Nenhuma seleção foi efetuada</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>102</MSGNR>
+     <TEXT>Para Condição &amp;1 somente permitido Material/ForncServ!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>103</MSGNR>
+     <TEXT>Registros não podem ser salvos pela TK13 sem permissão na TK12!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>104</MSGNR>
+     <TEXT>Não existem registros para esta seleção/filtro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>105</MSGNR>
+     <TEXT>Usuário &amp;1 sem acesso definido na Transação ZLES0124!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>106</MSGNR>
+     <TEXT>CT-e nº &amp;1 da barcaça &amp;2 ainda não foi autorizado. (SAP)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>107</MSGNR>
+     <TEXT>A barcaça &amp;1 não possui nenhuma nota fiscal vinculada. (SAP)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>108</MSGNR>
+     <TEXT>Comboio não encontrado para empresa &amp;1 centro &amp;2 ano &amp;3 viagem &amp;4. (SAP)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>109</MSGNR>
+     <TEXT>Comboio registrado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>110</MSGNR>
+     <TEXT>Erro desconhecido. (LOGONE)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>111</MSGNR>
+     <TEXT>Parâmetros de autenticação (url, usuário, senha) não encontrados!&amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>112</MSGNR>
+     <TEXT>Empresa &amp;1 Local de Negócio &amp;2 não encontrados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>113</MSGNR>
+     <TEXT>Transportador &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>114</MSGNR>
+     <TEXT>Transportador &amp;1 sem RNTRC no cadastro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>115</MSGNR>
+     <TEXT>Comboio já foi enviado para a LOGONE.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>116</MSGNR>
+     <TEXT>Não encontrado a Placa &amp;1 cadastrada no SAP! (ZLES0003)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>117</MSGNR>
+     <TEXT>Não encontrado a Placa &amp;1 cadastrada no SAP p/ Forn. &amp;2! (ZLES0003)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>118</MSGNR>
+     <TEXT>Não encontrado Placa cadastrada no SAP p/ Forn. &amp;2! (ZLES0003)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>119</MSGNR>
+     <TEXT>Não existe % p/ desc. de Seguro. Mat.: &amp;1 Agente: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>120</MSGNR>
+     <TEXT>Não existe % p/ desc. de IOF Mat.: &amp;1 Agente: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>121</MSGNR>
+     <TEXT>Cancelado % p/ desc. de Seguro. Mat.: &amp;1 Agente: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>122</MSGNR>
+     <TEXT>Cancelado % p/ desc. de IOF Mat.: &amp;1 Agente: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>123</MSGNR>
+     <TEXT>Data de Chegada deve ser Maior ou Igual a Data de Saída!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>124</MSGNR>
+     <TEXT>Quantidade não pode ser menor que 0 (Zero)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>125</MSGNR>
+     <TEXT>Nota Fiscal &amp;1/&amp;2 não encontrada no processo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>126</MSGNR>
+     <TEXT>Fornecedor &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>127</MSGNR>
+     <TEXT>Deve ser selecionado registros!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>128</MSGNR>
+     <TEXT>Deseja Realmente Eliminar a DCL &amp;1 do Vagão &amp;2?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>129</MSGNR>
+     <TEXT>Nota Fiscal &amp;1/&amp;2 não possui um DCL de Saída!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>130</MSGNR>
+     <TEXT>Deve ser primeiro informado os dados do DCL/Vagão!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>131</MSGNR>
+     <TEXT>Documeto &amp;1 não encontrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>132</MSGNR>
+     <TEXT>Nota Fiscal &amp;1/&amp;2 já está no processo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>133</MSGNR>
+     <TEXT>DCL/Vagão &amp;1/&amp;2: Erro de Transbordo, Notas devem ter mesmo transbordo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>134</MSGNR>
+     <TEXT>Tomador de Serviço &amp;1 não está configurado como Contribuinte de ICMS!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>135</MSGNR>
+     <TEXT>Não Encontrado Rota REPOM, de &amp;1 para &amp;2 e Filial &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>136</MSGNR>
+     <TEXT>Será alterado o Município de Origem ou Final da Prestação?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>137</MSGNR>
+     <TEXT>Vl.Limite Cond. &amp;1 excedido p/ &amp;2! Entrar em Contato com Transportadora!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>138</MSGNR>
+     <TEXT>Quantidade de Eixos diferente da quantidade informada na ANTT!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>139</MSGNR>
+     <TEXT>Comboio registrado com sucesso(Logone Itaituba)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>140</MSGNR>
+     <TEXT>Comboio registrado com sucesso(Logone Barcarena)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>141</MSGNR>
+     <TEXT>Veículo de placa &amp;1 não cadastrado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>146</MSGNR>
+     <TEXT>Parceiro MT &amp;1 (Motorista) deve ser do grupo ZMOT (Verificar Cadastro)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>147</MSGNR>
+     <TEXT>Não encontrado Modo de transporte para Tipo de expedição &amp;1 (VT)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>148</MSGNR>
+     <TEXT>Placa &amp;1 fora do padrão LLLNLNN ou LLLNNNN! L é letra e N é número.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>149</MSGNR>
+     <TEXT>Placa &amp;1 não é de tração!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>150</MSGNR>
+     <TEXT>Placa &amp;1 não é reboque!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>151</MSGNR>
+     <TEXT>Centro Emissor &amp;1 ou Porto Embarque &amp;2 não possuem Local de Descarga!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZLES</ARBGB>
+     <MSGNR>152</MSGNR>
+     <TEXT>Vl.Limite Cond. &amp;1 excedido p/ &amp;2! Entrar em Contato com a Logistica!</TEXT>
+    </T100>
+   </T100>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>NA</ID>
+      <OBJECT>ZLES147</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0002</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00006</TXTLINES>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZLES147</TDNAME>
+      <TDID>NA</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00002</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;CAUSE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Não foi previsto para o Tipo de Expedição do documento de transporte</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>um Modo de Transporte</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;SYSTEM_RESPONSE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Não será gerado um documento fiscal para o CT-e</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;WHAT_TO_DO&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Solicitar ao Departamento Logístico abertura de um CS para ser</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>configurado um novo Modo de Transporte para o Tipo de Expedição do</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>documento de transporte.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;SYS_ADMIN&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>NA</ID>
+      <OBJECT>ZLES151</OBJECT>
+      <LANGU>P</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0002</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00007</TXTLINES>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZLES151</TDNAME>
+      <TDID>NA</TDID>
+      <TDSPRAS>P</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00002</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;CAUSE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Centro emissor ou Porto de Embarque não possuem em local de embarque</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>configurado.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;SYSTEM_RESPONSE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Não retorna local de embarque para a seleção de romaneios.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;WHAT_TO_DO&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Deve ser verificado a transação ZLES0111:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Cadastrar um Local de Descarga para o Centro Emissor.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Deve ser verificado a transação ZLES0189:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Cadastrar Local de Descarga para o Porto de Embarque.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;SYS_ADMIN&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

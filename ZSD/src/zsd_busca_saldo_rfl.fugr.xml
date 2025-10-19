@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Busca saldo da notas de formação de lote</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZSD_BUSCA_SALDO_RFLF01</SOBJ_NAME>
+    <SOBJ_NAME>LZSD_BUSCA_SALDO_RFLTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZSD_BUSCA_SALDO_RFL</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZSDF_BUSCA_SALDO_RFL</FUNCNAME>
+     <SHORT_TEXT>Busca saldo de formação de lote</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DOCNUM_PROD</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZSDT_ITMNUM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_COD_RA_EMBARQUE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZDE_CODIGO_RA_EMBARQUE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EUDR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZEUDR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_RETORNAR_EUDR</PARAMETER>
+       <DEFAULT>SPACE</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_TP_VINC1</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_RFL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZSDT_RFL</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_RFL_SALDO_FISICO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZSDT_RFL_SALDO_FISICO</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DOCNUM_PROD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>docnum e itmnum</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_COD_RA_EMBARQUE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Código Recinto Alfandegado Embarque</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EUDR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Atende critérios Europeu</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_RETORNAR_EUDR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Listar também notas EUDR</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_TP_VINC1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Com vínculo</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_RFL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Remessa formação de lote</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_RFL_SALDO_FISICO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>RFL Saldo Físico</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

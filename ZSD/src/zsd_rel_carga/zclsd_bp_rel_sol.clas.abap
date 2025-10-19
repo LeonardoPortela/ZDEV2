@@ -1,0 +1,5 @@
+CLASS zclsd_bp_rel_sol DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_sd_rel_solicitacao.
+ENDCLASS.
+
+CLASS zclsd_bp_rel_sol IMPLEMENTATION.
+ENDCLASS.

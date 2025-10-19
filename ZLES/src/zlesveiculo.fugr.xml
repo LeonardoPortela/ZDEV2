@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo de Função de Veículos</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZLESVEICULOTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZLESVEICULO</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_RETORNA_VEICULOS</FUNCNAME>
+     <SHORT_TEXT>Pesquisa de Veículos</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>RT_PLACA</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZLXHME_RANGE_C7_T</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>RT_PROPR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LXHME_RANGE_C10_T</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>RT_CIDAD</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LXHME_RANGE_C25_T</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>RT_ESTAD</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LXHME_RANGE_C3_T</TYP>
+      </RSIMP>
+     </IMPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>IT_VEICULOS</PARAMETER>
+       <DBSTRUCT>ZLEST0002</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>ERRO_VAZIO</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>RT_PLACA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Ctg.tabela: área p/campo de (07) caracteres</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RT_PROPR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Ctg.tabela: área p/campo de (10) caracteres</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RT_CIDAD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Estrutura tabela intervalo de valores p/campo 25 caracteres</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RT_ESTAD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Estrutura de uma tabela rage p/campo de 3 caracteres</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_VEICULOS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Controle de veículos</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ERRO_VAZIO</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Não existe veículos</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
