@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZSIMETRYA</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Classe de Mensagens para nota/conhecimento eletrônico</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>Documento &amp; não possui link de impressão!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>A NF-e &amp;1 não está autorizada na SEFAZ!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>A NF-e &amp;1 não está cancelada na SEFAZ!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Processamento de CT-e com êxito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Ocorreu um erro durante o processamento de CT-e; verificar log de erros.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Documento &amp;1 não é NF-e!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>A CT-e &amp;1 está com erro de status monitor!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>A CT-e &amp;1 deve ser cancelada antes de fazer esta operação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>A CT-e &amp;1 deve ser estornada pois está denegada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>A CT-e &amp;1 não autorizado sem estorno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Documento &amp;1 não localizado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Documento &amp;1 não possui item!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Documento &amp;1 não possui registro eletrônico!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Documento &amp;1 eletrônico cancelado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Documento &amp;1 eletrônico com status não permitido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Não encontrados nf entrada para esta nf de exp &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Status de &quot;Organiz.transp&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Status de &quot;Registro&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Status de &quot;Iníc.carrgmto.&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Status de &quot;Fim carrg.&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Status de &quot;Procmto.p/transp&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Status de &quot;Início transporte&quot; doc. transporte &amp;1 não definido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Data documento diferente da data atual, estornar e fazer novamente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Não informado documento para processamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Documento &amp;1 não é modelo 57!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Não foram encontradas notas fiscais para este transporte!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Falha de Comunicação com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Status de comunicação com &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Falha de processamento com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>TimeOut com &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Erro XML: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Documento não é de origem ZW!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Protocolo da Solicitação: &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Selecione uma Declaração de Importação (DI)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Local de Negócio &amp;1, sem Certidão Neg. de Débito!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Viagem Reinicializada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Erro na Impressão do Boleto - BB</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Remessa Form.Lote já vinculada ao retorno &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Retorno Form.Lote. já vinculado a O.V &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>O Documento &amp;1 já está vinculado a Recepção de Carga(CCT) Id: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>O Documento &amp;1 já está vinculado a DU-e Id: &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Documento lançado pela ZNFW0009. Estornar e fazer novamente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>O Documento &amp;1 já possui romaneio de entrada. Romaneio: &amp;2/&amp;3/&amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Docnum &amp;1 não localizado na transação ZLES0181, fatura: &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Falta cadastrar PESO BRUTO para material &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Falta a classificação em KG para o material</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZSIMETRYA</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>Valor da nota fiscal zerado.</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>
