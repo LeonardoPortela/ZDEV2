@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_NEW_NFE.
+﻿FUNCTION Z_GRC_NEW_NFE.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

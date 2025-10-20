@@ -4,14 +4,18 @@
   <asx:values>
    <PROGDIR>
     <NAME>LZGRCF07</NAME>
-    <DBAPL>S</DBAPL>
-    <DBNA>D$</DBNA>
     <SUBC>I</SUBC>
     <APPL>S</APPL>
-    <FIXPT>X</FIXPT>
-    <LDBNAME>D$S</LDBNAME>
+    <RLOAD>P</RLOAD>
     <UCCHECK>X</UCCHECK>
    </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Include LZGRCF07</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+   </TPOOL>
   </asx:values>
  </asx:abap>
 </abapGit>

@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_REGISTRA_INF_ZIB_NFE.
+﻿FUNCTION Z_GRC_REGISTRA_INF_ZIB_NFE.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_AJUSTA_TP_EMISSAO.
+﻿FUNCTION Z_GRC_AJUSTA_TP_EMISSAO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

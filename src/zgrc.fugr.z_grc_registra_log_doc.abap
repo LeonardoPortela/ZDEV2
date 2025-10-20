@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_REGISTRA_LOG_DOC.
+﻿FUNCTION Z_GRC_REGISTRA_LOG_DOC.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

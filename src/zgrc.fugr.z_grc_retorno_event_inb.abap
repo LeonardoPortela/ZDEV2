@@ -1,4 +1,4 @@
-FUNCTION z_grc_retorno_event_inb .
+﻿FUNCTION z_grc_retorno_event_inb .
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

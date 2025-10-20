@@ -1,4 +1,4 @@
-FUNCTION z_grc_download_xml_pdf.
+﻿FUNCTION z_grc_download_xml_pdf.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

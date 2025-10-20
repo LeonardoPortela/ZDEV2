@@ -1,4 +1,4 @@
-FUNCTION z_grc_update_averb.
+﻿FUNCTION z_grc_update_averb.
 **"----------------------------------------------------------------------
 **"*"Interface local:
 **"  IMPORTING

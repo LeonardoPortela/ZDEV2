@@ -1,4 +1,4 @@
-FUNCTION Z_J_1B_MDFE_CANCEL.
+﻿FUNCTION Z_J_1B_MDFE_CANCEL.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

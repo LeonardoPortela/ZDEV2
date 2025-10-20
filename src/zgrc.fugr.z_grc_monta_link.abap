@@ -1,4 +1,4 @@
-FUNCTION z_grc_monta_link.
+﻿FUNCTION z_grc_monta_link.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

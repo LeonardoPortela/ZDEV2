@@ -1,4 +1,4 @@
-function z_j_1b_event_cancel_nf_cte.
+﻿function z_j_1b_event_cancel_nf_cte.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

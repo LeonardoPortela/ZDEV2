@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_SEND_EMAIL_AUTO.
+﻿FUNCTION Z_GRC_SEND_EMAIL_AUTO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

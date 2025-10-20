@@ -1,4 +1,4 @@
-FUNCTION z_j_1b_mdfe_close.
+﻿FUNCTION z_j_1b_mdfe_close.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

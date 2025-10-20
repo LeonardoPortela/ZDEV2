@@ -1,4 +1,4 @@
-FUNCTION Z_GRC_ENVIA_LEGADO.
+﻿FUNCTION Z_GRC_ENVIA_LEGADO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

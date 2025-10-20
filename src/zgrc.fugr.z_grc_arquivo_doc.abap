@@ -1,4 +1,4 @@
-FUNCTION z_grc_arquivo_doc.
+﻿FUNCTION z_grc_arquivo_doc.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

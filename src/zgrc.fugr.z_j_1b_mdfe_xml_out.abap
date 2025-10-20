@@ -1,4 +1,4 @@
-FUNCTION z_j_1b_mdfe_xml_out.
+﻿FUNCTION z_j_1b_mdfe_xml_out.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

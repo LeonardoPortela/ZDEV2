@@ -1,4 +1,4 @@
-FUNCTION zfsd_busca_danfe.
+﻿FUNCTION zfsd_busca_danfe.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

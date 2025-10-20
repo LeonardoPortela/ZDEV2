@@ -1,4 +1,4 @@
-FUNCTION z_detalhamento_cte.
+﻿FUNCTION z_detalhamento_cte.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

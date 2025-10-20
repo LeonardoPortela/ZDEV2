@@ -1,4 +1,4 @@
-FUNCTION z_grc_update_inbound.
+﻿FUNCTION z_grc_update_inbound.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING
