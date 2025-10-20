@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>valida vínculo nf formação de lote</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZSD_VALIDA_NF_FORMACAO_LOTTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZSD_VALIDA_NF_FORMACAO_LOT</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZSD_VALIDA_NF_FORMACAO_LOTE</FUNCNAME>
+     <SHORT_TEXT>Valida vínculo nf de formação de lote</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DOCNUM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>J_1BDOCNUM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DIRECAO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_NFS_VINCULADAS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DOCNUM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nº documento</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DIRECAO</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_NFS_VINCULADAS</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZSD_VALIDA_NOTA_CCT</FUNCNAME>
+     <SHORT_TEXT>Valida se nota está no cct</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DOCNUM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>J_1BDOCNUM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_ENTRADA_CCT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_SAIDA_CCT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_AMBAS_CCT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_ZLEST0146</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZLEST0146</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DOCNUM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nº documento</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ENTRADA_CCT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_SAIDA_CCT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_AMBAS_CCT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ZLEST0146</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Tabela Cabeçalho Recepção de Carga - CCT</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

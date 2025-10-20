@@ -1,0 +1,3 @@
+sap.ui.define(["sap/m/MessageToast"],function(e){"use strict";return{onAfterRendering:function(){this.getView().byId("listReportFilter").addEventDelegate({onAfterRendering:function(e){for(let t of e.srcControl.getContent()[0].getContent()){for(let e of t+
+.getContent()){if(e.getId().includes("BASIC"))switch(e.getId().split("-").pop()){case"distrib_status":debugger;e.setTokens([new sap.m.Token({text:"2",key:"2"}),new sap.m.Token({text:"5",key:"5"})]);break;default:break}}}}.bind(this)})}}});                
+//# sourceMappingURL=ListReportExt.controller.js.map                                                                                                                                                                                                           

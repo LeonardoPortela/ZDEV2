@@ -3,18 +3,32 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD04V>
+<<<<<<<< HEAD:src/zde_peso_chegada_sdec.dtel.xml
+    <ROLLNAME>ZDE_PESO_CHEGADA_SDEC</ROLLNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <DOMNAME>ZDM_PESO_CHEGADA_SDEC</DOMNAME>
+========
     <ROLLNAME>ZDE_ADD02</ROLLNAME>
     <DDLANGUAGE>P</DDLANGUAGE>
     <DOMNAME>ZDM_ADD02</DOMNAME>
+>>>>>>>> 343e65c3a3e3c0c14df6b6c542c2942de5b88c29:src/zde_add02.dtel.xml
     <HEADLEN>55</HEADLEN>
     <SCRLEN1>10</SCRLEN1>
     <SCRLEN2>20</SCRLEN2>
     <SCRLEN3>40</SCRLEN3>
+<<<<<<<< HEAD:src/zde_peso_chegada_sdec.dtel.xml
+    <DDTEXT>Peso Chegada sem Decimal</DDTEXT>
+    <REPTEXT>Peso Chegada</REPTEXT>
+    <SCRTEXT_S>Peso Ch.</SCRTEXT_S>
+    <SCRTEXT_M>Peso Chegada</SCRTEXT_M>
+    <SCRTEXT_L>Peso Chegada</SCRTEXT_L>
+========
     <DDTEXT>Inf. adicionais 2</DDTEXT>
     <REPTEXT>Inf. Adicionais 2</REPTEXT>
     <SCRTEXT_S>Inf.Add.2</SCRTEXT_S>
     <SCRTEXT_M>Inf. Adicionais 2</SCRTEXT_M>
     <SCRTEXT_L>Inf. Adicionais 2</SCRTEXT_L>
+>>>>>>>> 343e65c3a3e3c0c14df6b6c542c2942de5b88c29:src/zde_add02.dtel.xml
     <DTELMASTER>P</DTELMASTER>
     <REFKIND>D</REFKIND>
    </DD04V>

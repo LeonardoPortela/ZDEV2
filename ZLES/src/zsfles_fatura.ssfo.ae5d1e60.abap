@@ -1,0 +1,24 @@
+TOTAL_QUEBRA = W_TOTAL-ZVLR_QUEBRA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

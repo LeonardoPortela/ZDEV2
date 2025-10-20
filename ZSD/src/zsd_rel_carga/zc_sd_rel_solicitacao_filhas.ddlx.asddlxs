@@ -1,0 +1,74 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Filhas',
+                typeNamePlural: 'Filhas',
+                title: { type: #STANDARD, label: 'Filhas', value: 'NroSol' } } }
+annotate entity ZC_SD_REL_SOLICITACAO_FILHAS with
+{
+
+  @UI: { identification: [ { position: 10 }],
+      selectionField: [{position: 10 }] }
+  NroSol;
+
+  @UI.hidden: true
+  NroSolOrigem;
+
+  @UI: { identification: [ { position: 20 }],
+     selectionField: [{position: 20 }] }
+  Vbeln;
+
+  @UI: { identification: [ { position: 30 }],
+     selectionField: [{position: 30 }] }
+  Posnr;
+
+  @UI: { identification: [ { position: 40 }],
+     selectionField: [{position: 40 }] }
+  Cliente;
+
+  @UI.hidden: true
+  NomeCliente;
+
+  @UI: { identification: [ { position: 50 }],
+     selectionField: [{position: 50 }] }
+  UFCliente;
+
+  @UI: { identification: [ { position: 60 }],
+     selectionField: [{position: 60 }] }
+  Material;
+
+  @UI: { identification: [ { position: 70 }],
+     selectionField: [{position: 70 }] }
+  NomeMaterial;
+
+  @UI: { identification: [ { position: 80 }],
+     selectionField: [{position: 80 }] }
+  NrRota;
+
+  @UI: { identification: [ { position: 90 }],
+     selectionField: [{position: 90 }] }
+  UF;
+
+  @UI: { identification: [ { position: 100 }],
+     selectionField: [{position: 100 }] }
+  UM;
+
+  @UI: { identification: [ { position: 110 }],
+     selectionField: [{position: 110 }] }
+  QtdSoli;
+
+  @UI: { identification: [ { position: 120 }],
+     selectionField: [{position: 120 }] }
+  QtdVinc;
+
+  @UI: { identification: [ { position: 130 }],
+     selectionField: [{position: 130 }] }
+  SaldoCarga;
+
+  @UI: { identification: [ { position: 140 }],
+     selectionField: [{position: 140 }] }
+  DataEntrega;
+  //    /* Associations */
+  //    Sol;
+
+}

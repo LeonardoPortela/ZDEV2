@@ -1,0 +1,22 @@
+V_RECEBER = W_ITEM-ZVLR_LIQ_RECEBER.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

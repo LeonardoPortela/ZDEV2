@@ -1,0 +1,22 @@
+
+w_cant = w_cant + wa_lips-lfimg.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

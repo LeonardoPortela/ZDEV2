@@ -1,0 +1,22 @@
+V_KG_QUEBRA = W_ITEM-ZQUEBRA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+TOTAL_PERDA = W_TOTAL-ZVLR_PERDA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

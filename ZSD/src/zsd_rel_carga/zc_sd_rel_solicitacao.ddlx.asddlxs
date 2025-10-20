@@ -1,0 +1,108 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Solicitações',
+                typeNamePlural: 'Solicitações',
+                title: { type: #STANDARD, label: 'Solicitações', value: 'NroSol' } } }
+
+
+annotate entity ZC_SD_REL_SOLICITACAO with
+{
+
+  @UI.facet: [{
+       id: 'Tela1',
+       position:10 ,
+       label: 'Detalhes da Ordem',
+       type: #IDENTIFICATION_REFERENCE },
+
+       { id: 'IdItem',
+         purpose: #STANDARD,
+         type: #LINEITEM_REFERENCE,
+         label: 'Carga',
+         position: 10,
+         targetElement: '_Cargas' },
+
+       { id: 'IdParc',
+         purpose: #STANDARD,
+         type: #LINEITEM_REFERENCE,
+         label: 'Solicitações Filhas',
+         position: 20,
+         targetElement: '_SolFilha' }
+       ]
+
+  @UI: {  lineItem:       [ { position: 10, importance: #HIGH }],
+     identification: [ { position: 10 } ],
+     selectionField: [{position: 10 }] }
+  NroSol;
+
+  @UI: {  lineItem:       [ { position: 11, importance: #HIGH }],
+     identification: [ { position: 11 } ],
+     selectionField: [{position: 11 }] }
+  DtSol;
+
+  @UI: {  lineItem:       [ { position: 20, importance: #HIGH }],
+      identification: [ { position: 20 } ] }
+  Vbeln;
+
+  @UI: {  lineItem:       [ { position: 30, importance: #HIGH }],
+      identification: [ { position: 30 } ] }
+  Posnr;
+
+  @UI: {  lineItem:       [ { position: 40, importance: #HIGH }],
+      identification: [ { position: 40 } ] }
+  NroSolOrigem;
+
+  @UI: {  lineItem:       [ { position: 50, importance: #HIGH }],
+      identification: [ { position: 50 } ] ,
+     selectionField: [{position: 20 }] }
+  Cliente;
+
+  @UI.hidden: true
+  NomeCliente;
+
+  @UI: {  lineItem:       [ { position: 60, importance: #HIGH }],
+      identification: [ { position: 60 } ] }
+  UFCliente;
+
+  @UI: {  lineItem:       [ { position: 70 , importance: #HIGH}],
+      identification: [ { position: 70 } ] }
+  Material;
+
+  @UI.hidden: true
+  NomeMaterial;
+
+  @UI: {  lineItem:       [ { position: 80, importance: #HIGH }],
+        identification: [ { position: 80 } ] }
+  NrRota;
+
+  @UI: {  lineItem:       [ { position: 90, importance: #HIGH }],
+        identification: [ { position: 90 } ] }
+  UF;
+
+  @UI: {  lineItem:       [ { position: 92, importance: #HIGH }],
+        identification: [ { position: 92 } ] }
+  DescRota;
+
+  @UI.hidden: true
+  UM;
+
+  @UI: {  lineItem:       [ { position: 100, importance: #HIGH }],
+        identification: [ { position: 100 } ] }
+  QtdSoli;
+
+  @UI: {  lineItem:       [ { position: 110, importance: #HIGH }],
+        identification: [ { position: 110 } ] }
+  QtdVinc;
+
+  @UI: {  lineItem:       [ { position: 120, importance: #HIGH }],
+        identification: [ { position: 120 } ] }
+  SaldoCarga;
+
+  @UI: {  lineItem:       [ { position: 130, importance: #HIGH }],
+        identification: [ { position: 130 } ] }
+  DataEntrega;
+  //  /* Associations */
+  //  _Cargas;
+  //  _SolFilha;
+
+}

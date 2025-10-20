@@ -1,0 +1,47 @@
+FUNCTION ZENQUEUE_SD_SOL_INSUMOS.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(MODE) TYPE  ENQMODE DEFAULT 'X'
+*"     REFERENCE(MANDT) TYPE  MANDT DEFAULT SY-MANDT
+*"     REFERENCE(CHAVE) TYPE  ZDE_CHAVE_SOL
+*"     REFERENCE(_SCOPE) DEFAULT '2'
+*"     REFERENCE(_WAIT) DEFAULT SPACE
+*"     REFERENCE(_COLLECT) TYPE  DDENQCOLL DEFAULT SPACE
+*"  EXCEPTIONS
+*"      FOREIGN_LOCK
+*"      SYSTEM_FAILURE
+*"----------------------------------------------------------------------
+
+  DATA: __SEQTA_TAB TYPE SEQTA OCCURS 01 WITH HEADER LINE,
+        __SCOPE     TYPE DDENQSCOPE,
+        __WAIT      TYPE DDENQWAIT.
+
+  __WAIT = _WAIT.
+  __SCOPE = _SCOPE.
+
+  DATA: BEGIN OF %A_IT_ZSDT0082,
+          MANDT    TYPE SY-MANDT,
+          chave    TYPE char25,
+        END OF %A_IT_ZSDT0082.
+
+  CALL 'C_ENQ_WILDCARD' ID 'HEX0' FIELD %A_IT_ZSDT0082.
+
+  MOVE: CHAVE TO %A_IT_ZSDT0082-chave.
+
+  IF NOT MANDT IS INITIAL.
+    MOVE MANDT TO: %A_IT_ZSDT0082-MANDT.
+  ENDIF.
+
+* Preencher tab.bloqueio:
+  __SEQTA_TAB-GNAME = 'IT_ZSDT0082'.
+  __SEQTA_TAB-GMODE = MODE.
+  __SEQTA_TAB-GARG = %A_IT_ZSDT0082.
+  APPEND __SEQTA_TAB.
+
+* Fixar bloqueio:
+  PERFORM SEND_ENQUEUE(SAPLSENA)
+   TABLES __SEQTA_TAB
+    USING '1' __SCOPE __WAIT ' ' 'EZ_ZSDT0082' _COLLECT.
+
+ENDFUNCTION.

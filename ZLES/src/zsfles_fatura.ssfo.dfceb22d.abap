@@ -1,0 +1,23 @@
+V_KG_PERDA = W_ITEM-ZPERDA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

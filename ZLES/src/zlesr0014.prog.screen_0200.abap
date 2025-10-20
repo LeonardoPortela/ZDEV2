@@ -1,0 +1,13 @@
+
+PROCESS BEFORE OUTPUT.
+
+  MODULE status_0200.
+
+  CALL SUBSCREEN: sub0000 INCLUDING sy-cprog vg_tela_0200.
+
+*
+PROCESS AFTER INPUT.
+
+  CALL SUBSCREEN: sub0000.
+
+  MODULE user_command_0200.

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_UDMO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DM40L>
+    <DMOID>ZCOMP</DMOID>
+    <AS4LOCAL>A</AS4LOCAL>
+    <FLG_FRAME>X</FLG_FRAME>
+    <FLG_BUSINS>X</FLG_BUSINS>
+   </DM40L>
+   <UDMO_ENTITIES>
+    <DM41S>
+     <DMOID>ZCOMP</DMOID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <OBJID>11027</OBJID>
+     <OBJTYP>E</OBJTYP>
+     <HIERPOS>004</HIERPOS>
+    </DM41S>
+    <DM41S>
+     <DMOID>ZCOMP</DMOID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <OBJID>12014</OBJID>
+     <OBJTYP>E</OBJTYP>
+     <HIERPOS>002</HIERPOS>
+    </DM41S>
+    <DM41S>
+     <DMOID>ZCOMP</DMOID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <OBJID>12016</OBJID>
+     <OBJTYP>E</OBJTYP>
+     <HIERPOS>003</HIERPOS>
+    </DM41S>
+    <DM41S>
+     <DMOID>ZCOMP</DMOID>
+     <AS4LOCAL>A</AS4LOCAL>
+     <OBJID>ZLEST0039</OBJID>
+     <OBJTYP>E</OBJTYP>
+     <HIERPOS>001</HIERPOS>
+     <XPOS>00001</XPOS>
+     <YPOS>00001</YPOS>
+    </DM41S>
+   </UDMO_ENTITIES>
+   <UDMO_TEXTS>
+    <item>
+     <SPRACHE>E</SPRACHE>
+     <DMOID>ZCOMP</DMOID>
+     <LANGBEZ>Comparativo de saidas e chegadas</LANGBEZ>
+     <AS4LOCAL>A</AS4LOCAL>
+    </item>
+    <item>
+     <SPRACHE>P</SPRACHE>
+     <DMOID>ZCOMP</DMOID>
+     <LANGBEZ>Comparativo de saidas e chegadas</LANGBEZ>
+     <AS4LOCAL>A</AS4LOCAL>
+    </item>
+    <item>
+     <SPRACHE>S</SPRACHE>
+     <DMOID>ZCOMP</DMOID>
+     <LANGBEZ>Comparativo de saidas e chegadas</LANGBEZ>
+     <AS4LOCAL>A</AS4LOCAL>
+    </item>
+   </UDMO_TEXTS>
+   <UDMO_LONG_TEXTS>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+    </item>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+    <item>
+     <LANGUAGE>S</LANGUAGE>
+    </item>
+   </UDMO_LONG_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,3 @@
+FUNCTION-POOL ZGFLES_RECEB_SHLP_EXIT.       "MESSAGE-ID ..
+
+* INCLUDE LZGFLES_RECEB_SHLP_EXITD...        " Local class definition

@@ -1,0 +1,27 @@
+FUNCTION Z_BUSCA_DEPARA.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(I_WERKS) TYPE  WERKS_D
+*"     REFERENCE(I_LIFNR) TYPE  LIFNR
+*"     REFERENCE(I_OPERA) TYPE  ZDE_OPER_AQUAV DEFAULT 'RF'
+*"  EXPORTING
+*"     REFERENCE(ZSDT_DEPARA_DEPO) TYPE  ZSDT_DEPARA_DEPO
+*"----------------------------------------------------------------------
+
+  CLEAR ZSDT_DEPARA_DEPO.
+  SELECT SINGLE *
+    FROM ZSDT_DEPARA_DEPO INTO ZSDT_DEPARA_DEPO
+    WHERE WERKS EQ I_WERKS
+    AND   LIFNR EQ I_LIFNR
+    AND   OPERACAO EQ I_OPERA.
+
+  IF SY-SUBRC NE 0 AND I_OPERA = 'RF'.
+    SELECT SINGLE *
+      FROM ZSDT_DEPARA_DEPO INTO ZSDT_DEPARA_DEPO
+      WHERE WERKS EQ I_WERKS
+      AND   LIFNR EQ I_LIFNR
+      AND OPERACAO = '  '.
+  ENDIF.
+
+ENDFUNCTION.

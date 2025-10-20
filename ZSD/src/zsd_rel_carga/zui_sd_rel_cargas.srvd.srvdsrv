@@ -1,0 +1,6 @@
+@EndUserText.label: 'Serviço Def - App Relatorio Solicitações'
+define service ZUI_SD_REL_CARGAS {
+  expose ZC_SD_REL_SOLICITACAO as Solicitacao;
+  expose ZC_SD_REL_SOLICITACAO_FILHAS as SolFilha;
+  expose ZC_SD_REL_CARGAS as Cargas;
+}

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Email Fatura monitor Frete Frota - ZSDT0</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGFLES_MONI_FRETE_FROTATOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGFLES_MONI_FRETE_FROTA</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFFLES_EMAIL_FATURA_GERADAS</FUNCNAME>
+     <SHORT_TEXT>Envio de e-mail de faturas Geradas - ZSDT0168</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_COD_CLIENTE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZLEST0194-KUNNR_OV</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_NRO_FATURA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZLEST0194-NR_FATURA</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SOFOLENTI1-OBJECT_ID</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>GT_SAIDA</PARAMETER>
+       <DBSTRUCT>ZLEST0194</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_COD_CLIENTE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nº cliente</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_NRO_FATURA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Numero da fatura</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ENVIADO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>SAPoffice: ID de um objeto SAPoffice</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>GT_SAIDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Relação de Faturas Geradas</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

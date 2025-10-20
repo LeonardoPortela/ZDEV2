@@ -1,0 +1,339 @@
+FUNCTION Z_LES_REGISTRAR_COMBOIO_BUNGE.
+*"----------------------------------------------------------------------
+*"*"Interface local:
+*"  IMPORTING
+*"     REFERENCE(EMPRESA) TYPE  ZLEST0063-BUKRS
+*"     REFERENCE(FILIAL) TYPE  ZLEST0063-WERKS
+*"     REFERENCE(ANO) TYPE  ZLEST0063-ANO_VIAGEM
+*"     REFERENCE(VIAGEM) TYPE  ZLEST0063-NR_VIAGEM
+*"     REFERENCE(DATA_SAIDA_ORIGEM) TYPE  SY-DATUM
+*"     REFERENCE(HORA_SAIDA_ORIGEM) TYPE  SY-UZEIT
+*"     REFERENCE(DATA_PREVISAO_CHEGADA) TYPE  SY-DATUM
+*"     REFERENCE(HORA_PREVISAO_CHEGADA) TYPE  SY-UZEIT
+*"     REFERENCE(COMMIT) TYPE  ABAP_BOOL DEFAULT ABAP_TRUE
+*"  EXPORTING
+*"     REFERENCE(DATA_COMBOIO) TYPE  ZLESE0005
+*"     REFERENCE(XML_COMBOIO) TYPE  STRING
+*"  EXCEPTIONS
+*"      CTE_UNAUTHORIZED
+*"      BARCACA_WITHOUT_NF_VINCULADAS
+*"      COMBOIO_NOT_FOUND
+*"      SERVICE_ERROR
+*"      UNKNOWN_ERROR
+*"      OAUTH_PARAMETERS_NOT_FOUND
+*"      COMBOIO_ALREADY_SENDED
+*"----------------------------------------------------------------------
+
+  DATA HTTP_CLIENT             TYPE REF TO IF_HTTP_CLIENT.
+  DATA XML_RETURN              TYPE REF TO CL_XML_DOCUMENT.
+  DATA LOGONE_BARCACAS         TYPE TABLE OF ZLESE0003.
+  DATA LOGONE_NOTAS_VINCULADAS TYPE TABLE OF ZLESE0002.
+  DATA LOGONE_REBOCADORES      TYPE TABLE OF ZLESE0004.
+  DATA EXT_DT_REGISTRO         TYPE CHAR20.
+  DATA PESO_TOTAL              TYPE ZLESE0002-PESO.
+  DATA LOGONE_NOTA_VINCULADA   TYPE ZLESE0002.
+  DATA CTE_AUTHORIZED          TYPE ABAP_BOOL.
+  DATA RETURN_CODE             TYPE I.
+  DATA E_RESULTADO             TYPE STRING.
+  DATA NAME_                   TYPE STRING.
+  DATA VALUE_                  TYPE STRING.
+  DATA CENTRO_FATURAMENTO      TYPE LIFNR.
+
+
+  "//Get service characteristic
+  SELECT SINGLE *
+    FROM ZAUTH_WEBSERVICE
+    INTO @DATA(_AUTH_SERVICE)
+   WHERE SERVICE = 'BUNGE_REGISTRAR_COMBOIO_TRANSITO'.
+
+  "//Seleciona comboio
+  SELECT SINGLE *
+    FROM ZLEST0056
+    INTO COMBOIO
+   WHERE BUKRS      EQ EMPRESA
+     AND WERKS      EQ FILIAL
+     AND ANO_VIAGEM EQ ANO
+     AND NR_VIAGEM  EQ VIAGEM.
+
+  IF SY-SUBRC <> 0.
+    MESSAGE E108(ZLES) WITH EMPRESA FILIAL ANO VIAGEM RAISING COMBOIO_NOT_FOUND.
+  ENDIF.
+
+  "//Seleciona comboios
+  SELECT *
+    FROM ZLEST0063
+    INTO TABLE COMBOIOS
+   WHERE BUKRS      EQ EMPRESA
+     AND WERKS      EQ FILIAL
+     AND ANO_VIAGEM EQ ANO
+     AND NR_VIAGEM  EQ VIAGEM.
+
+  "//Seleciona notas fiscais vinculadas aos comboios
+  SELECT *
+    FROM ZLEST0060
+    INTO TABLE NOTAS_VINCULADAS
+ FOR ALL ENTRIES IN COMBOIOS
+   WHERE BUKRS      EQ COMBOIOS-BUKRS
+     AND WERKS      EQ COMBOIOS-WERKS
+     AND ANO_VIAGEM EQ COMBOIOS-ANO_VIAGEM
+     AND NOME_EMB   EQ COMBOIOS-NOME_EMB
+     AND NR_VIAGEM  EQ COMBOIOS-NR_VIAGEM.
+
+  IT_DTCODIGO = VALUE #( FOR LS IN NOTAS_VINCULADAS ( DT_CODIGO = LS-DT_CODIGO ) ).
+  SORT IT_DTCODIGO.
+  DELETE ADJACENT DUPLICATES FROM IT_DTCODIGO COMPARING ALL FIELDS.
+
+  IT_RMCODIGO = VALUE #( FOR LS IN NOTAS_VINCULADAS ( RM_CODIGO = LS-RM_CODIGO DT_CODIGO = LS-DT_CODIGO  ) ).
+  SORT IT_RMCODIGO.
+  DELETE ADJACENT DUPLICATES FROM IT_RMCODIGO COMPARING ALL FIELDS.
+
+  LOOP AT COMBOIOS INTO DATA(_COMBOIO) WHERE EMBARCACAO EQ TIPO_EMBARCACAO-BARCACA. "QUEBRANDO POR BARCAÇA
+    LOOP AT IT_DTCODIGO INTO DATA(_CODIGO_DT). "QUEBRANDO POR DESTINATARIO
+
+      SELECT SINGLE STCD1
+          FROM KNA1
+          INTO @DATA(_CNPJ)
+         WHERE KUNNR = @_CODIGO_DT-DT_CODIGO.
+
+      CHECK ( _CNPJ(8) = '84046101' ).
+
+      FREE: LOGONE_BARCACAS, LOGONE_NOTAS_VINCULADAS.
+
+      LOOP AT IT_RMCODIGO INTO DATA(_CODIGO_RM) WHERE DT_CODIGO EQ _CODIGO_DT-DT_CODIGO. "QUEBRANDO POR REMETENTE
+        LOOP AT NOTAS_VINCULADAS
+            INTO DATA(_NOTA_VINCULADA) WHERE ( BUKRS      EQ _COMBOIO-BUKRS       )
+                                         AND ( WERKS      EQ _COMBOIO-WERKS       )
+                                         AND ( ANO_VIAGEM EQ _COMBOIO-ANO_VIAGEM  )
+                                         AND ( NOME_EMB   EQ _COMBOIO-NOME_EMB    )
+                                         AND ( DT_CODIGO  EQ _CODIGO_RM-DT_CODIGO )
+                                         AND ( RM_CODIGO  EQ _CODIGO_RM-RM_CODIGO ).
+
+          PERFORM CTE_IS_AUTHORIZED
+            USING _NOTA_VINCULADA-DOCNUM
+                  CTE_AUTHORIZED.
+
+          IF ( CTE_AUTHORIZED = ABAP_FALSE ).
+            MESSAGE E106(ZLES) WITH _NOTA_VINCULADA-NFNUM _COMBOIO-NOME_EMB RAISING CTE_UNAUTHORIZED.
+          ENDIF.
+
+          SELECT SINGLE MAKTX
+            FROM MAKT
+            INTO @DATA(_DESCRICAO_PRODUTO)
+           WHERE MATNR EQ @_COMBOIO-COD_MATERIAL
+             AND SPRAS EQ @SY-LANGU.
+
+          SELECT SINGLE NAME1, STCD1
+            FROM KNA1
+            INTO @DATA(_DESTINATARIO)
+           WHERE LIFNR = @_NOTA_VINCULADA-DT_CODIGO.
+
+          SELECT SINGLE NAME1, STCD1
+            FROM LFA1
+            INTO @DATA(_REMETENTE)
+           WHERE LIFNR = @_NOTA_VINCULADA-RM_CODIGO.
+
+          LOGONE_NOTA_VINCULADA-CHAVENFE          = _NOTA_VINCULADA-CHAVE_NFE.
+          LOGONE_NOTA_VINCULADA-PESO              = COND #( WHEN _NOTA_VINCULADA-PESO_LIQ_RET IS NOT INITIAL THEN _NOTA_VINCULADA-PESO_LIQ_RET ELSE _NOTA_VINCULADA-PESO_FISCAL ).
+          LOGONE_NOTA_VINCULADA-VALOR             = _NOTA_VINCULADA-NETWR.
+          LOGONE_NOTA_VINCULADA-DESCRICAO_PRODUTO = |{ _DESCRICAO_PRODUTO } { COND #( WHEN _NOTA_VINCULADA-TP_TRANSGENIA EQ 'CO' THEN 'CO' ELSE 'RR' ) }|.
+          LOGONE_NOTA_VINCULADA-CODIGO_PRODUTO    = _COMBOIO-COD_MATERIAL.
+          LOGONE_NOTA_VINCULADA-SERIE             = _NOTA_VINCULADA-SERIES.
+          LOGONE_NOTA_VINCULADA-NUMERO            = _NOTA_VINCULADA-NFNUM.
+          LOGONE_NOTA_VINCULADA-CNPJ_REMETENTE    = _REMETENTE-STCD1.
+          LOGONE_NOTA_VINCULADA-CNPJ_DESTINATARIO = _DESTINATARIO-STCD1.
+
+          PESO_TOTAL = PESO_TOTAL + LOGONE_NOTA_VINCULADA-PESO.
+
+          APPEND LOGONE_NOTA_VINCULADA TO LOGONE_NOTAS_VINCULADAS.
+          CLEAR LOGONE_NOTA_VINCULADA.
+        ENDLOOP.
+
+        IF ( SY-SUBRC <> 0 ).
+          CONTINUE.
+        ENDIF.
+
+        SELECT SINGLE CENTRO_FAT
+          FROM ZLEST0061
+          INTO CENTRO_FATURAMENTO
+            WHERE WERKS      EQ _COMBOIO-WERKS
+              AND BUKRS      EQ _COMBOIO-BUKRS
+              AND ANO_VIAGEM EQ _COMBOIO-ANO_VIAGEM
+              AND NR_VIAGEM  EQ _COMBOIO-NR_VIAGEM
+              AND NOME_EMB   EQ _COMBOIO-NOME_EMB.
+
+        IF CENTRO_FATURAMENTO IS INITIAL.
+          CENTRO_FATURAMENTO = COMBOIO-WERKS.
+        ELSE.
+          CENTRO_FATURAMENTO = |{ CENTRO_FATURAMENTO ALPHA = IN }|.
+        ENDIF.
+
+        SELECT SINGLE STCD1
+          FROM LFA1 INTO @DATA(_TRANSPORTADORA)
+         WHERE LIFNR = @CENTRO_FATURAMENTO.
+
+        SELECT SINGLE NAME1
+          FROM LFA1 INTO @DATA(_LOCAL_CARREGAMENTO)
+         WHERE LIFNR = @COMBOIO-PO_EMBARQUE.
+
+        PERFORM DATE_AND_TIME_TO_EXTERNAL
+          USING _COMBOIO-DATA_REGISTRO _COMBOIO-HORA_REGISTRO EXT_DT_REGISTRO.
+
+        APPEND VALUE #( IDENTIFICADOR       = _COMBOIO-NOME_EMB
+                        CNPJ_TRANSPORTADORA = _TRANSPORTADORA
+                        PESO_LIQUIDO        = PESO_TOTAL
+                        PESO_BRUTO          = PESO_TOTAL
+                        DATA_CARREGAMENTO   = EXT_DT_REGISTRO
+                        LOCAL_CARREGAMENTO  = _LOCAL_CARREGAMENTO
+                        NOTASFISCAIS  = LOGONE_NOTAS_VINCULADAS
+                      ) TO LOGONE_BARCACAS.
+
+        CLEAR: LOGONE_NOTAS_VINCULADAS, PESO_TOTAL.
+
+        "//Convert date and time to external format
+        PERFORM DATE_AND_TIME_TO_EXTERNAL
+          USING DATA_SAIDA_ORIGEM HORA_SAIDA_ORIGEM DATA_COMBOIO-DATA_SAIDA_ORIGEM.
+
+        PERFORM DATE_AND_TIME_TO_EXTERNAL
+          USING DATA_PREVISAO_CHEGADA HORA_PREVISAO_CHEGADA DATA_COMBOIO-DATA_PREVISAO_CHEGADA.
+
+        PERFORM DATE_AND_TIME_TO_EXTERNAL
+          USING SY-DATUM SY-UZEIT DATA_COMBOIO-DATA_HORA_GERACAO.
+
+        DATA_COMBOIO-IDENTIFICADOR         = _COMBOIO-BUKRS && _COMBOIO-WERKS && _COMBOIO-ANO_VIAGEM && _COMBOIO-NR_VIAGEM.
+        DATA_COMBOIO-BARCACAS              = LOGONE_BARCACAS.
+        DATA_COMBOIO-TRANSACAO            = 'INSERIR'.
+        DATA_COMBOIO-CNPJ_REMETENTE       = _REMETENTE-STCD1.
+        DATA_COMBOIO-EMPRESA_REMETENTE    = _REMETENTE-NAME1.
+        DATA_COMBOIO-CNPJ_DESTINATARIO    = _DESTINATARIO-STCD1.
+        DATA_COMBOIO-EMPRESA_DESTINATARIO = _DESTINATARIO-NAME1.
+
+        "//Set XML data
+        PERFORM MONTAR_XML_BUNGE
+          USING
+           DATA_COMBOIO
+           _AUTH_SERVICE-USERNAME
+           _AUTH_SERVICE-PASSWORD
+           XML_COMBOIO.
+
+        CHECK ( COMMIT = ABAP_TRUE ).
+
+        IF ( _AUTH_SERVICE-URL IS INITIAL ).
+          MESSAGE E111(ZLES) RAISING OAUTH_PARAMETERS_NOT_FOUND.
+        ENDIF.
+
+        CALL FUNCTION 'SAPGUI_PROGRESS_INDICATOR'
+          EXPORTING
+            PERCENTAGE = SY-TABIX
+            TEXT       = TEXT-003.
+
+        "//Call service
+*        CL_HTTP_CLIENT=>CREATE_BY_URL(
+*          EXPORTING
+*            URL                = CONV #( _AUTH_SERVICE-URL )
+*            SSL_ID             = 'DFAULT'
+*          IMPORTING
+*            CLIENT             = HTTP_CLIENT
+*          EXCEPTIONS
+*            ARGUMENT_NOT_FOUND = 1
+*            PLUGIN_NOT_ACTIVE  = 2
+*            INTERNAL_ERROR     = 3
+*            OTHERS             = 4 ).
+
+CALL METHOD cl_http_client=>create_by_destination
+  EXPORTING
+    destination                = 'BUNGE'
+  IMPORTING
+    client                     = HTTP_CLIENT
+  EXCEPTIONS
+    argument_not_found         = 1
+    destination_not_found      = 2
+    destination_no_authority   = 3
+    plugin_not_active          = 4
+    internal_error             = 5
+    oa2c_set_token_error       = 6
+    oa2c_missing_authorization = 7
+    oa2c_invalid_config        = 8
+    oa2c_invalid_parameters    = 9
+    oa2c_invalid_scope         = 10
+    oa2c_invalid_grant         = 11
+    others                     = 12
+        .
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.
+
+
+        HTTP_CLIENT->REQUEST->SET_HEADER_FIELD( NAME  = '~request_method'  VALUE = 'POST' ).
+        HTTP_CLIENT->REQUEST->SET_HEADER_FIELD( NAME  = '~server_protocol' VALUE = 'HTTP/1.1' ).
+        HTTP_CLIENT->REQUEST->SET_HEADER_FIELD( NAME  = 'Content-Type'     VALUE = 'application/soap+xml;charset=UTF-8;').
+        HTTP_CLIENT->REQUEST->SET_CDATA(
+                                          DATA   = XML_COMBOIO
+                                          OFFSET = 0
+                                          LENGTH = STRLEN( XML_COMBOIO )
+                                        ).
+        HTTP_CLIENT->SEND( ).
+        HTTP_CLIENT->RECEIVE(
+                              EXCEPTIONS
+                                HTTP_COMMUNICATION_FAILURE = 1
+                                HTTP_INVALID_STATE         = 2
+                                HTTP_PROCESSING_FAILED     = 3
+                                OTHERS                     = 4
+                             ).
+
+        "//Check return content
+        CREATE OBJECT XML_RETURN.
+
+        XML_RETURN->PARSE_STRING( STREAM = HTTP_CLIENT->RESPONSE->GET_CDATA( ) ).
+        HTTP_CLIENT->RESPONSE->GET_STATUS( IMPORTING CODE = RETURN_CODE ).
+        E_RESULTADO = HTTP_CLIENT->RESPONSE->GET_CDATA( ).
+
+        DATA TABNAME_VALUE TYPE STRING VALUE 'ReceiveXmlDocumentResult'.
+
+        XML_RETURN->FIND_NODE_TABLE(
+                                      EXPORTING
+                                        TABNAME = TABNAME_VALUE
+                                      IMPORTING
+                                        T_NODES = DATA(_NODES)
+                                   ).
+
+        DATA RESULT TYPE TABLE OF STRING.
+
+        LOOP AT _NODES INTO DATA(_NODE).
+          APPEND CAST IF_IXML_NODE( _NODE-NODE )->GET_VALUE( ) TO RESULT.
+        ENDLOOP.
+
+        TRY.
+            DATA(_CODE)    = CAST IF_IXML_NODE( _NODES[ 1 ]-NODE )->GET_VALUE( ).
+            DATA(_MESSAGE) = CAST IF_IXML_NODE( _NODES[ 2 ]-NODE )->GET_VALUE( ).
+          CATCH CX_SY_ITAB_LINE_NOT_FOUND.
+        ENDTRY.
+
+        IF ( _CODE = 0 ).
+          IF _MESSAGE IS NOT INITIAL.
+            MESSAGE |{ _MESSAGE } - (BUNGE)| TYPE 'E' RAISING SERVICE_ERROR.
+          ELSE.
+            MESSAGE 'Erro desconhecido (BUNGE)' TYPE 'E' RAISING UNKNOWN_ERROR.
+          ENDIF.
+
+        ELSE.
+
+          _PROTOCOLO = VALUE #( (
+                                EMPRESA    = _COMBOIO-BUKRS
+                                CENTRO     = _COMBOIO-WERKS
+                                ANO        = _COMBOIO-ANO_VIAGEM
+                                VIAGEM     = _COMBOIO-NR_VIAGEM
+                                NOME_EMB   = _COMBOIO-NOME_EMB
+                                RM_CODIGO  = _CODIGO_RM-DT_CODIGO
+                                DT_CODIGO  = _CODIGO_RM-RM_CODIGO
+                                PROTOCOLO  = _CODE
+                              ) ).
+
+          MODIFY ZLEST0166 FROM TABLE _PROTOCOLO.
+          COMMIT WORK.
+        ENDIF.
+
+      ENDLOOP.
+    ENDLOOP.
+  ENDLOOP.
+
+ENDFUNCTION.

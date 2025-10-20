@@ -1,0 +1,112 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Filhas',
+                typeNamePlural: 'Filhas',
+                title: { type: #STANDARD, label: 'Filhas', value: 'NroSol' } } }
+annotate entity ZC_SD_REL_CARGAS with
+{
+  @UI.hidden: true
+  NroSol;
+
+  @UI.hidden: true
+  NroLote;
+
+  @UI: {  lineItem:       [ { position: 10, importance: #HIGH }],
+     identification: [ { position: 10 } ] }
+  Carga;
+
+  @UI: {  lineItem:       [ { position: 20, importance: #HIGH }],
+    identification: [ { position: 20 } ] }
+  Seq;
+
+  @UI: {  lineItem:       [ { position: 30, importance: #HIGH }],
+    identification: [ { position: 30 } ] }
+  StatusCarga;
+
+  @UI.hidden: true
+  DescStCarga;
+
+  @UI: {  lineItem:       [ { position: 40, importance: #HIGH }],
+    identification: [ { position: 40 } ] }
+  SeqEntrega;
+
+  @UI: {  lineItem:       [ { position: 50, importance: #HIGH }],
+    identification: [ { position: 50 } ] }
+  QtdVinc;
+
+  @UI.hidden: true
+  Um;
+
+  @UI: {  lineItem:       [ { position: 60, importance: #HIGH }],
+    identification: [ { position: 60 } ] }
+  Transp;
+
+  @UI.hidden: true
+  NomeTransp;
+
+  @UI: {  lineItem:       [ { position: 70, importance: #HIGH }],
+    identification: [ { position: 70 } ] }
+  Motorista;
+
+  @UI.hidden: true
+  NomeMotorista;
+
+  @UI: {  lineItem:       [ { position: 80, importance: #HIGH }],
+     identification: [ { position: 80 } ] }
+  TelefoneMot;
+
+  @UI: {  lineItem:       [ { position: 90, importance: #HIGH }],
+     identification: [ { position: 90 } ] }
+  PlacaCavalo;
+
+  @UI: {  lineItem:       [ { position: 100, importance: #HIGH }],
+     identification: [ { position: 100 } ] }
+  LocalEmb;
+
+  @UI: {  lineItem:       [ { position: 110, importance: #HIGH }],
+     identification: [ { position: 110 } ] }
+  Uf;
+
+  @UI.hidden: true
+  StatusEntrega;
+
+  @UI.hidden: true
+  LinkLocaliza;
+
+  @UI: {  lineItem:       [ { position: 140, importance: #HIGH }],
+     identification: [ { position: 140 } ] }
+  Nf;
+
+  @UI: {  lineItem:       [ { position: 142, importance: #HIGH }],
+     identification: [ { position: 142 } ] }
+  DataCarga;
+
+  @UI: {  lineItem:       [ { position: 150, importance: #HIGH }],
+     identification: [ { position: 150 } ] }
+  DtCargaEnvCot;
+
+  @UI: {  lineItem:       [ { position: 160, importance: #HIGH }],
+  identification: [ { position: 160 } ] }
+  DtFreteCont;
+
+  @UI: {  lineItem:       [ { position: 170, importance: #HIGH }],
+  identification: [ { position: 170 } ] }
+  DtAutEmb;
+
+  @UI: {  lineItem:       [ { position: 180, importance: #HIGH }],
+  identification: [ { position: 180 } ] }
+  DtTrocaNFFor;
+
+  @UI: {  lineItem:       [ { position: 190, importance: #HIGH }],
+  identification: [ { position: 190 } ] }
+  DtCarrFor;
+
+  @UI: {  lineItem:       [ { position: 200, importance: #HIGH }],
+  identification: [ { position: 200 } ] }
+  DtCarrCD;
+
+  //  /* Associations */
+  //  Sol;
+
+}
