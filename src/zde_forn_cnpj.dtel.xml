@@ -15,7 +15,8 @@
     <SCRTEXT_S>Forn.CNPJ</SCRTEXT_S>
     <SCRTEXT_M>Fornecedor CNPJ</SCRTEXT_M>
     <SCRTEXT_L>Fornecedor CNPJ</SCRTEXT_L>
-    <DTELMASTER>P</DTELMASTER><REFKIND>D</REFKIND>
+    <DTELMASTER>P</DTELMASTER>
+    <REFKIND>D</REFKIND>
    </DD04V>
   </asx:values>
  </asx:abap>
