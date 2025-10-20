@@ -1,4 +1,4 @@
-Ôªø<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
@@ -6,7 +6,7 @@
     <TABNAME>ZESAP_PROD</TABNAME>
     <DDLANGUAGE>P</DDLANGUAGE>
     <TABCLASS>INTTAB</TABCLASS>
-    <DDTEXT>Detalhamento de Produtos e Servi√ßos</DDTEXT>
+    <DDTEXT>Detalhamento de Produtos e ServiÁos</DDTEXT>
     <EXCLASS>1</EXCLASS>
    </DD02V>
    <DD03P_TABLE>
@@ -17,7 +17,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>C√≥digo do produto ou servi√ßo</DDTEXT>
+     <DDTEXT>CÛdigo do produto ou serviÁo</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>CEAN</FIELDNAME>
@@ -26,7 +26,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>GTIN do produto, antigo c√≥digo EAN ou c√≥d. de barras</DDTEXT>
+     <DDTEXT>GTIN do produto, antigo cÛdigo EAN ou cÛd. de barras</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>XPROD</FIELDNAME>
@@ -35,7 +35,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Descri√ß√£o do produto ou servi√ßo</DDTEXT>
+     <DDTEXT>DescriÁ„o do produto ou serviÁo</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>NCM</FIELDNAME>
@@ -44,7 +44,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>C√≥digo NCM com 8 d√≠gitos</DDTEXT>
+     <DDTEXT>CÛdigo NCM com 8 dÌgitos</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>CEST</FIELDNAME>
@@ -53,7 +53,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>C√≥digo CEST</DDTEXT>
+     <DDTEXT>CÛdigo CEST</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>EXTIPI</FIELDNAME>
@@ -62,7 +62,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>C√≥digo EX da TIPI</DDTEXT>
+     <DDTEXT>CÛdigo EX da TIPI</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>CFOP</FIELDNAME>
@@ -71,7 +71,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>C√≥digo Fiscal de Opera√ß√µes e Presta√ß√µes</DDTEXT>
+     <DDTEXT>CÛdigo Fiscal de OperaÁıes e PrestaÁıes</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>UCOM</FIELDNAME>
@@ -98,7 +98,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Valor Unit√°rio de Comercializa√ß√£o</DDTEXT>
+     <DDTEXT>Valor Unit·rio de ComercializaÁ„o</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>VPROD</FIELDNAME>
@@ -107,7 +107,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Valor Total Bruto dos Produtos ou Servi√ßos</DDTEXT>
+     <DDTEXT>Valor Total Bruto dos Produtos ou ServiÁos</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>CEANTRIB</FIELDNAME>
@@ -116,7 +116,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>GTIN da unidade tribut√°vel, antigo c√≥d. EAN ou c√≥d.Barras</DDTEXT>
+     <DDTEXT>GTIN da unidade tribut·vel, antigo cÛd. EAN ou cÛd.Barras</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>UTRIB</FIELDNAME>
@@ -125,7 +125,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Unidade Tribut√°vel</DDTEXT>
+     <DDTEXT>Unidade Tribut·vel</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>QTRIB</FIELDNAME>
@@ -134,7 +134,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Quantidade Tribut√°vel</DDTEXT>
+     <DDTEXT>Quantidade Tribut·vel</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>VUNTRIB</FIELDNAME>
@@ -143,7 +143,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Valor Unit√°rio de tributa√ß√£o</DDTEXT>
+     <DDTEXT>Valor Unit·rio de tributaÁ„o</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>VFRETE</FIELDNAME>
@@ -206,7 +206,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>N√∫mero Item Pedido</DDTEXT>
+     <DDTEXT>N˙mero Item Pedido</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>SAP_MATNR</FIELDNAME>
@@ -224,7 +224,7 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Valor de Redu√ß√£o</DDTEXT>
+     <DDTEXT>Valor de ReduÁ„o</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>SAP_INCLTX</FIELDNAME>
@@ -233,11 +233,11 @@
      <INTLEN>000008</INTLEN>
      <DATATYPE>STRG</DATATYPE>
      <MASK>  STRG</MASK>
-     <DDTEXT>Valor e pre√ßo inclu√≠ndo ICMS/ISS</DDTEXT>
+     <DDTEXT>Valor e preÁo incluÌndo ICMS/ISS</DDTEXT>
     </DD03P>
     <DD03P>
      <FIELDNAME>DETEXPORT</FIELDNAME>
-     <ROLLNAME>ZPROD_DET_EXPORT_T</ROLLNAME>
+     <ROLLNAME>ZESAP_PROD_DET_EXPORT_T</ROLLNAME>
      <ADMINFIELD>0</ADMINFIELD>
      <DATATYPE>TTYP</DATATYPE>
      <MASK>  TTYPL</MASK>
