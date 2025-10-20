@@ -3,26 +3,15 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD40V>
-<<<<<<<< HEAD:src/znfref.ttyp.xml
     <TYPENAME>ZNFREF</TYPENAME>
     <DDLANGUAGE>P</DDLANGUAGE>
     <ROWTYPE>ZREFNFE</ROWTYPE>
-========
-    <TYPENAME>ZCTLES_ITEM</TYPENAME>
-    <DDLANGUAGE>P</DDLANGUAGE>
-    <ROWTYPE>ZSTLES_ITEM</ROWTYPE>
->>>>>>>> 343e65c3a3e3c0c14df6b6c542c2942de5b88c29:ZLES/src/zctles_item.ttyp.xml
     <ROWKIND>S</ROWKIND>
     <DATATYPE>STRU</DATATYPE>
     <ACCESSMODE>T</ACCESSMODE>
     <KEYDEF>D</KEYDEF>
     <KEYKIND>N</KEYKIND>
-<<<<<<<< HEAD:src/znfref.ttyp.xml
     <DDTEXT>Informação de Documentos Fiscais referenciados</DDTEXT>
-    <FURTHERSECKEY>O</FURTHERSECKEY>
-========
-    <DDTEXT>Item</DDTEXT>
->>>>>>>> 343e65c3a3e3c0c14df6b6c542c2942de5b88c29:ZLES/src/zctles_item.ttyp.xml
    </DD40V>
   </asx:values>
  </asx:abap>
