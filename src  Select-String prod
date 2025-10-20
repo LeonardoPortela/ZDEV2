@@ -1,0 +1,7 @@
+[33mc61e0bcf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mZDEV_REFATORADO[m[33m, [m[1;31morigin/ZDEV_REFATORADO[m[33m)[m Recuperar cadeia completa de dependencias para ZNFE_XML_SEFAZ_AUTH (estruturas ZINTG, ZDET, ZBRNFE e outras)
+[33m315d6f73[m Remove 763 objetos fora do escopo (1042 arquivos) - Mantem apenas lista inicial e dependencias diretas
+[33mabfe1e97[m Renomeia objetos com conflito de pacote e atualiza referencias: ZDE_CHAVE->ZESAP_DE_CHAVE, ZDE_CONTADOR->ZESAP_CONTADOR, ZPLACA->ZESAP_PLACA, ZPROD->ZESAP_PROD
+[33m73a6ade7[m Recuperacao recursiva completa - 773 objetos e todas dependencias Z
+[33m4372f068[m Refatoracao RIGOROSA: remocao de 1.054 arquivos fora do escopo (.smim, .pdts, .sicf, etc) - mantidos APENAS 229 arquivos essenciais
+[33m64309854[m[33m ([m[1;31morigin/ZESAP3[m[33m)[m Limpeza de arquivos não utilizados no projeto ZESAP3
+[33m601d7c0b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/ZESAP2[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m BG: Multiple objects
