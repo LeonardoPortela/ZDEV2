@@ -1,7 +1,7 @@
 ﻿*---------------------------------------------------------------------*
-*    program for:   TABLEFRAME_ZIB_CTE_DIST_TER
+*    program for:   TABLEFRAME_ZCTE_DIST
 *---------------------------------------------------------------------*
-FUNCTION TABLEFRAME_ZIB_CTE_DIST_TER   .
+FUNCTION TABLEFRAME_ZCTE_DIST          .
 
   PERFORM TABLEFRAME TABLES X_HEADER X_NAMTAB DBA_SELLIST DPL_SELLIST
                             EXCL_CUA_FUNCT

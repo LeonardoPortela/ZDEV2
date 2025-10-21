@@ -1,5 +1,8 @@
 ﻿*---------------------------------------------------------------------*
-*    view related PAI modules
+*    program for:   TABLEPROC_ZCTE_DIST
 *---------------------------------------------------------------------*
+FUNCTION TABLEPROC_ZCTE_DIST           .
 
-INCLUDE LSVIMITX . "base table related PAI modules
+  PERFORM TABLEPROC.
+
+ENDFUNCTION.

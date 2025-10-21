@@ -1,5 +1,8 @@
 ﻿*---------------------------------------------------------------------*
-*    view related PAI modules
+*    program for:   TABLEPROC_ZCTE_VIAGEM
 *---------------------------------------------------------------------*
+FUNCTION TABLEPROC_ZCTE_VIAGEM         .
 
-INCLUDE LSVIMITX . "base table related PAI modules
+  PERFORM TABLEPROC.
+
+ENDFUNCTION.

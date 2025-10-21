@@ -1,15 +1,15 @@
 ﻿*---------------------------------------------------------------------*
 *    view related data declarations
 *---------------------------------------------------------------------*
-*...processing: ZIB_CTE_DIST_TER................................*
-DATA:  BEGIN OF STATUS_ZIB_CTE_DIST_TER              .   "state vector
+*...processing: ZCTE_VIAGEM.....................................*
+DATA:  BEGIN OF STATUS_ZCTE_VIAGEM                   .   "state vector
          INCLUDE STRUCTURE VIMSTATUS.
-DATA:  END OF STATUS_ZIB_CTE_DIST_TER              .
-CONTROLS: TCTRL_ZIB_CTE_DIST_TER
-            TYPE TABLEVIEW USING SCREEN '0001'.
+DATA:  END OF STATUS_ZCTE_VIAGEM                   .
+CONTROLS: TCTRL_ZCTE_VIAGEM
+            TYPE TABLEVIEW USING SCREEN '0100'.
 *.........table declarations:.................................*
-TABLES: *ZIB_CTE_DIST_TER              .
-TABLES: ZIB_CTE_DIST_TER               .
+TABLES: *ZCTE_VIAGEM                   .
+TABLES: ZCTE_VIAGEM                    .
 
 * general table data declarations..............
   INCLUDE LSVIMTDT                                .
