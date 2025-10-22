@@ -1,0 +1,8 @@
+﻿git : fatal: path 'src/zctmm_chave_nfe.tabl.xml' exists on disk, but not in 'main'
+No linha:1 caractere:1
++ git show main:src/zctmm_chave_nfe.tabl.xml > src\zctmm_chave_nfe.tabl ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: path 'sr...t not in 'main':String) [], RemoteExce 
+   ption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
