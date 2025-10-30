@@ -1,4 +1,4 @@
-﻿class ZCL_WEBSERVICE_TRACE definition
+class ZCL_WEBSERVICE_TRACE definition
   public
   create public .
 

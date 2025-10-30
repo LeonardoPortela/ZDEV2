@@ -1,4 +1,4 @@
-﻿class ZCL_WEBSERVICE_TIPCARD definition
+class ZCL_WEBSERVICE_TIPCARD definition
   public
   inheriting from ZCL_WEBSERVICE
   create public .

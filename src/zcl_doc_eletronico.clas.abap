@@ -1,4 +1,4 @@
-﻿class ZCL_DOC_ELETRONICO definition
+class ZCL_DOC_ELETRONICO definition
   public
   create public .
 

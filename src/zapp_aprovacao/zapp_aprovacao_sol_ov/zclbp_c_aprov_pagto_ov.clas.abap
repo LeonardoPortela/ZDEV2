@@ -1,0 +1,5 @@
+CLASS zclbp_c_aprov_pagto_ov DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zc_aprov_pagto_ov.
+ENDCLASS.
+
+CLASS zclbp_c_aprov_pagto_ov IMPLEMENTATION.
+ENDCLASS.

@@ -1,4 +1,4 @@
-﻿class ZCL_WEBSERVICE_TX_CURVA definition
+class ZCL_WEBSERVICE_TX_CURVA definition
   public
   inheriting from ZCL_WEBSERVICE
   create public .

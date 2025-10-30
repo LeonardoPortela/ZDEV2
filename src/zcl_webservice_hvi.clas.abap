@@ -1,4 +1,4 @@
-﻿class ZCL_WEBSERVICE_HVI definition
+class ZCL_WEBSERVICE_HVI definition
   public
   create public .
 

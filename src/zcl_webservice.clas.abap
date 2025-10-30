@@ -1,4 +1,4 @@
-﻿CLASS zcl_webservice DEFINITION
+CLASS zcl_webservice DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
