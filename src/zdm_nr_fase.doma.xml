@@ -8,6 +8,7 @@
     <DATATYPE>NUMC</DATATYPE>
     <LENG>000014</LENG>
     <OUTPUTLEN>000018</OUTPUTLEN>
+    <CONVEXIT>ZFASE</CONVEXIT>
     <DDTEXT>Fundo Mato-Grossense de Apoio a Cultura de Semente</DDTEXT>
    </DD01V>
   </asx:values>

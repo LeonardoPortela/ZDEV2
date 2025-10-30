@@ -8,6 +8,7 @@
     <DATATYPE>NUMC</DATATYPE>
     <LENG>000047</LENG>
     <OUTPUTLEN>000055</OUTPUTLEN>
+    <CONVEXIT>ZBOLE</CONVEXIT>
     <DDTEXT>Código de Boleto Bancário</DDTEXT>
    </DD01V>
   </asx:values>
