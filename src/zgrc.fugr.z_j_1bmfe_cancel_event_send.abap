@@ -1,4 +1,4 @@
-﻿FUNCTION z_j_1bmfe_cancel_event_send.
+FUNCTION z_j_1bmfe_cancel_event_send.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

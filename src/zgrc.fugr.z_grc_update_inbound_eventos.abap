@@ -1,4 +1,4 @@
-﻿FUNCTION Z_GRC_UPDATE_INBOUND_EVENTOS.
+FUNCTION Z_GRC_UPDATE_INBOUND_EVENTOS.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

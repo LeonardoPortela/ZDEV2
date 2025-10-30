@@ -1,4 +1,4 @@
-﻿FUNCTION ZGRC_LIMPA_REF_MIRO_FISCAL .
+FUNCTION ZGRC_LIMPA_REF_MIRO_FISCAL .
 *"--------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

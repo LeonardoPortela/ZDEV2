@@ -1,4 +1,4 @@
-﻿
+
 * data PE
 IF i_cabecalho-bukrs = '1003'AND
    i_cabecalho-branch = '0008'.

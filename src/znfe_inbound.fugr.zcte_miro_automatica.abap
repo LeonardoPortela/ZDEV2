@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_MIRO_AUTOMATICA.
+FUNCTION ZCTE_MIRO_AUTOMATICA.
 *"--------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

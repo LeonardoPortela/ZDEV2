@@ -1,4 +1,4 @@
-﻿FUNCTION ZBRNFE_DANFE.
+FUNCTION ZBRNFE_DANFE.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

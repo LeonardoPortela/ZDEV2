@@ -1,4 +1,4 @@
-﻿FUNCTION z_grc_retorno_auth_doc .
+FUNCTION z_grc_retorno_auth_doc .
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

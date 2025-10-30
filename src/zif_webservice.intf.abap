@@ -1,4 +1,4 @@
-﻿*"* components of interface ZIF_WEBSERVICE
+*"* components of interface ZIF_WEBSERVICE
 interface ZIF_WEBSERVICE
   public .
 

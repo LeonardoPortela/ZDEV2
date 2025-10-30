@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_DIST_AUTORIZACAO.
+FUNCTION ZCTE_DIST_AUTORIZACAO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

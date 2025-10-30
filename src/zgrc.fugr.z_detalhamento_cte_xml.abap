@@ -1,4 +1,4 @@
-﻿FUNCTION z_detalhamento_cte_xml.
+FUNCTION z_detalhamento_cte_xml.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

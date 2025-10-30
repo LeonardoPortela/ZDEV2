@@ -1,4 +1,4 @@
-﻿FUNCTION Z_J_1B_NF_OBJECT_ADD.
+FUNCTION Z_J_1B_NF_OBJECT_ADD.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

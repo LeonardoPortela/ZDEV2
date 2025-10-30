@@ -1,4 +1,4 @@
-﻿FUNCTION Z_GRC_GET_STATUS_DOC.
+FUNCTION Z_GRC_GET_STATUS_DOC.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

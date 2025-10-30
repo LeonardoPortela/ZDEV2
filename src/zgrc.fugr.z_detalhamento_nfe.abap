@@ -1,4 +1,4 @@
-﻿FUNCTION Z_DETALHAMENTO_NFE.
+FUNCTION Z_DETALHAMENTO_NFE.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

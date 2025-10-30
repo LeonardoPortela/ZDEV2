@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_DIST_FATURAR_INFO.
+FUNCTION ZCTE_DIST_FATURAR_INFO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

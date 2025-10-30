@@ -1,4 +1,4 @@
-﻿interface ZIF_DOC_ELETRONICO
+interface ZIF_DOC_ELETRONICO
   public .
 
 

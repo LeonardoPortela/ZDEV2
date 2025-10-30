@@ -1,4 +1,4 @@
-﻿FUNCTION z_detalhamento_cte_in_massa.
+FUNCTION z_detalhamento_cte_in_massa.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_DIST_SEL_APROVACAO.
+FUNCTION ZCTE_DIST_SEL_APROVACAO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

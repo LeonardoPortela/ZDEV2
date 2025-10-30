@@ -1,4 +1,4 @@
-﻿FUNCTION ZENQUEUE_CTE_TERCEIRO.
+FUNCTION ZENQUEUE_CTE_TERCEIRO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

@@ -1,4 +1,4 @@
-﻿FUNCTION Z_GRC_MDFE_LOAD.
+FUNCTION Z_GRC_MDFE_LOAD.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

@@ -1,4 +1,4 @@
-﻿FUNCTION Z_GRC_ARQUIVO_DOC_XML.
+FUNCTION Z_GRC_ARQUIVO_DOC_XML.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

@@ -1,4 +1,4 @@
-﻿
+
 CLEAR: V_LOGO, V_GRAPHIC.
 
 "BREAK-POINT.

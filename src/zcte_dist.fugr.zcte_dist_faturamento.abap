@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_DIST_FATURAMENTO.
+FUNCTION ZCTE_DIST_FATURAMENTO.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

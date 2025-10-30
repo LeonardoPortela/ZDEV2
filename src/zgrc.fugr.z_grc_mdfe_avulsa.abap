@@ -1,4 +1,4 @@
-﻿FUNCTION Z_GRC_MDFE_AVULSA.
+FUNCTION Z_GRC_MDFE_AVULSA.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING

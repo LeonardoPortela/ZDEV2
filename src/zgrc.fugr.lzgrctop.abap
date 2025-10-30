@@ -1,4 +1,4 @@
-﻿FUNCTION-POOL zgrc MESSAGE-ID zgrc.
+FUNCTION-POOL zgrc MESSAGE-ID zgrc.
 
 TYPES: BEGIN OF ty_editor,
          line(72),

@@ -1,4 +1,4 @@
-﻿FUNCTION z_grc_retorno_event_doc .
+FUNCTION z_grc_retorno_event_doc .
 *&--------------------------------------------------------------------&*
 *&                    Histórico de Modificações                       &*
 *& Autor ABAP |Request    |Data       |Descrição                      &*

@@ -1,4 +1,4 @@
-﻿FUNCTION ZCTE_DIST_FATURAMENTO_FERROV.
+FUNCTION ZCTE_DIST_FATURAMENTO_FERROV.
 *"----------------------------------------------------------------------
 *"*"Interface local:
 *"  IMPORTING
