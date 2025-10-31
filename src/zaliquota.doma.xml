@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+<<<<<<<< HEAD:src/zde_alvo.doma.xml
+    <DOMNAME>ZDE_ALVO</DOMNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000120</LENG>
+    <OUTPUTLEN>000120</OUTPUTLEN>
+    <LOWERCASE>X</LOWERCASE>
+    <DDTEXT>Alvo</DDTEXT>
+========
+    <DOMNAME>ZALIQUOTA</DOMNAME>
+    <DDLANGUAGE>P</DDLANGUAGE>
+    <DATATYPE>NUMC</DATATYPE>
+    <LENG>000002</LENG>
+    <OUTPUTLEN>000002</OUTPUTLEN>
+    <DDTEXT>Percentual da Aliquota de ICMS</DDTEXT>
+>>>>>>>> 343e65c3a3e3c0c14df6b6c542c2942de5b88c29:ZLES/src/zaliquota.doma.xml
+   </DD01V>
+  </asx:values>
+ </asx:abap>
+</abapGit>
