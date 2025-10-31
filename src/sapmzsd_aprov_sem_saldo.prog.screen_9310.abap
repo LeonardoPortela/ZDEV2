@@ -1,5 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE zm_status_9310.
-*
-PROCESS AFTER INPUT.
- MODULE zm_user_command_9310.

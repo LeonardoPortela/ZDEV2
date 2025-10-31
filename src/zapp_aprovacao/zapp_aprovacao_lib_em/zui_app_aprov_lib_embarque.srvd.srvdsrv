@@ -1,6 +1,0 @@
-@EndUserText.label: 'Service Defition - Lib. Embarque'
-define service ZUI_APP_APROV_LIB_EMBARQUE {
-  expose ZC_APROV_LIB_EMBARQUE as Lim_Embarque;
-  expose ZC_APROV_LIB_EMBARQUE_IT as Lim_Embarque_IT;
-  expose ZC_APROV_LIB_EMB_EST as Lim_Embarque_Est;
-}

@@ -1,3 +1,0 @@
-FUNCTION-POOL ZSD_CERTIFICACAO_SOC.         "MESSAGE-ID ..
-
-* INCLUDE LZSD_CERTIFICACAO_SOCD...          " Local class definition

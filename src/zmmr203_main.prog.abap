@@ -1,9 +1,0 @@
-PARAMETERS: p_file TYPE string.
-
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
-  CREATE OBJECT lo_import.
-  lo_import->get_file( ).
-
-  IF IT_SAIDA IS NOT INITIAL.
-    CALL SCREEN 0100.
-  ENDIF.

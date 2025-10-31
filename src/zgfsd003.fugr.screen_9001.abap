@@ -1,9 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_9001.
-*
-PROCESS AFTER INPUT.
-
-
-  MODULE exit_command_9001 AT EXIT-COMMAND.
-
-  MODULE user_command_9001.

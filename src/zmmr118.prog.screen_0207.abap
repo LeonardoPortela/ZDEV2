@@ -1,7 +1,0 @@
-PROCESS BEFORE OUTPUT.
-
-  MODULE status_0207.
-
-PROCESS AFTER INPUT.
-
-  "MODULE user_command_0207.

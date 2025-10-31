@@ -1,6 +1,0 @@
-PROCESS BEFORE OUTPUT.
-  MODULE status_5000.
-*
-PROCESS AFTER INPUT.
-  MODULE user_command_5000_exit AT EXIT-COMMAND.
-  MODULE user_command_5000.

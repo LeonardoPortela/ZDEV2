@@ -1,4 +1,0 @@
-@EndUserText.label: 'Service Defition - Orç. Ordem PM'
-define service ZUI_APP_APROV_ORC_ORDEM_PM {
-  expose ZC_APROV_ORC_ORDEM_PM as Ordem_PM;
-}

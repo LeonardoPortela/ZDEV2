@@ -1,8 +1,0 @@
-PROCESS BEFORE OUTPUT.
-
-  MODULE status_0301.
-*
-PROCESS AFTER INPUT.
-
-* MODULE user_command_0301_exit AT EXIT-COMMAND.
-  MODULE user_command_0301.

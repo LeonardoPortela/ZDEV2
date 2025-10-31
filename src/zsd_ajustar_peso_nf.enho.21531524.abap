@@ -1,9 +1,0 @@
-"Name: \PR:SAPLJ1BI\FO:READ_MARA\SE:END\EI
-ENHANCEMENT 0 ZSD_AJUSTAR_PESO_NF.
-*
-*-CS2025000249-27.05.2025-#175255-JT-inicio
-  PERFORM f_guardar_pesos USING xmenge
-                                gs_rmmme.
-*-CS2025000249-27.05.2025-#175255-JT-fim
-*
-ENDENHANCEMENT.

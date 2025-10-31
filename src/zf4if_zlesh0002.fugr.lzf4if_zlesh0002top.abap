@@ -1,2 +1,0 @@
-FUNCTION-POOL ZF4IF_ZLESH0002.              "MESSAGE-ID ..
-

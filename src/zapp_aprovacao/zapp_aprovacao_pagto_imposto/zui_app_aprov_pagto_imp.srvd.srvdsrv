@@ -1,6 +1,0 @@
-@EndUserText.label: 'Service Def - Aprov. Pagto. Imposto'
-define service ZUI_APP_APROV_PAGTO_IMP {
-  expose ZC_APROV_PAGTO_IMP as PagtoImp;
-  expose ZC_APROV_PAGTO_IMP_IT as PagtoImpIt;
-  expose ZC_APROV_PAGTO_IMP_EST as PagtoImpEst;
-}

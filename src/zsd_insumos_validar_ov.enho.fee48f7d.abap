@@ -1,9 +1,0 @@
-"Name: \PR:SAPMV45A\FO:USEREXIT_CHECK_XVBAP_FOR_DELET\SE:END\EI
-ENHANCEMENT 0 ZSD_INSUMOS_VALIDAR_OV.
-*
-*-CS2019001753-04.07.2023-#65741-JT-inicio
-  PERFORM f_validar_gerador_doc USING us_error
-                                      us_exit.
-*-CS2019001753-04.07.2023-#65741-JT-inicio
-*
-ENDENHANCEMENT.
